@@ -18,34 +18,32 @@ void automatically_reconnect_server(int action)
 
     //status_conductor->trying_to_reconnect=TRUE;
 
-    get_sys_time(systime);  // Get current system time
+    get_sys_time(systime); // Get current system time
 
-    if(action==START_DELAY)
+    if (action == START_DELAY)
     {
 
-        #ifdef __amigaos4__
-        systime_reconnect_timer->tv_sec  = systime->tv_sec+my_settings.Reconnect_Delay;
+#ifdef __amigaos4__
+        systime_reconnect_timer->tv_sec = systime->tv_sec+my_settings.Reconnect_Delay;
         systime_reconnect_timer->tv_usec = systime->tv_usec;
-        #else
-        systime_reconnect_timer->tv_secs  = systime->tv_secs+my_settings.Reconnect_Delay;
+#else
+        systime_reconnect_timer->tv_secs = systime->tv_secs + my_settings.Reconnect_Delay;
         systime_reconnect_timer->tv_micro = systime->tv_micro;
-        #endif
+#endif
 
     }
-    else if(action==RECONNECT_STRAIGHT_AWAY)
+    else if (action == RECONNECT_STRAIGHT_AWAY)
     {
 
-        #ifdef __amigaos4__
-        systime_reconnect_timer->tv_sec  = systime->tv_sec;
+#ifdef __amigaos4__
+        systime_reconnect_timer->tv_sec = systime->tv_sec;
         systime_reconnect_timer->tv_usec = systime->tv_usec;
-        #else
-        systime_reconnect_timer->tv_secs  = systime->tv_secs;
+#else
+        systime_reconnect_timer->tv_secs = systime->tv_secs;
         systime_reconnect_timer->tv_micro = systime->tv_micro;
-        #endif
-
+#endif
 
     }
-
 
 }
 

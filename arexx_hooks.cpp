@@ -19,8 +19,8 @@ APTR MN1_AREXX;
 //STRPTR maintask_basename;
 char maintask_basename[100];
 
-APTR	MN1_Hide, MNmenuBarLabel2,MN1_Main, MN1_SelectServer, MN1_NewTAB, MN1_NewGTAB,MN1_CloseTAB, MNmenuBarLabel0,MNmenuBarLabel1, MN_ClearAllHistory,MN_ClearHistory,  MN_SaveHistory, MN_MainSettings;
-APTR	MN_Settings,MN_SaveSettings, MN_MUISettings, MN_ColourSettings, MN_windows_dcc2,  MN_windows_dcc, MN_windows, MN_urlgrabber, MN_ignorelist, MN_about, MN_quit, MN_MultiColumnDisplay, MN_CloneDetection, MN_Clipboard;
+APTR    MN1_Hide, MNmenuBarLabel2,MN1_Main, MN1_SelectServer, MN1_NewTAB, MN1_NewGTAB,MN1_CloseTAB, MNmenuBarLabel0,MNmenuBarLabel1, MN_ClearAllHistory,MN_ClearHistory,  MN_SaveHistory, MN_MainSettings;
+APTR    MN_Settings,MN_SaveSettings, MN_MUISettings, MN_ColourSettings, MN_windows_dcc2,  MN_windows_dcc, MN_windows, MN_urlgrabber, MN_ignorelist, MN_about, MN_quit, MN_MultiColumnDisplay, MN_CloneDetection, MN_Clipboard;
 APTR    MN_MuteSound;
 APTR    MN_Edit, MN_cut, MN_copy, MN_paste;
 
@@ -50,20 +50,20 @@ int add_scripts_to_menu()
     BOOL more;
 
     struct ExAllControl *eac = (struct ExAllControl*) AllocDosObject(DOS_EXALLCONTROL,NULL);
-	if (!eac)
-	{
+    if (!eac)
+    {
         return 0;
-	}
-	eac->eac_LastKey = 0;
+    }
+    eac->eac_LastKey = 0;
 
     BPTR my_lock=Lock("progdir:arexx_scripts",ACCESS_READ);
 
 
     if(MN1_AREXX) DoMethod((Object*)WookieChat->MN_, OM_REMMEMBER, (Object*)MN1_AREXX);
 
-	MN1_AREXX = (Object*)MenuObject,
-		MUIA_Menu_Title, (char*)GetCatalogStr(catalog,331,"ARexx"),
-	End;
+    MN1_AREXX = (Object*)MenuObject,
+        MUIA_Menu_Title, (char*)GetCatalogStr(catalog,331,"ARexx"),
+    End;
 
     if(!my_lock)
     {
@@ -79,35 +79,35 @@ int add_scripts_to_menu()
     strcpy(AREXX_Menu_Items[count].MenuItem_FullFilename,"");
     AREXX_Menu_Items[count].return_id=AREXX_MENU_VALUES+count;
 
-	AREXX_Menu_Items[count].MN_MenuItem = (Object*)MenuitemObject,
-		MUIA_Menuitem_Title, (char*)AREXX_Menu_Items[count].MenuItem_String,
-	End;
+    AREXX_Menu_Items[count].MN_MenuItem = (Object*)MenuitemObject,
+        MUIA_Menuitem_Title, (char*)AREXX_Menu_Items[count].MenuItem_String,
+    End;
 
     DoMethod((Object *)AREXX_Menu_Items[count].MN_MenuItem, MUIM_Notify, MUIA_Menuitem_Trigger,MUIV_EveryTime, (Object*)WookieChat->App,2,MUIM_Application_ReturnID,AREXX_Menu_Items[count].return_id);
 
     DoMethod((Object*)MN1_AREXX, OM_ADDMEMBER, (Object*)AREXX_Menu_Items[count].MN_MenuItem);
-	
+    
 
     count++;
 
     do
-	{
-	   more = ExAll(my_lock, (struct ExAllData*)EAData, sizeof(EAData), ED_TYPE, (struct ExAllControl*) eac);
-	   if ((!more) && (IoErr() != ERROR_NO_MORE_ENTRIES))
-	   {
+    {
+       more = ExAll(my_lock, (struct ExAllData*)EAData, sizeof(EAData), ED_TYPE, (struct ExAllControl*) eac);
+       if ((!more) && (IoErr() != ERROR_NO_MORE_ENTRIES))
+       {
             //printf("failed abnormally with some other error\n");
             break;
 
-	   }
-	   if (eac->eac_Entries == 0)
-	   {
+       }
+       if (eac->eac_Entries == 0)
+       {
             //printf("failed normally with no entries\n");
             break;
-	   }
-	   for(ead = (struct ExAllData *)EAData; ead; ead = ead->ed_Next)
-	   {
+       }
+       for(ead = (struct ExAllData *)EAData; ead; ead = ead->ed_Next)
+       {
             if(EAD_IS_FILE(ead))
-  	        {
+              {
                 //if(IDOS->DevNameFromLock(my_lock, work_buffer, 800, DN_FULLPATH))
                 {
                     if(wookie_folder[strlen(wookie_folder)-1]==':' || wookie_folder[strlen(wookie_folder)-1]=='/')
@@ -124,9 +124,9 @@ int add_scripts_to_menu()
                     strcpy(AREXX_Menu_Items[count].MenuItem_FullFilename,work_buffer2);
                     AREXX_Menu_Items[count].return_id=AREXX_MENU_VALUES+count;
 
-                	AREXX_Menu_Items[count].MN_MenuItem = (Object*)MenuitemObject,
-                		MUIA_Menuitem_Title, (char*)AREXX_Menu_Items[count].MenuItem_String,
-                	End;
+                    AREXX_Menu_Items[count].MN_MenuItem = (Object*)MenuitemObject,
+                        MUIA_Menuitem_Title, (char*)AREXX_Menu_Items[count].MenuItem_String,
+                    End;
 
                     DoMethod((Object *)AREXX_Menu_Items[count].MN_MenuItem, MUIM_Notify, MUIA_Menuitem_Trigger,MUIV_EveryTime, (Object*)WookieChat->App,2,MUIM_Application_ReturnID,AREXX_Menu_Items[count].return_id);
 
@@ -139,11 +139,11 @@ int add_scripts_to_menu()
                 count++;
 
 
-  	        }
+              }
 
         }
 
-	} while(more);
+    } while(more);
 
 
     DoMethod((Object*)WookieChat->MN_, OM_ADDMEMBER, (Object*)MN1_AREXX);
@@ -1166,55 +1166,55 @@ struct Hook sel20hook = { { NULL,NULL }, (ULONG(*)())sel20hookfunc, NULL,NULL };
 
 /*
  NAME
-	SetRexxVar - Sets the value of a variable of a running ARexx program
+    SetRexxVar - Sets the value of a variable of a running ARexx program
 
    SYNOPSIS
-	error = SetRexxVar(message,varname,value,length)
-	D0                 A0      A1      D0    D1
+    error = SetRexxVar(message,varname,value,length)
+    D0                 A0      A1      D0    D1
 
-	LONG SetRexxVar(struct RexxMsg *,char *,char *,ULONG);
+    LONG SetRexxVar(struct RexxMsg *,char *,char *,ULONG);
 
    FUNCTION
-	This function will attempt to the the value of the symbol
-	varname in the ARexx script that sent the message.
+    This function will attempt to the the value of the symbol
+    varname in the ARexx script that sent the message.
 
-	While this function is new in the V37 amiga.lib, it is safe to
-	call it in all versions of the operating system.  It is also
-	PURE code, thus usable in resident/pure executables.
+    While this function is new in the V37 amiga.lib, it is safe to
+    call it in all versions of the operating system.  It is also
+    PURE code, thus usable in resident/pure executables.
 
    NOTE
-	This is a stub in amiga.lib.  It is only available via amiga.lib.
-	The stub has two labels.  One, _SetRexxVar, takes the arguments
-	from the stack.  The other, SetRexxVar, takes the arguments in
-	registers.
+    This is a stub in amiga.lib.  It is only available via amiga.lib.
+    The stub has two labels.  One, _SetRexxVar, takes the arguments
+    from the stack.  The other, SetRexxVar, takes the arguments in
+    registers.
 
-	This routine does a CheckRexxMsg() on the message.
+    This routine does a CheckRexxMsg() on the message.
 
    EXAMPLE
 
-	char	*value;
+    char    *value;
 
-	if (!SetRexxVar(rxmsg,"TheVar","25 Dollars",10))
-	{
-		// The value of TheVar will now be "25 Dollars"
-	}
+    if (!SetRexxVar(rxmsg,"TheVar","25 Dollars",10))
+    {
+        // The value of TheVar will now be "25 Dollars"
+    }
 
    INPUTS
-	message		A message gotten from an ARexx script
-	varname		The name of the variable to set
-	value		A string that will be the new value of the variable
-	length		The length of the value string
+    message        A message gotten from an ARexx script
+    varname        The name of the variable to set
+    value        A string that will be the new value of the variable
+    length        The length of the value string
 
 
    RESULTS
-	error		0 for success, otherwise an error code.
-			(Other codes may exists, these are documented)
-			3  == Insufficient Storage
-			9  == String too long
-			10 == invalid message
+    error        0 for success, otherwise an error code.
+            (Other codes may exists, these are documented)
+            3  == Insufficient Storage
+            9  == String too long
+            10 == invalid message
 
    SEE ALSO
-	SetRexxVar(), CheckRexxMsg()
+    SetRexxVar(), CheckRexxMsg()
 
 */
 BOOL wanna_quit;
@@ -1280,9 +1280,9 @@ int sel21hookfunc(void) {
 
                     //set the string while the display is paused
                     getmacro((Object*)app,MUIA_Application_RexxMsg,&my_rexxmsg);
-                	
+                    
                     #ifdef __amigaos4__
-                	if(status_conductor)
+                    if(status_conductor)
                     {
                         if(status_conductor->last_incoming_line_unparsed)
                         {
@@ -1291,7 +1291,7 @@ int sel21hookfunc(void) {
                             work_status=status_conductor;
                             for(count=0,status_conductor=status_root; status_conductor && status_conductor!=work_status; count++,status_conductor=status_conductor->next);
                             sprintf(network_result,"%d",count);
-                        	IRexxSys->SetRexxVarFromMsg((char*)"line.network",network_result,(struct RexxMsg*)my_rexxmsg);
+                            IRexxSys->SetRexxVarFromMsg((char*)"line.network",network_result,(struct RexxMsg*)my_rexxmsg);
                             status_conductor=work_status;
 
                             if(stricmp(status_conductor->last_incoming_line_unparsed,""))
@@ -1301,7 +1301,7 @@ int sel21hookfunc(void) {
 
                                 line_string=strtok(line_buffer," ");
                                 if(line_string) { if(line_string[0]==':') { for(ULONG count=0; count<=strlen(line_string); count++) line_string[count]=line_string[count+1]; } }
-                            	
+                                
                                 if(line_string)
                                 {
                                     //copy the nick from the prefix variable
@@ -1318,7 +1318,7 @@ int sel21hookfunc(void) {
                                         nick_hostname[count2]=line_string[count];
                                     }
                                     nick_hostname[count]='\0';
-                                	IRexxSys->SetRexxVarFromMsg((char*)"line.nick",nick_hostname,(struct RexxMsg*)my_rexxmsg);
+                                    IRexxSys->SetRexxVarFromMsg((char*)"line.nick",nick_hostname,(struct RexxMsg*)my_rexxmsg);
 
                                     //copy the hostname from the prefix variable
                                     for(count++,count2=0;count<(LONG)strlen((char*)line_string) && line_string[count]!='\0'; count2++,count++)
@@ -1326,19 +1326,19 @@ int sel21hookfunc(void) {
                                         nick_hostname[count2]=line_string[count];
                                     }
                                     nick_hostname[count]='\0';
-                                	IRexxSys->SetRexxVarFromMsg((char*)"line.hostname",nick_hostname,(struct RexxMsg*)my_rexxmsg);
+                                    IRexxSys->SetRexxVarFromMsg((char*)"line.hostname",nick_hostname,(struct RexxMsg*)my_rexxmsg);
 
                                 }
                                 line_string=strtok(NULL," ");
-                            	if(line_string) IRexxSys->SetRexxVarFromMsg((char*)"line.command",line_string,(struct RexxMsg*)my_rexxmsg);
+                                if(line_string) IRexxSys->SetRexxVarFromMsg((char*)"line.command",line_string,(struct RexxMsg*)my_rexxmsg);
 
                                 line_string=strtok(NULL," ");
                                 if(line_string) { if(line_string[0]==':') { for(ULONG count=0; count<=strlen(line_string); count++) line_string[count]=line_string[count+1]; } }
-                            	if(line_string) IRexxSys->SetRexxVarFromMsg((char*)"line.dest",line_string,(struct RexxMsg*)my_rexxmsg);
+                                if(line_string) IRexxSys->SetRexxVarFromMsg((char*)"line.dest",line_string,(struct RexxMsg*)my_rexxmsg);
 
                                 line_string=strtok(NULL,"");
                                 if(line_string) { if(line_string[0]==':') { for(ULONG count=0; count<=strlen(line_string); count++) line_string[count]=line_string[count+1]; } }
-                            	if(line_string) IRexxSys->SetRexxVarFromMsg((char*)"line.rest",line_string,(struct RexxMsg*)my_rexxmsg);
+                                if(line_string) IRexxSys->SetRexxVarFromMsg((char*)"line.rest",line_string,(struct RexxMsg*)my_rexxmsg);
                             }
                         }
                     }
@@ -1352,7 +1352,7 @@ int sel21hookfunc(void) {
                             work_status=status_conductor;
                             for(count=0,status_conductor=status_root; status_conductor && status_conductor!=work_status; count++,status_conductor=status_conductor->next);
                             sprintf(network_result,"%d",count);
-                        	SetRexxVar((struct RexxMsg*)my_rexxmsg,(c_in)"LINE.NETWORK",(c_in)network_result,strlen(network_result));
+                            SetRexxVar((struct RexxMsg*)my_rexxmsg,(c_in)"LINE.NETWORK",(c_in)network_result,strlen(network_result));
                             status_conductor=work_status;
 
                             if(stricmp(status_conductor->last_incoming_line_unparsed,""))
@@ -1361,7 +1361,7 @@ int sel21hookfunc(void) {
 
                                 line_string=strtok(line_buffer," ");
                                 if(line_string) { if(line_string[0]==':') { for(ULONG count=0; count<=strlen(line_string); count++) line_string[count]=line_string[count+1]; } }
-                            	if(line_string) SetRexxVar((struct RexxMsg*)my_rexxmsg,(c_in)"LINE.PREFIX",(c_in)line_string,strlen(line_string));
+                                if(line_string) SetRexxVar((struct RexxMsg*)my_rexxmsg,(c_in)"LINE.PREFIX",(c_in)line_string,strlen(line_string));
 
                                 if(strchr((char*)line_string,'!'))
                                 {
@@ -1372,7 +1372,7 @@ int sel21hookfunc(void) {
                                         nick_hostname[count2]=line_string[count];
                                     }
                                     nick_hostname[count]='\0';
-                                	SetRexxVar((struct RexxMsg*)my_rexxmsg,(c_in)"LINE.NICK",(c_in)nick_hostname,strlen(nick_hostname));
+                                    SetRexxVar((struct RexxMsg*)my_rexxmsg,(c_in)"LINE.NICK",(c_in)nick_hostname,strlen(nick_hostname));
 
                                     //copy the hostname from the prefix variable
                                     for(count++,count2=0;count<(LONG)strlen((char*)line_string) && line_string[count]!='\0'; count2++,count++)
@@ -1380,20 +1380,20 @@ int sel21hookfunc(void) {
                                         nick_hostname[count2]=line_string[count];
                                     }
                                     nick_hostname[count]='\0';
-                                	SetRexxVar((struct RexxMsg*)my_rexxmsg,(c_in)"LINE.HOSTNAME",(c_in)nick_hostname,strlen(nick_hostname));
+                                    SetRexxVar((struct RexxMsg*)my_rexxmsg,(c_in)"LINE.HOSTNAME",(c_in)nick_hostname,strlen(nick_hostname));
 
                                 }
 
                                 line_string=strtok(NULL," ");
-                            	if(line_string) SetRexxVar((struct RexxMsg*)my_rexxmsg,(c_in)"LINE.COMMAND",(c_in)line_string,strlen(line_string));
+                                if(line_string) SetRexxVar((struct RexxMsg*)my_rexxmsg,(c_in)"LINE.COMMAND",(c_in)line_string,strlen(line_string));
 
                                 line_string=strtok(NULL," ");
                                 if(line_string) { if(line_string[0]==':') { for(ULONG count=0; count<=strlen(line_string); count++) line_string[count]=line_string[count+1]; } }
-                            	if(line_string) SetRexxVar((struct RexxMsg*)my_rexxmsg,(c_in)"LINE.DEST",(c_in)line_string,strlen(line_string));
+                                if(line_string) SetRexxVar((struct RexxMsg*)my_rexxmsg,(c_in)"LINE.DEST",(c_in)line_string,strlen(line_string));
 
                                 line_string=strtok(NULL,"");
                                 if(line_string) { if(line_string[0]==':') { for(ULONG count=0; count<=strlen(line_string); count++) line_string[count]=line_string[count+1]; } }
-                            	if(line_string) SetRexxVar((struct RexxMsg*)my_rexxmsg,(c_in)"LINE.REST",(c_in)line_string,strlen(line_string));
+                                if(line_string) SetRexxVar((struct RexxMsg*)my_rexxmsg,(c_in)"LINE.REST",(c_in)line_string,strlen(line_string));
                             }
                         }
                     }
@@ -1407,7 +1407,7 @@ int sel21hookfunc(void) {
                             work_status=status_conductor;
                             for(count=0,status_conductor=status_root; status_conductor && status_conductor!=work_status; count++,status_conductor=status_conductor->next);
                             sprintf(network_result,"%d",count);
-                        	SetRexxVar((struct RexxMsg*)my_rexxmsg,(c_in)"line.network",(c_in)network_result,strlen(network_result));
+                            SetRexxVar((struct RexxMsg*)my_rexxmsg,(c_in)"line.network",(c_in)network_result,strlen(network_result));
                             status_conductor=work_status;
 
                             if(stricmp(status_conductor->last_incoming_line_unparsed,""))
@@ -1416,7 +1416,7 @@ int sel21hookfunc(void) {
 
                                 line_string=strtok(line_buffer," ");
                                 if(line_string) { if(line_string[0]==':') { for(ULONG count=0; count<=strlen(line_string); count++) line_string[count]=line_string[count+1]; } }
-                            	if(line_string) SetRexxVar((struct RexxMsg*)my_rexxmsg,(c_in)"line.prefix",(c_in)line_string,strlen(line_string));
+                                if(line_string) SetRexxVar((struct RexxMsg*)my_rexxmsg,(c_in)"line.prefix",(c_in)line_string,strlen(line_string));
 
                                 if(strchr((char*)line_string,'!'))
                                 {
@@ -1427,7 +1427,7 @@ int sel21hookfunc(void) {
                                         nick_hostname[count2]=line_string[count];
                                     }
                                     nick_hostname[count]='\0';
-                                	SetRexxVar((struct RexxMsg*)my_rexxmsg,(c_in)"line.nick",(c_in)nick_hostname,strlen(nick_hostname));
+                                    SetRexxVar((struct RexxMsg*)my_rexxmsg,(c_in)"line.nick",(c_in)nick_hostname,strlen(nick_hostname));
 
                                     //copy the hostname from the prefix variable
                                     for(count++,count2=0;count<(LONG)strlen((char*)line_string) && line_string[count]!='\0'; count2++,count++)
@@ -1435,26 +1435,26 @@ int sel21hookfunc(void) {
                                         nick_hostname[count2]=line_string[count];
                                     }
                                     nick_hostname[count]='\0';
-                                	SetRexxVar((struct RexxMsg*)my_rexxmsg,(c_in)"line.hostname",(c_in)nick_hostname,strlen(nick_hostname));
+                                    SetRexxVar((struct RexxMsg*)my_rexxmsg,(c_in)"line.hostname",(c_in)nick_hostname,strlen(nick_hostname));
 
                                 }
 
                                 line_string=strtok(NULL," ");
-                            	if(line_string) SetRexxVar((struct RexxMsg*)my_rexxmsg,(c_in)"line.command",(c_in)line_string,strlen(line_string));
+                                if(line_string) SetRexxVar((struct RexxMsg*)my_rexxmsg,(c_in)"line.command",(c_in)line_string,strlen(line_string));
 
                                 line_string=strtok(NULL," ");
                                 if(line_string) { if(line_string[0]==':') { for(ULONG count=0; count<=strlen(line_string); count++) line_string[count]=line_string[count+1]; } }
-                            	if(line_string) SetRexxVar((struct RexxMsg*)my_rexxmsg,(c_in)"line.dest",(c_in)line_string,strlen(line_string));
+                                if(line_string) SetRexxVar((struct RexxMsg*)my_rexxmsg,(c_in)"line.dest",(c_in)line_string,strlen(line_string));
 
                                 line_string=strtok(NULL,"");
                                 if(line_string) { if(line_string[0]==':') { for(ULONG count=0; count<=strlen(line_string); count++) line_string[count]=line_string[count+1]; } }
-                            	if(line_string) SetRexxVar((struct RexxMsg*)my_rexxmsg,(c_in)"line.rest",(c_in)line_string,strlen(line_string));
+                                if(line_string) SetRexxVar((struct RexxMsg*)my_rexxmsg,(c_in)"line.rest",(c_in)line_string,strlen(line_string));
                             }
                         }
                     }
 
                     #else
-                	if(status_conductor)
+                    if(status_conductor)
                     {
                         if(status_conductor->last_incoming_line_unparsed)
                         {
@@ -1463,7 +1463,7 @@ int sel21hookfunc(void) {
                             work_status=status_conductor;
                             for(count=0,status_conductor=status_root; status_conductor && status_conductor!=work_status; count++,status_conductor=status_conductor->next);
                             sprintf(network_result,"%d",count);
-                        	SetRexxVar((struct Message*)my_rexxmsg,(c_in)"line.network",(c_in)network_result,strlen(network_result));
+                            SetRexxVar((struct Message*)my_rexxmsg,(c_in)"line.network",(c_in)network_result,strlen(network_result));
                             status_conductor=work_status;
 
                             if(stricmp(status_conductor->last_incoming_line_unparsed,""))
@@ -1472,7 +1472,7 @@ int sel21hookfunc(void) {
 
                                 line_string=strtok(line_buffer," ");
                                 if(line_string) { if(line_string[0]==':') { for(ULONG count=0; count<=strlen(line_string); count++) line_string[count]=line_string[count+1]; } }
-                            	if(line_string) SetRexxVar((struct Message*)my_rexxmsg,(c_in)"line.prefix",(c_in)line_string,strlen(line_string));
+                                if(line_string) SetRexxVar((struct Message*)my_rexxmsg,(c_in)"line.prefix",(c_in)line_string,strlen(line_string));
 
                                 if(strchr((char*)line_string,'!'))
                                 {
@@ -1483,7 +1483,7 @@ int sel21hookfunc(void) {
                                         nick_hostname[count2]=line_string[count];
                                     }
                                     nick_hostname[count]='\0';
-                                	SetRexxVar((struct Message*)my_rexxmsg,(c_in)"line.nick",(c_in)nick_hostname,strlen(nick_hostname));
+                                    SetRexxVar((struct Message*)my_rexxmsg,(c_in)"line.nick",(c_in)nick_hostname,strlen(nick_hostname));
 
                                     //copy the hostname from the prefix variable
                                     for(count++,count2=0;count<(LONG)strlen((char*)line_string) && line_string[count]!='\0'; count2++,count++)
@@ -1491,20 +1491,20 @@ int sel21hookfunc(void) {
                                         nick_hostname[count2]=line_string[count];
                                     }
                                     nick_hostname[count]='\0';
-                                	SetRexxVar((struct Message*)my_rexxmsg,(c_in)"line.hostname",(c_in)nick_hostname,strlen(nick_hostname));
+                                    SetRexxVar((struct Message*)my_rexxmsg,(c_in)"line.hostname",(c_in)nick_hostname,strlen(nick_hostname));
 
                                 }
 
                                 line_string=strtok(NULL," ");
-                            	if(line_string) SetRexxVar((struct Message*)my_rexxmsg,(c_in)"line.command",(c_in)line_string,strlen(line_string));
+                                if(line_string) SetRexxVar((struct Message*)my_rexxmsg,(c_in)"line.command",(c_in)line_string,strlen(line_string));
 
                                 line_string=strtok(NULL," ");
                                 if(line_string) { if(line_string[0]==':') { for(ULONG count=0; count<=strlen(line_string); count++) line_string[count]=line_string[count+1]; } }
-                            	if(line_string) SetRexxVar((struct Message*)my_rexxmsg,(c_in)"line.dest",(c_in)line_string,strlen(line_string));
+                                if(line_string) SetRexxVar((struct Message*)my_rexxmsg,(c_in)"line.dest",(c_in)line_string,strlen(line_string));
 
                                 line_string=strtok(NULL,"");
                                 if(line_string) { if(line_string[0]==':') { for(ULONG count=0; count<=strlen(line_string); count++) line_string[count]=line_string[count+1]; } }
-                            	if(line_string) SetRexxVar((struct Message*)my_rexxmsg,(c_in)"line.rest",(c_in)line_string,strlen(line_string));
+                                if(line_string) SetRexxVar((struct Message*)my_rexxmsg,(c_in)"line.rest",(c_in)line_string,strlen(line_string));
                             }
                         }
                     }
@@ -1561,7 +1561,7 @@ int sel23hookfunc(void) {
         getmacro((Object*)app,MUIA_Application_RexxMsg,&my_rexxmsg);
 
         #ifdef __amigaos4__
-    	if(status_conductor)
+        if(status_conductor)
         {
        if(DEBUG)  printf("parseline 2\n");
 
@@ -1569,7 +1569,7 @@ int sel23hookfunc(void) {
 
             for(count=0,status_conductor=status_root; status_conductor && status_conductor!=work_status; count++,status_conductor=status_conductor->next);
             sprintf(network_result,"%d",count);
-        	IRexxSys->SetRexxVarFromMsg((char*)"line.network",network_result,(struct RexxMsg*)my_rexxmsg);
+            IRexxSys->SetRexxVarFromMsg((char*)"line.network",network_result,(struct RexxMsg*)my_rexxmsg);
 
             //if(stricmp(status_conductor->last_incoming_line_unparsed,""))
             if(stricmp(line_buffer,""))
@@ -1583,7 +1583,7 @@ int sel23hookfunc(void) {
 
                 line_string=strtok(line_buffer," ");
                 if(line_string) { if(line_string[0]==':') { for(ULONG count=0; count<=strlen(line_string); count++) line_string[count]=line_string[count+1]; } }
-            	if(line_string) IRexxSys->SetRexxVarFromMsg((char*)"line.prefix",line_string,(struct RexxMsg*)my_rexxmsg);
+                if(line_string) IRexxSys->SetRexxVarFromMsg((char*)"line.prefix",line_string,(struct RexxMsg*)my_rexxmsg);
 
                 if(strchr((char*)line_string,'!'))
                 {
@@ -1594,7 +1594,7 @@ int sel23hookfunc(void) {
                         nick_hostname[count2]=line_string[count];
                     }
                     nick_hostname[count]='\0';
-                	IRexxSys->SetRexxVarFromMsg((char*)"line.nick",nick_hostname,(struct RexxMsg*)my_rexxmsg);
+                    IRexxSys->SetRexxVarFromMsg((char*)"line.nick",nick_hostname,(struct RexxMsg*)my_rexxmsg);
 
                     //copy the hostname from the prefix variable
                     for(count++,count2=0;count<(LONG)strlen((char*)line_string) && line_string[count]!='\0'; count2++,count++)
@@ -1602,32 +1602,32 @@ int sel23hookfunc(void) {
                         nick_hostname[count2]=line_string[count];
                     }
                     nick_hostname[count]='\0';
-                	IRexxSys->SetRexxVarFromMsg((char*)"line.hostname",nick_hostname,(struct RexxMsg*)my_rexxmsg);
+                    IRexxSys->SetRexxVarFromMsg((char*)"line.hostname",nick_hostname,(struct RexxMsg*)my_rexxmsg);
 
                 }
                 line_string=strtok(NULL," ");
-            	if(line_string) IRexxSys->SetRexxVarFromMsg((char*)"line.command",line_string,(struct RexxMsg*)my_rexxmsg);
+                if(line_string) IRexxSys->SetRexxVarFromMsg((char*)"line.command",line_string,(struct RexxMsg*)my_rexxmsg);
 
                 line_string=strtok(NULL," ");
                 if(line_string) { if(line_string[0]==':') { for(ULONG count=0; count<=strlen(line_string); count++) line_string[count]=line_string[count+1]; } }
-            	if(line_string) IRexxSys->SetRexxVarFromMsg((char*)"line.dest",line_string,(struct RexxMsg*)my_rexxmsg);
+                if(line_string) IRexxSys->SetRexxVarFromMsg((char*)"line.dest",line_string,(struct RexxMsg*)my_rexxmsg);
 
                 line_string=strtok(NULL,"");
                 if(line_string) { if(line_string[0]==':') { for(ULONG count=0; count<=strlen(line_string); count++) line_string[count]=line_string[count+1]; } }
-            	if(line_string) IRexxSys->SetRexxVarFromMsg((char*)"line.rest",line_string,(struct RexxMsg*)my_rexxmsg);
+                if(line_string) IRexxSys->SetRexxVarFromMsg((char*)"line.rest",line_string,(struct RexxMsg*)my_rexxmsg);
 
 
         }
         }
         #elif __morphos__
-    	if(status_conductor)
+        if(status_conductor)
         {
             //strcpy(line_buffer,status_conductor->last_incoming_line_unparsed);
             strcpy(line_buffer,(char*)parameters[1]);
 
             for(count=0,status_conductor=status_root; status_conductor && status_conductor!=work_status; count++,status_conductor=status_conductor->next);
             sprintf(network_result,"%d",count);
-        	SetRexxVar((struct RexxMsg*)my_rexxmsg,(c_in)"LINE.NETWORK",(c_in)network_result,strlen(network_result));
+            SetRexxVar((struct RexxMsg*)my_rexxmsg,(c_in)"LINE.NETWORK",(c_in)network_result,strlen(network_result));
 
             //if(stricmp(status_conductor->last_incoming_line_unparsed,""))
             if(stricmp(line_buffer,""))
@@ -1637,7 +1637,7 @@ int sel23hookfunc(void) {
 
                 line_string=strtok(line_buffer," ");
                 if(line_string) { if(line_string[0]==':') { for(ULONG count=0; count<=strlen(line_string); count++) line_string[count]=line_string[count+1]; } }
-            	if(line_string) SetRexxVar((struct RexxMsg*)my_rexxmsg,(c_in)"LINE.PREFIX",(c_in)line_string,strlen(line_string));
+                if(line_string) SetRexxVar((struct RexxMsg*)my_rexxmsg,(c_in)"LINE.PREFIX",(c_in)line_string,strlen(line_string));
 
                 if(strchr((char*)line_string,'!'))
                 {
@@ -1648,7 +1648,7 @@ int sel23hookfunc(void) {
                         nick_hostname[count2]=line_string[count];
                     }
                     nick_hostname[count]='\0';
-                	SetRexxVar((struct RexxMsg*)my_rexxmsg,(c_in)"LINE.NICK",(c_in)nick_hostname,strlen(nick_hostname));
+                    SetRexxVar((struct RexxMsg*)my_rexxmsg,(c_in)"LINE.NICK",(c_in)nick_hostname,strlen(nick_hostname));
 
                     //copy the hostname from the prefix variable
                     for(count++,count2=0;count<(LONG)strlen((char*)line_string) && line_string[count]!='\0'; count2++,count++)
@@ -1656,31 +1656,31 @@ int sel23hookfunc(void) {
                         nick_hostname[count2]=line_string[count];
                     }
                     nick_hostname[count]='\0';
-                	SetRexxVar((struct RexxMsg*)my_rexxmsg,(c_in)"LINE.HOSTNAME",(c_in)nick_hostname,strlen(nick_hostname));
+                    SetRexxVar((struct RexxMsg*)my_rexxmsg,(c_in)"LINE.HOSTNAME",(c_in)nick_hostname,strlen(nick_hostname));
 
                 }
 
                 line_string=strtok(NULL," ");
-            	if(line_string) SetRexxVar((struct RexxMsg*)my_rexxmsg,(c_in)"LINE.COMMAND",(c_in)line_string,strlen(line_string));
+                if(line_string) SetRexxVar((struct RexxMsg*)my_rexxmsg,(c_in)"LINE.COMMAND",(c_in)line_string,strlen(line_string));
 
                 line_string=strtok(NULL," ");
                 if(line_string) { if(line_string[0]==':') { for(ULONG count=0; count<=strlen(line_string); count++) line_string[count]=line_string[count+1]; } }
-            	if(line_string) SetRexxVar((struct RexxMsg*)my_rexxmsg,(c_in)"LINE.DEST",(c_in)line_string,strlen(line_string));
+                if(line_string) SetRexxVar((struct RexxMsg*)my_rexxmsg,(c_in)"LINE.DEST",(c_in)line_string,strlen(line_string));
 
                 line_string=strtok(NULL,"");
                 if(line_string) { if(line_string[0]==':') { for(ULONG count=0; count<=strlen(line_string); count++) line_string[count]=line_string[count+1]; } }
-            	if(line_string) SetRexxVar((struct RexxMsg*)my_rexxmsg,(c_in)"LINE.REST",(c_in)line_string,strlen(line_string));
+                if(line_string) SetRexxVar((struct RexxMsg*)my_rexxmsg,(c_in)"LINE.REST",(c_in)line_string,strlen(line_string));
             }
         }
         #elif __AROS__
-    	if(status_conductor)
+        if(status_conductor)
         {
             //strcpy(line_buffer,status_conductor->last_incoming_line_unparsed);
             strcpy(line_buffer,(char*)parameters[1]);
 
             for(count=0,status_conductor=status_root; status_conductor && status_conductor!=work_status; count++,status_conductor=status_conductor->next);
             sprintf(network_result,"%d",count);
-        	SetRexxVar((struct RexxMsg*)my_rexxmsg,(c_in)"line.network",(c_in)network_result,strlen(network_result));
+            SetRexxVar((struct RexxMsg*)my_rexxmsg,(c_in)"line.network",(c_in)network_result,strlen(network_result));
 
             //if(stricmp(status_conductor->last_incoming_line_unparsed,""))
             if(stricmp(line_buffer,""))
@@ -1690,7 +1690,7 @@ int sel23hookfunc(void) {
 
                 line_string=strtok(line_buffer," ");
                 if(line_string) { if(line_string[0]==':') { for(ULONG count=0; count<=strlen(line_string); count++) line_string[count]=line_string[count+1]; } }
-            	if(line_string) SetRexxVar((struct RexxMsg*)my_rexxmsg,(c_in)"line.prefix",(c_in)line_string,strlen(line_string));
+                if(line_string) SetRexxVar((struct RexxMsg*)my_rexxmsg,(c_in)"line.prefix",(c_in)line_string,strlen(line_string));
 
                 if(strchr((char*)line_string,'!'))
                 {
@@ -1701,7 +1701,7 @@ int sel23hookfunc(void) {
                         nick_hostname[count2]=line_string[count];
                     }
                     nick_hostname[count]='\0';
-                	SetRexxVar((struct RexxMsg*)my_rexxmsg,(c_in)"line.nick",(c_in)nick_hostname,strlen(nick_hostname));
+                    SetRexxVar((struct RexxMsg*)my_rexxmsg,(c_in)"line.nick",(c_in)nick_hostname,strlen(nick_hostname));
 
                     //copy the hostname from the prefix variable
                     for(count++,count2=0;count<(LONG)strlen((char*)line_string) && line_string[count]!='\0'; count2++,count++)
@@ -1709,31 +1709,31 @@ int sel23hookfunc(void) {
                         nick_hostname[count2]=line_string[count];
                     }
                     nick_hostname[count]='\0';
-                	SetRexxVar((struct RexxMsg*)my_rexxmsg,(c_in)"line.hostname",(c_in)nick_hostname,strlen(nick_hostname));
+                    SetRexxVar((struct RexxMsg*)my_rexxmsg,(c_in)"line.hostname",(c_in)nick_hostname,strlen(nick_hostname));
 
                 }
 
                 line_string=strtok(NULL," ");
-            	if(line_string) SetRexxVar((struct RexxMsg*)my_rexxmsg,(c_in)"line.command",(c_in)line_string,strlen(line_string));
+                if(line_string) SetRexxVar((struct RexxMsg*)my_rexxmsg,(c_in)"line.command",(c_in)line_string,strlen(line_string));
 
                 line_string=strtok(NULL," ");
                 if(line_string) { if(line_string[0]==':') { for(ULONG count=0; count<=strlen(line_string); count++) line_string[count]=line_string[count+1]; } }
-            	if(line_string) SetRexxVar((struct RexxMsg*)my_rexxmsg,(c_in)"line.dest",(c_in)line_string,strlen(line_string));
+                if(line_string) SetRexxVar((struct RexxMsg*)my_rexxmsg,(c_in)"line.dest",(c_in)line_string,strlen(line_string));
 
                 line_string=strtok(NULL,"");
                 if(line_string) { if(line_string[0]==':') { for(ULONG count=0; count<=strlen(line_string); count++) line_string[count]=line_string[count+1]; } }
-            	if(line_string) SetRexxVar((struct RexxMsg*)my_rexxmsg,(c_in)"line.rest",(c_in)line_string,strlen(line_string));
+                if(line_string) SetRexxVar((struct RexxMsg*)my_rexxmsg,(c_in)"line.rest",(c_in)line_string,strlen(line_string));
             }
         }
         #else
-    	if(status_conductor)
+        if(status_conductor)
         {
             //strcpy(line_buffer,status_conductor->last_incoming_line_unparsed);
             strcpy(line_buffer,(char*)parameters[1]);
 
             for(count=0,status_conductor=status_root; status_conductor && status_conductor!=work_status; count++,status_conductor=status_conductor->next);
             sprintf(network_result,"%d",count);
-        	SetRexxVar((struct Message*)my_rexxmsg,(a_in)"line.network",(a_in)network_result,strlen(network_result));
+            SetRexxVar((struct Message*)my_rexxmsg,(a_in)"line.network",(a_in)network_result,strlen(network_result));
 
             //if(stricmp(status_conductor->last_incoming_line_unparsed,""))
             if(stricmp(line_buffer,""))
@@ -1743,7 +1743,7 @@ int sel23hookfunc(void) {
 
                 line_string=strtok(line_buffer," ");
                 if(line_string) { if(line_string[0]==':') { for(ULONG count=0; count<=strlen(line_string); count++) line_string[count]=line_string[count+1]; } }
-            	if(line_string) SetRexxVar((struct Message*)my_rexxmsg,(a_in)"line.prefix",(a_in)line_string,strlen(line_string));
+                if(line_string) SetRexxVar((struct Message*)my_rexxmsg,(a_in)"line.prefix",(a_in)line_string,strlen(line_string));
 
                 if(strchr((char*)line_string,'!'))
                 {
@@ -1754,7 +1754,7 @@ int sel23hookfunc(void) {
                         nick_hostname[count2]=line_string[count];
                     }
                     nick_hostname[count]='\0';
-                	SetRexxVar((struct Message*)my_rexxmsg,(a_in)"line.nick",(a_in)nick_hostname,strlen(nick_hostname));
+                    SetRexxVar((struct Message*)my_rexxmsg,(a_in)"line.nick",(a_in)nick_hostname,strlen(nick_hostname));
 
                     //copy the hostname from the prefix variable
                     for(count++,count2=0;count<(LONG)strlen((char*)line_string) && line_string[count]!='\0'; count2++,count++)
@@ -1762,20 +1762,20 @@ int sel23hookfunc(void) {
                         nick_hostname[count2]=line_string[count];
                     }
                     nick_hostname[count]='\0';
-                	SetRexxVar((struct Message*)my_rexxmsg,(a_in)"line.hostname",(a_in)nick_hostname,strlen(nick_hostname));
+                    SetRexxVar((struct Message*)my_rexxmsg,(a_in)"line.hostname",(a_in)nick_hostname,strlen(nick_hostname));
 
                 }
 
                 line_string=strtok(NULL," ");
-            	if(line_string) SetRexxVar((struct Message*)my_rexxmsg,(a_in)"line.command",(a_in)line_string,strlen(line_string));
+                if(line_string) SetRexxVar((struct Message*)my_rexxmsg,(a_in)"line.command",(a_in)line_string,strlen(line_string));
 
                 line_string=strtok(NULL," ");
                 if(line_string) { if(line_string[0]==':') { for(ULONG count=0; count<=strlen(line_string); count++) line_string[count]=line_string[count+1]; } }
-            	if(line_string) SetRexxVar((struct Message*)my_rexxmsg,(a_in)"line.dest",(a_in)line_string,strlen(line_string));
+                if(line_string) SetRexxVar((struct Message*)my_rexxmsg,(a_in)"line.dest",(a_in)line_string,strlen(line_string));
 
                 line_string=strtok(NULL,"");
                 if(line_string) { if(line_string[0]==':') { for(ULONG count=0; count<=strlen(line_string); count++) line_string[count]=line_string[count+1]; } }
-            	if(line_string) SetRexxVar((struct Message*)my_rexxmsg,(a_in)"line.rest",(a_in)line_string,strlen(line_string));
+                if(line_string) SetRexxVar((struct Message*)my_rexxmsg,(a_in)"line.rest",(a_in)line_string,strlen(line_string));
             }
         }
         #endif
@@ -1983,8 +1983,8 @@ int sel25hookfunc(void) {
         sprintf(network_result,"%d",count);
 
         #ifdef __amigaos4__
-    	if(strcmp(status_conductor->groupname,"")) IRexxSys->SetRexxVarFromMsg((char*)"network.groupname",status_conductor->groupname,(struct RexxMsg*)my_rexxmsg);
-    	if(strcmp(status_conductor->servername,"")) IRexxSys->SetRexxVarFromMsg((char*)"network.servername",status_conductor->servername,(struct RexxMsg*)my_rexxmsg);
+        if(strcmp(status_conductor->groupname,"")) IRexxSys->SetRexxVarFromMsg((char*)"network.groupname",status_conductor->groupname,(struct RexxMsg*)my_rexxmsg);
+        if(strcmp(status_conductor->servername,"")) IRexxSys->SetRexxVarFromMsg((char*)"network.servername",status_conductor->servername,(struct RexxMsg*)my_rexxmsg);
         IRexxSys->SetRexxVarFromMsg((char*)"network.number",network_result,(struct RexxMsg*)my_rexxmsg);
         #elif __morphos__
         if(strcmp(status_conductor->groupname,"")) SetRexxVar((struct RexxMsg*)my_rexxmsg,(c_in)"NETWORK.GROUPNAME",(c_in)status_conductor->groupname,strlen(status_conductor->servername));
@@ -2131,11 +2131,11 @@ int disable_getline_hook(void)
 {
 /*struct MUI_Command
 {
-	char        *mc_Name;
-	char        *mc_Template;
-	LONG         mc_Parameters;
-	struct Hook *mc_Hook;
-	LONG         mc_Reserved[5];
+    char        *mc_Name;
+    char        *mc_Template;
+    LONG         mc_Parameters;
+    struct Hook *mc_Hook;
+    LONG         mc_Reserved[5];
 };
 */
 
@@ -2154,17 +2154,17 @@ int AREXX_Task(void)
 
     AREXX_started=TRUE;
 
-	//APTR AREXX_App = AllocVec(sizeof(Object*), MEMF_PUBLIC|MEMF_CLEAR);
+    //APTR AREXX_App = AllocVec(sizeof(Object*), MEMF_PUBLIC|MEMF_CLEAR);
     //printf("arexx 1\n");
 
     AREXX_App =(Object*) ApplicationObject,
-		//MUIA_Application_UsedClasses, classlist,
-		MUIA_Application_Author, "James Carroll",
-		MUIA_Application_Base, "WOOKIECHAT_AREXX",
-		MUIA_Application_Title, "WookieChat AREXX",
-		MUIA_Application_Version, VERSION_MUI,
-		MUIA_Application_Copyright, "James Carroll",
-		MUIA_Application_Description, "IRC Client",
+        //MUIA_Application_UsedClasses, classlist,
+        MUIA_Application_Author, "James Carroll",
+        MUIA_Application_Base, "WOOKIECHAT_AREXX",
+        MUIA_Application_Title, "WookieChat AREXX",
+        MUIA_Application_Version, VERSION_MUI,
+        MUIA_Application_Copyright, "James Carroll",
+        MUIA_Application_Description, "IRC Client",
         //MUIA_Application_DiskObject, dobj,
         MUIA_Application_UseRexx, TRUE,
         MUIA_Application_Commands, &commands,
@@ -2203,16 +2203,16 @@ int AREXX_Task(void)
             LONG port_signal = 1L << arexx_process_port->mp_SigBit;
             arexx_process_port->mp_Flags=PA_SIGNAL;
 
-        	while(running)
-        	{
+            while(running)
+            {
 
             ULONG sigs = 0;
 
-     	    while(DoMethod((Object*)AREXX_App,MUIM_Application_NewInput,&sigs) != (ULONG)MUIV_Application_ReturnID_Quit)
-     	    {
-      	        if(sigs)
-      	        {
-       	            sigs = Wait(sigs | SIGBREAKF_CTRL_C /*| port_signal*/ | quit_signal);
+             while(DoMethod((Object*)AREXX_App,MUIM_Application_NewInput,&sigs) != (ULONG)MUIV_Application_ReturnID_Quit)
+             {
+                  if(sigs)
+                  {
+                       sigs = Wait(sigs | SIGBREAKF_CTRL_C /*| port_signal*/ | quit_signal);
 
                     if(sigs & quit_signal)
                     {
@@ -2244,8 +2244,8 @@ int AREXX_Task(void)
 
                     //Delay(10);
 
-      	        }
-         	    }
+                  }
+                 }
                 running=FALSE;
 
             }

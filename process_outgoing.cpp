@@ -15,149 +15,149 @@
 char *pch2;
 char new_filtered_string1[550];
 #ifndef __AROS__
-                STRPTR   charset_convert_1;
-                STRPTR   charset_convert_2;
+STRPTR charset_convert_1;
+STRPTR charset_convert_2;
 
-                //UTF8   *charset_convert_1;
-                //UTF8   *charset_convert_2;
+//UTF8   *charset_convert_1;
+//UTF8   *charset_convert_2;
 #endif
 
 void play_external_sound_replayer(char *string1)
 {
 
-    if(muted_sound) return;
+    if (muted_sound)
+        return;
 
-    if(my_settings.samples_path[strlen(my_settings.samples_path)-1]==':' ||
-        my_settings.samples_path[strlen(my_settings.samples_path)-1]=='/')
-        sprintf(string11,"%s%s",my_settings.samples_path,string1);
+    if (my_settings.samples_path[strlen(my_settings.samples_path) - 1] == ':'
+            || my_settings.samples_path[strlen(my_settings.samples_path) - 1] == '/')
+        sprintf(string11, "%s%s", my_settings.samples_path, string1);
     else
-        sprintf(string11,"%s/%s",my_settings.samples_path,string1);
+        sprintf(string11, "%s/%s", my_settings.samples_path, string1);
 
-    if(my_settings.use_external_sound_replayer)
+    if (my_settings.use_external_sound_replayer)
     {
 
-        sprintf(file_name,"run >nil: %s %s",my_settings.external_sound_replayer,string11);
+        sprintf(file_name, "run >nil: %s %s", my_settings.external_sound_replayer, string11);
 
-        #ifdef __amigaos4__
+#ifdef __amigaos4__
         SystemTags(file_name,TAG_DONE);
-        #else
-        Execute(file_name,0,0);
-        #endif
-
+#else
+        Execute(file_name, 0, 0);
+#endif
 
     }
     else
     {
-        if(o) DisposeDTObject(o);
-        if (NULL != (o = NewDTObject(string11,DTA_GroupID,GID_SOUND,TAG_END)))
-        	DoMethod (o,DTM_TRIGGER,NULL,STM_PLAY,NULL);
+        if (o)
+            DisposeDTObject(o);
+        if (NULL != (o = NewDTObject(string11, DTA_GroupID, GID_SOUND, TAG_END)))
+            DoMethod(o, DTM_TRIGGER, NULL, STM_PLAY, NULL);
     }
 
 }
 
-
-
 void censor_swear_words(char *string1)
 {
 
-    strcpy(new_filtered_string1,string1);
+    strcpy(new_filtered_string1, string1);
 
-    for(unsigned int count=0; count<strlen(string1); count++) string1[count]=ToLower(string1[count]);
+    for (unsigned int count = 0; count < strlen(string1); count++)
+        string1[count] = ToLower(string1[count]);
 
-    pch2=strstr(string1, "shit");
+    pch2 = strstr(string1, "shit");
 
     int where_to_put_stars[500];
-    int where_to_put_stars_count=0;
+    int where_to_put_stars_count = 0;
 
-    while(pch2)
+    while (pch2)
     {
         //where_to_put_stars[where_to_put_stars_count++]=pch2-string1+1;
-        where_to_put_stars[where_to_put_stars_count++]=pch2-string1+2;
+        where_to_put_stars[where_to_put_stars_count++] = pch2 - string1 + 2;
 
         //string1[pch2-string1+1]='*';
-        string1[pch2-string1+2]='*';
+        string1[pch2 - string1 + 2] = '*';
 
-        pch2=strstr(pch2, "shit");
+        pch2 = strstr(pch2, "shit");
 
     }
 
-    pch2=strstr(string1, "fuck");
+    pch2 = strstr(string1, "fuck");
 
-    while(pch2)
+    while (pch2)
     {
-        where_to_put_stars[where_to_put_stars_count++]=pch2-string1+1;
+        where_to_put_stars[where_to_put_stars_count++] = pch2 - string1 + 1;
         //where_to_put_stars[where_to_put_stars_count++]=pch2-string1+2;
 
-        string1[pch2-string1+1]='*';
+        string1[pch2 - string1 + 1] = '*';
         //string1[pch2-string1+2]='*';
 
-        pch2=strstr(pch2, "fuck");
+        pch2 = strstr(pch2, "fuck");
 
     }
 
-    pch2=strstr(string1, "cunt");
+    pch2 = strstr(string1, "cunt");
 
-    while(pch2)
+    while (pch2)
     {
-        where_to_put_stars[where_to_put_stars_count++]=pch2-string1+1;
+        where_to_put_stars[where_to_put_stars_count++] = pch2 - string1 + 1;
         //where_to_put_stars[where_to_put_stars_count++]=pch2-string1+2;
 
-        string1[pch2-string1+1]='*';
+        string1[pch2 - string1 + 1] = '*';
         //string1[pch2-string1+2]='*';
 
-        pch2=strstr(pch2, "cunt");
+        pch2 = strstr(pch2, "cunt");
 
     }
 
-    pch2=strstr(string1, "wank");
+    pch2 = strstr(string1, "wank");
 
-    while(pch2)
+    while (pch2)
     {
-        where_to_put_stars[where_to_put_stars_count++]=pch2-string1+1;
+        where_to_put_stars[where_to_put_stars_count++] = pch2 - string1 + 1;
         //where_to_put_stars[where_to_put_stars_count++]=pch2-string1+2;
 
-        string1[pch2-string1+1]='*';
+        string1[pch2 - string1 + 1] = '*';
         //string1[pch2-string1+4]='*';
 
-        pch2=strstr(pch2, "wanker");
+        pch2 = strstr(pch2, "wanker");
 
     }
 
-    pch2=strstr(string1, "dick");
+    pch2 = strstr(string1, "dick");
 
-    while(pch2)
+    while (pch2)
     {
-        where_to_put_stars[where_to_put_stars_count++]=pch2-string1+1;
+        where_to_put_stars[where_to_put_stars_count++] = pch2 - string1 + 1;
 
-        string1[pch2-string1+1]='*';
+        string1[pch2 - string1 + 1] = '*';
 
-        pch2=strstr(pch2, "dick");
+        pch2 = strstr(pch2, "dick");
 
     }
 
-    pch2=strstr(string1, "bastard");
+    pch2 = strstr(string1, "bastard");
 
-    while(pch2)
+    while (pch2)
     {
-        where_to_put_stars[where_to_put_stars_count++]=pch2-string1+1;
+        where_to_put_stars[where_to_put_stars_count++] = pch2 - string1 + 1;
         //where_to_put_stars[where_to_put_stars_count++]=pch2-string1+2;
         //where_to_put_stars[where_to_put_stars_count++]=pch2-string1+4;
 
-        string1[pch2-string1+1]='*';
+        string1[pch2 - string1 + 1] = '*';
         //string1[pch2-string1+2]='*';
         //string1[pch2-string1+4]='*';
 
-        pch2=strstr(pch2, "bastard");
+        pch2 = strstr(pch2, "bastard");
 
     }
 
-    for(int count=0; count<where_to_put_stars_count; count++)
+    for (int count = 0; count < where_to_put_stars_count; count++)
     {
-       new_filtered_string1[where_to_put_stars[count]]='*';
+        new_filtered_string1[where_to_put_stars[count]] = '*';
 
     }
 
-    strcpy(string1,new_filtered_string1);
+    strcpy(string1, new_filtered_string1);
 
 }
 
@@ -165,39 +165,38 @@ void process_outgoing(char *string123, int usestringgadget)
 {
 
     //printf("outgoing:%s\n",string123);
-    colour=8;
+    colour = 8;
 
-    if(usestringgadget)
+    if (usestringgadget)
     {
-        status_conductor=status_current;
+        status_conductor = status_current;
 
-        status_conductor->current_query->string_conductor=status_conductor->current_query->string_root;
+        status_conductor->current_query->string_conductor = status_conductor->current_query->string_root;
 
-        while(status_conductor->current_query->string_conductor->next)
+        while (status_conductor->current_query->string_conductor->next)
         {
 
             status_conductor->current_query->string_conductor = status_conductor->current_query->string_conductor->next;
 
         }
 
-        if(strcmp(string123,""))
+        if (strcmp(string123, ""))
         {
 
-            strcpy(status_conductor->current_query->string_conductor->buffer_history,string123);
+            strcpy(status_conductor->current_query->string_conductor->buffer_history, string123);
 
-            work_history=status_conductor->current_query->string_conductor;
+            work_history = status_conductor->current_query->string_conductor;
             status_conductor->current_query->string_conductor->next = new history;
-            status_conductor->current_query->string_conductor=status_conductor->current_query->string_conductor->next;
-            status_conductor->current_query->string_conductor->previous=work_history;
+            status_conductor->current_query->string_conductor = status_conductor->current_query->string_conductor->next;
+            status_conductor->current_query->string_conductor->previous = work_history;
 
-            status_conductor->current_query->string_conductor->next=NULL;
-            status_conductor->current_query->string_conductor->buffer_history[0]='\0';
-
+            status_conductor->current_query->string_conductor->next = NULL;
+            status_conductor->current_query->string_conductor->buffer_history[0] = '\0';
 
         }
 
-        status_conductor=status_current;
-        status_conductor->conductor=status_current->current_query;
+        status_conductor = status_current;
+        status_conductor->conductor = status_current->current_query;
     }
 
     timestamp_2_string();
@@ -207,82 +206,85 @@ void process_outgoing(char *string123, int usestringgadget)
     char *string2; //=new char[1000];
     char *string3; //=new char[1000];
 
-    if(string123[0]==' ')
-        pch=strtok(string123,"\r\n");
+    if (string123[0] == ' ')
+        pch = strtok(string123, "\r\n");
     else
-        pch=strtok(string123," \r\n");
-    if(!(pch)) { pch=new char[1]; strcpy(pch,""); }
-
-
-    if( !stricmp((p_in)pch,(p_in)"/whois") )
+        pch = strtok(string123, " \r\n");
+    if (!(pch))
     {
-        string1=strtok(NULL, "");
+        pch = new char[1];
+        strcpy(pch, "");
+    }
 
-        if(string1) SWhoIs(string1);
+    if (!stricmp((p_in) pch, (p_in) "/whois"))
+    {
+        string1 = strtok(NULL, "");
+
+        if (string1)
+            SWhoIs(string1);
         else
         {
-            sprintf(buffer3,"%s%s%s%s /whois %s",timestamp,GetCatalogStr(catalog,217,"["),GetCatalogStr(catalog,149,"Syntax"),GetCatalogStr(catalog,218,"]"),GetCatalogStr(catalog,242,"<nick>"));
+            sprintf(buffer3, "%s%s%s%s /whois %s", timestamp, GetCatalogStr(catalog, 217, "["),
+                    GetCatalogStr(catalog, 149, "Syntax"), GetCatalogStr(catalog, 218, "]"),
+                    GetCatalogStr(catalog, 242, "<nick>"));
 
-            add_text_to_conductor_list(buffer3,9, ACTIVITY);
+            add_text_to_conductor_list(buffer3, 9, ACTIVITY);
         }
 
     }
-    else if( !stricmp((p_in)pch,(p_in)"/activate") )
+    else if (!stricmp((p_in) pch, (p_in) "/activate"))
     {
 
-
-        setmacro((Object*)WookieChat->WI_main,MUIA_Window_Open,TRUE);
-        setmacro((Object*)WookieChat->WI_main,MUIA_Window_Activate,TRUE);
-    	DoMethod((Object*)WookieChat->WI_main,MUIM_Window_ScreenToFront);
+        setmacro((Object*) WookieChat->WI_main, MUIA_Window_Open, TRUE);
+        setmacro((Object*) WookieChat->WI_main, MUIA_Window_Activate, TRUE);
+        DoMethod((Object*) WookieChat->WI_main, MUIM_Window_ScreenToFront);
 
     }
-    else if( !stricmp((p_in)pch,(p_in)"/catalog") )
+    else if (!stricmp((p_in) pch, (p_in) "/catalog"))
     {
-        string1=strtok(NULL, " ");
+        string1 = strtok(NULL, " ");
 
-        if(string1)
+        if (string1)
         {
 
             CloseCatalog(catalog);
 
-            printf("loading catalog for language %s\n",string1);
+            printf("loading catalog for language %s\n", string1);
 
-            catalog = OpenCatalog(NULL,
-                    "WookieChat.catalog",
-                    OC_Language, string1,
-                    TAG_DONE);
+            catalog = OpenCatalog(NULL, "WookieChat.catalog", OC_Language, string1, TAG_DONE);
 
-            if(!catalog)
+            if (!catalog)
             {
                 printf("unable to use default language\n");
 
                 catalog = OpenCatalog(NULL, "WookieChat.catalog", OC_Language, "english", TAG_DONE);
 
-                if(!catalog) printf("unable to load english catalog, using built in strings\n");
+                if (!catalog)
+                    printf("unable to load english catalog, using built in strings\n");
 
             }
         }
 
     }
-    else if( !stricmp((p_in)pch,(p_in)"/invite") )
+    else if (!stricmp((p_in) pch, (p_in) "/invite"))
     {
-        string1=strtok(NULL," "); //nick to invite
-        string2=strtok(NULL," "); //channel to invite to
+        string1 = strtok(NULL, " "); //nick to invite
+        string2 = strtok(NULL, " "); //channel to invite to
 
         timestamp_2_string();
 
-        if(string1 && string2)
+        if (string1 && string2)
         {
-            sprintf(buffer3,"INVITE %s :%s\r\n",string1,string2);
+            sprintf(buffer3, "INVITE %s :%s\r\n", string1, string2);
             send_text(buffer3);
 
             //sprintf(buffer3,"* Inviting %s to %s",string1,string2);
             //add_text_to_current_list(buffer3, 15, ACTIVITY);
 
         }
-        else if(string1)
+        else if (string1)
         {
-            sprintf(buffer3,"INVITE %s :%s\r\n",string1,status_conductor->conductor->name); //current_query->name);
+            sprintf(buffer3, "INVITE %s :%s\r\n", string1, status_conductor->conductor->name); //current_query->name);
             send_text(buffer3);
             //sprintf(buffer3,"* Inviting %s to %s",string1,current_query->name);
             //add_text_to_current_list(buffer3, 15, ACTIVITY);
@@ -290,39 +292,42 @@ void process_outgoing(char *string123, int usestringgadget)
         }
         else
         {
-            sprintf(buffer3,"%s%s%s%s /invite %s %s",timestamp,GetCatalogStr(catalog,217,"["),GetCatalogStr(catalog,149,"Syntax"),GetCatalogStr(catalog,218,"]"),GetCatalogStr(catalog,242,"<nick>"),GetCatalogStr(catalog,241,"<channel_name>"));
-            add_text_to_conductor_list(buffer3,9, ACTIVITY);
+            sprintf(buffer3, "%s%s%s%s /invite %s %s", timestamp, GetCatalogStr(catalog, 217, "["),
+                    GetCatalogStr(catalog, 149, "Syntax"), GetCatalogStr(catalog, 218, "]"),
+                    GetCatalogStr(catalog, 242, "<nick>"), GetCatalogStr(catalog, 241, "<channel_name>"));
+            add_text_to_conductor_list(buffer3, 9, ACTIVITY);
         }
 
     }
-    else if( !stricmp((p_in)pch,(p_in)"/dcc") )
+    else if (!stricmp((p_in) pch, (p_in) "/dcc"))
     {
-        string1=strtok(NULL," "); //send or chat?
-        string2=strtok(NULL," "); //nick
-        string3=strtok(NULL," "); //argument, filename or "chat"
-        if(string1)
+        string1 = strtok(NULL, " "); //send or chat?
+        string2 = strtok(NULL, " "); //nick
+        string3 = strtok(NULL, " "); //argument, filename or "chat"
+        if (string1)
         {
-            if(!stricmp((p_in)string1,"send"))
+            if (!stricmp((p_in) string1, "send"))
             {
 
-                if(string3) setmacro((Object*)WookieChat->PA_dcc_send_file,MUIA_String_Contents,string3);
+                if (string3)
+                    setmacro((Object*) WookieChat->PA_dcc_send_file, MUIA_String_Contents, string3);
 
-                if(string2) setmacro((Object*)WookieChat->STR_dcc_send_nick,MUIA_String_Contents,string2);
+                if (string2)
+                    setmacro((Object*) WookieChat->STR_dcc_send_nick, MUIA_String_Contents, string2);
 
-                if(string2 && string3)
+                if (string2 && string3)
                 {
                     char work1[5];
-                    strcpy(work1,"SEND");
+                    strcpy(work1, "SEND");
                     offer_dcc(status_conductor->networkname, work1, string2, string3, 1025);
                 }
                 else
-                setmacro((Object*)WookieChat->WI_dcc_send,MUIA_Window_Open, TRUE);
-
+                    setmacro((Object*) WookieChat->WI_dcc_send, MUIA_Window_Open, TRUE);
 
             }
-            if(!stricmp((p_in)string1,"chat"))
+            if (!stricmp((p_in) string1, "chat"))
             {
-                if(string2)
+                if (string2)
                 {
                     initiate_outgoing_dcc_chat(string2);
 
@@ -332,223 +337,253 @@ void process_outgoing(char *string123, int usestringgadget)
         }
         else
         {
-            sprintf(buffer3,"%s%s%s%s /dcc send %s %s",timestamp,GetCatalogStr(catalog,217,"["),GetCatalogStr(catalog,149,"Syntax"),GetCatalogStr(catalog,218,"]"),GetCatalogStr(catalog,242,"<nick>"),GetCatalogStr(catalog,255,"<filename>"));
-            add_text_to_conductor_list(buffer3,9, ACTIVITY);
+            sprintf(buffer3, "%s%s%s%s /dcc send %s %s", timestamp, GetCatalogStr(catalog, 217, "["),
+                    GetCatalogStr(catalog, 149, "Syntax"), GetCatalogStr(catalog, 218, "]"),
+                    GetCatalogStr(catalog, 242, "<nick>"), GetCatalogStr(catalog, 255, "<filename>"));
+            add_text_to_conductor_list(buffer3, 9, ACTIVITY);
 
-            sprintf(buffer3,"%s%s%s%s /dcc chat %s",timestamp,GetCatalogStr(catalog,217,"["),GetCatalogStr(catalog,149,"Syntax"),GetCatalogStr(catalog,218,"]"),GetCatalogStr(catalog,242,"<nick>"));
-            add_text_to_conductor_list(buffer3,9, ACTIVITY);
+            sprintf(buffer3, "%s%s%s%s /dcc chat %s", timestamp, GetCatalogStr(catalog, 217, "["),
+                    GetCatalogStr(catalog, 149, "Syntax"), GetCatalogStr(catalog, 218, "]"),
+                    GetCatalogStr(catalog, 242, "<nick>"));
+            add_text_to_conductor_list(buffer3, 9, ACTIVITY);
 
         }
 
     }
-    else if( !stricmp((p_in)pch,(p_in)"/clip") || !stricmp((p_in)pch,(p_in)"/clipboard") )
+    else if (!stricmp((p_in) pch, (p_in) "/clip") || !stricmp((p_in) pch, (p_in) "/clipboard"))
     {
 
-        if(my_settings.which_clipboard_style==NORMAL)
+        if (my_settings.which_clipboard_style == NORMAL)
         {
-            my_settings.which_clipboard_style=COLUMNS;
-            sprintf(buffer3,"%s%s%s%s Changing style to: Column marking",timestamp,GetCatalogStr(catalog,217,"["),GetCatalogStr(catalog,800,"Clipboard"),GetCatalogStr(catalog,218,"]"));
-            add_text_to_current_list(buffer3,9, ACTIVITY);
-            setmacro((Object*)MN_Clipboard,MUIA_Menuitem_Checked,TRUE);
+            my_settings.which_clipboard_style = COLUMNS;
+            sprintf(buffer3, "%s%s%s%s Changing style to: Column marking", timestamp, GetCatalogStr(catalog, 217, "["),
+                    GetCatalogStr(catalog, 800, "Clipboard"), GetCatalogStr(catalog, 218, "]"));
+            add_text_to_current_list(buffer3, 9, ACTIVITY);
+            setmacro((Object*) MN_Clipboard, MUIA_Menuitem_Checked, TRUE);
         }
         else
         {
-            my_settings.which_clipboard_style=NORMAL;
-            sprintf(buffer3,"%s%s%s%s Changing style to: Normal",timestamp,GetCatalogStr(catalog,217,"["),GetCatalogStr(catalog,800,"Clipboard"),GetCatalogStr(catalog,218,"]"));
-            add_text_to_current_list(buffer3,9, ACTIVITY);
-            setmacro((Object*)MN_Clipboard,MUIA_Menuitem_Checked,FALSE);
+            my_settings.which_clipboard_style = NORMAL;
+            sprintf(buffer3, "%s%s%s%s Changing style to: Normal", timestamp, GetCatalogStr(catalog, 217, "["),
+                    GetCatalogStr(catalog, 800, "Clipboard"), GetCatalogStr(catalog, 218, "]"));
+            add_text_to_current_list(buffer3, 9, ACTIVITY);
+            setmacro((Object*) MN_Clipboard, MUIA_Menuitem_Checked, FALSE);
 
         }
     }
-    else if( !stricmp((p_in)pch,(p_in)"/sound") )
+    else if (!stricmp((p_in) pch, (p_in) "/sound"))
     {
 
-        string1=strtok(NULL," ");
-        string2=strtok(NULL,"");
+        string1 = strtok(NULL, " ");
+        string2 = strtok(NULL, "");
 
-        if(string1)
+        if (string1)
         {
 
-                send_text((char*)"PRIVMSG ");
+            send_text((char*) "PRIVMSG ");
 
-                if(string2) send_text(string2);
-                else send_text(status_conductor->conductor->name);
+            if (string2)
+                send_text(string2);
+            else
+                send_text(status_conductor->conductor->name);
 
-                send_text((char*)" :\001SOUND ");
-                send_text(string1);
-                send_text((char*)"\001\r\n");
+            send_text((char*) " :\001SOUND ");
+            send_text(string1);
+            send_text((char*) "\001\r\n");
 
-                if(string2)
-                    sprintf(buffer3,"%s%sSound%s %s %s to %s", timestamp,GetCatalogStr(catalog,217,"["),GetCatalogStr(catalog,218,"]"),GetCatalogStr(catalog,212,"playing"), string1, string2);
-                else
-                    sprintf(buffer3,"%s%sSound%s %s %s", timestamp,GetCatalogStr(catalog,217,"["),GetCatalogStr(catalog,218,"]"),GetCatalogStr(catalog,212,"playing"),string1);
+            if (string2)
+                sprintf(buffer3, "%s%sSound%s %s %s to %s", timestamp, GetCatalogStr(catalog, 217, "["),
+                        GetCatalogStr(catalog, 218, "]"), GetCatalogStr(catalog, 212, "playing"), string1, string2);
+            else
+                sprintf(buffer3, "%s%sSound%s %s %s", timestamp, GetCatalogStr(catalog, 217, "["),
+                        GetCatalogStr(catalog, 218, "]"), GetCatalogStr(catalog, 212, "playing"), string1);
 
-                add_text_to_conductor_list(buffer3,6, ACTIVITY);
+            add_text_to_conductor_list(buffer3, 6, ACTIVITY);
 
-                play_external_sound_replayer(string1);
+            play_external_sound_replayer(string1);
 
         }
         else
         {
-            sprintf(buffer3,"%s%s%s%s /sound %s %s",timestamp,GetCatalogStr(catalog,217,"["),GetCatalogStr(catalog,149,"Syntax"),GetCatalogStr(catalog,218,"]"),GetCatalogStr(catalog,244,"<sound_sample_name>"),GetCatalogStr(catalog,242,"<nick>"));
+            sprintf(buffer3, "%s%s%s%s /sound %s %s", timestamp, GetCatalogStr(catalog, 217, "["),
+                    GetCatalogStr(catalog, 149, "Syntax"), GetCatalogStr(catalog, 218, "]"),
+                    GetCatalogStr(catalog, 244, "<sound_sample_name>"), GetCatalogStr(catalog, 242, "<nick>"));
 
-            add_text_to_conductor_list(buffer3,9, ACTIVITY);
+            add_text_to_conductor_list(buffer3, 9, ACTIVITY);
         }
 
     }
-    else if( !stricmp((p_in)pch,(p_in)"/ctcp") )
+    else if (!stricmp((p_in) pch, (p_in) "/ctcp"))
     {
-        string1=strtok(NULL," ");
-        string2=strtok(NULL,"");
+        string1 = strtok(NULL, " ");
+        string2 = strtok(NULL, "");
 
-        if(string1 && string2)
+        if (string1 && string2)
         {
 
-            if(!stricmp(string2,"PING") && string1) SPing(string1);
+            if (!stricmp(string2, "PING") && string1)
+                SPing(string1);
             else
             {
-                send_text((char*)"PRIVMSG ");
+                send_text((char*) "PRIVMSG ");
                 send_text(string1);
-                send_text((char*)" :\001");
-                for(unsigned int a=0; a<strlen(string2)+1; a++) string2[a]=ToUpper(string2[a]);
+                send_text((char*) " :\001");
+                for (unsigned int a = 0; a < strlen(string2) + 1; a++)
+                    string2[a] = ToUpper(string2[a]);
                 send_text(string2);
-                send_text((char*)"\001\r\n");
+                send_text((char*) "\001\r\n");
 
-                sprintf(buffer3,"%s%sCTCP%s %s %s %s %s", timestamp,GetCatalogStr(catalog,217,"["), GetCatalogStr(catalog,218,"]"),GetCatalogStr(catalog,213,"Sending CTCP"),string2, GetCatalogStr(catalog,205,"to"), string1);
-                add_text_to_conductor_list(buffer3,6, ACTIVITY);
+                sprintf(buffer3, "%s%sCTCP%s %s %s %s %s", timestamp, GetCatalogStr(catalog, 217, "["),
+                        GetCatalogStr(catalog, 218, "]"), GetCatalogStr(catalog, 213, "Sending CTCP"), string2,
+                        GetCatalogStr(catalog, 205, "to"), string1);
+                add_text_to_conductor_list(buffer3, 6, ACTIVITY);
 
             }
 
         }
         else
         {
-            sprintf(buffer3,"%s%s%s%s /ctcp %s %s",timestamp,GetCatalogStr(catalog,217,"["),GetCatalogStr(catalog,149,"Syntax"),GetCatalogStr(catalog,218,"]"),GetCatalogStr(catalog,242,"<nick>"),GetCatalogStr(catalog,243,"<command>"));
+            sprintf(buffer3, "%s%s%s%s /ctcp %s %s", timestamp, GetCatalogStr(catalog, 217, "["),
+                    GetCatalogStr(catalog, 149, "Syntax"), GetCatalogStr(catalog, 218, "]"),
+                    GetCatalogStr(catalog, 242, "<nick>"), GetCatalogStr(catalog, 243, "<command>"));
 
-            add_text_to_conductor_list(buffer3,9, ACTIVITY);
+            add_text_to_conductor_list(buffer3, 9, ACTIVITY);
         }
     }
-    else if(!stricmp((p_in)pch,(p_in)"/clearchans") )
+    else if (!stricmp((p_in) pch, (p_in) "/clearchans"))
     {
 
-        for(status_conductor=status_root; status_conductor; status_conductor=status_conductor->next)
+        for (status_conductor = status_root; status_conductor; status_conductor = status_conductor->next)
         {
-            for(status_conductor->conductor=status_conductor->root; status_conductor->conductor; status_conductor->conductor=status_conductor->conductor->next)
+            for (status_conductor->conductor = status_conductor->root; status_conductor->conductor;
+                    status_conductor->conductor = status_conductor->conductor->next)
             {
-                if(!status_conductor->conductor->removed)
+                if (!status_conductor->conductor->removed)
                 {
-                    if(status_conductor->conductor->LV_channel && strcspn(status_conductor->conductor->name,status_conductor->chantypes)==0)
+                    if (status_conductor->conductor->LV_channel
+                            && strcspn(status_conductor->conductor->name, status_conductor->chantypes) == 0)
                     {
-                        status_conductor->conductor->entries_count=0;
+                        status_conductor->conductor->entries_count = 0;
 
-                        DoMethod((Object*)status_conductor->conductor->LV_channel,MUIM_NList_Clear);
+                        DoMethod((Object*) status_conductor->conductor->LV_channel, MUIM_NList_Clear);
                     }
                 }
             }
 
         }
 
-        status_conductor=status_current;
-        status_conductor->conductor=status_conductor->current_query;
+        status_conductor = status_current;
+        status_conductor->conductor = status_conductor->current_query;
     }
-    else if( !stricmp((p_in)pch,(p_in)"/flush") || !stricmp((p_in)pch,(p_in)"/clear") )
+    else if (!stricmp((p_in) pch, (p_in) "/flush") || !stricmp((p_in) pch, (p_in) "/clear"))
     {
-        current_query->entries_count=0;
+        current_query->entries_count = 0;
 
-        DoMethod((Object*)current_query->LV_channel,MUIM_NList_Clear);
+        DoMethod((Object*) current_query->LV_channel, MUIM_NList_Clear);
     }
-    else if( !stricmp((p_in)pch,(p_in)"/op") )
+    else if (!stricmp((p_in) pch, (p_in) "/op"))
     {
 
-        string1=strtok(NULL, ", ");
+        string1 = strtok(NULL, ", ");
 
-        if(string1)
+        if (string1)
         {
             //sprintf(sendstuff,"mode %s +o %s\r\n",current_query->name, string1);
-            sprintf(sendstuff,"mode %s +o %s\r\n",status_conductor->conductor->name, string1);
+            sprintf(sendstuff, "mode %s +o %s\r\n", status_conductor->conductor->name, string1);
             send_text(sendstuff);
         }
         else
         {
-            sprintf(buffer3,"%s%s%s%s /op %s",timestamp,GetCatalogStr(catalog,217,"["),GetCatalogStr(catalog,149,"Syntax"),GetCatalogStr(catalog,218,"]"),GetCatalogStr(catalog,242,"<nick>"));
-            add_text_to_conductor_list(buffer3,9, ACTIVITY);
-         }
+            sprintf(buffer3, "%s%s%s%s /op %s", timestamp, GetCatalogStr(catalog, 217, "["),
+                    GetCatalogStr(catalog, 149, "Syntax"), GetCatalogStr(catalog, 218, "]"),
+                    GetCatalogStr(catalog, 242, "<nick>"));
+            add_text_to_conductor_list(buffer3, 9, ACTIVITY);
+        }
     }
-    else if( !stricmp((p_in)pch,(p_in)"/deop") )
+    else if (!stricmp((p_in) pch, (p_in) "/deop"))
     {
 
-        string1=strtok(NULL, ", ");
+        string1 = strtok(NULL, ", ");
 
-        if(string1)
+        if (string1)
         {
-            sprintf(sendstuff,"mode %s -o %s\r\n",status_conductor->conductor->name, string1);
+            sprintf(sendstuff, "mode %s -o %s\r\n", status_conductor->conductor->name, string1);
             send_text(sendstuff);
         }
         else
         {
-            sprintf(buffer3,"%s%s%s%s /deop %s",timestamp,GetCatalogStr(catalog,217,"["),GetCatalogStr(catalog,149,"Syntax"),GetCatalogStr(catalog,218,"]"),GetCatalogStr(catalog,242,"<nick>"));
-            add_text_to_conductor_list(buffer3,9, ACTIVITY);
+            sprintf(buffer3, "%s%s%s%s /deop %s", timestamp, GetCatalogStr(catalog, 217, "["),
+                    GetCatalogStr(catalog, 149, "Syntax"), GetCatalogStr(catalog, 218, "]"),
+                    GetCatalogStr(catalog, 242, "<nick>"));
+            add_text_to_conductor_list(buffer3, 9, ACTIVITY);
         }
     }
-    else if( !stricmp((p_in)pch,(p_in)"/ban") )
+    else if (!stricmp((p_in) pch, (p_in) "/ban"))
     {
 
-        string1=strtok(NULL, " ");
-        if(string1)
+        string1 = strtok(NULL, " ");
+        if (string1)
         {
 
-            sprintf(sendstuff,"mode %s +b %s\r\n",status_conductor->conductor->name, string1);
+            sprintf(sendstuff, "mode %s +b %s\r\n", status_conductor->conductor->name, string1);
             send_text(sendstuff);
 
         }
         else
         {
-            sprintf(buffer3,"%s%s%s%s /ban %s",timestamp,GetCatalogStr(catalog,217,"["),GetCatalogStr(catalog,149,"Syntax"),GetCatalogStr(catalog,218,"]"),GetCatalogStr(catalog,245,"<ban_mask>"));
-            add_text_to_conductor_list(buffer3,9, ACTIVITY);
+            sprintf(buffer3, "%s%s%s%s /ban %s", timestamp, GetCatalogStr(catalog, 217, "["),
+                    GetCatalogStr(catalog, 149, "Syntax"), GetCatalogStr(catalog, 218, "]"),
+                    GetCatalogStr(catalog, 245, "<ban_mask>"));
+            add_text_to_conductor_list(buffer3, 9, ACTIVITY);
         }
     }
-    else if( !stricmp((p_in)pch,(p_in)"/unban") )
+    else if (!stricmp((p_in) pch, (p_in) "/unban"))
     {
 
-        string1=strtok(NULL, " ");
-        if(string1)
+        string1 = strtok(NULL, " ");
+        if (string1)
         {
 
-            sprintf(sendstuff,"mode %s -b %s\r\n",status_conductor->conductor->name, string1);
+            sprintf(sendstuff, "mode %s -b %s\r\n", status_conductor->conductor->name, string1);
             send_text(sendstuff);
-
 
         }
         else
         {
-            sprintf(buffer3,"%s%s%s%s /unban %s",timestamp,GetCatalogStr(catalog,217,"["),GetCatalogStr(catalog,149,"Syntax"),GetCatalogStr(catalog,218,"]"),GetCatalogStr(catalog,245,"<ban_mask>"));
+            sprintf(buffer3, "%s%s%s%s /unban %s", timestamp, GetCatalogStr(catalog, 217, "["),
+                    GetCatalogStr(catalog, 149, "Syntax"), GetCatalogStr(catalog, 218, "]"),
+                    GetCatalogStr(catalog, 245, "<ban_mask>"));
 
-            add_text_to_conductor_list(buffer3,9, ACTIVITY);
+            add_text_to_conductor_list(buffer3, 9, ACTIVITY);
         }
     }
-    else if( !stricmp((p_in)pch,(p_in)"/kick") )
+    else if (!stricmp((p_in) pch, (p_in) "/kick"))
     {
 
-        string1=strtok(NULL, " ");
-        string2=strtok(NULL, "");
+        string1 = strtok(NULL, " ");
+        string2 = strtok(NULL, "");
         //if(!(string2)) { string2=new char[500]; strcpy(string2,my_settings.default_kickmsg); }
 
-        if(string1)
+        if (string1)
         {
-            if(string2)
-                sprintf(sendstuff,"kick %s %s :%s\r\n",status_current->current_query->name, string1, string2);
+            if (string2)
+                sprintf(sendstuff, "kick %s %s :%s\r\n", status_current->current_query->name, string1, string2);
             else
-                sprintf(sendstuff,"kick %s %s :%s\r\n",status_current->current_query->name, string1, my_settings.default_kickmsg);
+                sprintf(sendstuff, "kick %s %s :%s\r\n", status_current->current_query->name, string1,
+                        my_settings.default_kickmsg);
 
             send_text(sendstuff);
         }
         else
         {
-            sprintf(buffer3,"%s%s%s%s /kick %s %s",timestamp,GetCatalogStr(catalog,217,"["),GetCatalogStr(catalog,149,"Syntax"),GetCatalogStr(catalog,218,"]"),GetCatalogStr(catalog,242,"<nick>"),GetCatalogStr(catalog,246,"<message>"));
+            sprintf(buffer3, "%s%s%s%s /kick %s %s", timestamp, GetCatalogStr(catalog, 217, "["),
+                    GetCatalogStr(catalog, 149, "Syntax"), GetCatalogStr(catalog, 218, "]"),
+                    GetCatalogStr(catalog, 242, "<nick>"), GetCatalogStr(catalog, 246, "<message>"));
 
-            add_text_to_conductor_list(buffer3,9, ACTIVITY);
+            add_text_to_conductor_list(buffer3, 9, ACTIVITY);
         }
     }
-    else if( !stricmp((p_in)pch,(p_in)"/cycle") )
+    else if (!stricmp((p_in) pch, (p_in) "/cycle"))
     {
         //add_text_to_current_list("* Cycling..",9);
 
@@ -558,436 +593,466 @@ void process_outgoing(char *string123, int usestringgadget)
         send_text(buffer3);
 
     }
-    else if( !stricmp((p_in)pch,(p_in)"/a") )
+    else if (!stricmp((p_in) pch, (p_in) "/a"))
     {
 
-        strcpy(buffer3,"[12:32:02] <sundown> Anyone seen jahc? where is he!! jahc is such a tosser");
+        strcpy(buffer3, "[12:32:02] <sundown> Anyone seen jahc? where is he!! jahc is such a tosser");
 
-        char *test_search=new char[10];
-        strcpy(test_search,"jahc");
+        char *test_search = new char[10];
+        strcpy(test_search, "jahc");
 
         search_for_highlight_words(test_search, buffer3);
 
         //sort_linked_list();
 
-
     }
-    else if( !stricmp((p_in)pch,(p_in)"/b") )
+    else if (!stricmp((p_in) pch, (p_in) "/b"))
     {
         /*if(status_conductor)
-        {
-            if(status_conductor->conductor)
-            {
-                for(count=0; count<=status_conductor->conductor->nicks; count++)
-                {
-                    printf("%d:%s:%s\n",count, status_conductor->conductor->nicklist[count].name,status_conductor->conductor->nicklist[count].modes);
-                }
-            }
-        } */
-
+         {
+         if(status_conductor->conductor)
+         {
+         for(count=0; count<=status_conductor->conductor->nicks; count++)
+         {
+         printf("%d:%s:%s\n",count, status_conductor->conductor->nicklist[count].name,status_conductor->conductor->nicklist[count].modes);
+         }
+         }
+         } */
 
         /*FD_SET(status_conductor->a_socket, &read_master);
 
-        sprintf(string_to_send,"PING %s\r\n",status_conductor->servername);
-        send_text(string_to_send);
-        printf("Adding socket to the FD list, then sending ping to server..\n");
+         sprintf(string_to_send,"PING %s\r\n",status_conductor->servername);
+         send_text(string_to_send);
+         printf("Adding socket to the FD list, then sending ping to server..\n");
 
-        read_fds = read_master;
-        do_waitselect_code();
-          */
+         read_fds = read_master;
+         do_waitselect_code();
+         */
 
-        int recv_thing=recv(status_conductor->a_socket, (i_in)status_conductor->buffer, 512, 0);
+        int recv_thing = recv(status_conductor->a_socket, (i_in) status_conductor->buffer, 512, 0);
 
-        if(recv_thing != -1)
+        if (recv_thing != -1)
         {
-            status_conductor->buffer[recv_thing]='\0';
-			strcat(status_conductor->str,status_conductor->buffer);
+            status_conductor->buffer[recv_thing] = '\0';
+            strcat(status_conductor->str, status_conductor->buffer);
         }
 
-        if(recv_thing > 0)
+        if (recv_thing > 0)
         {
-            sprintf(buffer3,"%s%s%s%s recv() text: \"%s\"",timestamp,GetCatalogStr(catalog,217,"["),GetCatalogStr(catalog,149,"Syntax"),GetCatalogStr(catalog,218,"]"),status_conductor->str);
+            sprintf(buffer3, "%s%s%s%s recv() text: \"%s\"", timestamp, GetCatalogStr(catalog, 217, "["),
+                    GetCatalogStr(catalog, 149, "Syntax"), GetCatalogStr(catalog, 218, "]"), status_conductor->str);
         }
         else
         {
-            sprintf(buffer3,"%s%s%s%s No text to recv(): \"%s\"",timestamp,GetCatalogStr(catalog,217,"["),GetCatalogStr(catalog,149,"Syntax"),GetCatalogStr(catalog,218,"]"),status_conductor->str);
+            sprintf(buffer3, "%s%s%s%s No text to recv(): \"%s\"", timestamp, GetCatalogStr(catalog, 217, "["),
+                    GetCatalogStr(catalog, 149, "Syntax"), GetCatalogStr(catalog, 218, "]"), status_conductor->str);
         }
 
-        add_text_to_conductor_list(buffer3,9, ACTIVITY);
-
+        add_text_to_conductor_list(buffer3, 9, ACTIVITY);
 
     }
 
-    else if( !stricmp((p_in)pch,(p_in)"/away") )
+    else if (!stricmp((p_in) pch, (p_in) "/away"))
     {
-        string1=strtok(NULL, "");
+        string1 = strtok(NULL, "");
         //global status changes (set all networks away at once),
 
-        if(string1)
-            sprintf(sendstuff,"away :%s\r\n",string1);
+        if (string1)
+            sprintf(sendstuff, "away :%s\r\n", string1);
         else
-            sprintf(sendstuff,"away :\r\n");
+            sprintf(sendstuff, "away :\r\n");
 
-
-        for(status_conductor=status_root; status_conductor; status_conductor=status_conductor->next)
+        for (status_conductor = status_root; status_conductor; status_conductor = status_conductor->next)
         {
-            if(status_conductor == status_current)
-                status_conductor->conductor=status_conductor->current_query;
+            if (status_conductor == status_current)
+                status_conductor->conductor = status_conductor->current_query;
             else
-                status_conductor->conductor=status_conductor->root;
+                status_conductor->conductor = status_conductor->root;
 
-            status_conductor->away=TRUE;
+            status_conductor->away = TRUE;
 
-            if(status_conductor->connection_active) send_text(sendstuff);
+            if (status_conductor->connection_active)
+                send_text(sendstuff);
         }
 
-        status_conductor=status_current;
-
+        status_conductor = status_current;
 
     }
 
-    else if( !stricmp((p_in)pch,(p_in)"/ping"))
+    else if (!stricmp((p_in) pch, (p_in) "/ping"))
     {
-        string1=strtok(NULL, "");
+        string1 = strtok(NULL, "");
 
-        if(string1) SPing(string1);
+        if (string1)
+            SPing(string1);
         else
         {
-            sprintf(buffer3,"%s%s%s%s /ping %s",timestamp,GetCatalogStr(catalog,217,"["),GetCatalogStr(catalog,149,"Syntax"),GetCatalogStr(catalog,218,"]"),GetCatalogStr(catalog,242,"<nick>"));
-            add_text_to_conductor_list(buffer3,9, ACTIVITY);
+            sprintf(buffer3, "%s%s%s%s /ping %s", timestamp, GetCatalogStr(catalog, 217, "["),
+                    GetCatalogStr(catalog, 149, "Syntax"), GetCatalogStr(catalog, 218, "]"),
+                    GetCatalogStr(catalog, 242, "<nick>"));
+            add_text_to_conductor_list(buffer3, 9, ACTIVITY);
 
         }
     }
-    else if( !stricmp((p_in)pch,(p_in)"/tab"))
+    else if (!stricmp((p_in) pch, (p_in) "/tab"))
     {
         create_new_status(0);
     }
-    else if( !stricmp((p_in)pch,(p_in)"/version"))
+    else if (!stricmp((p_in) pch, (p_in) "/version"))
     {
-        string1=strtok(NULL, "");
+        string1 = strtok(NULL, "");
 
-        if(string1)
+        if (string1)
         {
-            sprintf(sendstuff,"PRIVMSG %s :\001VERSION\001\r\n",string1);
-            sprintf(buffer3,"%s-> [%s] VERSION",timestamp,string1);
+            sprintf(sendstuff, "PRIVMSG %s :\001VERSION\001\r\n", string1);
+            sprintf(buffer3, "%s-> [%s] VERSION", timestamp, string1);
 
             send_text(sendstuff);
-            add_text_to_conductor_list(buffer3,6, ACTIVITY);
+            add_text_to_conductor_list(buffer3, 6, ACTIVITY);
         }
         else
         {
 
-            sprintf(buffer3,"%s%s%s%s /version %s",timestamp,GetCatalogStr(catalog,217,"["),GetCatalogStr(catalog,149,"Syntax"),GetCatalogStr(catalog,218,"]"),GetCatalogStr(catalog,242,"<nick>"));
-            add_text_to_conductor_list(buffer3,9, ACTIVITY);
+            sprintf(buffer3, "%s%s%s%s /version %s", timestamp, GetCatalogStr(catalog, 217, "["),
+                    GetCatalogStr(catalog, 149, "Syntax"), GetCatalogStr(catalog, 218, "]"),
+                    GetCatalogStr(catalog, 242, "<nick>"));
+            add_text_to_conductor_list(buffer3, 9, ACTIVITY);
         }
 
     }
-    else if( !stricmp((p_in)pch,(p_in)"/time"))
+    else if (!stricmp((p_in) pch, (p_in) "/time"))
     {
-        string1=strtok(NULL, "");
-        if(string1)
+        string1 = strtok(NULL, "");
+        if (string1)
         {
-            sprintf(sendstuff,"PRIVMSG %s :\001TIME\001\r\n",string1);
-            sprintf(buffer3,"%s-> [%s] TIME",timestamp,string1);
+            sprintf(sendstuff, "PRIVMSG %s :\001TIME\001\r\n", string1);
+            sprintf(buffer3, "%s-> [%s] TIME", timestamp, string1);
 
             send_text(sendstuff);
-            add_text_to_conductor_list(buffer3,6, ACTIVITY);
+            add_text_to_conductor_list(buffer3, 6, ACTIVITY);
 
         }
         else
         {
-            sprintf(buffer3,"%s%s%s%s /time %s",timestamp,GetCatalogStr(catalog,217,"["),GetCatalogStr(catalog,149,"Syntax"),GetCatalogStr(catalog,218,"]"),GetCatalogStr(catalog,242,"<nick>"));
+            sprintf(buffer3, "%s%s%s%s /time %s", timestamp, GetCatalogStr(catalog, 217, "["),
+                    GetCatalogStr(catalog, 149, "Syntax"), GetCatalogStr(catalog, 218, "]"),
+                    GetCatalogStr(catalog, 242, "<nick>"));
 
-            add_text_to_conductor_list(buffer3,9, ACTIVITY);
+            add_text_to_conductor_list(buffer3, 9, ACTIVITY);
 
         }
 
     }
 
-    else if( !stricmp((p_in)pch,(p_in)"/settings"))
+    else if (!stricmp((p_in) pch, (p_in) "/settings"))
     {
-    	DoMethod((Object*)WookieChat->App,MUIM_Application_OpenConfigWindow,0);
+        DoMethod((Object*) WookieChat->App, MUIM_Application_OpenConfigWindow, 0);
     }
-    else if( !(stricmp((p_in)pch,(p_in)"/query")) )
+    else if (!(stricmp((p_in) pch, (p_in) "/query")))
     {
-        string1=strtok(NULL, " ");
-        string2=strtok(NULL,"");
+        string1 = strtok(NULL, " ");
+        string2 = strtok(NULL, "");
 
-        if(string1)
+        if (string1)
         {
             SQuery(string1);
         }
         else
         {
-            sprintf(buffer3,"%s%s%s%s /query %s",timestamp,GetCatalogStr(catalog,217,"["),GetCatalogStr(catalog,149,"Syntax"),GetCatalogStr(catalog,218,"]"),GetCatalogStr(catalog,242,"<nick>"));
-            add_text_to_conductor_list(buffer3,9, ACTIVITY);
+            sprintf(buffer3, "%s%s%s%s /query %s", timestamp, GetCatalogStr(catalog, 217, "["),
+                    GetCatalogStr(catalog, 149, "Syntax"), GetCatalogStr(catalog, 218, "]"),
+                    GetCatalogStr(catalog, 242, "<nick>"));
+            add_text_to_conductor_list(buffer3, 9, ACTIVITY);
 
         }
-        if(string1 && string2)
+        if (string1 && string2)
         {
-            if(string2)
+            if (string2)
             {
                 /*
-                #ifndef __AROS__
-                struct TagItem my_send_charset1_taglist[] = { {CSA_Source, (ULONG)string2 },
-                    {CSA_SourceCodeset, (ULONG)charsets[local_charset]}, {CSA_DestCodeset, (ULONG)charsets[status_conductor->remote_charset]}, {TAG_DONE, 0} };
-                charset_convert_1 = CodesetsConvertStrA(my_send_charset1_taglist);
+                 #ifndef __AROS__
+                 struct TagItem my_send_charset1_taglist[] = { {CSA_Source, (ULONG)string2 },
+                 {CSA_SourceCodeset, (ULONG)charsets[local_charset]}, {CSA_DestCodeset, (ULONG)charsets[status_conductor->remote_charset]}, {TAG_DONE, 0} };
+                 charset_convert_1 = CodesetsConvertStrA(my_send_charset1_taglist);
 
-                if(charset_convert_1)
-                {
-                    sprintf(string_to_send,"PRIVMSG %s :%s\r\n",(char*)string1, (char*)charset_convert_1);
-                	sprintf(buffer3,"%s<%s> %s",timestamp,status_conductor->nick, (char*)charset_convert_1);
-                    CodesetsFreeA(charset_convert_1,NULL);
-                }
-                else
-                {
-                    sprintf(string_to_send,"PRIVMSG %s :%s\r\n",(char*)string1, (char*)string2);
-                	sprintf(buffer3,"%s<%s> %s",timestamp,status_conductor->nick, string2);
-
-                }
-                #else
-                sprintf(string_to_send,"PRIVMSG %s :%s\r\n",(char*)string1, (char*)string2);
-            	sprintf(buffer3,"%s<%s> %s",timestamp,status_conductor->nick, string2);
-                #endif
-                */
-
-                sprintf(string_to_send,"PRIVMSG %s :%s\r\n",(char*)string1, (char*)string2);
-            	sprintf(buffer3,"%s<%s> %s",timestamp,status_conductor->nick, string2);
-
-                send_text(string_to_send);
-                add_text_to_conductor_list((char*)buffer3, 10, ACTIVITY);
-
-            }
-
-        }
-
-        if(RECENTLY_CREATED_A_TAB==TRUE)
-        {
-            if(status_current)
-            {
-                if(status_current->current_query)
-                {
-                    setmacro((Object*)WookieChat->LV_tabs,MUIA_NList_Active,status_current->current_query->nlist_tab_number);
-                    sort_linked_list();
+                 if(charset_convert_1)
+                 {
+                 sprintf(string_to_send,"PRIVMSG %s :%s\r\n",(char*)string1, (char*)charset_convert_1);
+                 sprintf(buffer3,"%s<%s> %s",timestamp,status_conductor->nick, (char*)charset_convert_1);
+                 CodesetsFreeA(charset_convert_1,NULL);
                  }
-            }
+                 else
+                 {
+                 sprintf(string_to_send,"PRIVMSG %s :%s\r\n",(char*)string1, (char*)string2);
+                 sprintf(buffer3,"%s<%s> %s",timestamp,status_conductor->nick, string2);
 
-            RECENTLY_CREATED_A_TAB=FALSE;
-        }
-
-
-    }
-
-    else if( !(stricmp((p_in)pch,(p_in)"/nick")) )
-    {
-        string1=strtok(NULL, "");
-
-        if(string1)
-        ChangeMyNick(string1);
-        else
-        {
-            sprintf(buffer3,"%s%s%s%s /nick %s",timestamp,GetCatalogStr(catalog,217,"["),GetCatalogStr(catalog,149,"Syntax"),GetCatalogStr(catalog,218,"]"),GetCatalogStr(catalog,247,"<new nick>"));
-
-            add_text_to_conductor_list(buffer3,9, ACTIVITY);
-        }
-    }
-
-    else if( !(stricmp((p_in)pch,(p_in)"/j"))|| !(stricmp((p_in)pch,(p_in)"/join")) )
-    {
-        string1=strtok(NULL, "");
-        if(string1)
-        {
-            /*if(string1[0]!='#') sprintf(string7,"#%s",string1);
-            else strcpy(string7,string1);
+                 }
+                 #else
+                 sprintf(string_to_send,"PRIVMSG %s :%s\r\n",(char*)string1, (char*)string2);
+                 sprintf(buffer3,"%s<%s> %s",timestamp,status_conductor->nick, string2);
+                 #endif
                  */
 
-            /*if(strcspn(string1,status_conductor->chantypes)!=0) sprintf(string7,"#%s",string1);
-                else strcpy(string7,string1);
-              */
+                sprintf(string_to_send, "PRIVMSG %s :%s\r\n", (char*) string1, (char*) string2);
+                sprintf(buffer3, "%s<%s> %s", timestamp, status_conductor->nick, string2);
 
-            if(string1) SJoin(string1);
+                send_text(string_to_send);
+                add_text_to_conductor_list((char*) buffer3, 10, ACTIVITY);
+
+            }
+
+        }
+
+        if (RECENTLY_CREATED_A_TAB == TRUE)
+        {
+            if (status_current)
+            {
+                if (status_current->current_query)
+                {
+                    setmacro((Object*) WookieChat->LV_tabs, MUIA_NList_Active,
+                            status_current->current_query->nlist_tab_number);
+                    sort_linked_list();
+                }
+            }
+
+            RECENTLY_CREATED_A_TAB = FALSE;
+        }
+
+    }
+
+    else if (!(stricmp((p_in) pch, (p_in) "/nick")))
+    {
+        string1 = strtok(NULL, "");
+
+        if (string1)
+            ChangeMyNick(string1);
+        else
+        {
+            sprintf(buffer3, "%s%s%s%s /nick %s", timestamp, GetCatalogStr(catalog, 217, "["),
+                    GetCatalogStr(catalog, 149, "Syntax"), GetCatalogStr(catalog, 218, "]"),
+                    GetCatalogStr(catalog, 247, "<new nick>"));
+
+            add_text_to_conductor_list(buffer3, 9, ACTIVITY);
+        }
+    }
+
+    else if (!(stricmp((p_in) pch, (p_in) "/j")) || !(stricmp((p_in) pch, (p_in) "/join")))
+    {
+        string1 = strtok(NULL, "");
+        if (string1)
+        {
+            /*if(string1[0]!='#') sprintf(string7,"#%s",string1);
+             else strcpy(string7,string1);
+             */
+
+            /*if(strcspn(string1,status_conductor->chantypes)!=0) sprintf(string7,"#%s",string1);
+             else strcpy(string7,string1);
+             */
+
+            if (string1)
+                SJoin(string1);
         }
         //if(string1) SJoin(string1);
         else
         {
-            sprintf(buffer3,"%s%s%s%s /join %s",timestamp,GetCatalogStr(catalog,217,"["),GetCatalogStr(catalog,149,"Syntax"),GetCatalogStr(catalog,218,"]"),GetCatalogStr(catalog,241,"<channel_name>"));
+            sprintf(buffer3, "%s%s%s%s /join %s", timestamp, GetCatalogStr(catalog, 217, "["),
+                    GetCatalogStr(catalog, 149, "Syntax"), GetCatalogStr(catalog, 218, "]"),
+                    GetCatalogStr(catalog, 241, "<channel_name>"));
 
-            add_text_to_conductor_list(buffer3,9, ACTIVITY);
+            add_text_to_conductor_list(buffer3, 9, ACTIVITY);
         }
     }
 
-    else if( !(stricmp((p_in)pch,(p_in)"/m")) || !(stricmp((p_in)pch,(p_in)"/msg")) )
+    else if (!(stricmp((p_in) pch, (p_in) "/m")) || !(stricmp((p_in) pch, (p_in) "/msg")))
     {
-        string1=strtok(NULL, " ");  //nick
-        string2=strtok(NULL, "");   //message
-        if(string1 && string2)
+        string1 = strtok(NULL, " "); //nick
+        string2 = strtok(NULL, ""); //message
+        if (string1 && string2)
         {
-            if(!stricmp(string1,"."))
-                SMsg(status_conductor->last_msg_nick,string2);
+            if (!stricmp(string1, "."))
+                SMsg(status_conductor->last_msg_nick, string2);
             else
-                SMsg(string1,string2);
+                SMsg(string1, string2);
 
         }
         else
         {
-            sprintf(buffer3,"%s%s%s%s /msg %s %s",timestamp,GetCatalogStr(catalog,217,"["),GetCatalogStr(catalog,149,"Syntax"),GetCatalogStr(catalog,218,"]"),GetCatalogStr(catalog,242,"<nick>"),GetCatalogStr(catalog,246,"<message>"));
-            add_text_to_conductor_list(buffer3,9, ACTIVITY);
+            sprintf(buffer3, "%s%s%s%s /msg %s %s", timestamp, GetCatalogStr(catalog, 217, "["),
+                    GetCatalogStr(catalog, 149, "Syntax"), GetCatalogStr(catalog, 218, "]"),
+                    GetCatalogStr(catalog, 242, "<nick>"), GetCatalogStr(catalog, 246, "<message>"));
+            add_text_to_conductor_list(buffer3, 9, ACTIVITY);
         }
     }
 
-    else if( !(stricmp((p_in)pch,(p_in)"/names")) )
+    else if (!(stricmp((p_in) pch, (p_in) "/names")))
     {
-        string1=strtok(NULL, " ");
-        if(string1)
+        string1 = strtok(NULL, " ");
+        if (string1)
             SNames(string1);
         else
             SNames(status_current->current_query->name);
 
         /*{
 
-            sprintf(buffer3,"%s%s%s%s /names %s",timestamp,GetCatalogStr(catalog,217,"["),GetCatalogStr(catalog,149,"Syntax"),GetCatalogStr(catalog,218,"]"),GetCatalogStr(catalog,241,"<channel_name>"));
+         sprintf(buffer3,"%s%s%s%s /names %s",timestamp,GetCatalogStr(catalog,217,"["),GetCatalogStr(catalog,149,"Syntax"),GetCatalogStr(catalog,218,"]"),GetCatalogStr(catalog,241,"<channel_name>"));
 
-            add_text_to_conductor_list(buffer3,9, ACTIVITY);
-        } */
+         add_text_to_conductor_list(buffer3,9, ACTIVITY);
+         } */
 
     }
-    else if( !(stricmp((p_in)pch,(p_in)"/notice")) )
+    else if (!(stricmp((p_in) pch, (p_in) "/notice")))
     {
-        string1=strtok(NULL, " ");
-        string2=strtok(NULL, "");
+        string1 = strtok(NULL, " ");
+        string2 = strtok(NULL, "");
 
-        if(string1 && string2)
+        if (string1 && string2)
         {
-            if(!stricmp(string1,"."))
-                SNotice(status_conductor->last_notice_nick,string2);
+            if (!stricmp(string1, "."))
+                SNotice(status_conductor->last_notice_nick, string2);
             else
-                SNotice(string1,string2);
+                SNotice(string1, string2);
 
         }
         else
         {
-            sprintf(buffer3,"%s%s%s%s /notice %s %s",timestamp,GetCatalogStr(catalog,217,"["),GetCatalogStr(catalog,149,"Syntax"),GetCatalogStr(catalog,218,"]"),GetCatalogStr(catalog,254,"<nick or channel>"),GetCatalogStr(catalog,246,"<message>"));
+            sprintf(buffer3, "%s%s%s%s /notice %s %s", timestamp, GetCatalogStr(catalog, 217, "["),
+                    GetCatalogStr(catalog, 149, "Syntax"), GetCatalogStr(catalog, 218, "]"),
+                    GetCatalogStr(catalog, 254, "<nick or channel>"), GetCatalogStr(catalog, 246, "<message>"));
 
-            add_text_to_conductor_list(buffer3,9, ACTIVITY);
+            add_text_to_conductor_list(buffer3, 9, ACTIVITY);
         }
     }
-    else if( !(stricmp((p_in)pch,(p_in)"/topic")) )
+    else if (!(stricmp((p_in) pch, (p_in) "/topic")))
     {
-        string1=strtok(NULL, "");
+        string1 = strtok(NULL, "");
 
-        if(string1) ChangeTopic(string1);
+        if (string1)
+            ChangeTopic(string1);
         else
         {
-            sprintf(string_to_send,"TOPIC %s\r\n", status_conductor->conductor->name);
+            sprintf(string_to_send, "TOPIC %s\r\n", status_conductor->conductor->name);
             send_text(string_to_send);
 
         }
     }
-    else if( !(stricmp((p_in)pch,(p_in)"/p"))|| !(stricmp((p_in)pch,(p_in)"/part")) )
+    else if (!(stricmp((p_in) pch, (p_in) "/p")) || !(stricmp((p_in) pch, (p_in) "/part")))
     {
-        string1=strtok(NULL,"");
+        string1 = strtok(NULL, "");
         //if(status_conductor->conductor->name[0]=='#') SPart(string1);
-        if(strcspn(status_conductor->conductor->name,status_conductor->chantypes)==0) SPart(string1);
-        else close_tab();
+        if (strcspn(status_conductor->conductor->name, status_conductor->chantypes) == 0)
+            SPart(string1);
+        else
+            close_tab();
 
-      /*status_conductor=status_current;
-        if(status_current->current_query->name[0]=='#') SPart(string1);
-        else close_tab();
-*/
+        /*status_conductor=status_current;
+         if(status_current->current_query->name[0]=='#') SPart(string1);
+         else close_tab();
+         */
     }
-    else if( !(stricmp((p_in)pch,(p_in)"/quit")) )
+    else if (!(stricmp((p_in) pch, (p_in) "/quit")))
     {
-        string1=strtok(NULL,"");
-        if(!(string1)) { string1=new char[1]; strcpy(string1,""); }
+        string1 = strtok(NULL, "");
+        if (!(string1))
+        {
+            string1 = new char[1];
+            strcpy(string1, "");
+        }
 
         SQuit(string1);
 
     }
 
-
-    else if( !(stricmp((p_in)pch,(p_in)"/me")) )
+    else if (!(stricmp((p_in) pch, (p_in) "/me")))
     {
-        string1=strtok(NULL,"");
+        string1 = strtok(NULL, "");
 
-        if(string1) SAction(string1);
+        if (string1)
+            SAction(string1);
         else
         {
-            sprintf(buffer3,"%s%s%s%s /me %s",timestamp,GetCatalogStr(catalog,217,"["),GetCatalogStr(catalog,149,"Syntax"),GetCatalogStr(catalog,218,"]"),GetCatalogStr(catalog,256,"<action>"));
+            sprintf(buffer3, "%s%s%s%s /me %s", timestamp, GetCatalogStr(catalog, 217, "["),
+                    GetCatalogStr(catalog, 149, "Syntax"), GetCatalogStr(catalog, 218, "]"),
+                    GetCatalogStr(catalog, 256, "<action>"));
 
-            add_text_to_conductor_list(buffer3,9, ACTIVITY);
+            add_text_to_conductor_list(buffer3, 9, ACTIVITY);
         }
     }
 
-    else if( !(stricmp((p_in)pch,(p_in)"/server")) )
+    else if (!(stricmp((p_in) pch, (p_in) "/server")))
     {
 
-        char *servername=new char[50];
+        char *servername = new char[50];
         servername = strtok(NULL, " ");
 
-        char *portnumber=new char[7];
-        portnumber = strtok(NULL,"");
+        char *portnumber = new char[7];
+        portnumber = strtok(NULL, "");
 
-        if(!portnumber)
+        if (!portnumber)
         {
-            portnumber=new char[7];
-            strcpy(portnumber,"6667");
+            portnumber = new char[7];
+            strcpy(portnumber, "6667");
         }
 
-        if(servername)
+        if (servername)
         {
-            strcpy(server_name,"");
-            strcpy(port_number,"");
-            strcpy(server_charset,"");
-            strcpy(nick_password,"");
-            strcpy(server_password,"");
-            strcpy(auto_joins,"");
-            strcpy(auto_connect,"");
+            strcpy(server_name, "");
+            strcpy(port_number, "");
+            strcpy(server_charset, "");
+            strcpy(nick_password, "");
+            strcpy(server_password, "");
+            strcpy(auto_joins, "");
+            strcpy(auto_connect, "");
 
-            connect2server(servername, portnumber,1,1,CONNECT_IN_CURRENT_TAB,NULL,0);
+            connect2server(servername, portnumber, 1, 1, CONNECT_IN_CURRENT_TAB, NULL, 0);
 
         }
         else
         {
-            sprintf(buffer3,"%s%s%s%s /server %s %s",timestamp,GetCatalogStr(catalog,217,"["),GetCatalogStr(catalog,149,"Syntax"),GetCatalogStr(catalog,218,"]"),GetCatalogStr(catalog,249,"<servername>"),GetCatalogStr(catalog,250,"<port>"));
+            sprintf(buffer3, "%s%s%s%s /server %s %s", timestamp, GetCatalogStr(catalog, 217, "["),
+                    GetCatalogStr(catalog, 149, "Syntax"), GetCatalogStr(catalog, 218, "]"),
+                    GetCatalogStr(catalog, 249, "<servername>"), GetCatalogStr(catalog, 250, "<port>"));
 
-            add_text_to_conductor_list(buffer3,9, ACTIVITY);
+            add_text_to_conductor_list(buffer3, 9, ACTIVITY);
         }
 
     }
 
-    else if( !(stricmp((p_in)pch,(p_in) "/close")) )
+    else if (!(stricmp((p_in) pch, (p_in) "/close")))
     {
         close_tab();
     }
-    else if( !(stricmp((p_in)pch,(p_in) "/filter")) )
+    else if (!(stricmp((p_in) pch, (p_in) "/filter")))
     {
-        status_conductor->filter_swear_words=1-status_conductor->filter_swear_words;
-        if(status_conductor->filter_swear_words==1)
+        status_conductor->filter_swear_words = 1 - status_conductor->filter_swear_words;
+        if (status_conductor->filter_swear_words == 1)
         {
-            sprintf(buffer3,"%s%s%s%s %s",timestamp,GetCatalogStr(catalog,217,"["),GetCatalogStr(catalog,251,"SwearFilter"),GetCatalogStr(catalog,218,"]"),GetCatalogStr(catalog,252,"Enabled"));
+            sprintf(buffer3, "%s%s%s%s %s", timestamp, GetCatalogStr(catalog, 217, "["),
+                    GetCatalogStr(catalog, 251, "SwearFilter"), GetCatalogStr(catalog, 218, "]"),
+                    GetCatalogStr(catalog, 252, "Enabled"));
 
-            add_text_to_conductor_list(buffer3,9, ACTIVITY);
+            add_text_to_conductor_list(buffer3, 9, ACTIVITY);
         }
         else
         {
-            sprintf(buffer3,"%s%s%s%s %s",timestamp,GetCatalogStr(catalog,217,"["),GetCatalogStr(catalog,251,"SwearFilter"),GetCatalogStr(catalog,218,"]"),GetCatalogStr(catalog,253,"Disabled"));
+            sprintf(buffer3, "%s%s%s%s %s", timestamp, GetCatalogStr(catalog, 217, "["),
+                    GetCatalogStr(catalog, 251, "SwearFilter"), GetCatalogStr(catalog, 218, "]"),
+                    GetCatalogStr(catalog, 253, "Disabled"));
 
-            add_text_to_conductor_list(buffer3,9, ACTIVITY);
+            add_text_to_conductor_list(buffer3, 9, ACTIVITY);
         }
 
-
-
     }
 
-    else if( !(stricmp((p_in)pch, (p_in)"/quote")) || !(stricmp((p_in)pch,(p_in) "/raw")) )
+    else if (!(stricmp((p_in) pch, (p_in) "/quote")) || !(stricmp((p_in) pch, (p_in) "/raw")))
     {
-        string1=strtok(NULL,"");
+        string1 = strtok(NULL, "");
 
-        if(string1) SQuote(string1);
+        if (string1)
+            SQuote(string1);
 
     }
-    else if( !(stricmp((p_in)pch,(p_in) "/playing")) ||  !(stricmp((p_in)pch,(p_in) "/p"))
-             ||  !(stricmp((p_in)pch,(p_in) "/tunenet")))
+    else if (!(stricmp((p_in) pch, (p_in) "/playing")) || !(stricmp((p_in) pch, (p_in) "/p"))
+            || !(stricmp((p_in) pch, (p_in) "/tunenet")))
     {
 
         char work_buffer[400];
@@ -995,57 +1060,63 @@ void process_outgoing(char *string123, int usestringgadget)
         //memset(work_buffer,'\0',399);
         //memset(work_buffer2,'\0',99);
 
-        BPTR tunenet_status=Open("env:tunenet/status",MODE_OLDFILE);
-        BPTR tunenet_playing=Open("env:tunenet/playing",MODE_OLDFILE);
-        if(tunenet_playing && tunenet_status)
+        BPTR tunenet_status = Open("env:tunenet/status", MODE_OLDFILE);
+        BPTR tunenet_playing = Open("env:tunenet/playing", MODE_OLDFILE);
+        if (tunenet_playing && tunenet_status)
         {
 
-            if(!FGets(tunenet_playing, work_buffer, 300))
-                strcpy(work_buffer,"(none)");
+            if (!FGets(tunenet_playing, work_buffer, 300))
+                strcpy(work_buffer, "(none)");
 
-            if(!FGets(tunenet_status, work_buffer2, 300))
-                strcpy(work_buffer2,"(none)");
+            if (!FGets(tunenet_status, work_buffer2, 300))
+                strcpy(work_buffer2, "(none)");
 
-            sprintf(string_to_send,"PRIVMSG %s :[%s] %s\r\n",status_conductor->conductor->name, work_buffer2, work_buffer);
-            sprintf(buffer3,"%s<%s> [%s] %s", timestamp, status_conductor->nick, work_buffer2, work_buffer);
+            sprintf(string_to_send, "PRIVMSG %s :[%s] %s\r\n", status_conductor->conductor->name, work_buffer2,
+                    work_buffer);
+            sprintf(buffer3, "%s<%s> [%s] %s", timestamp, status_conductor->nick, work_buffer2, work_buffer);
 
-            add_text_to_conductor_list(buffer3,10, ACTIVITY);
+            add_text_to_conductor_list(buffer3, 10, ACTIVITY);
             send_text(string_to_send);
-
 
         }
 
-        if(tunenet_status) Close(tunenet_status);
-        if(tunenet_playing) Close(tunenet_playing);
-
+        if (tunenet_status)
+            Close(tunenet_status);
+        if (tunenet_playing)
+            Close(tunenet_playing);
 
     }
-    else if( !(stricmp((p_in)pch,(p_in) "/say")) )
+    else if (!(stricmp((p_in) pch, (p_in) "/say")))
     {
 
-        string1=strtok(NULL,"\0");
-        if(!(string1)) { string1=new char[1]; strcpy(string1,""); }
+        string1 = strtok(NULL, "\0");
+        if (!(string1))
+        {
+            string1 = new char[1];
+            strcpy(string1, "");
+        }
 
-        if(!status_conductor) status_conductor=status_current;
+        if (!status_conductor)
+            status_conductor = status_current;
         /*if(status_conductor->filter_swear_words==1)
-        {
-            censor_swear_words(pch);      //do the first word
-            censor_swear_words(string1);  //then do the rest of the sentence
-        } */
+         {
+         censor_swear_words(pch);      //do the first word
+         censor_swear_words(string1);  //then do the rest of the sentence
+         } */
 
-        if( !(strcmp("Status",status_conductor->conductor->name )) )
+        if (!(strcmp("Status", status_conductor->conductor->name)))
         {
-            sprintf(buffer3,"%s %s",timestamp, string1);
-            sprintf(string_to_send,"%s\r\n", string1);
+            sprintf(buffer3, "%s %s", timestamp, string1);
+            sprintf(string_to_send, "%s\r\n", string1);
         }
         else
         {
-            sprintf(string_to_send,"PRIVMSG %s :%s\r\n",status_conductor->conductor->name, string1);
-            sprintf(buffer3,"%s<%s> %s", timestamp, status_conductor->nick, string1);
+            sprintf(string_to_send, "PRIVMSG %s :%s\r\n", status_conductor->conductor->name, string1);
+            sprintf(buffer3, "%s<%s> %s", timestamp, status_conductor->nick, string1);
 
         }
 
-        add_text_to_conductor_list(buffer3,10, ACTIVITY);
+        add_text_to_conductor_list(buffer3, 10, ACTIVITY);
         //printf("string to send:%s",string_to_send);
 
         send_text(string_to_send);
@@ -1053,64 +1124,76 @@ void process_outgoing(char *string123, int usestringgadget)
         //send_text(string_to_send);
 
     }
-    else if( !(stricmp((p_in)pch,(p_in) "/rx")) )
+    else if (!(stricmp((p_in) pch, (p_in) "/rx")))
     {
-        string1=strtok(NULL,"\0");
-        if(string1)
+        string1 = strtok(NULL, "\0");
+        if (string1)
         {
 
-            sprintf(file_name,"run >nil: rx %s",string1);
-            if(DEBUG) printf("%s\n",file_name);
+            sprintf(file_name, "run >nil: rx %s", string1);
+            if (DEBUG)
+                printf("%s\n", file_name);
 
-            BPTR arexx_dir_lock = Lock("progdir:arexx_scripts",SHARED_LOCK);
-            if(arexx_dir_lock)
+            BPTR arexx_dir_lock = Lock("progdir:arexx_scripts", SHARED_LOCK);
+            if (arexx_dir_lock)
             {
-                #ifdef __AROS__
-                struct TagItem my_arexx_command_taglist[] = { {NP_CurrentDir,(IPTR)arexx_dir_lock}, {TAG_DONE, (IPTR)0} };
-                #else
-                struct TagItem my_arexx_command_taglist[] = { {NP_CurrentDir,(ULONG)arexx_dir_lock}, {TAG_DONE, (ULONG)0} };
-                #endif
-                
-                SystemTagList(file_name,my_arexx_command_taglist);
+#ifdef __AROS__
+                struct TagItem my_arexx_command_taglist[] =
+                {
+                { NP_CurrentDir, (IPTR) arexx_dir_lock },
+                { TAG_DONE, (IPTR) 0 } };
+#else
+                struct TagItem my_arexx_command_taglist[] =
+                {
+                    {   NP_CurrentDir,(ULONG)arexx_dir_lock},
+                    {   TAG_DONE, (ULONG)0}};
+#endif
+
+                SystemTagList(file_name, my_arexx_command_taglist);
             }
 
         }
     }
-    else if( !(stricmp((p_in)pch,(p_in) "/echo")) )
+    else if (!(stricmp((p_in) pch, (p_in) "/echo")))
     {
 
-        string1=strtok(NULL," ");
-        string2=strtok(NULL,"\0");
+        string1 = strtok(NULL, " ");
+        string2 = strtok(NULL, "\0");
 
-        if(string1 && string2)
+        if (string1 && string2)
         {
-            sprintf(buffer3,"%s%s", timestamp, string2);
-            add_text_to_conductor_list(buffer3,atoi(string1), ACTIVITY);
+            sprintf(buffer3, "%s%s", timestamp, string2);
+            add_text_to_conductor_list(buffer3, atoi(string1), ACTIVITY);
         }
-        else if(string1)
+        else if (string1)
         {
-            sprintf(buffer3,"%s%s", timestamp, string1);
-            add_text_to_conductor_list(buffer3,9, ACTIVITY);
+            sprintf(buffer3, "%s%s", timestamp, string1);
+            add_text_to_conductor_list(buffer3, 9, ACTIVITY);
         }
 
     }
 
-    else if( !(stricmp((p_in)pch,(p_in) "/sayall")) )
+    else if (!(stricmp((p_in) pch, (p_in) "/sayall")))
     {
 
-        string1=strtok(NULL,"\0");
-        if(!(string1)) { string1=new char[1]; strcpy(string1,""); }
-
-        for(status_conductor=status_root; status_conductor; status_conductor=status_conductor->next)
+        string1 = strtok(NULL, "\0");
+        if (!(string1))
         {
-            for(status_conductor->conductor=status_conductor->root; status_conductor->conductor; status_conductor->conductor=status_conductor->conductor->next)
+            string1 = new char[1];
+            strcpy(string1, "");
+        }
+
+        for (status_conductor = status_root; status_conductor; status_conductor = status_conductor->next)
+        {
+            for (status_conductor->conductor = status_conductor->root; status_conductor->conductor;
+                    status_conductor->conductor = status_conductor->conductor->next)
             {
                 //if(status_conductor->conductor->name[0]=='#')
-                if(strcspn(status_conductor->conductor->name,status_conductor->chantypes)==0)
+                if (strcspn(status_conductor->conductor->name, status_conductor->chantypes) == 0)
                 {
-                    sprintf(string_to_send,"PRIVMSG %s :%s\r\n",status_conductor->conductor->name, string1);
-                    sprintf(buffer3,"%s<%s> %s", timestamp, status_conductor->nick, string1);
-                    add_text_to_conductor_list(buffer3,10, ACTIVITY);
+                    sprintf(string_to_send, "PRIVMSG %s :%s\r\n", status_conductor->conductor->name, string1);
+                    sprintf(buffer3, "%s<%s> %s", timestamp, status_conductor->nick, string1);
+                    add_text_to_conductor_list(buffer3, 10, ACTIVITY);
                     send_text(string_to_send);
 
                 }
@@ -1119,73 +1202,72 @@ void process_outgoing(char *string123, int usestringgadget)
 
         }
 
-        status_conductor=status_current;
-        status_conductor->conductor=status_conductor->root;
+        status_conductor = status_current;
+        status_conductor->conductor = status_conductor->root;
 
     }
 
-    else if(pch[0]=='/' && pch[1] != '/')
+    else if (pch[0] == '/' && pch[1] != '/')
     {
-        string1=new char[400];
-        int a=0;
-        for(a=0; pch[a] != '\0'; a++)
+        string1 = new char[400];
+        int a = 0;
+        for (a = 0; pch[a] != '\0'; a++)
         {
 
-            string1[a]=pch[a+1];
+            string1[a] = pch[a + 1];
 
         }
 
-        string2=strtok(NULL,"\0");
+        string2 = strtok(NULL, "\0");
 
-        if(string2)
+        if (string2)
         {
-            sprintf(buffer3,"%s %s\r\n",string1,string2);
+            sprintf(buffer3, "%s %s\r\n", string1, string2);
             send_text(buffer3);
         }
-        else if(string1)
+        else if (string1)
         {
-            sprintf(buffer3,"%s\r\n",string1);
+            sprintf(buffer3, "%s\r\n", string1);
             send_text(buffer3);
 
         }
         //delete [] string1;
 
     }
-    else if( !(pch) )
+    else if (!(pch))
     {
 
     }
-    else if(status_conductor->current_query->name[0]=='$')
+    else if (status_conductor->current_query->name[0] == '$')
     {
-        dcc_chat_conductor=dcc_chat_root->next;
-        while(dcc_chat_conductor)
+        dcc_chat_conductor = dcc_chat_root->next;
+        while (dcc_chat_conductor)
         {
             //if(dcc_chat_conductor->conductor==status_conductor->conductor)
-            if(dcc_chat_conductor->conductor)
+            if (dcc_chat_conductor->conductor)
             {
-                if(!stricmp(dcc_chat_conductor->conductor->name,status_conductor->conductor->name))
+                if (!stricmp(dcc_chat_conductor->conductor->name, status_conductor->conductor->name))
                 {
-                    string1=strtok(NULL,"\0");
-                    if(string1)
+                    string1 = strtok(NULL, "\0");
+                    if (string1)
                     {
-                        sprintf(buffer3,"%s<%s> %s %s",timestamp, dcc_chat_conductor->own_nick, pch, string1);
-                        sprintf(string_to_send,"%s %s\r\n",pch, string1);
+                        sprintf(buffer3, "%s<%s> %s %s", timestamp, dcc_chat_conductor->own_nick, pch, string1);
+                        sprintf(string_to_send, "%s %s\r\n", pch, string1);
                     }
                     else
                     {
-                        sprintf(buffer3,"%s<%s> %s",timestamp, dcc_chat_conductor->own_nick, pch);
-                        sprintf(string_to_send,"%s\r\n",pch);
-
+                        sprintf(buffer3, "%s<%s> %s", timestamp, dcc_chat_conductor->own_nick, pch);
+                        sprintf(string_to_send, "%s\r\n", pch);
 
                     }
 
-                    add_text_to_conductor_list(buffer3,10, ACTIVITY);
+                    add_text_to_conductor_list(buffer3, 10, ACTIVITY);
                     send_dcc_chat(string_to_send);
                     break;
 
                 }
             }
-            dcc_chat_conductor=dcc_chat_conductor->next;
+            dcc_chat_conductor = dcc_chat_conductor->next;
 
         }
 
@@ -1193,25 +1275,26 @@ void process_outgoing(char *string123, int usestringgadget)
     else
     {
 
-        string1=strtok(NULL,"\0");
+        string1 = strtok(NULL, "\0");
 
-        if(status_conductor->filter_swear_words==1)
+        if (status_conductor->filter_swear_words == 1)
         {
-            censor_swear_words(pch);      //do the first word
-            if(string1) censor_swear_words(string1);  //then do the rest of the sentence
+            censor_swear_words(pch); //do the first word
+            if (string1)
+                censor_swear_words(string1); //then do the rest of the sentence
         }
 
-        if( !(strcmp("Status",status_conductor->conductor->name )) )
+        if (!(strcmp("Status", status_conductor->conductor->name)))
         {
-            if(string1)
+            if (string1)
             {
-                sprintf(buffer3,"%s%s %s",timestamp, pch, string1);
-                sprintf(string_to_send,"%s %s\r\n",pch, string1);
+                sprintf(buffer3, "%s%s %s", timestamp, pch, string1);
+                sprintf(string_to_send, "%s %s\r\n", pch, string1);
             }
             else
             {
-                sprintf(buffer3,"%s%s",timestamp, pch);
-                sprintf(string_to_send,"%s\r\n",pch);
+                sprintf(buffer3, "%s%s", timestamp, pch);
+                sprintf(string_to_send, "%s\r\n", pch);
 
             }
 
@@ -1219,47 +1302,48 @@ void process_outgoing(char *string123, int usestringgadget)
         else
         {
             char modes[10];
-            strcpy(modes,"");
+            strcpy(modes, "");
 
-            if(status_conductor->conductor && my_settings.user_modes_beside_nicks)
+            if (status_conductor->conductor && my_settings.user_modes_beside_nicks)
             {
-                for(count=0; count<status_conductor->conductor->nicks; count++)
+                for (count = 0; count < status_conductor->conductor->nicks; count++)
                 {
-                    if(!stricmp(status_conductor->conductor->nicklist[count].name,status_conductor->nick))
+                    if (!stricmp(status_conductor->conductor->nicklist[count].name, status_conductor->nick))
                     {
-                        strcpy(modes,status_conductor->conductor->nicklist[count].modes);
-                        if(modes[0]==' ') strcpy(modes,"");
+                        strcpy(modes, status_conductor->conductor->nicklist[count].modes);
+                        if (modes[0] == ' ')
+                            strcpy(modes, "");
                         break;
                     }
                 }
             }
 
-            if(string1 && pch)
+            if (string1 && pch)
             {
 
-                sprintf(string_to_send,"PRIVMSG %s :%s %s\r\n",status_conductor->conductor->name, (char*)pch, (char*)string1);
-                sprintf(buffer3,"%s<%s%s> %s %s", timestamp, modes, status_conductor->nick,(char*)pch,(char*)string1);
+                sprintf(string_to_send, "PRIVMSG %s :%s %s\r\n", status_conductor->conductor->name, (char*) pch,
+                        (char*) string1);
+                sprintf(buffer3, "%s<%s%s> %s %s", timestamp, modes, status_conductor->nick, (char*) pch,
+                        (char*) string1);
             }
-            else if(pch)
+            else if (pch)
             {
-                sprintf(string_to_send,"PRIVMSG %s :%s\r\n",status_conductor->conductor->name, (char*)pch);
-                sprintf(buffer3,"%s<%s%s> %s", timestamp, modes, status_conductor->nick, (char*)pch);
+                sprintf(string_to_send, "PRIVMSG %s :%s\r\n", status_conductor->conductor->name, (char*) pch);
+                sprintf(buffer3, "%s<%s%s> %s", timestamp, modes, status_conductor->nick, (char*) pch);
             }
-
 
         }
 
-        add_text_to_conductor_list(buffer3,10, ACTIVITY);
+        add_text_to_conductor_list(buffer3, 10, ACTIVITY);
 
         send_text(string_to_send);
 
     }
 
-    if(usestringgadget)
+    if (usestringgadget)
     {
-        setmacro((Object*)WookieChat->STR_usertext,MUIA_String_Contents,"");
-    	setmacro((Object*)WookieChat->WI_main,MUIA_Window_ActiveObject,(Object*)WookieChat->STR_usertext);
+        setmacro((Object*) WookieChat->STR_usertext, MUIA_String_Contents, "");
+        setmacro((Object*) WookieChat->WI_main, MUIA_Window_ActiveObject, (Object*) WookieChat->STR_usertext);
     }
-
 
 }

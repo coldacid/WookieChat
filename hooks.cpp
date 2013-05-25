@@ -628,8 +628,8 @@ struct list_entry * ConstructLI_TextFunc(void) {
 
     *work_entry=*new_entry;
     work_entry->hostname=NULL;
-	//return new_entry;
-	
+    //return new_entry;
+    
     return work_entry;
 }
 
@@ -661,7 +661,7 @@ static void DestructLI_TextFunc(void)
     {
         //if(new_entry->hostname) { delete []new_entry->hostname; new_entry->hostname=NULL; }
         FreeMem((struct list_entry*) new_entry, sizeof(struct list_entry));
-		new_entry=NULL;
+        new_entry=NULL;
     }
 }
 
@@ -978,7 +978,7 @@ static void Display_servers_TextFunc(void)
 #endif
 
 
-	if(a_entry->TreeNode != NULL)
+    if(a_entry->TreeNode != NULL)
     {
         strcpy(servers_work,a_entry->TreeNode->tn_Name);
 
@@ -1162,19 +1162,19 @@ static void DisplayLI2_channel_TextFunc(void)
     //if(!status_conductor->conductor) return;
     //if(!status_current) return;
     //if(!status_current->current_query) return;
-	//char new_array[512];
-	
+    //char new_array[512];
+    
     //if(status_conductor->conductor!=status_current->current_query) return;
-	//if(!array) return;
-	
+    //if(!array) return;
+    
     if(a_entry != NULL)
     {
-		
-		if((int)a_entry->colour < 0) return;
-		
-		//struct channel_entry *a_entry=new channel_entry;
-		//*a_entry=*b_entry;
-		
+        
+        if((int)a_entry->colour < 0) return;
+        
+        //struct channel_entry *a_entry=new channel_entry;
+        //*a_entry=*b_entry;
+        
         if(a_entry->colour)
         {
 

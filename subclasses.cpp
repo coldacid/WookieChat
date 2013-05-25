@@ -15,8 +15,8 @@ char code_to_convert[63];
 
 void setup_background_colours(void)
 {
-	//return;
-	
+    //return;
+    
     //if(GEIT) printf("setup_background_colours() 1\n");
     if(status_current)
     {
@@ -504,7 +504,7 @@ ULONG NList_HandleInput(struct IClass *cl, Object *obj, struct MUIP_HandleInput 
     //printf("handle event\n");
 
     //struct InstanceData *data = (InstanceData*)INST_DATA(cl,obj);
-	//setmacro((Object*)WookieChat->WI_main,MUIA_Window_ActiveObject,(Object*)WookieChat->STR_usertext);
+    //setmacro((Object*)WookieChat->WI_main,MUIA_Window_ActiveObject,(Object*)WookieChat->STR_usertext);
 
     //printf("handle event subclass\n");
 
@@ -531,14 +531,14 @@ ULONG NList_HandleInput(struct IClass *cl, Object *obj, struct MUIP_HandleInput 
                             //DoMethod((Object*)status_current->current_query->LV_channel,MUIM_NList_GetSelectInfo,res);
                             //if(res->start == -1 && res->end == -1 && !res->vnum)
                             //{
-                          //  	  setmacro((Object*)WookieChat->WI_main,MUIA_Window_ActiveObject,(Object*)WookieChat->STR_usertext);
+                          //        setmacro((Object*)WookieChat->WI_main,MUIA_Window_ActiveObject,(Object*)WookieChat->STR_usertext);
                           //      break;
                           //  }
                           //  else
                           //  {
                                 //DoMethod((Object*)status_current->current_query->LV_channel,MUIM_NList_CopyToClip, MUIV_NList_CopyToClip_Selected, 0, NULL, NULL);
                                 //DoMethod((Object*)status_current->current_query->LV_channel,MUIM_NList_Select,MUIV_NList_Select_All, MUIV_NList_Select_Off, NULL);
-                          //  	  setmacro((Object*)WookieChat->WI_main,MUIA_Window_ActiveObject,(Object*)WookieChat->STR_usertext);
+                          //        setmacro((Object*)WookieChat->WI_main,MUIA_Window_ActiveObject,(Object*)WookieChat->STR_usertext);
                                 //return MUI_EventHandlerRC_Eat; //we want to eat the event
 
                           //  }
@@ -596,7 +596,7 @@ void selectup_code()
                         {
                             getmacro((Object*)status_conductor->current_query->LV_channel,MUIA_NList_Entries, &entries);
                             getmacro((Object*)status_conductor->current_query->LV_channel,MUIA_NList_First, &first);
-                        	DoMethod((Object*)status_conductor->current_query->LV_channel,MUIM_NList_InsertSingleWrap,centry,MUIV_NList_Insert_Bottom,WRAPCOL0,ALIGN_LEFT);
+                            DoMethod((Object*)status_conductor->current_query->LV_channel,MUIM_NList_InsertSingleWrap,centry,MUIV_NList_Insert_Bottom,WRAPCOL0,ALIGN_LEFT);
 
                             if ((first + visible) >= (entries - 1))
                             DoMethod((Object*)status_conductor->current_query->LV_channel, MUIM_NList_Jump, MUIV_NList_Jump_Bottom);
@@ -604,7 +604,7 @@ void selectup_code()
                         }
                         else
                         {
-                        	DoMethod((Object*)status_conductor->current_query->LV_channel,MUIM_NList_InsertSingleWrap,centry,MUIV_NList_Insert_Bottom,WRAPCOL0,ALIGN_LEFT);
+                            DoMethod((Object*)status_conductor->current_query->LV_channel,MUIM_NList_InsertSingleWrap,centry,MUIV_NList_Insert_Bottom,WRAPCOL0,ALIGN_LEFT);
                             DoMethod((Object*)status_conductor->current_query->LV_channel, MUIM_NList_Jump, MUIV_NList_Jump_Bottom);
 
                         }
@@ -620,7 +620,7 @@ void selectup_code()
                     else
                     {
 
-                    	DoMethod((Object*)status_conductor->conductor->LV_channel,MUIM_NList_InsertSingleWrap,centry,MUIV_NList_Insert_Bottom,WRAPCOL0,ALIGN_LEFT);
+                        DoMethod((Object*)status_conductor->conductor->LV_channel,MUIM_NList_InsertSingleWrap,centry,MUIV_NList_Insert_Bottom,WRAPCOL0,ALIGN_LEFT);
                         DoMethod((Object*)status_conductor->conductor->LV_channel, MUIM_NList_Jump, MUIV_NList_Jump_Bottom);
 
                         status_conductor->conductor->entries_count++;
@@ -660,12 +660,12 @@ ULONG NList_HandleEvent(struct IClass *cl, Object *obj, struct MUIP_HandleEvent 
         if(my_object1!=status_current->current_query->STR_topic &&
             my_object1!=status_current->current_query->STR_keyword &&
             my_object1!=status_current->current_query->STR_limit)
-        	setmacro((Object*)WookieChat->WI_main,MUIA_Window_ActiveObject,(Object*)WookieChat->STR_usertext);
+            setmacro((Object*)WookieChat->WI_main,MUIA_Window_ActiveObject,(Object*)WookieChat->STR_usertext);
     }
     else
     {
         if(my_object1!=status_current->current_query->STR_topic)
-        	setmacro((Object*)WookieChat->WI_main,MUIA_Window_ActiveObject,(Object*)WookieChat->STR_usertext);
+            setmacro((Object*)WookieChat->WI_main,MUIA_Window_ActiveObject,(Object*)WookieChat->STR_usertext);
 
     }
 
@@ -872,7 +872,7 @@ ULONG NList_ContextMenu(struct IClass *cl, Object *obj, struct MUIP_ContextMenuC
         case 78: // Channel Listview Copy to Clipboard
             DoMethod((Object*)obj,MUIM_NList_CopyToClip, MUIV_NList_CopyToClip_Selected, 0, NULL, NULL);
             DoMethod((Object*)obj,MUIM_NList_Select,MUIV_NList_Select_All, MUIV_NList_Select_Off, NULL);
-        	setmacro((Object*)WookieChat->WI_main,MUIA_Window_ActiveObject,(Object*)WookieChat->STR_usertext);
+            setmacro((Object*)WookieChat->WI_main,MUIA_Window_ActiveObject,(Object*)WookieChat->STR_usertext);
             break;
 
         case 79: //bring up dcc send window
@@ -1038,9 +1038,9 @@ ULONG NList_Dispatcher(void)
         case MUIM_ContextMenuChoice: return(NList_ContextMenu(cl,obj,(struct MUIP_ContextMenuChoice*)msg));
         case MUIM_HandleEvent:       return(NList_HandleEvent(cl,obj,(struct MUIP_HandleEvent*)msg));
     }
-	
-	return(DoSuperMethodA(cl,obj,msg));
-	    
+    
+    return(DoSuperMethodA(cl,obj,msg));
+        
 }
 
 }
@@ -1568,16 +1568,16 @@ ULONG BetterString_HandleEvent(struct IClass *cl, Object *obj, struct MUIP_Handl
 
 struct MyData
 {
-	struct MUI_PenSpec penspec;
-	LONG pen;
-	BOOL penchange;
+    struct MUI_PenSpec penspec;
+    LONG pen;
+    BOOL penchange;
     int requestchange;
 };
 
 
 SAVEDS ULONG Group_Setup(struct IClass *cl,Object *obj,struct Message *msg)
 {
-//	struct MyData *data = (MyData*)INST_DATA(cl,obj);
+//    struct MyData *data = (MyData*)INST_DATA(cl,obj);
 
     //printf("Group_Setup..\n");
 
@@ -1609,30 +1609,30 @@ SAVEDS ULONG Group_Setup(struct IClass *cl,Object *obj,struct Message *msg)
 
 
     custom_pen_colours[0]= MUI_ObtainPen(muiRenderInfo(obj),pendisplay_specs[1],0);
-	custom_pen_colours[1]= MUI_ObtainPen(muiRenderInfo(obj),pendisplay_specs[2],0);
-	custom_pen_colours[2]= MUI_ObtainPen(muiRenderInfo(obj),pendisplay_specs[3],0);
-	custom_pen_colours[3]= MUI_ObtainPen(muiRenderInfo(obj),pendisplay_specs[4],0);
-	custom_pen_colours[4]= MUI_ObtainPen(muiRenderInfo(obj),pendisplay_specs[5],0);
-	custom_pen_colours[5]= MUI_ObtainPen(muiRenderInfo(obj),pendisplay_specs[6],0);
-	custom_pen_colours[6]= MUI_ObtainPen(muiRenderInfo(obj),pendisplay_specs[7],0);
-	custom_pen_colours[7]= MUI_ObtainPen(muiRenderInfo(obj),pendisplay_specs[8],0);
-	custom_pen_colours[8]= MUI_ObtainPen(muiRenderInfo(obj),pendisplay_specs[9],0);
-	custom_pen_colours[9]= MUI_ObtainPen(muiRenderInfo(obj),pendisplay_specs[10],0);
-	custom_pen_colours[10]= MUI_ObtainPen(muiRenderInfo(obj),pendisplay_specs[11],0);
-	custom_pen_colours[11]= MUI_ObtainPen(muiRenderInfo(obj),pendisplay_specs[12],0);
-	custom_pen_colours[12]= MUI_ObtainPen(muiRenderInfo(obj),pendisplay_specs[13],0);
-	custom_pen_colours[13]= MUI_ObtainPen(muiRenderInfo(obj),pendisplay_specs[14],0);
-	custom_pen_colours[14]= MUI_ObtainPen(muiRenderInfo(obj),pendisplay_specs[15],0);
-	custom_pen_colours[15]= MUI_ObtainPen(muiRenderInfo(obj),pendisplay_specs[16],0);
-	custom_pen_colours[16]= MUI_ObtainPen(muiRenderInfo(obj),pendisplay_specs[17],0);
-	custom_pen_colours[17]= MUI_ObtainPen(muiRenderInfo(obj),pendisplay_specs[18],0);
-	custom_pen_colours[18]= MUI_ObtainPen(muiRenderInfo(obj),pendisplay_specs[19],0);
-	custom_pen_colours[19]= MUI_ObtainPen(muiRenderInfo(obj),pendisplay_specs[20],0);
-	custom_pen_colours[20]= MUI_ObtainPen(muiRenderInfo(obj),pendisplay_specs[21],0);
-	custom_pen_colours[21]= MUI_ObtainPen(muiRenderInfo(obj),pendisplay_specs[22],0);
-	custom_pen_colours[22]= MUI_ObtainPen(muiRenderInfo(obj),pendisplay_specs[23],0);
-	custom_pen_colours[23]= MUI_ObtainPen(muiRenderInfo(obj),pendisplay_specs[24],0);
-	//custom_pen_colours[24]= MUI_ObtainPen(muiRenderInfo(obj),pendisplay_specs[25],0);
+    custom_pen_colours[1]= MUI_ObtainPen(muiRenderInfo(obj),pendisplay_specs[2],0);
+    custom_pen_colours[2]= MUI_ObtainPen(muiRenderInfo(obj),pendisplay_specs[3],0);
+    custom_pen_colours[3]= MUI_ObtainPen(muiRenderInfo(obj),pendisplay_specs[4],0);
+    custom_pen_colours[4]= MUI_ObtainPen(muiRenderInfo(obj),pendisplay_specs[5],0);
+    custom_pen_colours[5]= MUI_ObtainPen(muiRenderInfo(obj),pendisplay_specs[6],0);
+    custom_pen_colours[6]= MUI_ObtainPen(muiRenderInfo(obj),pendisplay_specs[7],0);
+    custom_pen_colours[7]= MUI_ObtainPen(muiRenderInfo(obj),pendisplay_specs[8],0);
+    custom_pen_colours[8]= MUI_ObtainPen(muiRenderInfo(obj),pendisplay_specs[9],0);
+    custom_pen_colours[9]= MUI_ObtainPen(muiRenderInfo(obj),pendisplay_specs[10],0);
+    custom_pen_colours[10]= MUI_ObtainPen(muiRenderInfo(obj),pendisplay_specs[11],0);
+    custom_pen_colours[11]= MUI_ObtainPen(muiRenderInfo(obj),pendisplay_specs[12],0);
+    custom_pen_colours[12]= MUI_ObtainPen(muiRenderInfo(obj),pendisplay_specs[13],0);
+    custom_pen_colours[13]= MUI_ObtainPen(muiRenderInfo(obj),pendisplay_specs[14],0);
+    custom_pen_colours[14]= MUI_ObtainPen(muiRenderInfo(obj),pendisplay_specs[15],0);
+    custom_pen_colours[15]= MUI_ObtainPen(muiRenderInfo(obj),pendisplay_specs[16],0);
+    custom_pen_colours[16]= MUI_ObtainPen(muiRenderInfo(obj),pendisplay_specs[17],0);
+    custom_pen_colours[17]= MUI_ObtainPen(muiRenderInfo(obj),pendisplay_specs[18],0);
+    custom_pen_colours[18]= MUI_ObtainPen(muiRenderInfo(obj),pendisplay_specs[19],0);
+    custom_pen_colours[19]= MUI_ObtainPen(muiRenderInfo(obj),pendisplay_specs[20],0);
+    custom_pen_colours[20]= MUI_ObtainPen(muiRenderInfo(obj),pendisplay_specs[21],0);
+    custom_pen_colours[21]= MUI_ObtainPen(muiRenderInfo(obj),pendisplay_specs[22],0);
+    custom_pen_colours[22]= MUI_ObtainPen(muiRenderInfo(obj),pendisplay_specs[23],0);
+    custom_pen_colours[23]= MUI_ObtainPen(muiRenderInfo(obj),pendisplay_specs[24],0);
+    //custom_pen_colours[24]= MUI_ObtainPen(muiRenderInfo(obj),pendisplay_specs[25],0);
 
     strncpy(pendisplay_specs[1]->buf,popimage_background,32);
     strncpy(pendisplay_specs[2]->buf,popimage_nicklistbackground,32);
@@ -1641,46 +1641,46 @@ SAVEDS ULONG Group_Setup(struct IClass *cl,Object *obj,struct Message *msg)
     setup_background_colours();
 
 
-	if (!DoSuperMethodA(cl,obj,(Msg)msg))
-		return(FALSE);
+    if (!DoSuperMethodA(cl,obj,(Msg)msg))
+        return(FALSE);
 
     return(TRUE);
 }
 
 SAVEDS ULONG Group_Cleanup(struct IClass *cl,Object *obj,struct Message *msg)
 {
-//	struct MyData *data = (MyData*)INST_DATA(cl,obj);
+//    struct MyData *data = (MyData*)INST_DATA(cl,obj);
 
     //printf("cleanup..\n");
 
     //printf("Group_Cleanup..\n");
 
-	MUI_ReleasePen(muiRenderInfo(obj),custom_pen_colours[0]);
-	MUI_ReleasePen(muiRenderInfo(obj),custom_pen_colours[1]);
-	MUI_ReleasePen(muiRenderInfo(obj),custom_pen_colours[2]);
-	MUI_ReleasePen(muiRenderInfo(obj),custom_pen_colours[3]);
-	MUI_ReleasePen(muiRenderInfo(obj),custom_pen_colours[4]);
-	MUI_ReleasePen(muiRenderInfo(obj),custom_pen_colours[5]);
-	MUI_ReleasePen(muiRenderInfo(obj),custom_pen_colours[6]);
-	MUI_ReleasePen(muiRenderInfo(obj),custom_pen_colours[7]);
-	MUI_ReleasePen(muiRenderInfo(obj),custom_pen_colours[8]);
-	MUI_ReleasePen(muiRenderInfo(obj),custom_pen_colours[9]);
-	MUI_ReleasePen(muiRenderInfo(obj),custom_pen_colours[10]);
-	MUI_ReleasePen(muiRenderInfo(obj),custom_pen_colours[11]);
-	MUI_ReleasePen(muiRenderInfo(obj),custom_pen_colours[12]);
-	MUI_ReleasePen(muiRenderInfo(obj),custom_pen_colours[13]);
-	MUI_ReleasePen(muiRenderInfo(obj),custom_pen_colours[14]);
-	MUI_ReleasePen(muiRenderInfo(obj),custom_pen_colours[15]);
-	MUI_ReleasePen(muiRenderInfo(obj),custom_pen_colours[16]);
-	MUI_ReleasePen(muiRenderInfo(obj),custom_pen_colours[17]);
-	MUI_ReleasePen(muiRenderInfo(obj),custom_pen_colours[18]);
-	MUI_ReleasePen(muiRenderInfo(obj),custom_pen_colours[19]);
-	MUI_ReleasePen(muiRenderInfo(obj),custom_pen_colours[20]);
-	MUI_ReleasePen(muiRenderInfo(obj),custom_pen_colours[21]);
-	MUI_ReleasePen(muiRenderInfo(obj),custom_pen_colours[22]);
-	MUI_ReleasePen(muiRenderInfo(obj),custom_pen_colours[23]);
+    MUI_ReleasePen(muiRenderInfo(obj),custom_pen_colours[0]);
+    MUI_ReleasePen(muiRenderInfo(obj),custom_pen_colours[1]);
+    MUI_ReleasePen(muiRenderInfo(obj),custom_pen_colours[2]);
+    MUI_ReleasePen(muiRenderInfo(obj),custom_pen_colours[3]);
+    MUI_ReleasePen(muiRenderInfo(obj),custom_pen_colours[4]);
+    MUI_ReleasePen(muiRenderInfo(obj),custom_pen_colours[5]);
+    MUI_ReleasePen(muiRenderInfo(obj),custom_pen_colours[6]);
+    MUI_ReleasePen(muiRenderInfo(obj),custom_pen_colours[7]);
+    MUI_ReleasePen(muiRenderInfo(obj),custom_pen_colours[8]);
+    MUI_ReleasePen(muiRenderInfo(obj),custom_pen_colours[9]);
+    MUI_ReleasePen(muiRenderInfo(obj),custom_pen_colours[10]);
+    MUI_ReleasePen(muiRenderInfo(obj),custom_pen_colours[11]);
+    MUI_ReleasePen(muiRenderInfo(obj),custom_pen_colours[12]);
+    MUI_ReleasePen(muiRenderInfo(obj),custom_pen_colours[13]);
+    MUI_ReleasePen(muiRenderInfo(obj),custom_pen_colours[14]);
+    MUI_ReleasePen(muiRenderInfo(obj),custom_pen_colours[15]);
+    MUI_ReleasePen(muiRenderInfo(obj),custom_pen_colours[16]);
+    MUI_ReleasePen(muiRenderInfo(obj),custom_pen_colours[17]);
+    MUI_ReleasePen(muiRenderInfo(obj),custom_pen_colours[18]);
+    MUI_ReleasePen(muiRenderInfo(obj),custom_pen_colours[19]);
+    MUI_ReleasePen(muiRenderInfo(obj),custom_pen_colours[20]);
+    MUI_ReleasePen(muiRenderInfo(obj),custom_pen_colours[21]);
+    MUI_ReleasePen(muiRenderInfo(obj),custom_pen_colours[22]);
+    MUI_ReleasePen(muiRenderInfo(obj),custom_pen_colours[23]);
 
-	return(DoSuperMethodA(cl,obj,(Msg)msg));
+    return(DoSuperMethodA(cl,obj,(Msg)msg));
 }
 
 
@@ -1704,19 +1704,19 @@ ULONG Group_Dispatcher(void)
   register Msg a1 __asm("a1");            Msg msg = a1;
 #endif
 
-	switch (msg->MethodID)
-	{
-		//case OM_NEW        : return(PopPen_New      (cl,obj,(struct Message*)msg));
-		//case OM_DISPOSE    : return(PopPen_Dispose  (cl,obj,(struct Message*)msg));
-		//case OM_SET        : return(PopPen_Set      (cl,obj,(struct Message*)msg));
-		//case OM_GET        : return(PopPen_Get      (cl,obj,(struct Message*)msg));
-		//case MUIM_AskMinMax: return(PopPen_AskMinMax(cl,obj,(MUIP_AskMinMax*)msg));
-		case MUIM_Setup    : return(Group_Setup    (cl,obj,(struct Message*)msg));
-		case MUIM_Cleanup  : return(Group_Cleanup  (cl,obj,(struct Message*)msg));
-		//case MUIM_Draw     : return(PopPen_Draw     (cl,obj,(MUIP_Draw*)msg));
-	}
+    switch (msg->MethodID)
+    {
+        //case OM_NEW        : return(PopPen_New      (cl,obj,(struct Message*)msg));
+        //case OM_DISPOSE    : return(PopPen_Dispose  (cl,obj,(struct Message*)msg));
+        //case OM_SET        : return(PopPen_Set      (cl,obj,(struct Message*)msg));
+        //case OM_GET        : return(PopPen_Get      (cl,obj,(struct Message*)msg));
+        //case MUIM_AskMinMax: return(PopPen_AskMinMax(cl,obj,(MUIP_AskMinMax*)msg));
+        case MUIM_Setup    : return(Group_Setup    (cl,obj,(struct Message*)msg));
+        case MUIM_Cleanup  : return(Group_Cleanup  (cl,obj,(struct Message*)msg));
+        //case MUIM_Draw     : return(PopPen_Draw     (cl,obj,(MUIP_Draw*)msg));
+    }
 
-	//experimental 2008-11-18
+    //experimental 2008-11-18
     return(DoSuperMethodA(cl,obj,msg));
     //if (!DoSuperMethodA(cl,obj,(Msg)msg))
     //    return(FALSE);
@@ -1734,11 +1734,11 @@ ULONG Group_Dispatcher(void)
 
 SAVEDS ULONG Window_Setup(struct IClass *cl,Object *obj,struct Message *msg)
 {
-	//struct MyData *data = (MyData*)INST_DATA(cl,obj);
+    //struct MyData *data = (MyData*)INST_DATA(cl,obj);
     struct InstanceData *data = (InstanceData*)INST_DATA(cl,obj);
-	
+    
     if (!DoSuperMethodA(cl,obj,(Msg)msg))
-		return(FALSE);
+        return(FALSE);
 
     //printf("setup..\n");
 
@@ -1784,16 +1784,16 @@ SAVEDS ULONG Window_Cleanup(struct IClass *cl,Object *obj,struct Message *msg)
 {
       
     //printf("cleanup..\n");
-	
+    
     //MUI_ReleasePen(muiRenderInfo(obj),custom_pen_colours[2]);
 
-	//MUI_ReleasePen(muiRenderInfo(WookieChat->PP_CSW_join),custom_pen_colours[2]);
+    //MUI_ReleasePen(muiRenderInfo(WookieChat->PP_CSW_join),custom_pen_colours[2]);
 
     struct InstanceData *data = (InstanceData*)INST_DATA(cl,obj);
 
     DoMethod(obj,MUIM_Window_RemEventHandler,&data->ehnode);
 
-	return(DoSuperMethodA(cl,obj,(Msg)msg));
+    return(DoSuperMethodA(cl,obj,(Msg)msg));
 }
 
 /*
@@ -1801,7 +1801,7 @@ ULONG Window_HandleEvent(struct IClass *cl, Object *obj, struct MUIP_HandleEvent
 {
     printf("window handle event\n");
 
-	//DoSuperMethodA(cl,obj,(Msg)msg);
+    //DoSuperMethodA(cl,obj,(Msg)msg);
 
     //struct InstanceData *data = (InstanceData*)INST_DATA(cl,obj);
 
@@ -1816,7 +1816,7 @@ ULONG Window_HandleEvent(struct IClass *cl, Object *obj, struct MUIP_HandleEvent
 
     }
 
-	//return(DoSuperMethodA(cl,obj,(Msg)msg));
+    //return(DoSuperMethodA(cl,obj,(Msg)msg));
 
     return 0;
 
@@ -1825,23 +1825,23 @@ ULONG Window_HandleEvent(struct IClass *cl, Object *obj, struct MUIP_HandleEvent
 SAVEDS ULONG Window_Draw(struct IClass *cl,Object *obj,struct MUIP_Draw *msg)
 {
 
-	//printf("drawing..\n");
+    //printf("drawing..\n");
 
-	/*
-	** let our superclass draw itself first, area class would
-	** e.g. draw the frame and clear the whole region. What
-	** it does exactly depends on msg->flags.
-	*/
+    /*
+    ** let our superclass draw itself first, area class would
+    ** e.g. draw the frame and clear the whole region. What
+    ** it does exactly depends on msg->flags.
+    */
 
-	DoSuperMethodA(cl,obj,(Msg)msg);
+    DoSuperMethodA(cl,obj,(Msg)msg);
 
-	/*
-	** if MADF_DRAWOBJECT isn't set, we shouldn't draw anything.
-	** MUI just wanted to update the frame or something like that.
-	*/
+    /*
+    ** if MADF_DRAWOBJECT isn't set, we shouldn't draw anything.
+    ** MUI just wanted to update the frame or something like that.
+    */
 
 
-	//MUI_ReleasePen(muiRenderInfo(WookieChat->PP_CSW_join),custom_pen_colours[2]);
+    //MUI_ReleasePen(muiRenderInfo(WookieChat->PP_CSW_join),custom_pen_colours[2]);
 
     //custom_pen_colours[2] = MUI_ObtainPen(muiRenderInfo((Object*)WookieChat->PP_CSW_join),(MUI_PenSpec*)&background_pen3,0);
 
@@ -1850,7 +1850,7 @@ SAVEDS ULONG Window_Draw(struct IClass *cl,Object *obj,struct MUIP_Draw *msg)
     getmacro((Object*)status_current->current_query->STR_limit,MUIA_Selected,&string3);
 
     //if(!string1 && !string2 && !string3) printf("lkjasdf\n");
-	
+    
     return(0);
 }
 
@@ -1883,26 +1883,26 @@ ULONG Window_Dispatcher(void)
   register Msg a1 __asm("a1");            Msg msg = a1;
 #endif
 
-	switch (msg->MethodID)
-	{
-		/*case OM_NEW        : return(penNew      (cl,obj,(struct Message*)msg));
-		case OM_DISPOSE    : return(penDispose  (cl,obj,(struct Message*)msg));
-		case OM_SET        : return(penSet      (cl,obj,(struct Message*)msg));
-		case OM_GET        : return(penGet      (cl,obj,(struct Message*)msg));
-		case MUIM_AskMinMax: return(penAskMinMax(cl,obj,(MUIP_AskMinMax*)msg));
-		case MUIM_Setup    : return(penSetup    (cl,obj,(struct Message*)msg));
-		case MUIM_Cleanup  : return(penCleanup  (cl,obj,(struct Message*)msg));
-		case MUIM_Draw     : return(penDraw     (cl,obj,(MUIP_Draw*)msg));*/
+    switch (msg->MethodID)
+    {
+        /*case OM_NEW        : return(penNew      (cl,obj,(struct Message*)msg));
+        case OM_DISPOSE    : return(penDispose  (cl,obj,(struct Message*)msg));
+        case OM_SET        : return(penSet      (cl,obj,(struct Message*)msg));
+        case OM_GET        : return(penGet      (cl,obj,(struct Message*)msg));
+        case MUIM_AskMinMax: return(penAskMinMax(cl,obj,(MUIP_AskMinMax*)msg));
+        case MUIM_Setup    : return(penSetup    (cl,obj,(struct Message*)msg));
+        case MUIM_Cleanup  : return(penCleanup  (cl,obj,(struct Message*)msg));
+        case MUIM_Draw     : return(penDraw     (cl,obj,(MUIP_Draw*)msg));*/
 
-		//case OM_NEW        : return(wNew      (cl,obj,(struct Message*)msg));
+        //case OM_NEW        : return(wNew      (cl,obj,(struct Message*)msg));
         case MUIM_Window_Setup    : return(Window_Setup    (cl,obj,(struct Message*)msg));
-		case MUIM_Window_Cleanup  : return(Window_Cleanup  (cl,obj,(struct Message*)msg));
-		//case MUIM_Draw            : return(wDraw     (cl,obj,(MUIP_Draw*)msg));
+        case MUIM_Window_Cleanup  : return(Window_Cleanup  (cl,obj,(struct Message*)msg));
+        //case MUIM_Draw            : return(wDraw     (cl,obj,(MUIP_Draw*)msg));
         //case MUIM_HandleEvent     : return(Window_HandleEvent(cl,obj,(struct MUIP_HandleEvent*)msg));
 
-	}
+    }
 
-	return(DoSuperMethodA(cl,obj,msg));
+    return(DoSuperMethodA(cl,obj,msg));
 }
 
 }

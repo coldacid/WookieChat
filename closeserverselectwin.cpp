@@ -11,35 +11,35 @@
 void close_server_select_window()
 {
 
+    int a = 0;
+    int abc = 1;
 
-    int a=0;
-    int abc=1;
+    BPTR save_file = Open("progdir:servers.txt", MODE_NEWFILE);
 
-    BPTR save_file = Open("progdir:servers.txt",MODE_NEWFILE);
-
-    FPuts(save_file,(b_in)"WOOKIECHAT_SERVERS_FILE_2\n");
+    FPuts(save_file, (b_in) "WOOKIECHAT_SERVERS_FILE_2\n");
 
     do
     {
-        struct MUI_NListtree_TreeNode *treenode = (struct MUI_NListtree_TreeNode *) DoMethod((Object*)WookieChat->NLT_Servers, MUIM_NListtree_GetEntry, MUIV_NListtree_GetEntry_ListNode_Root, a, 0);
+        struct MUI_NListtree_TreeNode *treenode = (struct MUI_NListtree_TreeNode *) DoMethod(
+                (Object*) WookieChat->NLT_Servers, MUIM_NListtree_GetEntry, MUIV_NListtree_GetEntry_ListNode_Root, a,
+                0);
         a++;
 
-        if(!treenode) abc=0;
+        if (!treenode)
+            abc = 0;
         else
         {
 
-            FPuts(save_file,(b_in)treenode->tn_Name);
-            FPuts(save_file,(b_in)"\n");
+            FPuts(save_file, (b_in) treenode->tn_Name);
+            FPuts(save_file, (b_in) "\n");
 
         }
 
-    }while(abc);
-
+    } while (abc);
 
     Close(save_file);
 
-    setmacro((Object*)WookieChat->WI_label_2,MUIA_Window_Open, FALSE);
-
+    setmacro((Object*) WookieChat->WI_label_2, MUIA_Window_Open, FALSE);
 
 }
 

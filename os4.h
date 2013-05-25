@@ -26,7 +26,6 @@
 #define SSL_read IAmiSSL->SSL_read
 #define SSL_CTX_free IAmiSSL->SSL_CTX_free
 
-
 #define AddSemaphore IExec->AddSemaphore
 #define InitSemaphore IExec->InitSemaphore
 #define NewList IExec->NewList
@@ -217,7 +216,6 @@ struct MUIMasterIFace *IMUIMaster = NULL;
 #define NewDTObject IDataTypes->NewDTObject
 #define DisposeDTObject IDataTypes->DisposeDTObject
 
-
 #include "sys/filio.h"
 
 #define MUI_NewObject IMUIMaster->MUI_NewObject
@@ -227,5 +225,4 @@ struct MUIMasterIFace *IMUIMaster = NULL;
 
 #define SSL_get_current_cipher IAmiSSL->SSL_get_current_cipher
 #define SSL_CIPHER_get_name IAmiSSL->SSL_CIPHER_get_name
-
 
