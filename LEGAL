@@ -1,0 +1,132 @@
+The original WookieChat code where developed by James Carroll.
+
+The codes were purchased by Krzysztof Smiechowicz and ownership transfered
+effective 12th April 2013 (*)
+
+This copy of codes was made open source by Krzysztof Smiechowicz. The
+codes are governed by AROS Public License v1.1:
+
+http://aros.sourceforge.net/license.html
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the AROS Public License version 1.1.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+AROS Public License for more details.
+
+
+
+
+
+
+
+
+
+(*) Proof of transfer, transaction details and binary attachments removed
+
+X-Account-Key: account4
+X-UIDL: 1365749596.Kwx90Y.9,S=714871
+X-Mozilla-Status: 0011
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                 
+Return-Path: <james.carroll.jahc@gmail.com>
+Delivered-To: deadwood@wp.pl (deadwood)
+Received: (wp-smtpd mx.wp.pl 28271 invoked from network); 12 Apr 2013 08:53:14 +0200
+Received: from mail-ob0-f178.google.com ([209.85.214.178])
+          (envelope-sender <james.carroll.jahc@gmail.com>)
+          by mx.wp.pl (WP-SMTPD) with RC4-SHA encrypted SMTP
+          for <deadwood@wp.pl>; 12 Apr 2013 08:53:14 +0200
+Received: by mail-ob0-f178.google.com with SMTP id ni5so2087157obc.37
+        for <deadwood@wp.pl>; Thu, 11 Apr 2013 23:53:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:content-type;
+        bh=Pfo1fuucr2seD7GtVQ1npcRixAxZtFVfR+23uH/0IcY=;
+        b=CEVZ9O50nOWixY17BRlvGegM9Gbvk9dYXT7XStMx2KT2BxomdQFiS3zKHbt6Kkqdau
+         7WFS1Inftz5qy2/joPPwV59RB2r4Lgiiwd3xFSp5ryZgAb1QJW85Yi0U1o6P3YHKvYUn
+         AN7XpxyWg89O9w+DQjOiZO/+ckFJ+XN3/KrX6PhTJsBTZNmdpXFC0MHXty+0sVdBqj7R
+         84hqXUBLXsvdAr9tdd2J18vMjXgrjMhwUOSPaVAJm/c4zLgVBX04xzGzVOqkqLcm+2c5
+         aCVWmGBt9b5DssvTq+4zK+qRvdRfZUYP7bFcqCx0oWFExyLppjWyjmIwgKjJ4A5PjktU
+         GQ+w==
+MIME-Version: 1.0
+X-Received: by 10.182.204.5 with SMTP id ku5mr3506672obc.22.1365749592692;
+ Thu, 11 Apr 2013 23:53:12 -0700 (PDT)
+Received: by 10.60.115.9 with HTTP; Thu, 11 Apr 2013 23:53:12 -0700 (PDT)
+In-Reply-To: <CAH8FW48SX+3iykuBTNF8EdwoFYO96pSE1j7v-9RbR348npe27w@mail.gmail.com>
+References: <5161346A.4090506@wp.pl>
+	<CAH8FW49GpE4j6LhNuWCw+GqhFzAtS6pu2+D=KRwO6LywOHwytA@mail.gmail.com>
+	<5162FD1B.9080805@wp.pl>
+	<CAH8FW48tL7cbg+Zcjju8vD9zBsiBXE_dPQ5h9JkKCps-mMeDgw@mail.gmail.com>
+	<51643FBE.8010609@wp.pl>
+	<CAH8FW49hSaLZNi4LkHRakdNr94p7Qg81TuNmThCUn-NWvUJr1g@mail.gmail.com>
+	<5166ECEE.8040008@wp.pl>
+	<CAH8FW48OxKxu95JZGSQKRfxmZieofDV2_FgLfi7CJCk4SYVhqg@mail.gmail.com>
+	<516726FF.1090100@wp.pl>
+	<CAH8FW48SX+3iykuBTNF8EdwoFYO96pSE1j7v-9RbR348npe27w@mail.gmail.com>
+Date: Fri, 12 Apr 2013 18:53:12 +1200
+Message-ID: <CAH8FW4859FkYf12Q6WJMPpxdXzenP1dUTYke85NxQ-4_5NZ=Mg@mail.gmail.com>
+Subject: Re: WookieChat for RaspberryPi
+From: James Carroll <james.carroll.jahc@gmail.com>
+To: Krzysztof Smiechowicz <deadwood@wp.pl>
+Content-Type: multipart/mixed; boundary=e89a8ff1cd3e53214b04da245b1e
+X-WP-DKIM-Status: good (id: gmail.com)                                                        
+X-WP-AV: skaner antywirusowy poczty Wirtualnej Polski S. A.
+X-WP-SPAM: NO (GW) 1W00010 [EeOU]
+
+--e89a8ff1cd3e53214b04da245b1e
+Content-Type: multipart/alternative; boundary=e89a8ff1cd3e53214704da245b1c
+
+--e89a8ff1cd3e53214704da245b1c
+Content-Type: text/plain; charset=ISO-8859-1
+
+Here you go :) I'm so glad I had an old 2.12 version on my PC!
+
+-- TRANSACION DETAILS LINE REMOVED BEFORE POSTING TO SOURCEFORGE SVN
+
+Legal note:
+I'm transferring ownership of the WookieChat source code to Krzysztof
+Smiechowicz as of the 12th April 2013. He is free to do whatever he wishes
+with it, including open sourcing it, or whichever. :)
+-James Carroll 2013-04-12
+
+--e89a8ff1cd3e53214704da245b1c
+Content-Type: text/html; charset=ISO-8859-1
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div><div>Here you go :) I&#39;m so glad I had an old 2.12=
+ version on my PC! <br>
+
+-- TRANSACION DETAILS LINE REMOVED BEFORE POSTING TO SOURCEFORGE SVN
+
+<br></div><div>Legal note:<br></div><div>I&#39;m transferring ownership of =
+the WookieChat source code to <span name=3D"Krzysztof Smiechowicz" class=3D=
+"">Krzysztof Smiechowicz as of the 12th April 2013. He is free to do whatev=
+er he wishes with it, including open sourcing it, or whichever. :)</span><b=
+r>
+-James Carroll 2013-04-12<br><br></div></div>
+
+--e89a8ff1cd3e53214704da245b1c--
+--e89a8ff1cd3e53214b04da245b1e
+Content-Type: application/octet-stream; 
+	name="WookieChat_3.0 unfinished src.lha"
+Content-Disposition: attachment; 
+	filename="WookieChat_3.0 unfinished src.lha"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_hfezqo0o0
+
+-- ATTACHEMENT REMOVED BEFOR POSTING TO SOURCEFORGE SVN
+
+--e89a8ff1cd3e53214b04da245b1e
+Content-Type: application/zip; name="WookieChat 2_12 beta 14 src.zip"
+Content-Disposition: attachment; filename="WookieChat 2_12 beta 14 src.zip"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_hfezylra1
+
+-- ATTACHEMENT REMOVED BEFOR POSTING TO SOURCEFORGE SVN
+
+--e89a8ff1cd3e53214b04da245b1e--
+
+
