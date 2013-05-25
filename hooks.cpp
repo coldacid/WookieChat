@@ -1912,5 +1912,3 @@ struct Hook DisplayTREE_TextHook = { { NULL,NULL },(IPTR(*)())DisplayTREE_TextFu
 #else
 struct Hook DisplayTREE_TextHook = { { NULL,NULL },(ULONG(*)())DisplayTREE_TextFunc, NULL,NULL };
 #endif
-
-#include "arexx_hooks.cpp"

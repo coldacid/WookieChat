@@ -8,32 +8,48 @@
     for the specific language governing rights and limitations under the License.
 */
 
+#include <clib/alib_protos.h>
+#include <proto/exec.h>
+#include <proto/dos.h>
+#include <proto/intuition.h>
+#include <proto/locale.h>
+#include <proto/muimaster.h>
+#include <libraries/mui.h>
+#include <libraries/gadtools.h>
+#include <mui/NListview_mcc.h>
+
+#include <string.h>
+#include <stdlib.h>
+#include <stdio.h>
+
+#include "intern.h"
+#include "version_info.h"
+
 int disable_getline_hook(void);
 
 char string_to_send2[800];
 
-#define MAX_AREXX_SCRIPTS 20
 struct NewMenu AREXX_Menu[MAX_AREXX_SCRIPTS];
 
 APTR MN1_AREXX;
-//STRPTR maintask_basename;
 char maintask_basename[100];
 
-APTR    MN1_Hide, MNmenuBarLabel2,MN1_Main, MN1_SelectServer, MN1_NewTAB, MN1_NewGTAB,MN1_CloseTAB, MNmenuBarLabel0,MNmenuBarLabel1, MN_ClearAllHistory,MN_ClearHistory,  MN_SaveHistory, MN_MainSettings;
-APTR    MN_Settings,MN_SaveSettings, MN_MUISettings, MN_ColourSettings, MN_windows_dcc2,  MN_windows_dcc, MN_windows, MN_urlgrabber, MN_ignorelist, MN_about, MN_quit, MN_MultiColumnDisplay, MN_CloneDetection, MN_Clipboard;
-APTR    MN_MuteSound;
-APTR    MN_Edit, MN_cut, MN_copy, MN_paste;
+struct AREXX_Menu AREXX_Menu_Items[MAX_AREXX_SCRIPTS];
 
-struct AREXX_Menu
+/* Locals */
+static struct MsgPort *arexx_process_port;
+static struct MsgPort *arexx_quit_port;
+
+BOOL SafePutToPort(struct XYMessage *message, STRPTR portname)
 {
+    struct MsgPort *port;
+    Forbid();
 
-    APTR MN_MenuItem;
-    char MenuItem_String[300];
-    char MenuItem_FullFilename[300];
-    LONG return_id;
-
-} AREXX_Menu_Items[MAX_AREXX_SCRIPTS];
-
+    port = FindPort((c_in)portname);
+    if (port) PutMsg(port, (struct Message*)message);
+    Permit();
+    return(port ? TRUE : FALSE);
+}
 
 int add_scripts_to_menu()
 {
@@ -2121,31 +2137,14 @@ static struct MUI_Command commands2[] =
 
 
 APTR AREXX_App;
-//STRPTR basename;
 char basename[100];
 BOOL AREXX_started;
-//STRPTR arexxquit_portname;
 char arexxquit_portname[100];
 
 int disable_getline_hook(void)
 {
-/*struct MUI_Command
-{
-    char        *mc_Name;
-    char        *mc_Template;
-    LONG         mc_Parameters;
-    struct Hook *mc_Hook;
-    LONG         mc_Reserved[5];
-};
-*/
-
-   if(DEBUG)  printf("disable hooks\n");
+    if(DEBUG)  printf("disable hooks\n");
     setmacro((Object*)AREXX_App,MUIA_Application_Commands, &commands2);
-                              /*
-    printf("disable getline hook:%s\n",commands[13].mc_Name);
-    commands[13].mc_Hook=NULL;
-    strcpy(commands[13].mc_Name,"REMOVED");
-    */
     return 0;
 }
 

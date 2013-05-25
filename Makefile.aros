@@ -1,28 +1,30 @@
-CPP       = i386-aros-g++
+CXX       = i386-aros-g++
 CC        = i386-aros-gcc
-WINDRES   = windres.exe
-OBJ       = main.o
-LINKOBJ   = main.o
 LIBS      = -lamiga -lmui  
 INCS      = 
 CXXINCS   = 
-RCINCS    = 
-BIN       = WookieChat_AROS
 DEFINES   = 
 CXXFLAGS  = $(CXXINCS) $(DEFINES)
 CFLAGS    = $(INCS) $(DEFINES)  
-GPROF     = gprof.exe
-RM        = rm -f
-LINK      = i386-aros-g++
+TARGET    = WookieChat_AROS
+SOURCES   = main.cpp arexx_hooks.cpp globals.cpp #$(shell echo *.c)
+OBJECTS   = $(SOURCES:.cpp=.o)
 
-.PHONY: all all-before all-after clean clean-custom
-all: all-before $(BIN) all-after
+all: $(TARGET)
+ 
+$(TARGET): $(OBJECTS)
+	$(CXX) $(CFLAGS) -o $(TARGET) $(OBJECTS) $(LIBS)
 
-clean: clean-custom
-	$(RM) $(OBJ) $(BIN)
+clean:
+	-rm -f $(OBJECTS)
+	-rm -f $(TARGET)
 
-$(BIN): $(OBJ)
-	$(LINK) $(LINKOBJ) -o $(BIN) $(LIBS)
+%.o: %.c $$($$@_DEPS)
+	$(CC) $(CFLAGS) -c -o $@ $<
 
-main.o: $(GLOBALDEPS) main.cpp
-	$(CPP) -c main.cpp -o main.o $(CXXFLAGS)
+#.c.o:
+#	$(CC) $(CFLAGS) $< -o $@
+
+#.cpp.o:
+#	$(CXX) $(CXXFLAGS) $< -o $@
+	
