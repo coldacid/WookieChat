@@ -13,18 +13,16 @@ OBJECTS   = $(SOURCES:.cpp=.o)
 all: $(TARGET)
  
 $(TARGET): $(OBJECTS)
-	$(CXX) $(CFLAGS) -o $(TARGET) $(OBJECTS) $(LIBS)
+	$(CXX) $(CXXFLAGS) -o $(TARGET) $(OBJECTS) $(LIBS)
 
 clean:
 	-rm -f $(OBJECTS)
+	-rm -f $(OBJECTS:.o=.d)
 	-rm -f $(TARGET)
 
-%.o: %.c $$($$@_DEPS)
-	$(CC) $(CFLAGS) -c -o $@ $<
+-include $(OBJECTS:.o=.d)
 
-#.c.o:
-#	$(CC) $(CFLAGS) $< -o $@
-
-#.cpp.o:
-#	$(CXX) $(CXXFLAGS) $< -o $@
+%.o: %.cpp
+	$(CXX) $(CXXFLAGS) -c -o $@ $<
+	@$(CXX) -MM $(CXXFLAGS) $< > $*.d
 	
