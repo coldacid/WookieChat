@@ -106,7 +106,6 @@ struct AslIFace * IAsl = NULL;
      // && select_struct.vnum==clipboard_struct.pos+1)
 #include <proto/timer.h>
 typedef char *p_in;
-typedef char *l_in;
 typedef char *i_in;
 typedef UBYTE *a_in;
 typedef char **c2_in;
@@ -164,7 +163,6 @@ extern "C"
 #include <dos/dostags.h>
 
 typedef char *p_in;
-typedef char *l_in;
 typedef UBYTE *i_in;
 typedef UBYTE *a_in;
 typedef char **c2_in;
@@ -204,7 +202,6 @@ extern "C"
 }
 
 typedef char *p_in;
-typedef char *l_in;
 typedef unsigned int *i_in;
 typedef UBYTE *a_in;
 typedef char **c2_in;
@@ -226,7 +223,6 @@ typedef char **c2_in;
 
 
 typedef char *p_in;
-typedef char *l_in;
 typedef unsigned char *i_in;
 typedef UBYTE *a_in;
 typedef UBYTE **c2_in;
@@ -512,7 +508,6 @@ char activity[64];
 char activity_chat[64];
 char activity_highlight[64];
 char background4[64];
-char background2[64];
 char background[64];
 char banmask[200];
 char ban_window_title[200];
@@ -522,7 +517,6 @@ char pen_number[10];
 char new_array[20];
 char new_array2[900];
 char new_array3[20];
-char file_name[800];
 char listview_format[100];
 char list_channels_work[900];
 char list_found_nicks[5000][50]; // Nick completion function variables
@@ -566,7 +560,6 @@ int previous_b=0;
 int socket_global=0;
 int sort_method=1; //which sorting method is used for nick lists - only 1 presently
 LONG char_read_storage;
-LONG colour=8; //default colour for listview text
 ULONG arexx_wants_to_send_signal;
 ULONG custom_pen_colours[24];
 ULONG iconified_and_new_text;
@@ -578,15 +571,6 @@ struct DiskObject *dobj; //for the iconified icon
 struct FileRequester *filerequester;
 struct hostent *he;
 struct MUI_NList_TestPos_Result *last_clicked_res;
-struct MUI_PenSpec *pendisplay_specs[25];
-
-STRPTR popimage_background;
-STRPTR popimage_nicklistbackground;
-STRPTR popimage_tabsbackground;
-
-//char popimage_background[100];
-//char popimage_nicklistbackground[100];
-
 
 struct MUI_PenSpec *startpen;
 struct sockaddr addr_buffer, addr_buffer2;

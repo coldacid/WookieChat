@@ -8,6 +8,16 @@
     for the specific language governing rights and limitations under the License.
 */
 
+#include <proto/intuition.h>
+#include <proto/dos.h>
+#include <proto/locale.h>
+#include <libraries/mui.h>
+
+#include <stdio.h>
+#include <string.h>
+
+#include "intern.h"
+
 void set_colours(void)
 {
 

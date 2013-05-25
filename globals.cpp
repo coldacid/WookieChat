@@ -45,5 +45,15 @@ BOOL QUIET_DCC;
 
 struct timeval *systime;
 
+struct MUI_PenSpec *pendisplay_specs[25];
+
+STRPTR popimage_background;
+STRPTR popimage_nicklistbackground;
+STRPTR popimage_tabsbackground;
+
+char background2[64];
+char file_name[800];
+LONG colour=8; //default colour for listview text
+
 // "reconnection on abnormal disconnection" delay timer
 struct timeval *systime_reconnect_timer;

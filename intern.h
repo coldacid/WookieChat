@@ -22,15 +22,19 @@
 #ifdef __amigaos4__
 typedef char *b_in;
 typedef char *c_in;
+typedef char *l_in;
 #elif __MORPHOS__
 typedef char *b_in;
 typedef char *c_in;
+typedef char *l_in;
 #elif __AROS__
 typedef char *b_in;
 typedef char *c_in;
+typedef char *l_in;
 #else
 typedef char *b_in;
 typedef UBYTE *c_in;
+typedef char *l_in;
 #endif
 
 struct XYMessage
@@ -816,6 +820,15 @@ extern BOOL QUIET_DCC;
 extern struct timeval *systime; // FIXME make this a local variable in each function
 extern struct timeval *systime_reconnect_timer;
 
+extern struct MUI_PenSpec *pendisplay_specs[25];
+extern STRPTR popimage_background;
+extern STRPTR popimage_nicklistbackground;
+extern STRPTR popimage_tabsbackground;
+
+extern char background2[64]; // FIXME make this a local variable in each function
+extern char file_name[800]; // FIXME make this a local variable in each function
+extern LONG colour;
+
 /* arexx_hooks.c */
 #define MAX_AREXX_SCRIPTS 20
 extern char maintask_basename[100];
@@ -840,3 +853,11 @@ struct timeval get_sys_time(struct timeval *tv);
 
 /* process_outgoing.c */
 void process_outgoing(char*, int);
+
+/* coloursettings.c */
+void save_colours();
+void get_colours();
+void set_colours();
+
+/* subclasses.c */
+void setup_background_colours();

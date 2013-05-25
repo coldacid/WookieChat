@@ -7,7 +7,9 @@ DEFINES   =
 CXXFLAGS  = $(CXXINCS) $(DEFINES)
 CFLAGS    = $(INCS) $(DEFINES)  
 TARGET    = WookieChat_AROS
-SOURCES   = main.cpp arexx_hooks.cpp globals.cpp auto_reconnect_server.cpp closeserverselectwin.cpp
+SOURCES   = main.cpp arexx_hooks.cpp globals.cpp auto_reconnect_server.cpp closeserverselectwin.cpp \
+            coloursettings.cpp
+
 OBJECTS   = $(SOURCES:.cpp=.o)
 
 all: $(TARGET)
