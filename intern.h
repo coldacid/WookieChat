@@ -13,6 +13,7 @@
 #include <libraries/dos.h>
 #include <sys/types.h>
 #include <netinet/in.h>
+#include <sys/time.h>
 
 #define MAX_QUEUED_MESSAGES         500
 #define BUFFERSIZE                  30000
@@ -759,6 +760,8 @@ struct Settings
 };
 
 #define AREXX_MENU_VALUES           500000
+#define START_DELAY                 2
+#define RECONNECT_STRAIGHT_AWAY     1
 
 #ifndef EAD_IS_FILE
 #define EAD_IS_FILE(ead)            ((ead)->ed_Type <  0)
@@ -806,6 +809,9 @@ extern char buffer2[BUFFERSIZE*2];
 extern ULONG entries;
 extern BOOL QUIET_DCC;
 
+extern struct timeval *systime; // FIXME make this a local variable in each function
+extern struct timeval *systime_reconnect_timer;
+
 /* arexx_hooks.c */
 #define MAX_AREXX_SCRIPTS 20
 extern char maintask_basename[100];
@@ -826,6 +832,7 @@ BOOL SafePutToPort(struct XYMessage *message, STRPTR portname);
 extern int count; // FIXME make this a local variable in each function
 extern int count2; // FIXME make this a local variable in each function
 extern int DEBUG;
+struct timeval get_sys_time(struct timeval *tv);
 
 /* process_outgoing.c */
 void process_outgoing(char*, int);

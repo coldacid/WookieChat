@@ -13,6 +13,8 @@
 //in main() is some code which waits for this timer signal. if it hasnt finished
 //reconnecting by that time, it will send another timer signal.
 
+#include "intern.h"
+
 void automatically_reconnect_server(int action)
 {
 

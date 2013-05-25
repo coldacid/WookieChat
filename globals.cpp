@@ -42,3 +42,8 @@ char buffer2[BUFFERSIZE*2];
 
 ULONG entries;
 BOOL QUIET_DCC;
+
+struct timeval *systime;
+
+// "reconnection on abnormal disconnection" delay timer
+struct timeval *systime_reconnect_timer;

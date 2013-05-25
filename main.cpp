@@ -38,7 +38,6 @@ int GEIT3 = 0;
 void check_if_at_bottom(void);
 
 #include "events_arexx.cpp"
-#include "auto_reconnect_server.cpp"
 #include "connect2server.cpp"
 #include "closeserverselectwin.cpp"
 #include "nicklist.cpp"

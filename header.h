@@ -270,8 +270,6 @@ extern "C"
 #endif
 
 //automatically reconnect options
-#define RECONNECT_STRAIGHT_AWAY 1
-#define START_DELAY 2
 #define MAX_CLONE_FIELDS 25
 #define FLAG_AS_COMPLETED 1
 #define DONT_FLAG_AS_COMPLETED 0
@@ -406,7 +404,6 @@ void remove_tab_listview(void);
 void add_tabs_to_nicklist_group(void);
 void setup_notifys(void);
 void kill_my_notifys(void);
-struct timeval get_sys_time(struct timeval *tv);
 int connect2server(char*, char*, int, int, int, char*);
 void automatically_reconnect_server(int);
 char *doubleclick_url_action(char*, int, int);
@@ -1156,10 +1153,8 @@ struct Message *TimerMSG;
 struct timerequest *Timer2IO;
 struct MsgPort *Timer2MP;
 struct Message *Timer2MSG;
-struct timeval *systime;
 
-// "reconnection on abnormal disconnection" delay timer
-struct timeval *systime_reconnect_timer;
+
 
 
 //struct timerequest *Timer3IO;
