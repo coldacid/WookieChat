@@ -39,11 +39,14 @@ struct Settings my_settings;
 struct Settings temp_settings;
 
 char buffer2[BUFFERSIZE*2];
+char buffer3[BUFFERSIZE*2];
 
 ULONG entries;
 BOOL QUIET_DCC;
 
 struct timeval *systime;
+// "reconnection on abnormal disconnection" delay timer
+struct timeval *systime_reconnect_timer;
 
 struct MUI_PenSpec *pendisplay_specs[25];
 
@@ -55,5 +58,38 @@ char background2[64];
 char file_name[800];
 LONG colour=8; //default colour for listview text
 
-// "reconnection on abnormal disconnection" delay timer
-struct timeval *systime_reconnect_timer;
+char group_name[100];
+char server_name[100];
+char port_number[10];
+char server_password[50];
+char auto_joins[100];
+char auto_connect[10];
+char nick_password[50];
+char server_charset[30];
+char server_nick[128];
+char server_nick2[128];
+char server_nick3[128];
+char server_real_name[256];
+char server_user_name[256];
+LONG use_global=1;
+char *nick2;
+char *nick3;
+char *nick;
+char username[20];
+char realname[100];
+int local_charset;
+int remote_charset;
+char *local_charsets[45];
+char *remote_charsets[45];
+int total_charsets;
+
+char timestamp[12];
+
+fd_set read_master;       // master file descriptor list
+fd_set write_master;      // master file descriptor list
+int fdmax=-1;        // maximum file descriptor number
+
+BOOL ZUNE_SYSTEM;
+BOOL Pro_Charsets_Enabled=FALSE;
+
+struct hostent *he;

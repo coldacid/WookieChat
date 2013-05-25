@@ -8,6 +8,31 @@
     for the specific language governing rights and limitations under the License.
 */
 
+#include <proto/exec.h>
+#include <proto/intuition.h>
+#include <proto/locale.h>
+#include <mui/NListview_mcc.h>
+#include <mui/NListtree_mcc.h>
+
+#ifdef __amigaos4__
+#error "Missing socket includes for AmigaOS4"
+#elif __MORPHOS__
+#error "Missing socket includes for MorphOS"
+#elif __AROS__
+#include <sys/ioctl.h>
+#include <sys/socket.h>
+#include <bsdsocket/socketbasetags.h>
+#include <proto/socket.h>
+#else
+#error "Missing socket includes for AmigaOS3"
+#endif
+
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+
+#include "intern.h"
+
 void acquire_connect_details(char *work_buffer)
 {
 
@@ -253,18 +278,6 @@ int connect2server(char *servername, char *port_number, int typedservercommand, 
     status_conductor->root->nlist_tab_title.colour = 23;
     DoMethod((Object*) WookieChat->LV_tabs, MUIM_NList_ReplaceSingle, &status_conductor->root->nlist_tab_title,
             status_conductor->root->nlist_tab_title_number);
-
-    /*
-     strcpy(work_buffer,servername);
-     #ifdef __amigaos4__
-     CreateTaskTags(status_conductor->groupname, 0, (APTR)gethostbyname_separate_task, 16384, AT_Param1, status_conductor, AT_Param2, servername, TAG_DONE);
-     //IDOS->CreateNewProcTags(NP_Entry,(APTR)gethostbyname_separate_task,NP_Name,status_conductor->groupname,NP_StackSize,10000,NP_Child,TRUE,TAG_DONE);
-     #elif __MORPHOS__
-     CreateNewProcTags(NP_Entry,(APTR)gethostbyname_separate_task,NP_Name,status_conductor->groupname,NP_CodeType, CODETYPE_PPC,NP_PPCStackSize, 10000, TAG_DONE);
-     #else
-     CreateNewProcTags(NP_Entry,(APTR)gethostbyname_separate_task,NP_Name,status_conductor->groupname,NP_StackSize,10000,TAG_DONE);
-     #endif
-     */
 
 #ifdef __MORPHOS__
     if ( !(he=gethostbyname((UBYTE*)servername)) ) // get the host info

@@ -14,6 +14,7 @@
 #include <sys/types.h>
 #include <netinet/in.h>
 #include <sys/time.h>
+#include <netdb.h>
 
 #define MAX_QUEUED_MESSAGES         500
 #define BUFFERSIZE                  30000
@@ -770,6 +771,7 @@ struct Settings
 #define AREXX_MENU_VALUES           500000
 #define START_DELAY                 2
 #define RECONNECT_STRAIGHT_AWAY     1
+#define ACTIVITY                    1
 
 #ifndef EAD_IS_FILE
 #define EAD_IS_FILE(ead)            ((ead)->ed_Type <  0)
@@ -812,7 +814,8 @@ extern struct list_entry *work_entry;
 extern struct Settings my_settings;
 extern struct Settings temp_settings;
 
-extern char buffer2[BUFFERSIZE*2];
+extern char buffer2[BUFFERSIZE*2]; // FIXME make this a local variable in each function
+extern char buffer3[BUFFERSIZE*2]; // FIXME make this a local variable in each function
 
 extern ULONG entries;
 extern BOOL QUIET_DCC;
@@ -828,6 +831,41 @@ extern STRPTR popimage_tabsbackground;
 extern char background2[64]; // FIXME make this a local variable in each function
 extern char file_name[800]; // FIXME make this a local variable in each function
 extern LONG colour;
+
+extern char group_name[100];
+extern char server_name[100];
+extern char port_number[10];
+extern char server_password[50];
+extern char auto_joins[100];
+extern char auto_connect[10];
+extern char nick_password[50];
+extern char server_charset[30];
+extern char server_nick[128];
+extern char server_nick2[128];
+extern char server_nick3[128];
+extern char server_real_name[256];
+extern char server_user_name[256];
+extern LONG use_global;
+extern char *nick2; // FIXME make this a local variable in each function
+extern char *nick3; // FIXME make this a local variable in each function
+extern char *nick; // FIXME make this a local variable in each function
+extern char username[20]; // FIXME make this a local variable in each function
+extern char realname[100]; // FIXME make this a local variable in each function
+extern int local_charset;
+extern int remote_charset;
+extern char *local_charsets[45];
+extern char *remote_charsets[45];
+extern int total_charsets;
+
+extern char timestamp[12]; // FIXME make this a local variable in each function
+
+extern fd_set read_master;
+extern fd_set write_master;
+extern int fdmax;
+
+extern BOOL ZUNE_SYSTEM;
+extern BOOL Pro_Charsets_Enabled;
+extern struct hostent *he;
 
 /* arexx_hooks.c */
 #define MAX_AREXX_SCRIPTS 20
@@ -850,6 +888,7 @@ extern int count; // FIXME make this a local variable in each function
 extern int count2; // FIXME make this a local variable in each function
 extern int DEBUG;
 struct timeval get_sys_time(struct timeval *tv);
+void timestamp_2_string();
 
 /* process_outgoing.c */
 void process_outgoing(char*, int);
@@ -861,3 +900,11 @@ void set_colours();
 
 /* subclasses.c */
 void setup_background_colours();
+
+/* connect2server.c */
+int connect2server(char *servername, char *port_number, int typedservercommand, int set_connect_script_name,
+        int connect_in_current_tab, char *requested_remote_charset, int write_new_passwords_to_this_node);
+
+/* pincoming.c */
+int add_text_to_conductor_list(char*, LONG, int);
+int add_text_to_current_list(char*, LONG, int);

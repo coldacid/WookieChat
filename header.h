@@ -319,7 +319,6 @@ extern "C"
 #define ASK 3
 #define RENAME 4
 
-#define ACTIVITY 1
 #define ACTIVITY_CHAT 2
 #define ACTIVITY_HIGHLIGHT 3
 
@@ -383,8 +382,6 @@ void activate_tab_button(void);
 void remove_tab_listview(void);
 void add_tabs_to_nicklist_group(void);
 void acquire_connect_details(char*);
-int add_text_to_conductor_list(char*, LONG, int);
-int add_text_to_current_list(char*, LONG, int);
 void save_colours_choice(void);
 void load_colours_choice(void);
 void set_channel_clipboard_hook(void);
@@ -396,7 +393,6 @@ void remove_tab_listview(void);
 void add_tabs_to_nicklist_group(void);
 void setup_notifys(void);
 void kill_my_notifys(void);
-int connect2server(char*, char*, int, int, int, char*);
 void automatically_reconnect_server(int);
 char *doubleclick_url_action(char*, int, int);
 void change_window_titlebar_text(void);
@@ -429,7 +425,6 @@ void SAction(char *message);
 void CloseQueryWindow(void);
 void SQuote(char *message);
 void SPing(char *message);
-void timestamp_2_string(void);
 void ping_time(void);
 void save_settings(void);
 void save_nick_settings(void);
@@ -466,7 +461,6 @@ struct SharedList {
 
 //APTR BT_blank;
 APTR pen;
-BOOL Pro_Charsets_Enabled=FALSE;
 BOOL RECENTLY_CREATED_A_TAB=FALSE;
 BOOL muted_sound;
 BOOL is_chooser_window_open;
@@ -476,22 +470,15 @@ BOOL using_a_proxy;
 BPTR urlgrabber_file, newbptr_file;
 BPTR arexx_dir_lock;
 BOOL start_reconnect_delay_timer;
-BOOL ZUNE_SYSTEM,dont_open_colours;
+BOOL dont_open_colours;
 struct codeset *charsets[45];
 struct codeset *local_charsets_list[45];
 struct codeset *cs;
-int local_charset;
-int remote_charset;
-char *local_charsets[45];
-char *remote_charsets[45];
 char graphical_smiley_themes[10][100];
 char *background3;//=new char[64];
 char *banmask_tokens[6];
 char *channel_display;//=new char[100];
 char *NewPreParse_NewText;//=new char[100];
-char *nick2;//=new char[30];
-char *nick3;//=new char[30];
-char *nick;//=new char[30];
 char *nickcolour;//=new char[40];
 char *pch3;
 char *pch;
@@ -511,7 +498,6 @@ char background4[64];
 char background[64];
 char banmask[200];
 char ban_window_title[200];
-char buffer3[BUFFERSIZE*2];
 char buffer_text[800];
 char pen_number[10];
 char new_array[20];
@@ -524,7 +510,6 @@ char output_string[800];
 char old_ignore_entry[800];
 char old_alias_entry[800];
 char rawservername[100];
-char realname[100];
 char sendstuff[1500];
 char server[50];
 char *string123;
@@ -533,7 +518,6 @@ char string_to_send[BUFFERSIZE];
 char uhostname[50] = "58.28.146.45"; // Default Hostname
 char urlgrabber_str[2000];
 char urlvisit_str[1][2000];
-char username[20];
 char uservername[50] = "uk.amigaworld.net"; // Default Server of the User
 char windowtitlestring[110];
 char wookie_dir[400]; //the pathname wookiechat is located in
@@ -545,9 +529,7 @@ char wscreent[200];
 int a,b;
 int a_socket=0;
 int count_the_linefeeds=0;
-int total_charsets;
 int delay_b4_ping_server_count=0;
-int fdmax=-1;        // maximum file descriptor number
 int how_many_lines=15;
 int iv=0;
 int last_a=0;
@@ -569,7 +551,6 @@ struct ClockData *clockdata;
 struct ClockData *clockdata2;
 struct DiskObject *dobj; //for the iconified icon
 struct FileRequester *filerequester;
-struct hostent *he;
 struct MUI_NList_TestPos_Result *last_clicked_res;
 
 struct MUI_PenSpec *startpen;
@@ -585,11 +566,7 @@ enum { NEVER=0, ALWAYS, WHEN_WIN_ACTIVE };
 enum { AMIRC_STYLE=0, MIRC_STYLE };
 //enum { BLACK_BACKGROUND=0, WHITE_BACKGROUND };
 
-fd_set read_master;       // master file descriptor list
 fd_set read_fds;          // temp file descriptor list for select()
-//fd_set exception_master;  // master file descriptor list
-//fd_set exception_fds;     // temp file descriptor list for select()
-fd_set write_master;      // master file descriptor list
 fd_set write_fds;         // temp file descriptor list for select()
 
 char *ignore1,*ignore2,*ignore3,*ignore4,*ignore5,*ignore6,*ignore7,*ignore8,*ignore9,*ignore10;
@@ -671,70 +648,6 @@ APTR STR_events_script;
 APTR STR_events_args;
 APTR CYCLE_events;
 
-/*
-#define MYATTR_PEN  0x8022
-#define MYATTR_PEN2 0x8023
-#define MYATTR_PEN3 0x8024
-#define MYATTR_PEN4 0x8025
-#define MYATTR_PEN5 0x8026
-#define MYATTR_PEN6 0x8027
-#define MYATTR_PEN7 0x8028
-#define MYATTR_PEN8 0x8029
-#define MYATTR_PEN9 0x8030
-#define MYATTR_PEN10 0x8031
-#define MYATTR_PEN11 0x8032
-#define MYATTR_PEN12 0x8033
-#define MYATTR_PEN13 0x8034
-#define MYATTR_PEN14 0x8035
-#define MYATTR_PEN15 0x8036
-#define MYATTR_PEN16 0x8037
-#define MYATTR_PEN17 0x8038
-#define MYATTR_PEN18 0x8039
-#define MYATTR_PEN19 0x8040
-#define MYATTR_PEN20 0x8041
-#define MYATTR_PEN21 0x8042
-#define MYATTR_PEN22 0x8043
-#define MYATTR_PEN23 0x8045
-#define MYATTR_PEN24 0x8046
-  */
-char group_name[100];
-char server_name[100];
-char port_number[10];
-char server_password[50];
-char auto_joins[100];
-char auto_connect[10];
-char nick_password[50];
-char server_charset[30];
-/*
-struct server_list_structure
-{
-    int auto_connect;
-    int group;
-    char group_name[50];
-    char server_name[100];
-    char port_number[10];
-    char server_password[50];
-    char auto_joins[100];
-    char nick_password[50];
-    char server_charset[30];
-
-    char *server_name;
-    char *port_number;
-    char *server_password;
-    char *auto_joins;
-    char *nick_password;
-    char *server_charset;
-    getmacro((Object*)WookieChat->CH_autoconnect,MUIA_Selected,&auto_connect);
-    getmacro((Object*)WookieChat->STR_servername,MUIA_String_Contents,&server_name);
-    getmacro((Object*)WookieChat->STR_port,MUIA_String_Contents,&port_number);
-    getmacro((Object*)WookieChat->STR_pass,MUIA_String_Contents,&server_password);
-    getmacro((Object*)WookieChat->STR_autojoin,MUIA_String_Contents,&auto_joins);
-    getmacro((Object*)WookieChat->STR_nick_registration_command,MUIA_String_Contents,&nick_password);
-    getmacro((Object*)WookieChat->CYCLE_remote_charset,MUIA_Cycle_Active,&server_charset);
-
-
-} server_list[100];
-  */
 char num_to_string[100];
 
     struct test_tree
@@ -1065,14 +978,6 @@ int queued_messages_total;
 
 char number_of_lines_unread[20];
 
-char server_nick[128];
-char server_nick2[128];
-char server_nick3[128];
-char server_real_name[256];
-char server_user_name[256];
-//char use_global[10];
-LONG use_global=1;
-
 struct MUI_NList_GetSelectInfo *res=new struct MUI_NList_GetSelectInfo;
 ULONG visible,first;
 
@@ -1151,7 +1056,7 @@ struct MsgPort *Timer5MP;
 
 LONG error;
 ULONG days,hrs,secs,mins,mics;
-char timestamp_hrs[4]; char timestamp_mins[4]; char timestamp_secs[4]; char timestamp[12];
+char timestamp_hrs[4]; char timestamp_mins[4]; char timestamp_secs[4];
 
 //ctcp ping variables
 char pingtimestamp_hrs[4]; char pingtimestamp_mins[4]; char pingtimestamp_secs[4]; char pingtimestamp[12];
