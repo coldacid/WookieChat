@@ -8,6 +8,12 @@
     for the specific language governing rights and limitations under the License.
 */
 
+#include <proto/dos.h>
+#include <proto/intuition.h>
+#include <mui/NListtree_mcc.h>
+
+#include "intern.h"
+
 void close_server_select_window()
 {
 

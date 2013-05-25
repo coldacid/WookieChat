@@ -109,7 +109,6 @@ typedef char *p_in;
 typedef char *l_in;
 typedef char *i_in;
 typedef UBYTE *a_in;
-typedef char *b_in;
 typedef char **c2_in;
 #include "os4.h"
 
@@ -168,7 +167,6 @@ typedef char *p_in;
 typedef char *l_in;
 typedef UBYTE *i_in;
 typedef UBYTE *a_in;
-typedef char *b_in;
 typedef char **c2_in;
 
 #elif __AROS__
@@ -209,7 +207,6 @@ typedef char *p_in;
 typedef char *l_in;
 typedef unsigned int *i_in;
 typedef UBYTE *a_in;
-typedef char *b_in;
 typedef char **c2_in;
 
 #else
@@ -232,7 +229,6 @@ typedef char *p_in;
 typedef char *l_in;
 typedef unsigned char *i_in;
 typedef UBYTE *a_in;
-typedef char *b_in;
 typedef UBYTE **c2_in;
 
 extern "C"

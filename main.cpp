@@ -39,7 +39,6 @@ void check_if_at_bottom(void);
 
 #include "events_arexx.cpp"
 #include "connect2server.cpp"
-#include "closeserverselectwin.cpp"
 #include "nicklist.cpp"
 #include "sortnicks.cpp"
 //#include "create_new_tab.cpp"

@@ -20,12 +20,16 @@
 #define MAX_EVENTS                  16
 
 #ifdef __amigaos4__
+typedef char *b_in;
 typedef char *c_in;
 #elif __MORPHOS__
+typedef char *b_in;
 typedef char *c_in;
 #elif __AROS__
+typedef char *b_in;
 typedef char *c_in;
 #else
+typedef char *b_in;
 typedef UBYTE *c_in;
 #endif
 
