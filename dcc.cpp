@@ -8,6 +8,13 @@
     for the specific language governing rights and limitations under the License.
 */
 
+#include "includes.h"
+
+#include "intern.h"
+
+/* Locals */
+static LONG dcc_transfers=0;
+
 void shutdown_my_dcc_recv_socket(void)
 {
 

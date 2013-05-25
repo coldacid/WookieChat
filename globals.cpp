@@ -93,3 +93,23 @@ BOOL ZUNE_SYSTEM;
 BOOL Pro_Charsets_Enabled=FALSE;
 
 struct hostent *he;
+
+struct dcc_chat *dcc_chat_work;
+struct dcc_chat *dcc_chat_root;
+struct dcc_chat *dcc_chat_conductor;
+
+struct dcc *dcc_prev;
+struct dcc *dcc_next;
+struct dcc *dcc_work;
+struct dcc *dcc_root;
+struct dcc *dcc_conductor;
+struct dcc *dcc_send_work;
+struct dcc *dcc_send_root;
+struct dcc *dcc_send_conductor;
+
+ULONG days;
+ULONG hrs;
+ULONG secs;
+ULONG mins;
+char sendstuff[1500];
+struct dcc_entry *find=new dcc_entry;

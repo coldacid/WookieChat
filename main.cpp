@@ -46,7 +46,6 @@ void check_if_at_bottom(void);
 #include "process_outgoing.cpp"
 #include "irc.cpp"
 #include "save_settings.cpp"
-#include "dcc.cpp"
 #include "do_waitselect_code.cpp"
 #include "display_logfile_lines.cpp"
 #include "highlight_search.cpp"

@@ -8,21 +8,14 @@
     for the specific language governing rights and limitations under the License.
 */
 
-#include <clib/alib_protos.h>
-#include <proto/exec.h>
-#include <proto/dos.h>
-#include <proto/intuition.h>
-#include <proto/locale.h>
-#include <proto/muimaster.h>
-#include <libraries/mui.h>
-#include <libraries/gadtools.h>
-#include <mui/NListview_mcc.h>
+#include "includes.h"
 
-#include <string.h>
-#include <stdlib.h>
-#include <stdio.h>
+#include <clib/alib_protos.h>
+#include <proto/muimaster.h>
+#include <libraries/gadtools.h>
 
 #include "intern.h"
+
 #include "version_info.h"
 
 int disable_getline_hook(void);

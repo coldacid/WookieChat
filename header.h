@@ -106,7 +106,6 @@ struct AslIFace * IAsl = NULL;
      // && select_struct.vnum==clipboard_struct.pos+1)
 #include <proto/timer.h>
 typedef char *p_in;
-typedef char *i_in;
 typedef UBYTE *a_in;
 typedef char **c2_in;
 #include "os4.h"
@@ -163,7 +162,6 @@ extern "C"
 #include <dos/dostags.h>
 
 typedef char *p_in;
-typedef UBYTE *i_in;
 typedef UBYTE *a_in;
 typedef char **c2_in;
 
@@ -202,7 +200,6 @@ extern "C"
 }
 
 typedef char *p_in;
-typedef unsigned int *i_in;
 typedef UBYTE *a_in;
 typedef char **c2_in;
 
@@ -223,7 +220,6 @@ typedef char **c2_in;
 
 
 typedef char *p_in;
-typedef unsigned char *i_in;
 typedef UBYTE *a_in;
 typedef UBYTE **c2_in;
 
@@ -263,7 +259,6 @@ extern "C"
 
 //automatically reconnect options
 #define MAX_CLONE_FIELDS 25
-#define FLAG_AS_COMPLETED 1
 #define DONT_FLAG_AS_COMPLETED 0
 //#define QUEUED_MESSAGES_DELAY_IN_SECONDS 1
 //#define QUEUED_MESSAGES_DELAY_IN_MICROSECONDS 0
@@ -309,17 +304,9 @@ extern "C"
 
 #endif
 
-#define DCC_RECV_BUFFERSIZE 10000
 #define STDIN 0
 #define SIGNAL_TIMER 16
 
-#define OVERWRITE 0
-#define RESUME 1
-#define ABORT 2
-#define ASK 3
-#define RENAME 4
-
-#define ACTIVITY_CHAT 2
 #define ACTIVITY_HIGHLIGHT 3
 
 #ifdef __AROS__
@@ -397,15 +384,12 @@ void automatically_reconnect_server(int);
 char *doubleclick_url_action(char*, int, int);
 void change_window_titlebar_text(void);
 void initiate_outgoing_dcc_chat(char*);
-void create_recv_dcc(char*, char*, unsigned short);
 void create_recv_dcc_chat(char *, char *, char *);
-void create_send_dcc(char*,char*,int,int);
 int offer_dcc(char*,char*,char*,char*,int);
 int create_new_query_window(char*,int);
 void cleanexit(char*);
 void process_incoming();
 void process_dcc_chat_incoming();
-void send_text(char*);
 void send_current(char*);
 void send_dcc_chat(char*);
 int compare_func(char*,char*);
@@ -434,7 +418,6 @@ void close_server_select_window(void);
 void switch_between_tabs(int);
 int switch_between_tabs_with_keys(int);
 void load_colours(char*);
-void dcc_time(void);
 int display_last_few_lines_of_logfile_conductor(void);
 int load_graphical_smilies(void);
 int free_graphical_smilies(struct query_window*);
@@ -510,7 +493,6 @@ char output_string[800];
 char old_ignore_entry[800];
 char old_alias_entry[800];
 char rawservername[100];
-char sendstuff[1500];
 char server[50];
 char *string123;
 char string7[900],string8[900],string9[900],string10[900],string11[900];
@@ -1055,7 +1037,7 @@ struct timerequest *Timer5IO;
 struct MsgPort *Timer5MP;
 
 LONG error;
-ULONG days,hrs,secs,mins,mics;
+ULONG mics;
 char timestamp_hrs[4]; char timestamp_mins[4]; char timestamp_secs[4];
 
 //ctcp ping variables
@@ -1082,8 +1064,6 @@ ULONG dcc_signal;
 
 long own_address_socket;
 struct sockaddr_in own_addr;
-
-LONG dcc_transfers=0;
 
 //int lastentrynum, lastpos1, lastpos2, vcount=1,lastentry_pos=-1;
 int vcount=0
@@ -1599,72 +1579,9 @@ struct query_window *init_conductor(int a)
 }
 
 
-//dcc send/recieve transfer structure
-struct dcc
-{
-    BOOL accepted;
-    char networkname[100];
-    LONG pos;
-    char address[50];
-    char port[20];
-    char nick[150];
-    char filename[800];
-    char filepath[800];
-    char full_filename_with_path[1000];
-    char recv_buffer[DCC_RECV_BUFFERSIZE];
-    char buffer[DCC_RECV_BUFFERSIZE];
-    long dcc_socket;
-    long dcc_listen_socket;
-    struct dcc_entry *entry;
-    #ifdef __AROS__
-    IPTR total_recv;
-    IPTR start_recv; //not used yet
-    IPTR filesize;
-    #else
-    ULONG total_recv;
-    ULONG start_recv; //not used yet
-    ULONG filesize;
-    #endif
-
-    struct dcc *next;
-    struct dcc *previous;
-    BPTR dcc_file;
-    int completed;
-    int connected;
-    int removed;
-    int cancelled;
-    struct sockaddr_in test;
-    struct sockaddr_in their_addr;
-    char timestarted[1000];
-} *dcc_prev, *dcc_next, *dcc_work, *dcc_root,*dcc_conductor, *dcc_send_work, *dcc_send_root,*dcc_send_conductor;
-
-struct dcc_chat
-{
-    struct query_window *conductor;
-    char name[150];
-    char networkname[100];
-    char address[200];
-    char port[200];
-    char nick[150];
-    char own_nick[150];
-    char recv_buffer[BUFFERSIZE];
-    char buffer[BUFFERSIZE];
-    char *str;
-    long dcc_socket;
-    long dcc_listen_socket;
-    struct dcc_chat *next;
-    struct dcc_chat *previous;
-    int connected;
-    int removed;
-    struct sockaddr_in test;
-    struct sockaddr_in their_addr;
-} *dcc_chat_work, *dcc_chat_root,*dcc_chat_conductor;
-
 long dcc_socket;
 long dcc_listen_socket;
 struct sockaddr_in their_addr;
-
-struct dcc_entry *find=new dcc_entry;
 
 struct List temp_list;
 

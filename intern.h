@@ -19,22 +19,27 @@
 #define MAX_QUEUED_MESSAGES         500
 #define BUFFERSIZE                  30000
 #define MAX_EVENTS                  16
+#define DCC_RECV_BUFFERSIZE         10000
 
 #ifdef __amigaos4__
 typedef char *b_in;
 typedef char *c_in;
+typedef char *i_in;
 typedef char *l_in;
 #elif __MORPHOS__
 typedef char *b_in;
 typedef char *c_in;
+typedef UBYTE *i_in;
 typedef char *l_in;
 #elif __AROS__
 typedef char *b_in;
 typedef char *c_in;
+typedef unsigned int *i_in;
 typedef char *l_in;
 #else
 typedef char *b_in;
 typedef UBYTE *c_in;
+typedef unsigned char *i_in;
 typedef char *l_in;
 #endif
 
@@ -768,10 +773,95 @@ struct Settings
 
 };
 
+struct dcc_chat
+{
+    struct query_window *conductor;
+    char name[150];
+    char networkname[100];
+    char address[200];
+    char port[200];
+    char nick[150];
+    char own_nick[150];
+    char recv_buffer[BUFFERSIZE];
+    char buffer[BUFFERSIZE];
+    char *str;
+    long dcc_socket;
+    long dcc_listen_socket;
+    struct dcc_chat *next;
+    struct dcc_chat *previous;
+    int connected;
+    int removed;
+    struct sockaddr_in test;
+    struct sockaddr_in their_addr;
+};
+
+struct dcc_entry
+{
+    char status[50];
+    char nick[90];
+    char filename[200];
+    char cps[20];
+    char bytes_transferred[20];
+    char filesize[20];
+    char percentage[10];
+    char timeleft[50];
+    char port[20];
+};
+
+//dcc send/recieve transfer structure
+struct dcc
+{
+    BOOL accepted;
+    char networkname[100];
+    LONG pos;
+    char address[50];
+    char port[20];
+    char nick[150];
+    char filename[800];
+    char filepath[800];
+    char full_filename_with_path[1000];
+    char recv_buffer[DCC_RECV_BUFFERSIZE];
+    char buffer[DCC_RECV_BUFFERSIZE];
+    long dcc_socket;
+    long dcc_listen_socket;
+    struct dcc_entry *entry;
+    #ifdef __AROS__
+    IPTR total_recv;
+    IPTR start_recv; //not used yet
+    IPTR filesize;
+    #else
+    ULONG total_recv;
+    ULONG start_recv; //not used yet
+    ULONG filesize;
+    #endif
+
+    struct dcc *next;
+    struct dcc *previous;
+    BPTR dcc_file;
+    int completed;
+    int connected;
+    int removed;
+    int cancelled;
+    struct sockaddr_in test;
+    struct sockaddr_in their_addr;
+    char timestarted[1000];
+};
+
 #define AREXX_MENU_VALUES           500000
 #define START_DELAY                 2
 #define RECONNECT_STRAIGHT_AWAY     1
+
 #define ACTIVITY                    1
+#define ACTIVITY_CHAT               2
+
+#define FLAG_AS_COMPLETED           1
+
+#define OVERWRITE                   0
+#define RESUME                      1
+#define ABORT                       2
+#define ASK                         3
+#define RENAME                      4
+
 
 #ifndef EAD_IS_FILE
 #define EAD_IS_FILE(ead)            ((ead)->ed_Type <  0)
@@ -867,6 +957,26 @@ extern BOOL ZUNE_SYSTEM;
 extern BOOL Pro_Charsets_Enabled;
 extern struct hostent *he;
 
+extern struct dcc_chat *dcc_chat_work;
+extern struct dcc_chat *dcc_chat_root;
+extern struct dcc_chat *dcc_chat_conductor;
+
+extern struct dcc *dcc_prev;
+extern struct dcc *dcc_next;
+extern struct dcc *dcc_work;
+extern struct dcc *dcc_root;
+extern struct dcc *dcc_conductor;
+extern struct dcc *dcc_send_work;
+extern struct dcc *dcc_send_root;
+extern struct dcc *dcc_send_conductor;
+
+extern ULONG days; // FIXME make this a local variable in each function
+extern ULONG hrs; // FIXME make this a local variable in each function
+extern ULONG secs; // FIXME make this a local variable in each function
+extern ULONG mins; // FIXME make this a local variable in each function
+extern char sendstuff[1500];
+extern struct dcc_entry *find;
+
 /* arexx_hooks.c */
 #define MAX_AREXX_SCRIPTS 20
 extern char maintask_basename[100];
@@ -888,7 +998,9 @@ extern int count; // FIXME make this a local variable in each function
 extern int count2; // FIXME make this a local variable in each function
 extern int DEBUG;
 struct timeval get_sys_time(struct timeval *tv);
-void timestamp_2_string();
+void timestamp_2_string(); // FIXME chang to return value instead of setting global variable
+void dcc_time(); // FIXME chang to return value instead of setting global variable
+void send_text(char*);
 
 /* process_outgoing.c */
 void process_outgoing(char*, int);
@@ -908,3 +1020,20 @@ int connect2server(char *servername, char *port_number, int typedservercommand, 
 /* pincoming.c */
 int add_text_to_conductor_list(char*, LONG, int);
 int add_text_to_current_list(char*, LONG, int);
+
+/* dcc.c */
+extern LONG recv_thing;
+extern LONG send_thing;
+extern LONG actualLength;
+extern unsigned long dcc_addr;
+void cleanup_dcc_recv();
+void cleanup_dcc_send(int flag_as_completed);
+void dcc_time_to_recv();
+void dcc_send_data(int a);
+void dcc_chat_connect();
+void create_recv_dcc(char *nick, char *filename, char *address, unsigned short port, char *filesize);
+void accept_dcc(char *b);
+void create_send_dcc(char *nick, char *string3, int filesize, int portnumber);
+
+/* tabs_create_close.c*/
+int create_new_tab(char *name, int show_now, int query_type);

@@ -8,28 +8,9 @@
     for the specific language governing rights and limitations under the License.
 */
 
-#include <proto/exec.h>
-#include <proto/intuition.h>
-#include <proto/locale.h>
-#include <mui/NListview_mcc.h>
+#include "includes.h"
+
 #include <mui/NListtree_mcc.h>
-
-#ifdef __amigaos4__
-#error "Missing socket includes for AmigaOS4"
-#elif __MORPHOS__
-#error "Missing socket includes for MorphOS"
-#elif __AROS__
-#include <sys/ioctl.h>
-#include <sys/socket.h>
-#include <bsdsocket/socketbasetags.h>
-#include <proto/socket.h>
-#else
-#error "Missing socket includes for AmigaOS3"
-#endif
-
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
 
 #include "intern.h"
 

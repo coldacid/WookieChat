@@ -306,19 +306,6 @@ void setup_background_colours(void)
 }
 
 
-struct dcc_entry
-{
-    char status[50];
-    char nick[90];
-    char filename[200];
-    char cps[20];
-    char bytes_transferred[20];
-    char filesize[20];
-    char percentage[10];
-    char timeleft[50];
-    char port[20];
-};
-
 #ifdef __amigaos4__
 struct dcc_entry * ConstructDCC_TextFunc(REG(a0, struct Hook *hook),REG(a2, Object *obj),REG(a1, dcc_entry *new_entry)) {
 

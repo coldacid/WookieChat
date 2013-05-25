@@ -8,8 +8,8 @@
     for the specific language governing rights and limitations under the License.
 */
 
-#include <proto/dos.h>
-#include <proto/intuition.h>
+#include "includes.h"
+
 #include <mui/NListtree_mcc.h>
 
 #include "intern.h"
