@@ -17,7 +17,7 @@
    =================================================================== */
 
 //fixed width size
-#define FW 13
+
 
 
 #define  __USE_OLD_TIMEVAL__ 1
@@ -295,21 +295,15 @@ extern "C"
 #define SIGNAL_TIMER 16
 
 // prototypes
-void give_each_tab_a_page_group_number(void);
 int do_waitselect_code(void);
 BOOL FindUTF8Chars(char*);
-void remove_tab_listview(void);
-void add_tabs_to_nicklist_group(void);
 void save_colours_choice(void);
 void load_colours_choice(void);
 void shutdown_my_dcc_send_socket(void);
 void remove_tab_listview2(void);
-void remove_tab_listview(void);
 void add_tabs_to_nicklist_group(void);
-void kill_my_notifys(void);
 char *doubleclick_url_action(char*, int, int);
 int create_new_query_window(char*,int);
-void cleanexit(char*);
 int compare_func(char*,char*);
 void LoadAllLibs(void);
 void CloseQueryWindow(void);
@@ -317,7 +311,6 @@ void save_nick_settings(void);
 void load_nick_settings(void);
 void retrieve_settings(void);
 void close_server_select_window(void);
-void switch_between_tabs(int);
 void load_colours(char*);
 int load_graphical_smilies(void);
 int find_themes(void);
@@ -359,7 +352,6 @@ char wscreent[200];
 
 int a_socket=0;
 int delay_b4_ping_server_count=0;
-int iv=0;
 int last_a=0;
 int last_c=0;
 int previous_b=0;
@@ -755,7 +747,7 @@ IPTR DoSuperNew(struct IClass *cl, Object *obj, ULONG tag1, ...)
 #define BS_Object NewObjectAROS(mcc->mcc_Class,NULL //nlist subclass#else
 #else
 #define BS_Object NewObject(mcc->mcc_Class,NULL
-#endif        
+#endif
 
 
 char clipboard_string[5000];
@@ -845,474 +837,6 @@ int clip_count=1;
 char *CYA_GroupTitleColor[20];
 
 
-struct query_window *init_conductor(int a)
-{
-
-    struct query_window *test;
-
-    test = (struct query_window *) AllocVec(sizeof(struct query_window), MEMF_PUBLIC|MEMF_CLEAR);
-
-    test->entries_count=0;
-
-    for(count=0; count<2500; count++)
-        test->nicklist[count].hostname=NULL;
-
-    test->next=NULL;
-    test->removed=0;
-    test->nicks=0;
-    work_query=NULL;
-    //test->queued_messages_current=0;
-    test->queued_messages_total=0;
-
-    for(count=0; count<MAX_QUEUED_MESSAGES; count++) test->queued_messages[count]=NULL; //strcpy(test->queued_messages[count],"");
-
-
-
-    strcpy(test->limit,"");
-    strcpy(test->keyword,"");
-    strcpy(test->away_message,"");
-
-    iv++;
-    //printf("init_conductor iv:%d\n",iv);
-
-    test->BT_mode_X = (Object*)TextObject,
-        ButtonFrame,
-        MUIA_Weight, 0,
-        MUIA_FixWidth, FW,
-        MUIA_Background, MUII_ButtonBack,
-        MUIA_Text_Contents, (char*)"X",
-        MUIA_Text_PreParse, (char*)"\033c",
-        MUIA_ShortHelp, (char*)GetCatalogStr(catalog,4,(char*)"Close the current tab"),
-        MUIA_InputMode, MUIV_InputMode_RelVerify,
-    End;
-
-    test->BT_mode_T = (Object*)TextObject,
-        ButtonFrame,
-        MUIA_FixWidth, FW,
-        MUIA_Weight, 0,
-        MUIA_Background, MUII_ButtonBack,
-        MUIA_Text_Contents, (char*)"T",
-        MUIA_Text_PreParse, (char*)"\033c",
-        MUIA_ShortHelp, GetCatalogStr(catalog,6,"Topic protection. This setting prevents regular users from changing the channel topic"),
-        MUIA_InputMode, MUIV_InputMode_Toggle,
-    End;
-
-    test->BT_mode_N = (Object*)TextObject,
-        ButtonFrame,
-        MUIA_FixWidth, FW,
-        MUIA_Weight, 0,
-        MUIA_Background, MUII_ButtonBack,
-        MUIA_Text_Contents, "N",
-        MUIA_Text_PreParse, "\033c",
-        MUIA_ShortHelp, GetCatalogStr(catalog,7,"No messaging. This setting forces users to be in the channel to be able to talk in it"),
-        MUIA_InputMode, MUIV_InputMode_Toggle,
-    End;
-
-    test->BT_mode_S = (Object*)TextObject,
-        ButtonFrame,
-        MUIA_FixWidth, FW,
-        MUIA_Weight, 0,
-        MUIA_Background, MUII_ButtonBack,
-        MUIA_Text_Contents, "S",
-        MUIA_Text_PreParse, "\033c",
-        MUIA_ShortHelp, GetCatalogStr(catalog,8,"Secret mode. If this is set, the channel is invisible until you have joined"),
-        MUIA_InputMode, MUIV_InputMode_Toggle,
-    End;
-
-    test->BT_mode_I = (Object*)TextObject,
-        ButtonFrame,
-        MUIA_FixWidth, FW,
-        MUIA_Weight, 0,
-        MUIA_Background, MUII_ButtonBack,
-        MUIA_Text_Contents, "I",
-        MUIA_Text_PreParse, "\033c",
-        MUIA_ShortHelp, GetCatalogStr(catalog,9,"Invite only. Only users who have been invited to the channel may join"),
-        MUIA_InputMode, MUIV_InputMode_Toggle,
-    End;
-
-    test->BT_mode_P = (Object*)TextObject,
-        ButtonFrame,
-        MUIA_FixWidth, FW,
-        MUIA_Weight, 0,
-        MUIA_Background, MUII_ButtonBack,
-        MUIA_Text_Contents, "P",
-        MUIA_Text_PreParse, "\033c",
-        MUIA_ShortHelp, GetCatalogStr(catalog,10,"Private mode. If set, channel topic is not shown on global channel lists"),
-        MUIA_InputMode, MUIV_InputMode_Toggle,
-    End;
-
-    test->BT_mode_M = (Object*)TextObject,
-        ButtonFrame,
-        MUIA_FixWidth, FW,
-        MUIA_Weight, 0,
-        MUIA_Background, MUII_ButtonBack,
-        MUIA_Text_Contents, "M",
-        MUIA_Text_PreParse, "\033c",
-        MUIA_ShortHelp, GetCatalogStr(catalog,11,"Moderated mode. Only users with operator, halfop or voice status (thats @ % or +) may talk in channel when set"),
-        MUIA_InputMode, MUIV_InputMode_Toggle,
-    End;
-
-    test->BT_mode_B = (Object*)TextObject,
-        ButtonFrame,
-        MUIA_FixWidth, FW,
-        MUIA_Weight, 0,
-        MUIA_Background, MUII_ButtonBack,
-        MUIA_Text_Contents, "B",
-        MUIA_Text_PreParse, "\033c",
-        MUIA_ShortHelp, GetCatalogStr(catalog,12,"Click to view a list of all banmasks for this channel"),
-        MUIA_InputMode, MUIV_InputMode_RelVerify,
-    End;
-
-    test->BT_mode_K = (Object*)TextObject,
-        ButtonFrame,
-        MUIA_FixWidth, FW,
-        MUIA_Weight, 0,
-        MUIA_Background, MUII_ButtonBack,
-        MUIA_Text_Contents, "K",
-        MUIA_Text_PreParse, "\033c",
-        MUIA_ShortHelp, GetCatalogStr(catalog,13,"Keyword mode. When this is set, users need to supply a keyword (password) to enter"),
-        MUIA_InputMode, MUIV_InputMode_Toggle,
-    End;
-
-        test->STR_keyword = (Object*)BetterStringObject,
-        MUIA_Weight, 10,
-        MUIA_Frame, MUIV_Frame_String,
-        MUIA_ShortHelp, GetCatalogStr(catalog,14,"Current channel keyword"),
-        MUIA_String_Secret, TRUE,
-        End;
-
-    test->BT_mode_L = (Object*)TextObject,
-        ButtonFrame,
-        MUIA_FixWidth, FW,
-        MUIA_Weight, 0,
-        MUIA_Background, MUII_ButtonBack,
-        MUIA_Text_Contents, "L",
-        MUIA_Text_PreParse, "\033c",
-        MUIA_ShortHelp, GetCatalogStr(catalog,15,"Enforce a limit to how many users can currently join the channel"),
-        MUIA_InputMode, MUIV_InputMode_Toggle,
-    End;
-
-        test->STR_limit = (Object*)BetterStringObject,
-        MUIA_Weight, 10,
-        MUIA_Frame, MUIV_Frame_String,
-        MUIA_ShortHelp, GetCatalogStr(catalog,16,"Current user limit"),
-         MUIA_String_Accept, "0123456789",
-        End;
-
-    //setup_background_colours();
-
-    if(my_settings.use_column_display==0) //make a one columned display
-    {
-        #ifdef __AROS__
-        test->LV_channel = (Object*)NewObjectAROS(mcc2->mcc_Class, NULL,
-        #else
-        test->LV_channel = (Object*)NewObject(mcc2->mcc_Class, NULL,
-        #endif
-            MUIA_Frame, MUIV_Frame_InputList,
-            //undo
-            MUIA_NList_ConstructHook, &ConstructLI_channel_TextHook,
-            MUIA_NList_DestructHook, &DestructLI_channel_TextHook,
-            //MUIA_NList_ConstructHook, MUIV_NList_ConstructHook_String,
-            //MUIA_NList_DestructHook, MUIV_NList_DestructHook_String,
-            MUIA_NList_DisplayHook, &DisplayLI_channel_TextHook,
-            MUIA_NList_DisplayRecall, TRUE,
-            MUIA_NList_CopyEntryToClipHook, &Custom_Clipboard2_Hook,
-            MUIA_NList_AutoCopyToClip, TRUE,
-            MUIA_NList_Input, FALSE,
-            MUIA_NList_ListBackground, popimage_background,
-            MUIA_NList_TypeSelect,MUIV_NList_TypeSelect_Char,
-        End;
-    }
-    else //make a multi columned display for time/nick/text
-    {
-            #ifdef __AROS__
-            test->LV_channel = (Object*)NewObjectAROS(mcc2->mcc_Class, NULL,
-            #else
-            test->LV_channel = (Object*)NewObject(mcc2->mcc_Class,NULL,// NListObject,
-            #endif
-            MUIA_Frame, MUIV_Frame_InputList,
-            //undo
-            MUIA_NList_ConstructHook, &ConstructLI_channel_TextHook,
-            MUIA_NList_DestructHook, &DestructLI_channel_TextHook,
-            //MUIA_NList_ConstructHook, MUIV_NList_ConstructHook_String,
-            //MUIA_NList_DestructHook, MUIV_NList_DestructHook_String,
-            MUIA_NList_DisplayHook, &DisplayLI2_channel_TextHook,
-            MUIA_NList_DisplayRecall, TRUE,
-            MUIA_NList_CopyEntryToClipHook, &Custom_Clipboard2_Hook,
-            MUIA_NList_Format,listview_format,
-            MUIA_NList_AutoCopyToClip, TRUE,
-            MUIA_NList_Input, FALSE,
-            MUIA_NList_ListBackground, popimage_background,
-            MUIA_NList_TypeSelect,MUIV_NList_TypeSelect_Char,
-        End;
-
-    }
-
-    if(!test->LV_channel) cleanexit((char*)GetCatalogStr(catalog,18,"Please download and install the NList MUI Class from aminet\n"));
-
-    test->LV_channel = (Object*)NListviewObject,
-        MUIA_HelpNode, "LV_channel",
-        MUIA_Weight, 100,
-        MUIA_NListview_NList, test->LV_channel,
-    End;
-
-
-
-    if(a==1)
-    {
-
-        test->STR_topic = (Object*)BetterStringObject,
-            MUIA_Weight, 80,
-            //MUIA_Textinput_Multiline, FALSE,
-            MUIA_Frame, MUIV_Frame_String,
-            MUIA_ShortHelp, GetCatalogStr(catalog,5,"This is the channels current topic"),
-            MUIA_String_MaxLen, 500,
-        End;
-
-        test->GR_channel_modes = (Object*)GroupObject,
-            MUIA_HelpNode, "GR_channel_modes",
-            MUIA_Group_Horiz, TRUE,
-            MUIA_Group_HorizSpacing, 1,
-            MUIA_Weight,100,
-            Child, test->BT_mode_X,
-            Child, test->STR_topic,
-            Child, test->GR_mode_gadgets_sub_group=(Object*)GroupObject,
-                MUIA_Group_Horiz, TRUE,
-                MUIA_Group_HorizSpacing, 1,
-                MUIA_Weight,40,
-                MUIA_ShowMe,TRUE,
-                Child, test->BT_mode_T,
-                Child, test->BT_mode_N,
-                Child, test->BT_mode_S,
-                Child, test->BT_mode_I,
-                Child, test->BT_mode_P,
-                Child, test->BT_mode_M,
-                Child, test->BT_mode_B,
-                Child, test->BT_mode_K,
-                Child, test->STR_keyword,
-                Child, test->BT_mode_L,
-                Child, test->STR_limit,
-            End,
-        End;
-
-        #ifdef __AROS__
-        test->LV_nicklist = (Object*)NewObjectAROS(mcc2->mcc_Class,NULL,  //NListObject,
-        #else
-        test->LV_nicklist = (Object*)NewObject(mcc2->mcc_Class,NULL,  //NListObject,
-            #endif
-            MUIA_ContextMenu, test->strip = (Object*)MUI_MakeObject(MUIO_MenustripNM,MenuData1,0),
-            MUIA_ShortHelp,GetCatalogStr(catalog,319,"Graphical Usermodes Key:\nGreen = Channel Operators or @\nBlue = HalfOps or \%\nYellow = Voiced Users or +"),
-            MUIA_NList_MultiSelect, MUIV_NList_MultiSelect_Default,
-            MUIA_NList_ConstructHook, &ConstructLI_TextHook,
-            MUIA_NList_DisplayHook, &DisplayLI_TextHook,
-            MUIA_NList_DestructHook, &DestructLI_TextHook,
-            MUIA_NList_ListBackground, popimage_nicklistbackground,
-            MUIA_NList_ListPen, pendisplay_specs[22],
-            MUIA_NList_Format,"PIXELWIDTH=15, WEIGHT=90",
-            MUIA_Frame, MUIV_Frame_InputList,
-        End;
-
-        test->LV_nicklist = (Object*)NListviewObject,
-            //MUIA_Weight, 20,
-            MUIA_HelpNode, "LV_nicklist",
-            MUIA_ObjectID, MAKE_ID('L', 'V', '0', '1'),
-            MUIA_Width, my_settings.nicklist_horizontal_weight,
-            MUIA_MaxWidth, my_settings.nicklist_horizontal_weight,
-            MUIA_NListview_Horiz_ScrollBar,MUIV_NListview_HSB_None,
-            MUIA_NListview_NList, test->LV_nicklist,
-        End;
-
-        DoMethod((Object*)test->LV_nicklist,MUIM_Notify,MUIA_NList_DoubleClick,TRUE,(Object*)WookieChat->App,2,MUIM_Application_ReturnID,9);
-
-        DoMethod((Object*)test->BT_mode_B,MUIM_Notify,MUIA_Selected,FALSE,(Object*)WookieChat->App,2,MUIM_Application_ReturnID,18);
-
-
-        DoMethod((Object*)test->STR_topic,MUIM_Notify,MUIA_String_Acknowledge, MUIV_EveryTime, (Object*)WookieChat->App,2,MUIM_Application_ReturnID,29);
-
-    }
-    else
-    {
-
-        test->STR_topic = (Object*)BetterStringObject,
-            MUIA_Weight, 80,
-            //MUIA_Textinput_Multiline, FALSE,
-            MUIA_String_MaxLen, 500,
-            MUIA_Frame, MUIV_Frame_String,
-            MUIA_ShortHelp, GetCatalogStr(catalog,17,"This is the hostname of the user you are currently talking to"),
-            //MUIA_ShortHelp, "This is the hostname of the user you are currently talking to",
-        End;
-
-        /*if(ZUNE_SYSTEM==TRUE)
-        {
-            test->GR_channel_modes = (Object*)GroupObject,
-                MUIA_HelpNode, "GR_channel_modes",
-                MUIA_Group_Horiz, TRUE,
-                MUIA_Group_HorizSpacing, 1,
-                MUIA_Group_HorizSpacing, 0,
-                MUIA_Weight,100,
-                Child, test->BT_mode_X,
-                Child, test->STR_topic,
-                Child, test->BT_mode_T,
-                Child, test->BT_mode_N,
-                Child, test->BT_mode_S,
-                Child, test->BT_mode_I,
-                Child, test->BT_mode_P,
-                Child, test->BT_mode_M,
-                Child, test->BT_mode_B,
-                Child, test->BT_mode_K,
-                Child, test->STR_keyword,
-                Child, test->BT_mode_L,
-                Child, test->STR_limit,
-            End;
-
-        }
-        else*/
-        {
-            test->GR_channel_modes = (Object*)GroupObject,
-                MUIA_ShortHelp, "GR_channel_modes",
-                MUIA_Group_Horiz, TRUE,
-                MUIA_Group_HorizSpacing, 1,
-                //MUIA_Group_HorizSpacing, 2,
-                MUIA_Weight,100,
-                Child, test->BT_mode_X,
-                Child, test->STR_topic,
-            End;
-        }
-
-        #ifdef __AROS__
-        test->LV_nicklist = (Object*)NewObjectAROS(mcc2->mcc_Class,NULL,  //NListObject,
-        #else
-        test->LV_nicklist = (Object*)NewObject(mcc2->mcc_Class,NULL,  //NListObject,
-            #endif
-            MUIA_ContextMenu, test->strip = (Object*)MUI_MakeObject(MUIO_MenustripNM,MenuData1,0),
-            //MUIA_ShortHelp,"Graphical Usermodes Key:\nGreen = Channel Operators or @\nBlue = HalfOps or \%\nYellow = Voiced Users or +",
-            MUIA_NList_MultiSelect, MUIV_NList_MultiSelect_Default,
-            MUIA_NList_ConstructHook, &ConstructLI_TextHook,
-            MUIA_NList_DisplayHook, &DisplayLI_TextHook,
-            MUIA_NList_DestructHook, &DestructLI_TextHook,
-            MUIA_NList_ListBackground, popimage_nicklistbackground,
-            MUIA_NList_ListPen, pendisplay_specs[22],
-            MUIA_NList_Format,"COLWIDTH=1.5, WEIGHT=90",
-            //MUIA_NList_Format,"PIXELWIDTH=15, WEIGHT=90",
-            MUIA_Frame, MUIV_Frame_InputList,
-        End;
-
-        test->LV_nicklist = (Object*)NListviewObject,
-            MUIA_HelpNode, "LV_nicklist",
-            //MUIA_Weight, 20,
-            MUIA_Width, my_settings.nicklist_horizontal_weight,
-            MUIA_MaxWidth, my_settings.nicklist_horizontal_weight,
-            MUIA_ObjectID, MAKE_ID('L', 'V', '0', '2'),
-            MUIA_NListview_Horiz_ScrollBar,MUIV_NListview_HSB_None,
-            MUIA_NListview_NList, test->LV_nicklist,
-        End;
-
-        DoMethod((Object*)test->LV_nicklist,MUIM_Notify,MUIA_NList_DoubleClick,TRUE,(Object*)WookieChat->App,2,MUIM_Application_ReturnID,9);
-
-
-
-    }
-
-    test->GR_tabs = (Object*)GroupObject,
-        MUIA_HelpNode, "GR_listviews",
-        MUIA_Group_Horiz, FALSE,
-        MUIA_Group_HorizSpacing, 1,
-        MUIA_Group_VertSpacing, 1,
-        Child, WookieChat->GR_click_user_list_buttons,
-        Child, WookieChat->LV_tabs,
-    End;
-
-    test->GR_nicklist_and_tabs = (Object*)GroupObject,
-        MUIA_HelpNode, "GR_listviews",
-        //MUIA_HorizWeight,20,
-        //MUIA_Weight, 20,
-        MUIA_Width, my_settings.nicklist_horizontal_weight,
-        MUIA_MaxWidth, my_settings.nicklist_horizontal_weight,
-        MUIA_Group_Horiz, FALSE,
-        MUIA_Group_HorizSpacing, 1,
-        MUIA_Group_VertSpacing, 1,
-        Child, test->LV_nicklist,
-    End;
-
-    test->GR_listviews = (Object*)GroupObject,
-        MUIA_HelpNode, "GR_listviews",
-        MUIA_Group_Horiz, TRUE,
-        MUIA_Group_HorizSpacing, 1,
-        MUIA_Group_VertSpacing, 1,
-        Child, test->LV_channel,
-            Child, test->GR_listviews_sub= (Object*)GroupObject,
-                MUIA_HelpNode, "GR_listviews",
-                MUIA_Group_Horiz, FALSE,
-                MUIA_Group_HorizSpacing, 1,
-                MUIA_Group_VertSpacing, 1,
-                Child, test->TX_nicklist=TextObject,MUIA_Text_Contents,"                 ",MUIA_ShowMe,TRUE,MUIA_Background,MUII_TextBack,MUIA_Frame,MUIV_Frame_Text, End,
-                Child, test->GR_nicklist_and_tabs,
-            End,
-    End;
-
-    test->GR_conductor = (Object*)GroupObject,
-        MUIA_HelpNode, "GR_conductor",
-        MUIA_Group_HorizSpacing, 1,
-        //MUIA_Group_VertSpacing, 1,
-        MUIA_Group_VertSpacing, 1,
-        
-        Child, test->GR_channel_modes,
-        Child, test->GR_listviews,
-    End;
-
-    if(SMALLTABS)
-    {
-
-        test->BT_querybutton = (Object*)TextObject,
-            ButtonFrame,
-            MUIA_Weight, 0,
-            MUIA_Background, MUII_ButtonBack,
-            MUIA_Text_Contents, "new button",
-            MUIA_Text_PreParse, "\033c\0332",
-            MUIA_HelpNode, "BT_query2",
-            MUIA_InputMode, MUIV_InputMode_Immediate,
-            MUIA_Text_SetMin,FALSE,
-        End;
-
-    }
-    else
-    {
-        test->BT_querybutton = (Object*)TextObject,
-            ButtonFrame,
-            MUIA_MaxWidth, 150,  //testing smaller buttons
-            MUIA_Background, MUII_ButtonBack,
-            MUIA_Text_Contents, "new button",
-            MUIA_Text_PreParse, "\033c\0332",
-            MUIA_HelpNode, "BT_query2",
-            MUIA_InputMode, MUIV_InputMode_Immediate,
-            MUIA_Text_SetMin,FALSE,
-        End;
-    }
-
-    setmacro((Object*)test->LV_channel,MUIA_NListview_Horiz_ScrollBar,MUIV_NListview_HSB_None);
-
-
-    DoMethod((Object*)test->BT_mode_X,MUIM_Notify,MUIA_Selected,FALSE,(Object*)WookieChat->App,2,MUIM_Application_ReturnID,73);
-
-    test->removed=0;
-
-    test->string_root=new history;
-    test->string_conductor=new history;
-    strcpy(test->string_conductor->buffer_history,"");
-    test->string_conductor->next=NULL;
-    test->string_conductor->previous=NULL;
-    test->string_root=test->string_conductor;
-
-    DoMethod((Object*)test->LV_channel,MUIM_Notify, MUIA_NList_DoubleClick, TRUE,(Object*)WookieChat->App,2,MUIM_Application_ReturnID, 96);
-
-    strcpy(test->your_current_mode,"");
-
-    
-    use_graphical_smilies(test);
-
-    return test;
-
-}
 
 
 long dcc_socket;
@@ -1336,7 +860,7 @@ int string_id=2;
 APTR    GR_ban, GR_ban_subgroup, GR_logging_splitup, GR_logging_splitup2;
 
 APTR    GROUP_ROOT_1;
-APTR    GR_buttons, GR_virtual_buttons, GR_samples_path;
+APTR    GR_virtual_buttons, GR_samples_path;
 APTR    LA_space;
 
     APTR    GROUP_ROOT_8;

@@ -20,3 +20,4 @@ extern APTR GROUP_ROOT_0;
 extern APTR GR_top;
 extern APTR LV_events;
 extern APTR GR_bottom_group;
+extern APTR GR_buttons;

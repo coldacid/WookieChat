@@ -936,8 +936,6 @@ enum
 #define MUIC_DTPIC "Dtpic.mui"
 #endif
 
-
-
 /* globals.c */
 extern struct XYMessage *my_message;
 extern struct XYMessage *incoming_message;
@@ -1328,6 +1326,13 @@ void check_column_size();
 void set_column_size();
 int switch_between_tabs_with_keys(int);
 int switch_between_tabs_with_nlisttabclick(LONG result, BOOL saving_prefs);
+void check_if_at_bottom();
+void kill_my_notifys();
+void remove_tab_listview();
+void switch_between_tabs(int);
+void add_tabs_to_nicklist_group();
+
+
 
 /* highlight_search.c */
 int search_for_highlight_words(char *, char *);
@@ -1384,6 +1389,7 @@ void save_ignore_list();
 
 /* startexit.c */
 extern struct NewMenu MenuData1[];
+void cleanexit(char*);
 
 /* timers.c */
 BOOL TimerWait_Close();
