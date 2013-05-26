@@ -12,6 +12,7 @@ SOURCES   = main.cpp arexx_hooks.cpp globals.cpp auto_reconnect_server.cpp close
             do_waitselect_code.cpp events_arexx.cpp graphical_smilies.cpp objapp.cpp highlight_search.cpp \
             hooks.cpp irc.cpp nicklist.cpp pincoming.cpp process_outgoing.cpp save_settings.cpp \
             sortnicks.cpp startexit.cpp subclasses.cpp tabs_change.cpp tabs_create_close.cpp \
+            timers.cpp
 
 OBJECTS   = $(SOURCES:.cpp=.o)
 

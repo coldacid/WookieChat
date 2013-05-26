@@ -368,7 +368,7 @@ struct sockaddr addr_buffer, addr_buffer2;
 struct sockaddr_in slapshot_in;
 ULONG ev_type;
 ULONG portsig, portsig2, portsig3, portsig4;
-ULONG socksigbit,dccsigbit,timer_signal,reconnect_delay_timer_signal;
+ULONG socksigbit,dccsigbit,reconnect_delay_timer_signal;
 STRPTR work_incoming2;
 
 ULONG test, test2;
@@ -766,14 +766,11 @@ int lastvstart;
 int lastvend;
 
 // timer device variables
-struct timerequest *TimerIO;
-struct MsgPort *TimerMP;
+
 struct Message *TimerMSG;
 //struct MsgPort *xyreplyport;
 
-// second timer device variables for the 2 second delays
-struct timerequest *Timer2IO;
-struct MsgPort *Timer2MP;
+
 struct Message *Timer2MSG;
 
 
@@ -783,15 +780,12 @@ struct Message *Timer2MSG;
 //struct MsgPort *Timer3MP;
 //struct MsgPort *xyreplyport2;
 
-//check if its midnight yet, if it is then inform the user in all open tabs
-struct timerequest *Timer4IO;
-struct MsgPort *Timer4MP;
 
-// signal us when its time to send another line of our paste
-struct timerequest *Timer5IO;
-struct MsgPort *Timer5MP;
 
-LONG error;
+
+
+
+
 ULONG mics;
 char timestamp_secs[4];
 

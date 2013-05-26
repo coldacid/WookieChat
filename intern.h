@@ -1131,6 +1131,17 @@ extern char *string123;
 
 extern int b; //FIXME This must go
 
+extern struct timerequest *TimerIO;
+extern struct MsgPort *Timer2MP;
+extern struct timerequest *Timer2IO;
+extern struct MsgPort *Timer4MP;
+extern struct timerequest *Timer4IO;
+extern struct MsgPort *Timer5MP;
+extern struct timerequest *Timer5IO;
+extern ULONG timer_signal;
+extern LONG error;
+
+
 int which_clipboard_style();
 
 
@@ -1393,3 +1404,4 @@ void cleanexit(char*);
 
 /* timers.c */
 BOOL TimerWait_Close();
+BOOL TimerWait_Open();

@@ -210,6 +210,18 @@ char *string123;
 
 int b;
 
+struct timerequest *TimerIO;
+// second timer device variables for the 2 second delays
+struct MsgPort *Timer2MP;
+struct timerequest *Timer2IO;
+//check if its midnight yet, if it is then inform the user in all open tabs
+struct MsgPort *Timer4MP;
+struct timerequest *Timer4IO;
+// signal us when its time to send another line of our paste
+struct MsgPort *Timer5MP;
+struct timerequest *Timer5IO;
+ULONG timer_signal;
+LONG error;
 
 int which_clipboard_style()
 {

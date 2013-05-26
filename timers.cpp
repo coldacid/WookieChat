@@ -8,11 +8,19 @@
     for the specific language governing rights and limitations under the License.
 */
 
-BOOL Timer1_WaitCheck;
-BOOL Timer2_WaitCheck;
-//BOOL Timer3_WaitCheck;
-BOOL Timer4_WaitCheck;
-BOOL Timer5_WaitCheck;
+#include "includes.h"
+
+#include <clib/alib_protos.h>
+
+#include "intern.h"
+
+/* Locals */
+static BOOL Timer1_WaitCheck;
+static BOOL Timer2_WaitCheck;
+static BOOL Timer4_WaitCheck;
+static BOOL Timer5_WaitCheck;
+static struct MsgPort *TimerMP;
+
 
 BOOL TimerWait_Close(void);
 

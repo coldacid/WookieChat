@@ -687,8 +687,6 @@ void set_channel_clipboard_hook(void)
 
 }
 
-#include "timers.cpp"
-
 BOOL open_timers();
 
 static char *stack_cookie __attribute__((used)) = (char*) "$STACK: 550000";
