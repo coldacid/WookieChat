@@ -12,6 +12,7 @@
 #include <proto/intuition.h>
 #include <proto/locale.h>
 #include <proto/dos.h>
+#include <proto/utility.h>
 
 #include <libraries/mui.h>
 #include <mui/NListview_mcc.h>

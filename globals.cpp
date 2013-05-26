@@ -185,6 +185,7 @@ struct codeset *charsets[45];
 
 struct history *work_history;
 
+char listview_format[100];
 
 int which_clipboard_style()
 {

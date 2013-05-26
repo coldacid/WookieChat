@@ -8,6 +8,16 @@
     for the specific language governing rights and limitations under the License.
 */
 
+#include "includes.h"
+
+#include <proto/muimaster.h>
+
+#include "intern.h"
+#include "objapp.h"
+
+/* Locals */
+static char output_string[800];
+
 int load_user_list_buttons_config(void);
 int save_user_list_buttons_config(void);
 int create_user_list_buttons(void);
@@ -796,9 +806,6 @@ void retrieve_settings()
 
 }
 
-//#define DEFAULT_CHARSET "US-ASCII"
-//#define SECONDARY_CHARSET "ISO-8859-15"
-#define DEFAULT_CHARSET "ISO-8859-15"
 #define SECONDARY_CHARSET "US-ASCII"
 
 void load_nick_settings()
@@ -2039,16 +2046,7 @@ void load_settings()
 
 }
 
-#define MAX_BUTTONS 30
-
-struct user_list_buttons_array
-{
-    int num;
-    APTR BT_click;
-    char name[USERLIST_NAME_SIZE];
-    char command[USERLIST_COMMAND_SIZE];
-
-} buttons[MAX_BUTTONS + 1];
+struct user_list_buttons_array buttons[MAX_BUTTONS + 1];
 
 #define USER_LIST_BUTTONS_FILE "progdir:user_list_buttons.txt"
 

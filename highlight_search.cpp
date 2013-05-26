@@ -12,7 +12,6 @@
 #include "includes.h"
 
 #include <proto/datatypes.h>
-#include <proto/utility.h>
 
 #include "intern.h"
 

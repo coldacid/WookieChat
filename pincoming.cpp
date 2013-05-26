@@ -15,7 +15,6 @@
 
 #include <proto/datatypes.h>
 #include <proto/codesets.h>
-#include <proto/utility.h>
 
 #include "intern.h"
 #include "version_info.h"

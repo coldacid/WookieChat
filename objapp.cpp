@@ -10,11 +10,12 @@
 
 #include "objapp.h"
 
-APTR    MN1_Hide, MNmenuBarLabel2,MN1_Main, MN1_SelectServer, MN1_NewTAB, MN1_NewGTAB,MN1_CloseTAB, MNmenuBarLabel0,MNmenuBarLabel1, MN_ClearAllHistory,MN_ClearHistory,  MN_SaveHistory, MN_MainSettings;
-APTR    MN_Settings,MN_SaveSettings, MN_MUISettings, MN_ColourSettings, MN_windows_dcc2,  MN_windows_dcc, MN_windows, MN_urlgrabber, MN_ignorelist, MN_about, MN_quit, MN_MultiColumnDisplay, MN_CloneDetection, MN_Clipboard;
-APTR    MN_MuteSound;
-APTR    MN_Edit, MN_cut, MN_copy, MN_paste;
+APTR MN1_Hide, MNmenuBarLabel2,MN1_Main, MN1_SelectServer, MN1_NewTAB, MN1_NewGTAB,MN1_CloseTAB, MNmenuBarLabel0,MNmenuBarLabel1, MN_ClearAllHistory,MN_ClearHistory,  MN_SaveHistory, MN_MainSettings;
+APTR MN_Settings,MN_SaveSettings, MN_MUISettings, MN_ColourSettings, MN_windows_dcc2,  MN_windows_dcc, MN_windows, MN_urlgrabber, MN_ignorelist, MN_about, MN_quit, MN_MultiColumnDisplay, MN_CloneDetection, MN_Clipboard;
+APTR MN_MuteSound;
+APTR MN_Edit, MN_cut, MN_copy, MN_paste;
 
-APTR    GR_string_gadget;
-APTR    GROUP_ROOT_0;
-APTR    GR_top;
+APTR GR_string_gadget;
+APTR GROUP_ROOT_0;
+APTR GR_top;
+APTR LV_events;

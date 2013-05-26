@@ -18,7 +18,7 @@
 
 //fixed width size
 #define FW 13
-#define SECOND_SET_OF_RETURNIDS 400000
+
 
 #define  __USE_OLD_TIMEVAL__ 1
 
@@ -262,8 +262,6 @@ extern "C"
  
 
 #define SMALLSTRING_BUFFERSIZE 100
-#define USERLIST_NAME_SIZE 100
-#define USERLIST_COMMAND_SIZE 800
 
 
 #ifndef __AROS__
@@ -351,8 +349,6 @@ void remove_tab_listview(void);
 void add_tabs_to_nicklist_group(void);
 void save_colours_choice(void);
 void load_colours_choice(void);
-void set_channel_clipboard_hook(void);
-void check_column_size(void);
 void shutdown_my_dcc_send_socket(void);
 void remove_tab_listview2(void);
 void remove_tab_listview(void);
@@ -364,7 +360,6 @@ void cleanexit(char*);
 int compare_func(char*,char*);
 void LoadAllLibs(void);
 void CloseQueryWindow(void);
-void save_settings(void);
 void save_nick_settings(void);
 void load_nick_settings(void);
 void retrieve_settings(void);
@@ -414,10 +409,8 @@ char banmask[200];
 char ban_window_title[200];
 char pen_number[10];
 char new_array2[900];
-char listview_format[100];
 char list_channels_work[900];
 char list_found_nicks[5000][50]; // Nick completion function variables
-char output_string[800];
 char old_ignore_entry[800];
 char old_alias_entry[800];
 char *string123;
@@ -456,8 +449,6 @@ STRPTR work_incoming2;
 
 ULONG test, test2;
 enum { NEVER=0, ALWAYS, WHEN_WIN_ACTIVE };
-enum { AMIRC_STYLE=0, MIRC_STYLE };
-//enum { BLACK_BACKGROUND=0, WHITE_BACKGROUND };
 
 char *ignore1,*ignore2,*ignore3,*ignore4,*ignore5,*ignore6,*ignore7,*ignore8,*ignore9,*ignore10;
 
@@ -507,7 +498,7 @@ struct MUI_CustomClass *NLI_Class;
 
 
 
-APTR LV_events;
+
 APTR STR_events_script;
 APTR STR_events_args;
 APTR CYCLE_events;

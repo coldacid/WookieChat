@@ -887,6 +887,11 @@ struct SharedList
     struct List sl_List;
 };
 
+enum
+{
+    AMIRC_STYLE = 0, MIRC_STYLE
+};
+
 #define AREXX_MENU_VALUES           500000
 #define START_DELAY                 2
 #define RECONNECT_STRAIGHT_AWAY     1
@@ -910,6 +915,8 @@ struct SharedList
 #define HOSTNAME_STRING_SIZE        85
 
 #define CONNECT_IN_CURRENT_TAB      1
+
+#define SECOND_SET_OF_RETURNIDS     400000
 
 #ifndef EAD_IS_FILE
 #define EAD_IS_FILE(ead)            ((ead)->ed_Type <  0)
@@ -1098,6 +1105,8 @@ extern struct codeset *charsets[45];
 
 extern struct history *work_history;
 
+extern char listview_format[100];
+
 int which_clipboard_style();
 
 
@@ -1131,6 +1140,7 @@ void dcc_time(); // FIXME chang to return value instead of setting global variab
 void send_text(char*);
 void ping_time();
 void send_current(char*);
+void set_channel_clipboard_hook();
 
 /* process_outgoing.c */
 void process_outgoing(char*, int);
@@ -1255,6 +1265,8 @@ int update_TX_nicklist();
 int update_your_nickname_text_label();
 void activate_tab_button();
 void setup_notifys();
+void check_column_size();
+void set_column_size();
 
 /* highlight_search.c */
 int search_for_highlight_words(char *, char *);
@@ -1280,3 +1292,31 @@ int display_last_few_lines_of_logfile_conductor();
 
 /* subclasses.c */
 extern BOOL user_is_trying_to_select_text;
+
+/* save_settings.c */
+#define MAX_BUTTONS             30
+#define USERLIST_NAME_SIZE      100
+#define USERLIST_COMMAND_SIZE   800
+#define DEFAULT_CHARSET         "ISO-8859-15"
+
+
+struct user_list_buttons_array
+{
+    int num;
+    APTR BT_click;
+    char name[USERLIST_NAME_SIZE];
+    char command[USERLIST_COMMAND_SIZE];
+
+};
+extern struct user_list_buttons_array buttons[MAX_BUTTONS + 1];
+
+void set_settings();
+void load_settings();
+int load_user_list_buttons_config();
+int create_user_list_buttons();
+int load_events_settings();
+void save_settings();
+int save_events_settings();
+void get_events_settings();
+void load_ignore_list();
+void save_ignore_list();
