@@ -122,3 +122,10 @@ char new_array[20];
 ULONG custom_pen_colours[24];
 ULONG visible;
 ULONG first;
+
+fd_set read_fds;          // temp file descriptor list for select()
+fd_set write_fds;         // temp file descriptor list for select()
+int queued_messages_total;
+BOOL start_reconnect_delay_timer;
+char string10[900];
+char dcctimestamp[12];

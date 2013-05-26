@@ -8,6 +8,15 @@
     for the specific language governing rights and limitations under the License.
 */
 
+#include "includes.h"
+
+#include "intern.h"
+
+/* Locals */
+static char uhostname[50] = "58.28.146.45"; // Default Hostname
+static char uservername[50] = "uk.amigaworld.net"; // Default Server of the User
+static int len;
+
 int do_waitselect_code(void)
 {
 

@@ -847,9 +847,32 @@ struct dcc
     char timestarted[1000];
 };
 
+enum
+{
+    HIGHLIGHT = 0,
+    CONNECT,
+    DISCONNECT,
+    JOIN,
+    PART,
+    QUIT,
+    DCC_RECV_OFFERED,
+    DCC_RECV_FINISHED,
+    DCC_SEND_FINISHED,
+    CHANNEL_MESSAGE,
+    PRIVATE_MESSAGE,
+    NOTICE,
+    CTCP_REQUEST,
+    KICK,
+    MODE_CHANGE,
+    INVITE
+};
+
+
 #define AREXX_MENU_VALUES           500000
 #define START_DELAY                 2
 #define RECONNECT_STRAIGHT_AWAY     1
+#define DONT_FLAG_AS_COMPLETED      0
+
 
 #define ACTIVITY                    1
 #define ACTIVITY_CHAT               2
@@ -986,6 +1009,12 @@ extern ULONG custom_pen_colours[24];
 extern ULONG visible;
 extern ULONG first;
 
+extern fd_set read_fds;
+extern fd_set write_fds;
+extern int queued_messages_total;
+extern BOOL start_reconnect_delay_timer;
+extern char string10[900];  // FIXME make this a local variable in each function
+extern char dcctimestamp[12];
 
 /* arexx_hooks.c */
 #define MAX_AREXX_SCRIPTS 20
@@ -1030,6 +1059,8 @@ int connect2server(char *servername, char *port_number, int typedservercommand, 
 /* pincoming.c */
 int add_text_to_conductor_list(char*, LONG, int);
 int add_text_to_current_list(char*, LONG, int);
+void process_incoming();
+void process_dcc_chat_incoming();
 
 /* dcc.c */
 extern LONG recv_thing;
@@ -1044,9 +1075,19 @@ void dcc_chat_connect();
 void create_recv_dcc(char *nick, char *filename, char *address, unsigned short port, char *filesize);
 void accept_dcc(char *b);
 void create_send_dcc(char *nick, char *string3, int filesize, int portnumber);
+void shutdown_my_dcc_recv_socket();
 
 /* tabs_create_close.c */
 int create_new_tab(char *name, int show_now, int query_type);
 
 /* graphical_smilies.c */
 void insert_graphical_smilies();
+
+/* events_arexx.c */
+extern char event_string[900];
+extern char target_nick[60];
+void create_arexx_event_string(char *arexx_event_to_use, char *arexx_arguments);
+BOOL is_window_active();
+
+/* auto_reconnect_server.c */
+void automatically_reconnect_server(int);

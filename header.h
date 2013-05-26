@@ -259,9 +259,6 @@ extern "C"
 
 //automatically reconnect options
 #define MAX_CLONE_FIELDS 25
-#define DONT_FLAG_AS_COMPLETED 0
-//#define QUEUED_MESSAGES_DELAY_IN_SECONDS 1
-//#define QUEUED_MESSAGES_DELAY_IN_MICROSECONDS 0
 
 #define QUEUED_MESSAGES_DELAY_IN_SECONDS 0
 #define QUEUED_MESSAGES_DELAY_IN_MICROSECONDS 750000
@@ -373,14 +370,12 @@ void save_colours_choice(void);
 void load_colours_choice(void);
 void set_channel_clipboard_hook(void);
 void check_column_size(void);
-void shutdown_my_dcc_recv_socket(void);
 void shutdown_my_dcc_send_socket(void);
 void remove_tab_listview2(void);
 void remove_tab_listview(void);
 void add_tabs_to_nicklist_group(void);
 void setup_notifys(void);
 void kill_my_notifys(void);
-void automatically_reconnect_server(int);
 char *doubleclick_url_action(char*, int, int);
 void change_window_titlebar_text(void);
 void initiate_outgoing_dcc_chat(char*);
@@ -388,8 +383,6 @@ void create_recv_dcc_chat(char *, char *, char *);
 int offer_dcc(char*,char*,char*,char*,int);
 int create_new_query_window(char*,int);
 void cleanexit(char*);
-void process_incoming();
-void process_dcc_chat_incoming();
 void send_current(char*);
 void send_dcc_chat(char*);
 int compare_func(char*,char*);
@@ -452,7 +445,6 @@ BOOL aslresult;
 BOOL using_a_proxy;
 BPTR urlgrabber_file, newbptr_file;
 BPTR arexx_dir_lock;
-BOOL start_reconnect_delay_timer;
 BOOL dont_open_colours;
 struct codeset *charsets[45];
 struct codeset *local_charsets_list[45];
@@ -493,12 +485,10 @@ char old_alias_entry[800];
 char rawservername[100];
 char server[50];
 char *string123;
-char string7[900],string8[900],string9[900],string10[900],string11[900];
+char string7[900],string8[900],string9[900],string11[900];
 char string_to_send[BUFFERSIZE];
-char uhostname[50] = "58.28.146.45"; // Default Hostname
 char urlgrabber_str[2000];
 char urlvisit_str[1][2000];
-char uservername[50] = "uk.amigaworld.net"; // Default Server of the User
 char windowtitlestring[110];
 char wookie_dir[400]; //the pathname wookiechat is located in
 char wscreent[200];
@@ -512,7 +502,6 @@ int delay_b4_ping_server_count=0;
 int iv=0;
 int last_a=0;
 int last_c=0;
-int len;
 int nickcomp_count=0;
 int nickcomp_state=0;
 int nick_length;
@@ -542,9 +531,6 @@ enum { NEVER=0, ALWAYS, WHEN_WIN_ACTIVE };
 enum { AMIRC_STYLE=0, MIRC_STYLE };
 //enum { BLACK_BACKGROUND=0, WHITE_BACKGROUND };
 
-fd_set read_fds;          // temp file descriptor list for select()
-fd_set write_fds;         // temp file descriptor list for select()
-
 char *ignore1,*ignore2,*ignore3,*ignore4,*ignore5,*ignore6,*ignore7,*ignore8,*ignore9,*ignore10;
 
 char clone_results[MAX_CLONE_FIELDS][900];
@@ -554,23 +540,6 @@ int count_clones;
 
 
 
-enum {
-HIGHLIGHT=0,
-CONNECT,
-DISCONNECT,
-JOIN,
-PART,
-QUIT,
-DCC_RECV_OFFERED,
-DCC_RECV_FINISHED,
-DCC_SEND_FINISHED,
-CHANNEL_MESSAGE,
-PRIVATE_MESSAGE,
-NOTICE,
-CTCP_REQUEST,
-KICK,
-MODE_CHANGE,
-INVITE };
 
 struct graphical_smilies_struct
 {
@@ -950,7 +919,7 @@ struct history
 
 
 
-int queued_messages_total;
+
 
 char number_of_lines_unread[20];
 
@@ -1036,7 +1005,7 @@ char timestamp_hrs[4]; char timestamp_mins[4]; char timestamp_secs[4];
 char pingtimestamp_hrs[4]; char pingtimestamp_mins[4]; char pingtimestamp_secs[4]; char pingtimestamp[12];
 
 //dcc time variables
-char dcctimestamp_secs[1000]; char dcctimestamp[12];
+char dcctimestamp_secs[1000];
 
 int pingcount=0;
 
