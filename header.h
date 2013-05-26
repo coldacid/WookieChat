@@ -433,7 +433,6 @@ struct SharedList {
 //APTR BT_blank;
 APTR pen;
 BOOL RECENTLY_CREATED_A_TAB=FALSE;
-BOOL muted_sound;
 BOOL is_chooser_window_open;
 BOOL user_ignore_privmsg, user_ignore_ctcp, user_ignore_dcc;
 BOOL aslresult;
@@ -505,7 +504,7 @@ int sort_method=1; //which sorting method is used for nick lists - only 1 presen
 ULONG arexx_wants_to_send_signal;
 ULONG iconified_and_new_text;
 long ev_sock;
-Object *o, *o2, *o3;
+Object *o, *o3;
 struct ClockData *clockdata;
 struct ClockData *clockdata2;
 struct DiskObject *dobj; //for the iconified icon

@@ -10,7 +10,8 @@
 
 #include <exec/types.h>
 #include <exec/ports.h>
-#include <libraries/dos.h>
+#include <dos/dos.h>
+#include <intuition/intuition.h>
 #include <sys/types.h>
 #include <netinet/in.h>
 #include <sys/time.h>
@@ -1035,6 +1036,9 @@ extern LONG count3; // FIXME make this a local variable in each function
 extern LONG count4; // FIXME make this a local variable in each function
 extern char string7[900]; // FIXME make this a local variable in each function
 extern BPTR newbptr_file; // FIXME make this a local variable in each function
+
+extern BOOL muted_sound;
+extern Object *o2;
 
 /* arexx_hooks.c */
 #define MAX_AREXX_SCRIPTS 20

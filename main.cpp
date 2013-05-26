@@ -45,7 +45,6 @@ void check_if_at_bottom(void);
 #include "process_outgoing.cpp"
 #include "irc.cpp"
 #include "save_settings.cpp"
-#include "highlight_search.cpp"
 
 void copy_settings_to_undo_buffer()
 {

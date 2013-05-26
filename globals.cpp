@@ -139,3 +139,6 @@ LONG count3;
 LONG count4;
 char string7[900];
 BPTR newbptr_file;
+
+BOOL muted_sound;
+Object *o2;

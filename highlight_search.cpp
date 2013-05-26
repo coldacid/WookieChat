@@ -9,6 +9,12 @@
 */
 
 //this function returns 1 (TRUE) if the nick or any configured highlight words are found
+#include "includes.h"
+
+#include <proto/datatypes.h>
+#include <proto/utility.h>
+
+#include "intern.h"
 
 BYTE sig;
 
