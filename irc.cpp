@@ -12,6 +12,9 @@
                             IRC Functions
    =================================================================== */
 
+#include "includes.h"
+
+#include "intern.h"
 
 void SWhoIs(char *selnick)
 {

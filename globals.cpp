@@ -148,6 +148,9 @@ Object *o2;
 char *string2;
 char *string3;
 
+char string_to_send[BUFFERSIZE];
+char pingtimestamp[12];
+
 int which_clipboard_style()
 {
     if(my_settings.which_clipboard_style==COLUMNS)

@@ -22,26 +22,22 @@
 #define MAX_EVENTS                  16
 #define DCC_RECV_BUFFERSIZE         10000
 
-#ifdef __amigaos4__
 typedef char *b_in;
+typedef char *l_in;
+typedef char *p_in;
+
+#ifdef __amigaos4__
 typedef char *c_in;
 typedef char *i_in;
-typedef char *l_in;
 #elif __MORPHOS__
-typedef char *b_in;
 typedef char *c_in;
 typedef UBYTE *i_in;
-typedef char *l_in;
 #elif __AROS__
-typedef char *b_in;
 typedef char *c_in;
 typedef unsigned int *i_in;
-typedef char *l_in;
 #else
-typedef char *b_in;
 typedef UBYTE *c_in;
 typedef unsigned char *i_in;
-typedef char *l_in;
 #endif
 
 struct XYMessage
@@ -1047,6 +1043,9 @@ extern Object *o2;
 extern char *string2; // FIXME make this a local variable in each function
 extern char *string3; // FIXME make this a local variable in each function
 
+extern char string_to_send[BUFFERSIZE];
+extern char pingtimestamp[12];
+
 int which_clipboard_style();
 
 /* arexx_hooks.c */
@@ -1073,6 +1072,7 @@ struct timeval get_sys_time(struct timeval *tv);
 void timestamp_2_string(); // FIXME chang to return value instead of setting global variable
 void dcc_time(); // FIXME chang to return value instead of setting global variable
 void send_text(char*);
+void ping_time();
 
 /* process_outgoing.c */
 void process_outgoing(char*, int);
@@ -1113,6 +1113,7 @@ void shutdown_my_dcc_recv_socket();
 
 /* tabs_create_close.c */
 int create_new_tab(char *name, int show_now, int query_type);
+void close_tab();
 
 /* graphical_smilies.c */
 #define MAXIMUM_SMILEYS         35

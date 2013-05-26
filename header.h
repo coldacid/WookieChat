@@ -104,7 +104,6 @@ struct AslIFace * IAsl = NULL;
 #include <proto/bsdsocket.h>
      // && select_struct.vnum==clipboard_struct.pos+1)
 #include <proto/timer.h>
-typedef char *p_in;
 typedef UBYTE *a_in;
 typedef char **c2_in;
 #include "os4.h"
@@ -160,7 +159,7 @@ extern "C"
 
 #include <dos/dostags.h>
 
-typedef char *p_in;
+
 typedef UBYTE *a_in;
 typedef char **c2_in;
 
@@ -198,7 +197,7 @@ extern "C"
 #include <clib/socket_protos.h>
 }
 
-typedef char *p_in;
+
 typedef UBYTE *a_in;
 typedef char **c2_in;
 
@@ -218,7 +217,7 @@ typedef char **c2_in;
 #include <dos/dostags.h>
 
 
-typedef char *p_in;
+
 typedef UBYTE *a_in;
 typedef UBYTE **c2_in;
 
@@ -396,7 +395,6 @@ void SAction(char *message);
 void CloseQueryWindow(void);
 void SQuote(char *message);
 void SPing(char *message);
-void ping_time(void);
 void save_settings(void);
 void save_nick_settings(void);
 void load_nick_settings(void);
@@ -477,7 +475,6 @@ char rawservername[100];
 char server[50];
 char *string123;
 char string8[900],string9[900],string11[900];
-char string_to_send[BUFFERSIZE];
 char urlgrabber_str[2000];
 char urlvisit_str[1][2000];
 char windowtitlestring[110];
@@ -983,7 +980,7 @@ ULONG mics;
 char timestamp_hrs[4]; char timestamp_mins[4]; char timestamp_secs[4];
 
 //ctcp ping variables
-char pingtimestamp_hrs[4]; char pingtimestamp_mins[4]; char pingtimestamp_secs[4]; char pingtimestamp[12];
+char pingtimestamp_hrs[4]; char pingtimestamp_mins[4]; char pingtimestamp_secs[4];
 
 //dcc time variables
 char dcctimestamp_secs[1000];

@@ -43,7 +43,6 @@ void check_if_at_bottom(void);
 #include "tabs_change.cpp"
 
 #include "process_outgoing.cpp"
-#include "irc.cpp"
 #include "save_settings.cpp"
 
 void copy_settings_to_undo_buffer()
