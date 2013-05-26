@@ -456,6 +456,13 @@ struct list_entry
     char *hostname;
 };
 
+struct history
+{
+    char buffer_history[800];
+    struct history *next;
+    struct history *previous;
+};
+
 struct query_window
 {
     char your_current_mode[15];
@@ -902,6 +909,8 @@ struct SharedList
 
 #define HOSTNAME_STRING_SIZE        85
 
+#define CONNECT_IN_CURRENT_TAB      1
+
 #ifndef EAD_IS_FILE
 #define EAD_IS_FILE(ead)            ((ead)->ed_Type <  0)
 #endif
@@ -1087,6 +1096,8 @@ extern BPTR urlgrabber_file;
 extern char urlgrabber_str[2000];
 extern struct codeset *charsets[45];
 
+extern struct history *work_history;
+
 int which_clipboard_style();
 
 
@@ -1160,10 +1171,15 @@ void accept_dcc(char *b);
 void create_send_dcc(char *nick, char *string3, int filesize, int portnumber);
 void shutdown_my_dcc_recv_socket();
 void create_recv_dcc_chat(char *, char *, char *);
+int offer_dcc(char*,char*,char*,char*,int);
+void initiate_outgoing_dcc_chat(char*);
+void send_dcc_chat(char*);
+
 
 /* tabs_create_close.c */
 int create_new_tab(char *name, int show_now, int query_type);
 void close_tab();
+int create_new_status(int first);
 
 /* graphical_smilies.c */
 #define MAXIMUM_SMILEYS         35
@@ -1245,6 +1261,19 @@ int search_for_highlight_words(char *, char *);
 
 /* irc.c */
 void ChangeMyNick(char *mynewnick);
+void SWhoIs(char *selnick);
+void SQuery(char *selnick);
+void SJoin(char *selchannel);
+void SMsg(char *selnick, char *message);
+void SNames(char *selchannel);
+void SNotice(char *selnick, char *massage);
+void SPart(char *message);
+void SQuit(char *message);
+void SPing(char *message);
+void SAction(char *message);
+void SQuote(char *message);
+void ChangeTopic(char *newtopic);
+
 
 /* display_logfile_lines.c */
 int display_last_few_lines_of_logfile_conductor();

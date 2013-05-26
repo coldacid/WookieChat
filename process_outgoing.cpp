@@ -12,14 +12,20 @@
                              Chat Input
    =================================================================== */
 
-char *pch2;
-char new_filtered_string1[550];
-#ifndef __AROS__
-STRPTR charset_convert_1;
-STRPTR charset_convert_2;
+#include "includes.h"
 
-//UTF8   *charset_convert_1;
-//UTF8   *charset_convert_2;
+#include <proto/datatypes.h>
+#include <proto/utility.h>
+
+#include "intern.h"
+#include "objapp.h"
+
+/* Locals */
+static char *pch2;
+static char new_filtered_string1[550];
+#ifndef __AROS__
+static STRPTR charset_convert_1;
+static STRPTR charset_convert_2;
 #endif
 
 void play_external_sound_replayer(char *string1)

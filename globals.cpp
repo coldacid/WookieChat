@@ -183,6 +183,8 @@ BPTR urlgrabber_file;
 char urlgrabber_str[2000];
 struct codeset *charsets[45];
 
+struct history *work_history;
+
 
 int which_clipboard_style()
 {

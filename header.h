@@ -359,26 +359,11 @@ void remove_tab_listview(void);
 void add_tabs_to_nicklist_group(void);
 void kill_my_notifys(void);
 char *doubleclick_url_action(char*, int, int);
-void initiate_outgoing_dcc_chat(char*);
-int offer_dcc(char*,char*,char*,char*,int);
 int create_new_query_window(char*,int);
 void cleanexit(char*);
-void send_dcc_chat(char*);
 int compare_func(char*,char*);
 void LoadAllLibs(void);
-void SWhoIs(char *selnick);
-void SQuery(char *selnick);
-void SJoin(char *selchannel);
-void SMsg(char *selnick, char *message);
-void SNames(char *selchannel);
-void SNotice(char *selnick, char *massage);
-void ChangeTopic(char *newtopic);
-void SPart(char *message);
-void SQuit(char *message);
-void SAction(char *message);
 void CloseQueryWindow(void);
-void SQuote(char *message);
-void SPing(char *message);
 void save_settings(void);
 void save_nick_settings(void);
 void load_nick_settings(void);
@@ -842,13 +827,6 @@ void read_list_of_servers(void)
 struct list_entry *work_entry3; // = new list_entry;
 struct list_entry work_entry4;
 
-
-struct history
-{
-    char buffer_history[800];
-    struct history *next;
-    struct history *previous;
-} *work_history, *work_history2;
 
 
 

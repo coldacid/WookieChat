@@ -14,7 +14,7 @@
 #define USE_F 0
 #define SECONDS_TO_WAIT_BEFORE_PING_SERVER 60*2
 
-#define CONNECT_IN_CURRENT_TAB 1
+
 #define DONT_CONNECT_IN_CURRENT_TAB 0
 
 
@@ -41,7 +41,6 @@ void check_if_at_bottom(void);
 #include "tabs_create_close.cpp"
 #include "tabs_change.cpp"
 
-#include "process_outgoing.cpp"
 #include "save_settings.cpp"
 
 void copy_settings_to_undo_buffer()
