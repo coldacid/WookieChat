@@ -252,7 +252,7 @@ extern "C"
 #endif
 
 //automatically reconnect options
-#define MAX_CLONE_FIELDS 25
+
 
 #define QUEUED_MESSAGES_DELAY_IN_SECONDS 0
 #define QUEUED_MESSAGES_DELAY_IN_MICROSECONDS 750000
@@ -261,7 +261,6 @@ extern "C"
 #define RIGHT 1
  
 
-#define STRING_BUFFERSIZE 800
 #define SMALLSTRING_BUFFERSIZE 100
 #define USERLIST_NAME_SIZE 100
 #define USERLIST_COMMAND_SIZE 800
@@ -296,8 +295,6 @@ extern "C"
 
 #define STDIN 0
 #define SIGNAL_TIMER 16
-
-#define ACTIVITY_HIGHLIGHT 3
 
 #ifdef __AROS__
 Library * IconBase = NULL;
@@ -346,14 +343,10 @@ Library * CodesetsBase = NULL;
 
 
 // prototypes
-int search_for_highlight_words(char *, char *);
 void give_each_tab_a_listview_number_for_switching_tabs(void);
 void give_each_tab_a_page_group_number(void);
 int do_waitselect_code(void);
-void sort_linked_list(void);
 BOOL FindUTF8Chars(char*);
-void DisplayNicks(void);
-void activate_tab_button(void);
 void remove_tab_listview(void);
 void add_tabs_to_nicklist_group(void);
 void save_colours_choice(void);
@@ -364,22 +357,17 @@ void shutdown_my_dcc_send_socket(void);
 void remove_tab_listview2(void);
 void remove_tab_listview(void);
 void add_tabs_to_nicklist_group(void);
-void setup_notifys(void);
 void kill_my_notifys(void);
 char *doubleclick_url_action(char*, int, int);
-void change_window_titlebar_text(void);
 void initiate_outgoing_dcc_chat(char*);
-void create_recv_dcc_chat(char *, char *, char *);
 int offer_dcc(char*,char*,char*,char*,int);
 int create_new_query_window(char*,int);
 void cleanexit(char*);
-void send_current(char*);
 void send_dcc_chat(char*);
 int compare_func(char*,char*);
 void LoadAllLibs(void);
 void SWhoIs(char *selnick);
 void SQuery(char *selnick);
-void ChangeMyNick(char *mynewnick);
 void SJoin(char *selchannel);
 void SMsg(char *selnick, char *message);
 void SNames(char *selchannel);
@@ -399,7 +387,6 @@ void close_server_select_window(void);
 void switch_between_tabs(int);
 int switch_between_tabs_with_keys(int);
 void load_colours(char*);
-int display_last_few_lines_of_logfile_conductor(void);
 int load_graphical_smilies(void);
 int free_graphical_smilies(struct query_window*);
 int use_graphical_smilies(struct query_window*);
@@ -411,50 +398,31 @@ struct TagItem blank_taglist[] = { {TAG_DONE, 0} };
 
 struct MsgPort *arexx_quit_replyport;
 struct MsgPort *app_process_port;
-struct MsgPort *app_process_replyport;
-struct MsgPort *send_text_replyport;
-//struct Message *my_message;
 
 
 struct SignalSemaphore *WookieChat_semaphore;
-struct SharedList {
-    struct SignalSemaphore sl_Semaphore;
-    struct List sl_List;
-} *slist;
+
 
 
 //APTR BT_blank;
 APTR pen;
-BOOL RECENTLY_CREATED_A_TAB=FALSE;
 BOOL is_chooser_window_open;
 BOOL user_ignore_privmsg, user_ignore_ctcp, user_ignore_dcc;
 BOOL aslresult;
-BOOL using_a_proxy;
-BPTR urlgrabber_file;
 BPTR arexx_dir_lock;
 BOOL dont_open_colours;
-struct codeset *charsets[45];
 struct codeset *local_charsets_list[45];
-struct codeset *cs;
+
 char *background3;//=new char[64];
 char *banmask_tokens[6];
-char *channel_display;//=new char[100];
-char *NewPreParse_NewText;//=new char[100];
 char *nickcolour;//=new char[40];
-char *pch3;
-char *pch;
 char *PreParse_NewText=(char*)"\033c\0333";
-char *string4,*string5;
 char *tabwork2_string;//=new char[900]; //text before cursor position
 char *tabwork3_string;//=new char[900]; //text after cursor position
 char *tabwork4_string;//=new char[100]; //nick text to complete
 char *tabwork5_string;//=new char[100]; //completed nick text to insert
 char *tabwork_string;//=new char[900]; //original string gadget contents
 char *text, *text2;
-STRPTR text3;
-char activity[64];
-char activity_chat[64];
-char activity_highlight[64];
 char background4[64];
 char background[64];
 char banmask[200];
@@ -467,12 +435,7 @@ char list_found_nicks[5000][50]; // Nick completion function variables
 char output_string[800];
 char old_ignore_entry[800];
 char old_alias_entry[800];
-char rawservername[100];
-char server[50];
 char *string123;
-char string8[900],string9[900],string11[900];
-char urlgrabber_str[2000];
-char urlvisit_str[1][2000];
 char wookie_dir[400]; //the pathname wookiechat is located in
 char wscreent[200];
                                         char orig_filename[1000];
@@ -487,15 +450,12 @@ int last_a=0;
 int last_c=0;
 int nickcomp_count=0;
 int nickcomp_state=0;
-int nick_length;
 int previous_b=0;
 int socket_global=0;
 int sort_method=1; //which sorting method is used for nick lists - only 1 presently
 ULONG arexx_wants_to_send_signal;
 ULONG iconified_and_new_text;
 long ev_sock;
-Object *o, *o3;
-struct ClockData *clockdata;
 struct ClockData *clockdata2;
 struct DiskObject *dobj; //for the iconified icon
 struct FileRequester *filerequester;
@@ -516,8 +476,7 @@ enum { AMIRC_STYLE=0, MIRC_STYLE };
 
 char *ignore1,*ignore2,*ignore3,*ignore4,*ignore5,*ignore6,*ignore7,*ignore8,*ignore9,*ignore10;
 
-char clone_results[MAX_CLONE_FIELDS][900];
-int count_clones;
+
 
 
 
@@ -895,7 +854,7 @@ struct history
 
 
 
-char number_of_lines_unread[20];
+
 
 struct MUI_NList_GetSelectInfo *res=new struct MUI_NList_GetSelectInfo;
 
@@ -971,10 +930,10 @@ struct MsgPort *Timer5MP;
 
 LONG error;
 ULONG mics;
-char timestamp_hrs[4]; char timestamp_mins[4]; char timestamp_secs[4];
+char timestamp_secs[4];
 
 //ctcp ping variables
-char pingtimestamp_hrs[4]; char pingtimestamp_mins[4]; char pingtimestamp_secs[4];
+char pingtimestamp_hrs[4];
 
 //dcc time variables
 char dcctimestamp_secs[1000];
@@ -1510,7 +1469,7 @@ void DisposeApp(struct ObjApp * MBObj)
 
 APTR    GR_ban, GR_ban_subgroup, GR_logging_splitup, GR_logging_splitup2;
 
-APTR    GROUP_ROOT_0, GROUP_ROOT_1, GR_top;
+APTR    GROUP_ROOT_1;
 APTR    GR_bottom_group, GR_buttons, GR_virtual_buttons, GR_samples_path;
 APTR    LA_space;
 

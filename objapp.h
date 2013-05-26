@@ -16,3 +16,5 @@ extern APTR    MN_MuteSound;
 extern APTR    MN_Edit, MN_cut, MN_copy, MN_paste;
 
 extern APTR    GR_string_gadget;
+extern APTR    GROUP_ROOT_0;
+extern APTR    GR_top;

@@ -153,6 +153,37 @@ char pingtimestamp[12];
 
 struct list_entry *new_entry;
 
+char string8[900];
+char string9[900];
+char *string4;
+char *string5;
+BOOL RECENTLY_CREATED_A_TAB=FALSE;
+Object *o;
+Object *o3;
+char timestamp_hrs[4];
+char timestamp_mins[4];
+struct ClockData *clockdata;
+char activity[64];
+char activity_chat[64];
+char activity_highlight[64];
+char pingtimestamp_mins[4];
+char pingtimestamp_secs[4];
+STRPTR text3;
+char *channel_display;
+char *NewPreParse_NewText;
+char string11[900];
+BOOL using_a_proxy;
+char server[50];
+struct MsgPort *app_process_replyport;
+struct MsgPort *send_text_replyport;
+struct codeset *cs;
+char *pch;
+struct SharedList *slist;
+BPTR urlgrabber_file;
+char urlgrabber_str[2000];
+struct codeset *charsets[45];
+
+
 int which_clipboard_style()
 {
     if(my_settings.which_clipboard_style==COLUMNS)

@@ -874,6 +874,12 @@ enum
     COLUMNS = 1, NORMAL
 };
 
+struct SharedList
+{
+    struct SignalSemaphore sl_Semaphore;
+    struct List sl_List;
+};
+
 #define AREXX_MENU_VALUES           500000
 #define START_DELAY                 2
 #define RECONNECT_STRAIGHT_AWAY     1
@@ -882,6 +888,7 @@ enum
 
 #define ACTIVITY                    1
 #define ACTIVITY_CHAT               2
+#define ACTIVITY_HIGHLIGHT          3
 
 #define FLAG_AS_COMPLETED           1
 
@@ -1050,7 +1057,40 @@ extern char pingtimestamp[12];
 
 extern struct list_entry *new_entry; // FIXME make this a local variable in each function
 
+extern char string8[900]; // FIXME make this a local variable in each function
+extern char string9[900]; // FIXME make this a local variable in each function
+extern char *string4; // FIXME make this a local variable in each function
+extern char *string5; // FIXME make this a local variable in each function
+extern BOOL RECENTLY_CREATED_A_TAB;
+extern Object *o; // FIXME make this a local variable in each function
+extern Object *o3; // FIXME make this a local variable in each function
+extern char timestamp_hrs[4];
+extern char timestamp_mins[4];
+extern struct ClockData *clockdata;
+extern char activity[64];
+extern char activity_chat[64];
+extern char activity_highlight[64];
+extern char pingtimestamp_mins[4];
+extern char pingtimestamp_secs[4];
+extern STRPTR text3;
+extern char *channel_display;
+extern char *NewPreParse_NewText;
+extern char string11[900]; // FIXME make this a local variable in each function
+extern BOOL using_a_proxy;
+extern char server[50];
+extern struct MsgPort *app_process_replyport;
+extern struct MsgPort *send_text_replyport;
+extern struct codeset *cs;
+extern char *pch; // FIXME make this a local variable in each function
+extern struct SharedList *slist;
+extern BPTR urlgrabber_file;
+extern char urlgrabber_str[2000];
+extern struct codeset *charsets[45];
+
 int which_clipboard_style();
+
+
+
 
 /* arexx_hooks.c */
 #define MAX_AREXX_SCRIPTS 20
@@ -1072,14 +1112,18 @@ BOOL SafePutToPort(struct XYMessage *message, STRPTR portname);
 extern int count; // FIXME make this a local variable in each function
 extern int count2; // FIXME make this a local variable in each function
 extern int DEBUG;
+extern int SMALLTABS;
+extern int RAW;
 struct timeval get_sys_time(struct timeval *tv);
 void timestamp_2_string(); // FIXME chang to return value instead of setting global variable
 void dcc_time(); // FIXME chang to return value instead of setting global variable
 void send_text(char*);
 void ping_time();
+void send_current(char*);
 
 /* process_outgoing.c */
 void process_outgoing(char*, int);
+void play_external_sound_replayer(char *string1);
 
 /* coloursettings.c */
 void save_colours();
@@ -1095,6 +1139,7 @@ int connect2server(char *servername, char *port_number, int typedservercommand, 
 void acquire_connect_details(char*);
 
 /* pincoming.c */
+extern struct list_entry new_entry2;
 int add_text_to_conductor_list(char*, LONG, int);
 int add_text_to_current_list(char*, LONG, int);
 void process_incoming();
@@ -1114,6 +1159,7 @@ void create_recv_dcc(char *nick, char *filename, char *address, unsigned short p
 void accept_dcc(char *b);
 void create_send_dcc(char *nick, char *string3, int filesize, int portnumber);
 void shutdown_my_dcc_recv_socket();
+void create_recv_dcc_chat(char *, char *, char *);
 
 /* tabs_create_close.c */
 int create_new_tab(char *name, int show_now, int query_type);
@@ -1181,11 +1227,27 @@ void AddNick(char *nick, char *hostname);
 int RemoveNick(char *string1);
 int ReplaceNicksWithVoiceOps(char *string1, char prefix, int option);
 int ChangeNick(char *oldnick, char *newnick, char *buffer3);
+void change_window_titlebar_text();
+void DisplayNicks();
 
 /* sortnicks.c */
 int sort_nicks(int);
+void sort_linked_list();
 
 /* tabs_change.c */
 int update_TX_nicklist();
 int update_your_nickname_text_label();
+void activate_tab_button();
+void setup_notifys();
 
+/* highlight_search.c */
+int search_for_highlight_words(char *, char *);
+
+/* irc.c */
+void ChangeMyNick(char *mynewnick);
+
+/* display_logfile_lines.c */
+int display_last_few_lines_of_logfile_conductor();
+
+/* subclasses.c */
+extern BOOL user_is_trying_to_select_text;

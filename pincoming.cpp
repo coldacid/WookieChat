@@ -11,52 +11,80 @@
 /* ===================================================================
                         Process Incoming
    =================================================================== */
+#include "includes.h"
 
-char *work_incoming = new char[STRING_BUFFERSIZE * 2];
-int is_bold;
+#include <proto/datatypes.h>
+#include <proto/codesets.h>
+#include <proto/utility.h>
+
+#include "intern.h"
+#include "version_info.h"
+#include "objapp.h"
+
 struct list_entry new_entry2;
+
+/* Locals */
+#define MAX_CLONE_FIELDS    25
+#define WORK_BUFFER_SIZE    800
+#define STRING_BUFFERSIZE   800
+static char *pch3;
+static char *work_incoming = new char[STRING_BUFFERSIZE * 2];
+static int is_bold;
+static char clone_results[MAX_CLONE_FIELDS][900];
+static char rawservername[100];
+static int count_clones;
+static int nick_length;
+static char urlvisit_str[1][2000];
+static char number_of_lines_unread[20];
+
 #ifdef __AROS__
 struct TagItem my_incoming_charset1_taglist[] =
 {
-{ CSA_Source, (IPTR) buffer2 },
-{ CSA_SourceCodeset, (IPTR) cs },
-{ CSA_DestCodeset, (IPTR) charsets[local_charset] },
-{ TAG_DONE, 0 } };
+    { CSA_Source, (IPTR) buffer2 },
+    { CSA_SourceCodeset, (IPTR) cs },
+    { CSA_DestCodeset, (IPTR) charsets[local_charset] },
+    { TAG_DONE, 0 }
+};
 
 struct TagItem my_incoming_charset2_taglist[] =
 {
-{ CSA_Source, (IPTR) buffer2 },
-{ CSA_SourceCodeset, (IPTR) cs },
-{ CSA_DestCodeset, (IPTR) local_charsets[local_charset] },
-{ TAG_DONE, 0 } };
+    { CSA_Source, (IPTR) buffer2 },
+    { CSA_SourceCodeset, (IPTR) cs },
+    { CSA_DestCodeset, (IPTR) local_charsets[local_charset] },
+    { TAG_DONE, 0 }
+};
 
 struct TagItem my_incoming_charset3_taglist[] =
 {
-{ CSA_Source, (IPTR) buffer2 },
-{ CSA_CodesetFamily, CSV_CodesetFamily_Latin },
-{ CSA_FallbackToDefault, TRUE },
-{ TAG_DONE, 0 } };
+    { CSA_Source, (IPTR) buffer2 },
+    { CSA_CodesetFamily, CSV_CodesetFamily_Latin },
+    { CSA_FallbackToDefault, TRUE },
+    { TAG_DONE, 0 }
+};
 #else
 struct TagItem my_incoming_charset1_taglist[] =
 {
     {   CSA_Source, (ULONG)buffer2},
     {   CSA_SourceCodeset, (ULONG)cs},
     {   CSA_DestCodeset, (ULONG)charsets[local_charset]},
-    {   TAG_DONE, 0}};
+    {   TAG_DONE, 0}
+};
 
 struct TagItem my_incoming_charset2_taglist[] =
 {
     {   CSA_Source, (ULONG)buffer2},
     {   CSA_SourceCodeset, (ULONG)cs},
     {   CSA_DestCodeset, (ULONG)local_charsets[local_charset]},
-    {   TAG_DONE, 0}};
+    {   TAG_DONE, 0}
+};
 
 struct TagItem my_incoming_charset3_taglist[] =
 {
     {   CSA_Source, (ULONG)buffer2},
     {   CSA_CodesetFamily, CSV_CodesetFamily_Latin},
     {   CSA_FallbackToDefault, TRUE},
-    {   TAG_DONE,0}};
+    {   TAG_DONE,0}
+};
 #endif
 
 char *work;

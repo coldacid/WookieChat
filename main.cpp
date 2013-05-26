@@ -16,7 +16,7 @@
 
 #define CONNECT_IN_CURRENT_TAB 1
 #define DONT_CONNECT_IN_CURRENT_TAB 0
-#define WORK_BUFFER_SIZE 800
+
 
 int NEWDEBUG = 0;
 
@@ -5417,6 +5417,5 @@ int main(int argc, char *argv[])
 
         }
 
-#include "pincoming.cpp"
 
 #include "startexit.cpp"
