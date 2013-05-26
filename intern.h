@@ -893,6 +893,8 @@ enum
 
 #define GRAPHICAL_SMILEY_VALUES     500900
 
+#define HOSTNAME_STRING_SIZE        85
+
 #ifndef EAD_IS_FILE
 #define EAD_IS_FILE(ead)            ((ead)->ed_Type <  0)
 #endif
@@ -1046,6 +1048,8 @@ extern char *string3; // FIXME make this a local variable in each function
 extern char string_to_send[BUFFERSIZE];
 extern char pingtimestamp[12];
 
+extern struct list_entry *new_entry; // FIXME make this a local variable in each function
+
 int which_clipboard_style();
 
 /* arexx_hooks.c */
@@ -1170,3 +1174,18 @@ extern struct Hook Display_events_TextHook;
 extern struct Hook Display_servers_TextHook;
 extern struct Hook DisplayLI_ban_TextHook;
 extern struct Hook Display_channellist_TextHook;
+
+/* nicklist.c */
+void update_nicks_hostname(char *nick, char *hostname);
+void AddNick(char *nick, char *hostname);
+int RemoveNick(char *string1);
+int ReplaceNicksWithVoiceOps(char *string1, char prefix, int option);
+int ChangeNick(char *oldnick, char *newnick, char *buffer3);
+
+/* sortnicks.c */
+int sort_nicks(int);
+
+/* tabs_change.c */
+int update_TX_nicklist();
+int update_your_nickname_text_label();
+

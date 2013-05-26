@@ -263,7 +263,6 @@ extern "C"
 
 #define STRING_BUFFERSIZE 800
 #define SMALLSTRING_BUFFERSIZE 100
-#define HOSTNAME_STRING_SIZE 85
 #define USERLIST_NAME_SIZE 100
 #define USERLIST_COMMAND_SIZE 800
 
@@ -350,8 +349,6 @@ Library * CodesetsBase = NULL;
 int search_for_highlight_words(char *, char *);
 void give_each_tab_a_listview_number_for_switching_tabs(void);
 void give_each_tab_a_page_group_number(void);
-int update_your_nickname_text_label(void);
-int update_TX_nicklist(void);
 int do_waitselect_code(void);
 void sort_linked_list(void);
 BOOL FindUTF8Chars(char*);
@@ -379,7 +376,6 @@ void cleanexit(char*);
 void send_current(char*);
 void send_dcc_chat(char*);
 int compare_func(char*,char*);
-int sort_nicks(int);
 void LoadAllLibs(void);
 void SWhoIs(char *selnick);
 void SQuery(char *selnick);
@@ -477,7 +473,6 @@ char *string123;
 char string8[900],string9[900],string11[900];
 char urlgrabber_str[2000];
 char urlvisit_str[1][2000];
-char windowtitlestring[110];
 char wookie_dir[400]; //the pathname wookiechat is located in
 char wscreent[200];
                                         char orig_filename[1000];
@@ -885,7 +880,6 @@ void read_list_of_servers(void)
 
 }
 
-struct list_entry *new_entry; //=new list_entry;
 struct list_entry *work_entry3; // = new list_entry;
 struct list_entry work_entry4;
 

@@ -12,6 +12,12 @@
                            Nicklist Functions
    =================================================================== */
 
+#include "includes.h"
+
+#include "intern.h"
+
+/* Locals */
+static char windowtitlestring[110];
 
 void update_nicks_hostname(char *nick, char *hostname)
 {
