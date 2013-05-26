@@ -1107,6 +1107,8 @@ extern struct history *work_history;
 
 extern char listview_format[100];
 
+extern struct list_entry work_entry4;
+
 int which_clipboard_style();
 
 
@@ -1190,6 +1192,7 @@ void send_dcc_chat(char*);
 int create_new_tab(char *name, int show_now, int query_type);
 void close_tab();
 int create_new_status(int first);
+void give_each_tab_a_listview_number_for_switching_tabs();
 
 /* graphical_smilies.c */
 #define MAXIMUM_SMILEYS         35

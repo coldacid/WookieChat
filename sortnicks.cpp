@@ -8,6 +8,12 @@
     for the specific language governing rights and limitations under the License.
 */
 
+#include "includes.h"
+
+#include "intern.h"
+
+#define SORT    1
+
 int sort_nicks(int a)
 {
 

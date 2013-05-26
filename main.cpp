@@ -8,7 +8,7 @@
     for the specific language governing rights and limitations under the License.
 */
 
-#define SORT 1
+
 #define string_default 0
 
 #define USE_F 0
@@ -37,7 +37,6 @@ int GEIT3 = 0;
 
 void check_if_at_bottom(void);
 
-#include "sortnicks.cpp"
 #include "tabs_create_close.cpp"
 #include "tabs_change.cpp"
 

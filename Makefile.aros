@@ -11,6 +11,7 @@ SOURCES   = main.cpp arexx_hooks.cpp globals.cpp auto_reconnect_server.cpp close
             coloursettings.cpp connect2server.cpp dcc.cpp display_logfile_lines.cpp \
             do_waitselect_code.cpp events_arexx.cpp graphical_smilies.cpp objapp.cpp highlight_search.cpp \
             hooks.cpp irc.cpp nicklist.cpp pincoming.cpp process_outgoing.cpp save_settings.cpp \
+            sortnicks.cpp
 
 OBJECTS   = $(SOURCES:.cpp=.o)
 

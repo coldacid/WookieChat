@@ -341,7 +341,6 @@ Library * CodesetsBase = NULL;
 
 
 // prototypes
-void give_each_tab_a_listview_number_for_switching_tabs(void);
 void give_each_tab_a_page_group_number(void);
 int do_waitselect_code(void);
 BOOL FindUTF8Chars(char*);
@@ -816,7 +815,6 @@ void read_list_of_servers(void)
 }
 
 struct list_entry *work_entry3; // = new list_entry;
-struct list_entry work_entry4;
 
 
 

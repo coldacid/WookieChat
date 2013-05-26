@@ -187,6 +187,9 @@ struct history *work_history;
 
 char listview_format[100];
 
+struct list_entry work_entry4;
+
+
 int which_clipboard_style()
 {
     if(my_settings.which_clipboard_style==COLUMNS)
