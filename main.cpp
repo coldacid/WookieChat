@@ -37,7 +37,6 @@ int GEIT3 = 0;
 
 void check_if_at_bottom(void);
 
-#include "events_arexx.cpp"
 #include "nicklist.cpp"
 #include "sortnicks.cpp"
 #include "tabs_create_close.cpp"
