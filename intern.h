@@ -1129,7 +1129,7 @@ extern struct DiskObject *dobj;
 extern struct MsgPort *arexx_quit_replyport;
 extern struct MUI_NList_TestPos_Result *last_clicked_res;
 
-
+extern char *string123;
 
 int which_clipboard_style();
 
@@ -1176,7 +1176,32 @@ void get_colours();
 void set_colours();
 
 /* subclasses.c */
+struct InstanceData
+{
+    struct MUI_EventHandlerNode ehnode; /* input event handler*/
+};
+
+struct MyData
+{
+    struct MUI_PenSpec penspec;
+    LONG pen;
+    BOOL penchange;
+    int requestchange;
+};
+
+extern struct Hook ConstructDCC_TextHook;
+extern struct Hook DestructDCC_TextHook;
+extern struct Hook DisplayDCC_recv_TextHook;
+extern struct Hook DisplayDCC_send_TextHook;
+extern LONG position;
 void setup_background_colours();
+extern "C"
+{
+ULONG BetterString_Dispatcher(Class *cl, Object *obj, Msg msg);
+ULONG NList_Dispatcher(Class *cl, Object *obj, Msg msg);
+ULONG Window_Dispatcher(Class *cl, Object *obj, Msg msg);
+ULONG Group_Dispatcher(Class *cl, Object *obj, Msg msg);
+}
 
 /* connect2server.c */
 int connect2server(char *servername, char *port_number, int typedservercommand, int set_connect_script_name,
@@ -1292,6 +1317,8 @@ void activate_tab_button();
 void setup_notifys();
 void check_column_size();
 void set_column_size();
+int switch_between_tabs_with_keys(int);
+
 
 /* highlight_search.c */
 int search_for_highlight_words(char *, char *);

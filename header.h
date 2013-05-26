@@ -318,7 +318,6 @@ void load_nick_settings(void);
 void retrieve_settings(void);
 void close_server_select_window(void);
 void switch_between_tabs(int);
-int switch_between_tabs_with_keys(int);
 void load_colours(char*);
 int load_graphical_smilies(void);
 int free_graphical_smilies(struct query_window*);
@@ -343,20 +342,16 @@ BOOL aslresult;
 BPTR arexx_dir_lock;
 struct codeset *local_charsets_list[45];
 
-char *banmask_tokens[6];
 char *PreParse_NewText=(char*)"\033c\0333";
 char *text, *text2;
 char background4[64];
 char background[64];
-char banmask[200];
 char ban_window_title[200];
 char pen_number[10];
 char new_array2[900];
 char list_channels_work[900];
-char list_found_nicks[5000][50]; // Nick completion function variables
 char old_ignore_entry[800];
 char old_alias_entry[800];
-char *string123;
 char wookie_dir[400]; //the pathname wookiechat is located in
 char wscreent[200];
                                         char orig_filename[1000];
@@ -369,8 +364,6 @@ int delay_b4_ping_server_count=0;
 int iv=0;
 int last_a=0;
 int last_c=0;
-int nickcomp_count=0;
-int nickcomp_state=0;
 int previous_b=0;
 int socket_global=0;
 int sort_method=1; //which sorting method is used for nick lists - only 1 presently
@@ -741,7 +734,6 @@ struct MUI_NList_GetSelectInfo *res=new struct MUI_NList_GetSelectInfo;
 
 struct channel_entry *wentry=new channel_entry;
 
-#include "subclasses.cpp"
 
 
 

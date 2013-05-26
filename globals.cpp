@@ -206,6 +206,8 @@ struct DiskObject *dobj; //for the iconified icon
 struct MsgPort *arexx_quit_replyport;
 struct MUI_NList_TestPos_Result *last_clicked_res;
 
+char *string123;
+
 
 int which_clipboard_style()
 {

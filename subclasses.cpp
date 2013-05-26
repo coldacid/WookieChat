@@ -10,8 +10,23 @@
 
 /* NLIST FOR DCC WINDOW STUFF FOLLOWS */
 
+#include "includes.h"
+
+#include <proto/muimaster.h>
+
+#include "intern.h"
+
 LONG position;
-char code_to_convert[63];
+
+/* Locals */
+static char code_to_convert[63];
+static char banmask[200];
+static char list_found_nicks[5000][50]; // Nick completion function variables
+static int nickcomp_count=0;
+static int nickcomp_state=0;
+static char *banmask_tokens[6];
+
+
 
 void setup_background_colours(void)
 {
@@ -478,10 +493,6 @@ struct Hook DisplayDCC_recv_TextHook = { { NULL,NULL },(ULONG(*)())DisplayDCC_re
 
 /* BETTER STRING STUFF FOLLOWS */
 
-struct InstanceData
-{
-    struct MUI_EventHandlerNode ehnode; /* input event handler*/
-};
 
 APTR my_object;
 
@@ -1552,15 +1563,6 @@ ULONG BetterString_HandleEvent(struct IClass *cl, Object *obj, struct MUIP_Handl
 }
 
 // BELOW IS THE SUBCLASS FOR THE POPPEN OBJECTS
-
-struct MyData
-{
-    struct MUI_PenSpec penspec;
-    LONG pen;
-    BOOL penchange;
-    int requestchange;
-};
-
 
 SAVEDS ULONG Group_Setup(struct IClass *cl,Object *obj,struct Message *msg)
 {
