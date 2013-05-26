@@ -17,6 +17,9 @@
 #include <sys/time.h>
 #include <netdb.h>
 
+#define MUI_OBSOLETE
+#include <libraries/mui.h>
+
 #define MAX_QUEUED_MESSAGES         500
 #define BUFFERSIZE                  30000
 #define MAX_EVENTS                  16
@@ -1109,6 +1112,25 @@ extern char listview_format[100];
 
 extern struct list_entry work_entry4;
 
+extern char *tabwork2_string;
+extern char *tabwork3_string;
+extern char *tabwork4_string;
+extern char *tabwork5_string;
+extern char *tabwork_string;
+extern BOOL dont_open_colours;
+extern struct ClockData *clockdata2;
+extern BOOL is_chooser_window_open;
+extern MUI_CustomClass *mcc;
+extern MUI_CustomClass *mcc2;
+extern MUI_CustomClass *mcc4;
+extern MUI_CustomClass *mcc5;
+extern MUI_CustomClass *mcc6;
+extern struct DiskObject *dobj;
+extern struct MsgPort *arexx_quit_replyport;
+extern struct MUI_NList_TestPos_Result *last_clicked_res;
+
+
+
 int which_clipboard_style();
 
 
@@ -1323,3 +1345,9 @@ int save_events_settings();
 void get_events_settings();
 void load_ignore_list();
 void save_ignore_list();
+
+/* startexit.c */
+extern struct NewMenu MenuData1[];
+
+/* timers.c */
+BOOL TimerWait_Close();

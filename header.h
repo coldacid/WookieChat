@@ -294,52 +294,6 @@ extern "C"
 #define STDIN 0
 #define SIGNAL_TIMER 16
 
-#ifdef __AROS__
-Library * IconBase = NULL;
-struct LocaleBase * LocaleBase = NULL;
-struct GfxBase * GfxBase = NULL;
-struct UtilityBase * UtilityBase = NULL;
-Library * MUIMasterBase = NULL;
-struct IntuitionBase * IntuitionBase = NULL;
-Library * SocketBase = NULL;
-Library * DataTypesBase = NULL;
-Library * CodesetsBase = NULL;
-#elif __amigaos4__
-Library * AslBase = NULL;
-Library * IconBase = NULL;
-Library * LocaleBase = NULL;
-Library * GfxBase = NULL;
-Library * UtilityBase = NULL;
-Library * MUIMasterBase = NULL;
-Library * IntuitionBase = NULL;
-Library * SocketBase = NULL;
-Library * DataTypesBase = NULL;
-Library * CodesetsBase = NULL;
-#elif __MORPHOS__
-Library * AslBase = NULL;
-Library * IconBase = NULL;
-Library * LocaleBase = NULL;
-struct GfxBase * GfxBase = NULL;
-Library * UtilityBase = NULL;
-Library * MUIMasterBase = NULL;
-struct IntuitionBase * IntuitionBase = NULL;
-Library * SocketBase = NULL;
-Library * DataTypesBase = NULL;
-Library * CodesetsBase = NULL;
-#else
-Library * AslBase = NULL;
-Library * IconBase = NULL;
-Library * LocaleBase = NULL;
-Library * GfxBase = NULL;
-Library * UtilityBase = NULL;
-Library * MUIMasterBase = NULL;
-Library * IntuitionBase = NULL;
-Library * SocketBase = NULL;
-Library * DataTypesBase = NULL;
-Library * CodesetsBase = NULL;
-#endif
-
-
 // prototypes
 void give_each_tab_a_page_group_number(void);
 int do_waitselect_code(void);
@@ -375,7 +329,6 @@ int find_themes(void);
 
 struct TagItem blank_taglist[] = { {TAG_DONE, 0} };
 
-struct MsgPort *arexx_quit_replyport;
 struct MsgPort *app_process_port;
 
 
@@ -385,22 +338,13 @@ struct SignalSemaphore *WookieChat_semaphore;
 
 //APTR BT_blank;
 APTR pen;
-BOOL is_chooser_window_open;
 BOOL user_ignore_privmsg, user_ignore_ctcp, user_ignore_dcc;
 BOOL aslresult;
 BPTR arexx_dir_lock;
-BOOL dont_open_colours;
 struct codeset *local_charsets_list[45];
 
-char *background3;//=new char[64];
 char *banmask_tokens[6];
-char *nickcolour;//=new char[40];
 char *PreParse_NewText=(char*)"\033c\0333";
-char *tabwork2_string;//=new char[900]; //text before cursor position
-char *tabwork3_string;//=new char[900]; //text after cursor position
-char *tabwork4_string;//=new char[100]; //nick text to complete
-char *tabwork5_string;//=new char[100]; //completed nick text to insert
-char *tabwork_string;//=new char[900]; //original string gadget contents
 char *text, *text2;
 char background4[64];
 char background[64];
@@ -433,10 +377,8 @@ int sort_method=1; //which sorting method is used for nick lists - only 1 presen
 ULONG arexx_wants_to_send_signal;
 ULONG iconified_and_new_text;
 long ev_sock;
-struct ClockData *clockdata2;
-struct DiskObject *dobj; //for the iconified icon
+
 struct FileRequester *filerequester;
-struct MUI_NList_TestPos_Result *last_clicked_res;
 
 struct MUI_PenSpec *startpen;
 struct sockaddr addr_buffer, addr_buffer2;
@@ -462,34 +404,6 @@ char *ignore1,*ignore2,*ignore3,*ignore4,*ignore5,*ignore6,*ignore7,*ignore8,*ig
 
 
 
-//the menu is left blank so we can use localised strings from a catalog.
-//the code for inserting the localised text is in LoadAllLibs() in
-//startexit.cpp
-struct NewMenu MenuData1[] =
-{
-    { NM_TITLE, (char*)""   ,0,0,0  ,(APTR)0      },
-    { NM_ITEM,  (char*)""   ,0,0,0  ,(APTR)65     },
-    { NM_ITEM,  (char*)""   ,0,0,0  ,(APTR)66     },
-    { NM_ITEM,  (char*)""   ,0,0,0  ,(APTR)80     },
-    { NM_ITEM,  (char*)""   ,0,0,0  ,(APTR)0      },
-    { NM_SUB,   (char*)""   ,0,0,0  ,(APTR)75     },
-    { NM_SUB,   (char*)""   ,0,0,0  ,(APTR)76     },
-    { NM_SUB,   (char*)""   ,0,0,0  ,(APTR)77     },
-    { NM_ITEM,  (char*)""   ,0,0,0  ,(APTR)0      },
-    { NM_SUB,   (char*)""   ,0,0,0  ,(APTR)79     },
-    { NM_SUB,   (char*)""   ,0,0,0  ,(APTR)81     },
-    { NM_ITEM,  (char*)""   ,0,0,0  ,(APTR)0      },
-    { NM_SUB,   (char*)""   ,0,0,0  ,(APTR)67     },
-    { NM_SUB,   (char*)""   ,0,0,0  ,(APTR)68     },
-    { NM_SUB,   (char*)""   ,0,0,0  ,(APTR)69     },
-    { NM_SUB,   (char*)""   ,0,0,0  ,(APTR)70     },
-    { NM_SUB,   (char*)""   ,0,0,0  ,(APTR)71     },
-    { NM_SUB,   (char*)""   ,0,0,0  ,(APTR)72     },
-    { NM_SUB,   (char*)""   ,0,0,0  ,(APTR)73     },
-    { NM_SUB,   (char*)""   ,0,0,0  ,(APTR)83     },
-
-    { NM_END,NULL,0,0,0,(APTR)0 },
-};
 
 struct MUI_CustomClass *NLI_Class;
 
@@ -814,7 +728,7 @@ void read_list_of_servers(void)
 
 }
 
-struct list_entry *work_entry3; // = new list_entry;
+
 
 
 
@@ -829,7 +743,7 @@ struct channel_entry *wentry=new channel_entry;
 
 #include "subclasses.cpp"
 
-MUI_CustomClass *mcc, *mcc2, *mcc3, *mcc4, *mcc5, *mcc6;
+
 
 #ifdef __AROS__
 IPTR NewObjectAROS( struct IClass *classPtr, UBYTE *classID, ULONG tag1, ... )
@@ -1425,11 +1339,6 @@ int string_id=2;
 
 /* GUI */
 
-void DisposeApp(struct ObjApp * MBObj)
-{
-    MUI_DisposeObject((Object*)MBObj->App);
-    FreeVec(MBObj);
-}
 
 
         

@@ -11,11 +11,100 @@
 /* ===================================================================
                            Start-Exit Code
    =================================================================== */
+#include "includes.h"
+
+#include <clib/alib_protos.h>
+#include <proto/muimaster.h>
+#include <proto/datatypes.h>
+#include <proto/icon.h>
+#include <proto/codesets.h>
+
+#include "intern.h"
+#include "objapp.h"
+
+#ifdef __AROS__
+Library * AslBase = NULL;
+Library * IconBase = NULL;
+struct LocaleBase * LocaleBase = NULL;
+struct GfxBase * GfxBase = NULL;
+struct UtilityBase * UtilityBase = NULL;
+Library * MUIMasterBase = NULL;
+struct IntuitionBase * IntuitionBase = NULL;
+Library * SocketBase = NULL;
+Library * DataTypesBase = NULL;
+Library * CodesetsBase = NULL;
+#elif __amigaos4__
+Library * AslBase = NULL;
+Library * IconBase = NULL;
+Library * LocaleBase = NULL;
+Library * GfxBase = NULL;
+Library * UtilityBase = NULL;
+Library * MUIMasterBase = NULL;
+Library * IntuitionBase = NULL;
+Library * SocketBase = NULL;
+Library * DataTypesBase = NULL;
+Library * CodesetsBase = NULL;
+#elif __MORPHOS__
+Library * AslBase = NULL;
+Library * IconBase = NULL;
+Library * LocaleBase = NULL;
+struct GfxBase * GfxBase = NULL;
+Library * UtilityBase = NULL;
+Library * MUIMasterBase = NULL;
+struct IntuitionBase * IntuitionBase = NULL;
+Library * SocketBase = NULL;
+Library * DataTypesBase = NULL;
+Library * CodesetsBase = NULL;
+#else
+Library * AslBase = NULL;
+Library * IconBase = NULL;
+Library * LocaleBase = NULL;
+Library * GfxBase = NULL;
+Library * UtilityBase = NULL;
+Library * MUIMasterBase = NULL;
+Library * IntuitionBase = NULL;
+Library * SocketBase = NULL;
+Library * DataTypesBase = NULL;
+Library * CodesetsBase = NULL;
+#endif
+
+//the menu is left blank so we can use localised strings from a catalog.
+//the code for inserting the localised text is in LoadAllLibs() in
+//startexit.cpp
+struct NewMenu MenuData1[] =
+{
+    { NM_TITLE, (char*)""   ,0,0,0  ,(APTR)0      },
+    { NM_ITEM,  (char*)""   ,0,0,0  ,(APTR)65     },
+    { NM_ITEM,  (char*)""   ,0,0,0  ,(APTR)66     },
+    { NM_ITEM,  (char*)""   ,0,0,0  ,(APTR)80     },
+    { NM_ITEM,  (char*)""   ,0,0,0  ,(APTR)0      },
+    { NM_SUB,   (char*)""   ,0,0,0  ,(APTR)75     },
+    { NM_SUB,   (char*)""   ,0,0,0  ,(APTR)76     },
+    { NM_SUB,   (char*)""   ,0,0,0  ,(APTR)77     },
+    { NM_ITEM,  (char*)""   ,0,0,0  ,(APTR)0      },
+    { NM_SUB,   (char*)""   ,0,0,0  ,(APTR)79     },
+    { NM_SUB,   (char*)""   ,0,0,0  ,(APTR)81     },
+    { NM_ITEM,  (char*)""   ,0,0,0  ,(APTR)0      },
+    { NM_SUB,   (char*)""   ,0,0,0  ,(APTR)67     },
+    { NM_SUB,   (char*)""   ,0,0,0  ,(APTR)68     },
+    { NM_SUB,   (char*)""   ,0,0,0  ,(APTR)69     },
+    { NM_SUB,   (char*)""   ,0,0,0  ,(APTR)70     },
+    { NM_SUB,   (char*)""   ,0,0,0  ,(APTR)71     },
+    { NM_SUB,   (char*)""   ,0,0,0  ,(APTR)72     },
+    { NM_SUB,   (char*)""   ,0,0,0  ,(APTR)73     },
+    { NM_SUB,   (char*)""   ,0,0,0  ,(APTR)83     },
+
+    { NM_END,NULL,0,0,0,(APTR)0 },
+};
+
+/* Locals */
+static char *background3; // FIXME not used
+static char *nickcolour; // FIXME not used
+static struct list_entry *work_entry3; //FIXME not used
+
 
 void cleanexit(char*);
 
-//#include "MemGuardian.h"
-//#include "MemGuardian.c"
 
 void LoadAllLibs(void)
 {
@@ -311,6 +400,13 @@ void LoadAllLibs(void)
         printf("cant allocate memory for the semaphore structure\n");
 
 }
+
+void DisposeApp(struct ObjApp * MBObj)
+{
+    MUI_DisposeObject((Object*)MBObj->App);
+    FreeVec(MBObj);
+}
+
 
 void cleanexit(char *str)
 {

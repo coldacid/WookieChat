@@ -189,6 +189,23 @@ char listview_format[100];
 
 struct list_entry work_entry4;
 
+char *tabwork2_string; //text before cursor position
+char *tabwork3_string; //text after cursor position
+char *tabwork4_string; //nick text to complete
+char *tabwork5_string; //completed nick text to insert
+char *tabwork_string; //original string gadget contents
+BOOL dont_open_colours;
+struct ClockData *clockdata2;
+BOOL is_chooser_window_open;
+MUI_CustomClass *mcc;
+MUI_CustomClass *mcc2;
+MUI_CustomClass *mcc4;
+MUI_CustomClass *mcc5;
+MUI_CustomClass *mcc6;
+struct DiskObject *dobj; //for the iconified icon
+struct MsgPort *arexx_quit_replyport;
+struct MUI_NList_TestPos_Result *last_clicked_res;
+
 
 int which_clipboard_style()
 {
