@@ -18,7 +18,6 @@
 
 //fixed width size
 #define FW 13
-#define GRAPHICAL_SMILEY_VALUES 500900
 #define SECOND_SET_OF_RETURNIDS 400000
 
 #define  __USE_OLD_TIMEVAL__ 1
@@ -253,10 +252,6 @@ extern "C"
 #define MUIA_Dtpic_Name 0x80423d72
 #endif
 
-#ifndef MUIC_DTPIC
-#define MUIC_DTPIC "Dtpic.mui"
-#endif
-
 //automatically reconnect options
 #define MAX_CLONE_FIELDS 25
 
@@ -443,13 +438,12 @@ BOOL is_chooser_window_open;
 BOOL user_ignore_privmsg, user_ignore_ctcp, user_ignore_dcc;
 BOOL aslresult;
 BOOL using_a_proxy;
-BPTR urlgrabber_file, newbptr_file;
+BPTR urlgrabber_file;
 BPTR arexx_dir_lock;
 BOOL dont_open_colours;
 struct codeset *charsets[45];
 struct codeset *local_charsets_list[45];
 struct codeset *cs;
-char graphical_smiley_themes[10][100];
 char *background3;//=new char[64];
 char *banmask_tokens[6];
 char *channel_display;//=new char[100];
@@ -485,7 +479,7 @@ char old_alias_entry[800];
 char rawservername[100];
 char server[50];
 char *string123;
-char string7[900],string8[900],string9[900],string11[900];
+char string8[900],string9[900],string11[900];
 char string_to_send[BUFFERSIZE];
 char urlgrabber_str[2000];
 char urlvisit_str[1][2000];
@@ -541,16 +535,8 @@ int count_clones;
 
 
 
-struct graphical_smilies_struct
-{
-    APTR   icon;
-} graphical_nicklist[3];
-
-
 // below are some variables for working with NextObject() loops
 
-struct MinList *list;
-APTR object_state, member_object;
 
 
 //the menu is left blank so we can use localised strings from a catalog.
@@ -963,7 +949,6 @@ int last_count, last_count2;
 struct MUI_NList_GetEntryInfo clipboard_struct;
 struct MUI_NList_GetEntryInfo clipboard_struct2;
 
-LONG count3,count4;
 int  col1,col2,pos1,pos2;
 int was_last_one_four;
 
@@ -1566,7 +1551,7 @@ void DisposeApp(struct ObjApp * MBObj)
 APTR    GR_ban, GR_ban_subgroup, GR_logging_splitup, GR_logging_splitup2;
 
 APTR    GROUP_ROOT_0, GROUP_ROOT_1, GR_top;
-APTR    GR_string_gadget, GR_bottom_group, GR_buttons, GR_virtual_buttons, GR_samples_path;
+APTR    GR_bottom_group, GR_buttons, GR_virtual_buttons, GR_samples_path;
 APTR    LA_space;
 
     APTR    GROUP_ROOT_8;

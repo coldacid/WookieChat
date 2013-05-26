@@ -867,6 +867,10 @@ enum
     INVITE
 };
 
+struct graphical_smilies_struct
+{
+    APTR   icon;
+};
 
 #define AREXX_MENU_VALUES           500000
 #define START_DELAY                 2
@@ -885,6 +889,7 @@ enum
 #define ASK                         3
 #define RENAME                      4
 
+#define GRAPHICAL_SMILEY_VALUES     500900
 
 #ifndef EAD_IS_FILE
 #define EAD_IS_FILE(ead)            ((ead)->ed_Type <  0)
@@ -896,6 +901,11 @@ enum
 #else
 #define getmacro(obj,attr,store) GetAttr(attr,obj,(ULONG *)store)
 #endif
+
+#ifndef MUIC_DTPIC
+#define MUIC_DTPIC "Dtpic.mui"
+#endif
+
 
 
 /* globals.c */
@@ -1016,6 +1026,16 @@ extern BOOL start_reconnect_delay_timer;
 extern char string10[900];  // FIXME make this a local variable in each function
 extern char dcctimestamp[12];
 
+extern struct graphical_smilies_struct graphical_nicklist[3];
+extern char graphical_smiley_themes[10][100];
+extern struct MinList *list; // FIXME make this a local variable in each function
+extern APTR object_state; // FIXME make this a local variable in each function
+extern APTR member_object; // FIXME make this a local variable in each function
+extern LONG count3; // FIXME make this a local variable in each function
+extern LONG count4; // FIXME make this a local variable in each function
+extern char string7[900]; // FIXME make this a local variable in each function
+extern BPTR newbptr_file; // FIXME make this a local variable in each function
+
 /* arexx_hooks.c */
 #define MAX_AREXX_SCRIPTS 20
 extern char maintask_basename[100];
@@ -1081,7 +1101,27 @@ void shutdown_my_dcc_recv_socket();
 int create_new_tab(char *name, int show_now, int query_type);
 
 /* graphical_smilies.c */
+#define MAXIMUM_SMILEYS         35
+#define MAXIMUM_SMILEY_ASCII    30
+
+struct smilies_struct
+{
+    char filename[100];
+    char ascii[MAXIMUM_SMILEY_ASCII][16];
+    char remove_ascii[16];
+    int ascii_total;
+    APTR icon;
+    APTR choose_icon;
+};
+
+extern int total_smileys;
+extern int preview_total_smileys;
+extern struct smilies_struct smilies[MAXIMUM_SMILEYS];
+extern struct smilies_struct preview_smilies[MAXIMUM_SMILEYS];
 void insert_graphical_smilies();
+void delete_smiley_objects();
+void delete_preview_smiley_objects();
+void exit_delete_smiley_objects();
 
 /* events_arexx.c */
 extern char event_string[900];
@@ -1091,3 +1131,7 @@ BOOL is_window_active();
 
 /* auto_reconnect_server.c */
 void automatically_reconnect_server(int);
+
+/* hooks.c */
+extern char display_hook_breakup2[900];
+extern char *graphical_string1;

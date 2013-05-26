@@ -8,21 +8,17 @@
     for the specific language governing rights and limitations under the License.
 */
 
+#include "includes.h"
+
+#include <proto/muimaster.h>
+
+#include "intern.h"
+#include "objapp.h"
+
 int total_smileys, preview_total_smileys;
 
-#define MAXIMUM_SMILEYS 35
-#define MAXIMUM_SMILEY_ASCII 30
-
-struct smilies_struct
-{
-    char filename[100];
-    char ascii[MAXIMUM_SMILEY_ASCII][16];
-    char remove_ascii[16];
-    int ascii_total;
-    APTR icon;
-    APTR choose_icon;
-    //APTR preview_icon;
-} smilies[MAXIMUM_SMILEYS], preview_smilies[MAXIMUM_SMILEYS];
+struct smilies_struct smilies[MAXIMUM_SMILEYS];
+struct smilies_struct preview_smilies[MAXIMUM_SMILEYS];
 
 int find_themes()
 {

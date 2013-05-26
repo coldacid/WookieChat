@@ -129,3 +129,13 @@ int queued_messages_total;
 BOOL start_reconnect_delay_timer;
 char string10[900];
 char dcctimestamp[12];
+
+struct graphical_smilies_struct graphical_nicklist[3];
+char graphical_smiley_themes[10][100];
+struct MinList *list;
+APTR object_state;
+APTR member_object;
+LONG count3;
+LONG count4;
+char string7[900];
+BPTR newbptr_file;
