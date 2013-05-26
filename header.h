@@ -360,7 +360,6 @@ void DisplayNicks(void);
 void activate_tab_button(void);
 void remove_tab_listview(void);
 void add_tabs_to_nicklist_group(void);
-void acquire_connect_details(char*);
 void save_colours_choice(void);
 void load_colours_choice(void);
 void set_channel_clipboard_hook(void);
@@ -411,7 +410,7 @@ int load_graphical_smilies(void);
 int free_graphical_smilies(struct query_window*);
 int use_graphical_smilies(struct query_window*);
 int find_themes(void);
-char * convert_graphical_smilies_2_text(char*);
+
 
 
 struct TagItem blank_taglist[] = { {TAG_DONE, 0} };
@@ -451,7 +450,7 @@ char *nickcolour;//=new char[40];
 char *pch3;
 char *pch;
 char *PreParse_NewText=(char*)"\033c\0333";
-char *string2,*string3,*string4,*string5;
+char *string4,*string5;
 char *tabwork2_string;//=new char[900]; //text before cursor position
 char *tabwork3_string;//=new char[900]; //text after cursor position
 char *tabwork4_string;//=new char[100]; //nick text to complete
@@ -468,7 +467,6 @@ char banmask[200];
 char ban_window_title[200];
 char pen_number[10];
 char new_array2[900];
-char new_array3[20];
 char listview_format[100];
 char list_channels_work[900];
 char list_found_nicks[5000][50]; // Nick completion function variables
@@ -943,15 +941,14 @@ char clipboard_string[5000];
 char *buffer4;
 char string20[800];
 char string21[800];
-char string22[800];
 int last_count, last_count2;
-struct MUI_NList_GetEntryInfo clipboard_struct;
+
 struct MUI_NList_GetEntryInfo clipboard_struct2;
 
 int  col1,col2,pos1,pos2;
 int was_last_one_four;
 
-struct MUI_NList_GetSelectInfo select_struct;
+
 int lastvstart;
 int lastvend;
 
@@ -1019,35 +1016,8 @@ int clip_count=1;
 
 
 
-int last_clipboardline=999;
 
-int last_line=999999;
-int last_pos1=999,last_pos2=999;
 
-enum { COLUMNS=1, NORMAL };
-
-int which_clipboard_style()
-{
-
-    if(my_settings.which_clipboard_style==COLUMNS)
-    {
-        if(DEBUG) printf("columns code used\n");
-        return 0;
-
-    }
-    else
-    {
-        if(DEBUG) printf("normal code used\n");
-        return 1;
-
-    }
-    return 1;
-
-}
-
-int first_pos1=0;
-
-#include "hooks.cpp"
 
 
 

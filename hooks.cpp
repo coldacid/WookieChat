@@ -8,6 +8,23 @@
     for the specific language governing rights and limitations under the License.
 */
 
+#include "includes.h"
+
+#include <mui/NListtree_mcc.h>
+
+#include "intern.h"
+
+/* Locals */
+static int last_line = 999999;
+static int last_pos1 = 999;
+static int last_pos2 = 999;
+static int first_pos1 = 0;
+static char string22[800];
+static struct MUI_NList_GetEntryInfo clipboard_struct;
+static struct MUI_NList_GetSelectInfo select_struct;
+static int last_clipboardline = 999;
+static char new_array3[20];
+
 #ifdef __amigaos4__
 void Custom_Clipboard2_Func(REG(a0, struct Hook *hook),REG(a2, char **array),REG(a1, char *new_entry)) {
 #elif __MORPHOS__

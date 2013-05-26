@@ -873,6 +873,11 @@ struct graphical_smilies_struct
     APTR   icon;
 };
 
+enum
+{
+    COLUMNS = 1, NORMAL
+};
+
 #define AREXX_MENU_VALUES           500000
 #define START_DELAY                 2
 #define RECONNECT_STRAIGHT_AWAY     1
@@ -1039,6 +1044,10 @@ extern BPTR newbptr_file; // FIXME make this a local variable in each function
 
 extern BOOL muted_sound;
 extern Object *o2;
+extern char *string2; // FIXME make this a local variable in each function
+extern char *string3; // FIXME make this a local variable in each function
+
+int which_clipboard_style();
 
 /* arexx_hooks.c */
 #define MAX_AREXX_SCRIPTS 20
@@ -1079,6 +1088,7 @@ void setup_background_colours();
 /* connect2server.c */
 int connect2server(char *servername, char *port_number, int typedservercommand, int set_connect_script_name,
         int connect_in_current_tab, char *requested_remote_charset, int write_new_passwords_to_this_node);
+void acquire_connect_details(char*);
 
 /* pincoming.c */
 int add_text_to_conductor_list(char*, LONG, int);
@@ -1126,6 +1136,7 @@ void insert_graphical_smilies();
 void delete_smiley_objects();
 void delete_preview_smiley_objects();
 void exit_delete_smiley_objects();
+char * convert_graphical_smilies_2_text(char*);
 
 /* events_arexx.c */
 extern char event_string[900];
@@ -1139,3 +1150,22 @@ void automatically_reconnect_server(int);
 /* hooks.c */
 extern char display_hook_breakup2[900];
 extern char *graphical_string1;
+extern struct Hook ConstructLI_channel_TextHook;
+extern struct Hook DestructLI_channel_TextHook;
+extern struct Hook ConstructLI_channel2_TextHook;
+extern struct Hook DestructLI_channel2_TextHook;
+extern struct Hook DisplayLI_channel_TextHook;
+extern struct Hook Custom_Clipboard2_Hook;
+extern struct Hook DisplayLI2_channel_TextHook;
+extern struct Hook ConstructLI_TextHook;
+extern struct Hook DisplayLI_TextHook;
+extern struct Hook DestructLI_TextHook;
+extern struct Hook Display_listviewtabs_TextHook;
+extern struct Hook Display_ignore_TextHook;
+extern struct Hook previewdisplay_TextHook;
+extern struct Hook Display_alias_TextHook;
+extern struct Hook DisplayHook_LV_userlist_buttons;
+extern struct Hook Display_events_TextHook;
+extern struct Hook Display_servers_TextHook;
+extern struct Hook DisplayLI_ban_TextHook;
+extern struct Hook Display_channellist_TextHook;

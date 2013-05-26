@@ -8,6 +8,8 @@
     for the specific language governing rights and limitations under the License.
 */
 
+#include "includes.h"
+
 #include "intern.h"
 
 struct XYMessage *my_message;
@@ -142,3 +144,22 @@ BPTR newbptr_file;
 
 BOOL muted_sound;
 Object *o2;
+
+char *string2;
+char *string3;
+
+int which_clipboard_style()
+{
+    if(my_settings.which_clipboard_style==COLUMNS)
+    {
+        if(DEBUG) printf("columns code used\n");
+        return 0;
+    }
+    else
+    {
+        if(DEBUG) printf("normal code used\n");
+        return 1;
+    }
+    return 1;
+}
+
