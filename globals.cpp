@@ -208,6 +208,8 @@ struct MUI_NList_TestPos_Result *last_clicked_res;
 
 char *string123;
 
+int b;
+
 
 int which_clipboard_style()
 {

@@ -1131,6 +1131,8 @@ extern struct MUI_NList_TestPos_Result *last_clicked_res;
 
 extern char *string123;
 
+extern int b; //FIXME This must go
+
 int which_clipboard_style();
 
 
@@ -1158,6 +1160,10 @@ extern int count2; // FIXME make this a local variable in each function
 extern int DEBUG;
 extern int SMALLTABS;
 extern int RAW;
+extern int GEIT;
+extern int GEIT2;
+extern int GEIT3;
+extern int NEWDEBUG;
 struct timeval get_sys_time(struct timeval *tv);
 void timestamp_2_string(); // FIXME chang to return value instead of setting global variable
 void dcc_time(); // FIXME chang to return value instead of setting global variable
@@ -1264,6 +1270,9 @@ void delete_smiley_objects();
 void delete_preview_smiley_objects();
 void exit_delete_smiley_objects();
 char * convert_graphical_smilies_2_text(char*);
+int free_graphical_smilies(struct query_window*);
+int use_graphical_smilies(struct query_window*);
+
 
 /* events_arexx.c */
 extern char event_string[900];
@@ -1318,7 +1327,7 @@ void setup_notifys();
 void check_column_size();
 void set_column_size();
 int switch_between_tabs_with_keys(int);
-
+int switch_between_tabs_with_nlisttabclick(LONG result, BOOL saving_prefs);
 
 /* highlight_search.c */
 int search_for_highlight_words(char *, char *);

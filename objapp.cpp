@@ -19,3 +19,4 @@ APTR GR_string_gadget;
 APTR GROUP_ROOT_0;
 APTR GR_top;
 APTR LV_events;
+APTR GR_bottom_group;

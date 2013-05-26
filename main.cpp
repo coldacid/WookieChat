@@ -38,7 +38,6 @@ int GEIT3 = 0;
 void check_if_at_bottom(void);
 
 #include "tabs_create_close.cpp"
-#include "tabs_change.cpp"
 
 void copy_settings_to_undo_buffer()
 {

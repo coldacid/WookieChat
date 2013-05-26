@@ -320,8 +320,6 @@ void close_server_select_window(void);
 void switch_between_tabs(int);
 void load_colours(char*);
 int load_graphical_smilies(void);
-int free_graphical_smilies(struct query_window*);
-int use_graphical_smilies(struct query_window*);
 int find_themes(void);
 
 
@@ -358,7 +356,7 @@ char wscreent[200];
                                         char filename[1000];
                                         char new_filename[1000];
 
-int b;
+
 int a_socket=0;
 int delay_b4_ping_server_count=0;
 int iv=0;
@@ -1338,7 +1336,7 @@ int string_id=2;
 APTR    GR_ban, GR_ban_subgroup, GR_logging_splitup, GR_logging_splitup2;
 
 APTR    GROUP_ROOT_1;
-APTR    GR_bottom_group, GR_buttons, GR_virtual_buttons, GR_samples_path;
+APTR    GR_buttons, GR_virtual_buttons, GR_samples_path;
 APTR    LA_space;
 
     APTR    GROUP_ROOT_8;

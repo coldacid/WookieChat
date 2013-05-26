@@ -8,6 +8,11 @@
     for the specific language governing rights and limitations under the License.
 */
 
+#include "includes.h"
+
+#include "intern.h"
+#include "objapp.h"
+
 void check_column_size()
 {
     if (NEWDEBUG)
