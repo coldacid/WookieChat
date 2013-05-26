@@ -21,3 +21,10 @@ extern APTR GR_top;
 extern APTR LV_events;
 extern APTR GR_bottom_group;
 extern APTR GR_buttons;
+extern APTR GR_local_charset;
+extern APTR STR_events_script;
+extern APTR STR_events_args;
+extern APTR CYCLE_events;
+
+
+struct ObjApp *CreateApp();

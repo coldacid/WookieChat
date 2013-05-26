@@ -14,20 +14,41 @@
 #include <proto/dos.h>
 #include <proto/utility.h>
 
+#define MUI_OBSOLETE
 #include <libraries/mui.h>
 #include <mui/NListview_mcc.h>
 
+#ifndef __AROS__
+#include <SDI_compiler.h>
+#include <SDI_hook.h>
+#endif
+
 #ifdef __amigaos4__
-#error "Missing socket includes for AmigaOS4"
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <sys/filio.h>
+#include <arpa/inet.h>
+#include <proto/bsdsocket.h>
+#include "os4.h"
 #elif __MORPHOS__
-#error "Missing socket includes for MorphOS"
+#include <proto/socket.h>
+#include <netinet/in.h>
+#include <sys/types.h>
+#include <sys/filio.h>
+#include <netdb.h>
 #elif __AROS__
 #include <sys/ioctl.h>
 #include <sys/socket.h>
 #include <bsdsocket/socketbasetags.h>
 #include <proto/socket.h>
 #else
-#error "Missing socket includes for AmigaOS3"
+#include "gg:netinclude/sys/types.h"
+#include "gg:netinclude/netdb.h"
+#include "gg:netinclude/sys/filio.h"
+#include "gg:netinclude/sys/ioctl.h"
+#include "gg:netinclude/sys/socket.h"
+#include "gg:netinclude/bsdsocket/socketbasetags.h"
+#include "gg:netinclude/clib/socket_protos.h"
 #endif
 
 #include <stdlib.h>

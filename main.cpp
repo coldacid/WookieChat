@@ -9,8 +9,6 @@
 */
 
 
-#define string_default 0
-
 #define USE_F 0
 #define SECONDS_TO_WAIT_BEFORE_PING_SERVER 60*2
 
@@ -33,7 +31,39 @@ int GEIT3 = 0;
 #define DEPRECATED
 #endif
 
-#include "header.h"
+#include "includes.h"
+
+#include <clib/alib_protos.h>
+#include <proto/asl.h>
+#include <proto/codesets.h>
+#include <proto/icon.h>
+#include <proto/muimaster.h>
+
+#include <mui/NListtree_mcc.h>
+#include <mui/BetterString_mcc.h>
+
+#include "intern.h"
+#include "objapp.h"
+
+
+/* Locals */
+static int delay_b4_ping_server_count=0;
+static ULONG arexx_wants_to_send_signal;
+static char ban_window_title[200];
+static BOOL aslresult;
+static struct FileRequester *filerequester;
+static char old_ignore_entry[800];
+static char old_alias_entry[800];
+static char new_filename[1000];
+static char orig_filename[1000];
+static char filename[1000];
+static char timestamp_secs[4];
+static char *text;
+static char pingtimestamp_hrs[4];
+static ULONG mics;
+static char wookie_dir[400]; //the pathname wookiechat is located in
+static ULONG iconified_and_new_text;
+
 
 
 
@@ -47,15 +77,6 @@ void copy_undo_buffer_to_settings()
     my_settings = temp_settings;
     set_settings();
 }
-
-/*
- LONG getv(APTR obj, ULONG attr)
- {
- ULONG val;
- GetAttr(attr, obj, &val);
- return val;
- }
- */
 
 UTF8 *utf8 = NULL;
 STRPTR buf[1024];
@@ -688,6 +709,125 @@ void set_channel_clipboard_hook(void)
 }
 
 BOOL open_timers();
+
+void read_list_of_servers(void)
+{
+    count=0;
+
+    char *work_buffer=new char[1000];
+    char *work_buffer2=new char[1000];
+    char *work1=new char[100];
+    char *len2; //variable used for file access
+    char work_buffer3[600];
+    newbptr_file = Open("progdir:servers.txt",MODE_OLDFILE);
+
+    int running3=1;
+    len2=(char*)FGets(newbptr_file,(b_in)work_buffer,600);
+    if(len2)
+    {
+        if(stricmp(work_buffer,"WOOKIECHAT_SERVERS_FILE_2\n"))
+        {
+            printf("Old servers.txt file detected!\nRenaming servers.txt to servers2.txt\nNow generating a new servers.txt in the new format\n(Keep servers2.txt as a backup in case something goes wrong!\n");
+
+            Rename("progdir:servers.txt","progdir:servers2.txt");
+
+            BPTR new_servers_file = Open("progdir:servers.txt",MODE_NEWFILE);
+            if(new_servers_file)
+            {
+                FPuts(new_servers_file,(b_in)"WOOKIECHAT_SERVERS_FILE_2\n");
+
+                FPuts(new_servers_file,(b_in)work_buffer);
+
+                while(running3)
+                {
+                    //read the line from the servers file
+                    len2=(char*)FGets(newbptr_file,(b_in)work_buffer,600);
+
+                    if(!len2) { running3=0; }
+
+                    if(DEBUG) printf("running3 = %d\n",running3);
+
+
+                    //work_buffer[strlen(work_buffer)]='\0';
+
+                    strcpy(work_buffer2,work_buffer);
+                    strtok(work_buffer2," ");
+                    work1=strtok(NULL," \n");
+
+                    //its a group name! lets create the initial group entry
+                    if(!work1)
+                    {
+                        //if(!first) FPuts(new_servers_file,(b_in)"ENDGROUP\n");
+                        //first=FALSE;
+
+                        //FPuts(new_servers_file,(b_in)"GROUP");
+                        FPuts(new_servers_file,(b_in)work_buffer);
+                        //FPuts(new_servers_file,(b_in)"\n");
+                        //printf("putting group name:%s",work_buffer);
+
+                    }
+                    else
+                    {
+                        strcpy(work_buffer2,work_buffer);
+                        //printf("1 work_buffer :%s",work_buffer);
+                        //printf("1 work_buffer2:%s",work_buffer2);
+
+                        string3=strtok(work_buffer2," "); //servername
+                        string2=strtok(NULL,"\n ");     //port number
+                        string1=strtok(NULL,"\n ");    //connect automatically, yes or not?
+                        string5=strtok(NULL,"\n ");     //charset
+                        string4=strtok(NULL,"\n ");   //password
+
+                        if(string3)
+                        {
+                            sprintf(work_buffer3,"SERVER=%s ",string3);
+                            FPuts(new_servers_file,(b_in)work_buffer3);
+
+                            if(string2)
+                            {
+                                sprintf(work_buffer3,"PORT=%s",string2);
+                                FPuts(new_servers_file,(b_in)work_buffer3);
+
+                            }
+                        }
+
+                        if(string1)
+                            sprintf(work_buffer3," AUTOCONNECT=%s",string1);
+                        else
+                            sprintf(work_buffer3," AUTOCONNECT=");
+
+                        FPuts(new_servers_file,(b_in)work_buffer3);
+
+                        if(string5)
+                            sprintf(work_buffer3," SERVER_CHARSET=%s",string5);
+                        else
+                            sprintf(work_buffer3," SERVER_CHARSET=");
+
+                        FPuts(new_servers_file,(b_in)work_buffer3);
+
+                        if(string4)
+                            sprintf(work_buffer3," SERVER_PASSWORD=%s",string4);
+                        else
+                            sprintf(work_buffer3," SERVER_PASSWORD=");
+                        FPuts(new_servers_file,(b_in)work_buffer3);
+
+
+                        sprintf(work_buffer3," AUTOJOINS=");
+                        FPuts(new_servers_file,(b_in)work_buffer3);
+
+                        FPuts(new_servers_file,(b_in)"\n");
+                    }
+                }
+                Close(new_servers_file);
+            }
+        }
+    }
+
+    Close(newbptr_file);
+
+
+    return;
+}
 
 static char *stack_cookie __attribute__((used)) = (char*) "$STACK: 550000";
 

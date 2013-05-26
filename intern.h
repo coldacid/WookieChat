@@ -31,15 +31,19 @@ typedef char *p_in;
 
 #ifdef __amigaos4__
 typedef char *c_in;
+typedef char **c2_in;
 typedef char *i_in;
 #elif __MORPHOS__
 typedef char *c_in;
+typedef char **c2_in;
 typedef UBYTE *i_in;
 #elif __AROS__
 typedef char *c_in;
+typedef char **c2_in;
 typedef unsigned int *i_in;
 #else
 typedef UBYTE *c_in;
+typedef UBYTE **c2_in;
 typedef unsigned char *i_in;
 #endif
 
@@ -936,6 +940,26 @@ enum
 #define MUIC_DTPIC "Dtpic.mui"
 #endif
 
+#ifndef MUIA_Dtpic_Name
+#define MUIA_Dtpic_Name 0x80423d72
+#endif
+
+#ifndef __AROS__
+
+#ifndef MUIA_Application_IconifyTitle
+#define MUIA_Application_IconifyTitle 0x80422cb8 /* V18 isg STRPTR            */
+#endif
+
+#ifndef MUIA_Imagedisplay_Spec
+#define MUIA_Imagedisplay_Spec 0x8042a547
+#endif
+
+#ifndef MUIA_Window_DisableKeys
+#define MUIA_Window_DisableKeys 0x80424c36
+#endif
+
+#endif
+
 /* globals.c */
 extern struct XYMessage *my_message;
 extern struct XYMessage *incoming_message;
@@ -1189,6 +1213,7 @@ void play_external_sound_replayer(char *string1);
 void save_colours();
 void get_colours();
 void set_colours();
+void load_colours(char*);
 
 /* subclasses.c */
 struct InstanceData
@@ -1229,6 +1254,7 @@ int add_text_to_conductor_list(char*, LONG, int);
 int add_text_to_current_list(char*, LONG, int);
 void process_incoming();
 void process_dcc_chat_incoming();
+char *doubleclick_url_action(char*, int, int);
 
 /* dcc.c */
 extern LONG recv_thing;
@@ -1248,6 +1274,8 @@ void create_recv_dcc_chat(char *, char *, char *);
 int offer_dcc(char*,char*,char*,char*,int);
 void initiate_outgoing_dcc_chat(char*);
 void send_dcc_chat(char*);
+void shutdown_my_dcc_send_socket();
+
 
 
 /* tabs_create_close.c */
@@ -1281,7 +1309,8 @@ void exit_delete_smiley_objects();
 char * convert_graphical_smilies_2_text(char*);
 int free_graphical_smilies(struct query_window*);
 int use_graphical_smilies(struct query_window*);
-
+int load_graphical_smilies();
+int find_themes();
 
 /* events_arexx.c */
 extern char event_string[900];
@@ -1397,11 +1426,24 @@ int save_events_settings();
 void get_events_settings();
 void load_ignore_list();
 void save_ignore_list();
+void save_nick_settings();
+void save_colours_choice();
+void load_colours_choice();
+void retrieve_settings();
+void load_nick_settings();
+
 
 /* startexit.c */
 extern struct NewMenu MenuData1[];
 void cleanexit(char*);
+void LoadAllLibs();
 
 /* timers.c */
 BOOL TimerWait_Close();
 BOOL TimerWait_Open();
+
+/* do_waitselect_code.c */
+int do_waitselect_code();
+
+/* closeserverselectwin.c */
+void close_server_select_window();
