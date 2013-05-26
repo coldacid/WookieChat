@@ -977,6 +977,16 @@ extern ULONG mins; // FIXME make this a local variable in each function
 extern char sendstuff[1500];
 extern struct dcc_entry *find;
 
+extern int a;  // FIXME make this a local variable in each function
+extern int how_many_lines; // FIXME make this a local variable in each function
+extern char buffer_text[800];  // FIXME make this a local variable in each function
+extern struct channel_entry *centry;
+extern char new_array[20];  // FIXME make this a local variable in each function
+extern ULONG custom_pen_colours[24];
+extern ULONG visible;
+extern ULONG first;
+
+
 /* arexx_hooks.c */
 #define MAX_AREXX_SCRIPTS 20
 extern char maintask_basename[100];
@@ -1035,5 +1045,8 @@ void create_recv_dcc(char *nick, char *filename, char *address, unsigned short p
 void accept_dcc(char *b);
 void create_send_dcc(char *nick, char *string3, int filesize, int portnumber);
 
-/* tabs_create_close.c*/
+/* tabs_create_close.c */
 int create_new_tab(char *name, int show_now, int query_type);
+
+/* graphical_smilies.c */
+void insert_graphical_smilies();

@@ -113,3 +113,12 @@ ULONG secs;
 ULONG mins;
 char sendstuff[1500];
 struct dcc_entry *find=new dcc_entry;
+
+int a;
+int how_many_lines=15;
+char buffer_text[800];
+struct channel_entry *centry=new channel_entry;
+char new_array[20];
+ULONG custom_pen_colours[24];
+ULONG visible;
+ULONG first;

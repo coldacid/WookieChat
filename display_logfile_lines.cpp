@@ -8,27 +8,38 @@
     for the specific language governing rights and limitations under the License.
 */
 
+#include "includes.h"
+
+#include "intern.h"
+
+/* Locals */
+static int count_the_linefeeds=0;
+static LONG char_read_storage;
+
 #ifndef __AROS__
 struct TagItem my_incoming_charset11_taglist[] =
 {
     {   CSA_Source, (ULONG)buffer_text},
     {   CSA_SourceCodeset, (ULONG)cs},
     {   CSA_DestCodeset, (ULONG)charsets[local_charset]},
-    {   TAG_DONE, 0}};
+    {   TAG_DONE, 0}
+};
 
 struct TagItem my_incoming_charset22_taglist[] =
 {
     {   CSA_Source, (ULONG)buffer_text},
     {   CSA_SourceCodeset, (ULONG)charsets[0]},
     {   CSA_DestCodeset, (ULONG)charsets[local_charset]},
-    {   TAG_DONE, 0}};
+    {   TAG_DONE, 0}
+};
 
 struct TagItem my_incoming_charset33_taglist[] =
 {
     {   CSA_Source, (ULONG)buffer_text},
     {   CSA_CodesetFamily, CSV_CodesetFamily_Latin},
     {   CSA_FallbackToDefault, TRUE},
-    {   TAG_DONE,0}};
+    {   TAG_DONE,0}
+};
 #endif
 
 int display_last_few_lines_of_logfile_conductor()

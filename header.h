@@ -424,7 +424,7 @@ int free_graphical_smilies(struct query_window*);
 int use_graphical_smilies(struct query_window*);
 int find_themes(void);
 char * convert_graphical_smilies_2_text(char*);
-void insert_graphical_smilies(void);
+
 
 struct TagItem blank_taglist[] = { {TAG_DONE, 0} };
 
@@ -481,9 +481,7 @@ char background4[64];
 char background[64];
 char banmask[200];
 char ban_window_title[200];
-char buffer_text[800];
 char pen_number[10];
-char new_array[20];
 char new_array2[900];
 char new_array3[20];
 char listview_format[100];
@@ -508,11 +506,9 @@ char wscreent[200];
                                         char filename[1000];
                                         char new_filename[1000];
 
-int a,b;
+int b;
 int a_socket=0;
-int count_the_linefeeds=0;
 int delay_b4_ping_server_count=0;
-int how_many_lines=15;
 int iv=0;
 int last_a=0;
 int last_c=0;
@@ -523,9 +519,7 @@ int nick_length;
 int previous_b=0;
 int socket_global=0;
 int sort_method=1; //which sorting method is used for nick lists - only 1 presently
-LONG char_read_storage;
 ULONG arexx_wants_to_send_signal;
-ULONG custom_pen_colours[24];
 ULONG iconified_and_new_text;
 long ev_sock;
 Object *o, *o2, *o3;
@@ -961,9 +955,7 @@ int queued_messages_total;
 char number_of_lines_unread[20];
 
 struct MUI_NList_GetSelectInfo *res=new struct MUI_NList_GetSelectInfo;
-ULONG visible,first;
 
-struct channel_entry *centry=new channel_entry;
 struct channel_entry *wentry=new channel_entry;
 
 #include "subclasses.cpp"
