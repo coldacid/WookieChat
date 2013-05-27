@@ -16,9 +16,6 @@
 
 int sort_nicks(int a)
 {
-
-    //if(!work_entry4.hostname) work_entry4.hostname=new char[HOSTNAME_STRING_SIZE];
-
     if (SORT)
     {
         unsigned int flipped;
@@ -44,20 +41,14 @@ int sort_nicks(int a)
 
                     strcpy(work_entry4.name, status_conductor->conductor->nicklist[indx2 - 1].name);
                     strcpy(work_entry4.modes, status_conductor->conductor->nicklist[indx2 - 1].modes);
-                    //if(!status_conductor->conductor->nicklist[indx2-1].hostname) status_conductor->conductor->nicklist[indx2-1].hostname=new char[HOSTNAME_STRING_SIZE];
-                    //strncpy(work_entry4.hostname,status_conductor->conductor->nicklist[indx2-1].hostname, HOSTNAME_STRING_SIZE-1);
 
                     strcpy(status_conductor->conductor->nicklist[indx2 - 1].name,
                             status_conductor->conductor->nicklist[indx2].name);
                     strcpy(status_conductor->conductor->nicklist[indx2 - 1].modes,
                             status_conductor->conductor->nicklist[indx2].modes);
-                    //if(!status_conductor->conductor->nicklist[indx2-1].hostname) status_conductor->conductor->nicklist[indx2-1].hostname=new char[HOSTNAME_STRING_SIZE];
-                    //strncpy(status_conductor->conductor->nicklist[indx2-1].hostname, status_conductor->conductor->nicklist[indx2].hostname,HOSTNAME_STRING_SIZE-1);
 
                     strcpy(status_conductor->conductor->nicklist[indx2].name, work_entry4.name);
                     strcpy(status_conductor->conductor->nicklist[indx2].modes, work_entry4.modes);
-                    //if(!status_conductor->conductor->nicklist[indx2].hostname) status_conductor->conductor->nicklist[indx2].hostname=new char[HOSTNAME_STRING_SIZE];
-                    //strncpy(status_conductor->conductor->nicklist[indx2].hostname, work_entry4.hostname,HOSTNAME_STRING_SIZE-1);
 
                     flipped = 1;
                 }
@@ -269,18 +260,7 @@ void sort_linked_list(void)
                 DoMethod((Object*) WookieChat->LV_tabs, MUIM_NList_ReplaceSingle,
                         &status_conductor->conductor->nlist_tab, status_conductor->conductor->nlist_tab_number, 0, 0);
 
-                //if(DEBUG) printf("giving sorted channel a new entry number %d\n",count);
             }
-
-            /*if(status_conductor->conductor && status_conductor->conductor->removed==0)
-             {
-             status_conductor->conductor->nlist_tab_number=count;
-             DoMethod((Object*)WookieChat->LV_tabs,MUIM_NList_ReplaceSingle,&status_conductor->conductor->nlist_tab,status_conductor->conductor->nlist_tab_number,0,0);
-
-             //if(DEBUG) printf("giving sorted channel a new entry number %d\n",count);
-             count++;
-             } */
-
         }
     }
 
@@ -291,11 +271,4 @@ void sort_linked_list(void)
     for (status_conductor->conductor = status_conductor->root; status_conductor->conductor->next;
             status_conductor->conductor = status_conductor->conductor->next)
         ;
-
-    /*status_conductor=work_status;
-
-     for(status_conductor->conductor=status_conductor->root; status_conductor->conductor->next;
-     status_conductor->conductor=status_conductor->conductor->next);
-     */
 }
-

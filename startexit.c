@@ -23,49 +23,49 @@
 #include "objapp.h"
 
 #ifdef __AROS__
-Library * AslBase = NULL;
-Library * IconBase = NULL;
+struct Library * AslBase = NULL;
+struct Library * IconBase = NULL;
 struct LocaleBase * LocaleBase = NULL;
 struct GfxBase * GfxBase = NULL;
 struct UtilityBase * UtilityBase = NULL;
-Library * MUIMasterBase = NULL;
+struct Library * MUIMasterBase = NULL;
 struct IntuitionBase * IntuitionBase = NULL;
-Library * SocketBase = NULL;
-Library * DataTypesBase = NULL;
-Library * CodesetsBase = NULL;
+struct Library * SocketBase = NULL;
+struct Library * DataTypesBase = NULL;
+struct Library * CodesetsBase = NULL;
 #elif __amigaos4__
-Library * AslBase = NULL;
-Library * IconBase = NULL;
-Library * LocaleBase = NULL;
-Library * GfxBase = NULL;
-Library * UtilityBase = NULL;
-Library * MUIMasterBase = NULL;
-Library * IntuitionBase = NULL;
-Library * SocketBase = NULL;
-Library * DataTypesBase = NULL;
-Library * CodesetsBase = NULL;
+struct Library * AslBase = NULL;
+struct Library * IconBase = NULL;
+struct Library * LocaleBase = NULL;
+struct Library * GfxBase = NULL;
+struct Library * UtilityBase = NULL;
+struct Library * MUIMasterBase = NULL;
+struct Library * IntuitionBase = NULL;
+struct Library * SocketBase = NULL;
+struct Library * DataTypesBase = NULL;
+struct Library * CodesetsBase = NULL;
 #elif __MORPHOS__
-Library * AslBase = NULL;
-Library * IconBase = NULL;
-Library * LocaleBase = NULL;
+struct Library * AslBase = NULL;
+struct Library * IconBase = NULL;
+struct Library * LocaleBase = NULL;
 struct GfxBase * GfxBase = NULL;
-Library * UtilityBase = NULL;
-Library * MUIMasterBase = NULL;
+struct Library * UtilityBase = NULL;
+struct Library * MUIMasterBase = NULL;
 struct IntuitionBase * IntuitionBase = NULL;
-Library * SocketBase = NULL;
-Library * DataTypesBase = NULL;
-Library * CodesetsBase = NULL;
+struct Library * SocketBase = NULL;
+struct Library * DataTypesBase = NULL;
+struct Library * CodesetsBase = NULL;
 #else
-Library * AslBase = NULL;
-Library * IconBase = NULL;
-Library * LocaleBase = NULL;
-Library * GfxBase = NULL;
-Library * UtilityBase = NULL;
-Library * MUIMasterBase = NULL;
-Library * IntuitionBase = NULL;
-Library * SocketBase = NULL;
-Library * DataTypesBase = NULL;
-Library * CodesetsBase = NULL;
+struct Library * AslBase = NULL;
+struct Library * IconBase = NULL;
+struct Library * LocaleBase = NULL;
+struct Library * GfxBase = NULL;
+struct Library * UtilityBase = NULL;
+struct Library * MUIMasterBase = NULL;
+struct Library * IntuitionBase = NULL;
+struct Library * SocketBase = NULL;
+struct Library * DataTypesBase = NULL;
+struct Library * CodesetsBase = NULL;
 #endif
 
 //the menu is left blank so we can use localised strings from a catalog.
@@ -98,10 +98,6 @@ struct NewMenu MenuData1[] =
 };
 
 /* Locals */
-static char *background3; // FIXME not used
-static char *nickcolour; // FIXME not used
-static struct list_entry *work_entry3; //FIXME not used
-
 
 void cleanexit(char*);
 
@@ -110,22 +106,24 @@ void LoadAllLibs(void)
 {
     //if(DEBUG) MG_Init();
 
-    background3 = new char[64];
-    channel_display = new char[100];
-    NewPreParse_NewText = new char[100];
-    nick2 = new char[30];
-    nick3 = new char[30];
-    nick = new char[30];
-    nickcolour = new char[40];
-    tabwork2_string = new char[900]; //text before cursor position
-    tabwork3_string = new char[900]; //text after cursor position
-    tabwork4_string = new char[100]; //nick text to complete
-    tabwork5_string = new char[100]; //completed nick text to insert
-    tabwork_string = new char[900]; //original string gadget contents
+    work_entry =  malloc(sizeof(struct list_entry));
+    find = malloc(sizeof(struct dcc_entry));
+    centry = malloc(sizeof(struct channel_entry));
 
-    new_entry = new list_entry;
-    new_entry->hostname = new char[HOSTNAME_STRING_SIZE + 1];
-    work_entry4.hostname = new char[HOSTNAME_STRING_SIZE + 1];
+    channel_display = malloc(sizeof(char) * 100);
+    NewPreParse_NewText = malloc(sizeof(char) * 100);
+    nick2 = malloc(sizeof(char) * 30);
+    nick3 = malloc(sizeof(char) * 30);
+    nick = malloc(sizeof(char) * 30);
+    tabwork2_string = malloc(sizeof(char) * 900); //text before cursor position
+    tabwork3_string = malloc(sizeof(char) * 900); //text after cursor position
+    tabwork4_string = malloc(sizeof(char) * 100); //nick text to complete
+    tabwork5_string = malloc(sizeof(char) * 100); //completed nick text to insert
+    tabwork_string = malloc(sizeof(char) * 900); //original string gadget contents
+
+    new_entry = malloc(sizeof(struct list_entry));
+    new_entry->hostname = malloc(sizeof(char) * (HOSTNAME_STRING_SIZE + 1));
+    work_entry4.hostname = malloc(sizeof(char) * (HOSTNAME_STRING_SIZE + 1));
 
     fdmax = -1;
 
@@ -142,7 +140,7 @@ void LoadAllLibs(void)
     for (a = 0; a < 25; a++)
         custom_pen_colours[a] = 0;
     for (a = 0; a < 25; a++)
-        pendisplay_specs[a] = new MUI_PenSpec;
+        pendisplay_specs[a] = malloc(sizeof(struct MUI_PenSpec));
 
     //default values before tooltypes and shell switches are read
     SMALLTABS = 0;
@@ -151,22 +149,22 @@ void LoadAllLibs(void)
     my_settings.os3_about_window_gfx = 0;
 
 #ifdef __amigaos4__
-    DataTypesBase = (Library*)OpenLibrary((c_in)"datatypes.library",0);
+    DataTypesBase = (struct Library*)OpenLibrary((c_in)"datatypes.library",0);
     if(!DataTypesBase) cleanexit((char*)"cant open datatypes.library\n");
 
-    AslBase = (Library*)OpenLibrary((c_in)"asl.library",0);
+    AslBase = (struct Library*)OpenLibrary((c_in)"asl.library",0);
     if(!AslBase) cleanexit((char*)"cant open asl.library\n");
 
-    IconBase = (Library*)OpenLibrary((c_in)"icon.library",0);
+    IconBase = (struct Library*)OpenLibrary((c_in)"icon.library",0);
     if(!IconBase) cleanexit((char*)"cant open icon.library\n");
 
-    LocaleBase = (Library*)OpenLibrary((c_in)"locale.library",0);
+    LocaleBase = (struct Library*)OpenLibrary((c_in)"locale.library",0);
     if(!LocaleBase) cleanexit((char*)"cant open locale.library\n");
 
-    GfxBase = (Library*)OpenLibrary((c_in)"graphics.library",0);
+    GfxBase = (struct Library*)OpenLibrary((c_in)"graphics.library",0);
     if(!GfxBase) cleanexit((char*)"cant open graphics.library\n");
 
-    UtilityBase = (Library*)OpenLibrary((c_in)"utility.library",0);
+    UtilityBase = (struct Library*)OpenLibrary((c_in)"utility.library",0);
     if(!UtilityBase) cleanexit((char*)"cant open utility.library\n");
 
     SocketBase = OpenLibrary((c_in)"bsdsocket.library",0L);
@@ -196,25 +194,25 @@ void LoadAllLibs(void)
     IAsl = (struct AslIFace*)GetInterface((struct Library *)AslBase, "main", 1, NULL);
 
 #elif __MORPHOS__
-    AslBase = (Library*)OpenLibrary((c_in)"asl.library",0);
+    AslBase = (struct Library*)OpenLibrary((c_in)"asl.library",0);
     if(!AslBase) cleanexit((char*)"cant open asl.library\n");
 
-    DataTypesBase = (Library*)OpenLibrary((c_in)"datatypes.library",0);
+    DataTypesBase = (struct Library*)OpenLibrary((c_in)"datatypes.library",0);
     if(!DataTypesBase) cleanexit((char*)"cant open datatypes.library\n");
 
     GfxBase = (struct GfxBase*)OpenLibrary("graphics.library",0);
     if(!GfxBase) cleanexit((char*)"cant open graphics.library\n");
 
-    IconBase = (Library*)OpenLibrary((c_in)"icon.library",0);
+    IconBase = (struct Library*)OpenLibrary((c_in)"icon.library",0);
     if(!IconBase) cleanexit((char*)"cant open icon.library\n");
 
-    LocaleBase = (Library*)OpenLibrary((c_in)"locale.library",0);
+    LocaleBase = (struct Library*)OpenLibrary((c_in)"locale.library",0);
     if(!LocaleBase) cleanexit((char*)"cant open locale.library\n");
 
     GfxBase = (struct GfxBase*)OpenLibrary((c_in)"graphics.library",0);
     if(!GfxBase) cleanexit((char*)"cant open graphics.library\n");
 
-    UtilityBase = (Library*)OpenLibrary((c_in)"utility.library",0);
+    UtilityBase = (struct Library*)OpenLibrary((c_in)"utility.library",0);
     if(!UtilityBase) cleanexit((char*)"cant open utility.library\n");
 
     SocketBase = OpenLibrary((c_in)"bsdsocket.library",0L);
@@ -229,11 +227,11 @@ void LoadAllLibs(void)
     CodesetsBase = OpenLibrary((c_in)CODESETSNAME, CODESETSVER);
     if(!CodesetsBase) cleanexit((char*)"cant open codesets.library\nDownload and install this:\nhttp://aminet.net/util/libs/codesets-6.4.lha\n\n");
 #elif __AROS__
-    AslBase = (Library*) OpenLibrary((c_in) "asl.library", 0);
+    AslBase = (struct Library*) OpenLibrary((c_in) "asl.library", 0);
     if (!AslBase)
         cleanexit((char*) "cant open asl.library\n");
 
-    DataTypesBase = (Library*) OpenLibrary((c_in) "datatypes.library", 0);
+    DataTypesBase = (struct Library*) OpenLibrary((c_in) "datatypes.library", 0);
     if (!DataTypesBase)
         cleanexit((char*) "cant open datatypes.library\n");
 
@@ -241,7 +239,7 @@ void LoadAllLibs(void)
     if (!GfxBase)
         cleanexit((char*) "cant open graphics.library\n");
 
-    IconBase = (Library*) OpenLibrary((c_in) "icon.library", 0);
+    IconBase = (struct Library*) OpenLibrary((c_in) "icon.library", 0);
     if (!IconBase)
         cleanexit((char*) "cant open icon.library\n");
 
@@ -276,22 +274,22 @@ void LoadAllLibs(void)
 
 #else
 
-    AslBase = (Library*)OpenLibrary((c_in)"asl.library",0);
+    AslBase = (struct Library*)OpenLibrary((c_in)"asl.library",0);
     if(!AslBase) cleanexit((char*)"cant open asl.library\n");
 
-    DataTypesBase = (Library*)OpenLibrary((c_in)"datatypes.library",0);
+    DataTypesBase = (struct Library*)OpenLibrary((c_in)"datatypes.library",0);
     if(!DataTypesBase) cleanexit((char*)"cant open datatypes.library\n");
 
-    IconBase = (Library*)OpenLibrary((c_in)"icon.library",0);
+    IconBase = (struct Library*)OpenLibrary((c_in)"icon.library",0);
     if(!IconBase) cleanexit((char*)"cant open icon.library\n");
 
-    LocaleBase = (Library*)OpenLibrary((c_in)"locale.library",0);
+    LocaleBase = (struct Library*)OpenLibrary((c_in)"locale.library",0);
     if(!LocaleBase) cleanexit((char*)"cant open locale.library\n");
 
-    GfxBase = (Library*)OpenLibrary((c_in)"graphics.library",0);
+    GfxBase = (struct Library*)OpenLibrary((c_in)"graphics.library",0);
     if(!GfxBase) cleanexit((char*)"cant open graphics.library\n");
 
-    UtilityBase = (Library*)OpenLibrary((c_in)"utility.library",0);
+    UtilityBase = (struct Library*)OpenLibrary((c_in)"utility.library",0);
     if(!UtilityBase) cleanexit((char*)"cant open utility.library\n");
 
     SocketBase = OpenLibrary((c_in)"bsdsocket.library",0L);
@@ -371,11 +369,9 @@ void LoadAllLibs(void)
     total_smileys = 0;
 
     //lets create some more structures
-    new_entry = new list_entry;
-    work_entry = new list_entry;
-    work_entry3 = new list_entry;
+    new_entry = malloc(sizeof(struct list_entry));
+    work_entry = malloc(sizeof(struct list_entry));
     new_entry->hostname = NULL;
-    work_entry3->hostname = NULL;
 
     //zero the socket filedescriptor sets
     FD_ZERO(&read_master);
@@ -387,8 +383,8 @@ void LoadAllLibs(void)
 
     is_chooser_window_open = FALSE;
 
-    clockdata = new struct ClockData;
-    clockdata2 = new struct ClockData;
+    clockdata = malloc(sizeof(struct ClockData));
+    clockdata2 = malloc(sizeof(struct ClockData));
 
     if ((slist = (struct SharedList*) AllocMem(sizeof(struct SharedList), MEMF_PUBLIC | MEMF_CLEAR)))
     {
@@ -557,11 +553,8 @@ void cleanexit(char *str)
         status_conductor = status_root;
         while (status_conductor)
         {
-            //if(status_conductor->remote_charset) CodesetsFreeA(status_conductor->remote_charset,blank_taglist);// my_utf8_taglist);
             //printf("6\n");
-            //if(status_conductor->buffer) delete [] status_conductor->buffer;
             //printf("7\n");
-            //if(status_conductor->str) delete [] status_conductor->str;
             //printf("8\n");
             status_conductor = status_conductor->next;
             //printf("9\n");
@@ -570,9 +563,6 @@ void cleanexit(char *str)
 //printf("4\n");
         if (GEIT)
             printf("9\n");
-
-        //delete [] NewPreParse_NewText;
-        //delete [] channel_display;
 
     }
 
@@ -591,9 +581,7 @@ void cleanexit(char *str)
             dcc_work = dcc_conductor->next;
             if (dcc_conductor)
             {
-                //delete dcc_conductor->entry;
-                delete dcc_conductor;
-
+                free(dcc_conductor);
             }
         }
 
@@ -606,8 +594,7 @@ void cleanexit(char *str)
             dcc_send_work = dcc_send_conductor->next;
             if (dcc_send_conductor)
             {
-                //delete dcc_send_conductor->entry;
-                delete dcc_send_conductor;
+                free(dcc_send_conductor);
 
             }
         }
@@ -620,8 +607,7 @@ void cleanexit(char *str)
             dcc_chat_work = dcc_chat_conductor->next;
             if (dcc_chat_conductor)
             {
-                //delete [] dcc_chat_conductor->str;
-                delete dcc_chat_conductor;
+                free(dcc_chat_conductor);
 
             }
         }
@@ -630,13 +616,13 @@ void cleanexit(char *str)
             printf("11\n");
 
         if (last_clicked_res)
-            delete last_clicked_res;
+            free(last_clicked_res);
         last_clicked_res = NULL;
         if (systime)
-            delete systime;
+            free(systime);
         systime = NULL;
         if (systime_reconnect_timer)
-            delete systime_reconnect_timer;
+            free(systime_reconnect_timer);
         systime_reconnect_timer = NULL;
 
     }
@@ -669,7 +655,7 @@ void cleanexit(char *str)
                 for (count = 0; count < 2500; count++)
                 {
                     if (status_conductor->conductor->nicklist[count].hostname)
-                        delete[] status_conductor->conductor->nicklist[count].hostname;
+                        free(status_conductor->conductor->nicklist[count].hostname);
                 }
                 // printf("5\n");
 
@@ -757,8 +743,7 @@ void cleanexit(char *str)
 
                         if (status_conductor->conductor->string_conductor->buffer_history[0] != '\0')
                         {
-                            //delete status_conductor->conductor->string_root;
-                            delete status_conductor->conductor->string_conductor;
+                            free(status_conductor->conductor->string_conductor);
                         }
 
                     }
@@ -777,7 +762,7 @@ void cleanexit(char *str)
             work_status = status_conductor->next;
             if (status_conductor && status_conductor != status_current)
             {
-                delete status_conductor;
+                free(status_conductor);
                 status_conductor = NULL;
             }
             status_conductor = work_status;
@@ -804,7 +789,7 @@ void cleanexit(char *str)
                 FreeVec(status_current->current_query);
                 status_current->current_query = NULL;
 
-                delete status_current;
+                free(status_current);
                 status_current = NULL;
 
             }
@@ -818,12 +803,6 @@ void cleanexit(char *str)
     //printf("15\n");
 
     //printf("6\n");
-
-    //if(ngew_entry) delete new_entry; new_entry=NULL;
-    //if(work_entry) delete work_entry; work_entry=NULL;
-    //if(work_entry3) delete work_entry3; work_entry3=NULL;
-
-    //if(current_query) delete current_query;
 
     if (o)
         DisposeDTObject(o);
@@ -854,10 +833,6 @@ void cleanexit(char *str)
         printf("19\n");
     //printf("8\n");
 
-    //if(tabwork2_string) delete []tabwork2_string; tabwork2_string=NULL;//text before cursor position
-    //if(tabwork3_string) delete []tabwork3_string; tabwork3_string=NULL;//text after cursor position
-    //if(tabwork4_string) delete []tabwork4_string; tabwork4_string=NULL;//nick text to complete
-    //if(tabwork5_string) delete []tabwork5_string; tabwork5_string=NULL;//completed nick text to insert
     //printf("17\n");
 
     //printf("9\n");
@@ -865,7 +840,6 @@ void cleanexit(char *str)
     if (GEIT)
         printf("20\n");
 
-    //if(res) delete res;
     //printf("10\n");
 
     if (str)
@@ -894,13 +868,13 @@ void cleanexit(char *str)
 
 #ifdef __AROS__
     if (UtilityBase)
-        CloseLibrary((Library*) UtilityBase);
+        CloseLibrary((struct Library*) UtilityBase);
     if (SocketBase)
-        CloseLibrary((Library*) SocketBase);
+        CloseLibrary((struct Library*) SocketBase);
     if (IntuitionBase)
-        CloseLibrary((Library*) IntuitionBase);
+        CloseLibrary((struct Library*) IntuitionBase);
     if (LocaleBase)
-        CloseLibrary((Library*) LocaleBase);
+        CloseLibrary((struct Library*) LocaleBase);
 #else
     if(CodesetsBase) CloseLibrary(CodesetsBase);
     if(UtilityBase) CloseLibrary(UtilityBase);
@@ -923,17 +897,14 @@ void cleanexit(char *str)
 
     //printf("7\n");
 
-    delete clockdata;
-    delete clockdata2;
+    free(clockdata);
+    free(clockdata2);
 
-    delete[] new_entry->hostname;
-    delete[] work_entry4.hostname;
-    delete[] new_entry2.hostname;
+    free(new_entry->hostname);
+    free(work_entry4.hostname);
+    free(new_entry2.hostname);
 
-    delete new_entry;
-
-    //SignalCheck_Done();
-    //if(DEBUG) MG_Exit();
+    free(new_entry);
 
     exit(0);
 }

@@ -322,12 +322,12 @@ void setup_background_colours(void)
 
 
 #ifdef __amigaos4__
-struct dcc_entry * ConstructDCC_TextFunc(REG(a0, struct Hook *hook),REG(a2, Object *obj),REG(a1, dcc_entry *new_entry)) {
+struct dcc_entry * ConstructDCC_TextFunc(REG(a0, struct Hook *hook),REG(a2, Object *obj),REG(a1, struct dcc_entry *new_entry)) {
 
 #elif __MORPHOS__
-struct dcc_entry * ConstructDCC_TextFunc(REG(a0, struct Hook *hook),REG(a2, Object *obj),REG(a1, dcc_entry *new_entry)) {
+struct dcc_entry * ConstructDCC_TextFunc(REG(a0, struct Hook *hook),REG(a2, Object *obj),REG(a1, struct dcc_entry *new_entry)) {
 #elif __AROS__
-struct dcc_entry * ConstructDCC_TextFunc(struct Hook *hook,Object *obj,dcc_entry *new_entry) {
+struct dcc_entry * ConstructDCC_TextFunc(struct Hook *hook,Object *obj,struct dcc_entry *new_entry) {
     #elif __GNUC__
 struct dcc_entry * ConstructDCC_TextFunc(void) {
 
@@ -356,11 +356,11 @@ struct Hook ConstructDCC_TextHook = { { NULL,NULL }, (ULONG(*)())ConstructDCC_Te
 
 
   #ifdef __amigaos4__
-static void DestructDCC_TextFunc(REG(a0, struct Hook *hook),REG(a2, Object *obj),REG(a1, dcc_entry *new_entry)) {
+static void DestructDCC_TextFunc(REG(a0, struct Hook *hook),REG(a2, Object *obj),REG(a1, struct dcc_entry *new_entry)) {
     #elif __MORPHOS__
-    static void DestructDCC_TextFunc(REG(a0, struct Hook *hook),REG(a2, Object *obj),REG(a1, dcc_entry *new_entry)) {
+    static void DestructDCC_TextFunc(REG(a0, struct Hook *hook),REG(a2, Object *obj),REG(a1, struct dcc_entry *new_entry)) {
 #elif __AROS__
-    static void DestructDCC_TextFunc(struct Hook *hook, Object *obj, dcc_entry *new_entry) {
+    static void DestructDCC_TextFunc(struct Hook *hook, Object *obj, struct dcc_entry *new_entry) {
   #elif __GNUC__
 static void DestructDCC_TextFunc(void)
 {
@@ -969,7 +969,7 @@ ULONG NList_Setup(struct IClass *cl, Object *obj, struct Message *msg)
 
     //printf("setup\n");
 
-    struct InstanceData *data = (InstanceData*)INST_DATA(cl,obj);
+    struct InstanceData *data = (struct InstanceData*)INST_DATA(cl,obj);
 
     if (!DoSuperMethodA(cl,obj,(Msg)msg))
     {
@@ -990,7 +990,7 @@ ULONG NList_Setup(struct IClass *cl, Object *obj, struct Message *msg)
 ULONG NList_Cleanup(struct IClass *cl,Object *obj, struct Message *msg)
 {
     //printf("cleanup part1\n");
-    struct InstanceData *data = (InstanceData*)INST_DATA(cl,obj);
+    struct InstanceData *data = (struct InstanceData*)INST_DATA(cl,obj);
 
 
     //#ifdef __amigaos4__
@@ -1005,9 +1005,6 @@ ULONG NList_Cleanup(struct IClass *cl,Object *obj, struct Message *msg)
 }
 
 
-
-extern "C"
-{
 
 #ifdef __amigaos4__
 DISPATCHERPROTO(NList_Dispatcher)
@@ -1041,15 +1038,10 @@ ULONG NList_Dispatcher(void)
         
 }
 
-}
-
 ULONG BetterString_HandleEvent(struct IClass *cl, Object *obj, struct MUIP_HandleEvent *msg);
 ULONG BetterString_Setup(struct IClass *cl,Object *obj, struct Message *msg);
 ULONG BetterString_Cleanup(struct IClass *cl,Object *obj, struct Message *msg);
 
-
-extern "C"
-{
 
 #ifdef __amigaos4__
 DISPATCHERPROTO(BetterString_Dispatcher)
@@ -1081,13 +1073,11 @@ ULONG BetterString_Dispatcher(void)
     return(DoSuperMethodA(cl,obj,msg));
 }
 
-}
-
 
 
 ULONG BetterString_Setup(struct IClass *cl,Object *obj,struct Message *msg)
 {
-    struct InstanceData *data = (InstanceData*)INST_DATA(cl,obj);
+    struct InstanceData *data = (struct InstanceData*)INST_DATA(cl,obj);
 
     if (!DoSuperMethodA(cl,obj,(Msg)msg))
     {
@@ -1109,7 +1099,7 @@ ULONG BetterString_Setup(struct IClass *cl,Object *obj,struct Message *msg)
 
 ULONG BetterString_Cleanup(struct IClass *cl,Object *obj, struct Message *msg)
 {
-    struct InstanceData *data = (InstanceData*)INST_DATA(cl,obj);
+    struct InstanceData *data = (struct InstanceData*)INST_DATA(cl,obj);
 
     /* remove user input handler */
     DoMethod(_win(obj),MUIM_Window_RemEventHandler,&data->ehnode);
@@ -1234,7 +1224,7 @@ ULONG BetterString_HandleEvent(struct IClass *cl, Object *obj, struct MUIP_Handl
                                 strncpy(status_current->current_query->string_conductor->buffer_history,string123,800-1);
 
                                 work_history=status_current->current_query->string_conductor;
-                                status_current->current_query->string_conductor->next = new history;
+                                status_current->current_query->string_conductor->next = malloc(sizeof(struct history));
                                 status_current->current_query->string_conductor=status_current->current_query->string_conductor->next;
                                 status_current->current_query->string_conductor->previous=work_history;
 
@@ -1289,7 +1279,7 @@ ULONG BetterString_HandleEvent(struct IClass *cl, Object *obj, struct MUIP_Handl
                                     strncpy(status_current->current_query->string_conductor->buffer_history,string123,800-1);
 
                                     work_history=status_current->current_query->string_conductor;
-                                    status_current->current_query->string_conductor->next = new history;
+                                    status_current->current_query->string_conductor->next = malloc(sizeof(struct history));
                                     status_current->current_query->string_conductor=status_current->current_query->string_conductor->next;
                                     status_current->current_query->string_conductor->previous=work_history;
 
@@ -1673,9 +1663,6 @@ SAVEDS ULONG Group_Cleanup(struct IClass *cl,Object *obj,struct Message *msg)
 }
 
 
-extern "C"
-{
-
 #ifdef __amigaos4__
 DISPATCHERPROTO(Group_Dispatcher)
 {
@@ -1711,7 +1698,6 @@ ULONG Group_Dispatcher(void)
     //    return(FALSE);
 }
 
-}
 
 //
 // Window Subclassing stuff below
@@ -1723,8 +1709,7 @@ ULONG Group_Dispatcher(void)
 
 SAVEDS ULONG Window_Setup(struct IClass *cl,Object *obj,struct Message *msg)
 {
-    //struct MyData *data = (MyData*)INST_DATA(cl,obj);
-    struct InstanceData *data = (InstanceData*)INST_DATA(cl,obj);
+    struct InstanceData *data = (struct InstanceData*)INST_DATA(cl,obj);
     
     if (!DoSuperMethodA(cl,obj,(Msg)msg))
         return(FALSE);
@@ -1778,7 +1763,7 @@ SAVEDS ULONG Window_Cleanup(struct IClass *cl,Object *obj,struct Message *msg)
 
     //MUI_ReleasePen(muiRenderInfo(WookieChat->PP_CSW_join),custom_pen_colours[2]);
 
-    struct InstanceData *data = (InstanceData*)INST_DATA(cl,obj);
+    struct InstanceData *data = (struct InstanceData*)INST_DATA(cl,obj);
 
     DoMethod(obj,MUIM_Window_RemEventHandler,&data->ehnode);
 
@@ -1851,9 +1836,6 @@ SAVEDS ULONG Window_Draw(struct IClass *cl,Object *obj,struct MUIP_Draw *msg)
 //struct MUIP_Window_Cleanup { ULONG MethodID; }; /* private */
 //struct MUIP_Window_Setup   { ULONG MethodID; }; /* private */
 
-extern "C"
-{
-
 #ifdef __amigaos4__
 DISPATCHERPROTO(Window_Dispatcher)
 {
@@ -1892,6 +1874,4 @@ ULONG Window_Dispatcher(void)
     }
 
     return(DoSuperMethodA(cl,obj,msg));
-}
-
 }

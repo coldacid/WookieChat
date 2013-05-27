@@ -222,8 +222,7 @@ void load_colours(char *load_this_theme)
     setmacro((Object*) WookieChat->WI_colour_settings, MUIA_Window_Title, colour_settings_title);
 
     char *len2;
-    char *work = new char[1024];
-    //STRPTR work;
+    char *work = malloc(sizeof(char) * 1024);
 
     len2 = (char*) FGets(open_file, (l_in) work2, 1024);
     work2[strlen(work2) - 1] = '\0';
@@ -424,8 +423,6 @@ void load_colours(char *load_this_theme)
 
     if (open_file)
         Close(open_file);
-
-    //delete work;
 
     set_colours();
 

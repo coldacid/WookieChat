@@ -20,6 +20,9 @@
 #define MUI_OBSOLETE
 #include <libraries/mui.h>
 
+#include <libraries/gadtools.h>
+
+
 #define MAX_QUEUED_MESSAGES         500
 #define BUFFERSIZE                  30000
 #define MAX_EVENTS                  16
@@ -516,9 +519,9 @@ struct query_window
     char name[60];
     char displayed_name[60];
 
-    query_window *previous;
+    struct query_window *previous;
     char topic[800];
-    query_window *next;
+    struct query_window *next;
     int chanquery;
     struct history *string_root;
     struct history *string_conductor;
@@ -567,8 +570,8 @@ struct status_window
     char *buffer;
 
     struct query_window *root, *conductor, *current_query, *previous_query;
-    status_window *next;
-    status_window *previous;
+    struct status_window *next;
+    struct status_window *previous;
     char *nick;
     char pass[100];
     char groupname[100];
@@ -1142,11 +1145,11 @@ extern char *tabwork_string;
 extern BOOL dont_open_colours;
 extern struct ClockData *clockdata2;
 extern BOOL is_chooser_window_open;
-extern MUI_CustomClass *mcc;
-extern MUI_CustomClass *mcc2;
-extern MUI_CustomClass *mcc4;
-extern MUI_CustomClass *mcc5;
-extern MUI_CustomClass *mcc6;
+extern struct MUI_CustomClass *mcc;
+extern struct MUI_CustomClass *mcc2;
+extern struct MUI_CustomClass *mcc4;
+extern struct MUI_CustomClass *mcc5;
+extern struct MUI_CustomClass *mcc6;
 extern struct DiskObject *dobj;
 extern struct MsgPort *arexx_quit_replyport;
 extern struct MUI_NList_TestPos_Result *last_clicked_res;
@@ -1235,13 +1238,10 @@ extern struct Hook DisplayDCC_recv_TextHook;
 extern struct Hook DisplayDCC_send_TextHook;
 extern LONG position;
 void setup_background_colours();
-extern "C"
-{
 ULONG BetterString_Dispatcher(Class *cl, Object *obj, Msg msg);
 ULONG NList_Dispatcher(Class *cl, Object *obj, Msg msg);
 ULONG Window_Dispatcher(Class *cl, Object *obj, Msg msg);
 ULONG Group_Dispatcher(Class *cl, Object *obj, Msg msg);
-}
 
 /* connect2server.c */
 int connect2server(char *servername, char *port_number, int typedservercommand, int set_connect_script_name,

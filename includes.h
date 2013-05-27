@@ -37,6 +37,8 @@
 #include <sys/filio.h>
 #include <netdb.h>
 #elif __AROS__
+#include <sys/types.h>
+#include <netinet/in.h>
 #include <sys/ioctl.h>
 #include <sys/socket.h>
 #include <bsdsocket/socketbasetags.h>

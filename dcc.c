@@ -87,7 +87,7 @@ void dcc_chat_connect()
 
     if (!dcc_chat_conductor->str)
     {
-        dcc_chat_conductor->str = new char[BUFFERSIZE * 2];
+        dcc_chat_conductor->str = malloc(sizeof(char) * BUFFERSIZE * 2);
         strcpy(dcc_chat_conductor->str, "");
     }
 
@@ -371,7 +371,7 @@ void accept_dcc(char *b)
                                 //if(DEBUG) printf("dcc 7\n");
 
                                 struct FileInfoBlock *a_fib;
-                                a_fib = (FileInfoBlock*) AllocDosObject(DOS_FIB, NULL);
+                                a_fib = (struct FileInfoBlock*) AllocDosObject(DOS_FIB, NULL);
 
                                 if (ExamineFH(examined_file, a_fib))
                                 {
@@ -571,8 +571,6 @@ int reoffer_dcc(char *networkname, char *string1, char *string2, char *string3, 
     //string2 == nick being offered to
     //string3 == filename including path
 
-    //char *work=new char[50];
-
     if (my_settings.autogethostid)
         addr = htonl(gethostid());
     else
@@ -581,7 +579,7 @@ int reoffer_dcc(char *networkname, char *string1, char *string2, char *string3, 
     //if(work)
     //{
 
-    char *file_name = new char[300];
+    char *file_name = malloc(sizeof(char) * 300);
 
     int count_chars = 0;
     int a;
@@ -605,7 +603,7 @@ int reoffer_dcc(char *networkname, char *string1, char *string2, char *string3, 
     BPTR examined_file = Open(string3, MODE_OLDFILE);
 
     struct FileInfoBlock *a_fib;
-    a_fib = (FileInfoBlock*) AllocDosObject(DOS_FIB, NULL);
+    a_fib = (struct FileInfoBlock*) AllocDosObject(DOS_FIB, NULL);
     if (!examined_file)
     {
         sprintf(buffer3, "%s%sDCC%s SEND: %s", timestamp, GetCatalogStr(catalog, 217, "["),
@@ -709,7 +707,7 @@ int offer_dcc(char *networkname, char *string1, char *string2, char *string3, in
         else
             addr = htonl(dcc_addr); //lets use the address automatically fetched from the server upon connection
 
-        char *file_name = new char[300];
+        char *file_name = malloc(sizeof(char) * 300);
 
         int count_chars = 0;
         int a;
@@ -733,7 +731,7 @@ int offer_dcc(char *networkname, char *string1, char *string2, char *string3, in
         BPTR examined_file = Open(string3, MODE_OLDFILE);
 
         struct FileInfoBlock *a_fib;
-        a_fib = (FileInfoBlock*) AllocDosObject(DOS_FIB, NULL);
+        a_fib = (struct FileInfoBlock*) AllocDosObject(DOS_FIB, NULL);
 
         if (!examined_file)
         {
@@ -804,7 +802,7 @@ void create_send_dcc(char *nick, char *string3, int filesize, int portnumber)
     dcc_root->removed = 1;
 
     dcc_work = dcc_send_conductor;
-    dcc_send_conductor->next = new dcc;
+    dcc_send_conductor->next = malloc(sizeof(struct dcc));
     dcc_send_conductor = dcc_send_conductor->next;
     dcc_send_conductor->next = NULL;
     dcc_send_conductor->previous = dcc_work;
@@ -829,7 +827,7 @@ void create_send_dcc(char *nick, char *string3, int filesize, int portnumber)
 
     // Create a DCC Entry for the DCC WINDOW NLIST then Fill in Values
 
-    dcc_send_conductor->entry = new dcc_entry;
+    dcc_send_conductor->entry = malloc(sizeof(struct dcc_entry));
 
     sprintf(dcc_send_conductor->port, "%i", portnumber);
 
@@ -849,7 +847,7 @@ void create_send_dcc(char *nick, char *string3, int filesize, int portnumber)
     strcpy(dcc_send_conductor->entry->percentage, "0%");
     strcpy(dcc_send_conductor->entry->status, GetCatalogStr(catalog, 206, "Waiting"));
 
-    char *file_name = new char[500];
+    char *file_name = malloc(sizeof(char) * 500);
 
     int count_chars = 0;
     int a;
@@ -988,7 +986,7 @@ void create_recv_dcc_chat(char *nick, char *address, char *port)
 
         dcc_chat_work = dcc_chat_conductor;
 
-        dcc_chat_conductor->next = new dcc_chat;
+        dcc_chat_conductor->next = malloc(sizeof(struct dcc_chat));
         dcc_chat_conductor = dcc_chat_conductor->next;
         dcc_chat_conductor->next = NULL;
 
@@ -1002,7 +1000,7 @@ void create_recv_dcc_chat(char *nick, char *address, char *port)
         {
             create_new_tab(dcc_chat_conductor->name, 0, 2);
             dcc_chat_conductor->conductor = status_conductor->conductor;
-            dcc_chat_conductor->str = new char[BUFFERSIZE * 2];
+            dcc_chat_conductor->str = malloc(sizeof(char) * BUFFERSIZE * 2);
             strcpy(dcc_chat_conductor->str, "");
 
         }
@@ -1030,7 +1028,7 @@ void create_recv_dcc_chat(char *nick, char *address, char *port)
     dcc_chat_conductor->connected = 0;
     dcc_chat_conductor->removed = 0;
 
-    in_addr test2;
+    struct in_addr test2;
 #ifdef __amigaos4__
     test2.s_addr = inet_addr(address);
 #elif __AROS__
@@ -1095,7 +1093,7 @@ void initiate_outgoing_dcc_chat(char *nick)
 
         dcc_chat_work = dcc_chat_conductor;
 
-        dcc_chat_conductor->next = new dcc_chat;
+        dcc_chat_conductor->next = malloc(sizeof(struct dcc_chat));
         dcc_chat_conductor = dcc_chat_conductor->next;
         dcc_chat_conductor->next = NULL;
 
@@ -1111,7 +1109,7 @@ void initiate_outgoing_dcc_chat(char *nick)
 
             create_new_tab(dcc_chat_conductor->name, 0, 2);
             //dcc_chat_conductor->conductor=status_conductor->conductor;
-            dcc_chat_conductor->str = new char[BUFFERSIZE * 2];
+            dcc_chat_conductor->str = malloc(sizeof(char) * BUFFERSIZE * 2);
             strcpy(dcc_chat_conductor->str, "");
         }
     }
@@ -1206,7 +1204,7 @@ void create_recv_dcc(char *nick, char *filename, char *address, unsigned short p
 
     dcc_root->removed = 1;
     dcc_work = dcc_conductor;
-    dcc_conductor->next = new dcc;
+    dcc_conductor->next = malloc(sizeof(struct dcc));
     dcc_conductor = dcc_conductor->next;
     dcc_conductor->next = NULL;
     dcc_conductor->previous = dcc_work;
@@ -1234,7 +1232,7 @@ void create_recv_dcc(char *nick, char *filename, char *address, unsigned short p
 
     // Create a DCC Entry for the DCC WINDOW NLIST then Fill in Values
 
-    dcc_conductor->entry = new dcc_entry;
+    dcc_conductor->entry = malloc(sizeof(struct dcc_entry));
 
     if (DEBUG)
         printf("dcc 6\n");
@@ -1286,7 +1284,7 @@ void create_recv_dcc(char *nick, char *filename, char *address, unsigned short p
     // This is the Entry position for when we edit the DCC NLIST Info ENTRY
     dcc_conductor->pos = dcc_transfers;
 
-    in_addr test2;
+    struct in_addr test2;
 #ifdef __amigaos4__
     test2.s_addr = inet_addr(address);
 #elif __AROS__

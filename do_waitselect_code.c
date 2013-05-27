@@ -96,7 +96,7 @@ int do_waitselect_code(void)
                             {
                                 if (status_conductor->conductor->queued_messages[count])
                                 {
-                                    delete status_conductor->conductor->queued_messages[count];
+                                    free(status_conductor->conductor->queued_messages[count]);
                                     status_conductor->conductor->queued_messages[count] = NULL;
 
                                 }
@@ -1025,7 +1025,7 @@ int do_waitselect_code(void)
                                 dcc_chat_work = dcc_chat_conductor->previous;
                                 dcc_chat_work->next = dcc_chat_conductor->next;
                                 if (dcc_chat_conductor)
-                                    delete dcc_chat_conductor;
+                                    free(dcc_chat_conductor);
 
                             }
                             else
@@ -1033,7 +1033,7 @@ int do_waitselect_code(void)
                                 dcc_chat_work = dcc_chat_conductor->previous;
                                 dcc_chat_work->next = NULL;
                                 if (dcc_chat_conductor)
-                                    delete dcc_chat_conductor;
+                                    free(dcc_chat_conductor);
                                 dcc_chat_conductor = NULL;
                             }
 

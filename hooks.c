@@ -127,8 +127,8 @@ void Custom_Clipboard2_Func(void) {
     if(!string1 || !string2) { array[0]=(char*)""; return; }
 
 
-    if(!string2) { string2=new char[1]; strcpy(string2,""); }
-    if(!string3) { string3=new char[1]; strcpy(string3,"");}
+    if(!string2) { string2=malloc(sizeof(char)); strcpy(string2,""); }
+    if(!string3) { string3=malloc(sizeof(char)); strcpy(string3,"");}
 
     //we dont want to do the actions on the same entry twice
     last_line=clipboard_struct.line;
@@ -628,11 +628,11 @@ struct Hook Custom_Clipboard2_Hook = { { NULL,NULL }, (ULONG(*)())Custom_Clipboa
 
 
 #ifdef __amigaos4__
-struct list_entry * ConstructLI_TextFunc(REG(a0, struct Hook *hook),REG(a2, Object *obj),REG(a1, list_entry *new_entry)) {
+struct list_entry * ConstructLI_TextFunc(REG(a0, struct Hook *hook),REG(a2, Object *obj),REG(a1, struct list_entry *new_entry)) {
 #elif __MORPHOS__
-struct list_entry * ConstructLI_TextFunc(REG(a0, struct Hook *hook),REG(a2, Object *obj),REG(a1, list_entry *new_entry)) {
+struct list_entry * ConstructLI_TextFunc(REG(a0, struct Hook *hook),REG(a2, Object *obj),REG(a1, struct list_entry *new_entry)) {
 #elif __AROS__
-struct list_entry * ConstructLI_TextFunc(struct Hook *hook,Object *obj,list_entry *new_entry) {
+struct list_entry * ConstructLI_TextFunc(struct Hook *hook,Object *obj,struct list_entry *new_entry) {
 #elif __GNUC__
 struct list_entry * ConstructLI_TextFunc(void) {
 
@@ -659,11 +659,11 @@ struct Hook ConstructLI_TextHook = { { NULL,NULL }, (ULONG(*)())ConstructLI_Text
 #endif
 
 #ifdef __amigaos4__
-static void DestructLI_TextFunc(REG(a0, struct Hook *hook),REG(a2, Object *obj),REG(a1, list_entry *new_entry)) {
+static void DestructLI_TextFunc(REG(a0, struct Hook *hook),REG(a2, Object *obj),REG(a1, struct list_entry *new_entry)) {
 #elif __MORPHOS__
-static void DestructLI_TextFunc(REG(a0, struct Hook *hook),REG(a2, Object *obj),REG(a1, list_entry *new_entry)) {
+static void DestructLI_TextFunc(REG(a0, struct Hook *hook),REG(a2, Object *obj),REG(a1, struct list_entry *new_entry)) {
 #elif __AROS__
-static void DestructLI_TextFunc(struct Hook *hook,Object *obj,list_entry *new_entry) {
+static void DestructLI_TextFunc(struct Hook *hook,Object *obj,struct list_entry *new_entry) {
 #elif __GNUC__
 static void DestructLI_TextFunc(void)
 {
@@ -676,7 +676,6 @@ static void DestructLI_TextFunc(void)
 
     if (new_entry)
     {
-        //if(new_entry->hostname) { delete []new_entry->hostname; new_entry->hostname=NULL; }
         FreeMem((struct list_entry*) new_entry, sizeof(struct list_entry));
         new_entry=NULL;
     }
@@ -1189,16 +1188,11 @@ static void DisplayLI2_channel_TextFunc(void)
         
         if((int)a_entry->colour < 0) return;
         
-        //struct channel_entry *a_entry=new channel_entry;
-        //*a_entry=*b_entry;
-        
         if(a_entry->colour)
         {
 
             if(a_entry->colour >= 0 && a_entry->colour <= 23)
             {
-
-                //static char new_array[20];
 
                 sprintf(new_array,"\033P[%ld]",custom_pen_colours[a_entry->colour]);
 
@@ -1697,11 +1691,11 @@ struct Hook ConstructLI_channel2_TextHook = { { NULL,NULL }, (ULONG(*)())Constru
 //DESTRUCTER FOR CHANNEL LISTVIEWS
 
 #ifdef __amigaos4__
-static void DestructLI_channel2_TextFunc(REG(a0, struct Hook *hook),REG(a2, Object *obj),REG(a1, channel_entry *new_entry)) {
+static void DestructLI_channel2_TextFunc(REG(a0, struct Hook *hook),REG(a2, Object *obj),REG(a1, struct channel_entry *new_entry)) {
 #elif __MORPHOS__
-static void DestructLI_channel2_TextFunc(REG(a0, struct Hook *hook),REG(a2, Object *obj),REG(a1, channel_entry *new_entry)) {
+static void DestructLI_channel2_TextFunc(REG(a0, struct Hook *hook),REG(a2, Object *obj),REG(a1, struct channel_entry *new_entry)) {
 #elif __AROS__
-static void DestructLI_channel2_TextFunc(struct Hook *hook, Object *obj, channel_entry *new_entry) {
+static void DestructLI_channel2_TextFunc(struct Hook *hook, Object *obj, struct channel_entry *new_entry) {
 #elif __GNUC__
 static void DestructLI_channel2_TextFunc(void)
 {
@@ -1762,11 +1756,11 @@ struct Hook ConstructLI_channel_TextHook = { { NULL,NULL }, (ULONG(*)())Construc
 //DESTRUCTER FOR CHANNEL LISTVIEWS
 
 #ifdef __amigaos4__
-static void DestructLI_channel_TextFunc(REG(a0, struct Hook *hook),REG(a2, Object *obj),REG(a1, channel_entry *new_entry)) {
+static void DestructLI_channel_TextFunc(REG(a0, struct Hook *hook),REG(a2, Object *obj),REG(a1, struct channel_entry *new_entry)) {
 #elif __MORPHOS__
-static void DestructLI_channel_TextFunc(REG(a0, struct Hook *hook),REG(a2, Object *obj),REG(a1, channel_entry *new_entry)) {
+static void DestructLI_channel_TextFunc(REG(a0, struct Hook *hook),REG(a2, Object *obj),REG(a1, struct channel_entry *new_entry)) {
 #elif __AROS__
-static void DestructLI_channel_TextFunc(struct Hook *hook, Object *obj, channel_entry *new_entry) {
+static void DestructLI_channel_TextFunc(struct Hook *hook, Object *obj, struct channel_entry *new_entry) {
 #elif __GNUC__
 static void DestructLI_channel_TextFunc(void)
 {
@@ -1801,7 +1795,7 @@ static void previewdisplay_TextFunc(REG(a0, struct Hook *hook), REG(a2, char **a
 #elif __MORPHOS__
 static void previewdisplay_TextFunc(REG(a0, struct Hook *hook), REG(a2, char **array),REG(a1, struct channel_entry  *a_entry)) {
 #elif __AROS__
-static void previewdisplay_TextFunc(struct Hook *hook, char **array, channel_entry *a_entry) {
+static void previewdisplay_TextFunc(struct Hook *hook, char **array, struct channel_entry *a_entry) {
 #elif __GNUC__
 static void previewdisplay_TextFunc(void)
 {
@@ -1836,11 +1830,11 @@ struct Hook previewdisplay_TextHook = { { NULL,NULL },(ULONG(*)())previewdisplay
 
 
 #ifdef __amigaos4__
-static void DisplayLI_TextFunc(REG(a0, struct Hook *hook), REG(a2, char **array),REG(a1, list_entry *a_entry)) {
+static void DisplayLI_TextFunc(REG(a0, struct Hook *hook), REG(a2, char **array),REG(a1, struct list_entry *a_entry)) {
 #elif __MORPHOS__
-static void DisplayLI_TextFunc(REG(a0, struct Hook *hook), REG(a2, char **array),REG(a1, list_entry *a_entry)) {
+static void DisplayLI_TextFunc(REG(a0, struct Hook *hook), REG(a2, char **array),REG(a1, struct list_entry *a_entry)) {
 #elif __AROS__
-static void DisplayLI_TextFunc(struct Hook *hook, char **array, list_entry *a_entry) {
+static void DisplayLI_TextFunc(struct Hook *hook, char **array, struct list_entry *a_entry) {
 #elif __GNUC__
 static void DisplayLI_TextFunc(void)
 {
@@ -1895,17 +1889,17 @@ struct Hook DisplayLI_TextHook = { { NULL,NULL },(ULONG(*)())DisplayLI_TextFunc,
 /* *********************************************** */
 
 #ifdef __amigaos4__
-static void DisplayTREE_TextFunc(  REG(a0, struct IClass *cl),  REG(a2, char **array),  REG(a1, MUIP_NListtree_DisplayMessage *a_entry)) {
+static void DisplayTREE_TextFunc(  REG(a0, struct IClass *cl),  REG(a2, char **array),  REG(a1, struct MUIP_NListtree_DisplayMessage *a_entry)) {
 #elif __MORPHOS__
-static void DisplayTREE_TextFunc(  REG(a0, struct IClass *cl),  REG(a2, char **array),  REG(a1, MUIP_NListtree_DisplayMessage *a_entry)) {
+static void DisplayTREE_TextFunc(  REG(a0, struct IClass *cl),  REG(a2, char **array),  REG(a1, struct MUIP_NListtree_DisplayMessage *a_entry)) {
 #elif __AROS__
-static void DisplayTREE_TextFunc(  struct IClass *cl, char **array, MUIP_NListtree_DisplayMessage *a_entry) {
+static void DisplayTREE_TextFunc(  struct IClass *cl, char **array, struct MUIP_NListtree_DisplayMessage *a_entry) {
 #elif __GNUC__
 static void DisplayTREE_TextFunc(void)
 {
 
   register char **a2 __asm("a2");                      char **array = a2;
-  register MUIP_NListtree_DisplayMessage *a1 __asm("a1");    MUIP_NListtree_DisplayMessage *a_entry = a1;
+  register MUIP_NListtree_DisplayMessage *a1 __asm("a1");    struct MUIP_NListtree_DisplayMessage *a_entry = a1;
   register struct Hook *a0 __asm("a0");                 struct Hook *hook = a0;
   #endif
 

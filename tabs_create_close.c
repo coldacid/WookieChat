@@ -483,8 +483,8 @@ static struct query_window *init_conductor(int a)
 
     test->removed=0;
 
-    test->string_root=new history;
-    test->string_conductor=new history;
+    test->string_root=malloc(sizeof(struct history));
+    test->string_conductor=malloc(sizeof(struct history));
     strcpy(test->string_conductor->buffer_history,"");
     test->string_conductor->next=NULL;
     test->string_conductor->previous=NULL;
@@ -576,7 +576,7 @@ int create_new_tab(char *name, int show_now, int query_type)
 
         status_conductor->conductor->next = init_conductor(query_type);
 
-        query_window *work = status_conductor->conductor;
+        struct query_window *work = status_conductor->conductor;
 
         status_conductor->conductor = status_conductor->conductor->next;
         status_conductor->conductor->previous = work;
@@ -791,9 +791,6 @@ int create_new_status(int first)
     if (DoMethod((Object*) GROUP_ROOT_0, MUIM_Group_InitChange))
     {
 
-        //status_window *status_work=new status_window;
-        //status_work=status_conductor;
-
         status_conductor = status_root;
 
         if (DoMethod((Object*) GR_top, MUIM_Group_InitChange))
@@ -823,8 +820,8 @@ int create_new_status(int first)
 
             if (first)
             {
-                status_root = new status_window;
-                status_conductor = new status_window;
+                status_root = malloc(sizeof(struct status_window));
+                status_conductor = malloc(sizeof(struct status_window));
 
                 if (my_settings.no_server_tabs)
                 {
@@ -844,7 +841,7 @@ int create_new_status(int first)
                 status_conductor->next = NULL;
                 status_conductor->conductor = status_conductor->root;
 
-                status_conductor->nick = new char[100];
+                status_conductor->nick = malloc(sizeof(char) * 100);
                 strcpy(status_conductor->nick, "(nick)");
                 strcpy(status_conductor->conductor->your_current_mode, "");
 
@@ -853,8 +850,8 @@ int create_new_status(int first)
                 status_current = status_conductor;
                 current_query = status_conductor->conductor;
 
-                status_conductor->str = new char[BUFFERSIZE * 2];
-                status_conductor->buffer = new char[BUFFERSIZE * 2];
+                status_conductor->str = malloc(sizeof(char) * (BUFFERSIZE * 2));
+                status_conductor->buffer = malloc(sizeof(char) * (BUFFERSIZE * 2));
 
                 status_conductor->previous = NULL;
 
@@ -881,12 +878,12 @@ int create_new_status(int first)
 
                 work_status = status_conductor;
 
-                status_conductor->next = new status_window;
+                status_conductor->next = malloc(sizeof(struct status_window));
                 status_conductor = status_conductor->next;
 
                 free_graphical_smilies(status_current->current_query);
 
-                status_conductor->nick = new char[100];
+                status_conductor->nick = malloc(sizeof(char) * 100);
                 strcpy(status_conductor->nick, nick);
 
                 if (my_settings.no_server_tabs)
@@ -920,8 +917,8 @@ int create_new_status(int first)
                 update_your_nickname_text_label();
                 strcpy(status_conductor->conductor->your_current_mode, "");
 
-                status_conductor->str = new char[BUFFERSIZE * 2];
-                status_conductor->buffer = new char[BUFFERSIZE * 2];
+                status_conductor->str = malloc(sizeof(char) * (BUFFERSIZE * 2));
+                status_conductor->buffer = malloc(sizeof(char) * (BUFFERSIZE * 2));
 
             }
 
@@ -1217,8 +1214,8 @@ void give_each_tab_a_listview_number_for_switching_tabs()
     }
 }
 
-query_window *query_work;
-query_window *query_previous, *query_next;
+struct query_window *query_work;
+struct query_window *query_previous, *query_next;
 
 void close_tab(void)
 {
@@ -1396,7 +1393,7 @@ void close_tab(void)
     {
         if (status_conductor->conductor->queued_messages[count])
         {
-            delete status_conductor->conductor->queued_messages[count];
+            free(status_conductor->conductor->queued_messages[count]);
             status_conductor->conductor->queued_messages[count] = NULL;
 
         }
@@ -1410,7 +1407,7 @@ void close_tab(void)
     {
         if (status_conductor->current_query->nicklist[count].hostname)
         {
-            delete[] status_conductor->current_query->nicklist[count].hostname;
+            free(status_conductor->current_query->nicklist[count].hostname);
             status_conductor->current_query->nicklist[count].hostname = NULL;
         }
     }
@@ -1444,7 +1441,7 @@ void close_tab(void)
 
             if (status_conductor->current_query->string_conductor->buffer_history[0] != '\0')
             {
-                delete status_conductor->current_query->string_conductor;
+                free(status_conductor->current_query->string_conductor);
             }
 
         }
@@ -1499,8 +1496,8 @@ void close_tab(void)
             FreeVec(status_conductor->current_query);
             status_conductor->current_query = NULL;
 
-            delete[] status_conductor->str;
-            delete[] status_conductor->buffer;
+            free(status_conductor->str);
+            free(status_conductor->buffer);
 
             if (status_conductor->a_socket != -1)
             {
@@ -1517,7 +1514,7 @@ void close_tab(void)
                 status_conductor = status_conductor->next;
                 status_root = status_conductor;
 
-                delete status_current;
+                free(status_current);
                 status_current = NULL;
 
                 status_conductor->previous = NULL;
@@ -1540,7 +1537,7 @@ void close_tab(void)
                         status_next->previous = status_previous;
                 }
 
-                delete status_current;
+                free(status_current);
                 status_current = NULL;
 
             }
@@ -1575,7 +1572,7 @@ void close_tab(void)
 
             if (status_conductor->current_query->string_conductor->buffer_history[0] != '\0')
             {
-                delete status_conductor->current_query->string_conductor;
+                free(status_conductor->current_query->string_conductor);
             }
 
         }
@@ -1617,28 +1614,6 @@ void close_tab(void)
     give_each_tab_a_listview_number_for_switching_tabs();
 
     give_each_tab_a_page_group_number();
-
-    /*
-     //give every LISTVIEW TAB entry a number so we can change it
-     for(count=0,status_conductor=status_root; status_conductor; status_conductor=status_conductor->next)
-     {
-     if(status_conductor)
-     {
-     for(status_conductor->conductor=status_conductor->root; status_conductor->conductor;
-     status_conductor->conductor=status_conductor->conductor->next)
-     {
-     if(status_conductor->conductor)
-     {
-     if(status_conductor->conductor->removed==0)
-     {
-     status_conductor->conductor->nlist_tab_number=count;
-     if(DEBUG) printf("closing irc tab, new entry number %d\n",count);
-     count++;
-     }
-     }
-     }
-     }
-     } */
 
     //get to the last node in our linked list
     //for(status_conductor->conductor=status_conductor->root; status_conductor->conductor->next; status_conductor->conductor=status_conductor->conductor->next);

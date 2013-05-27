@@ -33,8 +33,8 @@ BOOL TimerWait_Open(void)
     Timer4_WaitCheck = FALSE;
     Timer5_WaitCheck = FALSE;
 
-    systime = new struct timeval;
-    systime_reconnect_timer = new struct timeval;
+    systime = malloc(sizeof(struct timeval));
+    systime_reconnect_timer = malloc(sizeof(struct timeval));
 
     Timer1_WaitCheck = FALSE;
     if ((TimerMP = CreatePort(0, 0)))

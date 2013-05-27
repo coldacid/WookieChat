@@ -191,7 +191,7 @@ void process_outgoing(char *string123, int usestringgadget)
             strcpy(status_conductor->current_query->string_conductor->buffer_history, string123);
 
             work_history = status_conductor->current_query->string_conductor;
-            status_conductor->current_query->string_conductor->next = new history;
+            status_conductor->current_query->string_conductor->next = malloc(sizeof(struct history));
             status_conductor->current_query->string_conductor = status_conductor->current_query->string_conductor->next;
             status_conductor->current_query->string_conductor->previous = work_history;
 
@@ -206,10 +206,10 @@ void process_outgoing(char *string123, int usestringgadget)
 
     timestamp_2_string();
 
-    char *pch; //=new char[1000];
-    char *string1; //=new char[1000];
-    char *string2; //=new char[1000];
-    char *string3; //=new char[1000];
+    char *pch;
+    char *string1;
+    char *string2;
+    char *string3;
 
     if (string123[0] == ' ')
         pch = strtok(string123, "\r\n");
@@ -217,7 +217,7 @@ void process_outgoing(char *string123, int usestringgadget)
         pch = strtok(string123, " \r\n");
     if (!(pch))
     {
-        pch = new char[1];
+        pch = malloc(sizeof(char));
         strcpy(pch, "");
     }
 
@@ -567,7 +567,6 @@ void process_outgoing(char *string123, int usestringgadget)
 
         string1 = strtok(NULL, " ");
         string2 = strtok(NULL, "");
-        //if(!(string2)) { string2=new char[500]; strcpy(string2,my_settings.default_kickmsg); }
 
         if (string1)
         {
@@ -603,7 +602,7 @@ void process_outgoing(char *string123, int usestringgadget)
 
         strcpy(buffer3, "[12:32:02] <sundown> Anyone seen jahc? where is he!! jahc is such a tosser");
 
-        char *test_search = new char[10];
+        char *test_search = malloc(sizeof(char) * 10);
         strcpy(test_search, "jahc");
 
         search_for_highlight_words(test_search, buffer3);
@@ -959,7 +958,7 @@ void process_outgoing(char *string123, int usestringgadget)
         string1 = strtok(NULL, "");
         if (!(string1))
         {
-            string1 = new char[1];
+            string1 = malloc(sizeof(char));
             strcpy(string1, "");
         }
 
@@ -986,15 +985,15 @@ void process_outgoing(char *string123, int usestringgadget)
     else if (!(stricmp((p_in) pch, (p_in) "/server")))
     {
 
-        char *servername = new char[50];
+        char *servername = malloc(sizeof(char) * 50);
         servername = strtok(NULL, " ");
 
-        char *portnumber = new char[7];
+        char *portnumber = malloc(sizeof(char) * 7);
         portnumber = strtok(NULL, "");
 
         if (!portnumber)
         {
-            portnumber = new char[7];
+            portnumber = malloc(sizeof(char) * 7);
             strcpy(portnumber, "6667");
         }
 
@@ -1097,7 +1096,7 @@ void process_outgoing(char *string123, int usestringgadget)
         string1 = strtok(NULL, "\0");
         if (!(string1))
         {
-            string1 = new char[1];
+            string1 = malloc(sizeof(char));
             strcpy(string1, "");
         }
 
@@ -1184,7 +1183,7 @@ void process_outgoing(char *string123, int usestringgadget)
         string1 = strtok(NULL, "\0");
         if (!(string1))
         {
-            string1 = new char[1];
+            string1 = malloc(sizeof(char));
             strcpy(string1, "");
         }
 
@@ -1214,7 +1213,7 @@ void process_outgoing(char *string123, int usestringgadget)
 
     else if (pch[0] == '/' && pch[1] != '/')
     {
-        string1 = new char[400];
+        string1 = malloc(sizeof(char) * 400);
         int a = 0;
         for (a = 0; pch[a] != '\0'; a++)
         {
@@ -1236,8 +1235,6 @@ void process_outgoing(char *string123, int usestringgadget)
             send_text(buffer3);
 
         }
-        //delete [] string1;
-
     }
     else if (!(pch))
     {

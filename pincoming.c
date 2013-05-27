@@ -27,7 +27,7 @@ struct list_entry new_entry2;
 #define WORK_BUFFER_SIZE    800
 #define STRING_BUFFERSIZE   800
 static char *pch3;
-static char *work_incoming = new char[STRING_BUFFERSIZE * 2];
+static char work_incoming[STRING_BUFFERSIZE * 2];
 static int is_bold;
 static char clone_results[MAX_CLONE_FIELDS][900];
 static char rawservername[100];
@@ -37,22 +37,6 @@ static char urlvisit_str[1][2000];
 static char number_of_lines_unread[20];
 
 #ifdef __AROS__
-struct TagItem my_incoming_charset1_taglist[] =
-{
-    { CSA_Source, (IPTR) buffer2 },
-    { CSA_SourceCodeset, (IPTR) cs },
-    { CSA_DestCodeset, (IPTR) charsets[local_charset] },
-    { TAG_DONE, 0 }
-};
-
-struct TagItem my_incoming_charset2_taglist[] =
-{
-    { CSA_Source, (IPTR) buffer2 },
-    { CSA_SourceCodeset, (IPTR) cs },
-    { CSA_DestCodeset, (IPTR) local_charsets[local_charset] },
-    { TAG_DONE, 0 }
-};
-
 struct TagItem my_incoming_charset3_taglist[] =
 {
     { CSA_Source, (IPTR) buffer2 },
@@ -61,22 +45,6 @@ struct TagItem my_incoming_charset3_taglist[] =
     { TAG_DONE, 0 }
 };
 #else
-struct TagItem my_incoming_charset1_taglist[] =
-{
-    {   CSA_Source, (ULONG)buffer2},
-    {   CSA_SourceCodeset, (ULONG)cs},
-    {   CSA_DestCodeset, (ULONG)charsets[local_charset]},
-    {   TAG_DONE, 0}
-};
-
-struct TagItem my_incoming_charset2_taglist[] =
-{
-    {   CSA_Source, (ULONG)buffer2},
-    {   CSA_SourceCodeset, (ULONG)cs},
-    {   CSA_DestCodeset, (ULONG)local_charsets[local_charset]},
-    {   TAG_DONE, 0}
-};
-
 struct TagItem my_incoming_charset3_taglist[] =
 {
     {   CSA_Source, (ULONG)buffer2},
@@ -1465,17 +1433,17 @@ void process_incoming()
         incoming_3 = strtok(NULL, "");
         if (!(incoming_1))
         {
-            incoming_1 = new char[1];
+            incoming_1 = malloc(sizeof(char));
             strcpy(incoming_1, "");
         }
         if (!(incoming_2))
         {
-            incoming_2 = new char[1];
+            incoming_2 = malloc(sizeof(char));
             strcpy(incoming_2, "");
         }
         if (!(incoming_3))
         {
-            incoming_3 = new char[1];
+            incoming_3 = malloc(sizeof(char));
             strcpy(incoming_3, "");
         }
 
@@ -1879,10 +1847,8 @@ void process_incoming()
             timestamp_2_string();
 
             string1 = strtok(incoming_3, ":"); //nick who invited person
-            //if(!(string1)) { string1=new char[1]; strcpy(string1,""); }
 
             string2 = strtok(NULL, ""); //channel you're being invited to
-            //if(!(string2)) { string2=new char[1]; strcpy(string2,""); }
 
             for (a = 1; a < strlen(incoming_1); a++)
             {
@@ -1945,8 +1911,8 @@ void process_incoming()
 
             }
 
-            char *work; //=new char[700];
-            char *nick_length_char = new char[3];
+            char *work;
+            char *nick_length_char = malloc(sizeof(char) * 3);
 
             work = strstr(string2, "NICKLEN=");
             if (work)
@@ -1963,8 +1929,8 @@ void process_incoming()
 
                 nick_length = atoi(nick_length_char);
                 status_conductor->nick[nick_length] = '\0';
-                char *string1; //=new char[STRING_BUFFERSIZE];
-                char *string2; //=new char[STRING_BUFFERSIZE];
+                char *string1;
+                char *string2;
 
                 strcpy(buffer3, incoming_3);
 
@@ -2071,8 +2037,7 @@ void process_incoming()
 
             }
 
-            //delete work;
-            delete[] nick_length_char;
+            free(nick_length_char);
 
         }
         else if (!strcmp(incoming_2, "352")) // result from the /WHO command
@@ -2241,7 +2206,7 @@ void process_incoming()
                 || !strcmp(incoming_2, "318") || !strcmp(incoming_2, "319") || !strcmp(incoming_2, "310")
                 || !strcmp(incoming_2, "378") || !strcmp(incoming_2, "616") || !strcmp(incoming_2, "614")) // WHOIS RESULT DISPLAY
         {
-            char *work1; //=new char[700];
+            char *work1;
             strcpy(string7, incoming_3);
 
             strtok(incoming_3, " ");
@@ -2409,10 +2374,8 @@ void process_incoming()
 
             strtok(incoming_3, " ");
             string1 = strtok(NULL, " "); //nick who invited you
-            //if(!(string1)) { string1=new char[1]; strcpy(string1,""); }
 
             string2 = strtok(NULL, ""); //channel you're being invited to
-            //if(!(string2)) { string2=new char[1]; strcpy(string2,""); }
 
             if (string1 && string2)
             {
@@ -2979,9 +2942,6 @@ void process_incoming()
                     {
                         strcpy(status_conductor->conductor->nicklist[++count].modes, mode_work);
                         strcpy(status_conductor->conductor->nicklist[count].name, work);
-                        //if(!status_conductor->conductor->nicklist[count].hostname)
-                        //    status_conductor->conductor->nicklist[count].hostname=new char[HOSTNAME_STRING_SIZE];
-                        //strcpy(status_conductor->conductor->nicklist[count].hostname,"");
 
                         status_conductor->conductor->nicks++;
 
@@ -3555,7 +3515,7 @@ void process_incoming()
                         strcpy(new_entry2.modes, "");
                         strcpy(new_entry2.name, string7);
                         if (!new_entry2.hostname)
-                            new_entry2.hostname = new char[HOSTNAME_STRING_SIZE];
+                            new_entry2.hostname = malloc(sizeof(char) * HOSTNAME_STRING_SIZE);
                         strcpy(new_entry2.hostname, string8);
 
                         strcpy(status_conductor->conductor->nicklist[status_conductor->conductor->nicks].name,
@@ -3564,7 +3524,7 @@ void process_incoming()
 
                         if (!status_conductor->conductor->nicklist[status_conductor->conductor->nicks].hostname)
                             status_conductor->conductor->nicklist[status_conductor->conductor->nicks].hostname =
-                                    new char[HOSTNAME_STRING_SIZE];
+                                    malloc(sizeof(char) * HOSTNAME_STRING_SIZE);
 
                         strcpy(status_conductor->conductor->nicklist[status_conductor->conductor->nicks].hostname,
                                 new_entry2.hostname);
@@ -3595,7 +3555,7 @@ void process_incoming()
 
                             if (!status_conductor->conductor->nicklist[status_conductor->conductor->nicks].hostname)
                                 status_conductor->conductor->nicklist[status_conductor->conductor->nicks].hostname =
-                                        new char[HOSTNAME_STRING_SIZE];
+                                        malloc(sizeof(char) * HOSTNAME_STRING_SIZE);
                             strcpy(status_conductor->conductor->nicklist[0].hostname, string8);
 
                             status_conductor->conductor->nicks = 1;
@@ -3605,15 +3565,9 @@ void process_incoming()
                                     GetCatalogStr(catalog, 299, "has returned to IRC.."));
                             add_text_to_conductor_list((char*) buffer3, 2, ACTIVITY);
                         }
-
-                        //if(new_entry2.hostname) delete [] new_entry2.hostname;
-
                     }
-
                 }
-
             }
-
         }
         else if (!strcmp(incoming_2, "KICK"))
         {
@@ -3922,7 +3876,6 @@ void process_incoming()
             string3 = strtok(incoming_3, " ");
             string4 = strtok(NULL, " ");
             string5 = strtok(NULL, "");
-            //if(!(string5)) { string5=new char[1]; strcpy(string5,"\0"); }
 
             if ((my_settings.events[MODE_CHANGE].use_when == 1 && is_window_active())
                     || (my_settings.events[MODE_CHANGE].use_when == 2 && !is_window_active())
@@ -3975,10 +3928,7 @@ void process_incoming()
 
                 if (string5)
                 {
-
                     work = strtok(string5, " ");
-                    //if(!(work)) { work=new char[2]; strcpy(work,"\0"); }
-
                 }
                 a = 0;
                 int option = 0;
@@ -4341,10 +4291,7 @@ void process_incoming()
                     //string5[0]='\0';
 
                 }
-                //if(work) delete [] work; work=NULL;
-                //if(string5) delete string5; string5=NULL;
             }
-
         }
         else if (!strcmp(incoming_2, "PART"))
         {
@@ -4880,7 +4827,7 @@ void process_incoming()
                     string5 = strtok(NULL, "");
                     if (!(string5))
                     {
-                        string5 = new char[1];
+                        string5 = malloc(sizeof(char));
                         strcpy(string5, "");
                     }
 
@@ -4947,7 +4894,7 @@ void process_incoming()
                     string5 = strtok(NULL, "\001");
                     if (!(string5))
                     {
-                        string5 = new char[1];
+                        string5 = malloc(sizeof(char));
                         strcpy(string5, "");
                     }
                     string5[strlen(string5)] = '\0';

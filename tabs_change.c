@@ -1313,7 +1313,7 @@ int switch_between_tabs_with_nlisttabclick(LONG result, BOOL saving_prefs)
         if (work_list_entry)
         {
 
-            work_list_entry2 = new list_entry;
+            work_list_entry2 = malloc(sizeof(struct list_entry));
 
             strcpy(work_list_entry2->modes, string8);
             strcpy(work_list_entry2->name, string9);
@@ -1321,7 +1321,7 @@ int switch_between_tabs_with_nlisttabclick(LONG result, BOOL saving_prefs)
             DoMethod((Object*) status_current->current_query->LV_nicklist, MUIM_NList_ReplaceSingle, work_list_entry2,
                     0, NOWRAP, ALIGN_LEFT);
 
-            delete work_list_entry2;
+            free(work_list_entry2);
         }
     }
 

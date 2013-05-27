@@ -35,7 +35,7 @@ void update_nicks_hostname(char *nick, char *hostname)
 
             if (!status_conductor->conductor->nicklist[count].hostname)
             {
-                status_conductor->conductor->nicklist[count].hostname = new char[HOSTNAME_STRING_SIZE];
+                status_conductor->conductor->nicklist[count].hostname = malloc(sizeof(char) * HOSTNAME_STRING_SIZE);
                 strcpy(status_conductor->conductor->nicklist[count].hostname, "");
             }
 
@@ -76,100 +76,6 @@ void change_window_titlebar_text(void)
 
 }
 
-/*
- void DisplayNicks(void)
- {
-
- printf("Displaying nicks..\n");
-
- setmacro((Object*)status_conductor->conductor->LV_nicklist,MUIA_NList_Quiet, TRUE);
-
- if(!new_entry->hostname) new_entry->hostname=new char[HOSTNAME_STRING_SIZE+1];
-
- //if(DEBUG) printf("DisplayNicks()\n");
-
- DoMethod((Object*)status_conductor->conductor->LV_nicklist,MUIM_NList_Clear);
-
-
- for(int count1=1; count1<=status_conductor->max_modes; count1++)
- {
- a=0;
-
- //printf("count1:%i\n",count1);
-
- while(a<status_conductor->conductor->nicks)
- {
-
- //printf("a:%i\n",a);
-
- strcpy(new_entry->name, status_conductor->conductor->nicklist[a].name);
- strcpy(new_entry->modes, status_conductor->conductor->nicklist[a].modes);
- if(!status_conductor->conductor->nicklist[a].hostname) status_conductor->conductor->nicklist[a].hostname=new char[HOSTNAME_STRING_SIZE+1];
- if(status_conductor->conductor->nicklist[a].hostname)
- {
- strncpy(new_entry->hostname, status_conductor->conductor->nicklist[a].hostname,HOSTNAME_STRING_SIZE-1);
- new_entry->hostname[HOSTNAME_STRING_SIZE]='\0';
- }
- else
- strcpy(new_entry->hostname, "");
-
- if(new_entry->name)
- {
- if(new_entry->modes[0] == status_conductor->user_modes[count1].symbol[0])
- {
- DoMethod((Object*)status_conductor->conductor->LV_nicklist,MUIM_NList_InsertSingle,new_entry,MUIV_NList_Insert_Bottom,WRAPCOL0,ALIGN_LEFT);
- }
- }
- a++;
- }
-
- }
-
- //printf("b\n");
- a=0;
-
- while(a<status_conductor->conductor->nicks)
- {
-
- strcpy(new_entry->name, status_conductor->conductor->nicklist[a].name);
- strcpy(new_entry->modes, status_conductor->conductor->nicklist[a].modes);
- if(!new_entry->hostname) new_entry->hostname=new char[HOSTNAME_STRING_SIZE+1]; //was commented out, I dont know why
-
- if(status_conductor->conductor->nicklist[a].hostname)
- {
- strncpy(new_entry->hostname, status_conductor->conductor->nicklist[a].hostname,HOSTNAME_STRING_SIZE-1);
- new_entry->hostname[HOSTNAME_STRING_SIZE]='\0';
-
- }
- else
- strcpy(new_entry->hostname, "");
-
-
- if(new_entry->name)
- {
- int result=0;
-
- for(int count1=1; count1<=status_conductor->max_modes; count1++)
- {
- if(new_entry->modes[0] == status_conductor->user_modes[count1].symbol[0]) result=1;
- }
-
- if(result==0)
- {
- DoMethod((Object*)status_conductor->conductor->LV_nicklist,MUIM_NList_InsertSingle,new_entry,MUIV_NList_Insert_Bottom,WRAPCOL0,ALIGN_LEFT);
- }
- }
- a++;
- }
-
- //printf("c\n");
-
- setmacro((Object*)status_conductor->conductor->LV_nicklist,MUIA_NList_Quiet, FALSE);
-
- //delete new_entry;
-
- }
- */
 void DisplayNicks(void)
 {
 
@@ -184,10 +90,8 @@ void DisplayNicks(void)
     if (status_current->current_query == status_conductor->conductor)
         setmacro((Object*) status_conductor->conductor->LV_nicklist, MUIA_NList_Quiet, TRUE);
 
-    //static struct list_entry *new_entry=new list_entry;
-    //new_entry->hostname=new char[HOSTNAME_STRING_SIZE+1];
     if (!new_entry->hostname)
-        new_entry->hostname = new char[HOSTNAME_STRING_SIZE + 1];
+        new_entry->hostname = malloc(sizeof(char) * (HOSTNAME_STRING_SIZE + 1));
 
     DoMethod((Object*) status_conductor->conductor->LV_nicklist, MUIM_NList_Clear);
 
@@ -196,17 +100,13 @@ void DisplayNicks(void)
     for (int count1 = 1; count1 <= status_conductor->max_modes; count1++)
     {
         a = 0;
-        //printf("count1:%d, max_modes:%d\n",count1,status_conductor->max_modes);
 
         while (a < status_conductor->conductor->nicks)
         {
-
-            //printf("a:%i\n",a);
-
             strcpy(new_entry->name, status_conductor->conductor->nicklist[a].name);
             strcpy(new_entry->modes, status_conductor->conductor->nicklist[a].modes);
             if (!status_conductor->conductor->nicklist[a].hostname)
-                status_conductor->conductor->nicklist[a].hostname = new char[HOSTNAME_STRING_SIZE + 1];
+                status_conductor->conductor->nicklist[a].hostname = malloc(sizeof(char) * (HOSTNAME_STRING_SIZE + 1));
             if (status_conductor->conductor->nicklist[a].hostname)
             {
                 strncpy(new_entry->hostname, status_conductor->conductor->nicklist[a].hostname,
@@ -216,7 +116,6 @@ void DisplayNicks(void)
             else
                 strcpy(new_entry->hostname, "");
 
-            //printf("a:%d nicks:%d\n",a,status_conductor->conductor->nicks);
             if (new_entry)
             {
                 if (new_entry->name)
@@ -244,7 +143,6 @@ void DisplayNicks(void)
 
         strcpy(new_entry->name, status_conductor->conductor->nicklist[a].name);
         strcpy(new_entry->modes, status_conductor->conductor->nicklist[a].modes);
-        //if(!new_entry->hostname) new_entry->hostname=new char[HOSTNAME_STRING_SIZE+1]; //was commented out, I dont know why
 
         if (status_conductor->conductor->nicklist[a].hostname)
         {
@@ -281,19 +179,9 @@ void DisplayNicks(void)
         }
         a++;
     }
-    //printf("c\n");
 
     if (status_current->current_query == status_conductor->conductor)
         setmacro((Object*) status_conductor->conductor->LV_nicklist, MUIA_NList_Quiet, FALSE);
-
-    //if(new_entry->hostname) { delete [] new_entry->hostname; new_entry->hostname=NULL; }
-
-    //delete new_entry;
-
-    //delete [] new_entry->hostname;
-    //new_entry->hostname=NULL;
-
-    //delete new_entry;
 
     return;
 
@@ -304,15 +192,14 @@ int result = 0;
 void AddNick(char *nick, char *hostname)
 {
 
-    struct list_entry *work_entry3 = new list_entry;
-    work_entry3->hostname = new char[HOSTNAME_STRING_SIZE + 1];
+    struct list_entry *work_entry3 = malloc(sizeof(struct list_entry));
+    work_entry3->hostname = malloc(sizeof(char) * (HOSTNAME_STRING_SIZE + 1));
     strcpy(work_entry3->modes, " ");
     strcpy(work_entry3->name, nick);
 
     entries = status_conductor->conductor->nicks;
     unsigned long a = 0, b = 0;
 
-    //if(!work_entry3->hostname) work_entry3->hostname=new char[HOSTNAME_STRING_SIZE+1];
     strncpy(work_entry3->hostname, hostname, HOSTNAME_STRING_SIZE - 1);
     work_entry3->hostname[HOSTNAME_STRING_SIZE] = '\0';
 
@@ -363,9 +250,9 @@ void AddNick(char *nick, char *hostname)
     change_window_titlebar_text();
 
     if (work_entry3->hostname)
-        delete[] work_entry3->hostname;
+        free(work_entry3->hostname);
     work_entry3->hostname = NULL;
-    delete work_entry3;
+    free(work_entry3);
     work_entry3 = NULL;
 
 }
@@ -412,7 +299,7 @@ int ReplaceNicksWithVoiceOps(char *string1, char prefix, int option)
         strcpy(new_entry->modes, work_entry->modes);
         strcpy(new_entry->name, work_entry->name);
         if (!new_entry->hostname)
-            new_entry->hostname = new char[HOSTNAME_STRING_SIZE + 1];
+            new_entry->hostname = malloc(sizeof(char) * (HOSTNAME_STRING_SIZE + 1));
         if (work_entry->hostname)
         {
             strncpy(new_entry->hostname, work_entry->hostname, HOSTNAME_STRING_SIZE - 1);
@@ -523,95 +410,7 @@ int ReplaceNicksWithVoiceOps(char *string1, char prefix, int option)
     return 0;
 
 }
-/*
- int ReplaceNicksWithVoiceOps(char *string1, char prefix, int option)
- {
 
- getmacro((Object*)status_conductor->conductor->LV_nicklist,MUIA_NList_Entries, &entries);
-
- unsigned int a=0;
-
- while(a < entries)
- {
-
- DoMethod((Object*)status_conductor->conductor->LV_nicklist,MUIM_NList_GetEntry,a, &work_entry);
-
- strcpy(new_entry->modes, work_entry->modes);
- strcpy(new_entry->name, work_entry->name);
- if(!new_entry->hostname) new_entry->hostname=new char[HOSTNAME_STRING_SIZE+1];
- if(work_entry->hostname)
- {
- strncpy(new_entry->hostname, work_entry->hostname,HOSTNAME_STRING_SIZE-1);
- new_entry->hostname[HOSTNAME_STRING_SIZE]='\0';
-
-
- }
- else
- strcpy(new_entry->hostname, "");
-
- if(!string1) return 0;
-
- if(!stricmp(status_conductor->conductor->nicklist[a].name,string1))
- {
-
- if(option==0)
- {
- strcpy(status_conductor->conductor->nicklist[a].modes," ");
- }
-
- if(option==1)
- {
- for(int count=1; count<=status_conductor->max_modes; count++)
- {
- if(prefix==status_conductor->user_modes[count].mode[0])
- {
- status_conductor->conductor->nicklist[a].modes[0]=status_conductor->user_modes[count].symbol[0];
- status_conductor->conductor->nicklist[a].modes[1]='\0';
-
- }
- }
- }
-
-
- }
-
- if(!stricmp(work_entry->name,string1))
- {
- if(option==0)
- {
- strcpy(new_entry->modes," ");
-
- }
-
- if(option==1)
- {
-
- for(int count=1; count<=status_conductor->max_modes; count++)
- {
- if(prefix==status_conductor->user_modes[count].mode[0])
- {
- new_entry->modes[0]=status_conductor->user_modes[count].symbol[0];
- new_entry->modes[1]='\0';
-
- }
- }
-
- }
-
- }
-
- a++;
-
- }
-
- DisplayNicks();
-
- return 0;
-
- }
- */
-
-//struct list_entry *work_entry;
 int RemoveNick(char *string1)
 {
 

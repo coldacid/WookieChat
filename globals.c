@@ -35,7 +35,7 @@ struct query_window *work_query;
 
 struct list_entry *work_list_entry;
 struct list_entry *work_list_entry2;
-struct list_entry *work_entry = new list_entry;
+struct list_entry *work_entry;
 
 struct Settings my_settings;
 struct Settings temp_settings;
@@ -114,12 +114,12 @@ ULONG hrs;
 ULONG secs;
 ULONG mins;
 char sendstuff[1500];
-struct dcc_entry *find=new dcc_entry;
+struct dcc_entry *find;
 
 int a;
 int how_many_lines=15;
 char buffer_text[800];
-struct channel_entry *centry=new channel_entry;
+struct channel_entry *centry;
 char new_array[20];
 ULONG custom_pen_colours[24];
 ULONG visible;
@@ -197,11 +197,11 @@ char *tabwork_string; //original string gadget contents
 BOOL dont_open_colours;
 struct ClockData *clockdata2;
 BOOL is_chooser_window_open;
-MUI_CustomClass *mcc;
-MUI_CustomClass *mcc2;
-MUI_CustomClass *mcc4;
-MUI_CustomClass *mcc5;
-MUI_CustomClass *mcc6;
+struct MUI_CustomClass *mcc;
+struct MUI_CustomClass *mcc2;
+struct MUI_CustomClass *mcc4;
+struct MUI_CustomClass *mcc5;
+struct MUI_CustomClass *mcc6;
 struct DiskObject *dobj; //for the iconified icon
 struct MsgPort *arexx_quit_replyport;
 struct MUI_NList_TestPos_Result *last_clicked_res;

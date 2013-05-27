@@ -169,7 +169,7 @@ void load_ignore_list()
 
 void save_nick_settings()
 {
-    char *a; //=new char[800];
+    char *a;
     int b;
 
     BPTR save_file = Open("progdir:nick_settings.txt", MODE_NEWFILE);
@@ -212,15 +212,11 @@ void save_nick_settings()
     local_charset = b;
 
     Close(save_file);
-
-    //delete a;
-
 }
 
 void save_settings()
 {
-//    char *a=new char[800];
-    char *work_buffer = new char[800];
+    char *work_buffer = malloc(sizeof(char) * 800);
 
     BPTR save_file = Open("progdir:settings.txt", MODE_NEWFILE);
 
@@ -464,16 +460,13 @@ void save_settings()
 
     save_user_list_buttons_config();
 
-    //delete []a;
-    //delete []work_buffer;
-
 }
 
 void retrieve_settings()
 {
     LONG a;
-    char *b = new char[800];
-    char *work_buffer = new char[800];
+    char *b = malloc(sizeof(char) * 800);
+    char *work_buffer = malloc(sizeof(char) * 800);
 
     getmacro((Object*) WookieChat->STR_nickname1, MUIA_String_Contents, &b);
     if (b)
@@ -869,7 +862,7 @@ void load_nick_settings()
     load_ignore_list();
     save_ignore_list();
 
-    char *work_buffer = new char[800];
+    char *work_buffer = malloc(sizeof(char) * 800);
     //STRPTR work_buffer;
     char *len2; //variable used for file access
 
@@ -938,22 +931,6 @@ void load_nick_settings()
             {
                 if (Pro_Charsets_Enabled == FALSE)
                 {
-                    //struct Locale *loc=new struct Locale;
-                    //loc=ILocale->OpenLocale(NULL);
-
-                    /*char buffer[128];
-                     IDOS->GetVar("Charset", buffer, 128, GVF_GLOBAL_ONLY);
-                     //printf("buffer:%s\n",buffer);
-
-                     for(count=0; local_charsets[count]!=NULL; count++)
-                     {
-                     if(!stricmp(local_charsets[count],buffer))
-                     {
-                     setmacro((Object*)WookieChat->CYCLE_local_charset,MUIA_Cycle_Active,count);
-                     local_charset = count;
-                     break;
-                     }
-                     }*/
                 }
                 else
                 {
@@ -991,17 +968,14 @@ void load_nick_settings()
             }
 
         }
-
-        //if(which_setting) delete which_setting;
-        //if(setting_value) delete setting_value;
     }
 
     if (newbptr_file)
         Close(newbptr_file);
 
-    delete work_buffer;
+    free(work_buffer);
     if (len2)
-        delete len2;
+        free(len2);
 
 }
 
@@ -1251,7 +1225,7 @@ void set_settings()
 void load_settings()
 {
 
-    char *work_buffer = new char[800];
+    char *work_buffer = malloc(sizeof(char) * 800);
     char *len2; //variable used for file access
 
     BPTR newbptr_file = Open("progdir:settings.txt", MODE_OLDFILE);
@@ -1996,54 +1970,13 @@ void load_settings()
                 my_settings.user_modes_beside_nicks = 0;
 
         }
-
-        /*
-
-
-         else if(!stricmp(which_setting,"DCC_RECV_FORMAT"))
-         {
-         strcpy(my_settings.dcc_recv_format,setting_value);
-
-         }
-         else if(!stricmp(which_setting,"DCC_SEND_FORMAT"))
-         {
-
-         strcpy(my_settings.dcc_send_format,setting_value);
-
-         }
-         */
-
-        //getmacro((Object*)WookieChat->LV_dcc,MUIA_List_Format,&string1);
-        //if(string1) printf("lv dcc format:%s\n",string1);
-        //MUIA_NList_Format,"WEIGHT=19 BAR,WEIGHT=15 BAR,WEIGHT=55 BAR,WEIGHT=10 BAR,WEIGHT=15 BAR,WEIGHT=15 BAR,WEIGHT=5 BAR,WEIGHT=15",
-
-        //if(which_setting) delete which_setting;
-        //if(setting_value) delete setting_value;
     }
 
     if (newbptr_file)
         Close(newbptr_file);
 
-    //set_settings();
-
-    /*if(my_settings.timestamp_column_width==-1 && my_settings.nick_column_width==-1)
-     sprintf(listview_format,"COL=2 WEIGHT=-1, COL=1 DELTA=%s WEIGHT=-1 BAR, DELTA=%s COL=0",delta,delta);
-     else if(my_settings.timestamp_column_width!=-1 && my_settings.nick_column_width==-1)
-     sprintf(listview_format,"COL=2 COLWIDTH=%i, COL=1 DELTA=%s WEIGHT=-1 BAR, DELTA=%s COL=0",my_settings.timestamp_column_width,delta,delta);
-     else if(my_settings.timestamp_column_width==-1 && my_settings.nick_column_width!=-1)
-     sprintf(listview_format,"COL=2 WEIGHT=-1, COL=1 DELTA=%s COLWIDTH=%i BAR, DELTA=%s COL=0",delta,my_settings.nick_column_width,delta);
-     else
-     sprintf(listview_format,"COL=2 COLWIDTH=%i, COL=1 DELTA=%s COLWIDTH=%i BAR, DELTA=%s COL=0",my_settings.timestamp_column_width,delta,my_settings.nick_column_width,delta);
-     */
-
-    //sprintf(listview_format,"COL=2 COLWIDTH=%i, COL=1 DELTA=%i COLWIDTH=%i BAR, DELTA=%i COL=0",my_settings.timestamp_column_width,my_settings.delta,my_settings.nick_column_width,my_settings.delta);
     sprintf(listview_format, "COL=2 PIXWIDTH=%i, COL=1 DELTA=%i PIXWIDTH=%i BAR, DELTA=%i COL=0",
             my_settings.timestamp_column_width, my_settings.delta, my_settings.nick_column_width, my_settings.delta);
-
-    //if(work) delete []work;
-    //if(work_buffer) delete []work_buffer;
-    //if(len2) delete len2;
-
 }
 
 struct user_list_buttons_array buttons[MAX_BUTTONS + 1];

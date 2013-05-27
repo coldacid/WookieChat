@@ -714,9 +714,9 @@ void read_list_of_servers(void)
 {
     count=0;
 
-    char *work_buffer=new char[1000];
-    char *work_buffer2=new char[1000];
-    char *work1=new char[100];
+    char *work_buffer=malloc(sizeof(char) * 1000);
+    char *work_buffer2=malloc(sizeof(char) * 1000);
+    char *work1=malloc(sizeof(char) * 100);
     char *len2; //variable used for file access
     char work_buffer3[600];
     newbptr_file = Open("progdir:servers.txt",MODE_OLDFILE);
@@ -1112,7 +1112,7 @@ int main(int argc, char *argv[])
     }
 //
 
-    MUI_NList_TestPos_Result *last_clicked_res = new MUI_NList_TestPos_Result;
+    struct MUI_NList_TestPos_Result *last_clicked_res = malloc(sizeof(struct MUI_NList_TestPos_Result));
 
 #ifdef __amigaos4__
     struct MUI_EventHandlerNode ehnode;
@@ -1534,18 +1534,18 @@ int main(int argc, char *argv[])
 // Setup DCC CHAT SEND AND RECV linked lists and structures
 
     //setup dcc chat recieve linked list
-    dcc_chat_root = new dcc_chat;
+    dcc_chat_root = malloc(sizeof(struct dcc_chat));
     dcc_chat_root->next = NULL;
-    dcc_chat_conductor = new dcc_chat;
+    dcc_chat_conductor = malloc(sizeof(struct dcc_chat));
     dcc_chat_conductor->next = NULL;
     create_recv_dcc_chat((char*) "0", (char*) "0", (char*) "0");
     dcc_chat_conductor->dcc_socket = -1;
     dcc_chat_root = dcc_chat_conductor;
 
     //setup dcc recieve linked list
-    dcc_root = new dcc;
+    dcc_root = malloc(sizeof(struct dcc));
     dcc_root->next = NULL;
-    dcc_conductor = new dcc;
+    dcc_conductor = malloc(sizeof(struct dcc));
     dcc_conductor->previous = NULL;
     dcc_conductor->next = NULL;
     create_recv_dcc((char*) "0", (char*) "0", (char*) "0", 0, (char*) "0");
@@ -1553,9 +1553,9 @@ int main(int argc, char *argv[])
     dcc_root = dcc_conductor;
 
     //setup dcc recieve linked list
-    dcc_send_root = new dcc;
+    dcc_send_root = malloc(sizeof(struct dcc));
     dcc_send_root->next = NULL;
-    dcc_send_conductor = new dcc;
+    dcc_send_conductor = malloc(sizeof(struct dcc));
     dcc_send_conductor->next = NULL;
     dcc_send_conductor->previous = NULL;
     create_send_dcc((char*) "0", (char*) "0", 0, 0);
@@ -1576,8 +1576,8 @@ int main(int argc, char *argv[])
 
     }*tree_conductor, *tree_root;
 
-    tree_root = new test_tree;
-    tree_conductor = new test_tree;
+    tree_root = malloc(sizeof(struct test_tree));
+    tree_conductor = malloc(sizeof(struct test_tree));
     tree_conductor->next = NULL;
 
     //tree_conductor->t=(struct MUI_NListtree_TreeNode *)DoMethod((Object*)WookieChat->NLT_Servers, MUIM_NListtree_Insert, "Servers", NULL,
@@ -1585,9 +1585,9 @@ int main(int argc, char *argv[])
 
     tree_root = tree_conductor;
 
-    char *work_buffer = new char[2000];
-    char *work_buffer2 = new char[2000];
-    char *work1 = new char[100];
+    char *work_buffer = malloc(sizeof(char) * 2000);
+    char *work_buffer2 = malloc(sizeof(char) * 2000);
+    char *work1 = malloc(sizeof(char) * 100);
     char *len2; //variable used for file access
 
     newbptr_file = Open("progdir:servers.txt", MODE_OLDFILE);
@@ -1613,7 +1613,7 @@ int main(int argc, char *argv[])
 
             else if (!work1)
             {
-                tree_conductor->next = new test_tree;
+                tree_conductor->next = malloc(sizeof(struct test_tree));
                 tree_conductor = tree_conductor->next;
                 tree_conductor->next = NULL;
 
@@ -1633,69 +1633,6 @@ int main(int argc, char *argv[])
 
     Close(newbptr_file);
 
-    /*struct test_tree
-     {
-     struct MUI_NListtree_TreeNode *t;
-     struct test_tree *next;
-
-     } *tree_conductor, *tree_root;
-
-     tree_root=new test_tree;
-     tree_conductor=new test_tree;
-     tree_conductor->next=NULL;
-
-     tree_conductor->t=(struct MUI_NListtree_TreeNode *)DoMethod((Object*)WookieChat->NLT_Servers, MUIM_NListtree_Insert, "Servers", NULL,
-     MUIV_NListtree_Insert_ListNode_Root, MUIV_NListtree_Insert_PrevNode_Tail, TNF_LIST|TNF_OPEN);
-
-     tree_root=tree_conductor;
-
-     char *work_buffer=new char[2000];
-     char *work_buffer2=new char[2000];
-     char *work1=new char[100];
-     char *len2; //variable used for file access
-
-     newbptr_file = Open("progdir:servers.txt",MODE_OLDFILE);
-     int running3=1;
-
-     while(running3)
-     {
-     if(!newbptr_file) break;
-
-     len2=(char*)FGets(newbptr_file,(b_in)work_buffer,600);
-     work_buffer[strlen(work_buffer)-1]='\0';
-
-     if(stricmp(work_buffer,"WOOKIECHAT_SERVERS_FILE_2"))
-     {
-
-     strcpy(work_buffer2,work_buffer);
-     strtok(work_buffer2," ");
-     work1=strtok(NULL," ");
-
-     if(!len2) running3=0;
-
-     else if(!work1)
-     {
-     tree_conductor->next=new test_tree;
-     tree_conductor=tree_conductor->next;
-     tree_conductor->next=NULL;
-
-     tree_conductor->t = (struct MUI_NListtree_TreeNode *)DoMethod((Object*)WookieChat->NLT_Servers, MUIM_NListtree_Insert, work_buffer, NULL,
-     tree_root->t, MUIV_NListtree_Insert_PrevNode_Tail, TNF_LIST);
-     }
-     else
-     {
-     DoMethod((Object*)WookieChat->NLT_Servers, MUIM_NListtree_Insert, work_buffer, NULL,
-     tree_conductor->t, MUIV_NListtree_Insert_PrevNode_Tail, NULL );
-
-     }
-     }
-
-     }
-
-     Close(newbptr_file);
-     */
-
-    //DoMethod((Object*)WookieChat->NLT_Servers, MUIM_NListtree_Open,MUIV_NListtree_Open_ListNode_Root,MUIV_NListtree_Open_ListNode_Root);
     my_settings.current_port = atoi(my_settings.start_port);
 
     if (my_settings.display_server_window_on_startup)
@@ -1797,7 +1734,7 @@ int main(int argc, char *argv[])
     LONG result, e;
     int select_result;
     char *test[1000];
-    char *test2 = new char[462];
+    char *test2 = malloc(sizeof(char) * 462);
 
     while (running)
     {
@@ -1895,7 +1832,7 @@ int main(int argc, char *argv[])
                                                                 == NULL)
                                                         {
                                                             status_current->current_query->queued_messages[status_current->current_query->queued_messages_total] =
-                                                                    new char[460];
+                                                                    malloc(sizeof(char) * 460);
                                                             strcpy(
                                                                     status_current->current_query->queued_messages[status_current->current_query->queued_messages_total],
                                                                     string9);
@@ -1926,7 +1863,7 @@ int main(int argc, char *argv[])
                                                         == NULL)
                                                 {
                                                     status_current->current_query->queued_messages[status_current->current_query->queued_messages_total] =
-                                                            new char[460];
+                                                            malloc(sizeof(char) * 460);
                                                     strcpy(
                                                             status_current->current_query->queued_messages[status_current->current_query->queued_messages_total],
                                                             test2);
@@ -1977,7 +1914,7 @@ int main(int argc, char *argv[])
                                                             == NULL)
                                                     {
                                                         status_current->current_query->queued_messages[status_current->current_query->queued_messages_total] =
-                                                                new char[460];
+                                                                malloc(sizeof(char) * 460);
                                                         strcpy(
                                                                 status_current->current_query->queued_messages[status_current->current_query->queued_messages_total],
                                                                 string9);
@@ -2008,7 +1945,7 @@ int main(int argc, char *argv[])
                                                     == NULL)
                                             {
                                                 status_current->current_query->queued_messages[status_current->current_query->queued_messages_total] =
-                                                        new char[460];
+                                                        malloc(sizeof(char) * 460);
                                                 strcpy(
                                                         status_current->current_query->queued_messages[status_current->current_query->queued_messages_total],
                                                         test[c]);
@@ -2228,7 +2165,7 @@ int main(int argc, char *argv[])
             {
 // user has double clicked on an entry in the nicklist
                 LONG a;
-                struct list_entry *work_entry = new list_entry;
+                struct list_entry *work_entry = malloc(sizeof(struct list_entry));
 
                 getmacro((Object*)status_current->current_query->LV_nicklist, MUIA_NList_DoubleClick, &a);
                 DoMethod((Object*) status_current->current_query->LV_nicklist, MUIM_NList_GetEntry, a, &work_entry);
@@ -2277,7 +2214,7 @@ int main(int argc, char *argv[])
                 //"NewGroup-EditMe",
                 //NULL, tree_root->t, MUIV_NListtree_Insert_PrevNode_Tail, MUIV_NListtree_Insert_Flag_Active|TNF_LIST|TNF_OPEN);
 
-                tree_conductor->next = new test_tree;
+                tree_conductor->next = malloc(sizeof(struct test_tree));
                 tree_conductor = tree_conductor->next;
                 tree_conductor->next = NULL;
 
@@ -2655,7 +2592,7 @@ int main(int argc, char *argv[])
                 {
 
                     char work_buffer[800];
-                    char *work; //=new char[700];
+                    char *work;
                     if (treenode->tn_Name)
                         strcpy(work_buffer, treenode->tn_Name);
 
@@ -2688,9 +2625,6 @@ int main(int argc, char *argv[])
                         }
 
                     }
-                    //delete work;
-
-                    //delete [] work;
                 }
 //
             }
@@ -3050,14 +2984,14 @@ int main(int argc, char *argv[])
                                         printf("dcc_conductor->next isnt false\n");
                                     dcc_prev->next = dcc_next;
                                     dcc_next->previous = dcc_prev;
-                                    delete dcc_conductor;
+                                    free(dcc_conductor);
                                     dcc_conductor = NULL;
                                 }
                                 else
                                 {
                                     if (DEBUG)
                                         printf("dcc_conductor->next IS false\n");
-                                    delete dcc_conductor;
+                                    free(dcc_conductor);
                                     dcc_prev->next = NULL;
                                     dcc_conductor = NULL;
                                 }
@@ -3423,14 +3357,14 @@ int main(int argc, char *argv[])
                                         printf("dcc_send_conductor->next isnt false\n");
                                     dcc_prev->next = dcc_next;
                                     dcc_next->previous = dcc_prev;
-                                    delete dcc_send_conductor;
+                                    free(dcc_send_conductor);
                                     dcc_send_conductor = NULL;
                                 }
                                 else
                                 {
                                     if (DEBUG)
                                         printf("dcc_send_conductor->next IS false\n");
-                                    delete dcc_send_conductor;
+                                    free(dcc_send_conductor);
                                     dcc_prev->next = NULL;
                                     dcc_send_conductor = NULL;
                                 }
@@ -5450,14 +5384,12 @@ int main(int argc, char *argv[])
 
                                 for (count--; count < MAX_QUEUED_MESSAGES - 1; count++)
                                 {
-                                    //if(DEBUG) printf("zeroing after %i\n",count);
                                     if (status_conductor->conductor->queued_messages[count])
                                     {
-                                        delete status_conductor->conductor->queued_messages[count];
+                                        free(status_conductor->conductor->queued_messages[count]);
                                         status_conductor->conductor->queued_messages[count] = NULL;
 
                                     }
-                                    //strcpy(status_conductor->conductor->queued_messages[count],"");
                                 }
 
                             }
@@ -5530,19 +5462,13 @@ int main(int argc, char *argv[])
 
                 if (select_result > 0)
                     do_waitselect_code(); //iterate through all the sockets and read/write to them
-
-                //do_waitselect_code(); //iterate through all the sockets and read/write to them
-
             }
 
-            delete[] test2;
-            //delete [] work_buffer;
-            //delete [] work_buffer2;
+            free(test2);
 
             cleanexit(NULL);
 
-            delete[] work_buffer;
-            //delete [] work_buffer2;
+            free(work_buffer);
 
             return 0;
 

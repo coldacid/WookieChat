@@ -137,17 +137,24 @@ struct ObjApp *CreateApp(void)
         return(NULL);
 
 if(AMIX) printf("2\n");
-    static const char *titles2[] = { GetCatalogStr(catalog,19,"General"),
-                                     "GUI",
-                                     GetCatalogStr(catalog,260,"Servers"),
-                                     GetCatalogStr(catalog,20,"Logging"),
-                                     "DCC",
-                                     GetCatalogStr(catalog,21,"Sounds"),
-                                     GetCatalogStr(catalog,22,"Aliases"),
-                                     GetCatalogStr(catalog,374,"Nick List Buttons"),
-                                     GetCatalogStr(catalog,800,"Events"),
-                                     NULL };
+    static const char *titles2[] = {   "General",
+                                         "GUI",
+                                         "Servers",
+                                         "Logging",
+                                         "DCC",
+                                         "Sounds",
+                                         "Aliases",
+                                         "Nick List Buttons",
+                                         "Events",
+                                         NULL };
 
+    titles2[0] = GetCatalogStr(catalog,19,"General");
+    titles2[2] = GetCatalogStr(catalog,260,"Servers");
+    titles2[3] = GetCatalogStr(catalog,20,"Logging");
+    titles2[5] = GetCatalogStr(catalog,21,"Sounds");
+    titles2[6] = GetCatalogStr(catalog,22,"Aliases");
+    titles2[7] = GetCatalogStr(catalog,374,"Nick List Buttons");
+    titles2[8] = GetCatalogStr(catalog,800,"Events");
 
 if(AMIX) printf("3\n");
         #ifdef __AROS__
@@ -317,14 +324,14 @@ if(AMIX) printf("9\n");
             if(!strstr(array[i], "UTF"))
             {
                 //local_selectable_charsets[ii] = CodesetsFindA((char*)array[i],NULL);
-                local_charsets[ii]=new char[30];
+                local_charsets[ii]=malloc(sizeof(char) * 30);
                 strcpy(local_charsets[ii],array[i]);
                 ii++;
                 //local_selectable_charsets[ii]=NULL;
 
             }
 
-            remote_charsets[i]=new char[30];
+            remote_charsets[i]=malloc(sizeof(char) * 30);
             strcpy(remote_charsets[i],array[i]);
 
             if(DEBUG) printf("charset:%d %s\n",i,remote_charsets[i]);
@@ -862,14 +869,20 @@ if(AMIX) printf("52\n");
     static const char *RA_GroupTitleColor[] =
     {
        //"Overwrite", "Resume", "Abort", "Ask", NULL
-       GetCatalogStr(catalog,36,"Overwrite"),
-       GetCatalogStr(catalog,35,"Resume"),
-       GetCatalogStr(catalog,37,"Abort"),
-       GetCatalogStr(catalog,44,"Ask"),
-       GetCatalogStr(catalog,369,"Rename"),
+       "Overwrite",
+       "Resume",
+       "Abort",
+       "Ask",
+       "Rename",
        NULL
-
     };
+
+    RA_GroupTitleColor[0] = GetCatalogStr(catalog,36,"Overwrite");
+    RA_GroupTitleColor[1] = GetCatalogStr(catalog,35,"Resume");
+    RA_GroupTitleColor[2] = GetCatalogStr(catalog,37,"Abort");
+    RA_GroupTitleColor[3] = GetCatalogStr(catalog,44,"Ask");
+    RA_GroupTitleColor[4] = GetCatalogStr(catalog,369,"Rename");
+
 if(AMIX) printf("53\n");
     MBObj->RA_autoaccept = (Object*)CycleObject,
        MUIA_Cycle_Entries, RA_GroupTitleColor,
@@ -1368,10 +1381,13 @@ if(AMIX) printf("76\n");
 
     static const char *CYCLE_tabs_entries[] =
     {
-       GetCatalogStr(catalog,375,"Listview"),
-       GetCatalogStr(catalog,376,"Buttons"),
+       "Listview",
+       "Buttons",
        NULL,
     };
+
+    CYCLE_tabs_entries[0] = GetCatalogStr(catalog,375,"Listview");
+    CYCLE_tabs_entries[1] = GetCatalogStr(catalog,376,"Buttons");
 
     //MBObj->LA_tabs = (Object*)Label2(GetCatalogStr(catalog,296,"Use button-style tabs"));
     //MBObj->CH_tabs = (Object*)CheckMark(TRUE);
@@ -1469,7 +1485,7 @@ if(AMIX) printf("82\n");
     {
         for(count2=0; count2<count; count2++)
         {
-            CYA_GroupTitleColor[count2]=new char[100];
+            CYA_GroupTitleColor[count2]=malloc(sizeof(char) * 100);
             strcpy(CYA_GroupTitleColor[count2],graphical_smiley_themes[count2]);
         }
         CYA_GroupTitleColor[count2]=NULL;
@@ -1480,7 +1496,7 @@ if(AMIX) printf("82\n");
     }
     else
     {
-        CYA_GroupTitleColor[0]=new char[100];
+        CYA_GroupTitleColor[0]=malloc(sizeof(char) * 100);
         strcpy(CYA_GroupTitleColor[0],"");
 
         CYA_GroupTitleColor[1]=NULL;
@@ -1646,12 +1662,18 @@ if(AMIX) printf("89\n");
 
     static const char *RA_sound_sample_newmsg_entries[] =
     {
-       GetCatalogStr(catalog,82,"Never"),
-       GetCatalogStr(catalog,367,"When private tab is not selected"),
-       GetCatalogStr(catalog,83,"Always"),
-       GetCatalogStr(catalog,84,"Only when Window is inactive"),
+       "Never",
+       "When private tab is not selected",
+       "Always",
+       "Only when Window is inactive",
        NULL,
     };
+
+    RA_sound_sample_newmsg_entries[0] = GetCatalogStr(catalog,82,"Never");
+    RA_sound_sample_newmsg_entries[1] = GetCatalogStr(catalog,367,"When private tab is not selected");
+    RA_sound_sample_newmsg_entries[2] = GetCatalogStr(catalog,83,"Always");
+    RA_sound_sample_newmsg_entries[3] = GetCatalogStr(catalog,84,"Only when Window is inactive");
+
 if(AMIX) printf("90\n");
     MBObj->LA_sound_sample_newmsg = (Object*)Label2(GetCatalogStr(catalog,366,"Sample to play when a new PRIVMSG arrives"));
 
@@ -1680,11 +1702,16 @@ if(AMIX) printf("90\n");
 
     static const char *RA_sound_sample_tabopen_entries[] =
     {
-       GetCatalogStr(catalog,82,"Never"),
-       GetCatalogStr(catalog,83,"Always"),
-       GetCatalogStr(catalog,84,"Only when Window is inactive"),
+       "Never",
+       "Always",
+       "Only when Window is inactive",
        NULL,
     };
+
+    RA_sound_sample_tabopen_entries[0] = GetCatalogStr(catalog,82,"Never");
+    RA_sound_sample_tabopen_entries[1] = GetCatalogStr(catalog,83,"Always");
+    RA_sound_sample_tabopen_entries[2] = GetCatalogStr(catalog,84,"Only when Window is inactive");
+
 if(AMIX) printf("91\n");
     MBObj->LA_sound_sample_tabopen = (Object*)Label2(GetCatalogStr(catalog,85,"Sample to play when a tab opens"));
 
@@ -1715,12 +1742,17 @@ if(AMIX) printf("92\n");
     static const char *RA_sound_sample_highlight_entries[] =
     {
        //"Never", "Always", "Only when Window is inactive", NULL
-       GetCatalogStr(catalog,82,"Never"),
-       GetCatalogStr(catalog,83,"Always"),
-       GetCatalogStr(catalog,84,"Only when Window is inactive"),
-       GetCatalogStr(catalog,373,"Only when Tab is inactive"),
+       "Never",
+       "Always",
+       "Only when Window is inactive",
+       "Only when Tab is inactive",
        NULL
     };
+
+    RA_sound_sample_highlight_entries[0] = GetCatalogStr(catalog,82,"Never");
+    RA_sound_sample_highlight_entries[1] = GetCatalogStr(catalog,83,"Always");
+    RA_sound_sample_highlight_entries[2] = GetCatalogStr(catalog,84,"Only when Window is inactive");
+    RA_sound_sample_highlight_entries[3] = GetCatalogStr(catalog,373,"Only when Tab is inactive");
 
     MBObj->LA_sound_sample_highlight = (Object*)Label2(GetCatalogStr(catalog,88,"Sample to play on highlight"));
 
