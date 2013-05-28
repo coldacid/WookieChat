@@ -14,10 +14,9 @@
 
 #include "includes.h"
 
-#include <proto/datatypes.h>
-
 #include "intern.h"
 #include "objapp.h"
+#include "audio.h"
 
 /* Locals */
 static char *pch2;
@@ -26,40 +25,6 @@ static char new_filtered_string1[550];
 static STRPTR charset_convert_1;
 static STRPTR charset_convert_2;
 #endif
-
-void play_external_sound_replayer(char *string1)
-{
-
-    if (muted_sound)
-        return;
-
-    if (my_settings.samples_path[strlen(my_settings.samples_path) - 1] == ':'
-            || my_settings.samples_path[strlen(my_settings.samples_path) - 1] == '/')
-        sprintf(string11, "%s%s", my_settings.samples_path, string1);
-    else
-        sprintf(string11, "%s/%s", my_settings.samples_path, string1);
-
-    if (my_settings.use_external_sound_replayer)
-    {
-
-        sprintf(file_name, "run >nil: %s %s", my_settings.external_sound_replayer, string11);
-
-#ifdef __amigaos4__
-        SystemTags(file_name,TAG_DONE);
-#else
-        Execute(file_name, 0, 0);
-#endif
-
-    }
-    else
-    {
-        if (o)
-            DisposeDTObject(o);
-        if (NULL != (o = NewDTObject(string11, DTA_GroupID, GID_SOUND, TAG_END)))
-            DoMethod(o, DTM_TRIGGER, NULL, STM_PLAY, NULL);
-    }
-
-}
 
 void censor_swear_words(char *string1)
 {

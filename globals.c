@@ -142,9 +142,6 @@ LONG count4;
 char string7[900];
 BPTR newbptr_file;
 
-BOOL muted_sound;
-Object *o2;
-
 char *string2;
 char *string3;
 
@@ -158,8 +155,6 @@ char string9[900];
 char *string4;
 char *string5;
 BOOL RECENTLY_CREATED_A_TAB=FALSE;
-Object *o;
-Object *o3;
 char timestamp_hrs[4];
 char timestamp_mins[4];
 struct ClockData *clockdata;
@@ -171,13 +166,11 @@ char pingtimestamp_secs[4];
 STRPTR text3;
 char *channel_display;
 char *NewPreParse_NewText;
-char string11[900];
 BOOL using_a_proxy;
 char server[50];
 struct MsgPort *app_process_replyport;
 struct MsgPort *send_text_replyport;
 struct codeset *cs;
-char *pch;
 struct SharedList *slist;
 BPTR urlgrabber_file;
 char urlgrabber_str[2000];
@@ -207,8 +200,6 @@ struct MsgPort *arexx_quit_replyport;
 struct MUI_NList_TestPos_Result *last_clicked_res;
 
 char *string123;
-
-int b;
 
 struct timerequest *TimerIO;
 // second timer device variables for the 2 second delays

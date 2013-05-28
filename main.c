@@ -44,6 +44,7 @@ int GEIT3 = 0;
 
 #include "intern.h"
 #include "objapp.h"
+#include "audio.h"
 
 
 /* Locals */
@@ -63,7 +64,7 @@ static char pingtimestamp_hrs[4];
 static ULONG mics;
 static char wookie_dir[400]; //the pathname wookiechat is located in
 static ULONG iconified_and_new_text;
-
+static char string11[900];
 
 
 
@@ -499,7 +500,7 @@ void timestamp_2_string()
     if (my_settings.timestamp_config)
     {
         a = 0;
-        b = 0;
+        int b = 0;
 
         memset(timestamp, '\0', 12);
 
@@ -4175,15 +4176,15 @@ int main(int argc, char *argv[])
 
                         if (result == 1)
                         {
-                            if (muted_sound == FALSE)
+                            if (is_sound_muted() == FALSE)
                             {
                                 setmacro((Object*)MN_MuteSound, MUIA_Menuitem_Checked, TRUE);
-                                muted_sound = TRUE;
+                                set_sound_muted(TRUE);
                             }
                             else
                             {
                                 setmacro((Object*)MN_MuteSound, MUIA_Menuitem_Checked, FALSE);
-                                muted_sound = FALSE;
+                                set_sound_muted(FALSE);
                             }
 
                         }
@@ -4760,7 +4761,7 @@ int main(int argc, char *argv[])
                         getmacro((Object*)WookieChat->STR_usertext, MUIA_String_Contents, &tabwork_string);
 
                         a = 0;
-                        b = 0;
+                        int b = 0;
 
                         if (position != 0)
                         {

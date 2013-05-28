@@ -17,6 +17,7 @@
 
 /* Locals */
 static char output_string[800];
+static char string11[900];
 
 int load_user_list_buttons_config(void);
 int save_user_list_buttons_config(void);
@@ -597,24 +598,21 @@ void retrieve_settings()
     if (b)
         strcpy(my_settings.sound_sample_highlight, b);
 #ifndef __AROS__
-    if(o2) DisposeDTObject (o2);
-    o2 = NewDTObject(my_settings.sound_sample_highlight,DTA_GroupID,GID_SOUND,TAG_END);
+    reload_sample(my_settings.sound_sample_highlight, SAMPLE_HIGHLIGHT);
 #endif
 
     getmacro((Object*) WookieChat->RA_sound_sample_newmsg, MUIA_Cycle_Active, &a);
     //getmacro((Object*)WookieChat->RA_sound_sample_newmsg,MUIA_Radio_Active,&a);
     my_settings.play_sound_when_newmsg = a;
 #ifndef __AROS__
-    if(o3) DisposeDTObject (o3);
-    o3 = NewDTObject(my_settings.sound_sample_newmsg,DTA_GroupID,GID_SOUND,TAG_END);
+    reload_sample(my_settings.sound_sample_newmsg, SAMPLE_NEWMSG);
 #endif
 
     //getmacro((Object*)WookieChat->RA_sound_sample_tabopen,MUIA_Radio_Active,&a);
     getmacro((Object*) WookieChat->RA_sound_sample_tabopen, MUIA_Cycle_Active, &a);
     my_settings.play_sound_when_tabopen = a;
 #ifndef __AROS__
-    if(o) DisposeDTObject(o);
-    o = NewDTObject(my_settings.sound_sample_tabopen,DTA_GroupID,GID_SOUND,TAG_END);
+    reload_sample(my_settings.sound_sample_tabopen, SAMPLE_TABOPEN);
 #endif
 
     //getmacro((Object*)WookieChat->RA_sound_sample_highlight,MUIA_Radio_Active,&a);

@@ -1280,10 +1280,7 @@ int switch_between_tabs_with_nlisttabclick(LONG result, BOOL saving_prefs)
 
             }
 
-            b = 0;
-
             DoMethod((Object*) GR_top, MUIM_Group_ExitChange);
-
         }
 
         setmacro((Object*) GR_top, MUIA_Group_ActivePage, status_current->current_query->page_number);

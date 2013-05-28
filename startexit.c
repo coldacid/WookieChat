@@ -15,12 +15,12 @@
 
 #include <clib/alib_protos.h>
 #include <proto/muimaster.h>
-#include <proto/datatypes.h>
 #include <proto/icon.h>
 #include <proto/codesets.h>
 
 #include "intern.h"
 #include "objapp.h"
+#include "audio.h"
 
 #ifdef __AROS__
 struct Library * AslBase = NULL;
@@ -132,10 +132,9 @@ void LoadAllLibs(void)
 
     QUIET_DCC = FALSE;
     USE_AREXX = FALSE;
-    muted_sound = FALSE;
+    set_sound_muted(FALSE);
 
-    o2 = NULL;
-    o3 = NULL;
+    samples_init();
 
     for (a = 0; a < 25; a++)
         custom_pen_colours[a] = 0;
@@ -804,12 +803,7 @@ void cleanexit(char *str)
 
     //printf("6\n");
 
-    if (o)
-        DisposeDTObject(o);
-    if (o2)
-        DisposeDTObject(o2);
-    if (o3)
-        DisposeDTObject(o3);
+    samples_dispose();
 
     if (GEIT)
         printf("18\n");

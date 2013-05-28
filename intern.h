@@ -1091,8 +1091,6 @@ extern LONG count4; // FIXME make this a local variable in each function
 extern char string7[900]; // FIXME make this a local variable in each function
 extern BPTR newbptr_file; // FIXME make this a local variable in each function
 
-extern BOOL muted_sound;
-extern Object *o2;
 extern char *string2; // FIXME make this a local variable in each function
 extern char *string3; // FIXME make this a local variable in each function
 
@@ -1106,8 +1104,6 @@ extern char string9[900]; // FIXME make this a local variable in each function
 extern char *string4; // FIXME make this a local variable in each function
 extern char *string5; // FIXME make this a local variable in each function
 extern BOOL RECENTLY_CREATED_A_TAB;
-extern Object *o; // FIXME make this a local variable in each function
-extern Object *o3; // FIXME make this a local variable in each function
 extern char timestamp_hrs[4];
 extern char timestamp_mins[4];
 extern struct ClockData *clockdata;
@@ -1119,13 +1115,11 @@ extern char pingtimestamp_secs[4];
 extern STRPTR text3;
 extern char *channel_display;
 extern char *NewPreParse_NewText;
-extern char string11[900]; // FIXME make this a local variable in each function
 extern BOOL using_a_proxy;
 extern char server[50];
 extern struct MsgPort *app_process_replyport;
 extern struct MsgPort *send_text_replyport;
 extern struct codeset *cs;
-extern char *pch; // FIXME make this a local variable in each function
 extern struct SharedList *slist;
 extern BPTR urlgrabber_file;
 extern char urlgrabber_str[2000];
@@ -1155,8 +1149,6 @@ extern struct MsgPort *arexx_quit_replyport;
 extern struct MUI_NList_TestPos_Result *last_clicked_res;
 
 extern char *string123;
-
-extern int b; //FIXME This must go
 
 extern struct timerequest *TimerIO;
 extern struct MsgPort *Timer2MP;
@@ -1210,7 +1202,6 @@ void set_channel_clipboard_hook();
 
 /* process_outgoing.c */
 void process_outgoing(char*, int);
-void play_external_sound_replayer(char *string1);
 
 /* coloursettings.c */
 void save_colours();

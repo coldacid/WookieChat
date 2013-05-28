@@ -13,12 +13,12 @@
    =================================================================== */
 #include "includes.h"
 
-#include <proto/datatypes.h>
 #include <proto/codesets.h>
 
 #include "intern.h"
 #include "version_info.h"
 #include "objapp.h"
+#include "audio.h"
 
 struct list_entry new_entry2;
 
@@ -35,6 +35,7 @@ static int count_clones;
 static int nick_length;
 static char urlvisit_str[1][2000];
 static char number_of_lines_unread[20];
+static char string11[900];
 
 #ifdef __AROS__
 struct TagItem my_incoming_charset3_taglist[] =
@@ -1305,7 +1306,7 @@ void process_incoming()
     strcpy(status_conductor->str, james);
 
     /* find number of character in a string */
-    pch = strstr(status_conductor->str, "\r\n");
+    char * pch = strstr(status_conductor->str, "\r\n");
     if (pch)
     {
 
@@ -4795,9 +4796,7 @@ void process_incoming()
                     if ((!string1 && my_settings.play_sound_when_tabopen == 2)
                             || my_settings.play_sound_when_tabopen == 1)
                     {
-                        if (!muted_sound)
-                            DoMethod(o, DTM_TRIGGER, NULL, STM_PLAY, NULL);
-
+                        play_sample(SAMPLE_TABOPEN);
                     }
 
                     setmacro((Object*) status_conductor->conductor->STR_topic, MUIA_String_Contents, string8);
@@ -5333,10 +5332,7 @@ void process_incoming()
                                         && (status_conductor->conductor != status_current->current_query))
                                 || (!string1 && my_settings.play_sound_when_newmsg == 1))
                         {
-                            if (!muted_sound && o3)
-                                DoMethod(o3, DTM_TRIGGER, NULL, STM_PLAY, NULL);
-                            //play_external_sound_replayer_newmsg();
-
+                            play_sample(SAMPLE_NEWMSG);
                         }
 
                     }
@@ -5386,10 +5382,7 @@ void process_incoming()
                                 || my_settings.play_sound_when_newmsg == 2
                                 || (!string1 && my_settings.play_sound_when_newmsg == 1))
                         {
-                            //play_external_sound_replayer_newmsg();
-                            if (!muted_sound && o3)
-                                DoMethod(o3, DTM_TRIGGER, NULL, STM_PLAY, NULL);
-
+                            play_sample(SAMPLE_NEWMSG);
                         }
 
                     }

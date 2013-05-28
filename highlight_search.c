@@ -11,9 +11,8 @@
 //this function returns 1 (TRUE) if the nick or any configured highlight words are found
 #include "includes.h"
 
-#include <proto/datatypes.h>
-
 #include "intern.h"
+#include "audio.h"
 
 BYTE sig;
 
@@ -39,11 +38,7 @@ int search_for_highlight_words(char *stringSearch, char *buffer3)
                         && status_conductor->conductor != status_current->current_query)
                 || (my_settings.play_sound_when_highlight == 3 && !string1))
         {
-
-            //play_external_sound_replayer_highlight();
-            if (!muted_sound && o2)
-                DoMethod(o2, DTM_TRIGGER, NULL, STM_PLAY, NULL);
-
+            play_sample(SAMPLE_HIGHLIGHT);
         }
 
         return 1;
@@ -68,11 +63,7 @@ int search_for_highlight_words(char *stringSearch, char *buffer3)
                             && status_conductor->conductor != status_current->current_query)
                     || (my_settings.play_sound_when_highlight == 3 && !string1))
             {
-
-                //play_external_sound_replayer_highlight();
-                if (!muted_sound && o2)
-                    DoMethod(o2, DTM_TRIGGER, NULL, STM_PLAY, NULL);
-
+                play_sample(SAMPLE_HIGHLIGHT);
             }
 
             return 1;
