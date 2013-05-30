@@ -18,6 +18,8 @@
 /* Locals */
 static char output_string[800];
 static char string11[900];
+static char *string2;
+static char *string1;
 
 int load_user_list_buttons_config(void);
 int save_user_list_buttons_config(void);

@@ -25,6 +25,9 @@ static int nickcomp_count=0;
 static int nickcomp_state=0;
 static char *banmask_tokens[6];
 static char string11[900];
+static char *string2;
+static char *string3;
+static char *string1;
 
 
 void setup_background_colours(void)

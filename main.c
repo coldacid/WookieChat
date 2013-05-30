@@ -65,7 +65,14 @@ static ULONG mics;
 static char wookie_dir[400]; //the pathname wookiechat is located in
 static ULONG iconified_and_new_text;
 static char string11[900];
-
+static char *string4;
+static char *string5;
+static char string8[900];
+static char string9[900];
+static char *string2;
+static char *string3;
+static char string7[900];
+static char *string1;
 
 
 void copy_settings_to_undo_buffer()

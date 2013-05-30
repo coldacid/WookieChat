@@ -104,6 +104,7 @@ struct NewMenu MenuData1[] =
 };
 
 /* Locals */
+static char *string1;
 
 void cleanexit(char*);
 

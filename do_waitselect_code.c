@@ -16,6 +16,8 @@
 static char uhostname[50] = "58.28.146.45"; // Default Hostname
 static char uservername[50] = "uk.amigaworld.net"; // Default Server of the User
 static int len;
+static char string10[900];
+static char *string1;
 
 int do_waitselect_code(void)
 {

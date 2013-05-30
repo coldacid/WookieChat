@@ -14,6 +14,9 @@
 
 #include "intern.h"
 
+/* Locals */
+static char *string1;
+
 void acquire_connect_details(char *work_buffer)
 {
 

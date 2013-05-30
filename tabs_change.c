@@ -13,6 +13,11 @@
 #include "intern.h"
 #include "objapp.h"
 
+/* Locals */
+static char string8[900];
+static char string9[900];
+static char string7[900];
+
 void check_column_size()
 {
     if (NEWDEBUG)
@@ -33,18 +38,6 @@ void check_column_size()
             my_settings.nick_column_width = col1;
         if (col2 != -1)
             my_settings.timestamp_column_width = col2;
-
-        /*if(col1 != -1 || col2 != -1)
-         {
-         sprintf(work_buffer,"%i",my_settings.timestamp_column_width);
-         setmacro((Object*)WookieChat->NB_column_width_timestamp,MUIA_String_Contents,work_buffer);
-
-         sprintf(work_buffer,"%i",my_settings.nick_column_width);
-         setmacro((Object*)WookieChat->NB_column_width_nick,MUIA_String_Contents,work_buffer);
-
-         sprintf(listview_format,"COL=2 PIXWIDTH=%i, COL=1 DELTA=%i PIXWIDTH=%i BAR, DELTA=%i COL=0",my_settings.timestamp_column_width,my_settings.delta,my_settings.nick_column_width,my_settings.delta);
-
-         } */
     }
 }
 

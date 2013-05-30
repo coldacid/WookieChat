@@ -16,6 +16,10 @@
 
 BYTE sig;
 
+/* Locals */
+static char string7[900];
+static char *string1;
+
 int search_for_highlight_words(char *stringSearch, char *buffer3)
 {
 

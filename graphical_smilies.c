@@ -20,6 +20,10 @@ int total_smileys, preview_total_smileys;
 struct smilies_struct smilies[MAXIMUM_SMILEYS];
 struct smilies_struct preview_smilies[MAXIMUM_SMILEYS];
 
+/* Locals */
+static char string7[900];
+static char *string1;
+
 int find_themes()
 {
     count = 0;

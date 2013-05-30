@@ -24,6 +24,9 @@ static struct MUI_NList_GetEntryInfo clipboard_struct;
 static struct MUI_NList_GetSelectInfo select_struct;
 static int last_clipboardline = 999;
 static char new_array3[20];
+static char *string2;
+static char *string3;
+static char *string1;
 
 #ifdef __amigaos4__
 void Custom_Clipboard2_Func(REG(a0, struct Hook *hook),REG(a2, char **array),REG(a1, char *new_entry)) {

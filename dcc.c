@@ -14,6 +14,7 @@
 
 /* Locals */
 static LONG dcc_transfers=0;
+static char *string1;
 
 void shutdown_my_dcc_recv_socket(void)
 {

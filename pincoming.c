@@ -36,6 +36,15 @@ static int nick_length;
 static char urlvisit_str[1][2000];
 static char number_of_lines_unread[20];
 static char string11[900];
+static char *string4;
+static char *string5;
+static char string8[900];
+static char string9[900];
+static char *string2;
+static char *string3;
+static char string10[900];
+static char string7[900];
+static char *string1;
 
 #ifdef __AROS__
 struct TagItem my_incoming_charset3_taglist[] =

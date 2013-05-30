@@ -989,7 +989,6 @@ extern struct Catalog *catalog;
 extern BOOL USE_AREXX;
 extern char wookie_folder[400]; //the pathname wookiechat is located in
 extern char work_buffer[900]; // FIXME this can probably be a separate buffer per compilation unit
-extern char *string1; // FIXME make this a local variable in each function
 
 extern struct status_window *work_status;
 extern struct status_window *status_root;
@@ -1095,7 +1094,6 @@ extern fd_set read_fds;
 extern fd_set write_fds;
 extern int queued_messages_total;
 extern BOOL start_reconnect_delay_timer;
-extern char string10[900];  // FIXME make this a local variable in each function
 extern char dcctimestamp[12];
 
 extern struct graphical_smilies_struct graphical_nicklist[3];
@@ -1105,21 +1103,13 @@ extern APTR object_state; // FIXME make this a local variable in each function
 extern APTR member_object; // FIXME make this a local variable in each function
 extern LONG count3; // FIXME make this a local variable in each function
 extern LONG count4; // FIXME make this a local variable in each function
-extern char string7[900]; // FIXME make this a local variable in each function
 extern BPTR newbptr_file; // FIXME make this a local variable in each function
-
-extern char *string2; // FIXME make this a local variable in each function
-extern char *string3; // FIXME make this a local variable in each function
 
 extern char string_to_send[BUFFERSIZE];
 extern char pingtimestamp[12];
 
 extern struct list_entry *new_entry; // FIXME make this a local variable in each function
 
-extern char string8[900]; // FIXME make this a local variable in each function
-extern char string9[900]; // FIXME make this a local variable in each function
-extern char *string4; // FIXME make this a local variable in each function
-extern char *string5; // FIXME make this a local variable in each function
 extern BOOL RECENTLY_CREATED_A_TAB;
 extern char timestamp_hrs[4];
 extern char timestamp_mins[4];

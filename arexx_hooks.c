@@ -32,6 +32,7 @@ struct AREXX_Menu AREXX_Menu_Items[MAX_AREXX_SCRIPTS];
 /* Locals */
 static struct MsgPort *arexx_process_port;
 static struct MsgPort *arexx_quit_port;
+static char *string1;
 
 BOOL SafePutToPort(struct XYMessage *message, STRPTR portname)
 {

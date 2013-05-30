@@ -20,7 +20,6 @@ struct Catalog *catalog;
 BOOL USE_AREXX;
 char wookie_folder[400]; //the pathname wookiechat is located in
 char work_buffer[900];
-char *string1;
 
 struct status_window *work_status;
 struct status_window *status_root;
@@ -129,7 +128,6 @@ fd_set read_fds;          // temp file descriptor list for select()
 fd_set write_fds;         // temp file descriptor list for select()
 int queued_messages_total;
 BOOL start_reconnect_delay_timer;
-char string10[900];
 char dcctimestamp[12];
 
 struct graphical_smilies_struct graphical_nicklist[3];
@@ -139,21 +137,14 @@ APTR object_state;
 APTR member_object;
 LONG count3;
 LONG count4;
-char string7[900];
+//char string7[900];
 BPTR newbptr_file;
-
-char *string2;
-char *string3;
 
 char string_to_send[BUFFERSIZE];
 char pingtimestamp[12];
 
 struct list_entry *new_entry;
 
-char string8[900];
-char string9[900];
-char *string4;
-char *string5;
 BOOL RECENTLY_CREATED_A_TAB=FALSE;
 char timestamp_hrs[4];
 char timestamp_mins[4];
