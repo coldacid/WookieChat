@@ -2,7 +2,7 @@ CC        = i386-aros-gcc
 LIBS      = -lamiga -lmui  
 INCS      = 
 DEFINES   = 
-CFLAGS    = $(INCS) $(DEFINES) -std=gnu99
+CFLAGS    = $(INCS) $(DEFINES) -std=gnu99 -Wall -Wno-pointer-sign -Wno-format
 TARGET    = WookieChat_AROS
 
 SOURCES   = arexx_hooks.c auto_reconnect_server.c closeserverselectwin.c coloursettings.c \

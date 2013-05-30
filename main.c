@@ -601,45 +601,59 @@ struct timeval get_sys_time(struct timeval *tv)
 struct WBStartup *WBenchMsg;
 struct WBArg *wbarg;
 
+#ifdef __amigaos4__
+typedef CONST_STRPTR c1_in;
+typedef STRPTR *c2_in;
+#elif __MORPHOS__
+typedef CONST STRPTR *c1_in;
+typedef CONST STRPTR *c2_in;
+#elif __AROS__
+typedef const STRPTR c1_in;
+typedef const STRPTR *c2_in;
+#else
+typedef UBYTE *c1_in;
+typedef UBYTE **c2_in;
+#endif
+
 BOOL ParseToolTypes(struct WBArg *wbarg)
 {
     struct DiskObject *dobj;
-    char **toolarray;
+    c2_in toolarray;
     char *s;
     BOOL success = FALSE;
 
     if (!wbarg->wa_Name)
         return 0;
 
-    if ((*wbarg->wa_Name) && (dobj = GetDiskObject((c_in) (wbarg->wa_Name))))
+    if ((*wbarg->wa_Name) && (dobj = GetDiskObject((c1_in) (wbarg->wa_Name))))
     {
-        toolarray = (char **) dobj->do_ToolTypes;
-        if ((s = (char *) FindToolType((c2_in) toolarray, (c_in) "SMALLTABS")))
+        toolarray = /*(char **)*/ dobj->do_ToolTypes;
+        if ((s = (char *) FindToolType((c2_in) toolarray, (c1_in) "SMALLTABS")))
         {
             if (!stricmp(s, "true"))
                 SMALLTABS = 1;
         }
-        if ((s = (char *) FindToolType((c2_in) toolarray, (c_in) "DEBUG")))
+        if ((s = (char *) FindToolType((c2_in) toolarray, (c1_in) "DEBUG")))
         {
             //if(!stricmp(s,"true")) DEBUG=1;
         }
-        if ((s = (char *) FindToolType((c2_in) toolarray, (c_in) "RAW")))
+        if ((s = (char *) FindToolType((c2_in) toolarray, (c1_in) "RAW")))
         {
             if (!stricmp(s, "true"))
                 RAW = 1;
         }
-        if ((s = (char *) FindToolType((c2_in) toolarray, (c_in) "PROXY")))
+        if ((s = (char *) FindToolType((c2_in) toolarray, (c1_in) "PROXY")))
         {
             if (!stricmp(s, "true"))
                 using_a_proxy = TRUE;
         }
-        if ((s = (char *) FindToolType((c2_in) toolarray, (c_in) "NOZUNE")))
+        if ((s = (char *) FindToolType((c2_in) toolarray, (c1_in) "NOZUNE")))
         {
             if (!stricmp(s, "true"))
                 ZUNE_SYSTEM = FALSE;
 
         }
-        if ((s = (char *) FindToolType((c2_in) toolarray, (c_in) "ZUNE")))
+        if ((s = (char *) FindToolType((c2_in) toolarray, (c1_in) "ZUNE")))
         {
             if (!stricmp(s, "true"))
                 ZUNE_SYSTEM = TRUE;
@@ -647,24 +661,24 @@ BOOL ParseToolTypes(struct WBArg *wbarg)
                 ZUNE_SYSTEM = FALSE;
 
         }
-        if ((s = (char *) FindToolType((c2_in) toolarray, (c_in) "ALTCLIPBOARD")))
+        if ((s = (char *) FindToolType((c2_in) toolarray, (c1_in) "ALTCLIPBOARD")))
         {
             if (!stricmp(s, "true"))
                 ALTERNATIVE_CLIPBOARD = 1;
 
         }
 
-        if ((s = (char *) FindToolType((c2_in) toolarray, (c_in) "ABOUTGFX")))
+        if ((s = (char *) FindToolType((c2_in) toolarray, (c1_in) "ABOUTGFX")))
         {
             if (!stricmp(s, "true"))
                 my_settings.os3_about_window_gfx = 1;
         }
-        if ((s = (char *) FindToolType((c2_in) toolarray, (c_in) "GEIT")))
+        if ((s = (char *) FindToolType((c2_in) toolarray, (c1_in) "GEIT")))
         {
             if (!stricmp(s, "true"))
                 GEIT = 1;
         }
-        if ((s = (char *) FindToolType((c2_in) toolarray, (c_in) "AREXX")))
+        if ((s = (char *) FindToolType((c2_in) toolarray, (c1_in) "AREXX")))
         {
             if (!stricmp(s, "true"))
                 USE_AREXX = TRUE;
@@ -1859,7 +1873,7 @@ int main(int argc, char *argv[])
                                             else
                                                 sprintf(string9, "%s", string3);
 
-                                            if (status_current->current_query->queued_messages_total == 0 && c == 0
+                                            if ((status_current->current_query->queued_messages_total == 0 && c == 0)
                                                     || status_current->current_query->name[0] == '$')
                                             {
                                                 process_outgoing(string9, 1);
@@ -1888,7 +1902,7 @@ int main(int argc, char *argv[])
                                     }
                                 }
 
-                                if (status_current->current_query->queued_messages_total == 0 && c == 0
+                                if ((status_current->current_query->queued_messages_total == 0 && c == 0)
                                         || status_current->current_query->name[0] == '$')
                                 {
                                     if (count > my_settings.number_of_command_aliases)
@@ -2502,9 +2516,11 @@ int main(int argc, char *argv[])
                     }
 
                 }
+#ifndef __AROS__
                 struct MUI_NListtree_TreeNode *treenode = (struct MUI_NListtree_TreeNode *) DoMethod(
                         (Object*) WookieChat->NLT_Servers, MUIM_NListtree_GetEntry,
                         MUIV_NListtree_GetEntry_ListNode_Active, MUIV_NListtree_GetEntry_Position_Active, 0);
+#endif
 
                 if (DEBUG)
                     printf("new server entry %s\n", work_buffer3);

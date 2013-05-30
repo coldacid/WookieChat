@@ -34,19 +34,15 @@ typedef char *p_in;
 
 #ifdef __amigaos4__
 typedef char *c_in;
-typedef char **c2_in;
 typedef char *i_in;
 #elif __MORPHOS__
 typedef char *c_in;
-typedef char **c2_in;
 typedef UBYTE *i_in;
 #elif __AROS__
 typedef char *c_in;
-typedef char **c2_in;
 typedef unsigned int *i_in;
 #else
 typedef UBYTE *c_in;
-typedef UBYTE **c2_in;
 typedef unsigned char *i_in;
 #endif
 

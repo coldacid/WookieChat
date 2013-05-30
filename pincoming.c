@@ -1326,30 +1326,10 @@ void process_incoming()
 
         if ((cs = CodesetsFindBestA(my_incoming_charset3_taglist)))
         {
-#ifdef __AROS__
-            struct TagItem my_incoming_charset2_taglist[] =
-            {
-            { CSA_Source, (IPTR) buffer2 },
-            { CSA_SourceCodeset, (IPTR) cs },
-            { CSA_DestCodeset, (IPTR) local_charsets[local_charset] },
-            { TAG_DONE, 0 } };
-#else
-            struct TagItem my_incoming_charset2_taglist[] =
-            {
-                {   CSA_Source, (ULONG)buffer2},
-                {   CSA_SourceCodeset, (ULONG)cs},
-                {   CSA_DestCodeset, (ULONG)local_charsets[local_charset]},
-                {   TAG_DONE, 0}};
-#endif
-
-            //printf("found best: %d local charset: %s\n",cs,local_charsets[local_charset]);
-
             if (FindUTF8Chars(buffer2))
             {
                 if (DEBUG)
                     printf("codesets 1\n");
-
-                //text3 = CodesetsUTF8ToStrA(my_incoming_charset2_taglist);
 
                 if (!text3)
                 {
