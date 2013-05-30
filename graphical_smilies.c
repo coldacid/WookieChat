@@ -41,7 +41,7 @@ int find_themes()
     }
     eac->eac_LastKey = 0;
 
-    BPTR my_lock = Lock("progdir:smilies", ACCESS_READ);
+    BPTR my_lock = Lock((_s_cs)"progdir:smilies", ACCESS_READ);
 
     if (!my_lock)
     {
@@ -151,7 +151,7 @@ int free_graphical_smilies(struct query_window *new_tab)
         setmacro(
                 (Object*) new_tab->LV_nicklist,
                 MUIA_ShortHelp,
-                GetCatalogStr(
+                GCS(
                         catalog,
                         319,
                         "Graphical Usermodes Key:\nGreen = Channel Operators or @\nBlue = HalfOps or \%\nYellow = Voiced Users or +"));
@@ -205,7 +205,7 @@ int use_graphical_smilies(struct query_window *new_tab)
         setmacro(
                 (Object*) new_tab->LV_nicklist,
                 MUIA_ShortHelp,
-                GetCatalogStr(
+                GCS(
                         catalog,
                         319,
                         "Graphical Usermodes Key:\nGreen = Channel Operators or @\nBlue = HalfOps or \%\nYellow = Voiced Users or +"));
@@ -359,7 +359,7 @@ int load_graphical_smilies(void)
         sprintf(work_buffer, "progdir:smilies/%s", graphical_smiley_themes[my_settings.graphical_smilies_background]);
         if (DEBUG)
             printf("opening \"%s\"\n", work_buffer);
-        newbptr_file = Open(work_buffer, MODE_OLDFILE);
+        newbptr_file = Open((_s_cs)work_buffer, MODE_OLDFILE);
 
         if (newbptr_file)
         {
@@ -379,7 +379,7 @@ int load_graphical_smilies(void)
             total_smileys = 0;
             BOOL at_start = TRUE;
 
-            while (FGets(newbptr_file, (b_in) work_buffer, 900))
+            while (FGets(newbptr_file, (STRPTR) work_buffer, 900))
             {
                 if (work_buffer[0] != '#' && at_start == TRUE)
                     break;

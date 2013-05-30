@@ -27,7 +27,7 @@ void save_colours_choice()
 {
 
     strcpy(file_name, "progdir:colours/colours_theme.txt");
-    BPTR save_file = Open(file_name, MODE_NEWFILE);
+    BPTR save_file = Open((_s_cs)file_name, MODE_NEWFILE);
 
     if (save_file)
     {
@@ -43,12 +43,12 @@ void load_colours_choice()
 {
 
     strcpy(file_name, "progdir:colours/colours_theme.txt");
-    BPTR save_file = Open(file_name, MODE_OLDFILE);
+    BPTR save_file = Open((_s_cs)file_name, MODE_OLDFILE);
 
     if (save_file)
     {
 
-        if (FGets(save_file, (l_in) my_settings.default_colours_theme, 800))
+        if (FGets(save_file, (STRPTR) my_settings.default_colours_theme, 800))
         {
             if (DEBUG)
                 printf("loaded default colour theme:%s\n", my_settings.default_colours_theme);
@@ -72,7 +72,7 @@ void save_ignore_list()
     getmacro((Object*) WookieChat->LV_ignore, MUIA_NList_Entries, &entries);
 
     strcpy(file_name, "progdir:ignorelist.txt");
-    save_file = Open(file_name, MODE_NEWFILE);
+    save_file = Open((_s_cs)file_name, MODE_NEWFILE);
 
     if (save_file)
     {
@@ -150,10 +150,10 @@ void load_ignore_list()
     DoMethod((Object*) WookieChat->LV_ignore, MUIM_NList_Clear);
 
     strcpy(file_name, "progdir:ignorelist.txt");
-    BPTR ignore_file = Open(file_name, MODE_OLDFILE);
+    BPTR ignore_file = Open((_s_cs)file_name, MODE_OLDFILE);
     if (ignore_file)
     {
-        while (FGets(ignore_file, (b_in) urlgrabber_str, 2000))
+        while (FGets(ignore_file, (STRPTR) urlgrabber_str, 2000))
         {
             urlgrabber_str[strlen(urlgrabber_str) - 1] = '\0';
             for (unsigned int count = 0; count < strlen(urlgrabber_str); count++)
@@ -173,7 +173,7 @@ void save_nick_settings()
     char *a;
     int b;
 
-    BPTR save_file = Open("progdir:nick_settings.txt", MODE_NEWFILE);
+    BPTR save_file = Open((_s_cs)"progdir:nick_settings.txt", MODE_NEWFILE);
 
     char output_string[800];
 
@@ -219,7 +219,7 @@ void save_settings()
 {
     char *work_buffer = malloc(sizeof(char) * 800);
 
-    BPTR save_file = Open("progdir:settings.txt", MODE_NEWFILE);
+    BPTR save_file = Open((_s_cs)"progdir:settings.txt", MODE_NEWFILE);
 
     //nick settings are now stored in progdir:nick_settings.txt
 
@@ -864,14 +864,14 @@ void load_nick_settings()
     //STRPTR work_buffer;
     char *len2; //variable used for file access
 
-    BPTR newbptr_file = Open("progdir:nick_settings.txt", MODE_OLDFILE);
+    BPTR newbptr_file = Open((_s_cs)"progdir:nick_settings.txt", MODE_OLDFILE);
     if (!newbptr_file)
         return;
 
     while (1)
     {
 
-        len2 = (char*) FGets(newbptr_file, (l_in) work_buffer, 800);
+        len2 = (char*) FGets(newbptr_file, (STRPTR) work_buffer, 800);
         if (!len2)
             break;
 
@@ -1226,7 +1226,7 @@ void load_settings()
     char *work_buffer = malloc(sizeof(char) * 800);
     char *len2; //variable used for file access
 
-    BPTR newbptr_file = Open("progdir:settings.txt", MODE_OLDFILE);
+    BPTR newbptr_file = Open((_s_cs)"progdir:settings.txt", MODE_OLDFILE);
     //default values
     my_settings.sort_tabs_alphabetically = 1;
     my_settings.totalignores = 0;
@@ -1368,7 +1368,7 @@ void load_settings()
     while (1)
     {
 
-        len2 = (char*) FGets(newbptr_file, (l_in) work_buffer, 800);
+        len2 = (char*) FGets(newbptr_file, (STRPTR) work_buffer, 800);
         if (!len2)
             break;
 
@@ -2016,151 +2016,12 @@ void get_events_settings(void)
         else
             break;
     }
-
-    /*
-     getmacro((Object*)STR_events_highlight, MUIA_String_Contents, &string1);
-     if(string1) strcpy(my_settings.highlights.arexx_script,string1);
-     else strcpy(my_settings.highlights.arexx_script,"");
-
-     getmacro((Object*)STR_events_highlight2, MUIA_String_Contents, &string1);
-     if(string1) strcpy(my_settings.highlights.arexx_script2,string1);
-     else strcpy(my_settings.highlights.arexx_script2,"");
-
-     getmacro((Object*)CH_events_highlight, MUIA_Selected, &string1);
-     if(string1) my_settings.highlights.enabled=TRUE; else my_settings.highlights.enabled=FALSE;
-
-     getmacro((Object*)CH_events_highlight2, MUIA_Selected, &string1);
-     if(string1) my_settings.highlights.when_inactive=TRUE; else my_settings.highlights.when_inactive=FALSE;
-
-
-     getmacro((Object*)STR_events_connect, MUIA_String_Contents, &string1);
-     if(string1) strcpy(my_settings.connects.arexx_script,string1);
-     else strcpy(my_settings.connects.arexx_script,"");
-
-     getmacro((Object*)STR_events_connect2, MUIA_String_Contents, &string1);
-     if(string1) strcpy(my_settings.connects.arexx_script2,string1);
-     else strcpy(my_settings.connects.arexx_script2,"");
-
-     getmacro((Object*)CH_events_connect, MUIA_Selected, &string1);
-     if(string1) my_settings.connects.enabled=TRUE; else my_settings.connects.enabled=FALSE;
-
-     getmacro((Object*)CH_events_connect2, MUIA_Selected, &string1);
-     if(string1) my_settings.connects.when_inactive=TRUE; else my_settings.connects.when_inactive=FALSE;
-
-
-     getmacro((Object*)STR_events_disconnect, MUIA_String_Contents, &string1);
-     if(string1) strcpy(my_settings.disconnects.arexx_script,string1);
-     else strcpy(my_settings.disconnects.arexx_script,"");
-
-     getmacro((Object*)STR_events_disconnect2, MUIA_String_Contents, &string1);
-     if(string1) strcpy(my_settings.disconnects.arexx_script2,string1);
-     else strcpy(my_settings.disconnects.arexx_script2,"");
-
-     getmacro((Object*)CH_events_disconnect, MUIA_Selected, &string1);
-     if(string1) my_settings.disconnects.enabled=TRUE; else my_settings.disconnects.enabled=FALSE;
-
-     getmacro((Object*)CH_events_disconnect2, MUIA_Selected, &string1);
-     if(string1) my_settings.disconnects.when_inactive=TRUE; else my_settings.disconnects.when_inactive=FALSE;
-
-
-     getmacro((Object*)STR_events_join, MUIA_String_Contents, &string1);
-     if(string1) strcpy(my_settings.joins.arexx_script,string1);
-     else strcpy(my_settings.joins.arexx_script,"");
-
-     getmacro((Object*)STR_events_join2, MUIA_String_Contents, &string1);
-     if(string1) strcpy(my_settings.joins.arexx_script2,string1);
-     else strcpy(my_settings.joins.arexx_script2,"");
-
-     getmacro((Object*)CH_events_join, MUIA_Selected, &string1);
-     if(string1) my_settings.joins.enabled=TRUE; else my_settings.joins.enabled=FALSE;
-
-     getmacro((Object*)CH_events_join2, MUIA_Selected, &string1);
-     if(string1) my_settings.joins.when_inactive=TRUE; else my_settings.joins.when_inactive=FALSE;
-
-
-     getmacro((Object*)STR_events_part, MUIA_String_Contents, &string1);
-     if(string1) strcpy(my_settings.parts.arexx_script,string1);
-     else strcpy(my_settings.parts.arexx_script,"");
-
-     getmacro((Object*)STR_events_part2, MUIA_String_Contents, &string1);
-     if(string1) strcpy(my_settings.parts.arexx_script2,string1);
-     else strcpy(my_settings.parts.arexx_script2,"");
-
-     getmacro((Object*)CH_events_part, MUIA_Selected, &string1);
-     if(string1) my_settings.parts.enabled=TRUE; else my_settings.parts.enabled=FALSE;
-
-     getmacro((Object*)CH_events_part2, MUIA_Selected, &string1);
-     if(string1) my_settings.parts.when_inactive=TRUE; else my_settings.parts.when_inactive=FALSE;
-
-
-     getmacro((Object*)STR_events_quit, MUIA_String_Contents, &string1);
-     if(string1) strcpy(my_settings.quits.arexx_script,string1);
-     else strcpy(my_settings.quits.arexx_script,"");
-
-     getmacro((Object*)STR_events_quit2, MUIA_String_Contents, &string1);
-     if(string1) strcpy(my_settings.quits.arexx_script2,string1);
-     else strcpy(my_settings.quits.arexx_script2,"");
-
-     getmacro((Object*)CH_events_quit, MUIA_Selected, &string1);
-     if(string1) my_settings.quits.enabled=TRUE; else my_settings.quits.enabled=FALSE;
-
-     getmacro((Object*)CH_events_quit2, MUIA_Selected, &string1);
-     if(string1) my_settings.quits.when_inactive=TRUE; else my_settings.quits.when_inactive=FALSE;
-
-
-     getmacro((Object*)STR_events_dcc_send_finished, MUIA_String_Contents, &string1);
-     if(string1) strcpy(my_settings.dcc_send_finished.arexx_script,string1);
-     else strcpy(my_settings.dcc_send_finished.arexx_script,"");
-
-     getmacro((Object*)STR_events_dcc_send_finished2, MUIA_String_Contents, &string1);
-     if(string1) strcpy(my_settings.dcc_send_finished.arexx_script2,string1);
-     else strcpy(my_settings.dcc_send_finished.arexx_script2,"");
-
-     getmacro((Object*)CH_events_dcc_send_finished, MUIA_Selected, &string1);
-     if(string1) my_settings.dcc_send_finished.enabled=TRUE; else my_settings.dcc_send_finished.enabled=FALSE;
-
-     getmacro((Object*)CH_events_dcc_send_finished2, MUIA_Selected, &string1);
-     if(string1) my_settings.dcc_send_finished.when_inactive=TRUE; else my_settings.dcc_send_finished.when_inactive=FALSE;
-
-
-     getmacro((Object*)STR_events_dcc_recv_offered, MUIA_String_Contents, &string1);
-     if(string1) strcpy(my_settings.dcc_recv_offered.arexx_script,string1);
-     else strcpy(my_settings.dcc_recv_offered.arexx_script,"");
-
-     getmacro((Object*)STR_events_dcc_recv_offered2, MUIA_String_Contents, &string1);
-     if(string1) strcpy(my_settings.dcc_recv_offered.arexx_script2,string1);
-     else strcpy(my_settings.dcc_recv_offered.arexx_script2,"");
-
-     getmacro((Object*)CH_events_dcc_recv_offered, MUIA_Selected, &string1);
-     if(string1) my_settings.dcc_recv_offered.enabled=TRUE; else my_settings.dcc_recv_offered.enabled=FALSE;
-
-     getmacro((Object*)CH_events_dcc_recv_offered2, MUIA_Selected, &string1);
-     if(string1) my_settings.dcc_recv_offered.when_inactive=TRUE; else my_settings.dcc_recv_offered.when_inactive=FALSE;
-
-
-
-     getmacro((Object*)STR_events_dcc_recv_finished, MUIA_String_Contents, &string1);
-     if(string1) strcpy(my_settings.dcc_recv_finished.arexx_script,string1);
-     else strcpy(my_settings.dcc_recv_finished.arexx_script,"");
-
-     getmacro((Object*)STR_events_dcc_recv_finished2, MUIA_String_Contents, &string1);
-     if(string1) strcpy(my_settings.dcc_recv_finished.arexx_script2,string1);
-     else strcpy(my_settings.dcc_recv_finished.arexx_script2,"");
-
-     getmacro((Object*)CH_events_dcc_recv_finished, MUIA_Selected, &string1);
-     if(string1) my_settings.dcc_recv_finished.enabled=TRUE; else my_settings.dcc_recv_finished.enabled=FALSE;
-
-     getmacro((Object*)CH_events_dcc_recv_finished2, MUIA_Selected, &string1);
-     if(string1) my_settings.dcc_recv_finished.when_inactive=TRUE; else my_settings.dcc_recv_finished.when_inactive=FALSE;
-
-     */
-
 }
 
 int save_events_settings(void)
 {
 
-    BPTR save_file = Open(EVENTS_SETTINGS_FILE, MODE_NEWFILE);
+    BPTR save_file = Open((_s_cs)EVENTS_SETTINGS_FILE, MODE_NEWFILE);
     if (!save_file)
         return 0;
 
@@ -2197,34 +2058,6 @@ int save_events_settings(void)
 
     Close(save_file);
 
-    /*sprintf(output_string,"%d %d %s\033%s\n",my_settings.highlights.enabled,my_settings.highlights.when_inactive, my_settings.highlights.arexx_script, my_settings.highlights.arexx_script2);
-     FPuts(newbptr_file,(l_in)output_string);
-
-     sprintf(output_string,"%d %d %s\033%s\n",my_settings.connects.enabled, my_settings.connects.when_inactive, my_settings.connects.arexx_script, my_settings.connects.arexx_script2);
-     FPuts(newbptr_file,(l_in)output_string);
-
-     sprintf(output_string,"%d %d %s\033%s\n",my_settings.disconnects.enabled, my_settings.disconnects.when_inactive, my_settings.disconnects.arexx_script, my_settings.disconnects.arexx_script2);
-     FPuts(newbptr_file,(l_in)output_string);
-
-     sprintf(output_string,"%d %d %s\033%s\n",my_settings.joins.enabled, my_settings.joins.when_inactive, my_settings.joins.arexx_script, my_settings.joins.arexx_script2);
-     FPuts(newbptr_file,(l_in)output_string);
-
-     sprintf(output_string,"%d %d %s\033%s\n",my_settings.parts.enabled, my_settings.parts.when_inactive, my_settings.parts.arexx_script, my_settings.parts.arexx_script2);
-     FPuts(newbptr_file,(l_in)output_string);
-
-     sprintf(output_string,"%d %d %s\033%s\n",my_settings.quits.enabled, my_settings.quits.when_inactive, my_settings.quits.arexx_script, my_settings.quits.arexx_script2);
-     FPuts(newbptr_file,(l_in)output_string);
-
-     sprintf(output_string,"%d %d %s\033%s\n",my_settings.dcc_recv_offered.enabled, my_settings.dcc_recv_offered.when_inactive, my_settings.dcc_recv_offered.arexx_script, my_settings.dcc_recv_offered.arexx_script2);
-     FPuts(newbptr_file,(l_in)output_string);
-
-     sprintf(output_string,"%d %d %s\033%s\n",my_settings.dcc_recv_finished.enabled, my_settings.dcc_recv_finished.when_inactive, my_settings.dcc_recv_finished.arexx_script, my_settings.dcc_recv_finished.arexx_script2);
-     FPuts(newbptr_file,(l_in)output_string);
-
-     sprintf(output_string,"%d %d %s\033%s\n",my_settings.dcc_send_finished.enabled, my_settings.dcc_send_finished.when_inactive, my_settings.dcc_send_finished.arexx_script, my_settings.dcc_send_finished.arexx_script2);
-     FPuts(newbptr_file,(l_in)output_string);
-     */
-
     return 1;
 
 }
@@ -2232,7 +2065,7 @@ int save_events_settings(void)
 int load_events_settings(void)
 {
 
-    BPTR newbptr_file = Open(EVENTS_SETTINGS_FILE, MODE_READWRITE);
+    BPTR newbptr_file = Open((_s_cs)EVENTS_SETTINGS_FILE, MODE_READWRITE);
     if (!newbptr_file)
         return 0;
 
@@ -2240,30 +2073,10 @@ int load_events_settings(void)
     char insert_string[800];
     char insert_string2[800];
 
-    /*strcpy(my_settings.highlights.arexx_script,"");
-     strcpy(my_settings.connects.arexx_script,"");
-     strcpy(my_settings.disconnects.arexx_script,"");
-     strcpy(my_settings.joins.arexx_script,"");
-     strcpy(my_settings.parts.arexx_script,"");
-     strcpy(my_settings.quits.arexx_script,"");
-     strcpy(my_settings.dcc_send_finished.arexx_script,"");
-     strcpy(my_settings.dcc_recv_finished.arexx_script,"");
-     strcpy(my_settings.dcc_recv_offered.arexx_script,"");
-
-     strcpy(my_settings.highlights.arexx_script2,"");
-     strcpy(my_settings.connects.arexx_script2,"");
-     strcpy(my_settings.disconnects.arexx_script2,"");
-     strcpy(my_settings.joins.arexx_script2,"");
-     strcpy(my_settings.parts.arexx_script2,"");
-     strcpy(my_settings.quits.arexx_script2,"");
-     strcpy(my_settings.dcc_send_finished.arexx_script2,"");
-     strcpy(my_settings.dcc_recv_finished.arexx_script2,"");
-     strcpy(my_settings.dcc_recv_offered.arexx_script2,"");
-     */
     for (int count = 0; count < MAX_EVENTS; count++)
     {
 
-        if (FGets(newbptr_file, (l_in) work_buffer, 800))
+        if (FGets(newbptr_file, (STRPTR) work_buffer, 800))
         {
             if ((string1 = strtok(work_buffer, " ")))
                 my_settings.events[count].use_when = atoi(string1);
@@ -2338,7 +2151,7 @@ int load_events_settings(void)
 int load_user_list_buttons_config(void)
 {
 
-    BPTR newbptr_file = Open(USER_LIST_BUTTONS_FILE, MODE_OLDFILE);
+    BPTR newbptr_file = Open((_s_cs)USER_LIST_BUTTONS_FILE, MODE_OLDFILE);
     if (!newbptr_file)
         return 0;
 
@@ -2350,7 +2163,7 @@ int load_user_list_buttons_config(void)
 
     for (;;)
     {
-        if (FGets(newbptr_file, (l_in) work_buffer, 200))
+        if (FGets(newbptr_file, (STRPTR) work_buffer, 200))
         {
             stccpy(name, work_buffer, USERLIST_NAME_SIZE - 1);
 
@@ -2358,7 +2171,7 @@ int load_user_list_buttons_config(void)
         else
             break;
 
-        if (FGets(newbptr_file, (l_in) work_buffer, 800))
+        if (FGets(newbptr_file, (STRPTR) work_buffer, 800))
         {
             stccpy(command, work_buffer, USERLIST_COMMAND_SIZE - 1);
 
@@ -2492,7 +2305,7 @@ int save_user_list_buttons_config(void)
     getmacro((Object*) WookieChat->LV_user_list_buttons, MUIA_NList_Entries, &entries);
 
     strcpy(file_name, USER_LIST_BUTTONS_FILE);
-    save_file = Open(file_name, MODE_NEWFILE);
+    save_file = Open((_s_cs)file_name, MODE_NEWFILE);
 
     if (save_file)
     {

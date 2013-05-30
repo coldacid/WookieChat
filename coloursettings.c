@@ -14,35 +14,21 @@
 
 void set_colours(void)
 {
-
-    //if(DEBUG) printf("set_colours()\n");
-
-    //setmacro((Object*)WookieChat->PP_CSW_background, MUIA_Pendisplay_Spec,pendisplay_specs[1]);
-    //setmacro((Object*)WookieChat->PP_CSW_nicklistbackground,MUIA_Pendisplay_Spec,pendisplay_specs[2]);
-    //setmacro((Object*)WookieChat->PP_CSW_listviewtabs_background,MUIA_Pendisplay_Spec,pendisplay_specs[23]);
-
     setmacro((Object*) WookieChat->PP_CSW_background, MUIA_Imagedisplay_Spec, popimage_background);
-    strncpy(pendisplay_specs[1]->buf, popimage_background, 32);
+    strncpy(pendisplay_specs[1]->buf, (char *)popimage_background, 32);
     setmacro((Object*) WookieChat->PP_CSW_background, MUIA_Pendisplay_Spec, pendisplay_specs[1]);
 
     setmacro((Object*) WookieChat->PP_CSW_nicklistbackground, MUIA_Imagedisplay_Spec, popimage_nicklistbackground);
-    strncpy(pendisplay_specs[2]->buf, popimage_nicklistbackground, 32);
+    strncpy(pendisplay_specs[2]->buf, (char *)popimage_nicklistbackground, 32);
     setmacro((Object*) WookieChat->PP_CSW_nicklistbackground, MUIA_Pendisplay_Spec, pendisplay_specs[2]);
 
     setmacro((Object*) WookieChat->PP_CSW_listviewtabs_background, MUIA_Imagedisplay_Spec, popimage_tabsbackground);
-    strncpy(pendisplay_specs[23]->buf, popimage_tabsbackground, 32);
+    strncpy(pendisplay_specs[23]->buf, (char *)popimage_tabsbackground, 32);
     setmacro((Object*) WookieChat->PP_CSW_listviewtabs_background, MUIA_Pendisplay_Spec, pendisplay_specs[23]);
 
-    //printf("set_colours() set popimage_background         :%s\n",popimage_background);
-    //printf("set_colours() set pendisplay_specs[2]->buf    :%s\n",pendisplay_specs[1]->buf);
-    //printf("set_colours() set popimage_nicklistbackground :%s\n",popimage_nicklistbackground);
-    //printf("set_colours() set pendisplay_specs[2]->buf    :%s\n",pendisplay_specs[2]->buf);
-    //printf("set_colours() set popimage_tabsbackground     :%s\n",popimage_tabsbackground);
-    //printf("set_colours() set pendisplay_specs[2]->buf    :%s\n",pendisplay_specs[23]->buf);
-
-    strncpy(pendisplay_specs[1]->buf, popimage_background, 32);
-    strncpy(pendisplay_specs[2]->buf, popimage_nicklistbackground, 32);
-    strncpy(pendisplay_specs[23]->buf, popimage_tabsbackground, 32);
+    strncpy(pendisplay_specs[1]->buf, (char *)popimage_background, 32);
+    strncpy(pendisplay_specs[2]->buf, (char *)popimage_nicklistbackground, 32);
+    strncpy(pendisplay_specs[23]->buf, (char *)popimage_tabsbackground, 32);
 
     setup_background_colours();
 
@@ -123,7 +109,7 @@ void load_colours(char *load_this_theme)
     else
         strcpy(my_settings.default_colours_theme, load_this_theme);
 
-    BPTR open_file = Open(my_settings.default_colours_theme, MODE_OLDFILE);
+    BPTR open_file = Open((_s_cs)my_settings.default_colours_theme, MODE_OLDFILE);
     if (!open_file)
     {
         strcpy(work2, "2:00000000,00000000,00000000");
@@ -136,8 +122,8 @@ void load_colours(char *load_this_theme)
             background2[1] = ':';
             strcpy(work2, background2);
         }
-        popimage_background = work2;
-        strcpy(pendisplay_specs[1]->buf, popimage_background);
+        popimage_background = (STRPTR)work2;
+        strcpy(pendisplay_specs[1]->buf, (char *)popimage_background);
 
         strcpy(work3, "2:284E284E,3D983D98,91919191");
         if (work3[0] == 'r')
@@ -149,8 +135,8 @@ void load_colours(char *load_this_theme)
             background2[1] = ':';
             strcpy(work3, background2);
         }
-        popimage_nicklistbackground = work3;
-        strcpy(pendisplay_specs[2]->buf, popimage_nicklistbackground);
+        popimage_nicklistbackground = (STRPTR)work3;
+        strcpy(pendisplay_specs[2]->buf, (char *)popimage_nicklistbackground);
 
         strcpy(pendisplay_specs[3]->buf, "r521D521D,FFFFFFFF,2D9C2D9C");
 
@@ -202,9 +188,9 @@ void load_colours(char *load_this_theme)
             background2[1] = ':';
             strcpy(work4, background2);
         }
-        popimage_tabsbackground = work4;
+        popimage_tabsbackground = (STRPTR)work4;
 
-        strcpy(pendisplay_specs[23]->buf, popimage_tabsbackground);
+        strcpy(pendisplay_specs[23]->buf, (char *)popimage_tabsbackground);
 
         strcpy(pendisplay_specs[24]->buf, "2:00000000,00000000,00000000");
 
@@ -217,14 +203,14 @@ void load_colours(char *load_this_theme)
 
     //strcpy(my_settings.default_colour_theme,colours_theme);
 
-    sprintf(colour_settings_title, "%s %s", GetCatalogStr(catalog, 102, "Colour Settings..."),
+    sprintf(colour_settings_title, "%s %s", (char *)GCS(catalog, 102, "Colour Settings..."),
             my_settings.default_colours_theme);
     setmacro((Object*) WookieChat->WI_colour_settings, MUIA_Window_Title, colour_settings_title);
 
     char *len2;
     char *work = malloc(sizeof(char) * 1024);
 
-    len2 = (char*) FGets(open_file, (l_in) work2, 1024);
+    len2 = (char*) FGets(open_file, (STRPTR) work2, 1024);
     work2[strlen(work2) - 1] = '\0';
     if (!len2)
         strcpy(work2, "2:00000000,00000000,00000000");
@@ -237,10 +223,10 @@ void load_colours(char *load_this_theme)
         background2[1] = ':';
         strcpy(work2, background2);
     }
-    popimage_background = work2;
-    strcpy(pendisplay_specs[1]->buf, popimage_background);
+    popimage_background = (STRPTR)work2;
+    strcpy(pendisplay_specs[1]->buf, (char *)popimage_background);
 
-    len2 = (char*) FGets(open_file, (l_in) work3, 1024);
+    len2 = (char*) FGets(open_file, (STRPTR) work3, 1024);
     work3[strlen(work3) - 1] = '\0';
     if (!len2)
         strcpy(work3, "2:284E284E,3D983D98,91919191");
@@ -253,150 +239,150 @@ void load_colours(char *load_this_theme)
         background2[1] = ':';
         strcpy(work3, background2);
     }
-    popimage_nicklistbackground = work3;
-    strcpy(pendisplay_specs[2]->buf, popimage_nicklistbackground);
+    popimage_nicklistbackground = (STRPTR)work3;
+    strcpy(pendisplay_specs[2]->buf, (char *)popimage_nicklistbackground);
 
-    len2 = (char*) FGets(open_file, (l_in) work, 32);
+    len2 = (char*) FGets(open_file, (STRPTR) work, 32);
     work[strlen(work) - 1] = '\0';
     if (len2)
         strcpy(pendisplay_specs[3]->buf, work);
     else
         strcpy(pendisplay_specs[3]->buf, "r521D521D,FFFFFFFF,2D9C2D9C");
 
-    len2 = (char*) FGets(open_file, (l_in) work, 32);
+    len2 = (char*) FGets(open_file, (STRPTR) work, 32);
     work[strlen(work) - 1] = '\0';
     if (len2)
         strcpy(pendisplay_specs[4]->buf, work);
     else
         strcpy(pendisplay_specs[4]->buf, "r209C209C,A1AFA1AF,1A271A27");
 
-    len2 = (char*) FGets(open_file, (l_in) work, 32);
+    len2 = (char*) FGets(open_file, (STRPTR) work, 32);
     work[strlen(work) - 1] = '\0';
     if (len2)
         strcpy(pendisplay_specs[5]->buf, work);
     else
         strcpy(pendisplay_specs[5]->buf, "rE7D8E7D8,25A425A4,FFFFFFFF");
 
-    len2 = (char*) FGets(open_file, (l_in) work, 32);
+    len2 = (char*) FGets(open_file, (STRPTR) work, 32);
     work[strlen(work) - 1] = '\0';
     if (len2)
         strcpy(pendisplay_specs[6]->buf, work);
     else
         strcpy(pendisplay_specs[6]->buf, "rFFFFFFFF,8FC08FC0,12D112D1");
 
-    len2 = (char*) FGets(open_file, (l_in) work, 32);
+    len2 = (char*) FGets(open_file, (STRPTR) work, 32);
     work[strlen(work) - 1] = '\0';
     if (len2)
         strcpy(pendisplay_specs[7]->buf, work);
     else
         strcpy(pendisplay_specs[7]->buf, "rFFFFFFFF,0D620D62,00000000");
 
-    len2 = (char*) FGets(open_file, (l_in) work, 32);
+    len2 = (char*) FGets(open_file, (STRPTR) work, 32);
     work[strlen(work) - 1] = '\0';
     if (len2)
         strcpy(pendisplay_specs[8]->buf, work);
     else
         strcpy(pendisplay_specs[8]->buf, "rFFFF0000,FFFF0000,FFFF0000");
 
-    len2 = (char*) FGets(open_file, (l_in) work, 32);
+    len2 = (char*) FGets(open_file, (STRPTR) work, 32);
     work[strlen(work) - 1] = '\0';
     if (len2)
         strcpy(pendisplay_specs[9]->buf, work);
     else
         strcpy(pendisplay_specs[9]->buf, "rFFFDFFFD,FFFBFFFB,FFFFFFFF");
 
-    len2 = (char*) FGets(open_file, (l_in) work, 32);
+    len2 = (char*) FGets(open_file, (STRPTR) work, 32);
     work[strlen(work) - 1] = '\0';
     if (len2)
         strcpy(pendisplay_specs[10]->buf, work);
     else
         strcpy(pendisplay_specs[10]->buf, "rFFFFFFFF,AEACAEAC,D159D159");
 
-    len2 = (char*) FGets(open_file, (l_in) work, 32);
+    len2 = (char*) FGets(open_file, (STRPTR) work, 32);
     work[strlen(work) - 1] = '\0';
     if (len2)
         strcpy(pendisplay_specs[11]->buf, work);
     else
         strcpy(pendisplay_specs[11]->buf, "r7C3B7C3B,FFFFFFFF,F8CEF8CE");
 
-    len2 = (char*) FGets(open_file, (l_in) work, 32);
+    len2 = (char*) FGets(open_file, (STRPTR) work, 32);
     work[strlen(work) - 1] = '\0';
     if (len2)
         strcpy(pendisplay_specs[12]->buf, work);
     else
         strcpy(pendisplay_specs[12]->buf, "rFFFFFFFF,FBCCFBCC,25A225A2");
 
-    len2 = (char*) FGets(open_file, (l_in) work, 32);
+    len2 = (char*) FGets(open_file, (STRPTR) work, 32);
     work[strlen(work) - 1] = '\0';
     if (len2)
         strcpy(pendisplay_specs[13]->buf, work);
     else
         strcpy(pendisplay_specs[13]->buf, "rFFFFFFFF,1A591A59,25292529");
 
-    len2 = (char*) FGets(open_file, (l_in) work, 32);
+    len2 = (char*) FGets(open_file, (STRPTR) work, 32);
     work[strlen(work) - 1] = '\0';
     if (len2)
         strcpy(pendisplay_specs[14]->buf, work);
     else
         strcpy(pendisplay_specs[14]->buf, "rFFFFFFFF,12D012D0,168E168E");
 
-    len2 = (char*) FGets(open_file, (l_in) work, 32);
+    len2 = (char*) FGets(open_file, (STRPTR) work, 32);
     work[strlen(work) - 1] = '\0';
     if (len2)
         strcpy(pendisplay_specs[15]->buf, work);
     else
         strcpy(pendisplay_specs[15]->buf, "rFFFFFFFF,24CE24CE,12D212D2");
 
-    len2 = (char*) FGets(open_file, (l_in) work, 32);
+    len2 = (char*) FGets(open_file, (STRPTR) work, 32);
     work[strlen(work) - 1] = '\0';
     if (len2)
         strcpy(pendisplay_specs[16]->buf, work);
     else
         strcpy(pendisplay_specs[16]->buf, "rFFFFFFFF,8F098F09,1E1D1E1D");
 
-    len2 = (char*) FGets(open_file, (l_in) work, 32);
+    len2 = (char*) FGets(open_file, (STRPTR) work, 32);
     work[strlen(work) - 1] = '\0';
     if (len2)
         strcpy(pendisplay_specs[17]->buf, work);
     else
         strcpy(pendisplay_specs[17]->buf, "rFFFFFFFF,96409640,34B234B2");
 
-    len2 = (char*) FGets(open_file, (l_in) work, 32);
+    len2 = (char*) FGets(open_file, (STRPTR) work, 32);
     work[strlen(work) - 1] = '\0';
     if (len2)
         strcpy(pendisplay_specs[18]->buf, work);
     else
         strcpy(pendisplay_specs[18]->buf, "r61E061E0,FFFFFFFF,8CDC8CDC");
 
-    len2 = (char*) FGets(open_file, (l_in) work, 32);
+    len2 = (char*) FGets(open_file, (STRPTR) work, 32);
     work[strlen(work) - 1] = '\0';
     if (len2)
         strcpy(pendisplay_specs[19]->buf, work);
     else
         strcpy(pendisplay_specs[19]->buf, "r43C043C0,508F508F,FFFFFFFF");
 
-    len2 = (char*) FGets(open_file, (l_in) work, 32);
+    len2 = (char*) FGets(open_file, (STRPTR) work, 32);
     work[strlen(work) - 1] = '\0';
     if (len2)
         strcpy(pendisplay_specs[20]->buf, work);
     else
         strcpy(pendisplay_specs[20]->buf, "rFFFFFFFF,07850785,0B360B36");
 
-    len2 = (char*) FGets(open_file, (l_in) work, 32);
+    len2 = (char*) FGets(open_file, (STRPTR) work, 32);
     work[strlen(work) - 1] = '\0';
     if (len2)
         strcpy(pendisplay_specs[21]->buf, work);
     else
         strcpy(pendisplay_specs[21]->buf, "r54F454F4,EBCAEBCA,299B299B");
 
-    len2 = (char*) FGets(open_file, (l_in) work, 32);
+    len2 = (char*) FGets(open_file, (STRPTR) work, 32);
     work[strlen(work) - 1] = '\0';
     if (len2)
         strcpy(pendisplay_specs[22]->buf, work);
     else
         strcpy(pendisplay_specs[22]->buf, "rFFFDFFFD,FFFCFFFC,FFFFFFFF");
 
-    len2 = (char*) FGets(open_file, (l_in) work4, 1024);
+    len2 = (char*) FGets(open_file, (STRPTR) work4, 1024);
     work4[strlen(work4) - 1] = '\0';
     if (!len2)
         strcpy(work4, "2:DE50DE50,DE4ADE4A,DE47DE47");
@@ -409,10 +395,10 @@ void load_colours(char *load_this_theme)
         background2[1] = ':';
         strcpy(work4, background2);
     }
-    popimage_tabsbackground = work4;
-    strcpy(pendisplay_specs[23]->buf, popimage_tabsbackground);
+    popimage_tabsbackground = (STRPTR)work4;
+    strcpy(pendisplay_specs[23]->buf, (char *)popimage_tabsbackground);
 
-    len2 = (char*) FGets(open_file, (l_in) work, 32);
+    len2 = (char*) FGets(open_file, (STRPTR) work, 32);
     work[strlen(work) - 1] = '\0';
     if (len2)
         strcpy(pendisplay_specs[24]->buf, work);
@@ -435,7 +421,7 @@ void save_colours(void)
     get_colours();
 
     //BPTR save_file = Open("progdir:Colours/default.txt",MODE_NEWFILE);
-    BPTR save_file = Open(my_settings.default_colours_theme, MODE_NEWFILE);
+    BPTR save_file = Open((_s_cs)my_settings.default_colours_theme, MODE_NEWFILE);
     if (!save_file)
     {
         if (wookie_folder[strlen(wookie_folder) - 1] == ':')
@@ -443,11 +429,11 @@ void save_colours(void)
         else
             sprintf(file_name, "%s/Colours", wookie_folder);
 
-        BPTR created_dir_lock = CreateDir(file_name);
+        BPTR created_dir_lock = CreateDir((_s_cs)file_name);
         UnLock(created_dir_lock);
 
         //save_file = Open("progdir:Colours/default.txt",MODE_NEWFILE);
-        save_file = Open(my_settings.default_colours_theme, MODE_NEWFILE);
+        save_file = Open((_s_cs)my_settings.default_colours_theme, MODE_NEWFILE);
         //printf("saving %s\n",my_settings.default_colours_theme);
 
         //if(!save_file) printf("%s\n\n",GetCatalogStr(catalog,197,"Unable to save your colour settings. Make sure you have a drawer called 'Colours' inside WookieChat's drawer, for it to save your colour preferences to."));
@@ -455,7 +441,7 @@ void save_colours(void)
             return;
     }
 
-    sprintf(colour_settings_title, "%s %s", GetCatalogStr(catalog, 102, "Colour Settings..."),
+    sprintf(colour_settings_title, "%s %s", (char *)GCS(catalog, 102, "Colour Settings..."),
             my_settings.default_colours_theme);
     setmacro((Object*) WookieChat->WI_colour_settings, MUIA_Window_Title, colour_settings_title);
 

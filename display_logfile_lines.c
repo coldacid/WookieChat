@@ -53,7 +53,7 @@ int display_last_few_lines_of_logfile_conductor()
     else
         sprintf(file_name, "%s/logs/%s_%s", wookie_folder, status_conductor->networkname,
                 status_conductor->conductor->name);
-    status_conductor->conductor->log_file = Open(file_name, MODE_OLDFILE);
+    status_conductor->conductor->log_file = Open((_s_cs)file_name, MODE_OLDFILE);
 
     if (!status_conductor->conductor->log_file)
         return 0;

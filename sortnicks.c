@@ -35,8 +35,8 @@ int sort_nicks(int a)
             for (indx2 = entries - 1; indx2 >= indx; --indx2)
             {
 
-                if (stricmp((p_in) status_conductor->conductor->nicklist[indx2].name,
-                        (p_in) status_conductor->conductor->nicklist[indx2 - 1].name) < 0)
+                if (stricmp(status_conductor->conductor->nicklist[indx2].name,
+                        status_conductor->conductor->nicklist[indx2 - 1].name) < 0)
                 {
 
                     strcpy(work_entry4.name, status_conductor->conductor->nicklist[indx2 - 1].name);

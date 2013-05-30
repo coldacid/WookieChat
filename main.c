@@ -170,8 +170,8 @@ void send_text(char *text2)
     timestamp_2_string();
     if (!status_conductor->connection_active)
     {
-        sprintf(buffer3, "%s%s%s%s %s", timestamp, GetCatalogStr(catalog, 217, "["), GetCatalogStr(catalog, 0, "Error"),
-                GetCatalogStr(catalog, 218, "]"), GetCatalogStr(catalog, 134, "Not connected to a server"));
+        sprintf(buffer3, "%s%s%s%s %s", timestamp, GCS(catalog, 217, "["), GCS(catalog, 0, "Error"),
+                GCS(catalog, 218, "]"), GCS(catalog, 134, "Not connected to a server"));
         add_text_to_conductor_list(buffer3, 9, ACTIVITY_CHAT);
         return;
     }
@@ -198,7 +198,7 @@ void send_text(char *text2)
          canread = WaitSelect(status_conductor->a_socket + 1, NULL, &rd, NULL, &t, NULL);
          if(canread == 0) // && !FD_ISSET(status_conductor->a_socket, &rd))
          {
-         sprintf(buffer3,"%s%s%s%s Unable to write text to socket: error number: %li",timestamp,GetCatalogStr(catalog,217,"["),GetCatalogStr(catalog,0,"Error"),GetCatalogStr(catalog,218,"]"),Errno());
+         sprintf(buffer3,"%s%s%s%s Unable to write text to socket: error number: %li",timestamp,GCS(catalog,217,"["),GCS(catalog,0,"Error"),GCS(catalog,218,"]"),Errno());
          add_text_to_current_list(buffer3,9, ACTIVITY_CHAT);
          return;
          } */
@@ -225,8 +225,8 @@ void send_text(char *text2)
                 printf("error:%li\nunable to send:%s", Errno(), text);
 
             sprintf(buffer3, "%s%s%s%s Unable to send text: error number: %li", timestamp,
-                    GetCatalogStr(catalog, 217, "["), GetCatalogStr(catalog, 0, "Error"),
-                    GetCatalogStr(catalog, 218, "]"), Errno());
+                    GCS(catalog, 217, "["), GCS(catalog, 0, "Error"),
+                    GCS(catalog, 218, "]"), Errno());
             if (status_conductor->conductor->LV_channel)
                 add_text_to_conductor_list(buffer3, 9, ACTIVITY_CHAT);
 
@@ -235,9 +235,9 @@ void send_text(char *text2)
 
                 if (status_conductor->connection_active == 1)
                 {
-                    sprintf(buffer3, "%s%s%s%s %s", timestamp, GetCatalogStr(catalog, 217, "["),
-                            GetCatalogStr(catalog, 0, "Error"), GetCatalogStr(catalog, 218, "]"),
-                            GetCatalogStr(catalog, 134, "Not connected to a server"));
+                    sprintf(buffer3, "%s%s%s%s %s", timestamp, GCS(catalog, 217, "["),
+                            GCS(catalog, 0, "Error"), GCS(catalog, 218, "]"),
+                            GCS(catalog, 134, "Not connected to a server"));
 
                     status_conductor->connection_active = 0;
                     status_conductor->pass[0] = '\0';
@@ -268,8 +268,8 @@ void send_dcc_chat(char *text)
 
     if (!dcc_chat_conductor->connected)
     {
-        sprintf(buffer3, "%s%s%s%s %s", timestamp, GetCatalogStr(catalog, 217, "["), GetCatalogStr(catalog, 0, "Error"),
-                GetCatalogStr(catalog, 218, "]"), GetCatalogStr(catalog, 135, "Not connected to a user"));
+        sprintf(buffer3, "%s%s%s%s %s", timestamp, GCS(catalog, 217, "["), GCS(catalog, 0, "Error"),
+                GCS(catalog, 218, "]"), GCS(catalog, 135, "Not connected to a user"));
         add_text_to_conductor_list(buffer3, 9, ACTIVITY_CHAT);
         return;
     }
@@ -310,9 +310,9 @@ void send_dcc_chat(char *text)
 
             if (dcc_chat_conductor->connected == 1)
             {
-                sprintf(buffer3, "%s%s%s%s %s", timestamp, GetCatalogStr(catalog, 217, "["),
-                        GetCatalogStr(catalog, 0, "Error"), GetCatalogStr(catalog, 218, "]"),
-                        GetCatalogStr(catalog, 135, "Not connected to a user"));
+                sprintf(buffer3, "%s%s%s%s %s", timestamp, GCS(catalog, 217, "["),
+                        GCS(catalog, 0, "Error"), GCS(catalog, 218, "]"),
+                        GCS(catalog, 135, "Not connected to a user"));
                 if (dcc_chat_conductor->conductor->LV_channel)
                     add_text_to_conductor_list(buffer3, 9, ACTIVITY_CHAT);
                 dcc_chat_conductor->connected = 0;
@@ -362,8 +362,8 @@ void send_current(char *text2)
 
     if (!status_current->connection_active)
     {
-        sprintf(buffer3, "%s%s%s%s %s", timestamp, GetCatalogStr(catalog, 217, "["), GetCatalogStr(catalog, 0, "Error"),
-                GetCatalogStr(catalog, 218, "]"), GetCatalogStr(catalog, 134, "Not connected to a server"));
+        sprintf(buffer3, "%s%s%s%s %s", timestamp, GCS(catalog, 217, "["), GCS(catalog, 0, "Error"),
+                GCS(catalog, 218, "]"), GCS(catalog, 134, "Not connected to a server"));
 
         add_text_to_current_list(buffer3, 9, ACTIVITY_CHAT);
         return;
@@ -390,7 +390,7 @@ void send_current(char *text2)
          canread = WaitSelect(status_current->a_socket + 1, NULL, &rd, NULL, &t, NULL);
          if(canread == 0) // && !FD_ISSET(status_current->a_socket, &rd))
          {
-         sprintf(buffer3,"%s%s%s%s Unable to write text to socket: error number: %li",timestamp,GetCatalogStr(catalog,217,"["),GetCatalogStr(catalog,0,"Error"),GetCatalogStr(catalog,218,"]"),Errno());
+         sprintf(buffer3,"%s%s%s%s Unable to write text to socket: error number: %li",timestamp,GCS(catalog,217,"["),GCS(catalog,0,"Error"),GCS(catalog,218,"]"),Errno());
          add_text_to_current_list(buffer3,9, ACTIVITY_CHAT);
          return;
          } */
@@ -412,8 +412,8 @@ void send_current(char *text2)
             if (DEBUG)
                 printf("error:%li\nunable to send:%s", Errno(), text);
             sprintf(buffer3, "%s%s%s%s Unable to send text: error number: %li", timestamp,
-                    GetCatalogStr(catalog, 217, "["), GetCatalogStr(catalog, 0, "Error"),
-                    GetCatalogStr(catalog, 218, "]"), Errno());
+                    GCS(catalog, 217, "["), GCS(catalog, 0, "Error"),
+                    GCS(catalog, 218, "]"), Errno());
             if (status_current->conductor->LV_channel)
                 add_text_to_current_list(buffer3, 9, ACTIVITY_CHAT);
 
@@ -423,9 +423,9 @@ void send_current(char *text2)
                 if (status_current->connection_active == 1)
                 {
 
-                    sprintf(buffer3, "%s%s%s%s %s", timestamp, GetCatalogStr(catalog, 217, "["),
-                            GetCatalogStr(catalog, 0, "Error"), GetCatalogStr(catalog, 218, "]"),
-                            GetCatalogStr(catalog, 134, "Not connected to a server"));
+                    sprintf(buffer3, "%s%s%s%s %s", timestamp, GCS(catalog, 217, "["),
+                            GCS(catalog, 0, "Error"), GCS(catalog, 218, "]"),
+                            GCS(catalog, 134, "Not connected to a server"));
 
                     status_current->conductor = status_current->root;
                     while (status_current->conductor)
@@ -734,29 +734,29 @@ void read_list_of_servers(void)
     char *work1=malloc(sizeof(char) * 100);
     char *len2; //variable used for file access
     char work_buffer3[600];
-    newbptr_file = Open("progdir:servers.txt",MODE_OLDFILE);
+    newbptr_file = Open((_s_cs)"progdir:servers.txt",MODE_OLDFILE);
 
     int running3=1;
-    len2=(char*)FGets(newbptr_file,(b_in)work_buffer,600);
+    len2=(char*)FGets(newbptr_file,(STRPTR)work_buffer,600);
     if(len2)
     {
         if(stricmp(work_buffer,"WOOKIECHAT_SERVERS_FILE_2\n"))
         {
             printf("Old servers.txt file detected!\nRenaming servers.txt to servers2.txt\nNow generating a new servers.txt in the new format\n(Keep servers2.txt as a backup in case something goes wrong!\n");
 
-            Rename("progdir:servers.txt","progdir:servers2.txt");
+            Rename((_s_cs)"progdir:servers.txt",(_s_cs)"progdir:servers2.txt");
 
-            BPTR new_servers_file = Open("progdir:servers.txt",MODE_NEWFILE);
+            BPTR new_servers_file = Open((_s_cs)"progdir:servers.txt",MODE_NEWFILE);
             if(new_servers_file)
             {
-                FPuts(new_servers_file,(b_in)"WOOKIECHAT_SERVERS_FILE_2\n");
+                FPuts(new_servers_file,(l_in)"WOOKIECHAT_SERVERS_FILE_2\n");
 
-                FPuts(new_servers_file,(b_in)work_buffer);
+                FPuts(new_servers_file,(l_in)work_buffer);
 
                 while(running3)
                 {
                     //read the line from the servers file
-                    len2=(char*)FGets(newbptr_file,(b_in)work_buffer,600);
+                    len2=(char*)FGets(newbptr_file,(STRPTR)work_buffer,600);
 
                     if(!len2) { running3=0; }
 
@@ -772,12 +772,12 @@ void read_list_of_servers(void)
                     //its a group name! lets create the initial group entry
                     if(!work1)
                     {
-                        //if(!first) FPuts(new_servers_file,(b_in)"ENDGROUP\n");
+                        //if(!first) FPuts(new_servers_file,(char *)"ENDGROUP\n");
                         //first=FALSE;
 
-                        //FPuts(new_servers_file,(b_in)"GROUP");
-                        FPuts(new_servers_file,(b_in)work_buffer);
-                        //FPuts(new_servers_file,(b_in)"\n");
+                        //FPuts(new_servers_file,(char *)"GROUP");
+                        FPuts(new_servers_file,(l_in)work_buffer);
+                        //FPuts(new_servers_file,(char *)"\n");
                         //printf("putting group name:%s",work_buffer);
 
                     }
@@ -796,12 +796,12 @@ void read_list_of_servers(void)
                         if(string3)
                         {
                             sprintf(work_buffer3,"SERVER=%s ",string3);
-                            FPuts(new_servers_file,(b_in)work_buffer3);
+                            FPuts(new_servers_file,(l_in)work_buffer3);
 
                             if(string2)
                             {
                                 sprintf(work_buffer3,"PORT=%s",string2);
-                                FPuts(new_servers_file,(b_in)work_buffer3);
+                                FPuts(new_servers_file,(l_in)work_buffer3);
 
                             }
                         }
@@ -811,26 +811,26 @@ void read_list_of_servers(void)
                         else
                             sprintf(work_buffer3," AUTOCONNECT=");
 
-                        FPuts(new_servers_file,(b_in)work_buffer3);
+                        FPuts(new_servers_file,(l_in)work_buffer3);
 
                         if(string5)
                             sprintf(work_buffer3," SERVER_CHARSET=%s",string5);
                         else
                             sprintf(work_buffer3," SERVER_CHARSET=");
 
-                        FPuts(new_servers_file,(b_in)work_buffer3);
+                        FPuts(new_servers_file,(l_in)work_buffer3);
 
                         if(string4)
                             sprintf(work_buffer3," SERVER_PASSWORD=%s",string4);
                         else
                             sprintf(work_buffer3," SERVER_PASSWORD=");
-                        FPuts(new_servers_file,(b_in)work_buffer3);
+                        FPuts(new_servers_file,(l_in)work_buffer3);
 
 
                         sprintf(work_buffer3," AUTOJOINS=");
-                        FPuts(new_servers_file,(b_in)work_buffer3);
+                        FPuts(new_servers_file,(l_in)work_buffer3);
 
-                        FPuts(new_servers_file,(b_in)"\n");
+                        FPuts(new_servers_file,(l_in)"\n");
                     }
                 }
                 Close(new_servers_file);
@@ -880,29 +880,29 @@ int main(int argc, char *argv[])
     {
         for (count = 1; count < argc; count++)
         {
-            if (!stricmp((p_in) argv[count], (p_in) "geit"))
+            if (!stricmp(argv[count], "geit"))
                 GEIT = 1;
-            if (!stricmp((p_in) argv[count], (p_in) "geit2"))
+            if (!stricmp(argv[count], "geit2"))
                 GEIT2 = 1;
-            if (!stricmp((p_in) argv[count], (p_in) "geit3"))
+            if (!stricmp(argv[count], "geit3"))
                 GEIT3 = 1;
-            if (!stricmp((p_in) argv[count], (p_in) "smalltabs"))
+            if (!stricmp(argv[count], "smalltabs"))
                 SMALLTABS = 1;
-            if (!stricmp((p_in) argv[count], (p_in) "debug"))
+            if (!stricmp(argv[count], "debug"))
                 DEBUG = 1;
-            if (!stricmp((p_in) argv[count], (p_in) "raw"))
+            if (!stricmp(argv[count], "raw"))
                 RAW = 1;
-            if (!stricmp((p_in) argv[count], (p_in) "proxy"))
+            if (!stricmp(argv[count], "proxy"))
                 using_a_proxy = TRUE;
-            if (!stricmp((p_in) argv[count], (p_in) "nozune"))
+            if (!stricmp(argv[count], "nozune"))
                 ZUNE_SYSTEM = FALSE;
-            if (!stricmp((p_in) argv[count], (p_in) "zune"))
+            if (!stricmp(argv[count], "zune"))
                 ZUNE_SYSTEM = TRUE;
-            if (!stricmp((p_in) argv[count], (p_in) "altclipboard"))
+            if (!stricmp(argv[count], "altclipboard"))
                 ALTERNATIVE_CLIPBOARD = 1;
-            if (!stricmp((p_in) argv[count], (p_in) "aboutgfx"))
+            if (!stricmp(argv[count], "aboutgfx"))
                 my_settings.os3_about_window_gfx = 1;
-            if (!stricmp((p_in) argv[count], (p_in) "arexx"))
+            if (!stricmp(argv[count], "arexx"))
                 USE_AREXX = TRUE;
         }
     }
@@ -932,7 +932,7 @@ int main(int argc, char *argv[])
     }
 //
 
-    NameFromLock(GetProgramDir(), (b_in) wookie_folder, 300);
+    NameFromLock(GetProgramDir(), (STRPTR) wookie_folder, 300);
     if (DEBUG)
         printf("%s\r\n", wookie_folder);
 
@@ -943,7 +943,7 @@ int main(int argc, char *argv[])
 
 // Set AppPaths ENV variable for AmiUpdate for OS4 compiled Wookies
 #ifdef __amigaos4__
-    urlgrabber_file = Open("Envarc:AppPaths/WookieChat", MODE_NEWFILE);
+    urlgrabber_file = Open((_s_cs)"Envarc:AppPaths/WookieChat", MODE_NEWFILE);
     if(urlgrabber_file)
     {
         FPuts(urlgrabber_file,(l_in)wookie_folder);
@@ -951,7 +951,7 @@ int main(int argc, char *argv[])
     }
     urlgrabber_file=0;
 
-    urlgrabber_file = Open("Env:AppPaths/WookieChat", MODE_NEWFILE);
+    urlgrabber_file = Open((_s_cs)"Env:AppPaths/WookieChat", MODE_NEWFILE);
     if(urlgrabber_file)
     {
         FPuts(urlgrabber_file,(l_in)wookie_folder);
@@ -966,10 +966,10 @@ int main(int argc, char *argv[])
         sprintf(file_name, "%slogs", wookie_folder);
     else
         sprintf(file_name, "%s/logs", wookie_folder);
-    BPTR does_dir_exist = Open(file_name, MODE_OLDFILE);
+    BPTR does_dir_exist = Open((_s_cs)file_name, MODE_OLDFILE);
     if (!does_dir_exist)
     {
-        BPTR created_dir_lock = CreateDir(file_name);
+        BPTR created_dir_lock = CreateDir((_s_cs)file_name);
         UnLock(created_dir_lock);
     }
     else
@@ -983,14 +983,14 @@ int main(int argc, char *argv[])
         cleanexit((char*) "cant create timers\n");
 
     if (!create_custom_classes())
-        cleanexit((char*) GetCatalogStr(
+        cleanexit((char*) GCS(
                     catalog, 140,
                     "These missing classes can be downloaded from http://www.aminet.net/ or http://os4depot.net. Check the WookieChat readme for direct links to these classes\n"));
 //
 
     WookieChat = CreateApp();
     if (!WookieChat)
-        cleanexit((char*) GetCatalogStr(catalog, 133, "cant create application\n"));
+        cleanexit((char*) GCS(catalog, 133, "cant create application\n"));
 
     add_scripts_to_menu();
 
@@ -999,10 +999,10 @@ int main(int argc, char *argv[])
     {
 
         getmacro((Object*)WookieChat->App, MUIA_Application_Base, &string1);
-        strcpy(maintask_basename, string1);
-        strcat(maintask_basename, "_msgport");
+        strcpy((char *)maintask_basename, string1);
+        strcat((char *)maintask_basename, "_msgport");
 
-        send_text_replyport = CreatePort(maintask_basename, 0);
+        send_text_replyport = CreatePort((STRPTR)maintask_basename, 0);
         arexx_wants_to_send_signal = 1L << send_text_replyport->mp_SigBit;
 
         if (DEBUG)
@@ -1071,10 +1071,10 @@ int main(int argc, char *argv[])
     //Reload all the old URL's into the URL Grabber
 
     sprintf(file_name, "progdir:urls.txt");
-    urlgrabber_file = Open(file_name, MODE_OLDFILE);
+    urlgrabber_file = Open((_s_cs)file_name, MODE_OLDFILE);
     if (urlgrabber_file)
     {
-        while (FGets(urlgrabber_file, (b_in) urlgrabber_str, 2000))
+        while (FGets(urlgrabber_file, (STRPTR) urlgrabber_str, 2000))
         {
             urlgrabber_str[strlen(urlgrabber_str) - 1] = '\0';
             DoMethod((Object*) WookieChat->LV_urlgrabber, MUIM_NList_InsertSingle, urlgrabber_str,
@@ -1563,7 +1563,7 @@ int main(int argc, char *argv[])
     char *work1 = malloc(sizeof(char) * 100);
     char *len2; //variable used for file access
 
-    newbptr_file = Open("progdir:servers.txt", MODE_OLDFILE);
+    newbptr_file = Open((_s_cs)"progdir:servers.txt", MODE_OLDFILE);
     int running3 = 1;
 
     while (running3)
@@ -1571,7 +1571,7 @@ int main(int argc, char *argv[])
         if (!newbptr_file)
             break;
 
-        len2 = (char*) FGets(newbptr_file, (b_in) work_buffer, 600);
+        len2 = (char*) FGets(newbptr_file, (STRPTR) work_buffer, 600);
         work_buffer[strlen(work_buffer) - 1] = '\0';
 
         if (stricmp(work_buffer, "WOOKIECHAT_SERVERS_FILE_2"))
@@ -1627,14 +1627,14 @@ int main(int argc, char *argv[])
 
             if (treenode)
             {
-                strcpy(work_buffer, treenode->tn_Name);
+                strcpy(work_buffer, (char *)treenode->tn_Name);
 
                 acquire_connect_details(work_buffer);
 
                 if (port_number[0] != '\0')
                 {
 
-                    if (!stricmp(auto_connect, "Yes") || !stricmp(auto_connect, GetCatalogStr(catalog, 27, "Yes")))
+                    if (!stricmp(auto_connect, "Yes") || !stricmp(auto_connect, (char *)GCS(catalog, 27, "Yes")))
                     {
                         if (!connecting)
                         {
@@ -1981,10 +1981,10 @@ int main(int argc, char *argv[])
                 if (aslresult)
                 {
 
-                    strcpy(work_buffer, filerequester->fr_Drawer);
+                    strcpy(work_buffer, (char *)filerequester->fr_Drawer);
                     if (work_buffer[strlen(work_buffer) - 1] != ':')
                         strcat(work_buffer, "/");
-                    strcat(work_buffer, filerequester->fr_File);
+                    strcat(work_buffer, (char *)filerequester->fr_File);
 
                     strcpy(my_settings.default_colours_theme, work_buffer);
 
@@ -2023,10 +2023,10 @@ int main(int argc, char *argv[])
                 if (aslresult)
                 {
 
-                    strcpy(work_buffer, filerequester->fr_Drawer);
+                    strcpy(work_buffer, (char *)filerequester->fr_Drawer);
                     if (work_buffer[strlen(work_buffer) - 1] != ':')
                         strcat(work_buffer, "/");
-                    strcat(work_buffer, filerequester->fr_File);
+                    strcat(work_buffer, (char *)filerequester->fr_File);
 
                     load_colours(work_buffer);
                     set_colours();
@@ -2215,7 +2215,7 @@ int main(int argc, char *argv[])
                 if (treenode)
                 {
                     //copy all the prefs for this server to a temporary buffer
-                    strcpy(work_buffer, treenode->tn_Name);
+                    strcpy(work_buffer, (char *)treenode->tn_Name);
 
                     //copy all the individual prefs to individual strings, etc.. we'll copy these strings into the GUI later
                     acquire_connect_details(work_buffer);
@@ -2309,7 +2309,7 @@ int main(int argc, char *argv[])
                         setmacro((Object*)WookieChat->STR_autojoin, MUIA_String_BufferPos, 0);
                         setmacro((Object*)WookieChat->STR_nick_registration_command, MUIA_String_BufferPos, 0);
 
-                        if (!stricmp(auto_connect, "Yes") || !stricmp(auto_connect, GetCatalogStr(catalog, 27, "Yes")))
+                        if (!stricmp(auto_connect, "Yes") || !stricmp(auto_connect, (char *)GCS(catalog, 27, "Yes")))
                             setmacro((Object*)WookieChat->CH_autoconnect, MUIA_Selected, TRUE);
                         else
                             setmacro((Object*)WookieChat->CH_autoconnect, MUIA_Selected, FALSE);
@@ -2409,9 +2409,9 @@ int main(int argc, char *argv[])
                     strcat(work_buffer3, " AUTOCONNECT=");
 
                     if (my_auto_connect)
-                        strcat(work_buffer3, GetCatalogStr(catalog, 27, "Yes"));
+                        strcat(work_buffer3, (char *)GCS(catalog, 27, "Yes"));
                     else
-                        strcat(work_buffer3, GetCatalogStr(catalog, 28, "No"));
+                        strcat(work_buffer3, (char *)GCS(catalog, 28, "No"));
 
                     strcat(work_buffer3, " SERVER_CHARSET=");
                     //#ifdef __AROS__
@@ -2569,7 +2569,7 @@ int main(int argc, char *argv[])
                     char work_buffer[800];
                     char *work;
                     if (treenode->tn_Name)
-                        strcpy(work_buffer, treenode->tn_Name);
+                        strcpy(work_buffer, (char *)treenode->tn_Name);
 
                     strtok(work_buffer, " ");
                     work = strtok(NULL, " ");
@@ -2618,7 +2618,7 @@ int main(int argc, char *argv[])
                     char work_buffer[600];
 
                     if (treenode->tn_Name)
-                        strcpy(work_buffer, treenode->tn_Name);
+                        strcpy(work_buffer, (char *)treenode->tn_Name);
 
                     acquire_connect_details(work_buffer);
 
@@ -2658,7 +2658,7 @@ int main(int argc, char *argv[])
                     char work_buffer[600];
 
                     if (treenode->tn_Name)
-                        strcpy(work_buffer, treenode->tn_Name);
+                        strcpy(work_buffer, (char *)treenode->tn_Name);
 
                     create_new_status(0);
 
@@ -2739,9 +2739,9 @@ int main(int argc, char *argv[])
 
                                     strcpy(new_filename, string11);
 
-                                    while ((newbptr_file = Open(filename, MODE_OLDFILE)))
+                                    while ((newbptr_file = Open((_s_cs)filename, MODE_OLDFILE)))
                                     {
-                                        SetCurrentDirName(dcc_conductor->filepath);
+                                        SetCurrentDirName((_s_cs)dcc_conductor->filepath);
 
                                         Close(newbptr_file);
                                         count++;
@@ -2768,7 +2768,7 @@ int main(int argc, char *argv[])
 
                                     dcc_conductor->total_recv = 0;
 
-                                    strcpy(dcc_conductor->entry->status, GetCatalogStr(catalog, 201, "Connecting"));
+                                    strcpy(dcc_conductor->entry->status, (char *)GCS(catalog, 201, "Connecting"));
                                     strcpy(dcc_conductor->entry->percentage, "0%");
 
                                     DoMethod((Object*) WookieChat->LV_dcc, MUIM_NList_ReplaceSingle,
@@ -2820,7 +2820,7 @@ int main(int argc, char *argv[])
 
                 if (treenode)
                 {
-                    strcpy(work_buffer, treenode->tn_Name);
+                    strcpy(work_buffer, (char *)treenode->tn_Name);
                     strtok(work_buffer, " ");
                     char *work = strtok(NULL, "");
 
@@ -2843,9 +2843,9 @@ int main(int argc, char *argv[])
                                 treenode->tn_Name);
 
 #ifdef __amigaos4__
-                    SystemTags(file_name,TAG_DONE);
+                    SystemTags((_s_cs)file_name,TAG_DONE);
 #else
-                    Execute(file_name, 0, 0);
+                    Execute((_s_cs)file_name, 0, 0);
 #endif
                 }
 //
@@ -2881,7 +2881,7 @@ int main(int argc, char *argv[])
 
                                 if (dcc_conductor->entry)
                                 {
-                                    strcpy(dcc_conductor->entry->status, GetCatalogStr(catalog, 142, "Cancelled"));
+                                    strcpy(dcc_conductor->entry->status, (char *)GCS(catalog, 142, "Cancelled"));
                                     strcpy(dcc_conductor->entry->percentage, "N/A");
 
                                     dcc_conductor->cancelled = 1;
@@ -3155,16 +3155,16 @@ int main(int argc, char *argv[])
 
                 status_conductor = status_current;
 
-                //filerequester=(struct FileRequester*)AllocAslRequestTags(ASL_FileRequest,ASLFR_PopToFront,TRUE,ASLFR_TitleText,GetCatalogStr(catalog,87,"Choose filename to save buffer as.."),ASLFR_DoMultiSelect,TRUE,ASLFR_InitialDrawer,"progdir:",TAG_DONE, NULL);
+                //filerequester=(struct FileRequester*)AllocAslRequestTags(ASL_FileRequest,ASLFR_PopToFront,TRUE,ASLFR_TitleText,GCS(catalog,87,"Choose filename to save buffer as.."),ASLFR_DoMultiSelect,TRUE,ASLFR_InitialDrawer,"progdir:",TAG_DONE, NULL);
                 getmacro((Object*)WookieChat->WI_main, MUIA_Window_Window, &my_window);
 
 #ifdef __amigaos4__
-                filerequester=(struct FileRequester*)AllocAslRequestTags(ASL_FileRequest,ASLFR_Window,my_window,ASLFR_PopToFront,TRUE,ASLFR_TitleText,GetCatalogStr(catalog,87,"Choose filename to save buffer as.."),ASLFR_DoMultiSelect,TRUE,ASLFR_InitialDrawer,"progdir:",TAG_DONE, NULL);
+                filerequester=(struct FileRequester*)AllocAslRequestTags(ASL_FileRequest,ASLFR_Window,my_window,ASLFR_PopToFront,TRUE,ASLFR_TitleText,GCS(catalog,87,"Choose filename to save buffer as.."),ASLFR_DoMultiSelect,TRUE,ASLFR_InitialDrawer,"progdir:",TAG_DONE, NULL);
 #elif __MORPHOS__
-                filerequester=(struct FileRequester*)AllocAslRequestTags(ASL_FileRequest,/*ASLFR_TitleText,GetCatalogStr(catalog,87,"Choose filename to save buffer as.."),ASLFR_DoMultiSelect,TRUE,ASLFR_InitialDrawer,"progdir:",*/TAG_DONE, NULL);
+                filerequester=(struct FileRequester*)AllocAslRequestTags(ASL_FileRequest,/*ASLFR_TitleText,GCS(catalog,87,"Choose filename to save buffer as.."),ASLFR_DoMultiSelect,TRUE,ASLFR_InitialDrawer,"progdir:",*/TAG_DONE, NULL);
 #else
                 filerequester = (struct FileRequester*) AllocAslRequestTags(ASL_FileRequest, ASLFR_TitleText,
-                        GetCatalogStr(catalog, 87, "Choose filename to save buffer as.."), ASLFR_DoMultiSelect, TRUE,
+                        GCS(catalog, 87, "Choose filename to save buffer as.."), ASLFR_DoMultiSelect, TRUE,
                         ASLFR_InitialDrawer, "progdir:", TAG_DONE, NULL);
 #endif
 
@@ -3172,20 +3172,20 @@ int main(int argc, char *argv[])
                 if (aslresult)
                 {
 
-                    strcpy(work_buffer, filerequester->fr_Drawer);
+                    strcpy(work_buffer, (char *)filerequester->fr_Drawer);
                     if (work_buffer[strlen(work_buffer) - 1] != ':')
                         strcat(work_buffer, "/");
-                    strcat(work_buffer, filerequester->fr_File);
+                    strcat(work_buffer, (char *)filerequester->fr_File);
 
-                    newbptr_file = Open(work_buffer, MODE_NEWFILE);
+                    newbptr_file = Open((_s_cs)work_buffer, MODE_NEWFILE);
 
                     if (newbptr_file)
                     {
 
                         getmacro((Object*)status_conductor->current_query->LV_channel, MUIA_NList_Entries, &entries);
 
-                        sprintf(buffer3, "%s%sBuffer%s %s %s", timestamp, GetCatalogStr(catalog, 217, "["),
-                                GetCatalogStr(catalog, 218, "]"), GetCatalogStr(catalog, 141, "Saving buffer to file:"),
+                        sprintf(buffer3, "%s%sBuffer%s %s %s", timestamp, GCS(catalog, 217, "["),
+                                GCS(catalog, 218, "]"), GCS(catalog, 141, "Saving buffer to file:"),
                                 work_buffer);
                         add_text_to_current_list(buffer3, 9, ACTIVITY_CHAT);
 
@@ -3261,7 +3261,7 @@ int main(int argc, char *argv[])
 
                                 if (dcc_send_conductor->entry)
                                 {
-                                    strcpy(dcc_send_conductor->entry->status, GetCatalogStr(catalog, 142, "Cancelled"));
+                                    strcpy(dcc_send_conductor->entry->status, (char *)GCS(catalog, 142, "Cancelled"));
                                     strcpy(dcc_send_conductor->entry->percentage, "N/A");
                                     dcc_send_conductor->cancelled = 1;
                                     //if(dcc_send_conductor->completed!=1 && dcc_send_conductor->connected!=0)
@@ -3402,24 +3402,24 @@ int main(int argc, char *argv[])
                             buffer3,
                             "%s%sDCC%s %s",
                             timestamp,
-                            GetCatalogStr(catalog, 217, "["),
-                            GetCatalogStr(catalog, 218, "]"),
-                            GetCatalogStr(catalog, 143,
+                            GCS(catalog, 217, "["),
+                            GCS(catalog, 218, "]"),
+                            GCS(catalog, 143,
                                     "Please select a file to send, and a nick to offer the file to"));
                     add_text_to_current_list(buffer3, 9, ACTIVITY_CHAT);
                 }
                 else if (!strcmp(string1, ""))
                 {
-                    sprintf(buffer3, "%s%sDCC%s %s", timestamp, GetCatalogStr(catalog, 217, "["),
-                            GetCatalogStr(catalog, 218, "]"),
-                            GetCatalogStr(catalog, 144, "Please select a file to send"));
+                    sprintf(buffer3, "%s%sDCC%s %s", timestamp, GCS(catalog, 217, "["),
+                            GCS(catalog, 218, "]"),
+                            GCS(catalog, 144, "Please select a file to send"));
                     add_text_to_current_list(buffer3, 9, ACTIVITY_CHAT);
                 }
                 else if (!strcmp(string2, ""))
                 {
-                    sprintf(buffer3, "%s%sDCC%s %s", timestamp, GetCatalogStr(catalog, 217, "["),
-                            GetCatalogStr(catalog, 218, "]"),
-                            GetCatalogStr(catalog, 145, "Please select a nick to offer the file to"));
+                    sprintf(buffer3, "%s%sDCC%s %s", timestamp, GCS(catalog, 217, "["),
+                            GCS(catalog, 218, "]"),
+                            GCS(catalog, 145, "Please select a nick to offer the file to"));
                     add_text_to_current_list(buffer3, 9, ACTIVITY_CHAT);
                 }
                 else if (string1 && string2)
@@ -3524,16 +3524,16 @@ int main(int argc, char *argv[])
             {
 // ADD an ignore entry to the ignore list
                 setmacro((Object*)WookieChat->STR_addignore, MUIA_String_Contents, "");
-                setmacro((Object*)WookieChat->WI_addignore, MUIA_Window_Title, GetCatalogStr(catalog,273,"Add"));
-                setmacro((Object*)WookieChat->BT_addignore, MUIA_Text_Contents, GetCatalogStr(catalog,273,"Add"));
+                setmacro((Object*)WookieChat->WI_addignore, MUIA_Window_Title, GCS(catalog,273,"Add"));
+                setmacro((Object*)WookieChat->BT_addignore, MUIA_Text_Contents, GCS(catalog,273,"Add"));
                 setmacro((Object*)WookieChat->WI_addignore, MUIA_Window_Open, TRUE);
 //
             }
             else if (result == 86) //EDIT an ignore entry in the ignore list
             {
 // EDIT an ignore entry in the ignore list
-                setmacro((Object*)WookieChat->WI_addignore, MUIA_Window_Title, GetCatalogStr(catalog,274,"Edit"));
-                setmacro((Object*)WookieChat->BT_addignore, MUIA_Text_Contents, GetCatalogStr(catalog,274,"Edit"));
+                setmacro((Object*)WookieChat->WI_addignore, MUIA_Window_Title, GCS(catalog,274,"Edit"));
+                setmacro((Object*)WookieChat->BT_addignore, MUIA_Text_Contents, GCS(catalog,274,"Edit"));
 
                 DoMethod((Object*) WookieChat->LV_ignore, MUIM_NList_GetEntry, MUIV_NList_GetEntry_Active, &string4);
 
@@ -3586,7 +3586,7 @@ int main(int argc, char *argv[])
 
                 if (DEBUG)
                     printf("add or edit ignore? %s\n", string1);
-                if (!stricmp(string1, "edit") || !stricmp(string1, GetCatalogStr(catalog, 274, "Edit")))
+                if (!stricmp(string1, "edit") || !stricmp(string1, (char *)GCS(catalog, 274, "Edit")))
                 {
                     //printf("edit!\n");
                     LONG string1, string2, string3;
@@ -3654,7 +3654,7 @@ int main(int argc, char *argv[])
                     }
 
                 }
-                else if (!stricmp(string1, "add") || !stricmp(string1, GetCatalogStr(catalog, 273, "Add")))
+                else if (!stricmp(string1, "add") || !stricmp(string1, (char *)GCS(catalog, 273, "Add")))
                 {
 
                     LONG string1, string2, string3;
@@ -3867,10 +3867,10 @@ int main(int argc, char *argv[])
                                         buffer3,
                                         "%s%s%s%s %s",
                                         timestamp,
-                                        GetCatalogStr(catalog, 217, "["),
-                                        GetCatalogStr(catalog, 0, "Error"),
-                                        GetCatalogStr(catalog, 218, "]"),
-                                        GetCatalogStr(
+                                        GCS(catalog, 217, "["),
+                                        GCS(catalog, 0, "Error"),
+                                        GCS(catalog, 218, "]"),
+                                        GCS(
                                                 catalog,
                                                 136,
                                                 "Please go to the \"Main Settings\" window, and choose a browser for WookieChat to open web sites with"));
@@ -3890,9 +3890,9 @@ int main(int argc, char *argv[])
                                 sprintf(file_name, "run >nil: %s \"%s\"", my_settings.browser, string1);
 
 #ifdef __amigaos4__
-                                SystemTags(file_name,TAG_DONE);
+                                SystemTags((_s_cs)file_name,TAG_DONE);
 #else
-                                Execute(file_name, 0, 0);
+                                Execute((_s_cs)file_name, 0, 0);
 #endif
 
 //[13:20:14] <jahc> look at this picture of NeRP http://tinyurl.com/2d9z3a
@@ -3947,10 +3947,10 @@ int main(int argc, char *argv[])
                                 buffer3,
                                 "%s%s%s%s %s",
                                 timestamp,
-                                GetCatalogStr(catalog, 217, "["),
-                                GetCatalogStr(catalog, 0, "Error"),
-                                GetCatalogStr(catalog, 218, "]"),
-                                GetCatalogStr(
+                                GCS(catalog, 217, "["),
+                                GCS(catalog, 0, "Error"),
+                                GCS(catalog, 218, "]"),
+                                GCS(
                                         catalog,
                                         136,
                                         "Please go to the \"Main Settings\" window, and choose a browser for WookieChat to open web sites with"));
@@ -3963,9 +3963,9 @@ int main(int argc, char *argv[])
                         sprintf(file_name, "run >nil: %s \"%s\"", my_settings.browser, string1);
 
 #ifdef __amigaos4__
-                        SystemTags(file_name,TAG_DONE);
+                        SystemTags((_s_cs)file_name,TAG_DONE);
 #else
-                        Execute(file_name, 0, 0);
+                        Execute((_s_cs)file_name, 0, 0);
 #endif
                     }
                 }
@@ -3982,7 +3982,7 @@ int main(int argc, char *argv[])
                 getmacro((Object*)WookieChat->graphical_smileys_set, MUIA_Cycle_Active, &preview_number);
 
                 sprintf(work_buffer, "progdir:smilies/%s", graphical_smiley_themes[preview_number]);
-                newbptr_file = Open(work_buffer, MODE_OLDFILE);
+                newbptr_file = Open((_s_cs)work_buffer, MODE_OLDFILE);
 
                 if (newbptr_file)
                 {
@@ -3991,7 +3991,7 @@ int main(int argc, char *argv[])
 
                     preview_total_smileys = 0;
 
-                    while (FGets(newbptr_file, (b_in) work_buffer, 900))
+                    while (FGets(newbptr_file, (STRPTR) work_buffer, 900))
                     {
                         if (work_buffer[0] != '#')
                         {
@@ -4112,18 +4112,18 @@ int main(int argc, char *argv[])
                                                 //printf("aslrequest successful\n");
                                                 //printf("renaming incoming file 2\n");
 
-                                                strncpy(dcc_conductor->filename, filerequester->fr_File, 499);
+                                                strncpy(dcc_conductor->filename, (char *)filerequester->fr_File, 499);
                                                 dcc_conductor->filename[499] = '\0';
-                                                strncpy(dcc_conductor->filepath, filerequester->fr_Drawer, 499);
+                                                strncpy(dcc_conductor->filepath, (char *)filerequester->fr_Drawer, 499);
                                                 dcc_conductor->filepath[499] = '\0';
-                                                strncpy(dcc_conductor->entry->filename, filerequester->fr_File, 499);
+                                                strncpy(dcc_conductor->entry->filename, (char *)filerequester->fr_File, 499);
                                                 dcc_conductor->entry->filename[499] = '\0';
 
                                                 DoMethod((Object*) WookieChat->LV_dcc, MUIM_NList_ReplaceSingle,
                                                         dcc_conductor->entry, a, NOWRAP, ALIGN_LEFT);
                                                 dcc_conductor->total_recv = 0;
 
-                                                accept_dcc(filerequester->fr_Drawer);
+                                                accept_dcc((char *)filerequester->fr_Drawer);
 
                                             }
                                         }
@@ -4705,21 +4705,23 @@ int main(int argc, char *argv[])
                         if (DEBUG)
                             printf("%s\n", file_name);
 
-                        BPTR arexx_dir_lock = Lock("progdir:arexx_scripts", SHARED_LOCK);
+                        BPTR arexx_dir_lock = Lock((_s_cs)"progdir:arexx_scripts", SHARED_LOCK);
                         if (arexx_dir_lock)
                         {
 #ifdef __AROS__
                             struct TagItem my_arexx_command_taglist[] =
                             {
-                            { NP_CurrentDir, (IPTR) arexx_dir_lock },
-                            { TAG_DONE, 0 } };
+                                { NP_CurrentDir, (IPTR) arexx_dir_lock },
+                                { TAG_DONE, 0 }
+                            };
 #else
                             struct TagItem my_arexx_command_taglist[] =
                             {
                                 {   NP_CurrentDir,(ULONG)arexx_dir_lock},
-                                {   TAG_DONE, (ULONG)0}};
+                                {   TAG_DONE, (ULONG)0}
+                            };
 #endif
-                            SystemTagList(file_name, my_arexx_command_taglist);
+                            SystemTagList((_s_cs)file_name, my_arexx_command_taglist);
                         }
 //
                     }
@@ -4877,7 +4879,7 @@ int main(int argc, char *argv[])
                                 setmacro((Object*)WookieChat->WI_ban, MUIA_Window_Open, TRUE);
 
                                 sprintf(ban_window_title, "%s %s",
-                                        GetCatalogStr(catalog, 146, "List of banmasks for channel"),
+                                        GCS(catalog, 146, "List of banmasks for channel"),
                                         status_conductor->conductor->name);
 
                                 setmacro((Object*)WookieChat->WI_ban, MUIA_Window_Title, ban_window_title);
@@ -4895,9 +4897,9 @@ int main(int argc, char *argv[])
                                     send_text(sendstuff);
 
                                     sprintf(buffer3, "%s%sMode%s %s %s %s %s", timestamp,
-                                            GetCatalogStr(catalog, 217, "["), GetCatalogStr(catalog, 218, "]"),
-                                            GetCatalogStr(catalog, 147, "Removing banmask"), string2,
-                                            GetCatalogStr(catalog, 155, "for channel"),
+                                            GCS(catalog, 217, "["), GCS(catalog, 218, "]"),
+                                            GCS(catalog, 147, "Removing banmask"), string2,
+                                            GCS(catalog, 155, "for channel"),
                                             status_conductor->conductor->name);
                                     add_text_to_current_list(buffer3, 5, ACTIVITY_CHAT);
 
@@ -5116,7 +5118,7 @@ int main(int argc, char *argv[])
                                         sprintf(dcc_conductor->entry->timeleft, "00:00:%02lu", seconds_left);
 
                                     if (!stricmp(dcc_conductor->entry->status,
-                                            GetCatalogStr(catalog, 148, "Transferring")))
+                                            (char *)GCS(catalog, 148, "Transferring")))
                                         DoMethod((Object*) WookieChat->LV_dcc, MUIM_NList_ReplaceSingle,
                                                 dcc_conductor->entry, a, NOWRAP, ALIGN_LEFT);
 
@@ -5203,7 +5205,7 @@ int main(int argc, char *argv[])
                                         sprintf(dcc_send_conductor->entry->timeleft, "00:00:%02lu", seconds_left);
 
                                     if (!stricmp(dcc_send_conductor->entry->status,
-                                            GetCatalogStr(catalog, 148, "Transferring")))
+                                            (char *)GCS(catalog, 148, "Transferring")))
                                         DoMethod((Object*) WookieChat->LV_send_dcc, MUIM_NList_ReplaceSingle,
                                                 dcc_send_conductor->entry, a, NOWRAP, ALIGN_LEFT);
 
@@ -5296,8 +5298,8 @@ int main(int argc, char *argv[])
                                     if (my_settings.Maximum_Retries > 0)
                                     {
                                         sprintf(buffer3, "%s%sConnect%s %s", timestamp,
-                                                GetCatalogStr(catalog, 217, "["), GetCatalogStr(catalog, 218, "]"),
-                                                GetCatalogStr(catalog, 279, "Unable to connect, giving up"));
+                                                GCS(catalog, 217, "["), GCS(catalog, 218, "]"),
+                                                GCS(catalog, 279, "Unable to connect, giving up"));
                                         add_text_to_conductor_list(buffer3, 9, ACTIVITY_CHAT);
 
                                         if (status_conductor->a_socket != -1)
@@ -5398,8 +5400,8 @@ int main(int argc, char *argv[])
                         sprintf(timestamp_mins, "0%ld", mins);
                     else
                         sprintf(timestamp_mins, "%ld", mins);
-                    sprintf(buffer3, "%s%s%s%s * * %d-%d-%d * *", timestamp, GetCatalogStr(catalog, 217, "["),
-                            GetCatalogStr(catalog, 344, "Info"), GetCatalogStr(catalog, 218, "]"), clockdata->year,
+                    sprintf(buffer3, "%s%s%s%s * * %d-%d-%d * *", timestamp, GCS(catalog, 217, "["),
+                            GCS(catalog, 344, "Info"), GCS(catalog, 218, "]"), clockdata->year,
                             clockdata->month, clockdata->mday); //,timestamp_hrs,timestamp_mins);
 
                     for (status_conductor = status_root; status_conductor; status_conductor = status_conductor->next)

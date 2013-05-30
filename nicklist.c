@@ -62,13 +62,13 @@ void change_window_titlebar_text(void)
     {
         if (status_conductor->conductor->nicks == 0)
             sprintf(windowtitlestring, "WookieChat - %s %s %s - %s", status_conductor->nick,
-                    GetCatalogStr(catalog, 177, "connected to"), status_conductor->servername,
+                    GCS(catalog, 177, "connected to"), status_conductor->servername,
                     status_conductor->conductor->name);
         else
             sprintf(windowtitlestring, "WookieChat - %s %s %s - %s [%i %s]", status_conductor->nick,
-                    GetCatalogStr(catalog, 177, "connected to"), status_conductor->servername,
+                    GCS(catalog, 177, "connected to"), status_conductor->servername,
                     status_conductor->conductor->name, status_conductor->conductor->nicks,
-                    GetCatalogStr(catalog, 257, "users"));
+                    GCS(catalog, 257, "users"));
 
         setmacro((Object*) WookieChat->WI_main, MUIA_Window_Title, windowtitlestring);
         //setmacro((Object*)WookieChat->TX_nickname,MUIA_Text_Contents,status_conductor->nick);
@@ -236,7 +236,7 @@ void AddNick(char *nick, char *hostname)
 
         if (work_entry && work_entry3)
         {
-            if (stricmp((p_in) work_entry3->name, (p_in) work_entry->name) < 0)
+            if (stricmp(work_entry3->name, work_entry->name) < 0)
                 break;
         }
         else

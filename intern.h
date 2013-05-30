@@ -28,22 +28,41 @@
 #define MAX_EVENTS                  16
 #define DCC_RECV_BUFFERSIZE         10000
 
-typedef char *b_in;
-typedef char *l_in;
-typedef char *p_in;
+/*
+ * ub   - UBYTE *
+ * s    - STRPTR
+ * cs   - CONST_STRTR
+ * _3.1_AROSMOS4.x
+ */
 
 #ifdef __amigaos4__
-typedef char *c_in;
-typedef char *i_in;
+typedef char *          c_in;
+typedef char *          i_in;
+typedef CONST_STRPTR    l_in;
+typedef CONST_STRPTR    loc_in;
+typedef CONST_STRPTR    _ub_cs;
+typedef CONST_STRPTR    _s_cs;
 #elif __MORPHOS__
-typedef char *c_in;
-typedef UBYTE *i_in;
+typedef char *          c_in;
+typedef UBYTE *         i_in;
+typedef CONST_STRPTR    l_in;
+typedef STRPTR          loc_in;
+typedef CONST_STRPTR    _ub_cs;
+typedef CONST_STRPTR    _s_cs;
 #elif __AROS__
-typedef char *c_in;
-typedef unsigned int *i_in;
+typedef char *          c_in;
+typedef unsigned int *  i_in;
+typedef CONST_STRPTR    l_in;
+typedef CONST_STRPTR    loc_in;
+typedef CONST_STRPTR    _ub_cs;
+typedef CONST_STRPTR    _s_cs;
 #else
-typedef UBYTE *c_in;
-typedef unsigned char *i_in;
+typedef UBYTE *         c_in;
+typedef unsigned char * i_in;
+typedef STRPTR          l_in;
+typedef STRPTR          loc_in;
+typedef UBYTE *         _ub_cs;
+typedef STRPTR          _s_cs;
 #endif
 
 struct XYMessage
@@ -959,6 +978,8 @@ enum
 
 #endif
 
+#define GCS(a, b, c) GetCatalogStr(a, b, (loc_in)c)
+
 /* globals.c */
 extern struct XYMessage *my_message;
 extern struct XYMessage *incoming_message;
@@ -1159,14 +1180,14 @@ int which_clipboard_style();
 
 /* arexx_hooks.c */
 #define MAX_AREXX_SCRIPTS 20
-extern char maintask_basename[100];
+extern TEXT maintask_basename[100];
 extern BOOL wanna_quit;
 extern BOOL getline_wait;
 extern char string_to_send2[800];
 extern struct AREXX_Menu AREXX_Menu_Items[MAX_AREXX_SCRIPTS];
-extern char basename[100];
+extern TEXT basename[100];
 extern BOOL AREXX_started;
-extern char arexxquit_portname[100];
+extern TEXT arexxquit_portname[100];
 
 int add_scripts_to_menu();
 int AREXX_Task();

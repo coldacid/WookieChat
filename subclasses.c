@@ -246,14 +246,14 @@ static void DisplayDCC_send_TextFunc(void)
     else
     {
 
-        array[0]= (char*)GetCatalogStr(catalog,150,"Status");
-        array[1]= (char*)GetCatalogStr(catalog,240,"Reciever");
-        array[2]= (char*)GetCatalogStr(catalog,215,"Filename");
+        array[0]= (char*)GCS(catalog,150,"Status");
+        array[1]= (char*)GCS(catalog,240,"Reciever");
+        array[2]= (char*)GCS(catalog,215,"Filename");
         array[3]= (char*)"kB/s";
-        array[4]= (char*)GetCatalogStr(catalog,151,"Sent");
-        array[5]= (char*)GetCatalogStr(catalog,152,"File size");
+        array[4]= (char*)GCS(catalog,151,"Sent");
+        array[5]= (char*)GCS(catalog,152,"File size");
         array[6]= (char*)"%";
-        array[7]= (char*)GetCatalogStr(catalog,153,"Time Left");
+        array[7]= (char*)GCS(catalog,153,"Time Left");
 
     }
 
@@ -299,14 +299,14 @@ static void DisplayDCC_recv_TextFunc(void)
     else
     {
 
-        array[0]= (char*)GetCatalogStr(catalog,150,"Status");
-        array[1]= (char*)GetCatalogStr(catalog,239,"Sender");
-        array[2]= (char*)GetCatalogStr(catalog,215,"Filename");
+        array[0]= (char*)GCS(catalog,150,"Status");
+        array[1]= (char*)GCS(catalog,239,"Sender");
+        array[2]= (char*)GCS(catalog,215,"Filename");
         array[3]= (char*)"kB/s";
-        array[4]= (char*)GetCatalogStr(catalog,154,"Recieved");
-        array[5]= (char*)GetCatalogStr(catalog,152,"File size");
+        array[4]= (char*)GCS(catalog,154,"Recieved");
+        array[5]= (char*)GCS(catalog,152,"File size");
         array[6]= (char*)"%";
-        array[7]= (char*)GetCatalogStr(catalog,153,"Time Left");
+        array[7]= (char*)GCS(catalog,153,"Time Left");
 
 
     }
@@ -1260,13 +1260,13 @@ ULONG BetterString_HandleEvent(struct IClass *cl, Object *obj, struct MUIP_Handl
 
                                         for(d=0;d<status_current->conductor->nicks;d++)
                                         {
-                                            if(strnicmp((p_in)tabwork4_string,(p_in)status_current->conductor->nicklist[d].name,strlen(tabwork4_string)) == 0)
+                                            if(strnicmp(tabwork4_string,status_current->conductor->nicklist[d].name,strlen(tabwork4_string)) == 0)
                                             {
 
                                                 for(count=0; count<=nickcomp_count; count++)
                                                 {
-                                                    //printf("comparing '%s' to '%s'\n",(p_in)status_current->conductor->nicklist[d].name,list_found_nicks[count]);
-                                                    if(!stricmp((p_in)status_current->conductor->nicklist[d].name,list_found_nicks[count])) { /*printf("found a duplicate nick! we will not add %s\n",tabwork4_string);*/ break; }
+                                                    //printf("comparing '%s' to '%s'\n",status_current->conductor->nicklist[d].name,list_found_nicks[count]);
+                                                    if(!stricmp(status_current->conductor->nicklist[d].name,list_found_nicks[count])) { /*printf("found a duplicate nick! we will not add %s\n",tabwork4_string);*/ break; }
 
                                                 }
 
@@ -1294,7 +1294,7 @@ ULONG BetterString_HandleEvent(struct IClass *cl, Object *obj, struct MUIP_Handl
 
                             for(d=0;d<status_current->current_query->nicks;d++)
                             {
-                                if(strnicmp((p_in)tabwork4_string,(p_in)status_current->current_query->nicklist[d].name,strlen(tabwork4_string)) == 0)
+                                if(strnicmp(tabwork4_string,status_current->current_query->nicklist[d].name,strlen(tabwork4_string)) == 0)
                                 {
                                     strcpy(list_found_nicks[a],status_current->current_query->nicklist[d].name);
                                     if(!found_nicks) strcpy(tabwork5_string,list_found_nicks[a]);
@@ -1305,18 +1305,6 @@ ULONG BetterString_HandleEvent(struct IClass *cl, Object *obj, struct MUIP_Handl
                             }
                         }
                         status_current->conductor=work_query;
-
-                        /*for(d=0;d<status_current->current_query->nicks;d++)
-                        {
-                            if(strnicmp((p_in)tabwork4_string,(p_in)status_current->current_query->nicklist[d].name,strlen(tabwork4_string)) == 0)
-                            {
-                                strcpy(list_found_nicks[a],status_current->current_query->nicklist[d].name);
-                                if(!found_nicks) strcpy(tabwork5_string,list_found_nicks[a]);
-                                a++;
-
-                                found_nicks=1;
-                            }
-                        } */
 
                         strcpy(list_found_nicks[a],""); a=0;
 
@@ -1387,35 +1375,23 @@ ULONG BetterString_HandleEvent(struct IClass *cl, Object *obj, struct MUIP_Handl
 
 SAVEDS ULONG Group_Setup(struct IClass *cl,Object *obj,struct Message *msg)
 {
-//    struct MyData *data = (MyData*)INST_DATA(cl,obj);
-
-    //printf("Group_Setup..\n");
-
     getmacro((Object*)WookieChat->PP_CSW_background,MUIA_Imagedisplay_Spec,&popimage_background);
     getmacro((Object*)WookieChat->PP_CSW_background,MUIA_Pendisplay_Spec,&pendisplay_specs[1]);
-    strncpy(pendisplay_specs[1]->buf,popimage_background,32);
-    //printf("Group_Setup.. get pendisplay_specs[1]        :%s\n",pendisplay_specs[1]->buf);
-    //printf("Group_Setup.. get popimage_background        :%s\n",popimage_background);
+    strncpy(pendisplay_specs[1]->buf, (char *)popimage_background,32);
     if(pendisplay_specs[1]->buf[0]=='2')
         strncpy(pendisplay_specs[1]->buf,pendisplay_specs[1]->buf+2,32);
 
     getmacro((Object*)WookieChat->PP_CSW_nicklistbackground,MUIA_Imagedisplay_Spec,&popimage_nicklistbackground);
     getmacro((Object*)WookieChat->PP_CSW_nicklistbackground,MUIA_Pendisplay_Spec,&pendisplay_specs[2]);
-    strncpy(pendisplay_specs[2]->buf,popimage_nicklistbackground,32);
-    //printf("Group_Setup.. get pendisplay_specs[2]        :%s\n",pendisplay_specs[2]->buf);
-    //printf("Group_Setup.. get popimage_nicklistbackground:%s\n",popimage_nicklistbackground);
+    strncpy(pendisplay_specs[2]->buf,(char *)popimage_nicklistbackground,32);
     if(pendisplay_specs[2]->buf[0]=='2')
         strncpy(pendisplay_specs[2]->buf,pendisplay_specs[2]->buf+2,32);
-    //printf("Group_Setup.. new pendisplay_specs[2]        :%s\n\n",pendisplay_specs[2]->buf);
 
     getmacro((Object*)WookieChat->PP_CSW_listviewtabs_background,MUIA_Imagedisplay_Spec,&popimage_tabsbackground);
     getmacro((Object*)WookieChat->PP_CSW_listviewtabs_background,MUIA_Pendisplay_Spec,&pendisplay_specs[23]);
-    strncpy(pendisplay_specs[23]->buf,popimage_tabsbackground,32);
-    //printf("Group_Setup.. get pendisplay_specs[23]       :%s\n",pendisplay_specs[23]->buf);
-    //printf("Group_Setup.. get popimage_tabsbackground    :%s\n",popimage_tabsbackground);
+    strncpy(pendisplay_specs[23]->buf,(char *)popimage_tabsbackground,32);
     if(pendisplay_specs[23]->buf[0]=='2')
         strncpy(pendisplay_specs[23]->buf,pendisplay_specs[23]->buf+2,32);
-    //printf("Group_Setup.. new pendisplay_specs[23]       :%s\n\n",pendisplay_specs[23]->buf);
 
 
     custom_pen_colours[0]= MUI_ObtainPen(muiRenderInfo(obj),pendisplay_specs[1],0);
@@ -1442,11 +1418,10 @@ SAVEDS ULONG Group_Setup(struct IClass *cl,Object *obj,struct Message *msg)
     custom_pen_colours[21]= MUI_ObtainPen(muiRenderInfo(obj),pendisplay_specs[22],0);
     custom_pen_colours[22]= MUI_ObtainPen(muiRenderInfo(obj),pendisplay_specs[23],0);
     custom_pen_colours[23]= MUI_ObtainPen(muiRenderInfo(obj),pendisplay_specs[24],0);
-    //custom_pen_colours[24]= MUI_ObtainPen(muiRenderInfo(obj),pendisplay_specs[25],0);
 
-    strncpy(pendisplay_specs[1]->buf,popimage_background,32);
-    strncpy(pendisplay_specs[2]->buf,popimage_nicklistbackground,32);
-    strncpy(pendisplay_specs[23]->buf,popimage_tabsbackground,32);
+    strncpy(pendisplay_specs[1]->buf,(char *)popimage_background,32);
+    strncpy(pendisplay_specs[2]->buf,(char *)popimage_nicklistbackground,32);
+    strncpy(pendisplay_specs[23]->buf,(char *)popimage_tabsbackground,32);
 
     setup_background_colours();
 

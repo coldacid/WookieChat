@@ -396,14 +396,14 @@ int update_TX_nicklist(void)
     {
         sprintf(status_conductor->conductor->nicklist_info, "\033c%d ops, %d %s",
                 status_conductor->conductor->nicks_ops, status_conductor->conductor->nicks,
-                GetCatalogStr(catalog, 257, "users"));
+                GCS(catalog, 257, "users"));
         setmacro((Object*) status_conductor->conductor->TX_nicklist, MUIA_Text_Contents,
                 status_conductor->conductor->nicklist_info);
         //setmacro((Object*)status_conductor->conductor->TX_nicklist,MUIA_ShowMe, TRUE);
     }
     else
     {
-        sprintf(status_conductor->conductor->nicklist_info, " "); //, status_conductor->conductor->nicks_ops,status_conductor->conductor->nicks,GetCatalogStr(catalog,257,"users"));
+        sprintf(status_conductor->conductor->nicklist_info, " "); //, status_conductor->conductor->nicks_ops,status_conductor->conductor->nicks,GCS(catalog,257,"users"));
         setmacro((Object*) status_conductor->conductor->TX_nicklist, MUIA_Text_Contents,
                 status_conductor->conductor->nicklist_info);
         //setmacro((Object*)status_conductor->conductor->TX_nicklist,MUIA_ShowMe, FALSE);

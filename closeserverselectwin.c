@@ -20,9 +20,9 @@ void close_server_select_window()
     int a = 0;
     int abc = 1;
 
-    BPTR save_file = Open("progdir:servers.txt", MODE_NEWFILE);
+    BPTR save_file = Open((_s_cs)"progdir:servers.txt", MODE_NEWFILE);
 
-    FPuts(save_file, (b_in) "WOOKIECHAT_SERVERS_FILE_2\n");
+    FPuts(save_file, (l_in) "WOOKIECHAT_SERVERS_FILE_2\n");
 
     do
     {
@@ -36,8 +36,8 @@ void close_server_select_window()
         else
         {
 
-            FPuts(save_file, (b_in) treenode->tn_Name);
-            FPuts(save_file, (b_in) "\n");
+            FPuts(save_file, (l_in) treenode->tn_Name);
+            FPuts(save_file, (l_in) "\n");
 
         }
 

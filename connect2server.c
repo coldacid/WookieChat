@@ -202,7 +202,7 @@ int connect2server(char *servername, char *port_number, int typedservercommand, 
                     MUIM_NListtree_GetEntry, MUIV_NListtree_GetEntry_ListNode_Root, h, 0);
             if (!treenode)
                 break;
-            if (!(strchr(treenode->tn_Name, ' ') > 0))
+            if (!(strchr((char *)treenode->tn_Name, ' ') > 0))
                 break;
             h = h - 1;
 
@@ -211,7 +211,7 @@ int connect2server(char *servername, char *port_number, int typedservercommand, 
         if (treenode)
         {
             if (treenode->tn_Name)
-                strcpy(status_conductor->groupname, treenode->tn_Name);
+                strcpy(status_conductor->groupname, (char *)treenode->tn_Name);
             if (typedservercommand)
                 strcpy(status_conductor->groupname, servername);
         }
@@ -230,7 +230,7 @@ int connect2server(char *servername, char *port_number, int typedservercommand, 
 
     if (!SocketBase)
     {
-        SocketBase = OpenLibrary((c_in) "bsdsocket.library", 0L);
+        SocketBase = OpenLibrary((_ub_cs) "bsdsocket.library", 0L);
 #ifdef __amigaos4__
         ISocket = (struct SocketIFace*) GetInterface((struct Library *)SocketBase, "main", 1, NULL);
 #endif
@@ -240,9 +240,9 @@ int connect2server(char *servername, char *port_number, int typedservercommand, 
     if (!SocketBase)
     {
 
-        sprintf(buffer3, "%s%s%s%s %s", timestamp, GetCatalogStr(catalog, 217, "["), GetCatalogStr(catalog, 0, "Error"),
-                GetCatalogStr(catalog, 218, "]"),
-                GetCatalogStr(catalog, 198, "Please start a TCP/IP stack and try again."));
+        sprintf(buffer3, "%s%s%s%s %s", timestamp, GCS(catalog, 217, "["), GCS(catalog, 0, "Error"),
+                GCS(catalog, 218, "]"),
+                GCS(catalog, 198, "Please start a TCP/IP stack and try again."));
 
         add_text_to_current_list(buffer3, 9, ACTIVITY);
         return 0;
@@ -269,9 +269,9 @@ int connect2server(char *servername, char *port_number, int typedservercommand, 
 #endif
     {
         timestamp_2_string();
-        sprintf(buffer3, "%s%s%s%s %s: gethostbyname() %s.", timestamp, GetCatalogStr(catalog, 217, "["),
-                GetCatalogStr(catalog, 0, "Error"), GetCatalogStr(catalog, 218, "]"), servername,
-                GetCatalogStr(catalog, 184, "Failed"));
+        sprintf(buffer3, "%s%s%s%s %s: gethostbyname() %s.", timestamp, GCS(catalog, 217, "["),
+                GCS(catalog, 0, "Error"), GCS(catalog, 218, "]"), servername,
+                GCS(catalog, 184, "Failed"));
         add_text_to_current_list(buffer3, 9, ACTIVITY);
         //perror("gethostbyname");
         return 0;
@@ -303,8 +303,8 @@ int connect2server(char *servername, char *port_number, int typedservercommand, 
         status_conductor->servername[0] = '\0';
         status_conductor->networkname[0] = '\0';
 
-        sprintf(buffer3, "%s%sConnect%s %s", timestamp, GetCatalogStr(catalog, 217, "["),
-                GetCatalogStr(catalog, 218, "]"), GetCatalogStr(catalog, 199, "Connecting to a new server"));
+        sprintf(buffer3, "%s%sConnect%s %s", timestamp, GCS(catalog, 217, "["),
+                GCS(catalog, 218, "]"), GCS(catalog, 199, "Connecting to a new server"));
         status_conductor->conductor = status_conductor->root;
         while (status_conductor->conductor)
         {
@@ -412,16 +412,16 @@ int connect2server(char *servername, char *port_number, int typedservercommand, 
     {
         //memset(status_conductor->nick,'\0',30);
         //strcpy(status_conductor->nick,nick);
-        sprintf(buffer3, "%s%sConnect%s %s %s (%i)", timestamp, GetCatalogStr(catalog, 217, "["),
-                GetCatalogStr(catalog, 218, "]"), GetCatalogStr(catalog, 200, "Attempting to connect to"), servername,
+        sprintf(buffer3, "%s%sConnect%s %s %s (%i)", timestamp, GCS(catalog, 217, "["),
+                GCS(catalog, 218, "]"), GCS(catalog, 200, "Attempting to connect to"), servername,
                 status_conductor->portnumber);
         add_text_to_current_list(buffer3, 9, ACTIVITY);
     }
     else
     {
-        sprintf(buffer3, "%s%sConnect%s %s %s (%i) %s%i", timestamp, GetCatalogStr(catalog, 217, "["),
-                GetCatalogStr(catalog, 218, "]"), GetCatalogStr(catalog, 200, "Attempting to connect to"), servername,
-                status_conductor->portnumber, GetCatalogStr(catalog, 263, "Retry #"), status_conductor->retry_number);
+        sprintf(buffer3, "%s%sConnect%s %s %s (%i) %s%i", timestamp, GCS(catalog, 217, "["),
+                GCS(catalog, 218, "]"), GCS(catalog, 200, "Attempting to connect to"), servername,
+                status_conductor->portnumber, GCS(catalog, 263, "Retry #"), status_conductor->retry_number);
         add_text_to_conductor_list(buffer3, 9, ACTIVITY);
 
     }

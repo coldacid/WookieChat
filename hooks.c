@@ -732,8 +732,8 @@ static void Display_ignore_TextFunc(void)
     else
     {
 
-        array[0]= (char*)GetCatalogStr(catalog,264,"Ignore Mask");
-        array[1]= (char*)GetCatalogStr(catalog,265,"Text");
+        array[0]= (char*)GCS(catalog,264,"Ignore Mask");
+        array[1]= (char*)GCS(catalog,265,"Text");
         array[2]= (char*)"CTCP";
         array[3]= (char*)"DCC";
 
@@ -868,8 +868,8 @@ static void Display_alias_TextFunc(void)
     else
     {
 
-        array[0]= (char*)GetCatalogStr(catalog,280,"Alias");
-        array[1]= (char*)GetCatalogStr(catalog,281,"Command");
+        array[0]= (char*)GCS(catalog,280,"Alias");
+        array[1]= (char*)GCS(catalog,281,"Command");
 
     }
 
@@ -951,10 +951,10 @@ static void Display_events_TextFunc(void)
     else
     {
 
-        array[0]= (char*)GetCatalogStr(catalog,800,"Event");
-        array[1]= (char*)GetCatalogStr(catalog,800,"Use when");
-        array[2]= (char*)GetCatalogStr(catalog,800,"ARexx script");
-        array[3]= (char*)GetCatalogStr(catalog,800,"Text to send to script");
+        array[0]= (char*)GCS(catalog,800,"Event");
+        array[1]= (char*)GCS(catalog,800,"Use when");
+        array[2]= (char*)GCS(catalog,800,"ARexx script");
+        array[3]= (char*)GCS(catalog,800,"Text to send to script");
 
     }
 
@@ -996,26 +996,26 @@ static void Display_servers_TextFunc(void)
 
     if(a_entry->TreeNode != NULL)
     {
-        strcpy(servers_work,a_entry->TreeNode->tn_Name);
+        strcpy(servers_work,(char *)a_entry->TreeNode->tn_Name);
 
         acquire_connect_details(servers_work);
 
-        a_entry->Array[0]=server_name;
-        a_entry->Array[1]=port_number;
-        a_entry->Array[2]=auto_connect;
+        a_entry->Array[0]=(STRPTR)server_name;
+        a_entry->Array[1]=(STRPTR)port_number;
+        a_entry->Array[2]=(STRPTR)auto_connect;
         if(Pro_Charsets_Enabled==TRUE)
-            a_entry->Array[3]=server_charset;
+            a_entry->Array[3]=(STRPTR)server_charset;
 
 
     }
     else
     {
 
-        a_entry->Array[0]= (char*)GetCatalogStr(catalog,266,"Servers");
-        a_entry->Array[1]= (char*)GetCatalogStr(catalog,267,"Port");
-        a_entry->Array[2]= (char*)GetCatalogStr(catalog,268,"Auto-Connect");
+        a_entry->Array[0]= (STRPTR)GCS(catalog,266,"Servers");
+        a_entry->Array[1]= (STRPTR)GCS(catalog,267,"Port");
+        a_entry->Array[2]= (STRPTR)GCS(catalog,268,"Auto-Connect");
         if(Pro_Charsets_Enabled==TRUE)
-            a_entry->Array[3]= (char*)GetCatalogStr(catalog,329,"Charset");
+            a_entry->Array[3]= (STRPTR)GCS(catalog,329,"Charset");
 
 
     }
@@ -1084,9 +1084,9 @@ static void DisplayLI_ban_TextFunc(void)
     }
     else
     {
-        array[0]=(char*)GetCatalogStr(catalog,1,"Ban mask");
-        array[1]=(char*)GetCatalogStr(catalog,2,"Set by");
-        array[2]=(char*)GetCatalogStr(catalog,3,"Date placed");
+        array[0]=(char*)GCS(catalog,1,"Ban mask");
+        array[1]=(char*)GCS(catalog,2,"Set by");
+        array[2]=(char*)GCS(catalog,3,"Date placed");
 
     }
 
@@ -1141,8 +1141,8 @@ static void DisplayLV_userlist_buttons_TextFunc(void)
     }
     else
     {
-        array[0]=(char*)GetCatalogStr(catalog,800,"Name");
-        array[1]=(char*)GetCatalogStr(catalog,800,"Command");
+        array[0]=(char*)GCS(catalog,800,"Name");
+        array[1]=(char*)GCS(catalog,800,"Command");
 
     }
 
@@ -1907,9 +1907,9 @@ static void DisplayTREE_TextFunc(void)
     {
         char *work;
 
-        work=strtok(a_entry->Array[0]," ");
+        work=strtok((char *)a_entry->Array[0]," ");
         work=strtok(NULL," ");
-        strcpy(a_entry->Array[0],work);
+        strcpy((char *)a_entry->Array[0],work);
 
     }
 

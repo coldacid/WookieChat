@@ -39,9 +39,9 @@ void play_external_sound_replayer(char *string1)
         sprintf(file_name, "run >nil: %s %s", my_settings.external_sound_replayer, string11);
 
 #ifdef __amigaos4__
-        SystemTags(file_name,TAG_DONE);
+        SystemTags((_s_cs)file_name,TAG_DONE);
 #else
-        Execute(file_name, 0, 0);
+        Execute((_s_cs)file_name, 0, 0);
 #endif
 
     }

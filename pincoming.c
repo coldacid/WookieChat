@@ -115,9 +115,9 @@ void onjoin_clone_detection(char *nick, char *hostname)
         if (!string1)
             return;
 
-        sprintf(buffer3, "%s%s%s%s %s %s: %s ", timestamp, GetCatalogStr(catalog, 217, "["),
-                GetCatalogStr(catalog, 286, "Clones"), GetCatalogStr(catalog, 218, "]"),
-                GetCatalogStr(catalog, 287, "Detected clones from"), string1, nick);
+        sprintf(buffer3, "%s%s%s%s %s %s: %s ", timestamp, GCS(catalog, 217, "["),
+                GCS(catalog, 286, "Clones"), GCS(catalog, 218, "]"),
+                GCS(catalog, 287, "Detected clones from"), string1, nick);
 
         for (count = 0; count < status_conductor->conductor->nicks; count++)
         {
@@ -630,7 +630,7 @@ void search_for_url_then_add(char *buffer1)
 
                 //now save all url's to a text file
                 sprintf(file_name, "progdir:urls.txt");
-                urlgrabber_file = Open(file_name, MODE_NEWFILE);
+                urlgrabber_file = Open((_s_cs)file_name, MODE_NEWFILE);
                 if (urlgrabber_file)
                 {
                     getmacro((Object*) WookieChat->LV_urlgrabber, MUIA_NList_Entries, &entries);
@@ -641,7 +641,7 @@ void search_for_url_then_add(char *buffer1)
 
                         if (string1)
                         {
-                            FPuts(urlgrabber_file, (b_in) string1);
+                            FPuts(urlgrabber_file, (l_in) string1);
                             FPutC(urlgrabber_file, '\n');
 
                             if (!strcmp(string1, urlgrabber_str))
@@ -949,7 +949,7 @@ int add_text_to_conductor_list(char *buffer1, LONG colour, int activitylevel)
 
             if(iconified_and_new_text==0)
             {
-                setmacro((Object*)WookieChat->App,MUIA_Application_IconifyTitle,GetCatalogStr(catalog,370,"New Messages Waiting"));
+                setmacro((Object*)WookieChat->App,MUIA_Application_IconifyTitle,GCS(catalog,370,"New Messages Waiting"));
                 iconified_and_new_text=1;
 
             }
@@ -1036,7 +1036,7 @@ int add_text_to_conductor_list(char *buffer1, LONG colour, int activitylevel)
         else
             sprintf(file_name, "%s/logs/%s_%s", wookie_folder, status_conductor->networkname,
                     status_conductor->conductor->name);
-        status_conductor->conductor->log_file = Open(file_name, MODE_READWRITE);
+        status_conductor->conductor->log_file = Open((_s_cs)file_name, MODE_READWRITE);
         if (status_conductor->conductor->log_file)
         {
 
@@ -1057,7 +1057,7 @@ int add_text_to_conductor_list(char *buffer1, LONG colour, int activitylevel)
                 sprintf(timestamp_mins, "0%ld", mins);
             else
                 sprintf(timestamp_mins, "%ld", mins);
-            sprintf(buffer_text, "* * %s %d-%d-%d, at %s:%s * *", GetCatalogStr(catalog, 156, "Logging started at"),
+            sprintf(buffer_text, "* * %s %d-%d-%d, at %s:%s * *", GCS(catalog, 156, "Logging started at"),
                     clockdata->year, clockdata->month, clockdata->mday, timestamp_hrs, timestamp_mins);
 
             //if the filesize is over our max logfile size, lets rename it and create a new logfile!
@@ -1071,9 +1071,9 @@ int add_text_to_conductor_list(char *buffer1, LONG colour, int activitylevel)
                     if (a_fib.fib_Size > (ULONG) my_settings.max_log_size * 1024)
                     {
                         sprintf(string7, "%s_%d-%d-%d", file_name, clockdata->year, clockdata->month, clockdata->mday);
-                        Rename(file_name, string7);
+                        Rename((_s_cs)file_name, (_s_cs)string7);
                         Close(status_conductor->conductor->log_file);
-                        status_conductor->conductor->log_file = Open(file_name, MODE_READWRITE);
+                        status_conductor->conductor->log_file = Open((_s_cs)file_name, MODE_READWRITE);
 
                     }
 
@@ -1145,35 +1145,6 @@ int add_text_to_channels_query(char *buffer1, LONG colour, int activitylevel)
 
     if (!status_conductor->conductor->LV_channel)
         return 0;
-
-    /*
-     //below is adding entries alphabetically
-     getmacro((Object*)status_conductor->conductor->LV_channel,MUIA_NList_Entries, &entries);
-
-     if(entries > 0)
-     {
-
-     for(a=1; a<entries; a++)
-     {
-     DoMethod((Object*)status_conductor->conductor->LV_channel,MUIM_NList_GetEntry,a, &wentry);
-
-     if(wentry)
-     {
-
-     for(int aa=0,bb=10; aa<strlen((char*)wentry->entry)+1; aa++,bb++) list_channels_work[aa]=wentry->entry[bb];
-
-     //printf("getentry:%i\n1:%s\n2:%s\n",a,list_channels_work,buffer1);
-
-     if(stricmp((char*)list_channels_work,buffer1) > 0)
-     {
-     break;
-     }
-     }
-
-     }
-     }
-     DoMethod((Object*)status_conductor->conductor->LV_channel,MUIM_NList_InsertSingle,centry,a);
-     */
 
     DoMethod((Object*) status_conductor->conductor->LV_channel, MUIM_NList_InsertSingle, centry,
             MUIV_NList_Insert_Bottom);
@@ -1400,7 +1371,7 @@ void process_incoming()
         }
 
         if (text3)
-            strcpy(buffer2, text3);
+            strcpy(buffer2, (char *)text3);
 
         if (text3)
             CodesetsFreeA(text3, NULL);
@@ -1522,12 +1493,12 @@ void process_incoming()
 
             if (string1 && string2)
             {
-                if (!stricmp((p_in) string1, (p_in) status_conductor->nick))
-                    sprintf(buffer3, "%s%s%s%s %s", timestamp, GetCatalogStr(catalog, 217, "["),
-                            GetCatalogStr(catalog, 0, "Error"), GetCatalogStr(catalog, 218, "]"), string2);
+                if (!stricmp(string1, status_conductor->nick))
+                    sprintf(buffer3, "%s%s%s%s %s", timestamp, GCS(catalog, 217, "["),
+                            GCS(catalog, 0, "Error"), GCS(catalog, 218, "]"), string2);
                 else
-                    sprintf(buffer3, "%s%s%s%s%s %s", timestamp, GetCatalogStr(catalog, 217, "["),
-                            GetCatalogStr(catalog, 0, "Error"), GetCatalogStr(catalog, 218, "]"), string1, string2);
+                    sprintf(buffer3, "%s%s%s%s%s %s", timestamp, GCS(catalog, 217, "["),
+                            GCS(catalog, 0, "Error"), GCS(catalog, 218, "]"), string1, string2);
 
                 status_conductor->conductor = status_conductor->current_query;
 
@@ -1613,8 +1584,8 @@ void process_incoming()
 
             setmacro(status_conductor->root->BT_querybutton, MUIA_Text_Contents, status_conductor->shortserver);
 
-            sprintf(buffer3, "%s%s%s%s %s %s %s", timestamp, GetCatalogStr(catalog, 217, "["),
-                    GetCatalogStr(catalog, 359, "Server"), GetCatalogStr(catalog, 218, "]"), incoming_1, incoming_2,
+            sprintf(buffer3, "%s%s%s%s %s %s %s", timestamp, GCS(catalog, 217, "["),
+                    GCS(catalog, 359, "Server"), GCS(catalog, 218, "]"), incoming_1, incoming_2,
                     incoming_3);
             status_conductor->conductor = status_conductor->root;
             add_text_to_conductor_list((char*) buffer3, colour, ACTIVITY);
@@ -1663,8 +1634,8 @@ void process_incoming()
                                 {
                                     sprintf(buffer3,
                                             "%s%sDCC%s Unable to use obtain own address for use in DCC connections",
-                                            timestamp, GetCatalogStr(catalog, 217, "["),
-                                            GetCatalogStr(catalog, 218, "]"));
+                                            timestamp, GCS(catalog, 217, "["),
+                                            GCS(catalog, 218, "]"));
                                     add_text_to_current_list(buffer3, 9, ACTIVITY);
                                 }
 
@@ -1697,11 +1668,11 @@ void process_incoming()
 
                 sprintf(work_buffer, "progdir:connectscripts/%s", status_conductor->groupname);
 
-                BPTR newbptr_file = Open(work_buffer, MODE_OLDFILE);
+                BPTR newbptr_file = Open((_s_cs)work_buffer, MODE_OLDFILE);
 
                 if (newbptr_file)
                 {
-                    char *len2 = (char*) FGets(newbptr_file, (b_in) work_buffer, WORK_BUFFER_SIZE);
+                    char *len2 = (char*) FGets(newbptr_file, (STRPTR) work_buffer, WORK_BUFFER_SIZE);
 
                     if (work_buffer[strlen(work_buffer) - 1] == '\n')
                         work_buffer[strlen(work_buffer) - 1] = '\0';
@@ -1712,7 +1683,7 @@ void process_incoming()
                     {
                         strcat(work_buffer, "\r\n");
 
-                        if (stricmp((p_in) work_buffer, (p_in) "\r\n"))
+                        if (stricmp(work_buffer, "\r\n"))
                         {
 
                             //string1 == your typed command
@@ -1754,7 +1725,7 @@ void process_incoming()
                             }
                         }
 
-                        len2 = (char*) FGets(newbptr_file, (b_in) work_buffer, WORK_BUFFER_SIZE);
+                        len2 = (char*) FGets(newbptr_file, (STRPTR) work_buffer, WORK_BUFFER_SIZE);
 
                         if (work_buffer[strlen(work_buffer) - 1] == '\n')
                             work_buffer[strlen(work_buffer) - 1] = '\0';
@@ -1843,25 +1814,25 @@ void process_incoming()
 
             if (string1 && string2)
             {
-                sprintf(buffer3, "%s%s%s%s %s%s %s %s %s", timestamp, GetCatalogStr(catalog, 217, "["),
-                        GetCatalogStr(catalog, 800, "Invite"), GetCatalogStr(catalog, 218, "]"), string1,
-                        GetCatalogStr(catalog, 157, "has been invited to channel"), string2,
-                        GetCatalogStr(catalog, 158, "by user"), string7);
+                sprintf(buffer3, "%s%s%s%s %s%s %s %s %s", timestamp, GCS(catalog, 217, "["),
+                        GCS(catalog, 800, "Invite"), GCS(catalog, 218, "]"), string1,
+                        GCS(catalog, 157, "has been invited to channel"), string2,
+                        GCS(catalog, 158, "by user"), string7);
                 add_text_to_conductor_list((char*) buffer3, 14, ACTIVITY);
 
                 if ((my_settings.events[INVITE].use_when == 1 && is_window_active())
                         || (my_settings.events[INVITE].use_when == 2 && !is_window_active())
                         || my_settings.events[INVITE].use_when == 3)
                 {
-                    sprintf(buffer3, "%s%s%s %s%s %s %s %s", GetCatalogStr(catalog, 217, "["),
-                            GetCatalogStr(catalog, 800, "Invite"), GetCatalogStr(catalog, 218, "]"), string1,
-                            GetCatalogStr(catalog, 157, "has been invited to channel"), string2,
-                            GetCatalogStr(catalog, 158, "by user"), string7);
+                    sprintf(buffer3, "%s%s%s %s%s %s %s %s", GCS(catalog, 217, "["),
+                            GCS(catalog, 800, "Invite"), GCS(catalog, 218, "]"), string1,
+                            GCS(catalog, 157, "has been invited to channel"), string2,
+                            GCS(catalog, 158, "by user"), string7);
 
                     strcpy(target_nick, string1);
                     create_arexx_event_string(my_settings.events[INVITE].arexx_script,
                             my_settings.events[INVITE].arexx_script2);
-                    Execute(event_string, 0, 0);
+                    Execute((_s_cs)(_s_cs)event_string, 0, 0);
                 }
 
             }
@@ -1877,16 +1848,16 @@ void process_incoming()
 
             if (string1 && string2)
             {
-                if (!stricmp((p_in) string1, (p_in) status_conductor->nick))
-                    sprintf(buffer3, "%s%s%s%s %s", timestamp, GetCatalogStr(catalog, 217, "["),
-                            GetCatalogStr(catalog, 359, "Server"), GetCatalogStr(catalog, 218, "]"), string2);
+                if (!stricmp(string1, status_conductor->nick))
+                    sprintf(buffer3, "%s%s%s%s %s", timestamp, GCS(catalog, 217, "["),
+                            GCS(catalog, 359, "Server"), GCS(catalog, 218, "]"), string2);
                 else
-                    sprintf(buffer3, "%s%s%s%s %s %s", timestamp, GetCatalogStr(catalog, 217, "["),
-                            GetCatalogStr(catalog, 359, "Server"), GetCatalogStr(catalog, 218, "]"), string1, string2);
+                    sprintf(buffer3, "%s%s%s%s %s %s", timestamp, GCS(catalog, 217, "["),
+                            GCS(catalog, 359, "Server"), GCS(catalog, 218, "]"), string1, string2);
 
                 add_text_to_conductor_list((char*) buffer3, colour, ACTIVITY);
 
-                if (stricmp((p_in) string1, (p_in) status_conductor->nick))
+                if (stricmp(string1, status_conductor->nick))
                     strcpy(status_conductor->nick, string1);
                 update_your_nickname_text_label();
 
@@ -1921,11 +1892,11 @@ void process_incoming()
                 if (string1 && string2)
                 {
                     if (!strcmp(string1, status_conductor->nick))
-                        sprintf(buffer3, "%s%s%s%s %s", timestamp, GetCatalogStr(catalog, 217, "["),
-                                GetCatalogStr(catalog, 359, "Server"), GetCatalogStr(catalog, 218, "]"), string2);
+                        sprintf(buffer3, "%s%s%s%s %s", timestamp, GCS(catalog, 217, "["),
+                                GCS(catalog, 359, "Server"), GCS(catalog, 218, "]"), string2);
                     else
-                        sprintf(buffer3, "%s%s%s%s %s %s", timestamp, GetCatalogStr(catalog, 217, "["),
-                                GetCatalogStr(catalog, 359, "Server"), GetCatalogStr(catalog, 218, "]"), string1,
+                        sprintf(buffer3, "%s%s%s%s %s %s", timestamp, GCS(catalog, 217, "["),
+                                GCS(catalog, 359, "Server"), GCS(catalog, 218, "]"), string1,
                                 string2);
 
                     if (!status_conductor->conductor)
@@ -2098,9 +2069,9 @@ void process_incoming()
                             if (!string1)
                                 break;
 
-                            sprintf(buffer3, "%s%s%s%s %s %s: ", timestamp, GetCatalogStr(catalog, 217, "["),
-                                    GetCatalogStr(catalog, 286, "Clones"), GetCatalogStr(catalog, 218, "]"),
-                                    GetCatalogStr(catalog, 287, "Detected clones from"), string1);
+                            sprintf(buffer3, "%s%s%s%s %s %s: ", timestamp, GCS(catalog, 217, "["),
+                                    GCS(catalog, 286, "Clones"), GCS(catalog, 218, "]"),
+                                    GCS(catalog, 287, "Detected clones from"), string1);
 
                             for (count = 0; count < status_conductor->conductor->nicks; count++)
                             {
@@ -2175,8 +2146,8 @@ void process_incoming()
 
             if (string1 && string2)
             {
-                sprintf(buffer3, "%s%sMode%s %s%s", timestamp, GetCatalogStr(catalog, 217, "["),
-                        GetCatalogStr(catalog, 218, "]"), string1, string2);
+                sprintf(buffer3, "%s%sMode%s %s%s", timestamp, GCS(catalog, 217, "["),
+                        GCS(catalog, 218, "]"), string1, string2);
                 add_text_to_conductor_list((char*) buffer3, 5, ACTIVITY);
             }
 
@@ -2196,8 +2167,8 @@ void process_incoming()
 
             if (!strcmp(incoming_2, "301"))
             {
-                sprintf(buffer3, "%s%sWhois%s %s User is away %s", timestamp, GetCatalogStr(catalog, 217, "["),
-                        GetCatalogStr(catalog, 218, "]"), work1, string1);
+                sprintf(buffer3, "%s%sWhois%s %s User is away %s", timestamp, GCS(catalog, 217, "["),
+                        GCS(catalog, 218, "]"), work1, string1);
 
             }
             else if (!strcmp(incoming_2, "317")) //seconds idle, signon time
@@ -2259,7 +2230,7 @@ void process_incoming()
                         sprintf(string10, "%ld secs", secs);
 
                     sprintf(buffer3, "%s%sWhois%s Idle: %s, Signed on at: %s", timestamp,
-                            GetCatalogStr(catalog, 217, "["), GetCatalogStr(catalog, 218, "]"), string10,
+                            GCS(catalog, 217, "["), GCS(catalog, 218, "]"), string10,
                             asctime(timeinfo));
 
                     //theres an \n or \r  at the end of this string, get rid of it
@@ -2271,11 +2242,11 @@ void process_incoming()
             {
 
                 if (string1)
-                    sprintf(buffer3, "%s%sWhois%s %s %s", timestamp, GetCatalogStr(catalog, 217, "["),
-                            GetCatalogStr(catalog, 218, "]"), work1, string1);
+                    sprintf(buffer3, "%s%sWhois%s %s %s", timestamp, GCS(catalog, 217, "["),
+                            GCS(catalog, 218, "]"), work1, string1);
                 else
-                    sprintf(buffer3, "%s%sWhois%s %s", timestamp, GetCatalogStr(catalog, 217, "["),
-                            GetCatalogStr(catalog, 218, "]"), work1);
+                    sprintf(buffer3, "%s%sWhois%s %s", timestamp, GCS(catalog, 217, "["),
+                            GCS(catalog, 218, "]"), work1);
 
             }
 
@@ -2316,8 +2287,8 @@ void process_incoming()
             string1 = strtok(NULL, "");
             if (string1)
             {
-                sprintf(buffer3, "%s%sAway%s %s", timestamp, GetCatalogStr(catalog, 217, "["),
-                        GetCatalogStr(catalog, 218, "]"), string1);
+                sprintf(buffer3, "%s%sAway%s %s", timestamp, GCS(catalog, 217, "["),
+                        GCS(catalog, 218, "]"), string1);
                 add_text_to_conductor_list(buffer3, 9, ACTIVITY);
             }
             if (!strcmp(incoming_2, "305"))
@@ -2360,9 +2331,9 @@ void process_incoming()
 
             if (string1 && string2)
             {
-                sprintf(buffer3, "%s%sInvite%s %s %s %s %s", timestamp, GetCatalogStr(catalog, 217, "["),
-                        GetCatalogStr(catalog, 218, "]"), GetCatalogStr(catalog, 159, "You have invited"), string1,
-                        GetCatalogStr(catalog, 160, "to channel"), string2);
+                sprintf(buffer3, "%s%sInvite%s %s %s %s %s", timestamp, GCS(catalog, 217, "["),
+                        GCS(catalog, 218, "]"), GCS(catalog, 159, "You have invited"), string1,
+                        GCS(catalog, 160, "to channel"), string2);
                 add_text_to_conductor_list((char*) buffer3, 14, ACTIVITY);
             }
 
@@ -2477,7 +2448,7 @@ void process_incoming()
             int a = 0;
 
             status_conductor->conductor = status_conductor->root;
-            while (stricmp((p_in) status_conductor->conductor->name, (p_in) channel))
+            while (stricmp(status_conductor->conductor->name, channel))
             {
                 status_conductor->conductor = status_conductor->conductor->next;
                 if (!status_conductor->conductor)
@@ -2839,32 +2810,32 @@ void process_incoming()
             {
                 status_conductor->conductor = status_conductor->root;
 
-                sprintf(buffer3, "%s%sNames%s %s %s:", timestamp, GetCatalogStr(catalog, 217, "["),
-                        GetCatalogStr(catalog, 218, "]"), GetCatalogStr(catalog, 208, "Users in channel"), string7);
+                sprintf(buffer3, "%s%sNames%s %s %s:", timestamp, GCS(catalog, 217, "["),
+                        GCS(catalog, 218, "]"), GCS(catalog, 208, "Users in channel"), string7);
                 add_text_to_current_list(buffer3, 9, ACTIVITY);
 
-                sprintf(buffer3, "%s%sNames%s %s:", timestamp, GetCatalogStr(catalog, 217, "["),
-                        GetCatalogStr(catalog, 218, "]"), string8);
+                sprintf(buffer3, "%s%sNames%s %s:", timestamp, GCS(catalog, 217, "["),
+                        GCS(catalog, 218, "]"), string8);
                 add_text_to_current_list(buffer3, 9, ACTIVITY);
 
             }
             else //we're in the channel we're getting the list from, so lets update the nicklist structure with their names
             {
 
-                sprintf(buffer3, "%s%sNames%s %s %s:", timestamp, GetCatalogStr(catalog, 217, "["),
-                        GetCatalogStr(catalog, 218, "]"), GetCatalogStr(catalog, 208, "Users in channel"), string7);
+                sprintf(buffer3, "%s%sNames%s %s %s:", timestamp, GCS(catalog, 217, "["),
+                        GCS(catalog, 218, "]"), GCS(catalog, 208, "Users in channel"), string7);
                 add_text_to_conductor_list(buffer3, 9, ACTIVITY);
 
-                sprintf(buffer3, "%s%sNames%s %s:", timestamp, GetCatalogStr(catalog, 217, "["),
-                        GetCatalogStr(catalog, 218, "]"), string8);
+                sprintf(buffer3, "%s%sNames%s %s:", timestamp, GCS(catalog, 217, "["),
+                        GCS(catalog, 218, "]"), string8);
                 add_text_to_conductor_list(buffer3, 9, ACTIVITY);
 
                 DoMethod((Object*) status_conductor->conductor->LV_channel, MUIM_NList_Jump, MUIV_NList_Jump_Bottom);
 
-                if (stricmp((p_in) status_conductor->conductor->name, (p_in) string7))
+                if (stricmp(status_conductor->conductor->name, string7))
                 {
                     status_conductor->conductor = status_conductor->root;
-                    while (stricmp((p_in) status_conductor->conductor->name, (p_in) string7))
+                    while (stricmp(status_conductor->conductor->name, string7))
                     {
                         status_conductor->conductor = status_conductor->conductor->next;
                         if (!status_conductor->conductor)
@@ -3027,15 +2998,15 @@ void process_incoming()
             string9[a] = '\0';
 
             status_conductor->conductor = status_conductor->root;
-            while (stricmp((p_in) status_conductor->conductor->name, (p_in) string8))
+            while (stricmp(status_conductor->conductor->name, string8))
             {
                 status_conductor->conductor = status_conductor->conductor->next;
                 if (!status_conductor->conductor)
                     break;
             }
 
-            sprintf(buffer3, "%s%sTopic%s %s", timestamp, GetCatalogStr(catalog, 217, "["),
-                    GetCatalogStr(catalog, 218, "]"), string9);
+            sprintf(buffer3, "%s%sTopic%s %s", timestamp, GCS(catalog, 217, "["),
+                    GCS(catalog, 218, "]"), string9);
 
             if (status_conductor->conductor)
             {
@@ -3106,14 +3077,14 @@ void process_incoming()
             struct tm *timeinfo;
             timeinfo = localtime(&rawtime);
 
-            sprintf(buffer3, "%s%sTopic%s %s %s %s %s", timestamp, GetCatalogStr(catalog, 217, "["),
-                    GetCatalogStr(catalog, 218, "]"), GetCatalogStr(catalog, 161, "set by"), string9,
-                    GetCatalogStr(catalog, 162, "on"), asctime(timeinfo));
+            sprintf(buffer3, "%s%sTopic%s %s %s %s %s", timestamp, GCS(catalog, 217, "["),
+                    GCS(catalog, 218, "]"), GCS(catalog, 161, "set by"), string9,
+                    GCS(catalog, 162, "on"), asctime(timeinfo));
 
             buffer3[strlen(buffer3) - 1] = '\0';
 
             status_conductor->conductor = status_conductor->root;
-            while (stricmp((p_in) status_conductor->conductor->name, (p_in) string8))
+            while (stricmp(status_conductor->conductor->name, string8))
             {
                 status_conductor->conductor = status_conductor->conductor->next;
                 if (!status_conductor->conductor)
@@ -3143,19 +3114,19 @@ void process_incoming()
         {
             char newnick[100];
 
-            if (!stricmp((p_in) status_conductor->nick, (p_in) status_conductor->initial_nick)
+            if (!stricmp(status_conductor->nick, status_conductor->initial_nick)
                     && status_conductor->nick2[0] != '\0')
             {
                 strcpy(newnick, status_conductor->nick2);
             }
 
-            else if (!stricmp((p_in) status_conductor->nick, (p_in) status_conductor->nick2)
+            else if (!stricmp(status_conductor->nick, status_conductor->nick2)
                     && status_conductor->nick3[0] != '\0')
             {
                 strcpy(newnick, status_conductor->nick3);
             }
 
-            else if (!stricmp((p_in) status_conductor->nick, (p_in) status_conductor->nick3))
+            else if (!stricmp(status_conductor->nick, status_conductor->nick3))
             {
                 strcpy(newnick, "^");
                 strcat(newnick, status_conductor->nick);
@@ -3168,9 +3139,9 @@ void process_incoming()
 
             }
 
-            sprintf(buffer3, "%s%sNick%s Nick %s %s %s", timestamp, GetCatalogStr(catalog, 217, "["),
-                    GetCatalogStr(catalog, 218, "]"), status_conductor->nick,
-                    GetCatalogStr(catalog, 163, "in use, retrying with"), newnick);
+            sprintf(buffer3, "%s%sNick%s Nick %s %s %s", timestamp, GCS(catalog, 217, "["),
+                    GCS(catalog, 218, "]"), status_conductor->nick,
+                    GCS(catalog, 163, "in use, retrying with"), newnick);
 
             add_text_to_current_list((char*) buffer3, 9, ACTIVITY);
 
@@ -3222,8 +3193,8 @@ void process_incoming()
             }
             string9[a] = '\0';
 
-            sprintf(buffer3, "%s%s%s%s %s (%s)", timestamp, GetCatalogStr(catalog, 217, "["),
-                    GetCatalogStr(catalog, 164, "Join"), GetCatalogStr(catalog, 218, "]"), string7, string8);
+            sprintf(buffer3, "%s%s%s%s %s (%s)", timestamp, GCS(catalog, 217, "["),
+                    GCS(catalog, 164, "Join"), GCS(catalog, 218, "]"), string7, string8);
 
             //have we opened any channels yet? if not, lets use the root tab
             if (my_settings.no_server_tabs || (!my_settings.no_server_tabs && status_conductor->root->server_tab == 0))
@@ -3373,14 +3344,14 @@ void process_incoming()
                         status_conductor->conductor = status_conductor->root->next;
                     }
 
-                    while (stricmp((p_in) status_conductor->conductor->name, (p_in) string9))
+                    while (stricmp(status_conductor->conductor->name, string9))
                     {
                         status_conductor->conductor = status_conductor->conductor->next;
                         if (!status_conductor->conductor)
                             break;
                     }
 
-                    if (!stricmp((p_in) status_conductor->nick, (p_in) string7))
+                    if (!stricmp(status_conductor->nick, string7))
                     {
                         if (!status_conductor->conductor)
                         {
@@ -3401,9 +3372,9 @@ void process_incoming()
 
                         }
                         else
-                            sprintf(buffer3, "%s%s%s%s %s %s..", timestamp, GetCatalogStr(catalog, 217, "["),
-                                    GetCatalogStr(catalog, 164, "Join"), GetCatalogStr(catalog, 218, "]"),
-                                    GetCatalogStr(catalog, 209, "Auto-rejoining"), string9);
+                            sprintf(buffer3, "%s%s%s%s %s %s..", timestamp, GCS(catalog, 217, "["),
+                                    GCS(catalog, 164, "Join"), GCS(catalog, 218, "]"),
+                                    GCS(catalog, 209, "Auto-rejoining"), string9);
 
                         add_text_to_conductor_list((char*) buffer3, 2, ACTIVITY);
 
@@ -3423,14 +3394,14 @@ void process_incoming()
             {
 
                 status_conductor->conductor = status_conductor->root;
-                while (stricmp((p_in) status_conductor->conductor->name, (p_in) string9))
+                while (stricmp(status_conductor->conductor->name, string9))
                 {
                     status_conductor->conductor = status_conductor->conductor->next;
                     if (!status_conductor->conductor)
                         break;
                 }
 
-                if (!stricmp((p_in) status_conductor->nick, (p_in) string7))
+                if (!stricmp(status_conductor->nick, string7))
                 {
                     if (!status_conductor->conductor)
                     {
@@ -3451,9 +3422,9 @@ void process_incoming()
 
                     }
                     else
-                        sprintf(buffer3, "%s%s%s%s %s %s..", timestamp, GetCatalogStr(catalog, 217, "["),
-                                GetCatalogStr(catalog, 164, "Join"), GetCatalogStr(catalog, 218, "]"),
-                                GetCatalogStr(catalog, 209, "Auto-rejoining"), string9);
+                        sprintf(buffer3, "%s%s%s%s %s %s..", timestamp, GCS(catalog, 217, "["),
+                                GCS(catalog, 164, "Join"), GCS(catalog, 218, "]"),
+                                GCS(catalog, 209, "Auto-rejoining"), string9);
 
                     add_text_to_conductor_list((char*) buffer3, 2, ACTIVITY);
 
@@ -3485,7 +3456,7 @@ void process_incoming()
                             strcpy(target_nick, string7);
                             create_arexx_event_string(my_settings.events[JOIN].arexx_script,
                                     my_settings.events[JOIN].arexx_script2);
-                            Execute(event_string, 0, 0);
+                            Execute((_s_cs)event_string, 0, 0);
                         }
 
                         if (my_settings.clone_detection)
@@ -3524,7 +3495,7 @@ void process_incoming()
                         //lets put the joiners nick back in his private tabs' nicklist struct, if we're currently
                         //talking to him in private
                         status_conductor->conductor = status_conductor->root;
-                        while (stricmp((p_in) status_conductor->conductor->name, (p_in) string7))
+                        while (stricmp(status_conductor->conductor->name, string7))
                         {
                             status_conductor->conductor = status_conductor->conductor->next;
                             if (!status_conductor->conductor)
@@ -3541,9 +3512,9 @@ void process_incoming()
 
                             status_conductor->conductor->nicks = 1;
 
-                            sprintf(buffer3, "%s%s%s%s %s %s", timestamp, GetCatalogStr(catalog, 217, "["),
-                                    GetCatalogStr(catalog, 164, "Join"), GetCatalogStr(catalog, 218, "]"), string7,
-                                    GetCatalogStr(catalog, 299, "has returned to IRC.."));
+                            sprintf(buffer3, "%s%s%s%s %s %s", timestamp, GCS(catalog, 217, "["),
+                                    GCS(catalog, 164, "Join"), GCS(catalog, 218, "]"), string7,
+                                    GCS(catalog, 299, "has returned to IRC.."));
                             add_text_to_conductor_list((char*) buffer3, 2, ACTIVITY);
                         }
                     }
@@ -3589,20 +3560,20 @@ void process_incoming()
                 if (string5)
                 {
                     string5[a] = '(';
-                    sprintf(buffer3, "%s%sKick%s %s %s %s %s)", timestamp, GetCatalogStr(catalog, 217, "["),
-                            GetCatalogStr(catalog, 218, "]"), string4, GetCatalogStr(catalog, 167, "was kicked by"),
+                    sprintf(buffer3, "%s%sKick%s %s %s %s %s)", timestamp, GCS(catalog, 217, "["),
+                            GCS(catalog, 218, "]"), string4, GCS(catalog, 167, "was kicked by"),
                             string7, string5);
                 }
                 else
                 {
-                    sprintf(buffer3, "%s%sKick%s %s %s %s", timestamp, GetCatalogStr(catalog, 217, "["),
-                            GetCatalogStr(catalog, 218, "]"), string4, GetCatalogStr(catalog, 167, "was kicked by"),
+                    sprintf(buffer3, "%s%sKick%s %s %s %s", timestamp, GCS(catalog, 217, "["),
+                            GCS(catalog, 218, "]"), string4, GCS(catalog, 167, "was kicked by"),
                             string7);
 
                 }
 
                 status_conductor->conductor = status_conductor->root;
-                while (stricmp((p_in) status_conductor->conductor->name, (p_in) string3))
+                while (stricmp(status_conductor->conductor->name, string3))
                 {
                     status_conductor->conductor = status_conductor->conductor->next;
                     if (!status_conductor->conductor)
@@ -3611,10 +3582,10 @@ void process_incoming()
                 if (status_conductor->conductor)
                 {
 
-                    if (!stricmp((p_in) string4, (p_in) status_conductor->nick))
+                    if (!stricmp(string4, status_conductor->nick))
                     {
-                        sprintf(buffer3, "%s%sKick%s %s %s %s)", timestamp, GetCatalogStr(catalog, 217, "["),
-                                GetCatalogStr(catalog, 218, "]"), GetCatalogStr(catalog, 168, "You were kicked by"),
+                        sprintf(buffer3, "%s%sKick%s %s %s %s)", timestamp, GCS(catalog, 217, "["),
+                                GCS(catalog, 218, "]"), GCS(catalog, 168, "You were kicked by"),
                                 string7, string5);
 
                         add_text_to_conductor_list((char*) buffer3, 14, ACTIVITY);
@@ -3648,24 +3619,24 @@ void process_incoming()
                         if (string5)
                         {
                             string5[a] = '(';
-                            sprintf(buffer3, "%sKick%s %s %s %s %s)", GetCatalogStr(catalog, 217, "["),
-                                    GetCatalogStr(catalog, 218, "]"), string4,
-                                    GetCatalogStr(catalog, 167, "was kicked by"), string7, string5);
+                            sprintf(buffer3, "%sKick%s %s %s %s %s)", GCS(catalog, 217, "["),
+                                    GCS(catalog, 218, "]"), string4,
+                                    GCS(catalog, 167, "was kicked by"), string7, string5);
                         }
                         else
-                            sprintf(buffer3, "%sKick%s %s %s %s", GetCatalogStr(catalog, 217, "["),
-                                    GetCatalogStr(catalog, 218, "]"), string4,
-                                    GetCatalogStr(catalog, 167, "was kicked by"), string7);
+                            sprintf(buffer3, "%sKick%s %s %s %s", GCS(catalog, 217, "["),
+                                    GCS(catalog, 218, "]"), string4,
+                                    GCS(catalog, 167, "was kicked by"), string7);
 
-                        if (!stricmp((p_in) string4, (p_in) status_conductor->nick))
-                            sprintf(buffer3, "%sKick%s %s %s %s)", GetCatalogStr(catalog, 217, "["),
-                                    GetCatalogStr(catalog, 218, "]"), GetCatalogStr(catalog, 168, "You were kicked by"),
+                        if (!stricmp(string4, status_conductor->nick))
+                            sprintf(buffer3, "%sKick%s %s %s %s)", GCS(catalog, 217, "["),
+                                    GCS(catalog, 218, "]"), GCS(catalog, 168, "You were kicked by"),
                                     string7, string5);
 
                         strcpy(target_nick, string7);
                         create_arexx_event_string(my_settings.events[KICK].arexx_script,
                                 my_settings.events[KICK].arexx_script2);
-                        Execute(event_string, 0, 0);
+                        Execute((_s_cs)event_string, 0, 0);
                     }
 
                 }
@@ -3762,12 +3733,12 @@ void process_incoming()
 
                     if (a == 1)
                         sprintf(buffer3, "%s%sPing%s PING Reply %s %s, %i second", timestamp,
-                                GetCatalogStr(catalog, 217, "["), GetCatalogStr(catalog, 218, "]"),
-                                GetCatalogStr(catalog, 210, "from"), string7, a);
+                                GCS(catalog, 217, "["), GCS(catalog, 218, "]"),
+                                GCS(catalog, 210, "from"), string7, a);
                     else
                         sprintf(buffer3, "%s%sPing%s PING Reply %s %s, %i seconds", timestamp,
-                                GetCatalogStr(catalog, 217, "["), GetCatalogStr(catalog, 218, "]"),
-                                GetCatalogStr(catalog, 210, "from"), string7, a);
+                                GCS(catalog, 217, "["), GCS(catalog, 218, "]"),
+                                GCS(catalog, 210, "from"), string7, a);
                     colour = 6;
 
                 }
@@ -3781,7 +3752,7 @@ void process_incoming()
                     {
                         string5[strlen(string5) - 1] = '\0';
                         sprintf(buffer3, "%s%sVersion%s %s VERSION Reply: %s", timestamp,
-                                GetCatalogStr(catalog, 217, "["), GetCatalogStr(catalog, 218, "]"), string7, string5);
+                                GCS(catalog, 217, "["), GCS(catalog, 218, "]"), string7, string5);
                         colour = 6;
                     }
 
@@ -3795,8 +3766,8 @@ void process_incoming()
                     if (string5)
                     {
                         string5[strlen(string5) - 1] = '\0';
-                        sprintf(buffer3, "%s%sTime%s %s TIME Reply: %s", timestamp, GetCatalogStr(catalog, 217, "["),
-                                GetCatalogStr(catalog, 218, "]"), string7, string5);
+                        sprintf(buffer3, "%s%sTime%s %s TIME Reply: %s", timestamp, GCS(catalog, 217, "["),
+                                GCS(catalog, 218, "]"), string7, string5);
                         colour = 6;
                     }
                 }
@@ -3836,7 +3807,7 @@ void process_incoming()
                     strcpy(target_nick, string7);
                     create_arexx_event_string(my_settings.events[NOTICE].arexx_script,
                             my_settings.events[NOTICE].arexx_script2);
-                    Execute(event_string, 0, 0);
+                    Execute((_s_cs)event_string, 0, 0);
                 }
 
             }
@@ -3864,27 +3835,27 @@ void process_incoming()
             {
 
                 if (string5)
-                    sprintf(buffer3, "%sMode%s%s %s: %s %s", GetCatalogStr(catalog, 217, "["),
-                            GetCatalogStr(catalog, 218, "]"), string1, GetCatalogStr(catalog, 211, "sets mode"),
+                    sprintf(buffer3, "%sMode%s%s %s: %s %s", GCS(catalog, 217, "["),
+                            GCS(catalog, 218, "]"), string1, GCS(catalog, 211, "sets mode"),
                             string4, string5);
                 else
-                    sprintf(buffer3, "%sMode%s%s %s: %s", GetCatalogStr(catalog, 217, "["),
-                            GetCatalogStr(catalog, 218, "]"), string1, GetCatalogStr(catalog, 211, "sets mode"),
+                    sprintf(buffer3, "%sMode%s%s %s: %s", GCS(catalog, 217, "["),
+                            GCS(catalog, 218, "]"), string1, GCS(catalog, 211, "sets mode"),
                             string4);
 
                 strcpy(target_nick, string1);
                 create_arexx_event_string(my_settings.events[MODE_CHANGE].arexx_script,
                         my_settings.events[MODE_CHANGE].arexx_script2);
-                Execute(event_string, 0, 0);
+                Execute((_s_cs)event_string, 0, 0);
             }
 
             if (string5)
-                sprintf(buffer3, "%s%sMode%s%s %s: %s %s", timestamp, GetCatalogStr(catalog, 217, "["),
-                        GetCatalogStr(catalog, 218, "]"), string1, GetCatalogStr(catalog, 211, "sets mode"), string4,
+                sprintf(buffer3, "%s%sMode%s%s %s: %s %s", timestamp, GCS(catalog, 217, "["),
+                        GCS(catalog, 218, "]"), string1, GCS(catalog, 211, "sets mode"), string4,
                         string5);
             else
-                sprintf(buffer3, "%s%sMode%s%s %s: %s", timestamp, GetCatalogStr(catalog, 217, "["),
-                        GetCatalogStr(catalog, 218, "]"), string1, GetCatalogStr(catalog, 211, "sets mode"), string4);
+                sprintf(buffer3, "%s%sMode%s%s %s: %s", timestamp, GCS(catalog, 217, "["),
+                        GCS(catalog, 218, "]"), string1, GCS(catalog, 211, "sets mode"), string4);
 
             //if(DEBUG) printf("changing modes..\n");
 
@@ -3897,7 +3868,7 @@ void process_incoming()
                 int a = 0;
                 status_conductor->conductor = status_conductor->root;
 
-                while (stricmp((p_in) status_conductor->conductor->name, (p_in) string3))
+                while (stricmp(status_conductor->conductor->name, string3))
                 {
                     status_conductor->conductor = status_conductor->conductor->next;
                     if (!status_conductor->conductor)
@@ -4320,25 +4291,25 @@ void process_incoming()
                 if (string4[0] == ':')
                 {
                     string4[0] = '(';
-                    sprintf(buffer3, "%s%s%s%s %s (%s) %s)", timestamp, GetCatalogStr(catalog, 217, "["),
-                            GetCatalogStr(catalog, 165, "Part"), GetCatalogStr(catalog, 218, "]"), string7, string8,
+                    sprintf(buffer3, "%s%s%s%s %s (%s) %s)", timestamp, GCS(catalog, 217, "["),
+                            GCS(catalog, 165, "Part"), GCS(catalog, 218, "]"), string7, string8,
                             string4);
                 }
                 else
-                    sprintf(buffer3, "%s%s%s%s %s (%s) (%s)", timestamp, GetCatalogStr(catalog, 217, "["),
-                            GetCatalogStr(catalog, 165, "Part"), GetCatalogStr(catalog, 218, "]"), string7, string8,
+                    sprintf(buffer3, "%s%s%s%s %s (%s) (%s)", timestamp, GCS(catalog, 217, "["),
+                            GCS(catalog, 165, "Part"), GCS(catalog, 218, "]"), string7, string8,
                             string4);
             }
             else
-                sprintf(buffer3, "%s%s%s%s %s (%s)", timestamp, GetCatalogStr(catalog, 217, "["),
-                        GetCatalogStr(catalog, 165, "Part"), GetCatalogStr(catalog, 218, "]"), string7, string8);
+                sprintf(buffer3, "%s%s%s%s %s (%s)", timestamp, GCS(catalog, 217, "["),
+                        GCS(catalog, 165, "Part"), GCS(catalog, 218, "]"), string7, string8);
 
             status_conductor->previous_query = status_conductor->root;
             status_conductor->conductor = status_conductor->root;
 
             if (string3)
             {
-                while (stricmp((p_in) status_conductor->conductor->name, (p_in) string3))
+                while (stricmp(status_conductor->conductor->name, string3))
                 {
                     status_conductor->conductor = status_conductor->conductor->next;
                     if (!status_conductor->conductor)
@@ -4357,7 +4328,7 @@ void process_incoming()
                         strcpy(target_nick, string7);
                         create_arexx_event_string(my_settings.events[PART].arexx_script,
                                 my_settings.events[PART].arexx_script2);
-                        Execute(event_string, 0, 0);
+                        Execute((_s_cs)event_string, 0, 0);
                     }
 
                     RemoveNick(string7);
@@ -4402,8 +4373,8 @@ void process_incoming()
 
             status_conductor->conductor = status_conductor->root;
 
-            sprintf(buffer3, "%s%s%s%s %s (%s) (%s)", timestamp, GetCatalogStr(catalog, 217, "["),
-                    GetCatalogStr(catalog, 166, "Quit"), GetCatalogStr(catalog, 218, "]"), string7, string8, string9);
+            sprintf(buffer3, "%s%s%s%s %s (%s) (%s)", timestamp, GCS(catalog, 217, "["),
+                    GCS(catalog, 166, "Quit"), GCS(catalog, 218, "]"), string7, string8, string9);
             if ((my_settings.events[QUIT].use_when == 1 && is_window_active())
                     || (my_settings.events[QUIT].use_when == 2 && !is_window_active())
                     || my_settings.events[QUIT].use_when == 3)
@@ -4411,7 +4382,7 @@ void process_incoming()
                 strcpy(target_nick, string7);
                 create_arexx_event_string(my_settings.events[QUIT].arexx_script,
                         my_settings.events[QUIT].arexx_script2);
-                Execute(event_string, 0, 0);
+                Execute((_s_cs)event_string, 0, 0);
             }
 
             while (status_conductor->conductor)
@@ -4422,8 +4393,8 @@ void process_incoming()
                     //if(status_conductor->conductor->name[0]=='#' || status_conductor->conductor->name[0]=='&')
                     if (strcspn(status_conductor->conductor->name, status_conductor->chantypes) == 0)
                     {
-                        sprintf(buffer3, "%s%s%s%s %s (%s) (%s)", timestamp, GetCatalogStr(catalog, 217, "["),
-                                GetCatalogStr(catalog, 166, "Quit"), GetCatalogStr(catalog, 218, "]"), string7, string8,
+                        sprintf(buffer3, "%s%s%s%s %s (%s) (%s)", timestamp, GCS(catalog, 217, "["),
+                                GCS(catalog, 166, "Quit"), GCS(catalog, 218, "]"), string7, string8,
                                 string9);
                         if (RemoveNick(string7))
                             add_text_to_conductor_list((char*) buffer3, 4, ACTIVITY);
@@ -4431,9 +4402,9 @@ void process_incoming()
                     }
                     else
                     {
-                        sprintf(buffer3, "%s%s%s%s %s %s.. (%s)", timestamp, GetCatalogStr(catalog, 217, "["),
-                                GetCatalogStr(catalog, 166, "Quit"), GetCatalogStr(catalog, 218, "]"), string7,
-                                GetCatalogStr(catalog, 298, "has left IRC.."), string9);
+                        sprintf(buffer3, "%s%s%s%s %s %s.. (%s)", timestamp, GCS(catalog, 217, "["),
+                                GCS(catalog, 166, "Quit"), GCS(catalog, 218, "]"), string7,
+                                GCS(catalog, 298, "has left IRC.."), string9);
                         //RemoveNick(string7);
 
                         //if(strcspn(status_conductor->conductor->name,status_conductor->chantypes)>0)
@@ -4514,9 +4485,9 @@ void process_incoming()
 
             }
 
-            sprintf(buffer3, "%s%sNick%s %s %s %s", timestamp, GetCatalogStr(catalog, 217, "["),
-                    GetCatalogStr(catalog, 218, "]"), string7, GetCatalogStr(catalog, 169, "is now known as"), string9);
-            if (!stricmp((p_in) string7, (p_in) status_conductor->nick))
+            sprintf(buffer3, "%s%sNick%s %s %s %s", timestamp, GCS(catalog, 217, "["),
+                    GCS(catalog, 218, "]"), string7, GCS(catalog, 169, "is now known as"), string9);
+            if (!stricmp(string7, status_conductor->nick))
             {
                 strcpy(status_conductor->nick, string9);
 
@@ -4535,7 +4506,7 @@ void process_incoming()
                     ChangeNick(string7, string9, buffer3);
 
                 if (status_conductor->conductor->BT_querybutton
-                        && !stricmp((p_in) status_conductor->conductor->name, (p_in) string7))
+                        && !stricmp(status_conductor->conductor->name, string7))
                 {
                     if (status_conductor->conductor->activity == 0)
                         sprintf(string10, "\033c\033I[2:00000000,00000000,00000000] %s", string9);
@@ -4642,51 +4613,10 @@ void process_incoming()
             BOOL channel_message = FALSE;
             BOOL isAction = FALSE;
 
-            //if(string9[0] == '#' || string9[0] == '&')
-            /*if(strcspn(string9,status_conductor->chantypes)==0)
-             {
-             channel_message=TRUE;
-
-             while(stricmp((p_in)status_conductor->conductor->name,(p_in) string9))
-             {
-             status_conductor->conductor=status_conductor->conductor->next;
-             if(!status_conductor->conductor)
-             {
-             break;
-             }
-             }
-
-
-             }
-
-             else if(!stricmp((p_in)string9,(p_in)status_conductor->nick))
-             {
-
-             while(stricmp((p_in)status_conductor->conductor->name,(p_in) string7))
-             {
-             status_conductor->conductor=status_conductor->conductor->next;
-             if(!status_conductor->conductor) break;
-             }
-
-             if(!status_conductor->conductor)
-             {
-
-             status_conductor->conductor=status_conductor->root;
-             while(status_conductor->conductor->name[0] != '-')
-             {
-             status_conductor->conductor=status_conductor->conductor->next;
-             if(!status_conductor->conductor) break;
-             }
-
-
-             }
-
-             }*/
-
-            if (!stricmp((p_in) string9, (p_in) status_conductor->nick))
+            if (!stricmp(string9, status_conductor->nick))
             {
 
-                while (stricmp((p_in) status_conductor->conductor->name, (p_in) string7))
+                while (stricmp(status_conductor->conductor->name, string7))
                 {
                     status_conductor->conductor = status_conductor->conductor->next;
                     if (!status_conductor->conductor)
@@ -4711,7 +4641,7 @@ void process_incoming()
             {
                 channel_message = TRUE;
 
-                while (stricmp((p_in) status_conductor->conductor->name, (p_in) string9))
+                while (stricmp(status_conductor->conductor->name, string9))
                 {
                     status_conductor->conductor = status_conductor->conductor->next;
                     if (!status_conductor->conductor)
@@ -4831,7 +4761,7 @@ void process_incoming()
                         strcpy(target_nick, string7);
                         create_arexx_event_string(my_settings.events[CHANNEL_MESSAGE].arexx_script,
                                 my_settings.events[CHANNEL_MESSAGE].arexx_script2);
-                        Execute(event_string, 0, 0);
+                        Execute((_s_cs)event_string, 0, 0);
 
                         strcpy(buffer3, backup);
                         channel_message = TRUE;
@@ -4853,7 +4783,7 @@ void process_incoming()
                         strcpy(target_nick, string7);
                         create_arexx_event_string(my_settings.events[CHANNEL_MESSAGE].arexx_script,
                                 my_settings.events[CHANNEL_MESSAGE].arexx_script2);
-                        Execute(event_string, 0, 0);
+                        Execute((_s_cs)event_string, 0, 0);
 
                         strcpy(buffer3, backup);
 
@@ -4878,8 +4808,8 @@ void process_incoming()
                     }
                     string5[strlen(string5)] = '\0';
 
-                    sprintf(buffer3, "%s%sSound%s %s %s %s", timestamp, GetCatalogStr(catalog, 217, "["),
-                            GetCatalogStr(catalog, 218, "]"), string7, GetCatalogStr(catalog, 170, "plays"), string5);
+                    sprintf(buffer3, "%s%sSound%s %s %s %s", timestamp, GCS(catalog, 217, "["),
+                            GCS(catalog, 218, "]"), string7, GCS(catalog, 170, "plays"), string5);
 
                     play_external_sound_replayer(string5);
 
@@ -4897,11 +4827,11 @@ void process_incoming()
                     if (strcspn(string9, status_conductor->chantypes) == 0)
 
                         sprintf(buffer3, "%s%sCTCP%s CTCP VERSION %s %s %s", timestamp,
-                                GetCatalogStr(catalog, 217, "["), GetCatalogStr(catalog, 218, "]"), string9,
-                                GetCatalogStr(catalog, 210, "from"), string7);
+                                GCS(catalog, 217, "["), GCS(catalog, 218, "]"), string9,
+                                GCS(catalog, 210, "from"), string7);
                     else
-                        sprintf(buffer3, "%s%sCTCP%s CTCP VERSION %s %s", timestamp, GetCatalogStr(catalog, 217, "["),
-                                GetCatalogStr(catalog, 218, "]"), GetCatalogStr(catalog, 210, "from"), string7);
+                        sprintf(buffer3, "%s%sCTCP%s CTCP VERSION %s %s", timestamp, GCS(catalog, 217, "["),
+                                GCS(catalog, 218, "]"), GCS(catalog, 210, "from"), string7);
                     sprintf(sendstuff, "NOTICE %s :\001VERSION %s \001\r\n", string7, VERSION_CTCP);
                     colour = 6;
 
@@ -4916,12 +4846,12 @@ void process_incoming()
 
                     //if(string9[0]=='#')
                     if (strcspn(string9, status_conductor->chantypes) == 0)
-                        sprintf(buffer3, "%s%sCTCP%s CTCP PING %s %s %s", timestamp, GetCatalogStr(catalog, 217, "["),
-                                GetCatalogStr(catalog, 218, "]"), string9, GetCatalogStr(catalog, 210, "from"),
+                        sprintf(buffer3, "%s%sCTCP%s CTCP PING %s %s %s", timestamp, GCS(catalog, 217, "["),
+                                GCS(catalog, 218, "]"), string9, GCS(catalog, 210, "from"),
                                 string7);
                     else
-                        sprintf(buffer3, "%s%sCTCP%s CTCP PING %s %s", timestamp, GetCatalogStr(catalog, 217, "["),
-                                GetCatalogStr(catalog, 218, "]"), GetCatalogStr(catalog, 210, "from"), string7);
+                        sprintf(buffer3, "%s%sCTCP%s CTCP PING %s %s", timestamp, GCS(catalog, 217, "["),
+                                GCS(catalog, 218, "]"), GCS(catalog, 210, "from"), string7);
                     sprintf(sendstuff, "NOTICE %s :%s\r\n", string7, string10);
                     colour = 6;
 
@@ -4935,12 +4865,12 @@ void process_incoming()
                 {
                     //if(string9[0]=='#')
                     if (strcspn(string9, status_conductor->chantypes) == 0)
-                        sprintf(buffer3, "%s%sCTCP%s CTCP TIME %s %s %s", timestamp, GetCatalogStr(catalog, 217, "["),
-                                GetCatalogStr(catalog, 218, "]"), string9, GetCatalogStr(catalog, 210, "from"),
+                        sprintf(buffer3, "%s%sCTCP%s CTCP TIME %s %s %s", timestamp, GCS(catalog, 217, "["),
+                                GCS(catalog, 218, "]"), string9, GCS(catalog, 210, "from"),
                                 string7);
                     else
-                        sprintf(buffer3, "%s%sCTCP%s CTCP TIME %s %s", timestamp, GetCatalogStr(catalog, 217, "["),
-                                GetCatalogStr(catalog, 218, "]"), GetCatalogStr(catalog, 210, "from"), string7);
+                        sprintf(buffer3, "%s%sCTCP%s CTCP TIME %s %s", timestamp, GCS(catalog, 217, "["),
+                                GCS(catalog, 218, "]"), GCS(catalog, 210, "from"), string7);
 
                     get_sys_time(systime); // Get current system time
 #ifdef __amigaos4__
@@ -5016,8 +4946,8 @@ void process_incoming()
                 {
                     string10[0] = ' ';
                     string10[strlen(string10) - 1] = ' ';
-                    sprintf(buffer3, "%s%sCTCP%s UNKNOWN CTCP%s%s %s", timestamp, GetCatalogStr(catalog, 217, "["),
-                            GetCatalogStr(catalog, 218, "]"), string10, GetCatalogStr(catalog, 210, "from"), string7);
+                    sprintf(buffer3, "%s%sCTCP%s UNKNOWN CTCP%s%s %s", timestamp, GCS(catalog, 217, "["),
+                            GCS(catalog, 218, "]"), string10, GCS(catalog, 210, "from"), string7);
                     colour = 6;
                     is_it_a_ctcp = TRUE;
                     channel_message = TRUE;
@@ -5037,7 +4967,7 @@ void process_incoming()
                         strcpy(target_nick, string7);
                         create_arexx_event_string(my_settings.events[CTCP_REQUEST].arexx_script,
                                 my_settings.events[CTCP_REQUEST].arexx_script2);
-                        Execute(event_string, 0, 0);
+                        Execute((_s_cs)event_string, 0, 0);
 
                         strcpy(buffer3, backup);
 
@@ -5096,8 +5026,8 @@ void process_incoming()
                                             OFFSET_BEGINNING);
 #endif
                                 sprintf(buffer3, "%s%sDCC%s %s %s >> %s @ %s bytes", timestamp,
-                                        GetCatalogStr(catalog, 217, "["), GetCatalogStr(catalog, 218, "]"),
-                                        GetCatalogStr(catalog, 259, "RESUME file"), dcc_send_conductor->filename,
+                                        GCS(catalog, 217, "["), GCS(catalog, 218, "]"),
+                                        GCS(catalog, 259, "RESUME file"), dcc_send_conductor->filename,
                                         dcc_send_conductor->nick, string3);
 
                                 if ((my_settings.events[DCC_RECV_OFFERED].use_when == 1 && is_window_active())
@@ -5108,7 +5038,7 @@ void process_incoming()
 
                                     create_arexx_event_string(my_settings.events[DCC_RECV_OFFERED].arexx_script,
                                             my_settings.events[DCC_RECV_OFFERED].arexx_script2);
-                                    Execute(event_string, 0, 0);
+                                    Execute((_s_cs)event_string, 0, 0);
                                 }
 
                             }
@@ -5182,10 +5112,10 @@ void process_incoming()
                                 connect(dcc_conductor->dcc_socket, (struct sockaddr*) &dcc_conductor->test,
                                         sizeof(struct sockaddr));
                                 colour = 9;
-                                sprintf(buffer3, "%s%sDCC%s %s %s %s %s", timestamp, GetCatalogStr(catalog, 217, "["),
-                                        GetCatalogStr(catalog, 218, "]"),
-                                        GetCatalogStr(catalog, 171, "Attempting to resume"), dcc_conductor->filename,
-                                        GetCatalogStr(catalog, 210, "from"), dcc_conductor->nick); //,dcc_conductor->address,dcc_conductor->port);
+                                sprintf(buffer3, "%s%sDCC%s %s %s %s %s", timestamp, GCS(catalog, 217, "["),
+                                        GCS(catalog, 218, "]"),
+                                        GCS(catalog, 171, "Attempting to resume"), dcc_conductor->filename,
+                                        GCS(catalog, 210, "from"), dcc_conductor->nick); //,dcc_conductor->address,dcc_conductor->port);
                             }
                             dcc_conductor = dcc_conductor->next;
 
@@ -5214,17 +5144,17 @@ void process_incoming()
                         if (!stricmp(work3, "0") || !stricmp(work2, "0"))
                         {
                             colour = 9;
-                            sprintf(buffer3, "%s%sDCC%s%s - %s", timestamp, GetCatalogStr(catalog, 217, "["),
-                                    GetCatalogStr(catalog, 218, "]"), string7,
-                                    GetCatalogStr(catalog, 188, "Unable to establish DCC CHAT Connection"));
+                            sprintf(buffer3, "%s%sDCC%s%s - %s", timestamp, GCS(catalog, 217, "["),
+                                    GCS(catalog, 218, "]"), string7,
+                                    GCS(catalog, 188, "Unable to establish DCC CHAT Connection"));
                         }
                         else
                         {
                             create_recv_dcc_chat(string7, work2, work3);
                             colour = 9;
-                            sprintf(buffer3, "%s%sDCC%s%s - %s", timestamp, GetCatalogStr(catalog, 217, "["),
-                                    GetCatalogStr(catalog, 218, "]"), string7,
-                                    GetCatalogStr(catalog, 172, "Attempting to accept DCC CHAT request"));
+                            sprintf(buffer3, "%s%sDCC%s%s - %s", timestamp, GCS(catalog, 217, "["),
+                                    GCS(catalog, 218, "]"), string7,
+                                    GCS(catalog, 172, "Attempting to accept DCC CHAT request"));
                         }
                     }
 
@@ -5271,8 +5201,8 @@ void process_incoming()
                         create_recv_dcc(string7, work1, work2, work6, work7);
 
                         sprintf(buffer3, "%s%sDCC%s SEND: %s %s %s port %i", timestamp,
-                                GetCatalogStr(catalog, 217, "["), GetCatalogStr(catalog, 218, "]"), work1,
-                                GetCatalogStr(catalog, 173, "offered from"), string7, work6);
+                                GCS(catalog, 217, "["), GCS(catalog, 218, "]"), work1,
+                                GCS(catalog, 173, "offered from"), string7, work6);
                         colour = 9;
 
                         if ((my_settings.events[DCC_RECV_OFFERED].use_when == 1 && is_window_active())
@@ -5283,7 +5213,7 @@ void process_incoming()
 
                             create_arexx_event_string(my_settings.events[DCC_RECV_OFFERED].arexx_script,
                                     my_settings.events[DCC_RECV_OFFERED].arexx_script2);
-                            Execute(event_string, 0, 0);
+                            Execute((_s_cs)event_string, 0, 0);
                         }
 
                     }
@@ -5346,7 +5276,7 @@ void process_incoming()
                         if ((my_settings.events[HIGHLIGHT].use_when == 1 && is_window_active())
                                 || (my_settings.events[HIGHLIGHT].use_when == 2 && !is_window_active())
                                 || my_settings.events[HIGHLIGHT].use_when == 3)
-                            Execute(event_string, 0, 0);
+                            Execute((_s_cs)event_string, 0, 0);
 
                     }
 
@@ -5395,7 +5325,7 @@ void process_incoming()
                         if ((my_settings.events[HIGHLIGHT].use_when == 1 && is_window_active())
                                 || (my_settings.events[HIGHLIGHT].use_when == 2 && !is_window_active())
                                 || my_settings.events[HIGHLIGHT].use_when == 3)
-                            Execute(event_string, 0, 0);
+                            Execute((_s_cs)event_string, 0, 0);
                     }
 
                 }
@@ -5424,7 +5354,7 @@ void process_incoming()
 
                     create_arexx_event_string(my_settings.events[PRIVATE_MESSAGE].arexx_script,
                             my_settings.events[PRIVATE_MESSAGE].arexx_script2);
-                    Execute(event_string, 0, 0);
+                    Execute((_s_cs)event_string, 0, 0);
 
                     strcpy(buffer3, backup);
 
@@ -5484,12 +5414,12 @@ void process_incoming()
 
             //update_nicks_hostname(string1, string8);
 
-            sprintf(buffer3, "%s%sTopic%s %s %s '%s'", timestamp, GetCatalogStr(catalog, 217, "["),
-                    GetCatalogStr(catalog, 218, "]"), string7, GetCatalogStr(catalog, 174, "changes the topic to"),
+            sprintf(buffer3, "%s%sTopic%s %s %s '%s'", timestamp, GCS(catalog, 217, "["),
+                    GCS(catalog, 218, "]"), string7, GCS(catalog, 174, "changes the topic to"),
                     string10);
 
             status_conductor->conductor = status_conductor->root;
-            while (stricmp((p_in) status_conductor->conductor->name, (p_in) string9))
+            while (stricmp(status_conductor->conductor->name, string9))
             {
                 status_conductor->conductor = status_conductor->conductor->next;
                 if (!status_conductor->conductor)
@@ -5526,8 +5456,8 @@ void process_incoming()
 
             if (string2)
             {
-                sprintf(buffer3, "%s%s%s%s %s", timestamp, GetCatalogStr(catalog, 217, "["),
-                        GetCatalogStr(catalog, 0, "Error"), GetCatalogStr(catalog, 218, "]"), string2);
+                sprintf(buffer3, "%s%s%s%s %s", timestamp, GCS(catalog, 217, "["),
+                        GCS(catalog, 0, "Error"), GCS(catalog, 218, "]"), string2);
                 add_text_to_current_list((char*) buffer3, 9, ACTIVITY);
             }
 
@@ -5540,12 +5470,12 @@ void process_incoming()
 
             if (string1 && string2)
             {
-                if (!stricmp((p_in) string1, (p_in) status_conductor->nick))
-                    sprintf(buffer3, "%s%s%s%s %s", timestamp, GetCatalogStr(catalog, 217, "["),
-                            GetCatalogStr(catalog, 359, "Server"), GetCatalogStr(catalog, 218, "]"), string2);
+                if (!stricmp(string1, status_conductor->nick))
+                    sprintf(buffer3, "%s%s%s%s %s", timestamp, GCS(catalog, 217, "["),
+                            GCS(catalog, 359, "Server"), GCS(catalog, 218, "]"), string2);
                 else
-                    sprintf(buffer3, "%s%s%s%s %s %s", timestamp, GetCatalogStr(catalog, 217, "["),
-                            GetCatalogStr(catalog, 359, "Server"), GetCatalogStr(catalog, 218, "]"), string1, string2);
+                    sprintf(buffer3, "%s%s%s%s %s %s", timestamp, GCS(catalog, 217, "["),
+                            GCS(catalog, 359, "Server"), GCS(catalog, 218, "]"), string1, string2);
 
                 //status_conductor->conductor=status_conductor->root;
                 for (status_conductor->conductor = status_conductor->root; status_conductor->conductor;
@@ -5576,8 +5506,8 @@ void process_incoming()
                                 send_text(sendstuff);
 
                                 sprintf(buffer3, "%s%s%s%s Automatically sending: %s", timestamp,
-                                        GetCatalogStr(catalog, 217, "["), GetCatalogStr(catalog, 359, "Server"),
-                                        GetCatalogStr(catalog, 218, "]"), sendstuff);
+                                        GCS(catalog, 217, "["), GCS(catalog, 359, "Server"),
+                                        GCS(catalog, 218, "]"), sendstuff);
 
                                 if (status_conductor == status_current && !status_conductor->root->server_tab) //stricmp(status_conductor->root->displayed_name,"Status"))
                                 {
@@ -5601,7 +5531,7 @@ void process_incoming()
             if (string1 && !strcmp(incoming_2, "251"))
             {
 
-                if (stricmp((p_in) string1, (p_in) status_conductor->nick))
+                if (stricmp(string1, status_conductor->nick))
                     strcpy(status_conductor->nick, string1);
 
             }

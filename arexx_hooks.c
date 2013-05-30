@@ -25,7 +25,7 @@ char string_to_send2[800];
 struct NewMenu AREXX_Menu[MAX_AREXX_SCRIPTS];
 
 APTR MN1_AREXX;
-char maintask_basename[100];
+TEXT maintask_basename[100];
 
 struct AREXX_Menu AREXX_Menu_Items[MAX_AREXX_SCRIPTS];
 
@@ -38,7 +38,7 @@ BOOL SafePutToPort(struct XYMessage *message, STRPTR portname)
     struct MsgPort *port;
     Forbid();
 
-    port = FindPort((c_in)portname);
+    port = FindPort(portname);
     if (port) PutMsg(port, (struct Message*)message);
     Permit();
     return(port ? TRUE : FALSE);
@@ -65,13 +65,13 @@ int add_scripts_to_menu()
     }
     eac->eac_LastKey = 0;
 
-    BPTR my_lock=Lock("progdir:arexx_scripts",ACCESS_READ);
+    BPTR my_lock=Lock((_s_cs)"progdir:arexx_scripts",ACCESS_READ);
 
 
     if(MN1_AREXX) DoMethod((Object*)WookieChat->MN_, OM_REMMEMBER, (Object*)MN1_AREXX);
 
     MN1_AREXX = (Object*)MenuObject,
-        MUIA_Menu_Title, (char*)GetCatalogStr(catalog,331,"ARexx"),
+        MUIA_Menu_Title, GCS(catalog,331,"ARexx"),
     End;
 
     if(!my_lock)
@@ -84,7 +84,7 @@ int add_scripts_to_menu()
 
 
 
-    strcpy(AREXX_Menu_Items[count].MenuItem_String,GetCatalogStr(catalog,330,"<Rescan scripts directory>"));
+    strcpy(AREXX_Menu_Items[count].MenuItem_String,(char *)GCS(catalog,330,"<Rescan scripts directory>"));
     strcpy(AREXX_Menu_Items[count].MenuItem_FullFilename,"");
     AREXX_Menu_Items[count].return_id=AREXX_MENU_VALUES+count;
 
@@ -2130,9 +2130,9 @@ static struct MUI_Command commands2[] =
 
 
 APTR AREXX_App;
-char basename[100];
+TEXT basename[100];
 BOOL AREXX_started;
-char arexxquit_portname[100];
+TEXT arexxquit_portname[100];
 
 int disable_getline_hook(void)
 {
@@ -2165,10 +2165,10 @@ int AREXX_Task(void)
     //printf("arexx 2\n");
 
     getmacro((Object*)AREXX_App,MUIA_Application_Base,&string1);
-    strcpy(basename,string1);
+    strcpy((char *)basename,string1);
     sprintf(work_buffer,"\n\033cAREXX port: %s",string1);
     setmacro((Object*)WookieChat->TX_about3, MUIA_Text_Contents,work_buffer);
-    strcat(basename,"_msgport");
+    strcat((char *)basename,"_msgport");
 
     BOOL running = TRUE;
 
@@ -2176,17 +2176,11 @@ int AREXX_Task(void)
     if(DEBUG) printf("finding port %s\n",basename);
 
     Forbid();
-    #ifdef __morphos__
-    if(!FindPort((c_in)basename))
-    #elif __AROS__
-    if(!FindPort((c_in)basename))
-    #else
-    if(!FindPort((i_in)basename))
-    #endif
+    if(!FindPort((_ub_cs)basename))
     {
         arexx_process_port = CreatePort(basename,0);
 
-        sprintf(arexxquit_portname,"%s_quit",maintask_basename);
+        sprintf((char *)arexxquit_portname,"%s_quit",maintask_basename);
 
         arexx_quit_port = CreatePort(arexxquit_portname,0);
         if(arexx_process_port && arexx_quit_port)

@@ -68,31 +68,37 @@ struct Library * DataTypesBase = NULL;
 struct Library * CodesetsBase = NULL;
 #endif
 
+#ifdef __AROS__
+typedef CONST_STRPTR nml;
+#else
+typedef STRPTR nml;
+#endif
+
 //the menu is left blank so we can use localised strings from a catalog.
 //the code for inserting the localised text is in LoadAllLibs() in
 //startexit.cpp
 struct NewMenu MenuData1[] =
 {
-    { NM_TITLE, (char*)""   ,0,0,0  ,(APTR)0      },
-    { NM_ITEM,  (char*)""   ,0,0,0  ,(APTR)65     },
-    { NM_ITEM,  (char*)""   ,0,0,0  ,(APTR)66     },
-    { NM_ITEM,  (char*)""   ,0,0,0  ,(APTR)80     },
-    { NM_ITEM,  (char*)""   ,0,0,0  ,(APTR)0      },
-    { NM_SUB,   (char*)""   ,0,0,0  ,(APTR)75     },
-    { NM_SUB,   (char*)""   ,0,0,0  ,(APTR)76     },
-    { NM_SUB,   (char*)""   ,0,0,0  ,(APTR)77     },
-    { NM_ITEM,  (char*)""   ,0,0,0  ,(APTR)0      },
-    { NM_SUB,   (char*)""   ,0,0,0  ,(APTR)79     },
-    { NM_SUB,   (char*)""   ,0,0,0  ,(APTR)81     },
-    { NM_ITEM,  (char*)""   ,0,0,0  ,(APTR)0      },
-    { NM_SUB,   (char*)""   ,0,0,0  ,(APTR)67     },
-    { NM_SUB,   (char*)""   ,0,0,0  ,(APTR)68     },
-    { NM_SUB,   (char*)""   ,0,0,0  ,(APTR)69     },
-    { NM_SUB,   (char*)""   ,0,0,0  ,(APTR)70     },
-    { NM_SUB,   (char*)""   ,0,0,0  ,(APTR)71     },
-    { NM_SUB,   (char*)""   ,0,0,0  ,(APTR)72     },
-    { NM_SUB,   (char*)""   ,0,0,0  ,(APTR)73     },
-    { NM_SUB,   (char*)""   ,0,0,0  ,(APTR)83     },
+    { NM_TITLE, (nml)""   ,0,0,0  ,(APTR)0      },
+    { NM_ITEM,  (nml)""   ,0,0,0  ,(APTR)65     },
+    { NM_ITEM,  (nml)""   ,0,0,0  ,(APTR)66     },
+    { NM_ITEM,  (nml)""   ,0,0,0  ,(APTR)80     },
+    { NM_ITEM,  (nml)""   ,0,0,0  ,(APTR)0      },
+    { NM_SUB,   (nml)""   ,0,0,0  ,(APTR)75     },
+    { NM_SUB,   (nml)""   ,0,0,0  ,(APTR)76     },
+    { NM_SUB,   (nml)""   ,0,0,0  ,(APTR)77     },
+    { NM_ITEM,  (nml)""   ,0,0,0  ,(APTR)0      },
+    { NM_SUB,   (nml)""   ,0,0,0  ,(APTR)79     },
+    { NM_SUB,   (nml)""   ,0,0,0  ,(APTR)81     },
+    { NM_ITEM,  (nml)""   ,0,0,0  ,(APTR)0      },
+    { NM_SUB,   (nml)""   ,0,0,0  ,(APTR)67     },
+    { NM_SUB,   (nml)""   ,0,0,0  ,(APTR)68     },
+    { NM_SUB,   (nml)""   ,0,0,0  ,(APTR)69     },
+    { NM_SUB,   (nml)""   ,0,0,0  ,(APTR)70     },
+    { NM_SUB,   (nml)""   ,0,0,0  ,(APTR)71     },
+    { NM_SUB,   (nml)""   ,0,0,0  ,(APTR)72     },
+    { NM_SUB,   (nml)""   ,0,0,0  ,(APTR)73     },
+    { NM_SUB,   (nml)""   ,0,0,0  ,(APTR)83     },
 
     { NM_END,NULL,0,0,0,(APTR)0 },
 };
@@ -148,37 +154,37 @@ void LoadAllLibs(void)
     my_settings.os3_about_window_gfx = 0;
 
 #ifdef __amigaos4__
-    DataTypesBase = (struct Library*)OpenLibrary((c_in)"datatypes.library",0);
+    DataTypesBase = (struct Library*)OpenLibrary((_ub_css)"datatypes.library",0);
     if(!DataTypesBase) cleanexit((char*)"cant open datatypes.library\n");
 
-    AslBase = (struct Library*)OpenLibrary((c_in)"asl.library",0);
+    AslBase = (struct Library*)OpenLibrary((_ub_cs)"asl.library",0);
     if(!AslBase) cleanexit((char*)"cant open asl.library\n");
 
-    IconBase = (struct Library*)OpenLibrary((c_in)"icon.library",0);
+    IconBase = (struct Library*)OpenLibrary((_ub_cs)"icon.library",0);
     if(!IconBase) cleanexit((char*)"cant open icon.library\n");
 
-    LocaleBase = (struct Library*)OpenLibrary((c_in)"locale.library",0);
+    LocaleBase = (struct Library*)OpenLibrary((_ub_cs)"locale.library",0);
     if(!LocaleBase) cleanexit((char*)"cant open locale.library\n");
 
-    GfxBase = (struct Library*)OpenLibrary((c_in)"graphics.library",0);
+    GfxBase = (struct Library*)OpenLibrary((_ub_cs)"graphics.library",0);
     if(!GfxBase) cleanexit((char*)"cant open graphics.library\n");
 
-    UtilityBase = (struct Library*)OpenLibrary((c_in)"utility.library",0);
+    UtilityBase = (struct Library*)OpenLibrary((_ub_cs)"utility.library",0);
     if(!UtilityBase) cleanexit((char*)"cant open utility.library\n");
 
-    SocketBase = OpenLibrary((c_in)"bsdsocket.library",0L);
+    SocketBase = OpenLibrary((_ub_cs)"bsdsocket.library",0L);
     if(!SocketBase) cleanexit((char*)"cant open bsdsocket.library\n");
 
-    MUIMasterBase = OpenLibrary((c_in)"muimaster.library", 0);
+    MUIMasterBase = OpenLibrary((_ub_cs)"muimaster.library", 0);
     if(!MUIMasterBase) cleanexit((char*)"cant open muimaster.library\n");
 
-    IntuitionBase = OpenLibrary((c_in)"intuition.library",33);
+    IntuitionBase = OpenLibrary((_ub_cs)"intuition.library",33);
     if(!IntuitionBase) cleanexit((char*)"cant open intuition.library\n");
 
-    RexxSysBase = OpenLibrary((c_in)"rexxsyslib.library",33);
+    RexxSysBase = OpenLibrary((_ub_cs)"rexxsyslib.library",33);
     if(!RexxSysBase) cleanexit((char*)"cant open rexxsyslib.library\n");
 
-    CodesetsBase = OpenLibrary((c_in)CODESETSNAME, CODESETSVER);
+    CodesetsBase = OpenLibrary((_ub_cs)CODESETSNAME, CODESETSVER);
     if(!CodesetsBase) cleanexit((char*)"cant open codesets.library\nDownload and install this:\nhttp://aminet.net/util/libs/codesets-6.4.lha\n\n");
 
     IMUIMaster = (struct MUIMasterIFace*) GetInterface((struct Library *)MUIMasterBase, "main", 1, NULL);
@@ -193,119 +199,119 @@ void LoadAllLibs(void)
     IAsl = (struct AslIFace*)GetInterface((struct Library *)AslBase, "main", 1, NULL);
 
 #elif __MORPHOS__
-    AslBase = (struct Library*)OpenLibrary((c_in)"asl.library",0);
+    AslBase = (struct Library*)OpenLibrary((_ub_cs)"asl.library",0);
     if(!AslBase) cleanexit((char*)"cant open asl.library\n");
 
-    DataTypesBase = (struct Library*)OpenLibrary((c_in)"datatypes.library",0);
+    DataTypesBase = (struct Library*)OpenLibrary((_ub_cs)"datatypes.library",0);
     if(!DataTypesBase) cleanexit((char*)"cant open datatypes.library\n");
 
     GfxBase = (struct GfxBase*)OpenLibrary("graphics.library",0);
     if(!GfxBase) cleanexit((char*)"cant open graphics.library\n");
 
-    IconBase = (struct Library*)OpenLibrary((c_in)"icon.library",0);
+    IconBase = (struct Library*)OpenLibrary((_ub_cs)"icon.library",0);
     if(!IconBase) cleanexit((char*)"cant open icon.library\n");
 
-    LocaleBase = (struct Library*)OpenLibrary((c_in)"locale.library",0);
+    LocaleBase = (struct Library*)OpenLibrary((_ub_cs)"locale.library",0);
     if(!LocaleBase) cleanexit((char*)"cant open locale.library\n");
 
-    GfxBase = (struct GfxBase*)OpenLibrary((c_in)"graphics.library",0);
+    GfxBase = (struct GfxBase*)OpenLibrary((_ub_cs)"graphics.library",0);
     if(!GfxBase) cleanexit((char*)"cant open graphics.library\n");
 
-    UtilityBase = (struct Library*)OpenLibrary((c_in)"utility.library",0);
+    UtilityBase = (struct Library*)OpenLibrary((_ub_cs)"utility.library",0);
     if(!UtilityBase) cleanexit((char*)"cant open utility.library\n");
 
-    SocketBase = OpenLibrary((c_in)"bsdsocket.library",0L);
+    SocketBase = OpenLibrary((_ub_cs)"bsdsocket.library",0L);
     if(!SocketBase) cleanexit((char*)"cant open bsdsocket.library\n");
 
-    MUIMasterBase = OpenLibrary((c_in)"muimaster.library", 0);
+    MUIMasterBase = OpenLibrary((_ub_cs)"muimaster.library", 0);
     if(!MUIMasterBase) cleanexit((char*)"cant open muimaster.library\n");
 
-    IntuitionBase = (struct IntuitionBase*)OpenLibrary((c_in)"intuition.library",33);
+    IntuitionBase = (struct IntuitionBase*)OpenLibrary((_ub_cs)"intuition.library",33);
     if(!IntuitionBase) cleanexit((char*)"cant open intuition.library\n");
 
-    CodesetsBase = OpenLibrary((c_in)CODESETSNAME, CODESETSVER);
+    CodesetsBase = OpenLibrary((_ub_cs)CODESETSNAME, CODESETSVER);
     if(!CodesetsBase) cleanexit((char*)"cant open codesets.library\nDownload and install this:\nhttp://aminet.net/util/libs/codesets-6.4.lha\n\n");
 #elif __AROS__
-    AslBase = (struct Library*) OpenLibrary((c_in) "asl.library", 0);
+    AslBase = (struct Library*) OpenLibrary((_ub_cs) "asl.library", 0);
     if (!AslBase)
         cleanexit((char*) "cant open asl.library\n");
 
-    DataTypesBase = (struct Library*) OpenLibrary((c_in) "datatypes.library", 0);
+    DataTypesBase = (struct Library*) OpenLibrary((_ub_cs) "datatypes.library", 0);
     if (!DataTypesBase)
         cleanexit((char*) "cant open datatypes.library\n");
 
-    GfxBase = (struct GfxBase*) OpenLibrary("graphics.library", 0);
+    GfxBase = (struct GfxBase*) OpenLibrary((_ub_cs)"graphics.library", 0);
     if (!GfxBase)
         cleanexit((char*) "cant open graphics.library\n");
 
-    IconBase = (struct Library*) OpenLibrary((c_in) "icon.library", 0);
+    IconBase = (struct Library*) OpenLibrary((_ub_cs) "icon.library", 0);
     if (!IconBase)
         cleanexit((char*) "cant open icon.library\n");
 
-    LocaleBase = (struct LocaleBase*) OpenLibrary((c_in) "locale.library", 0);
+    LocaleBase = (struct LocaleBase*) OpenLibrary((_ub_cs) "locale.library", 0);
     if (!LocaleBase)
         cleanexit((char*) "cant open locale.library\n");
 
-    GfxBase = (struct GfxBase*) OpenLibrary((c_in) "graphics.library", 0);
+    GfxBase = (struct GfxBase*) OpenLibrary((_ub_cs) "graphics.library", 0);
     if (!GfxBase)
         cleanexit((char*) "cant open graphics.library\n");
 
-    UtilityBase = (struct UtilityBase*) OpenLibrary((c_in) "utility.library", 0);
+    UtilityBase = (struct UtilityBase*) OpenLibrary((_ub_cs) "utility.library", 0);
     if (!UtilityBase)
         cleanexit((char*) "cant open utility.library\n");
 
-    SocketBase = OpenLibrary((c_in) "bsdsocket.library", 0L);
+    SocketBase = OpenLibrary((_ub_cs) "bsdsocket.library", 0L);
     if (!SocketBase)
         cleanexit((char*) "cant open bsdsocket.library\n");
 
-    MUIMasterBase = OpenLibrary((c_in) "muimaster.library", 0);
+    MUIMasterBase = OpenLibrary((_ub_cs) "muimaster.library", 0);
     if (!MUIMasterBase)
         cleanexit((char*) "cant open muimaster.library\n");
 
-    IntuitionBase = (struct IntuitionBase*) OpenLibrary((c_in) "intuition.library", 33);
+    IntuitionBase = (struct IntuitionBase*) OpenLibrary((_ub_cs) "intuition.library", 33);
     if (!IntuitionBase)
         cleanexit((char*) "cant open intuition.library\n");
 
-    CodesetsBase = OpenLibrary((c_in) CODESETSNAME, CODESETSVER);
+    CodesetsBase = OpenLibrary((_ub_cs) CODESETSNAME, CODESETSVER);
     if (!CodesetsBase)
         cleanexit(
                 (char*) "cant open codesets.library\nDownload and install this:\nhttp://aminet.net/util/libs/codesets-6.4.lha\n\n");
 
 #else
 
-    AslBase = (struct Library*)OpenLibrary((c_in)"asl.library",0);
+    AslBase = (struct Library*)OpenLibrary((_ub_cs)"asl.library",0);
     if(!AslBase) cleanexit((char*)"cant open asl.library\n");
 
-    DataTypesBase = (struct Library*)OpenLibrary((c_in)"datatypes.library",0);
+    DataTypesBase = (struct Library*)OpenLibrary((_ub_cs)"datatypes.library",0);
     if(!DataTypesBase) cleanexit((char*)"cant open datatypes.library\n");
 
-    IconBase = (struct Library*)OpenLibrary((c_in)"icon.library",0);
+    IconBase = (struct Library*)OpenLibrary((_ub_cs)"icon.library",0);
     if(!IconBase) cleanexit((char*)"cant open icon.library\n");
 
-    LocaleBase = (struct Library*)OpenLibrary((c_in)"locale.library",0);
+    LocaleBase = (struct Library*)OpenLibrary((_ub_cs)"locale.library",0);
     if(!LocaleBase) cleanexit((char*)"cant open locale.library\n");
 
-    GfxBase = (struct Library*)OpenLibrary((c_in)"graphics.library",0);
+    GfxBase = (struct Library*)OpenLibrary((_ub_cs)"graphics.library",0);
     if(!GfxBase) cleanexit((char*)"cant open graphics.library\n");
 
-    UtilityBase = (struct Library*)OpenLibrary((c_in)"utility.library",0);
+    UtilityBase = (struct Library*)OpenLibrary((_ub_cs)"utility.library",0);
     if(!UtilityBase) cleanexit((char*)"cant open utility.library\n");
 
-    SocketBase = OpenLibrary((c_in)"bsdsocket.library",0L);
+    SocketBase = OpenLibrary((_ub_cs)"bsdsocket.library",0L);
     if(!SocketBase) cleanexit((char*)"cant open bsdsocket.library\n");
 
-    MUIMasterBase = OpenLibrary((c_in)"muimaster.library", 0);
+    MUIMasterBase = OpenLibrary((_ub_cs)"muimaster.library", 0);
     if(!MUIMasterBase) cleanexit((char*)"cant open muimaster.library\n");
 
-    IntuitionBase = OpenLibrary((c_in)"intuition.library",33);
+    IntuitionBase = OpenLibrary((_ub_cs)"intuition.library",33);
     if(!IntuitionBase) cleanexit((char*)"cant open intuition.library\n");
 
-    CodesetsBase = OpenLibrary((c_in)CODESETSNAME, CODESETSVER);
+    CodesetsBase = OpenLibrary((_ub_cs)CODESETSNAME, CODESETSVER);
     if(!CodesetsBase) cleanexit((char*)"cant open codesets.library\nDownload and install this:\nhttp://aminet.net/util/libs/codesets-6.4.lha\n\n");
 
 #endif
 
-    catalog = OpenCatalog(NULL, "WookieChat.catalog", OC_BuiltInLanguage, NULL, TAG_DONE);
+    catalog = OpenCatalog(NULL, (loc_in)"WookieChat.catalog", OC_BuiltInLanguage, NULL, TAG_DONE);
 
     if (!catalog)
     {
@@ -313,7 +319,7 @@ void LoadAllLibs(void)
         if (DEBUG)
             printf("unable to use default language\n");
 
-        catalog = OpenCatalog(NULL, "WookieChat.catalog", OC_Language, "english", TAG_DONE);
+        catalog = OpenCatalog(NULL, (loc_in)"WookieChat.catalog", OC_Language, "english", TAG_DONE);
 
         if (!catalog)
         {
@@ -326,37 +332,37 @@ void LoadAllLibs(void)
 
     //now that the catalog is open and locale library is open, lets give our context menu titles/items some labels
 
-    MenuData1[0].nm_Label = (char*) GetCatalogStr(catalog, 219, "Nicklist Options");
-    MenuData1[1].nm_Label = (char*) GetCatalogStr(catalog, 220, "Whois");
-    MenuData1[2].nm_Label = (char*) GetCatalogStr(catalog, 221, "Open Query");
-    MenuData1[3].nm_Label = (char*) GetCatalogStr(catalog, 222, "Open Global Query");
-    MenuData1[4].nm_Label = (char*) GetCatalogStr(catalog, 223, "CTCP");
-    MenuData1[5].nm_Label = (char*) GetCatalogStr(catalog, 224, "Ping");
-    MenuData1[6].nm_Label = (char*) GetCatalogStr(catalog, 225, "Version");
-    MenuData1[7].nm_Label = (char*) GetCatalogStr(catalog, 226, "Time");
-    MenuData1[8].nm_Label = (char*) GetCatalogStr(catalog, 227, "Direct Connection");
-    MenuData1[9].nm_Label = (char*) GetCatalogStr(catalog, 228, "Send file");
-    MenuData1[10].nm_Label = (char*) GetCatalogStr(catalog, 229, "Chat");
-    MenuData1[11].nm_Label = (char*) GetCatalogStr(catalog, 230, "Control");
-    MenuData1[12].nm_Label = (char*) GetCatalogStr(catalog, 231, "Op");
-    MenuData1[13].nm_Label = (char*) GetCatalogStr(catalog, 232, "DeOp");
-    MenuData1[14].nm_Label = (char*) GetCatalogStr(catalog, 233, "HalfOp");
-    MenuData1[15].nm_Label = (char*) GetCatalogStr(catalog, 234, "DeHalfOp");
-    MenuData1[16].nm_Label = (char*) GetCatalogStr(catalog, 235, "Voice");
-    MenuData1[17].nm_Label = (char*) GetCatalogStr(catalog, 236, "DeVoice");
-    MenuData1[18].nm_Label = (char*) GetCatalogStr(catalog, 237, "Kick");
-    MenuData1[19].nm_Label = (char*) GetCatalogStr(catalog, 238, "Ban");
+    MenuData1[0].nm_Label = (nml) GCS(catalog, 219, "Nicklist Options");
+    MenuData1[1].nm_Label = (nml) GCS(catalog, 220, "Whois");
+    MenuData1[2].nm_Label = (nml) GCS(catalog, 221, "Open Query");
+    MenuData1[3].nm_Label = (nml) GCS(catalog, 222, "Open Global Query");
+    MenuData1[4].nm_Label = (nml) GCS(catalog, 223, "CTCP");
+    MenuData1[5].nm_Label = (nml) GCS(catalog, 224, "Ping");
+    MenuData1[6].nm_Label = (nml) GCS(catalog, 225, "Version");
+    MenuData1[7].nm_Label = (nml) GCS(catalog, 226, "Time");
+    MenuData1[8].nm_Label = (nml) GCS(catalog, 227, "Direct Connection");
+    MenuData1[9].nm_Label = (nml) GCS(catalog, 228, "Send file");
+    MenuData1[10].nm_Label = (nml) GCS(catalog, 229, "Chat");
+    MenuData1[11].nm_Label = (nml) GCS(catalog, 230, "Control");
+    MenuData1[12].nm_Label = (nml) GCS(catalog, 231, "Op");
+    MenuData1[13].nm_Label = (nml) GCS(catalog, 232, "DeOp");
+    MenuData1[14].nm_Label = (nml) GCS(catalog, 233, "HalfOp");
+    MenuData1[15].nm_Label = (nml) GCS(catalog, 234, "DeHalfOp");
+    MenuData1[16].nm_Label = (nml) GCS(catalog, 235, "Voice");
+    MenuData1[17].nm_Label = (nml) GCS(catalog, 236, "DeVoice");
+    MenuData1[18].nm_Label = (nml) GCS(catalog, 237, "Kick");
+    MenuData1[19].nm_Label = (nml) GCS(catalog, 238, "Ban");
 
-    dobj = (struct DiskObject*) GetDiskObject((c_in) "PROGDIR:WookieChat_OS4");
+    dobj = (struct DiskObject*) GetDiskObject((_ub_cs) "PROGDIR:WookieChat_OS4");
     if (!dobj)
-        dobj = (struct DiskObject*) GetDiskObject((c_in) "PROGDIR:WookieChat_OS3");
+        dobj = (struct DiskObject*) GetDiskObject((_ub_cs) "PROGDIR:WookieChat_OS3");
     if (!dobj)
-        dobj = (struct DiskObject*) GetDiskObject((c_in) "PROGDIR:WookieChat");
+        dobj = (struct DiskObject*) GetDiskObject((_ub_cs) "PROGDIR:WookieChat");
 
 #ifdef __AROS__
     BPTR my_lock;
 
-    if ((my_lock = Lock("env:zune", ACCESS_READ)))
+    if ((my_lock = Lock((_s_cs)"env:zune", ACCESS_READ)))
     {
         UnLock(my_lock);
         ZUNE_SYSTEM = TRUE;
@@ -517,7 +523,7 @@ void cleanexit(char *str)
 
         //Now Save all URL's to a text file
         sprintf(file_name, "progdir:urls.txt");
-        urlgrabber_file = Open(file_name, MODE_NEWFILE);
+        urlgrabber_file = Open((_s_cs)file_name, MODE_NEWFILE);
         if (urlgrabber_file)
         {
             getmacro((Object*) WookieChat->LV_urlgrabber, MUIA_NList_Entries, &entries);
@@ -529,7 +535,7 @@ void cleanexit(char *str)
 
                 if (string1)
                 {
-                    FPuts(urlgrabber_file, (b_in) string1);
+                    FPuts(urlgrabber_file, (l_in) string1);
                     FPutC(urlgrabber_file, '\n');
 
                     if (!strcmp(string1, urlgrabber_str))

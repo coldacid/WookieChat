@@ -53,7 +53,7 @@ BOOL TimerWait_Open(void)
                 {
                     if ((Timer5IO = (struct timerequest *) CreateIORequest(Timer5MP, sizeof(struct timerequest))))
                     {
-                        if (!(error = OpenDevice((c_in) TIMERNAME, UNIT_WAITUNTIL, (struct IORequest *) Timer5IO, 0L)))
+                        if (!(error = OpenDevice((_ub_cs) TIMERNAME, UNIT_WAITUNTIL, (struct IORequest *) Timer5IO, 0L)))
                         {
                             Timer5_WaitCheck = TRUE;
 
@@ -62,7 +62,7 @@ BOOL TimerWait_Open(void)
                             if ((Timer4IO = (struct timerequest *) CreateIORequest(Timer4MP, sizeof(struct timerequest))))
                             {
 
-                                if (!(error = OpenDevice((c_in) TIMERNAME, UNIT_WAITUNTIL,
+                                if (!(error = OpenDevice((_ub_cs) TIMERNAME, UNIT_WAITUNTIL,
                                         (struct IORequest *) Timer4IO, 0L)))
                                 {
                                     Timer4_WaitCheck = TRUE;
@@ -73,7 +73,7 @@ BOOL TimerWait_Open(void)
                                     if ((Timer2IO = (struct timerequest *) CreateIORequest(Timer2MP,
                                             sizeof(struct timerequest))) != NULL)
                                     {
-                                        if (!(error = OpenDevice((c_in) TIMERNAME, UNIT_WAITUNTIL,
+                                        if (!(error = OpenDevice((_ub_cs) TIMERNAME, UNIT_WAITUNTIL,
                                                 (struct IORequest *) Timer2IO, 0L)))
                                         {
                                             Timer2_WaitCheck = TRUE;
@@ -85,7 +85,7 @@ BOOL TimerWait_Open(void)
                                             if ((TimerIO = (struct timerequest *) CreateIORequest(TimerMP,
                                                     sizeof(struct timerequest))) != NULL)
                                             {
-                                                if (!(error = OpenDevice((c_in) TIMERNAME, UNIT_VBLANK,
+                                                if (!(error = OpenDevice((_ub_cs) TIMERNAME, UNIT_VBLANK,
                                                         (struct IORequest *) TimerIO, 0L)))
                                                 {
                                                     Timer1_WaitCheck = TRUE;

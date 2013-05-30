@@ -123,16 +123,16 @@ int do_waitselect_code(void)
                             || my_settings.events[DISCONNECT].use_when == 3)
                     {
                         strcpy(target_nick, "");
-                        sprintf(buffer3, "%sServer%s %s", GetCatalogStr(catalog, 217, "["),
-                                GetCatalogStr(catalog, 218, "]"), GetCatalogStr(catalog, 183, "Disconnected"));
+                        sprintf(buffer3, "%sServer%s %s", GCS(catalog, 217, "["),
+                                GCS(catalog, 218, "]"), GCS(catalog, 183, "Disconnected"));
 
                         create_arexx_event_string(my_settings.events[DISCONNECT].arexx_script,
                                 my_settings.events[DISCONNECT].arexx_script2);
-                        Execute(event_string, 0, 0);
+                        Execute((_s_cs)event_string, 0, 0);
                     }
 
-                    sprintf(buffer3, "%s%sServer%s %s", timestamp, GetCatalogStr(catalog, 217, "["),
-                            GetCatalogStr(catalog, 218, "]"), GetCatalogStr(catalog, 183, "Disconnected"));
+                    sprintf(buffer3, "%s%sServer%s %s", timestamp, GCS(catalog, 217, "["),
+                            GCS(catalog, 218, "]"), GCS(catalog, 183, "Disconnected"));
                     status_conductor->conductor = status_conductor->root;
                     while (status_conductor->conductor)
                     {
@@ -182,8 +182,8 @@ int do_waitselect_code(void)
                     start_reconnect_delay_timer = FALSE;
                     status_conductor->trying_to_reconnect = FALSE;
 
-                    sprintf(buffer3, "%s%sServer%s %s", timestamp, GetCatalogStr(catalog, 217, "["),
-                            GetCatalogStr(catalog, 218, "]"), GetCatalogStr(catalog, 182, "Connected"));
+                    sprintf(buffer3, "%s%sServer%s %s", timestamp, GCS(catalog, 217, "["),
+                            GCS(catalog, 218, "]"), GCS(catalog, 182, "Connected"));
                     if (DEBUG)
                         printf("connected!!\n");
 
@@ -216,13 +216,13 @@ int do_waitselect_code(void)
                             || (my_settings.events[CONNECT].use_when == 2 && !is_window_active())
                             || my_settings.events[CONNECT].use_when == 3)
                     {
-                        sprintf(buffer3, "%sServer%s %s", GetCatalogStr(catalog, 217, "["),
-                                GetCatalogStr(catalog, 218, "]"), GetCatalogStr(catalog, 182, "Connected"));
+                        sprintf(buffer3, "%sServer%s %s", GCS(catalog, 217, "["),
+                                GCS(catalog, 218, "]"), GCS(catalog, 182, "Connected"));
 
                         strcpy(target_nick, "");
                         create_arexx_event_string(my_settings.events[CONNECT].arexx_script,
                                 my_settings.events[CONNECT].arexx_script2);
-                        Execute(event_string, 0, 0);
+                        Execute((_s_cs)event_string, 0, 0);
                     }
 
                     break;
@@ -230,8 +230,8 @@ int do_waitselect_code(void)
                 }
                 else if (recv_thing == 0)
                 {
-                    sprintf(buffer3, "%s%sConnect%s %s", timestamp, GetCatalogStr(catalog, 217, "["),
-                            GetCatalogStr(catalog, 218, "]"), GetCatalogStr(catalog, 368, "Unable to connect"));
+                    sprintf(buffer3, "%s%sConnect%s %s", timestamp, GCS(catalog, 217, "["),
+                            GCS(catalog, 218, "]"), GCS(catalog, 368, "Unable to connect"));
                     add_text_to_conductor_list(buffer3, 9, ACTIVITY);
                     if (status_conductor)
                     {
@@ -411,12 +411,12 @@ int do_waitselect_code(void)
 
                             if (!dcc_conductor->total_recv)
                             {
-                                dcc_conductor->dcc_file = Open(dcc_conductor->full_filename_with_path, MODE_NEWFILE);
+                                dcc_conductor->dcc_file = Open((_s_cs)dcc_conductor->full_filename_with_path, MODE_NEWFILE);
 
                             }
                             else
                             {
-                                dcc_conductor->dcc_file = Open(dcc_conductor->full_filename_with_path, MODE_READWRITE);
+                                dcc_conductor->dcc_file = Open((_s_cs)dcc_conductor->full_filename_with_path, MODE_READWRITE);
 
                             }
 
@@ -440,7 +440,7 @@ int do_waitselect_code(void)
                                 SetComment(dcc_conductor->full_filename_with_path,buffer2);
 #endif
 
-                                dcc_conductor->dcc_file = Open(dcc_conductor->full_filename_with_path, MODE_READWRITE);
+                                dcc_conductor->dcc_file = Open((_s_cs)dcc_conductor->full_filename_with_path, MODE_READWRITE);
 #ifdef __amigaos4__
                                 if(dcc_conductor->dcc_file) ChangeFilePosition(dcc_conductor->dcc_file,0,OFFSET_END);
 #else
@@ -456,7 +456,7 @@ int do_waitselect_code(void)
                             if (dcc_conductor->dcc_file == 0)
                             {
                                 printf("%s\n",
-                                        GetCatalogStr(catalog, 185, "unable to create new file for incoming transfer"));
+                                        GCS(catalog, 185, "unable to create new file for incoming transfer"));
                                 //if(dcc_conductor->dcc_file) Close(dcc_conductor->dcc_file);
                             }
 
@@ -467,7 +467,7 @@ int do_waitselect_code(void)
 
                         if (dcc_conductor->entry)
                         {
-                            strcpy(dcc_conductor->entry->status, GetCatalogStr(catalog, 148, "Transferring"));
+                            strcpy(dcc_conductor->entry->status, (char *)GCS(catalog, 148, "Transferring"));
                             strcpy(dcc_conductor->entry->percentage, "0%");
                         }
 
@@ -496,7 +496,7 @@ int do_waitselect_code(void)
                                 if (dcc_conductor->entry)
                                 {
 
-                                    strcpy(dcc_conductor->entry->status, GetCatalogStr(catalog, 179, "Complete")); //"Completed");
+                                    strcpy(dcc_conductor->entry->status, (char *)GCS(catalog, 179, "Complete")); //"Completed");
                                     strcpy(dcc_conductor->entry->timeleft, "N/A"); //Done");
                                     sprintf(dcc_conductor->entry->bytes_transferred, "%luKB",
                                             dcc_conductor->total_recv / 1024);
@@ -515,7 +515,7 @@ int do_waitselect_code(void)
                                 if (dcc_conductor->entry)
                                 {
 
-                                    strcpy(dcc_conductor->entry->status, GetCatalogStr(catalog, 180, "Incomplete")); //"Incomplete");
+                                    strcpy(dcc_conductor->entry->status, (char *)GCS(catalog, 180, "Incomplete")); //"Incomplete");
                                     strcpy(dcc_conductor->entry->timeleft, "N/A");
                                     float pct = 0;
                                     if (dcc_conductor->total_recv > 0)
@@ -531,9 +531,9 @@ int do_waitselect_code(void)
                                         a, NOWRAP, ALIGN_LEFT);
 
                                 sprintf(buffer3, "%s%sDCC%s SEND: %s %s %s %s", timestamp,
-                                        GetCatalogStr(catalog, 217, "["), GetCatalogStr(catalog, 218, "]"),
-                                        dcc_conductor->filename, GetCatalogStr(catalog, 173, "offered from"),
-                                        dcc_conductor->nick, GetCatalogStr(catalog, 180, "Incomplete"));
+                                        GCS(catalog, 217, "["), GCS(catalog, 218, "]"),
+                                        dcc_conductor->filename, GCS(catalog, 173, "offered from"),
+                                        dcc_conductor->nick, GCS(catalog, 180, "Incomplete"));
 
                                 if (dcc_conductor->dcc_file)
                                 {
@@ -564,7 +564,7 @@ int do_waitselect_code(void)
 
                             if (dcc_conductor->entry)
                             {
-                                strcpy(dcc_conductor->entry->status, GetCatalogStr(catalog, 181, "Cancelled"));
+                                strcpy(dcc_conductor->entry->status, (char *)GCS(catalog, 181, "Cancelled"));
                                 float pct = 0;
 
                                 if (dcc_conductor->total_recv > 0)
@@ -579,9 +579,9 @@ int do_waitselect_code(void)
                             DoMethod((Object*) WookieChat->LV_dcc, MUIM_NList_ReplaceSingle, dcc_conductor->entry, a,
                                     NOWRAP, ALIGN_LEFT);
                             sprintf(buffer3, "%s%sDCC%s SEND: %s %s %s *%s*", timestamp,
-                                    GetCatalogStr(catalog, 217, "["), GetCatalogStr(catalog, 218, "]"),
-                                    dcc_conductor->filename, GetCatalogStr(catalog, 173, "offered from"),
-                                    dcc_conductor->nick, GetCatalogStr(catalog, 181, "Cancelled"));
+                                    GCS(catalog, 217, "["), GCS(catalog, 218, "]"),
+                                    dcc_conductor->filename, GCS(catalog, 173, "offered from"),
+                                    dcc_conductor->nick, GCS(catalog, 181, "Cancelled"));
 
                             //dcc_conductor->connected=0;
 
@@ -593,7 +593,7 @@ int do_waitselect_code(void)
 
                             if (dcc_conductor->entry)
                             {
-                                strcpy(dcc_conductor->entry->status, GetCatalogStr(catalog, 184, "Failed"));
+                                strcpy(dcc_conductor->entry->status, (char *)GCS(catalog, 184, "Failed"));
                                 float pct = 0;
 
                                 if (dcc_conductor->total_recv > 0)
@@ -608,10 +608,10 @@ int do_waitselect_code(void)
 
                             DoMethod((Object*) WookieChat->LV_dcc, MUIM_NList_ReplaceSingle, dcc_conductor->entry, a,
                                     NOWRAP, ALIGN_LEFT);
-                            sprintf(buffer3, "%s%sDCC%s SEND: %s %s %s %s", timestamp, GetCatalogStr(catalog, 217, "["),
-                                    GetCatalogStr(catalog, 218, "]"), dcc_conductor->filename,
-                                    GetCatalogStr(catalog, 173, "offered from"), dcc_conductor->nick,
-                                    GetCatalogStr(catalog, 184, "Failed"));
+                            sprintf(buffer3, "%s%sDCC%s SEND: %s %s %s %s", timestamp, GCS(catalog, 217, "["),
+                                    GCS(catalog, 218, "]"), dcc_conductor->filename,
+                                    GCS(catalog, 173, "offered from"), dcc_conductor->nick,
+                                    GCS(catalog, 184, "Failed"));
 
                             //2006-10-04
                             //dcc_conductor->connected=0;
@@ -764,7 +764,7 @@ int do_waitselect_code(void)
                             if(dcc_send_conductor->dcc_file) ChangeFilePosition(dcc_send_conductor->dcc_file,dcc_send_conductor->total_recv,OFFSET_BEGINNING);
 #else
                             if (dcc_send_conductor->filepath && !dcc_send_conductor->dcc_file)
-                                dcc_send_conductor->dcc_file = Open(dcc_send_conductor->filepath, MODE_OLDFILE);
+                                dcc_send_conductor->dcc_file = Open((_s_cs)dcc_send_conductor->filepath, MODE_OLDFILE);
                             if (dcc_send_conductor->dcc_file)
                                 Seek(dcc_send_conductor->dcc_file, dcc_send_conductor->total_recv, OFFSET_BEGINNING);
 #endif
@@ -774,9 +774,9 @@ int do_waitselect_code(void)
 
                             if (dcc_send_conductor->dcc_file == 0)
                             {
-                                sprintf(buffer3, "%s%sDCC%s %s", timestamp, GetCatalogStr(catalog, 217, "["),
-                                        GetCatalogStr(catalog, 218, "]"),
-                                        GetCatalogStr(catalog, 186, "unable to open requested file"));
+                                sprintf(buffer3, "%s%sDCC%s %s", timestamp, GCS(catalog, 217, "["),
+                                        GCS(catalog, 218, "]"),
+                                        GCS(catalog, 186, "unable to open requested file"));
                                 //add_text_to_current_list(buffer3,9, ACTIVITY_CHAT);
                                 add_text_to_conductor_list(buffer3, 9, ACTIVITY_CHAT);
 
@@ -786,7 +786,7 @@ int do_waitselect_code(void)
                         if (dcc_send_conductor->entry)
                         {
 
-                            strcpy(dcc_send_conductor->entry->status, GetCatalogStr(catalog, 148, "Transferring")); //"Transferring");
+                            strcpy(dcc_send_conductor->entry->status, (char *)GCS(catalog, 148, "Transferring")); //"Transferring");
                             strcpy(dcc_send_conductor->entry->percentage, "0%");
                         }
 
@@ -809,9 +809,9 @@ int do_waitselect_code(void)
                             timestamp_2_string();
 
                             sprintf(buffer3, "%s[DCC%s %s %s %s %s error number:%li", timestamp,
-                                    GetCatalogStr(catalog, 218, "]"), dcc_send_conductor->filename,
-                                    GetCatalogStr(catalog, 205, "to"), dcc_send_conductor->nick,
-                                    GetCatalogStr(catalog, 184, "failed"), Errno());
+                                    GCS(catalog, 218, "]"), dcc_send_conductor->filename,
+                                    GCS(catalog, 205, "to"), dcc_send_conductor->nick,
+                                    GCS(catalog, 184, "failed"), Errno());
                             //add_text_to_current_list(buffer3,9, ACTIVITY_CHAT);
                             add_text_to_conductor_list(buffer3, 9, ACTIVITY_CHAT);
 
@@ -826,7 +826,7 @@ int do_waitselect_code(void)
                                     && (dcc_send_conductor->total_recv != dcc_send_conductor->filesize))
                             {
 
-                                strcpy(dcc_send_conductor->entry->status, GetCatalogStr(catalog, 148, "Transferring")); //"Transferring");
+                                strcpy(dcc_send_conductor->entry->status, (char *)GCS(catalog, 148, "Transferring")); //"Transferring");
                                 strcpy(dcc_send_conductor->entry->timeleft, "");
                                 sprintf(dcc_send_conductor->entry->bytes_transferred, "0KB");
                                 sprintf(dcc_send_conductor->entry->percentage, "0%%");
@@ -835,9 +835,9 @@ int do_waitselect_code(void)
                             if (dcc_send_conductor->total_recv == 0)
                             {
                                 sprintf(buffer3, "%s%sDCC%s SEND: %s %s %s %s", timestamp,
-                                        GetCatalogStr(catalog, 217, "["), GetCatalogStr(catalog, 218, "]"),
-                                        GetCatalogStr(catalog, 187, "Started file transfer:"),
-                                        dcc_send_conductor->filename, GetCatalogStr(catalog, 205, "to"),
+                                        GCS(catalog, 217, "["), GCS(catalog, 218, "]"),
+                                        GCS(catalog, 187, "Started file transfer:"),
+                                        dcc_send_conductor->filename, GCS(catalog, 205, "to"),
                                         dcc_send_conductor->nick);
                                 //add_text_to_current_list(buffer3,9, ACTIVITY_CHAT);
                                 add_text_to_conductor_list(buffer3, 9, ACTIVITY_CHAT);
@@ -849,7 +849,7 @@ int do_waitselect_code(void)
                                     strcpy(target_nick, "");
                                     create_arexx_event_string(my_settings.dcc_send_finished.arexx_script,
                                             my_settings.dcc_send_finished.arexx_script2);
-                                    Execute(event_string, 0, 0);
+                                    Execute((_s_cs)event_string, 0, 0);
                                 }
 
                             }
@@ -888,7 +888,7 @@ int do_waitselect_code(void)
                                     {
 
                                         strcpy(dcc_send_conductor->entry->status,
-                                                GetCatalogStr(catalog, 179, "Complete")); //"Completed");
+                                                (char *)GCS(catalog, 179, "Complete")); //"Completed");
                                         strcpy(dcc_send_conductor->entry->timeleft, "N/A"); //Done");
                                         sprintf(dcc_send_conductor->entry->bytes_transferred, "%luKB",
                                                 dcc_send_conductor->total_recv / 1024);
@@ -900,7 +900,7 @@ int do_waitselect_code(void)
                                     DoMethod((Object*) WookieChat->LV_send_dcc, MUIM_NList_ReplaceSingle,
                                             dcc_send_conductor->entry, a, NOWRAP, ALIGN_LEFT);
 
-                                    //sprintf(buffer3,"%s%sDCC%s SEND: %s to %s complete",timestamp,GetCatalogStr(catalog,217,"["),GetCatalogStr(catalog,218,"]"),dcc_send_conductor->filename,dcc_send_conductor->nick);
+                                    //sprintf(buffer3,"%s%sDCC%s SEND: %s to %s complete",timestamp,GCS(catalog,217,"["),GCS(catalog,218,"]"),dcc_send_conductor->filename,dcc_send_conductor->nick);
 
                                     //commented out the bottom part to see if small files can be labelled "complete" instead of stuck on "transffering"
                                     //dcc_time_to_send();
@@ -927,7 +927,7 @@ int do_waitselect_code(void)
                                         {
 
                                             strcpy(dcc_send_conductor->entry->status,
-                                                    GetCatalogStr(catalog, 180, "Incomplete")); //"Incomplete");
+                                                    (char *)GCS(catalog, 180, "Incomplete")); //"Incomplete");
                                             strcpy(dcc_send_conductor->entry->timeleft, "N/A"); //Done");
                                             float pct = 0;
 
@@ -946,9 +946,9 @@ int do_waitselect_code(void)
                                                 dcc_send_conductor->entry, a, NOWRAP, ALIGN_LEFT);
 
                                         sprintf(buffer3, "%s%sDCC%s SEND: %s %s %s %s", timestamp,
-                                                GetCatalogStr(catalog, 217, "["), GetCatalogStr(catalog, 218, "]"),
-                                                dcc_send_conductor->filename, GetCatalogStr(catalog, 205, "to"),
-                                                dcc_send_conductor->nick, GetCatalogStr(catalog, 180, "Incomplete"));
+                                                GCS(catalog, 217, "["), GCS(catalog, 218, "]"),
+                                                dcc_send_conductor->filename, GCS(catalog, 205, "to"),
+                                                dcc_send_conductor->nick, GCS(catalog, 180, "Incomplete"));
 
                                         if ((my_settings.events[DCC_SEND_FINISHED].use_when == 1 && is_window_active())
                                                 || (my_settings.events[DCC_SEND_FINISHED].use_when == 2
@@ -958,7 +958,7 @@ int do_waitselect_code(void)
                                             strcpy(target_nick, "");
                                             create_arexx_event_string(my_settings.dcc_send_finished.arexx_script,
                                                     my_settings.dcc_send_finished.arexx_script2);
-                                            Execute(event_string, 0, 0);
+                                            Execute((_s_cs)event_string, 0, 0);
                                         }
 
                                         cleanup_dcc_send(FLAG_AS_COMPLETED);
@@ -1012,8 +1012,8 @@ int do_waitselect_code(void)
                             dcc_chat_conductor->connected = 0;
                             strcpy(dcc_chat_conductor->name, "");
 
-                            sprintf(buffer3, "%s%sDCC%s DCC CHAT %s", timestamp, GetCatalogStr(catalog, 217, "["),
-                                    GetCatalogStr(catalog, 218, "]"), GetCatalogStr(catalog, 183, "Disconnected"));
+                            sprintf(buffer3, "%s%sDCC%s DCC CHAT %s", timestamp, GCS(catalog, 217, "["),
+                                    GCS(catalog, 218, "]"), GCS(catalog, 183, "Disconnected"));
                             status_conductor->conductor = dcc_chat_conductor->conductor;
                             add_text_to_conductor_list(buffer3, 9, ACTIVITY_CHAT);
                             if (FD_ISSET(dcc_chat_conductor->dcc_socket, &read_master))
@@ -1049,8 +1049,8 @@ int do_waitselect_code(void)
                         if (!dcc_chat_conductor->connected)
                         {
                             dcc_chat_conductor->connected = 1;
-                            sprintf(buffer3, "%s%sDCC%s DCC CHAT %s", timestamp, GetCatalogStr(catalog, 217, "["),
-                                    GetCatalogStr(catalog, 218, "]"), GetCatalogStr(catalog, 182, "Connected"));
+                            sprintf(buffer3, "%s%sDCC%s DCC CHAT %s", timestamp, GCS(catalog, 217, "["),
+                                    GCS(catalog, 218, "]"), GCS(catalog, 182, "Connected"));
                             status_conductor->conductor = dcc_chat_conductor->conductor;
                             add_text_to_conductor_list(buffer3, 9, ACTIVITY_CHAT);
                             strcpy(dcc_chat_conductor->buffer, "");
@@ -1114,8 +1114,8 @@ int do_waitselect_code(void)
                     if (DEBUG)
                         printf("connected!!\n");
 
-                    sprintf(buffer3, "%s%sServer%s %s", timestamp, GetCatalogStr(catalog, 217, "["),
-                            GetCatalogStr(catalog, 218, "]"), GetCatalogStr(catalog, 182, "Connected"));
+                    sprintf(buffer3, "%s%sServer%s %s", timestamp, GCS(catalog, 217, "["),
+                            GCS(catalog, 218, "]"), GCS(catalog, 182, "Connected"));
 
                     add_text_to_conductor_list(buffer3, 9, ACTIVITY);
 
@@ -1146,13 +1146,13 @@ int do_waitselect_code(void)
                             || (my_settings.events[CONNECT].use_when == 2 && !is_window_active())
                             || my_settings.events[CONNECT].use_when == 3)
                     {
-                        sprintf(buffer3, "%sServer%s %s", GetCatalogStr(catalog, 217, "["),
-                                GetCatalogStr(catalog, 218, "]"), GetCatalogStr(catalog, 182, "Connected"));
+                        sprintf(buffer3, "%sServer%s %s", GCS(catalog, 217, "["),
+                                GCS(catalog, 218, "]"), GCS(catalog, 182, "Connected"));
 
                         strcpy(target_nick, "");
                         create_arexx_event_string(my_settings.events[CONNECT].arexx_script,
                                 my_settings.events[CONNECT].arexx_script2);
-                        Execute(event_string, 0, 0);
+                        Execute((_s_cs)event_string, 0, 0);
                     }
 
                     break;
@@ -1189,9 +1189,9 @@ int do_waitselect_code(void)
 
                         dcc_chat_conductor->connected = 1;
 
-                        sprintf(buffer3, "%s%sDCC%s %s", timestamp, GetCatalogStr(catalog, 217, "["),
-                                GetCatalogStr(catalog, 218, "]"),
-                                GetCatalogStr(catalog, 189, "DCC CHAT connection established"));
+                        sprintf(buffer3, "%s%sDCC%s %s", timestamp, GCS(catalog, 217, "["),
+                                GCS(catalog, 218, "]"),
+                                GCS(catalog, 189, "DCC CHAT connection established"));
                         status_conductor->conductor = dcc_chat_conductor->conductor;
                         add_text_to_conductor_list(buffer3, 9, ACTIVITY);
                         //strcpy(dcc_chat_conductor->str,"");
