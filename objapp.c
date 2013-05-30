@@ -21,11 +21,10 @@
 #include "objapp.h"
 #include "version_info.h"
 
-// FIXME change non-public to local variables
-APTR MN1_Hide, MNmenuBarLabel2,MN1_Main, MN1_SelectServer, MN1_NewTAB, MN1_NewGTAB,MN1_CloseTAB, MNmenuBarLabel0,MNmenuBarLabel1, MN_ClearAllHistory,MN_ClearHistory,  MN_SaveHistory, MN_MainSettings;
-APTR MN_Settings,MN_SaveSettings, MN_MUISettings, MN_ColourSettings, MN_windows_dcc2,  MN_windows_dcc, MN_windows, MN_urlgrabber, MN_ignorelist, MN_about, MN_quit, MN_MultiColumnDisplay, MN_CloneDetection, MN_Clipboard;
+APTR MN1_Hide, MN1_SelectServer, MN1_NewTAB, MN1_NewGTAB,MN1_CloseTAB, MN_ClearAllHistory,MN_ClearHistory,  MN_SaveHistory, MN_MainSettings;
+APTR MN_SaveSettings, MN_MUISettings, MN_ColourSettings, MN_windows_dcc2,  MN_windows_dcc, MN_urlgrabber, MN_ignorelist, MN_about, MN_quit, MN_MultiColumnDisplay, MN_Clipboard;
 APTR MN_MuteSound;
-APTR MN_Edit, MN_cut, MN_copy, MN_paste;
+APTR MN_cut, MN_copy, MN_paste;
 
 APTR GR_string_gadget;
 APTR GROUP_ROOT_0;
@@ -41,11 +40,11 @@ APTR CYCLE_events;
 /* Locals */
 static int AMIX=0;
 
+static APTR MNmenuBarLabel2,MN1_Main, MNmenuBarLabel0,MNmenuBarLabel1, MN_Settings, MN_windows, MN_Edit;
+
 static APTR GROUP_ROOT_4, GR_grp_13, LA_servername, GR_grp_11, LA_port, LA_pass, GR_grp_12;
 static APTR GROUP_ROOT_5, GR_grp_15, LA_groupname, GR_grp_16, GR_grp_17;
 static APTR GR_ban, GR_ban_subgroup, GR_logging_splitup, GR_logging_splitup2;
-static APTR GROUP_ROOT_1;
-static APTR GR_virtual_buttons, GR_samples_path;
 static APTR LA_space;
 static APTR GROUP_ROOT_3, GR_grp_0, LA_nicknames, GR_grp_1, LA_realname, GR_grp_2;
 static APTR LA_username, GR_grp_3, REC_label_0, GR_grp_8, GR_grp_7, REC_label_0CC;
@@ -80,26 +79,26 @@ static APTR LA_CSW_listviewtabs_normaltext; //33
 
 static APTR DISPLAY_SERVER_WIN_GRP;
 static APTR IGNORE_ROOT, IGNORE_GRP1, GR_autoconnect;
-static APTR GROUP_ROOT_2_ALIASES, GR_alias1, GR_alias2, EDIT_ALIAS_ROOT, EDIT_ALIAS_1;
+static APTR GROUP_ROOT_2_ALIASES, GR_alias1, GR_alias2;
 static APTR URLGRABBER_ROOT, URLGRABBER_GRP1, ABOUT_ROOT, GROUP_ROOT_2_SERVER, GROUP_ROOT_2, GROUP_ROOT_2_SECOND;
-static APTR GROUP_ROOT_2_DCC,GROUP_ROOT_2_ACTIONS, GR_grp_20, GR_grp_21, GR_grp_22, obj_aux0, obj_auto_open_query_tabs_when_msged_label;
+static APTR GROUP_ROOT_2_DCC,GROUP_ROOT_2_ACTIONS, obj_auto_open_query_tabs_when_msged_label;
 static APTR GR_graphical_smileys;
 static APTR obj_autojoin_channels_when_kicked_label, grp_autojoin_channels_when_kicked, GR_grp_32, GR_grp_33;
 static APTR grp_dcc_settings1, grp_dcc_settings2,grp_dcc_settings3, grp_dcc_settings4, grp_dcc_settings5;
 static APTR GR_grp_28, GR_grp_31, GR_dcc_grp_28,GR_dcc_grp_282, GR_dcc_grp_29,REC_label_6,REC_label_7, GR_grp_29;
 static APTR obj_settings1_dcc, obj_settings2_dcc, obj_gethostid_dcc, obj_ipaddr_dcc, obj_port1_dcc, obj_port2_dcc;
-static APTR obj_aux20, obj_aux21, GR_grp_27, obj_aux22, obj_aux23, REC_label_5;
-static APTR obj_aux16, obj_aux17, obj_aux18, obj_aux19, REC_label_4, GR_grp_26, GR_grp_reload_log;
+static APTR obj_aux21, obj_aux22, obj_aux23, REC_label_5;
+static APTR obj_aux17, obj_aux18, obj_aux19, REC_label_4, GR_grp_26;
 static APTR obj_aux12, obj_aux13, obj_aux14, obj_aux15, REC_label_3, GR_grp_doubleclickactions;
 static APTR obj_aux7, REC_label_2, GR_grp_24, obj_aux8, obj_aux9, obj_aux10, obj_aux11;
-static APTR obj_aux2, obj_aux3, REC_label_1, GR_grp_23, obj_aux4, obj_aux5, obj_aux6;
+static APTR obj_aux2, obj_aux3, REC_label_1, GR_grp_23, obj_aux5, obj_aux6;
 static APTR grp_auto_open_query_tabs_when_msged;
 static APTR GROUP_ROOT_7, GROUP_ROOT_9;
 static APTR GR_send_dcc, GR_dcc, GR_dcc_file_exists;
 static APTR GROUP_ROOT_8;
 static APTR GROUP_ROOT_10, GR_grp_19, LA_dcc_send_file, GR_grp_30, LA_dcc_send_nick;
 static APTR QUIT_ROOT, quit_label;
-static APTR ADDIGNORE_ROOT, ADDIGNORE_GRP1, ADDIGNORE_GRP2;
+static APTR ADDIGNORE_ROOT, ADDIGNORE_GRP1;
 static APTR about_group1, about_group2, about_group3, about_group4;
 static APTR PICTURE_LOGO;
 
@@ -2627,14 +2626,6 @@ if(AMIX) printf("111\n");
         MUIA_InnerRight, 0,
     End;
 
-    APTR LA_space8 =(Object*)TextObject,
-        MUIA_Weight, 1,
-        MUIA_Text_PreParse, NULL,
-        MUIA_Text_Contents, NULL,
-        MUIA_InnerLeft, 0,
-        MUIA_InnerRight, 0,
-    End;
-
     GR_autoconnect = (Object*)GroupObject,
         MUIA_Group_Horiz, TRUE,
         Child, MBObj->CH_autoconnect,
@@ -2911,10 +2902,6 @@ if(AMIX) printf("120\n");
         Child, MBObj->BT_perform,
     End;
 
-    APTR REC_separator =(Object*) RectangleObject,
-        MUIA_Rectangle_HBar, TRUE,
-        MUIA_FixHeight, 8,
-    End;
 if(AMIX) printf("123\n");
 
     GROUP_ROOT_3 =(Object*)GroupObject,
@@ -2928,12 +2915,10 @@ if(AMIX) printf("123\n");
             Child, GR_grp_1,
             Child, GR_local_charset,
         End,
-        //Child, GR_grp_3,
         Child, GR_grp_8,
         Child, GR_grp_7,
         Child, GR_grp_9,
         Child, GR_grp_6,
-        //Child, REC_separator,
         Child, GroupObject,
             MUIA_FrameTitle, "Server settings",
             MUIA_Frame, MUIV_Frame_Group,
