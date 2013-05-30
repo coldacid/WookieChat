@@ -31,3 +31,8 @@ extern APTR CYCLE_events;
 
 
 struct ObjApp *CreateApp();
+
+BOOL create_custom_classes();
+void delete_custom_classes();
+
+struct MUI_CustomClass * get_nlist_class();

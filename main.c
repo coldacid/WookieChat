@@ -968,52 +968,10 @@ int main(int argc, char *argv[])
     if (!TimerWait_Open())
         cleanexit((char*) "cant create timers\n");
 
-// Create MUI Subclasses
-#ifdef __AROS__
-    mcc = MUI_CreateCustomClass(NULL, MUIC_BetterString, NULL, sizeof(struct InstanceData),
-            (APTR) BetterString_Dispatcher);
-    if (!mcc)
-        printf("%s\n", GetCatalogStr(catalog, 137, "Please download and install the BetterString.mcc MUI Class"));
-
-    mcc2 = MUI_CreateCustomClass(NULL, MUIC_NList, NULL, sizeof(struct MyData), (APTR) NList_Dispatcher);
-    if (!mcc2)
-        printf("%s\n", GetCatalogStr(catalog, 138, "Please download and install the NList.mcc MUI Class"));
-
-    mcc4 = MUI_CreateCustomClass(NULL, MUIC_Window, NULL, sizeof(struct MyData), (APTR) Window_Dispatcher);
-    if (!mcc4)
-        printf("Could not create custom class for windows\n");
-
-    mcc5 = MUI_CreateCustomClass(NULL, MUIC_NListview, NULL, sizeof(struct MyData), (APTR) NList_Dispatcher);
-    if (!mcc5)
-        printf("%s\n", GetCatalogStr(catalog, 139, "Please download and install the NListview.mcc MUI Class"));
-
-    mcc6 = MUI_CreateCustomClass(NULL, MUIC_Group, NULL, sizeof(struct MyData), (APTR) Group_Dispatcher);
-    if (!mcc4)
-        printf("Could not create custom class for windows\n");
-
-#else
-    mcc = MUI_CreateCustomClass(NULL,(char*)MUIC_BetterString,NULL,sizeof(struct InstanceData),ENTRY(BetterString_Dispatcher));
-    if(!mcc) printf("%s\n",GetCatalogStr(catalog,137,"Please download and install the BetterString.mcc MUI Class"));
-
-    mcc2 = MUI_CreateCustomClass(NULL,(char*)MUIC_NList,NULL,sizeof(struct MyData),ENTRY(NList_Dispatcher));
-    if(!mcc2) printf("%s\n",GetCatalogStr(catalog,138,"Please download and install the NList.mcc MUI Class"));
-
-    mcc4 = MUI_CreateCustomClass(NULL,(char*)MUIC_Window,NULL,sizeof(struct MyData),ENTRY(Window_Dispatcher));
-    if(!mcc4) printf("Could not create custom class for windows\n");
-
-    mcc5 = MUI_CreateCustomClass(NULL,(char*)MUIC_NListview,NULL,sizeof(struct MyData),ENTRY(NList_Dispatcher));
-    if(!mcc5) printf("%s\n",GetCatalogStr(catalog,139,"Please download and install the NListview.mcc MUI Class"));
-
-    mcc6 = MUI_CreateCustomClass(NULL,(char*)MUIC_Group,NULL,sizeof(struct MyData),ENTRY(Group_Dispatcher));
-    if(!mcc4) printf("Could not create custom class for windows\n");
-#endif
-
-    if (!mcc || !mcc2 || !mcc4 || !mcc5 || !mcc6)
-        cleanexit(
-                (char*) GetCatalogStr(
-                        catalog,
-                        140,
-                        "These missing classes can be downloaded from http://www.aminet.net/ or http://os4depot.net. Check the WookieChat readme for direct links to these classes\n"));
+    if (!create_custom_classes())
+        cleanexit((char*) GetCatalogStr(
+                    catalog, 140,
+                    "These missing classes can be downloaded from http://www.aminet.net/ or http://os4depot.net. Check the WookieChat readme for direct links to these classes\n"));
 //
 
     WookieChat = CreateApp();

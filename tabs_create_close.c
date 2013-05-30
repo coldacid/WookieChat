@@ -36,6 +36,7 @@ static struct query_window *init_conductor(int a)
 {
 
     struct query_window *test;
+    struct MUI_CustomClass * nlist = get_nlist_class();
 
     test = (struct query_window *) AllocVec(sizeof(struct query_window), MEMF_PUBLIC|MEMF_CLEAR);
 
@@ -191,9 +192,9 @@ static struct query_window *init_conductor(int a)
     if(my_settings.use_column_display==0) //make a one columned display
     {
         #ifdef __AROS__
-        test->LV_channel = (Object*)NewObjectAROS(mcc2->mcc_Class, NULL,
+        test->LV_channel = (Object*)NewObjectAROS(nlist->mcc_Class, NULL,
         #else
-        test->LV_channel = (Object*)NewObject(mcc2->mcc_Class, NULL,
+        test->LV_channel = (Object*)NewObject(nlist->mcc_Class, NULL,
         #endif
             MUIA_Frame, MUIV_Frame_InputList,
             //undo
@@ -213,9 +214,9 @@ static struct query_window *init_conductor(int a)
     else //make a multi columned display for time/nick/text
     {
             #ifdef __AROS__
-            test->LV_channel = (Object*)NewObjectAROS(mcc2->mcc_Class, NULL,
+            test->LV_channel = (Object*)NewObjectAROS(nlist->mcc_Class, NULL,
             #else
-            test->LV_channel = (Object*)NewObject(mcc2->mcc_Class,NULL,// NListObject,
+            test->LV_channel = (Object*)NewObject(nlist->mcc_Class,NULL,
             #endif
             MUIA_Frame, MUIV_Frame_InputList,
             //undo
@@ -283,9 +284,9 @@ static struct query_window *init_conductor(int a)
         End;
 
         #ifdef __AROS__
-        test->LV_nicklist = (Object*)NewObjectAROS(mcc2->mcc_Class,NULL,  //NListObject,
+        test->LV_nicklist = (Object*)NewObjectAROS(nlist->mcc_Class,NULL,
         #else
-        test->LV_nicklist = (Object*)NewObject(mcc2->mcc_Class,NULL,  //NListObject,
+        test->LV_nicklist = (Object*)NewObject(nlist->mcc_Class,NULL,
             #endif
             MUIA_ContextMenu, test->strip = (Object*)MUI_MakeObject(MUIO_MenustripNM,MenuData1,0),
             MUIA_ShortHelp,GetCatalogStr(catalog,319,"Graphical Usermodes Key:\nGreen = Channel Operators or @\nBlue = HalfOps or \%\nYellow = Voiced Users or +"),
@@ -367,9 +368,9 @@ static struct query_window *init_conductor(int a)
         }
 
         #ifdef __AROS__
-        test->LV_nicklist = (Object*)NewObjectAROS(mcc2->mcc_Class,NULL,  //NListObject,
+        test->LV_nicklist = (Object*)NewObjectAROS(nlist->mcc_Class,NULL,
         #else
-        test->LV_nicklist = (Object*)NewObject(mcc2->mcc_Class,NULL,  //NListObject,
+        test->LV_nicklist = (Object*)NewObject(nlist->mcc_Class,NULL,
             #endif
             MUIA_ContextMenu, test->strip = (Object*)MUI_MakeObject(MUIO_MenustripNM,MenuData1,0),
             //MUIA_ShortHelp,"Graphical Usermodes Key:\nGreen = Channel Operators or @\nBlue = HalfOps or \%\nYellow = Voiced Users or +",

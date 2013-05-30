@@ -810,17 +810,8 @@ void cleanexit(char *str)
 
     //printf("9\n");
 
-    if (mcc)
-        MUI_DeleteCustomClass(mcc);
-    if (mcc2)
-        MUI_DeleteCustomClass(mcc2);
-    //if(mcc3) MUI_DeleteCustomClass(mcc3);
-    if (mcc4)
-        MUI_DeleteCustomClass(mcc4);
-    if (mcc5)
-        MUI_DeleteCustomClass(mcc5);
-    if (mcc6)
-        MUI_DeleteCustomClass(mcc6);
+    delete_custom_classes();
+
     //printf("16\n");
 
     if (GEIT)

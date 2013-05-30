@@ -190,11 +190,6 @@ char *tabwork_string; //original string gadget contents
 BOOL dont_open_colours;
 struct ClockData *clockdata2;
 BOOL is_chooser_window_open;
-struct MUI_CustomClass *mcc;
-struct MUI_CustomClass *mcc2;
-struct MUI_CustomClass *mcc4;
-struct MUI_CustomClass *mcc5;
-struct MUI_CustomClass *mcc6;
 struct DiskObject *dobj; //for the iconified icon
 struct MsgPort *arexx_quit_replyport;
 struct MUI_NList_TestPos_Result *last_clicked_res;

@@ -120,17 +120,26 @@ static IPTR NewObjectAROS( struct IClass *classPtr, UBYTE *classID, ULONG tag1, 
 #endif
 
 #ifdef __AROS__
-#define BS_Object NewObjectAROS(mcc->mcc_Class,NULL //nlist subclass#else
+#define BS_Object NewObjectAROS(get_custom_class(CC_MUIC_BETTERSTRING)->mcc_Class,NULL
 #else
-#define BS_Object NewObject(mcc->mcc_Class,NULL
+#define BS_Object NewObject(get_custom_class(CC_MUIC_BETTERSTRING)->mcc_Class,NULL
 #endif
+
+#define CC_MUIC_NLIST           0
+#define CC_MUIC_BETTERSTRING    1
+#define CC_MUIC_WINDOW          2
+#define CC_MUIC_GROUP           3
+#define CC_MAX                  4
+
+static struct MUI_CustomClass * classes[CC_MAX];
+
+struct MUI_CustomClass * get_custom_class(ULONG id);
 
 struct ObjApp *CreateApp(void)
 {
 
-    //if(AMIX) printf("1\n");
-
     struct ObjApp *MBObj;
+    struct MUI_CustomClass * nlist = get_custom_class(CC_MUIC_NLIST);
 
     if (!(MBObj = (struct ObjApp *) AllocVec(sizeof(struct ObjApp), MEMF_PUBLIC|MEMF_CLEAR)))
         return(NULL);
@@ -157,9 +166,9 @@ if(AMIX) printf("2\n");
 
 if(AMIX) printf("3\n");
         #ifdef __AROS__
-        MBObj->LV_tabs = (Object*)NewObjectAROS(mcc2->mcc_Class,NULL, //nlist subclass
+        MBObj->LV_tabs = (Object*)NewObjectAROS(nlist->mcc_Class,NULL, //nlist subclass
         #else
-        MBObj->LV_tabs = (Object*)NewObject(mcc2->mcc_Class,NULL, //nlist subclass
+        MBObj->LV_tabs = (Object*)NewObject(nlist->mcc_Class,NULL, //nlist subclass
         #endif
         MUIA_Frame, MUIV_Frame_InputList,
         MUIA_NList_ConstructHook, &ConstructLI_channel2_TextHook,
@@ -890,9 +899,9 @@ if(AMIX) printf("53\n");
     MBObj->CH_autoaccept = (Object*)CheckMark(FALSE);
 if(AMIX) printf("54\n");
     #ifdef __AROS__
-    MBObj->LV_trusted_nicks = (Object*)NewObjectAROS(mcc2->mcc_Class,NULL,// NListObject,
+    MBObj->LV_trusted_nicks = (Object*)NewObjectAROS(nlist->mcc_Class,NULL,// NListObject,
     #else
-    MBObj->LV_trusted_nicks = (Object*)NewObject(mcc2->mcc_Class,NULL,// NListObject,
+    MBObj->LV_trusted_nicks = (Object*)NewObject(nlist->mcc_Class,NULL,// NListObject,
         #endif
         MUIA_Frame, MUIV_Frame_InputList,
         MUIA_NList_ConstructHook, MUIV_NList_ConstructHook_String,
@@ -3048,9 +3057,9 @@ if(AMIX) printf("127\n");
     {
         if(AMIX) printf("127a\n");
         #ifdef __AROS__
-        GROUP_ROOT_0 =(Object*)NewObjectAROS(mcc6->mcc_Class,NULL,  //(Object*)GroupObject,
+        GROUP_ROOT_0 =(Object*)NewObjectAROS(get_custom_class(CC_MUIC_GROUP)->mcc_Class,NULL,
         #else
-        GROUP_ROOT_0 =(Object*)NewObject(mcc6->mcc_Class,NULL,  //(Object*)GroupObject,
+        GROUP_ROOT_0 =(Object*)NewObject(get_custom_class(CC_MUIC_GROUP)->mcc_Class,NULL,
             #endif
             MUIA_Group_HorizSpacing, 1,
             MUIA_Group_VertSpacing, 1,
@@ -3064,9 +3073,9 @@ if(AMIX) printf("127\n");
     {
         if(AMIX) printf("127b\n");
         #ifdef __AROS__
-        GROUP_ROOT_0 =(Object*)NewObjectAROS(mcc6->mcc_Class,NULL, //(Object*)GroupObject,
+        GROUP_ROOT_0 =(Object*)NewObjectAROS(get_custom_class(CC_MUIC_GROUP)->mcc_Class,NULL,
         #else
-        GROUP_ROOT_0 =(Object*)NewObject(mcc6->mcc_Class,NULL, //(Object*)GroupObject,
+        GROUP_ROOT_0 =(Object*)NewObject(get_custom_class(CC_MUIC_GROUP)->mcc_Class,NULL,
             #endif
             MUIA_Group_HorizSpacing, 1,
             MUIA_Group_VertSpacing, 1,
@@ -3078,9 +3087,9 @@ if(AMIX) printf("127\n");
 if(AMIX) printf("128\n");
 
     #ifdef __AROS__
-    MBObj->WI_main =(Object*)NewObjectAROS(mcc4->mcc_Class,NULL, // (Object*)WindowObject,
+    MBObj->WI_main =(Object*)NewObjectAROS(get_custom_class(CC_MUIC_WINDOW)->mcc_Class,NULL, // (Object*)WindowObject,
     #else
-    MBObj->WI_main =(Object*)NewObject(mcc4->mcc_Class,NULL, // (Object*)WindowObject,
+    MBObj->WI_main =(Object*)NewObject(get_custom_class(CC_MUIC_WINDOW)->mcc_Class,NULL, // (Object*)WindowObject,
         #endif
         MUIA_Window_Title, "Wookiechat",
         MUIA_Window_Menustrip, MBObj->MN_,
@@ -3092,9 +3101,9 @@ if(AMIX) printf("128\n");
 
 if(AMIX) printf("129\n");
     #ifdef __AROS__
-    MBObj->LV_ban = (Object*)NewObjectAROS(mcc2->mcc_Class,NULL,// NListObject,
+    MBObj->LV_ban = (Object*)NewObjectAROS(nlist->mcc_Class,NULL,// NListObject,
     #else
-    MBObj->LV_ban = (Object*)NewObject(mcc2->mcc_Class,NULL,// NListObject,
+    MBObj->LV_ban = (Object*)NewObject(nlist->mcc_Class,NULL,// NListObject,
     #endif
         MUIA_Frame, MUIV_Frame_InputList,
         MUIA_NList_ConstructHook, MUIV_NList_ConstructHook_String,
@@ -3185,4 +3194,68 @@ if(AMIX) printf("131\n");
 
 //if(AMIX) printf(" THE END.. \n");
     return(MBObj);
+}
+
+BOOL create_custom_classes()
+{
+    for (int i = 0; i < CC_MAX; i++)
+        classes[i] = NULL;
+
+// Create MUI Subclasses
+#ifdef __AROS__
+    classes[CC_MUIC_BETTERSTRING] = MUI_CreateCustomClass(NULL, MUIC_BetterString, NULL, sizeof(struct InstanceData),
+            (APTR) BetterString_Dispatcher);
+    if (!classes[CC_MUIC_BETTERSTRING])
+        printf("%s\n", GetCatalogStr(catalog, 137, "Please download and install the BetterString.mcc MUI Class"));
+
+    classes[CC_MUIC_NLIST] = MUI_CreateCustomClass(NULL, MUIC_NList, NULL, sizeof(struct MyData), (APTR) NList_Dispatcher);
+    if (!classes[CC_MUIC_NLIST])
+        printf("%s\n", GetCatalogStr(catalog, 138, "Please download and install the NList.mcc MUI Class"));
+
+    classes[CC_MUIC_WINDOW] = MUI_CreateCustomClass(NULL, MUIC_Window, NULL, sizeof(struct MyData), (APTR) Window_Dispatcher);
+    if (!classes[CC_MUIC_WINDOW])
+        printf("Could not create custom class for windows\n");
+
+    classes[CC_MUIC_GROUP] = MUI_CreateCustomClass(NULL, MUIC_Group, NULL, sizeof(struct MyData), (APTR) Group_Dispatcher);
+    if (!classes[CC_MUIC_GROUP])
+        printf("Could not create custom class for groups\n");
+
+#else
+    classes[CC_MUIC_BETTERSTRING] = MUI_CreateCustomClass(NULL,(char*)MUIC_BetterString,NULL,sizeof(struct InstanceData),ENTRY(BetterString_Dispatcher));
+    if(!classes[CC_MUIC_BETTERSTRING]) printf("%s\n",GetCatalogStr(catalog,137,"Please download and install the BetterString.mcc MUI Class"));
+
+    classes[CC_MUIC_NLIST] = MUI_CreateCustomClass(NULL,(char*)MUIC_NList,NULL,sizeof(struct MyData),ENTRY(NList_Dispatcher));
+    if(!classes[CC_MUIC_NLIST]) printf("%s\n",GetCatalogStr(catalog,138,"Please download and install the NList.mcc MUI Class"));
+
+    classes[CC_MUIC_WINDOW] = MUI_CreateCustomClass(NULL,(char*)MUIC_Window,NULL,sizeof(struct MyData),ENTRY(Window_Dispatcher));
+    if(!classes[CC_MUIC_WINDOW]) printf("Could not create custom class for windows\n");
+
+    classes[CC_MUIC_GROUP] = MUI_CreateCustomClass(NULL,(char*)MUIC_Group,NULL,sizeof(struct MyData),ENTRY(Group_Dispatcher));
+    if(!classes[CC_MUIC_GROUP]) printf("Could not create custom class for groups\n");
+#endif
+
+    for (int i = 0; i < CC_MAX; i++)
+        if (!classes[i]) return FALSE;
+
+    return TRUE;
+}
+
+void delete_custom_classes()
+{
+    for (int i = 0; i < CC_MAX; i++)
+        if (classes[i])
+            MUI_DeleteCustomClass(classes[i]);
+}
+
+struct MUI_CustomClass * get_custom_class(ULONG id)
+{
+    if (id >= CC_MAX)
+        return NULL;
+    else
+        return classes[id];
+}
+
+struct MUI_CustomClass * get_nlist_class()
+{
+    return get_custom_class(CC_MUIC_NLIST);
 }
