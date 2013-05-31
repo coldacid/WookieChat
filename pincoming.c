@@ -132,7 +132,7 @@ void onjoin_clone_detection(char *nick, char *hostname)
                 GCS(catalog, 286, "Clones"), GCS(catalog, 218, "]"),
                 GCS(catalog, 287, "Detected clones from"), string1, nick);
 
-        for (count = 0; count < status_conductor->conductor->nicks; count++)
+        for (int count = 0; count < status_conductor->conductor->nicks; count++)
         {
 
             if (status_conductor->conductor->nicklist[count].hostname)
@@ -237,7 +237,7 @@ BOOL user_being_ignored(char *nick, char *hostname, int type)
     sprintf(string11, "%s!%s", string7, hostname);
     //if(DEBUG) printf("searching for this ignore:%s\n",string11);
 
-    for (count = 0; count < my_settings.totalignores; count++)
+    for (int count = 0; count < my_settings.totalignores; count++)
     {
         //if(DEBUG) printf("ignoremask entry:%s\n",my_settings.ignorelist[count].ignoremask);
         if (wildcmp(my_settings.ignorelist[count].ignoremask, string11))
@@ -1489,7 +1489,7 @@ void process_incoming()
 
                         if (stricmp(work_buffer, "\r\n"))
                         {
-
+                            int count;
                             //string1 == your typed command
                             //string4 == your typed stuff after command
                             //string2 == command alias keyword
@@ -1877,7 +1877,7 @@ void process_incoming()
                                     GCS(catalog, 286, "Clones"), GCS(catalog, 218, "]"),
                                     GCS(catalog, 287, "Detected clones from"), string1);
 
-                            for (count = 0; count < status_conductor->conductor->nicks; count++)
+                            for (int count = 0; count < status_conductor->conductor->nicks; count++)
                             {
 
                                 if (status_conductor->conductor->nicklist[count].hostname)
@@ -1977,6 +1977,8 @@ void process_incoming()
             }
             else if (!strcmp(incoming_2, "317")) //seconds idle, signon time
             {
+                int count;
+
                 for (count = 0; count < (LONG) strlen(string7) && string7[count] != ' '; count++)
                     ;
                 count++;
@@ -4462,7 +4464,7 @@ void process_incoming()
 
             if (status_conductor->conductor && my_settings.user_modes_beside_nicks)
             {
-                for (count = 0; count < status_conductor->conductor->nicks; count++)
+                for (int count = 0; count < status_conductor->conductor->nicks; count++)
                 {
                     if (!stricmp(status_conductor->conductor->nicklist[count].name, string7))
                     {
@@ -4797,6 +4799,8 @@ void process_incoming()
 
                         if (string1[0] == '\"')
                         {
+                            int count;
+
                             for (count = 1; count < (LONG) strlen(string1); count++)
                             {
                                 string1[count - 1] = string1[count];
@@ -4860,12 +4864,11 @@ void process_incoming()
                         strtok(string10, " ");
                         strtok(NULL, "\""); //move strtok position past "DCC ACCEPT"
                         work1 = strtok(NULL, "\"");
-                        for (count = 0; count < (LONG) strlen(work1); count++)
+                        for (int count = 0; count < (LONG) strlen(work1); count++)
                         {
                             if (work1[count] == ' ')
                                 work1[count] = '_';
                         }
-                        //if(DEBUG) printf("work1:%s\n",work1);
 
                     }
                     else

@@ -19,7 +19,6 @@
 int NEWDEBUG = 0;
 
 int DEBUG = 0;
-int count = 0;
 int SMALLTABS = 0;
 int RAW;
 int ALTERNATIVE_CLIPBOARD = 0;
@@ -748,8 +747,6 @@ BOOL open_timers();
 
 void read_list_of_servers(void)
 {
-    count=0;
-
     char *work_buffer=malloc(sizeof(char) * 1000);
     char *work_buffer2=malloc(sizeof(char) * 1000);
     char *work1=malloc(sizeof(char) * 100);
@@ -899,7 +896,7 @@ int main(int argc, char *argv[])
 
     if (argc >= 2)
     {
-        for (count = 1; count < argc; count++)
+        for (int count = 1; count < argc; count++)
         {
             if (!stricmp(argv[count], "geit"))
                 GEIT = 1;
@@ -1777,6 +1774,7 @@ int main(int argc, char *argv[])
                                 while (1)
                                 {
                                     int a = 0;
+                                    int count;
 
                                     do
                                     {
@@ -1865,7 +1863,7 @@ int main(int argc, char *argv[])
                             }
                             else
                             {
-
+                                int count;
                                 for (count = 1; count <= my_settings.number_of_command_aliases; count++)
                                 {
                                     strcpy(string7, test[c]);
@@ -2268,7 +2266,7 @@ int main(int argc, char *argv[])
                     }
                     else //else edit a server
                     {
-                        int count2;
+                        int count2, count;
                         //setmacro((Object*)WookieChat->WI_edit_server,MUIA_Window_Open, TRUE);
                         //setmacro((Object*)WookieChat->GR_server_specific_user_prefs, MUIA_ShowMe, FALSE);
 
@@ -2723,7 +2721,7 @@ int main(int argc, char *argv[])
                                     if (DEBUG)
                                         printf("auto renaming incoming file\n");
 
-                                    count = 1;
+                                    int count = 1;
 
                                     getmacro((Object*)WookieChat->PA_dcc_label_0, MUIA_String_Contents, &string5);
 
@@ -3640,7 +3638,7 @@ int main(int argc, char *argv[])
 
                             getmacro((Object*)WookieChat->LV_ignore, MUIA_NList_Entries, &entries);
 
-                            for (count = 0; count <= (LONG) entries; count++)
+                            for (int count = 0; count <= (LONG) entries; count++)
                             {
 
                                 DoMethod((Object*) WookieChat->LV_ignore, MUIM_NList_GetEntry, count, &string5);
@@ -3789,7 +3787,7 @@ int main(int argc, char *argv[])
                 getmacro((Object*)WookieChat->STR_edit_alias_name, MUIA_String_Contents, &string1);
                 getmacro((Object*)WookieChat->STR_edit_alias_command, MUIA_String_Contents, &string2);
 
-                for (count = 0;; count++)
+                for (int count = 0;; count++)
                 {
 
                     DoMethod((Object*) WookieChat->LV_alias, MUIM_NList_GetEntry, count, &string3);
@@ -4712,7 +4710,7 @@ int main(int argc, char *argv[])
                     else if (result > AREXX_MENU_VALUES && result < GRAPHICAL_SMILEY_VALUES)
                     {
 // Execute an AREXX script
-                        count = result - AREXX_MENU_VALUES;
+                        int count = result - AREXX_MENU_VALUES;
 
                         sprintf(file_name, "run rx %s", AREXX_Menu_Items[count].MenuItem_String);
                         if (DEBUG)
@@ -4741,7 +4739,7 @@ int main(int argc, char *argv[])
                     else if (result > GRAPHICAL_SMILEY_VALUES)
                     {
 // Insert a graphical smiley ascii into the chat entry string gadget
-                        count = result - GRAPHICAL_SMILEY_VALUES;
+                        int count = result - GRAPHICAL_SMILEY_VALUES;
 
                         setmacro((Object*)WookieChat->WI_graphical_smileys_choose, MUIA_Window_Open, FALSE);
                         is_chooser_window_open = FALSE;
@@ -5349,10 +5347,9 @@ int main(int argc, char *argv[])
                             if (status_conductor->conductor->queued_messages[0] != NULL)
                             {
                                 process_outgoing(status_conductor->conductor->queued_messages[0], 0);
-
-                                for (count = 0;
-                                        count <= status_conductor->conductor->queued_messages_total
-                                                && count < MAX_QUEUED_MESSAGES - 1; count++)
+                                int count;
+                                for (count = 0;count <= status_conductor->conductor->queued_messages_total
+                                     && count < MAX_QUEUED_MESSAGES - 1; count++)
                                 {
                                     if (status_conductor->conductor->queued_messages[count] != NULL
                                             && status_conductor->conductor->queued_messages[count + 1] != NULL)

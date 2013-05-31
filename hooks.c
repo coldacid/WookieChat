@@ -812,7 +812,7 @@ static void Display_channellist_TextFunc(void)
         {
             if(channellist_token[0]==':')
             {
-                for(count=0; count<(LONG)strlen(channellist_token); count++)
+                for(int count=0; count<(LONG)strlen(channellist_token); count++)
                 {    channellist_token[count]=channellist_token[count+1]; }
             }
             sprintf(channellist_work4,"%s%s",new_array, channellist_token);
@@ -1266,6 +1266,7 @@ static void DisplayLI2_channel_TextFunc(void)
                     {
                         if(a_entry->display_string1[0]=='<' && a_entry->display_string1[strlen(a_entry->display_string1)-1]=='>')
                         {
+                            int count;
                             for(count=0; count<(LONG)strlen(a_entry->display_string1)-1; count++)
                                 a_entry->display_string1[count]=a_entry->display_string1[count+1];
                             a_entry->display_string1[count-1]='\0';

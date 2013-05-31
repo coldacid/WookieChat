@@ -28,7 +28,7 @@ void update_nicks_hostname(char *nick, char *hostname)
     if (!nick || !hostname)
         return;
 
-    for (count = 0; count < status_conductor->conductor->nicks; count++)
+    for (int count = 0; count < status_conductor->conductor->nicks; count++)
     {
 
         if (!stricmp(status_conductor->conductor->nicklist[count].name, nick))

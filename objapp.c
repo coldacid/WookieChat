@@ -140,6 +140,7 @@ struct ObjApp *CreateApp(void)
 
     struct ObjApp *MBObj;
     struct MUI_CustomClass * nlist = get_custom_class(CC_MUIC_NLIST);
+    int tcount = 0;
 
     if (!(MBObj = (struct ObjApp *) AllocVec(sizeof(struct ObjApp), MEMF_PUBLIC|MEMF_CLEAR)))
         return(NULL);
@@ -1492,10 +1493,10 @@ if(AMIX) printf("81\n");
 if(AMIX) printf("82\n");
     //char graphical_smiley_themes[10][100];
 
-    if(find_themes())
+    if((tcount = find_themes()) > 0)
     {
         int count2;
-        for(count2=0; count2<count; count2++)
+        for(count2=0; count2<tcount; count2++)
         {
             CYA_GroupTitleColor[count2]=malloc(sizeof(char) * 100);
             strcpy(CYA_GroupTitleColor[count2],graphical_smiley_themes[count2]);

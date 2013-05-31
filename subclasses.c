@@ -1265,7 +1265,7 @@ ULONG BetterString_HandleEvent(struct IClass *cl, Object *obj, struct MUIP_Handl
                                         {
                                             if(strnicmp(tabwork4_string,status_current->conductor->nicklist[d].name,strlen(tabwork4_string)) == 0)
                                             {
-
+                                                int count;
                                                 for(count=0; count<=nickcomp_count; count++)
                                                 {
                                                     //printf("comparing '%s' to '%s'\n",status_current->conductor->nicklist[d].name,list_found_nicks[count]);

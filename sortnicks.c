@@ -67,11 +67,14 @@ struct query_window *prev = 0, *next = 0, *head, *current = 0;
 
 void sort_linked_list(void)
 {
+    int count;
+
     if (my_settings.sort_tabs_alphabetically == 0)
         return;
 
     if (DoMethod((Object*) status_conductor->GR_server1_buttons, MUIM_Group_InitChange))
     {
+        int count;
 
         for (num_nodes = 0, status_conductor->conductor = status_conductor->root; status_conductor->conductor;
                 status_conductor->conductor = status_conductor->conductor->next)

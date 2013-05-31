@@ -39,6 +39,7 @@ static struct query_window *init_conductor(int a)
 
     struct query_window *test;
     struct MUI_CustomClass * nlist = get_nlist_class();
+    int count;
 
     test = (struct query_window *) AllocVec(sizeof(struct query_window), MEMF_PUBLIC|MEMF_CLEAR);
 
@@ -505,6 +506,7 @@ static struct query_window *init_conductor(int a)
 
 int create_new_tab(char *name, int show_now, int query_type)
 {
+    int count;
 
     check_if_at_bottom();
 
@@ -1085,10 +1087,10 @@ int create_new_status(int first)
         status_conductor = status_current;
         status_conductor->conductor = status_conductor->current_query;
 
-        give_each_tab_a_listview_number_for_switching_tabs();
+        int newtabnumber = give_each_tab_a_listview_number_for_switching_tabs();
 
         if (DEBUG)
-            printf("new status tab number is %d\n", count);
+            printf("new status tab number is %d\n", newtabnumber);
 
         if (ZUNE_SYSTEM == TRUE)
             sprintf(status_conductor->conductor->nlist_tab_title.entry, "         \033c\033E(no server joined)");
@@ -1179,8 +1181,9 @@ void give_each_tab_a_page_group_number()
 //in our LV_tabs object, the user can click on entrys to switch between tabs. Each Listview-style Tab Entry requires
 //a "code", so when we click, it goes to the right tab. Lets sort out all the codes for all the existing tabs everytime
 //a new tab is created or closed.
-void give_each_tab_a_listview_number_for_switching_tabs()
+int give_each_tab_a_listview_number_for_switching_tabs()
 {
+    int count;
     BOOL is_our_reset_pointer_valid = TRUE;
     if (status_conductor)
     {
@@ -1218,6 +1221,8 @@ void give_each_tab_a_listview_number_for_switching_tabs()
         status_conductor = status_work;
         status_conductor->conductor = work_query;
     }
+
+    return count;
 }
 
 struct query_window *query_work;
@@ -1233,7 +1238,7 @@ void close_tab(void)
     status_conductor->conductor = status_conductor->current_query;
 
     int count2;
-    count = 0;
+    int count = 0;
     iv--;
 
     //if we've only got one server group, and we've closed the only channel here, we

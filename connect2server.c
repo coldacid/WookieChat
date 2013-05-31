@@ -38,7 +38,7 @@ void acquire_connect_details(char *work_buffer)
     while (string1)
     {
         strcpy(the_value, "");
-        int count2;
+        int count2, count;
 
         for (count2 = 0, count = 0; count <= (LONG) strlen(string1); count2++, count++)
         {
@@ -109,6 +109,7 @@ void acquire_connect_details(char *work_buffer)
 int connect2server(char *servername, char *port_number, int typedservercommand, int set_connect_script_name,
         int connect_in_current_tab, char *requested_remote_charset, int write_new_passwords_to_this_node)
 {
+    int count;
     if (use_global)
     {
         strcpy(status_conductor->nick, nick);

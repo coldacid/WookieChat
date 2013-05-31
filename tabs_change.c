@@ -1139,6 +1139,8 @@ int switch_between_tabs_with_keys(int result)
 
 int switch_between_tabs_with_nlisttabclick(LONG result, BOOL saving_prefs)
 {
+    int count;
+
     check_if_at_bottom();
 
     work_query = status_current->current_query;

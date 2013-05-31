@@ -1258,7 +1258,7 @@ void process_outgoing(char *string123, int usestringgadget)
 
             if (status_conductor->conductor && my_settings.user_modes_beside_nicks)
             {
-                for (count = 0; count < status_conductor->conductor->nicks; count++)
+                for (int count = 0; count < status_conductor->conductor->nicks; count++)
                 {
                     if (!stricmp(status_conductor->conductor->nicklist[count].name, status_conductor->nick))
                     {

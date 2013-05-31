@@ -27,7 +27,7 @@ static char work_buffer[900];
 
 int find_themes()
 {
-    count = 0;
+    int count = 0;
 
     char work_buffer2[500];
 #ifdef __amigaos4__
@@ -105,7 +105,7 @@ int find_themes()
     FreeDosObject(DOS_EXALLCONTROL, eac);
     if (my_lock)
         UnLock(my_lock);
-    return 1;
+    return count;
 
 }
 
@@ -126,7 +126,7 @@ int free_graphical_smilies(struct query_window *new_tab)
     if (my_settings.graphical_smilies == TRUE)
     {
 
-        for (count = 1; count <= total_smileys; count++)
+        for (int count = 1; count <= total_smileys; count++)
         {
             if (smilies[count].icon)
             {
@@ -176,7 +176,7 @@ int use_graphical_smilies(struct query_window *new_tab)
     if (my_settings.graphical_smilies == TRUE)
     {
 
-        for (count = 1; count <= total_smileys; count++)
+        for (int count = 1; count <= total_smileys; count++)
         {
             if (smilies[count].icon)
             {
@@ -246,7 +246,7 @@ void exit_delete_smiley_objects()
         MUI_DisposeObject((Object*) WookieChat->smiley_choose_icon);
     }
 
-    for (count = 1; count <= total_smileys; count++)
+    for (int count = 1; count <= total_smileys; count++)
     {
 
         if (smilies[count].icon)
@@ -254,7 +254,7 @@ void exit_delete_smiley_objects()
 
     }
 
-    for (count = 1; count <= preview_total_smileys; count++)
+    for (int count = 1; count <= preview_total_smileys; count++)
     {
 
         if (preview_smilies[count].icon)
@@ -262,7 +262,7 @@ void exit_delete_smiley_objects()
 
     }
 
-    for (count = 0; count <= 2; count++)
+    for (int count = 0; count <= 2; count++)
     {
         if (graphical_nicklist[count].icon)
         {
@@ -291,7 +291,7 @@ void delete_smiley_objects()
         for (status_conductor->conductor = status_conductor->root; status_conductor->conductor;
                 status_conductor->conductor = status_conductor->conductor->next)
         {
-            for (count = 1; count <= total_smileys; count++)
+            for (int count = 1; count <= total_smileys; count++)
             {
 
                 if (status_conductor->conductor->LV_channel)
@@ -315,7 +315,7 @@ void delete_smiley_objects()
     //status_conductor=work_status;
     //if(status_conductor) status_conductor->conductor=work_query;
 
-    for (count = 1; count <= total_smileys; count++)
+    for (int count = 1; count <= total_smileys; count++)
     {
 
         if (smilies[count].icon)
@@ -324,7 +324,7 @@ void delete_smiley_objects()
             smilies[count].icon = NULL;
         }
     }
-    for (count = 0; count <= 2; count++)
+    for (int count = 0; count <= 2; count++)
     {
         if (graphical_nicklist[count].icon)
         {
@@ -343,7 +343,7 @@ void delete_smiley_objects()
 void delete_preview_smiley_objects()
 {
 
-    for (count = 1; count <= preview_total_smileys; count++)
+    for (int count = 1; count <= preview_total_smileys; count++)
     {
 
         DoMethod((Object*) WookieChat->LV_graphical_smileys_preview, MUIM_NList_UseImage, NULL, count, 0L);
@@ -591,7 +591,7 @@ char * convert_graphical_smilies_2_text(char *work_buffer)
 void insert_smiley(char *ascii_smiley, int smiley_gfx_number)
 {
 
-    count = strlen(centry->entry);
+    int count = strlen(centry->entry);
     int count2 = strlen(ascii_smiley);
 
     //printf("start of insert smiley\n");

@@ -185,7 +185,7 @@ int get_right_network(LONG **parameters)
 
         status_conductor=status_root;
 
-        for(count=0; count<atoi((char*)parameters[0]) && status_conductor; count++)
+        for(int count=0; count<atoi((char*)parameters[0]) && status_conductor; count++)
             status_conductor=status_conductor->next;
 
         if(!status_conductor) { status_conductor=status_current;
@@ -845,7 +845,7 @@ int sel12hookfunc(void) {
         {
             char found_nicks[30*status_conductor->conductor->nicks];
             strcpy(found_nicks,"");
-            for(count=0; count<status_conductor->conductor->nicks; count++)
+            for(int count=0; count<status_conductor->conductor->nicks; count++)
             {
                 if(status_conductor->conductor->nicklist[count].modes[0]!=' ')
                     strcat(found_nicks,status_conductor->conductor->nicklist[count].modes);
@@ -1298,6 +1298,8 @@ int sel21hookfunc(void) {
                     {
                         if(status_conductor->last_incoming_line_unparsed)
                         {
+                            int count;
+
                             strcpy(line_buffer,status_conductor->last_incoming_line_unparsed);
 
                             work_status=status_conductor;
@@ -1360,6 +1362,8 @@ int sel21hookfunc(void) {
                     {
                         if(status_conductor->last_incoming_line_unparsed)
                         {
+                            int count;
+
                             strcpy(line_buffer,status_conductor->last_incoming_line_unparsed);
 
                             work_status=status_conductor;
@@ -1416,6 +1420,8 @@ int sel21hookfunc(void) {
                     {
                         if(status_conductor->last_incoming_line_unparsed)
                         {
+                            int count;
+
                             strcpy(line_buffer,status_conductor->last_incoming_line_unparsed);
 
                             work_status=status_conductor;
@@ -1473,6 +1479,8 @@ int sel21hookfunc(void) {
                     {
                         if(status_conductor->last_incoming_line_unparsed)
                         {
+                            int count;
+
                             strcpy(line_buffer,status_conductor->last_incoming_line_unparsed);
 
                             work_status=status_conductor;
@@ -1581,6 +1589,7 @@ int sel23hookfunc(void) {
         {
        if(DEBUG)  printf("parseline 2\n");
 
+            int count;
             strcpy(line_buffer,(char*)parameters[1]);
 
             for(count=0,status_conductor=status_root; status_conductor && status_conductor!=work_status; count++,status_conductor=status_conductor->next);
@@ -1638,6 +1647,8 @@ int sel23hookfunc(void) {
         #elif __morphos__
         if(status_conductor)
         {
+            int count;
+
             //strcpy(line_buffer,status_conductor->last_incoming_line_unparsed);
             strcpy(line_buffer,(char*)parameters[1]);
 
@@ -1691,6 +1702,8 @@ int sel23hookfunc(void) {
         #elif __AROS__
         if(status_conductor)
         {
+            int count;
+
             //strcpy(line_buffer,status_conductor->last_incoming_line_unparsed);
             strcpy(line_buffer,(char*)parameters[1]);
 
@@ -1745,6 +1758,8 @@ int sel23hookfunc(void) {
         #else
         if(status_conductor)
         {
+            int count;
+
             //strcpy(line_buffer,status_conductor->last_incoming_line_unparsed);
             strcpy(line_buffer,(char*)parameters[1]);
 
@@ -1931,7 +1946,7 @@ int sel24hookfunc(void) {
   register LONG **a1 __asm("a1");                        LONG **parameters = a1;
   register struct Hook *a0 __asm("a0");                  struct Hook *hook = a0;
 #endif
-
+    int count;
 
     work_status=status_conductor;
 
@@ -1976,6 +1991,7 @@ int sel25hookfunc(void) {
   register LONG **a1 __asm("a1");                        LONG **parameters = a1;
   register struct Hook *a0 __asm("a0");                  struct Hook *hook = a0;
 #endif
+    int count;
 
     getmacro((Object*)app,MUIA_Application_RexxMsg,&my_rexxmsg);
 

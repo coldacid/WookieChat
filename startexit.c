@@ -655,6 +655,7 @@ void cleanexit(char *str)
 
             while (status_conductor->conductor)
             {
+                int count;
                 // printf("4\n");
 
                 for (count = 0; count < 2500; count++)

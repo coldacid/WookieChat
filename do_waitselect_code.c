@@ -70,7 +70,7 @@ int do_waitselect_code(void)
                  }*/
 
                 recv_thing = -1;
-                count = BUFFERSIZE - strlen(status_conductor->str);
+                int count = BUFFERSIZE - strlen(status_conductor->str);
                 if (count > 0)
                     recv_thing = recv(status_conductor->a_socket, (i_in) status_conductor->buffer, count - 1, 0);
                 if (recv_thing != -1)

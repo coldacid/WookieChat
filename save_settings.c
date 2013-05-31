@@ -804,6 +804,7 @@ void retrieve_settings()
 
 void load_nick_settings()
 {
+    int count;
 
     for (count = 0; local_charsets[count] != NULL; count++)
     {
