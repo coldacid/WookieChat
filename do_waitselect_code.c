@@ -18,6 +18,8 @@ static char uservername[50] = "uk.amigaworld.net"; // Default Server of the User
 static int len;
 static char string10[900];
 static char *string1;
+static char buffer2[BUFFERSIZE*2];
+static char buffer3[BUFFERSIZE*2];
 
 int do_waitselect_code(void)
 {
@@ -129,7 +131,7 @@ int do_waitselect_code(void)
                                 GCS(catalog, 218, "]"), GCS(catalog, 183, "Disconnected"));
 
                         create_arexx_event_string(my_settings.events[DISCONNECT].arexx_script,
-                                my_settings.events[DISCONNECT].arexx_script2);
+                                my_settings.events[DISCONNECT].arexx_script2, buffer3);
                         Execute((_s_cs)event_string, 0, 0);
                     }
 
@@ -223,7 +225,7 @@ int do_waitselect_code(void)
 
                         strcpy(target_nick, "");
                         create_arexx_event_string(my_settings.events[CONNECT].arexx_script,
-                                my_settings.events[CONNECT].arexx_script2);
+                                my_settings.events[CONNECT].arexx_script2, buffer3);
                         Execute((_s_cs)event_string, 0, 0);
                     }
 
@@ -357,7 +359,7 @@ int do_waitselect_code(void)
             //DCC RECIEVE CODE
 
             dcc_conductor = dcc_root->next; //the root node contains nothing, so start at root->next
-            a = 0;
+            int a = 0;
 
             while (dcc_conductor)
             {
@@ -850,7 +852,7 @@ int do_waitselect_code(void)
                                 {
                                     strcpy(target_nick, "");
                                     create_arexx_event_string(my_settings.dcc_send_finished.arexx_script,
-                                            my_settings.dcc_send_finished.arexx_script2);
+                                            my_settings.dcc_send_finished.arexx_script2, buffer3);
                                     Execute((_s_cs)event_string, 0, 0);
                                 }
 
@@ -959,7 +961,7 @@ int do_waitselect_code(void)
                                         {
                                             strcpy(target_nick, "");
                                             create_arexx_event_string(my_settings.dcc_send_finished.arexx_script,
-                                                    my_settings.dcc_send_finished.arexx_script2);
+                                                    my_settings.dcc_send_finished.arexx_script2, buffer3);
                                             Execute((_s_cs)event_string, 0, 0);
                                         }
 
@@ -1153,7 +1155,7 @@ int do_waitselect_code(void)
 
                         strcpy(target_nick, "");
                         create_arexx_event_string(my_settings.events[CONNECT].arexx_script,
-                                my_settings.events[CONNECT].arexx_script2);
+                                my_settings.events[CONNECT].arexx_script2, buffer3);
                         Execute((_s_cs)event_string, 0, 0);
                     }
 

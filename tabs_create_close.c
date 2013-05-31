@@ -32,6 +32,7 @@ void give_each_tab_a_page_group_number();
 /* Locals */
 static int iv = 0;
 static char string7[900];
+static char buffer3[BUFFERSIZE*2];
 
 static struct query_window *init_conductor(int a)
 {

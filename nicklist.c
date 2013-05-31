@@ -99,7 +99,7 @@ void DisplayNicks(void)
 
     for (int count1 = 1; count1 <= status_conductor->max_modes; count1++)
     {
-        a = 0;
+        int a = 0;
 
         while (a < status_conductor->conductor->nicks)
         {
@@ -136,7 +136,7 @@ void DisplayNicks(void)
     }
 
     //printf("b\n");
-    a = 0;
+    int a = 0;
 
     while (a < status_conductor->conductor->nicks)
     {

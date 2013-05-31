@@ -16,6 +16,9 @@
 
 #include "intern.h"
 
+/* Locals */
+static char buffer3[BUFFERSIZE*2];
+
 void SWhoIs(char *selnick)
 {
     sprintf(sendstuff, "WHOIS %s\r\n", selnick);

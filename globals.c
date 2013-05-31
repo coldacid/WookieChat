@@ -19,7 +19,6 @@ struct ObjApp *WookieChat;
 struct Catalog *catalog;
 BOOL USE_AREXX;
 char wookie_folder[400]; //the pathname wookiechat is located in
-char work_buffer[900];
 
 struct status_window *work_status;
 struct status_window *status_root;
@@ -39,8 +38,6 @@ struct list_entry *work_entry;
 struct Settings my_settings;
 struct Settings temp_settings;
 
-char buffer2[BUFFERSIZE*2];
-char buffer3[BUFFERSIZE*2];
 
 ULONG entries;
 BOOL QUIET_DCC;
@@ -55,8 +52,6 @@ STRPTR popimage_background;
 STRPTR popimage_nicklistbackground;
 STRPTR popimage_tabsbackground;
 
-char background2[64];
-char file_name[800];
 LONG colour=8; //default colour for listview text
 
 char group_name[100];
@@ -115,7 +110,6 @@ ULONG mins;
 char sendstuff[1500];
 struct dcc_entry *find;
 
-int a;
 int how_many_lines=15;
 char buffer_text[800];
 struct channel_entry *centry;

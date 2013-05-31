@@ -988,7 +988,6 @@ extern struct ObjApp *WookieChat;
 extern struct Catalog *catalog;
 extern BOOL USE_AREXX;
 extern char wookie_folder[400]; //the pathname wookiechat is located in
-extern char work_buffer[900]; // FIXME this can probably be a separate buffer per compilation unit
 
 extern struct status_window *work_status;
 extern struct status_window *status_root;
@@ -1008,9 +1007,6 @@ extern struct list_entry *work_entry;
 extern struct Settings my_settings;
 extern struct Settings temp_settings;
 
-extern char buffer2[BUFFERSIZE*2]; // FIXME make this a local variable in each function
-extern char buffer3[BUFFERSIZE*2]; // FIXME make this a local variable in each function
-
 extern ULONG entries;
 extern BOOL QUIET_DCC;
 
@@ -1022,8 +1018,6 @@ extern STRPTR popimage_background;
 extern STRPTR popimage_nicklistbackground;
 extern STRPTR popimage_tabsbackground;
 
-extern char background2[64]; // FIXME make this a local variable in each function
-extern char file_name[800]; // FIXME make this a local variable in each function
 extern LONG colour;
 
 extern char group_name[100];
@@ -1081,7 +1075,6 @@ extern ULONG mins; // FIXME make this a local variable in each function
 extern char sendstuff[1500];
 extern struct dcc_entry *find;
 
-extern int a;  // FIXME make this a local variable in each function
 extern int how_many_lines; // FIXME make this a local variable in each function
 extern char buffer_text[800];  // FIXME make this a local variable in each function
 extern struct channel_entry *centry;
@@ -1308,7 +1301,7 @@ int find_themes();
 /* events_arexx.c */
 extern char event_string[900];
 extern char target_nick[60];
-void create_arexx_event_string(char *arexx_event_to_use, char *arexx_arguments);
+void create_arexx_event_string(char *arexx_event_to_use, char *arexx_arguments, char *buffer3);
 BOOL is_window_active();
 
 /* auto_reconnect_server.c */

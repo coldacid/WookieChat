@@ -12,6 +12,10 @@
 
 #include "intern.h"
 
+/* Locals */
+static char background2[64];
+static char file_name[800];
+
 void set_colours(void)
 {
     setmacro((Object*) WookieChat->PP_CSW_background, MUIA_Imagedisplay_Spec, popimage_background);

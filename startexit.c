@@ -105,13 +105,14 @@ struct NewMenu MenuData1[] =
 
 /* Locals */
 static char *string1;
+static char file_name[800];
 
 void cleanexit(char*);
 
 
 void LoadAllLibs(void)
 {
-    //if(DEBUG) MG_Init();
+    int a;
 
     work_entry =  malloc(sizeof(struct list_entry));
     find = malloc(sizeof(struct dcc_entry));

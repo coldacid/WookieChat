@@ -23,6 +23,7 @@ struct smilies_struct preview_smilies[MAXIMUM_SMILEYS];
 /* Locals */
 static char string7[900];
 static char *string1;
+static char work_buffer[900];
 
 int find_themes()
 {

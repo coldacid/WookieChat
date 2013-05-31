@@ -73,7 +73,8 @@ static char *string2;
 static char *string3;
 static char string7[900];
 static char *string1;
-
+static char buffer3[BUFFERSIZE*2];
+static char file_name[800];
 
 void copy_settings_to_undo_buffer()
 {
@@ -506,7 +507,7 @@ void timestamp_2_string()
 
     if (my_settings.timestamp_config)
     {
-        a = 0;
+        int a = 0;
         int b = 0;
 
         memset(timestamp, '\0', 12);
@@ -1121,20 +1122,11 @@ int main(int argc, char *argv[])
     //disable TAB so we can use it for nick completion
     setmacro((Object*)WookieChat->WI_main, MUIA_Window_DisableKeys, (1<<MUIKEY_GADGET_NEXT) | (1<<MUIKEY_GADGET_PREV));
 
-    //set some colours
-    //if(status_conductor->conductor->LV_nicklist) setmacro((Object*)status_conductor->conductor->LV_nicklist,MUIA_NList_ListBackground, (char*)background);
-    //setmacro((Object*)status_conductor->conductor->LV_channel,MUIA_NList_ListBackground, (char*)background2);
 
     if (status_conductor->conductor->LV_nicklist)
         setmacro((Object*)status_conductor->conductor->LV_nicklist, MUIA_NList_ListBackground,
                 popimage_nicklistbackground);
     setmacro((Object*)status_conductor->conductor->LV_channel, MUIA_NList_ListBackground, popimage_background);
-
-    //printf("startup popimage_background:%s\n",popimage_background);
-    //printf("startup popimage_nicklistbackground:%s\n",popimage_nicklistbackground);
-
-    //setmacro((Object*)WookieChat->PP_CSW_background,MUIA_Imagedisplay_Spec,popimage_background);
-    //setmacro((Object*)WookieChat->PP_CSW_nicklistbackground,MUIA_Imagedisplay_Spec,popimage_nicklistbackground);
 
 // Set GUI cycle chains for when using the TAB key
     DoMethod((Object *) WookieChat->WI_mainsettings, MUIM_Window_SetCycleChain, WookieChat->SETTINGS_Register_Grp,
@@ -4743,7 +4735,7 @@ int main(int argc, char *argv[])
                         getmacro((Object*)WookieChat->STR_usertext, MUIA_String_BufferPos, &position);
                         getmacro((Object*)WookieChat->STR_usertext, MUIA_String_Contents, &tabwork_string);
 
-                        a = 0;
+                        int a = 0;
                         int b = 0;
 
                         if (position != 0)

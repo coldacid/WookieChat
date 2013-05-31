@@ -45,6 +45,10 @@ static char *string3;
 static char string10[900];
 static char string7[900];
 static char *string1;
+static char work_buffer[900];
+static char buffer2[BUFFERSIZE*2];
+static char buffer3[BUFFERSIZE*2];
+static char file_name[800];
 
 #ifdef __AROS__
 struct TagItem my_incoming_charset3_taglist[] =
@@ -1840,7 +1844,7 @@ void process_incoming()
 
                     strcpy(target_nick, string1);
                     create_arexx_event_string(my_settings.events[INVITE].arexx_script,
-                            my_settings.events[INVITE].arexx_script2);
+                            my_settings.events[INVITE].arexx_script2, buffer3);
                     Execute((_s_cs)(_s_cs)event_string, 0, 0);
                 }
 
@@ -3464,7 +3468,7 @@ void process_incoming()
                         {
                             strcpy(target_nick, string7);
                             create_arexx_event_string(my_settings.events[JOIN].arexx_script,
-                                    my_settings.events[JOIN].arexx_script2);
+                                    my_settings.events[JOIN].arexx_script2, buffer3);
                             Execute((_s_cs)event_string, 0, 0);
                         }
 
@@ -3644,7 +3648,7 @@ void process_incoming()
 
                         strcpy(target_nick, string7);
                         create_arexx_event_string(my_settings.events[KICK].arexx_script,
-                                my_settings.events[KICK].arexx_script2);
+                                my_settings.events[KICK].arexx_script2, buffer3);
                         Execute((_s_cs)event_string, 0, 0);
                     }
 
@@ -3815,7 +3819,7 @@ void process_incoming()
                     strcpy(buffer3, buffer3 + strlen(timestamp));
                     strcpy(target_nick, string7);
                     create_arexx_event_string(my_settings.events[NOTICE].arexx_script,
-                            my_settings.events[NOTICE].arexx_script2);
+                            my_settings.events[NOTICE].arexx_script2, buffer3);
                     Execute((_s_cs)event_string, 0, 0);
                 }
 
@@ -3854,7 +3858,7 @@ void process_incoming()
 
                 strcpy(target_nick, string1);
                 create_arexx_event_string(my_settings.events[MODE_CHANGE].arexx_script,
-                        my_settings.events[MODE_CHANGE].arexx_script2);
+                        my_settings.events[MODE_CHANGE].arexx_script2, buffer3);
                 Execute((_s_cs)event_string, 0, 0);
             }
 
@@ -4336,7 +4340,7 @@ void process_incoming()
                     {
                         strcpy(target_nick, string7);
                         create_arexx_event_string(my_settings.events[PART].arexx_script,
-                                my_settings.events[PART].arexx_script2);
+                                my_settings.events[PART].arexx_script2, buffer3);
                         Execute((_s_cs)event_string, 0, 0);
                     }
 
@@ -4390,7 +4394,7 @@ void process_incoming()
             {
                 strcpy(target_nick, string7);
                 create_arexx_event_string(my_settings.events[QUIT].arexx_script,
-                        my_settings.events[QUIT].arexx_script2);
+                        my_settings.events[QUIT].arexx_script2, buffer3);
                 Execute((_s_cs)event_string, 0, 0);
             }
 
@@ -4769,7 +4773,7 @@ void process_incoming()
 
                         strcpy(target_nick, string7);
                         create_arexx_event_string(my_settings.events[CHANNEL_MESSAGE].arexx_script,
-                                my_settings.events[CHANNEL_MESSAGE].arexx_script2);
+                                my_settings.events[CHANNEL_MESSAGE].arexx_script2, buffer3);
                         Execute((_s_cs)event_string, 0, 0);
 
                         strcpy(buffer3, backup);
@@ -4791,7 +4795,7 @@ void process_incoming()
 
                         strcpy(target_nick, string7);
                         create_arexx_event_string(my_settings.events[CHANNEL_MESSAGE].arexx_script,
-                                my_settings.events[CHANNEL_MESSAGE].arexx_script2);
+                                my_settings.events[CHANNEL_MESSAGE].arexx_script2, buffer3);
                         Execute((_s_cs)event_string, 0, 0);
 
                         strcpy(buffer3, backup);
@@ -4975,7 +4979,7 @@ void process_incoming()
                         strcpy(buffer3, buffer3 + strlen(timestamp));
                         strcpy(target_nick, string7);
                         create_arexx_event_string(my_settings.events[CTCP_REQUEST].arexx_script,
-                                my_settings.events[CTCP_REQUEST].arexx_script2);
+                                my_settings.events[CTCP_REQUEST].arexx_script2, buffer3);
                         Execute((_s_cs)event_string, 0, 0);
 
                         strcpy(buffer3, backup);
@@ -5046,7 +5050,7 @@ void process_incoming()
                                     strcpy(target_nick, string7);
 
                                     create_arexx_event_string(my_settings.events[DCC_RECV_OFFERED].arexx_script,
-                                            my_settings.events[DCC_RECV_OFFERED].arexx_script2);
+                                            my_settings.events[DCC_RECV_OFFERED].arexx_script2, buffer3);
                                     Execute((_s_cs)event_string, 0, 0);
                                 }
 
@@ -5221,7 +5225,7 @@ void process_incoming()
                             strcpy(target_nick, string7);
 
                             create_arexx_event_string(my_settings.events[DCC_RECV_OFFERED].arexx_script,
-                                    my_settings.events[DCC_RECV_OFFERED].arexx_script2);
+                                    my_settings.events[DCC_RECV_OFFERED].arexx_script2, buffer3);
                             Execute((_s_cs)event_string, 0, 0);
                         }
 
@@ -5281,7 +5285,7 @@ void process_incoming()
                         }
 
                         create_arexx_event_string(my_settings.events[HIGHLIGHT].arexx_script,
-                                my_settings.events[HIGHLIGHT].arexx_script2);
+                                my_settings.events[HIGHLIGHT].arexx_script2, buffer3);
                         if ((my_settings.events[HIGHLIGHT].use_when == 1 && is_window_active())
                                 || (my_settings.events[HIGHLIGHT].use_when == 2 && !is_window_active())
                                 || my_settings.events[HIGHLIGHT].use_when == 3)
@@ -5330,7 +5334,7 @@ void process_incoming()
                         }
 
                         create_arexx_event_string(my_settings.events[HIGHLIGHT].arexx_script,
-                                my_settings.events[HIGHLIGHT].arexx_script2);
+                                my_settings.events[HIGHLIGHT].arexx_script2, buffer3);
                         if ((my_settings.events[HIGHLIGHT].use_when == 1 && is_window_active())
                                 || (my_settings.events[HIGHLIGHT].use_when == 2 && !is_window_active())
                                 || my_settings.events[HIGHLIGHT].use_when == 3)
@@ -5362,7 +5366,7 @@ void process_incoming()
                     }
 
                     create_arexx_event_string(my_settings.events[PRIVATE_MESSAGE].arexx_script,
-                            my_settings.events[PRIVATE_MESSAGE].arexx_script2);
+                            my_settings.events[PRIVATE_MESSAGE].arexx_script2, buffer3);
                     Execute((_s_cs)event_string, 0, 0);
 
                     strcpy(buffer3, backup);

@@ -15,7 +15,8 @@
 char event_string[900];
 char target_nick[60];
 
-void create_arexx_event_string(char *arexx_event_to_use, char *arexx_arguments)
+/* Locals */
+void create_arexx_event_string(char *arexx_event_to_use, char *arexx_arguments, char *buffer3)
 {
 
 #define MAX_CODES_TO_CONVERT 7

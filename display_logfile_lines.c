@@ -15,6 +15,7 @@
 /* Locals */
 static int count_the_linefeeds=0;
 static LONG char_read_storage;
+static char file_name[800];
 
 #ifndef __AROS__
 struct TagItem my_incoming_charset11_taglist[] =
@@ -58,7 +59,7 @@ int display_last_few_lines_of_logfile_conductor()
     if (!status_conductor->conductor->log_file)
         return 0;
 
-    a = 0;
+    int a = 0;
 
 #ifdef __amigaos4__
     ChangeFilePosition(status_conductor->conductor->log_file, -1, OFFSET_END);

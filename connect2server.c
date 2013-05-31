@@ -16,6 +16,7 @@
 
 /* Locals */
 static char *string1;
+static char buffer3[BUFFERSIZE*2];
 
 void acquire_connect_details(char *work_buffer)
 {

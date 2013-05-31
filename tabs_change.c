@@ -17,6 +17,7 @@
 static char string8[900];
 static char string9[900];
 static char string7[900];
+static char work_buffer[900];
 
 void check_column_size()
 {

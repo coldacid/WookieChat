@@ -21,6 +21,8 @@
 /* Locals */
 static char *pch2;
 static char new_filtered_string1[550];
+static char buffer3[BUFFERSIZE*2];
+static char file_name[800];
 #ifndef __AROS__
 static STRPTR charset_convert_1;
 static STRPTR charset_convert_2;
