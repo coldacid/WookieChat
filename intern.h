@@ -986,7 +986,6 @@ extern struct XYMessage *incoming_message;
 
 extern struct ObjApp *WookieChat;
 extern struct Catalog *catalog;
-extern BOOL USE_AREXX;
 extern char wookie_folder[400]; //the pathname wookiechat is located in
 
 extern struct status_window *work_status;
@@ -1008,7 +1007,6 @@ extern struct Settings my_settings;
 extern struct Settings temp_settings;
 
 extern ULONG entries;
-extern BOOL QUIET_DCC;
 
 extern struct MUI_PenSpec *pendisplay_specs[25];
 extern STRPTR popimage_background;
@@ -1046,8 +1044,6 @@ extern fd_set read_master;
 extern fd_set write_master;
 extern int fdmax;
 
-extern BOOL ZUNE_SYSTEM;
-extern BOOL Pro_Charsets_Enabled;
 extern struct hostent *he;
 
 extern struct dcc_chat *dcc_chat_work;
@@ -1081,7 +1077,6 @@ extern char graphical_smiley_themes[10][100];
 
 extern char string_to_send[BUFFERSIZE];
 
-extern BOOL RECENTLY_CREATED_A_TAB;
 extern struct ClockData *clockdata;
 extern char activity[64];
 extern char activity_chat[64];
@@ -1089,7 +1084,6 @@ extern char activity_highlight[64];
 extern STRPTR text3;
 extern char *channel_display;
 extern char *NewPreParse_NewText;
-extern BOOL using_a_proxy;
 extern char server[50];
 extern struct MsgPort *app_process_replyport;
 extern struct MsgPort *send_text_replyport;
@@ -1110,7 +1104,6 @@ extern char *tabwork3_string;
 extern char *tabwork4_string;
 extern char *tabwork5_string;
 extern char *tabwork_string;
-extern BOOL dont_open_colours;
 extern struct ClockData *clockdata2;
 extern BOOL is_chooser_window_open;
 extern struct DiskObject *dobj;
@@ -1150,13 +1143,19 @@ int disable_getline_hook();
 BOOL SafePutToPort(struct XYMessage *message, STRPTR portname);
 
 /* main.c */
-extern int DEBUG;
-extern int SMALLTABS;
-extern int RAW;
-extern int GEIT;
-extern int GEIT2;
-extern int GEIT3;
-extern int NEWDEBUG;
+extern BOOL DEBUG;
+extern BOOL SMALLTABS;
+extern BOOL RAW;
+extern BOOL GEIT;
+extern BOOL GEIT2;
+extern BOOL GEIT3;
+extern BOOL NEWDEBUG;
+extern BOOL RECENTLY_CREATED_A_TAB;
+extern BOOL ZUNE_SYSTEM;
+extern BOOL QUIET_DCC;
+extern BOOL USE_AREXX;
+extern BOOL USING_A_PROXY;
+extern BOOL PRO_CHARSETS_ENABLED;
 
 extern char timestamp[12];
 extern char timestamp_hrs[4];

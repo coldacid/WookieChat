@@ -11,20 +11,8 @@
 
 #define USE_F 0
 #define SECONDS_TO_WAIT_BEFORE_PING_SERVER 60*2
-
-
 #define DONT_CONNECT_IN_CURRENT_TAB 0
 
-
-int NEWDEBUG = 0;
-
-int DEBUG = 0;
-int SMALLTABS = 0;
-int RAW;
-int ALTERNATIVE_CLIPBOARD = 0;
-int GEIT = 0;
-int GEIT2 = 0;
-int GEIT3 = 0;
 
 #ifdef __amigaos4__
 #define DEPRECATED
@@ -44,6 +32,22 @@ int GEIT3 = 0;
 #include "intern.h"
 #include "objapp.h"
 #include "audio.h"
+
+/* Global flags */
+BOOL NEWDEBUG               = FALSE;
+BOOL DEBUG                  = FALSE;
+BOOL SMALLTABS              = FALSE;
+BOOL RAW                    = FALSE;
+BOOL ALTERNATIVE_CLIPBOARD  = FALSE;
+BOOL GEIT                   = FALSE;
+BOOL GEIT2                  = FALSE;
+BOOL GEIT3                  = FALSE;
+BOOL RECENTLY_CREATED_A_TAB = FALSE;
+BOOL ZUNE_SYSTEM            = FALSE;
+BOOL QUIET_DCC              = FALSE;
+BOOL USE_AREXX              = FALSE;
+BOOL USING_A_PROXY          = FALSE;
+BOOL PRO_CHARSETS_ENABLED   = FALSE;
 
 char timestamp[12];
 char timestamp_hrs[4];
@@ -101,45 +105,6 @@ void send_text(char *text2)
 
     if (!status_conductor)
         return;
-
-    //printf("local charset is %s and remote charset is %s\n", local_charsets[local_charset], remote_charsets[status_conductor->remote_charset]);
-    //if(FindUTF8Chars(text2))
-    /*if(1)
-     {
-     if(DEBUG) printf("doing a UTF8 conversion..\n");
-
-     struct TagItem my_send_charset1_taglist[] = { {CSA_Source, (ULONG)text2 }, //{CSA_SourceCodeset, (ULONG)local_charsets[local_charset]}, {CSA_DestCodeset, (ULONG)remote_charsets[status_conductor->remote_charset]}, {TAG_DONE, 0} };
-
-     //struct TagItem my_send_charset1_taglist[] = { {CSA_Source, (ULONG)text2 }, {CSA_SourceCodeset, (ULONG)charsets[local_charset]}, {CSA_DestCodeset, (ULONG)charsets[status_conductor->remote_charset]}, {TAG_DONE, 0} };
-     //struct TagItem my_send_charset1_taglist[] = { {CSA_Source, (ULONG)text2 }, {CSA_SourceCodeset, (ULONG)local_selectable_charsets[local_charset]}, {CSA_DestCodeset, (ULONG)charsets[status_conductor->remote_charset]}, {TAG_DONE, 0} };
-
-     text = CodesetsConvertStrA(my_send_charset1_taglist);
-     if(!text)
-     {
-     text=text2;
-     printf("failed conversion when sending to a server..\n");
-     }
-     else
-     {
-
-     if(!strcmp(text,"") && strlen(text2) > 0)
-     {
-     if(DEBUG)
-     {
-     printf("text field is blank..\n");
-     printf("original text field wasnt blank..\n");
-     printf("lets resend the original..\n");
-     }
-     text=text2;
-     }
-
-     }
-     }
-     else
-     {
-     text=text2;
-     }
-     */
 
     if (utf8)
     {
@@ -652,7 +617,7 @@ BOOL ParseToolTypes(struct WBArg *wbarg)
         if ((s = (char *) FindToolType((c2_in) toolarray, (c1_in) "SMALLTABS")))
         {
             if (!stricmp(s, "true"))
-                SMALLTABS = 1;
+                SMALLTABS = TRUE;
         }
         if ((s = (char *) FindToolType((c2_in) toolarray, (c1_in) "DEBUG")))
         {
@@ -661,12 +626,12 @@ BOOL ParseToolTypes(struct WBArg *wbarg)
         if ((s = (char *) FindToolType((c2_in) toolarray, (c1_in) "RAW")))
         {
             if (!stricmp(s, "true"))
-                RAW = 1;
+                RAW = TRUE;
         }
         if ((s = (char *) FindToolType((c2_in) toolarray, (c1_in) "PROXY")))
         {
             if (!stricmp(s, "true"))
-                using_a_proxy = TRUE;
+                USING_A_PROXY = TRUE;
         }
         if ((s = (char *) FindToolType((c2_in) toolarray, (c1_in) "NOZUNE")))
         {
@@ -685,7 +650,7 @@ BOOL ParseToolTypes(struct WBArg *wbarg)
         if ((s = (char *) FindToolType((c2_in) toolarray, (c1_in) "ALTCLIPBOARD")))
         {
             if (!stricmp(s, "true"))
-                ALTERNATIVE_CLIPBOARD = 1;
+                ALTERNATIVE_CLIPBOARD = TRUE;
 
         }
 
@@ -697,7 +662,7 @@ BOOL ParseToolTypes(struct WBArg *wbarg)
         if ((s = (char *) FindToolType((c2_in) toolarray, (c1_in) "GEIT")))
         {
             if (!stricmp(s, "true"))
-                GEIT = 1;
+                GEIT = TRUE;
         }
         if ((s = (char *) FindToolType((c2_in) toolarray, (c1_in) "AREXX")))
         {
@@ -900,25 +865,25 @@ int main(int argc, char *argv[])
         for (int count = 1; count < argc; count++)
         {
             if (!stricmp(argv[count], "geit"))
-                GEIT = 1;
+                GEIT = TRUE;
             if (!stricmp(argv[count], "geit2"))
-                GEIT2 = 1;
+                GEIT2 = TRUE;
             if (!stricmp(argv[count], "geit3"))
-                GEIT3 = 1;
+                GEIT3 = TRUE;
             if (!stricmp(argv[count], "smalltabs"))
-                SMALLTABS = 1;
+                SMALLTABS = TRUE;
             if (!stricmp(argv[count], "debug"))
-                DEBUG = 1;
+                DEBUG = TRUE;
             if (!stricmp(argv[count], "raw"))
-                RAW = 1;
+                RAW = TRUE;
             if (!stricmp(argv[count], "proxy"))
-                using_a_proxy = TRUE;
+                USING_A_PROXY = TRUE;
             if (!stricmp(argv[count], "nozune"))
                 ZUNE_SYSTEM = FALSE;
             if (!stricmp(argv[count], "zune"))
                 ZUNE_SYSTEM = TRUE;
             if (!stricmp(argv[count], "altclipboard"))
-                ALTERNATIVE_CLIPBOARD = 1;
+                ALTERNATIVE_CLIPBOARD = TRUE;
             if (!stricmp(argv[count], "aboutgfx"))
                 my_settings.os3_about_window_gfx = 1;
             if (!stricmp(argv[count], "arexx"))
@@ -1327,10 +1292,11 @@ int main(int argc, char *argv[])
 
     DoMethod((Object*) WookieChat->CYCLE_remote_charset, MUIM_Notify, MUIA_Cycle_Active, MUIV_EveryTime,
             (Object*) WookieChat->App, 2, MUIM_Application_ReturnID, 57);
-    if (Pro_Charsets_Enabled == FALSE)
+    if (!PRO_CHARSETS_ENABLED)
+    {
         setmacro(WookieChat->GR_charsets, MUIA_ShowMe, FALSE);
-    if (Pro_Charsets_Enabled == FALSE)
         setmacro(GR_local_charset, MUIA_ShowMe, FALSE);
+    }
 
     //DoMethod((Object*)WookieChat->STR_user_list_buttons_name,MUIM_Notify,MUIA_String_Contents, MUIV_EveryTime,(Object*)WookieChat->App, 2, MUIM_Application_ReturnID,SECOND_SET_OF_RETURNIDS+2);
     //DoMethod((Object*)WookieChat->STR_user_list_buttons_command,MUIM_Notify,MUIA_String_Contents, MUIV_EveryTime,(Object*)WookieChat->App, 2, MUIM_Application_ReturnID,SECOND_SET_OF_RETURNIDS+2);

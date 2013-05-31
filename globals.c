@@ -17,7 +17,6 @@ struct XYMessage *incoming_message;
 
 struct ObjApp *WookieChat;
 struct Catalog *catalog;
-BOOL USE_AREXX;
 char wookie_folder[400]; //the pathname wookiechat is located in
 
 struct status_window *work_status;
@@ -40,7 +39,6 @@ struct Settings temp_settings;
 
 
 ULONG entries;
-BOOL QUIET_DCC;
 
 struct MUI_PenSpec *pendisplay_specs[25];
 
@@ -79,9 +77,6 @@ fd_set read_master;       // master file descriptor list
 fd_set write_master;      // master file descriptor list
 int fdmax=-1;        // maximum file descriptor number
 
-BOOL ZUNE_SYSTEM;
-BOOL Pro_Charsets_Enabled=FALSE;
-
 struct hostent *he;
 
 struct dcc_chat *dcc_chat_work;
@@ -115,7 +110,6 @@ char graphical_smiley_themes[10][100];
 
 char string_to_send[BUFFERSIZE];
 
-BOOL RECENTLY_CREATED_A_TAB=FALSE;
 struct ClockData *clockdata;
 char activity[64];
 char activity_chat[64];
@@ -123,7 +117,6 @@ char activity_highlight[64];
 STRPTR text3;
 char *channel_display;
 char *NewPreParse_NewText;
-BOOL using_a_proxy;
 char server[50];
 struct MsgPort *app_process_replyport;
 struct MsgPort *send_text_replyport;
@@ -144,7 +137,6 @@ char *tabwork3_string; //text after cursor position
 char *tabwork4_string; //nick text to complete
 char *tabwork5_string; //completed nick text to insert
 char *tabwork_string; //original string gadget contents
-BOOL dont_open_colours;
 struct ClockData *clockdata2;
 BOOL is_chooser_window_open;
 struct DiskObject *dobj; //for the iconified icon

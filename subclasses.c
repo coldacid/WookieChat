@@ -1533,34 +1533,6 @@ SAVEDS ULONG Window_Setup(struct IClass *cl,Object *obj,struct Message *msg)
 
     DoMethod(obj,MUIM_Window_AddEventHandler,&data->ehnode);
 
-    /*setup_background_colours();
-
-    if(current_query)
-    {
-        DoMethod((Object*)current_query->LV_nicklist,MUIM_NList_Redraw,MUIV_NList_Redraw_All);
-        DoMethod((Object*)current_query->LV_channel,MUIM_NList_Redraw,MUIV_NList_Redraw_All);
-        DoMethod((Object*)WookieChat->LV_tabs,MUIM_NList_Redraw,MUIV_NList_Redraw_All);
-    } */
-
-/*
-    if(dont_open_colours==FALSE)
-    {
-        for(count=0; count<=24; count++) custom_pen_colours[count]=0;
-        setmacro((Object*)WookieChat->WI_colour_settings,MUIA_Window_Open, TRUE);
-        load_colours();
-
-        setup_background_colours();
-
-        setmacro((Object*)WookieChat->WI_colour_settings,MUIA_Window_Open, FALSE);
-
-        if(current_query)
-        {
-            DoMethod((Object*)current_query->LV_nicklist,MUIM_NList_Redraw,MUIV_NList_Redraw_All);
-            DoMethod((Object*)current_query->LV_channel,MUIM_NList_Redraw,MUIV_NList_Redraw_All);
-            DoMethod((Object*)WookieChat->LV_tabs,MUIM_NList_Redraw,MUIV_NList_Redraw_All);
-        }
-    }
-  */
     return(TRUE);
 }
 
@@ -1579,32 +1551,6 @@ SAVEDS ULONG Window_Cleanup(struct IClass *cl,Object *obj,struct Message *msg)
 
     return(DoSuperMethodA(cl,obj,(Msg)msg));
 }
-
-/*
-ULONG Window_HandleEvent(struct IClass *cl, Object *obj, struct MUIP_HandleEvent *msg)
-{
-    printf("window handle event\n");
-
-    //DoSuperMethodA(cl,obj,(Msg)msg);
-
-    //struct InstanceData *data = (InstanceData*)INST_DATA(cl,obj);
-
-    if(status_current)
-    {
-        LONG string1, string2, string3;
-
-        getmacro((Object*)status_current->current_query->STR_topic,MUIA_Selected,&string1);
-        getmacro((Object*)status_current->current_query->STR_keyword,MUIA_Selected,&string2);
-        getmacro((Object*)status_current->current_query->STR_limit,MUIA_Selected,&string3);
-
-
-    }
-
-    //return(DoSuperMethodA(cl,obj,(Msg)msg));
-
-    return 0;
-
-}*/
 
 SAVEDS ULONG Window_Draw(struct IClass *cl,Object *obj,struct MUIP_Draw *msg)
 {

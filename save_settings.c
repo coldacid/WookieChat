@@ -931,7 +931,7 @@ void load_nick_settings()
         {
             if (setting_value)
             {
-                if (Pro_Charsets_Enabled == FALSE)
+                if (!PRO_CHARSETS_ENABLED)
                 {
                 }
                 else

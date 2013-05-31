@@ -2860,7 +2860,7 @@ if(AMIX) printf("118\n");
         MUIA_NListtree_Title, TRUE,
     End;
 
-    if(Pro_Charsets_Enabled==FALSE)
+    if(!PRO_CHARSETS_ENABLED)
         setmacro((Object*)MBObj->NLT_Servers,MUIA_NListtree_Format,"COL=0 WEIGHT=45 BAR, COL=1 WEIGHT=10 BAR, COL=2 WEIGHT=15 BAR");
 
     MBObj->NLV_Servers=(Object*)NListviewObject,

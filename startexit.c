@@ -135,7 +135,6 @@ void LoadAllLibs(void)
 
     fdmax = -1;
 
-    dont_open_colours = FALSE;
     local_charset = 0;
 
     QUIET_DCC = FALSE;
@@ -150,9 +149,6 @@ void LoadAllLibs(void)
         pendisplay_specs[a] = malloc(sizeof(struct MUI_PenSpec));
 
     //default values before tooltypes and shell switches are read
-    SMALLTABS = 0;
-    using_a_proxy = FALSE;
-    RAW = 0;
     my_settings.os3_about_window_gfx = 0;
 
 #ifdef __amigaos4__
@@ -411,8 +407,6 @@ void DisposeApp(struct ObjApp * MBObj)
 
 void cleanexit(char *str)
 {
-    int GEIT = 0;
-
     if (GEIT)
         printf("closing\n1\n");
 

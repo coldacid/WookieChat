@@ -241,7 +241,7 @@ void add_tabs_to_nicklist_group()
                     if (my_settings.use_nlistobject_for_tabs)
                     {
 
-                        if (is_it_there == FALSE && GEIT2 == 0)
+                        if (is_it_there == FALSE && !GEIT2)
                         {
                             DoMethod((Object*) status_conductor->conductor->GR_nicklist_and_tabs, OM_ADDMEMBER,
                                     (Object*) status_conductor->conductor->GR_tabs);
@@ -271,7 +271,7 @@ void add_tabs_to_nicklist_group()
                         if (GEIT)
                             printf("1\n");
 
-                        if (is_it_there == FALSE && GEIT2 == 0)
+                        if (is_it_there == FALSE && !GEIT2)
                         {
                             DoMethod((Object*) status_conductor->conductor->GR_nicklist_and_tabs, OM_ADDMEMBER,
                                     (Object*) status_conductor->conductor->GR_tabs);

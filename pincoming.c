@@ -1395,7 +1395,7 @@ void process_incoming()
             status_conductor->conductor = status_conductor->root;
             add_text_to_conductor_list((char*) buffer3, colour, ACTIVITY);
 
-            if (using_a_proxy == FALSE)
+            if (!USING_A_PROXY)
             {
                 string1 = strtok(incoming_3, " ");
 

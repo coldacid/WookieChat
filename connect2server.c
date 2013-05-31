@@ -128,7 +128,7 @@ int connect2server(char *servername, char *port_number, int typedservercommand, 
         strcpy(status_conductor->real_name, server_real_name);
     }
 
-    if (Pro_Charsets_Enabled == FALSE)
+    if (!PRO_CHARSETS_ENABLED)
     {
         for (count = 0; remote_charsets[count] != NULL && count < total_charsets; count++)
         {

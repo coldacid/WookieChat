@@ -1007,7 +1007,7 @@ static void Display_servers_TextFunc(void)
         a_entry->Array[0]=(STRPTR)server_name;
         a_entry->Array[1]=(STRPTR)port_number;
         a_entry->Array[2]=(STRPTR)auto_connect;
-        if(Pro_Charsets_Enabled==TRUE)
+        if(PRO_CHARSETS_ENABLED)
             a_entry->Array[3]=(STRPTR)server_charset;
 
 
@@ -1018,7 +1018,7 @@ static void Display_servers_TextFunc(void)
         a_entry->Array[0]= (STRPTR)GCS(catalog,266,"Servers");
         a_entry->Array[1]= (STRPTR)GCS(catalog,267,"Port");
         a_entry->Array[2]= (STRPTR)GCS(catalog,268,"Auto-Connect");
-        if(Pro_Charsets_Enabled==TRUE)
+        if(PRO_CHARSETS_ENABLED)
             a_entry->Array[3]= (STRPTR)GCS(catalog,329,"Charset");
 
 
