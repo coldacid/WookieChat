@@ -1156,7 +1156,6 @@ BOOL SafePutToPort(struct XYMessage *message, STRPTR portname);
 
 /* main.c */
 extern int count; // FIXME make this a local variable in each function
-extern int count2; // FIXME make this a local variable in each function
 extern int DEBUG;
 extern int SMALLTABS;
 extern int RAW;

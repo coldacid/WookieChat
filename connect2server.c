@@ -38,6 +38,7 @@ void acquire_connect_details(char *work_buffer)
     while (string1)
     {
         strcpy(the_value, "");
+        int count2;
 
         for (count2 = 0, count = 0; count <= (LONG) strlen(string1); count2++, count++)
         {
@@ -97,19 +98,10 @@ void acquire_connect_details(char *work_buffer)
             //printf("the value:%s  use global:%i\n", the_value, use_global);
             //strcpy(use_global,the_value);
         }
-        /*else if(!stricmp(parameter,"NICK1")) strcpy(status_conductor->nick,the_value);
-         else if(!stricmp(parameter,"NICK2")) strcpy(status_conductor->nick2,the_value);
-         else if(!stricmp(parameter,"NICK3")) strcpy(status_conductor->nick3,the_value);
-         else if(!stricmp(parameter,"USERNAME")) strcpy(status_conductor->user_name,the_value);
-         else if(!stricmp(parameter,"REALNAME")) strcpy(status_conductor->real_name,the_value);
-         */
         else if (the_value[0] == '\0')
             strcpy(server_name, string1);
 
-        //if(DEBUG)  printf("parameter \"%s\" value \"%s\"\n",parameter,the_value);
-
         string1 = strtok(NULL, " \n");
-
     }
 
 }

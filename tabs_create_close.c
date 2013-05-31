@@ -512,7 +512,7 @@ int create_new_tab(char *name, int show_now, int query_type)
 
     if (DoMethod((Object*) GROUP_ROOT_0, MUIM_Group_InitChange))
     {
-
+        int count2;
         int running1 = 1;
 
         if (status_conductor != status_current)
@@ -1232,6 +1232,7 @@ void close_tab(void)
     status_conductor = status_current;
     status_conductor->conductor = status_conductor->current_query;
 
+    int count2;
     count = 0;
     iv--;
 

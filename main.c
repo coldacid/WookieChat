@@ -19,7 +19,7 @@
 int NEWDEBUG = 0;
 
 int DEBUG = 0;
-int count = 0, count2 = 0;
+int count = 0;
 int SMALLTABS = 0;
 int RAW;
 int ALTERNATIVE_CLIPBOARD = 0;
@@ -2268,6 +2268,7 @@ int main(int argc, char *argv[])
                     }
                     else //else edit a server
                     {
+                        int count2;
                         //setmacro((Object*)WookieChat->WI_edit_server,MUIA_Window_Open, TRUE);
                         //setmacro((Object*)WookieChat->GR_server_specific_user_prefs, MUIA_ShowMe, FALSE);
 

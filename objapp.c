@@ -1494,6 +1494,7 @@ if(AMIX) printf("82\n");
 
     if(find_themes())
     {
+        int count2;
         for(count2=0; count2<count; count2++)
         {
             CYA_GroupTitleColor[count2]=malloc(sizeof(char) * 100);

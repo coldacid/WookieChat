@@ -1323,6 +1323,7 @@ int sel21hookfunc(void) {
 
                                 if(strchr((char*)line_string,'!'))
                                 {
+                                    int count2;
                                     //copy the nick from the prefix variable
                                     if(line_string[0]==':') count=1; else count=0;
                                     for(count2=0;count<=(LONG)strlen((char*)line_string) && line_string[count]!='!' && line_string[count]!='\0'; count2++,count++)
@@ -1377,6 +1378,7 @@ int sel21hookfunc(void) {
 
                                 if(strchr((char*)line_string,'!'))
                                 {
+                                    int count2;
                                     //copy the nick from the prefix variable
                                     if(line_string[0]==':') count=1; else count=0;
                                     for(count2=0;count<=(LONG)strlen((char*)line_string) && line_string[count]!='!' && line_string[count]!='\0'; count2++,count++)
@@ -1432,6 +1434,7 @@ int sel21hookfunc(void) {
 
                                 if(strchr((char*)line_string,'!'))
                                 {
+                                    int count2;
                                     //copy the nick from the prefix variable
                                     if(line_string[0]==':') count=1; else count=0;
                                     for(count2=0;count<=(LONG)strlen((char*)line_string) && line_string[count]!='!' && line_string[count]!='\0'; count2++,count++)
@@ -1488,6 +1491,7 @@ int sel21hookfunc(void) {
 
                                 if(strchr((char*)line_string,'!'))
                                 {
+                                    int count2;
                                     //copy the nick from the prefix variable
                                     if(line_string[0]==':') count=1; else count=0;
                                     for(count2=0;count<=(LONG)strlen((char*)line_string) && line_string[count]!='!' && line_string[count]!='\0'; count2++,count++)
@@ -1707,6 +1711,7 @@ int sel23hookfunc(void) {
                 if(strchr((char*)line_string,'!'))
                 {
                     //copy the nick from the prefix variable
+                    int count2;
                     if(line_string[0]==':') count=1; else count=0;
                     for(count2=0;count<=(LONG)strlen((char*)line_string) && line_string[count]!='!' && line_string[count]!='\0'; count2++,count++)
                     {

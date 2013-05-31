@@ -592,7 +592,7 @@ void insert_smiley(char *ascii_smiley, int smiley_gfx_number)
 {
 
     count = strlen(centry->entry);
-    count2 = strlen(ascii_smiley);
+    int count2 = strlen(ascii_smiley);
 
     //printf("start of insert smiley\n");
 
