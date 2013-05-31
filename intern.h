@@ -1031,11 +1031,11 @@ extern char server_nick3[128];
 extern char server_real_name[256];
 extern char server_user_name[256];
 extern LONG use_global;
-extern char *nick2; // FIXME make this a local variable in each function
-extern char *nick3; // FIXME make this a local variable in each function
-extern char *nick; // FIXME make this a local variable in each function
-extern char username[20]; // FIXME make this a local variable in each function
-extern char realname[100]; // FIXME make this a local variable in each function
+extern char *nick2;
+extern char *nick3;
+extern char *nick;
+extern char username[20];
+extern char realname[100];
 extern int local_charset;
 extern int remote_charset;
 extern char *local_charsets[45];
@@ -1116,8 +1116,6 @@ extern BOOL is_chooser_window_open;
 extern struct DiskObject *dobj;
 extern struct MsgPort *arexx_quit_replyport;
 extern struct MUI_NList_TestPos_Result *last_clicked_res;
-
-extern char *string123;
 
 extern struct timerequest *TimerIO;
 extern struct MsgPort *Timer2MP;

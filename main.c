@@ -1733,6 +1733,7 @@ int main(int argc, char *argv[])
             }
             else if (result == 1)
             {
+                char * string123 = NULL;
 // user has typed some text and press enter
                 getmacro((Object*)WookieChat->STR_usertext, MUIA_String_Contents, &string123);
                 int c = 0;

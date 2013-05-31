@@ -1048,6 +1048,7 @@ ULONG BetterString_HandleEvent(struct IClass *cl, Object *obj, struct MUIP_Handl
 
                         if(status_current->current_query->string_conductor->previous)
                         {
+                            char * string123 = NULL;
                             getmacro((Object*)WookieChat->STR_usertext,MUIA_String_Contents,&string123);
 
                             //are we at the bottom and trying to go one previous? lets add new to the bottom first before going up
@@ -1088,7 +1089,7 @@ ULONG BetterString_HandleEvent(struct IClass *cl, Object *obj, struct MUIP_Handl
                 case CURSORDOWN:
                     if(status_current->current_query->string_conductor)
                     {
-
+                        char * string123 = NULL;
                         if(status_current->current_query->string_conductor->next)
                         {
                             status_current->current_query->string_conductor=status_current->current_query->string_conductor->next;
