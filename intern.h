@@ -1010,9 +1010,6 @@ extern struct Settings temp_settings;
 extern ULONG entries;
 extern BOOL QUIET_DCC;
 
-extern struct timeval *systime; // FIXME make this a local variable in each function
-extern struct timeval *systime_reconnect_timer;
-
 extern struct MUI_PenSpec *pendisplay_specs[25];
 extern STRPTR popimage_background;
 extern STRPTR popimage_nicklistbackground;
@@ -1287,6 +1284,7 @@ void create_arexx_event_string(char *arexx_event_to_use, char *arexx_arguments, 
 BOOL is_window_active();
 
 /* auto_reconnect_server.c */
+ULONG get_reconnect_secs();
 void automatically_reconnect_server(int);
 
 /* hooks.c */

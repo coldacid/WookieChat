@@ -33,9 +33,6 @@ BOOL TimerWait_Open(void)
     Timer4_WaitCheck = FALSE;
     Timer5_WaitCheck = FALSE;
 
-    systime = malloc(sizeof(struct timeval));
-    systime_reconnect_timer = malloc(sizeof(struct timeval));
-
     Timer1_WaitCheck = FALSE;
     if ((TimerMP = CreatePort(0, 0)))
     {
@@ -110,25 +107,26 @@ BOOL TimerWait_Open(void)
 
     if (Timer2_WaitCheck)
     {
-        get_sys_time(systime); // Get current system time
+        struct timeval systime;
+        get_sys_time(&systime); // Get current system time
 #ifdef __amigaos4__
-        Timer2IO->tr_time.tv_sec = systime->tv_sec+2;
-        Timer2IO->tr_time.tv_usec = systime->tv_usec;
+        Timer2IO->tr_time.tv_sec = systime.tv_sec+2;
+        Timer2IO->tr_time.tv_usec = systime.tv_usec;
 #else
-        Timer2IO->tr_time.tv_secs = systime->tv_secs + 2;
-        Timer2IO->tr_time.tv_micro = systime->tv_micro;
+        Timer2IO->tr_time.tv_secs = systime.tv_secs + 2;
+        Timer2IO->tr_time.tv_micro = systime.tv_micro;
 #endif
         SendIO((struct IORequest *) Timer2IO); // Get the results
     }
 
     if (Timer4_WaitCheck)
     {
-
-        get_sys_time(systime); // Get current system time
+        struct timeval systime;
+        get_sys_time(&systime); // Get current system time
 #ifdef __amigaos4__
-        Amiga2Date(systime->tv_sec, clockdata);
+        Amiga2Date(systime.tv_sec, clockdata);
 #else
-        Amiga2Date(systime->tv_secs, clockdata);
+        Amiga2Date(systime.tv_secs, clockdata);
 #endif
         timestamp_2_string();
         clockdata2->sec = 0;

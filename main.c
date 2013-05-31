@@ -466,12 +466,13 @@ void make_paste_pause_delay(void)
 
     if (CheckIO((struct IORequest *) Timer5IO))
     {
+        struct timeval *systime;
         get_sys_time(systime); // Get current system time
         Timer5IO->tr_node.io_Command = TR_ADDREQUEST;
 
 #ifdef __amigaos4__
-        Timer5IO->tr_time.tv_sec = systime->tv_sec+my_settings.paste_delay_seconds; //QUEUED_MESSAGES_DELAY_IN_SECONDS;
-        Timer5IO->tr_time.tv_usec = systime->tv_usec+my_settings.paste_delay_microseconds;//QUEUED_MESSAGES_DELAY_IN_MICROSECONDS;
+        Timer5IO->tr_time.tv_sec = systime.tv_sec+my_settings.paste_delay_seconds; //QUEUED_MESSAGES_DELAY_IN_SECONDS;
+        Timer5IO->tr_time.tv_usec = systime.tv_usec+my_settings.paste_delay_microseconds;//QUEUED_MESSAGES_DELAY_IN_MICROSECONDS;
 #else
         Timer5IO->tr_time.tv_secs = systime->tv_secs + my_settings.paste_delay_seconds; //QUEUED_MESSAGES_DELAY_IN_SECONDS;
         Timer5IO->tr_time.tv_micro = systime->tv_micro + my_settings.paste_delay_microseconds; //QUEUED_MESSAGES_DELAY_IN_MICROSECONDS;
@@ -5054,6 +5055,7 @@ int main(int argc, char *argv[])
                 }
                 if (waitsignals & timer_signal)
                 {
+                    struct timeval systime;
 // Update the dcc transfers window entries every 2 seconds!
 
                     while (GetMsg(Timer2MP))
@@ -5235,14 +5237,14 @@ int main(int argc, char *argv[])
                         }
 
                         // Get current system then wait 2 seconds before signalling again
-                        get_sys_time(systime);
+                        get_sys_time(&systime);
 
 #ifdef __amigaos4__
-                        Timer2IO->tr_time.tv_sec = systime->tv_sec+2;
-                        Timer2IO->tr_time.tv_usec = systime->tv_usec;
+                        Timer2IO->tr_time.tv_sec = systime.tv_sec+2;
+                        Timer2IO->tr_time.tv_usec = systime.tv_usec;
 #else
-                        Timer2IO->tr_time.tv_secs = systime->tv_secs + 2;
-                        Timer2IO->tr_time.tv_micro = systime->tv_micro;
+                        Timer2IO->tr_time.tv_secs = systime.tv_secs + 2;
+                        Timer2IO->tr_time.tv_micro = systime.tv_micro;
 #endif
 
                         SendIO((struct IORequest *) Timer2IO);
@@ -5270,13 +5272,13 @@ int main(int argc, char *argv[])
 
                     }
 
-                    get_sys_time(systime); // Get current system time
+                    get_sys_time(&systime); // Get current system time
 
                     // Check every 2 minutes if we're still connected. Auto reconnect on on unwanted disconnection
 #ifdef __amigaos4__
-                    if(start_reconnect_delay_timer==TRUE && systime_reconnect_timer->tv_sec <= systime->tv_sec)
+                    if(start_reconnect_delay_timer==TRUE && get_reconnect_secs() <= systime.tv_sec)
 #else
-                    if (start_reconnect_delay_timer == TRUE && systime_reconnect_timer->tv_secs <= systime->tv_secs)
+                    if (start_reconnect_delay_timer == TRUE && get_reconnect_secs() <= systime.tv_secs)
 #endif
                     {
 
@@ -5394,11 +5396,12 @@ int main(int argc, char *argv[])
                 }
                 if (GetMsg(Timer4MP))
                 {
-                    get_sys_time(systime); // Get current system time
+                    struct timeval systime;
+                    get_sys_time(&systime); // Get current system time
 #ifdef __amigaos4__
-                    Amiga2Date(systime->tv_sec, clockdata);
+                    Amiga2Date(systime.tv_sec, clockdata);
 #else
-                    Amiga2Date(systime->tv_secs, clockdata);
+                    Amiga2Date(systime.tv_secs, clockdata);
 #endif
                     timestamp_2_string();
 
@@ -5421,18 +5424,18 @@ int main(int argc, char *argv[])
                     status_conductor = status_current;
                     status_conductor->conductor = status_conductor->root;
 
-                    get_sys_time(systime); // Get current system time
+                    get_sys_time(&systime); // Get current system time
 #ifdef __amigaos4__
-                    Amiga2Date(systime->tv_sec, clockdata);
+                    Amiga2Date(systime.tv_sec, clockdata);
 #else
-                    Amiga2Date(systime->tv_secs, clockdata);
+                    Amiga2Date(systime.tv_secs, clockdata);
 #endif
 
 #ifdef __amigaos4__
-                    Timer4IO->tr_time.tv_sec = systime->tv_sec+(60*60*24);
+                    Timer4IO->tr_time.tv_sec = systime.tv_sec+(60*60*24);
                     Timer4IO->tr_time.tv_usec = 0;
 #else
-                    Timer4IO->tr_time.tv_secs = systime->tv_secs + (60 * 60 * 24);
+                    Timer4IO->tr_time.tv_secs = systime.tv_secs + (60 * 60 * 24);
                     Timer4IO->tr_time.tv_micro = 0;
 #endif
                     SendIO((struct IORequest *) Timer4IO); // Get the results

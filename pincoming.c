@@ -851,12 +851,13 @@ int add_text_to_conductor_list(char *buffer1, LONG colour, int activitylevel)
         if (status_conductor->conductor->log_file)
         {
             char buffer_text[800];
+            struct timeval systime;
             //get the date and current time for logging stamps and renaming
-            get_sys_time(systime); // Get current system time
+            get_sys_time(&systime); // Get current system time
 #ifdef __amigaos4__
-            Amiga2Date(systime->tv_sec, clockdata);
+            Amiga2Date(systime.tv_sec, clockdata);
 #else
-            Amiga2Date(systime->tv_secs, clockdata);
+            Amiga2Date(systime.tv_secs, clockdata);
 #endif
 
             timestamp_2_string();
@@ -4670,7 +4671,7 @@ void process_incoming()
                 else if ((strstr(string10, "\001TIME") || strstr(string10, "\001time"))
                         && string10[strlen(string10) - 1] == '\001')
                 {
-                    //if(string9[0]=='#')
+                    struct timeval systime;
                     if (strcspn(string9, status_conductor->chantypes) == 0)
                         sprintf(buffer3, "%s%sCTCP%s CTCP TIME %s %s %s", timestamp, GCS(catalog, 217, "["),
                                 GCS(catalog, 218, "]"), string9, GCS(catalog, 210, "from"),
@@ -4679,11 +4680,11 @@ void process_incoming()
                         sprintf(buffer3, "%s%sCTCP%s CTCP TIME %s %s", timestamp, GCS(catalog, 217, "["),
                                 GCS(catalog, 218, "]"), GCS(catalog, 210, "from"), string7);
 
-                    get_sys_time(systime); // Get current system time
+                    get_sys_time(&systime); // Get current system time
 #ifdef __amigaos4__
-                    Amiga2Date(systime->tv_sec, clockdata);
+                    Amiga2Date(systime.tv_sec, clockdata);
 #else
-                    Amiga2Date(systime->tv_secs, clockdata);
+                    Amiga2Date(systime.tv_secs, clockdata);
 #endif
 
                     timestamp_2_string();

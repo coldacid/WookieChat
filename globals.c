@@ -42,10 +42,6 @@ struct Settings temp_settings;
 ULONG entries;
 BOOL QUIET_DCC;
 
-struct timeval *systime;
-// "reconnection on abnormal disconnection" delay timer
-struct timeval *systime_reconnect_timer;
-
 struct MUI_PenSpec *pendisplay_specs[25];
 
 STRPTR popimage_background;

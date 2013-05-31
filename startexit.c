@@ -623,13 +623,6 @@ void cleanexit(char *str)
         if (last_clicked_res)
             free(last_clicked_res);
         last_clicked_res = NULL;
-        if (systime)
-            free(systime);
-        systime = NULL;
-        if (systime_reconnect_timer)
-            free(systime_reconnect_timer);
-        systime_reconnect_timer = NULL;
-
     }
 
     if (WookieChat)
