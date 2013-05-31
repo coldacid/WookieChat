@@ -453,9 +453,7 @@ int do_waitselect_code(void)
 #endif
                             }
 
-                            dcc_time();
-
-                            strcpy(dcc_conductor->timestarted, dcctimestamp);
+                            strcpy(dcc_conductor->timestarted, dcc_time());
 
                             if (dcc_conductor->dcc_file == 0)
                             {
@@ -773,8 +771,7 @@ int do_waitselect_code(void)
                                 Seek(dcc_send_conductor->dcc_file, dcc_send_conductor->total_recv, OFFSET_BEGINNING);
 #endif
 
-                            dcc_time();
-                            strcpy(dcc_send_conductor->timestarted, dcctimestamp);
+                            strcpy(dcc_send_conductor->timestarted, dcc_time());
 
                             if (dcc_send_conductor->dcc_file == 0)
                             {

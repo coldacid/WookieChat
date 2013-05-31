@@ -240,9 +240,7 @@ void SQuote(char *message)
 
 void SPing(char *string1)
 {
-    ping_time();
-
-    sprintf(sendstuff, "PRIVMSG %s :\001PING %s\001\r\n", string1, pingtimestamp);
+    sprintf(sendstuff, "PRIVMSG %s :\001PING %s\001\r\n", string1,  ping_time());
     send_text(sendstuff);
 
     timestamp_2_string();

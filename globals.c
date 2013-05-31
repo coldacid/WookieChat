@@ -79,8 +79,6 @@ char *local_charsets[45];
 char *remote_charsets[45];
 int total_charsets;
 
-char timestamp[12];
-
 fd_set read_master;       // master file descriptor list
 fd_set write_master;      // master file descriptor list
 int fdmax=-1;        // maximum file descriptor number
@@ -103,17 +101,10 @@ struct dcc *dcc_send_work;
 struct dcc *dcc_send_root;
 struct dcc *dcc_send_conductor;
 
-ULONG days;
-ULONG hrs;
-ULONG secs;
-ULONG mins;
 char sendstuff[1500];
 struct dcc_entry *find;
 
-int how_many_lines=15;
-char buffer_text[800];
 struct channel_entry *centry;
-char new_array[20];
 ULONG custom_pen_colours[24];
 ULONG visible;
 ULONG first;
@@ -122,32 +113,17 @@ fd_set read_fds;          // temp file descriptor list for select()
 fd_set write_fds;         // temp file descriptor list for select()
 int queued_messages_total;
 BOOL start_reconnect_delay_timer;
-char dcctimestamp[12];
 
 struct graphical_smilies_struct graphical_nicklist[3];
 char graphical_smiley_themes[10][100];
-struct MinList *list;
-APTR object_state;
-APTR member_object;
-LONG count3;
-LONG count4;
-//char string7[900];
-BPTR newbptr_file;
 
 char string_to_send[BUFFERSIZE];
-char pingtimestamp[12];
-
-struct list_entry *new_entry;
 
 BOOL RECENTLY_CREATED_A_TAB=FALSE;
-char timestamp_hrs[4];
-char timestamp_mins[4];
 struct ClockData *clockdata;
 char activity[64];
 char activity_chat[64];
 char activity_highlight[64];
-char pingtimestamp_mins[4];
-char pingtimestamp_secs[4];
 STRPTR text3;
 char *channel_display;
 char *NewPreParse_NewText;

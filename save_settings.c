@@ -2220,6 +2220,8 @@ int create_user_list_buttons(void)
 
         char *work_buffer;
         char work_buffer2[1000];
+        APTR member_object = NULL;
+        struct MinList *list = NULL;
 
         getmacro((Object*) WookieChat->LV_user_list_buttons, MUIA_NList_Entries, &entries);
 
@@ -2247,7 +2249,7 @@ int create_user_list_buttons(void)
         }
 
         getmacro((Object*) WookieChat->GR_click_user_list_buttons, MUIA_Group_ChildList, &list);
-        object_state = list->mlh_Head;
+        APTR object_state = list->mlh_Head;
         while ((member_object = NextObject((Object**) &object_state)))
         {
             DoMethod((Object*) WookieChat->GR_click_user_list_buttons, OM_REMMEMBER, (Object*) member_object);

@@ -129,8 +129,8 @@ void LoadAllLibs(void)
     tabwork5_string = malloc(sizeof(char) * 100); //completed nick text to insert
     tabwork_string = malloc(sizeof(char) * 900); //original string gadget contents
 
-    new_entry = malloc(sizeof(struct list_entry));
-    new_entry->hostname = malloc(sizeof(char) * (HOSTNAME_STRING_SIZE + 1));
+    nicklist_init();
+
     work_entry4.hostname = malloc(sizeof(char) * (HOSTNAME_STRING_SIZE + 1));
 
     fdmax = -1;
@@ -376,9 +376,7 @@ void LoadAllLibs(void)
     total_smileys = 0;
 
     //lets create some more structures
-    new_entry = malloc(sizeof(struct list_entry));
     work_entry = malloc(sizeof(struct list_entry));
-    new_entry->hostname = NULL;
 
     //zero the socket filedescriptor sets
     FD_ZERO(&read_master);
@@ -671,6 +669,8 @@ void cleanexit(char *str)
                     if (status_conductor->conductor->GR_conductor
                             && (status_conductor->conductor != status_current->current_query))
                     {
+                        APTR member_object = NULL;
+                        struct MinList *list = NULL;
 
                         if (DoMethod((Object*) GR_top, MUIM_Group_InitChange))
                         {
@@ -683,7 +683,7 @@ void cleanexit(char *str)
 
                                     getmacro((Object*) status_conductor->conductor->GR_listviews, MUIA_Group_ChildList,
                                             &list);
-                                    object_state = list->mlh_Head;
+                                    APTR object_state = list->mlh_Head;
 
                                     while ((member_object = NextObject((Object**) &object_state)))
                                     {
@@ -708,7 +708,7 @@ void cleanexit(char *str)
                         //does this belong here?
 
                         getmacro((Object*) GR_top, MUIA_Group_ChildList, &list);
-                        object_state = list->mlh_Head;
+                        APTR object_state = list->mlh_Head;
 
                         while ((member_object = NextObject((Object**) &object_state)))
                         {
@@ -893,11 +893,11 @@ void cleanexit(char *str)
     free(clockdata);
     free(clockdata2);
 
-    free(new_entry->hostname);
     free(work_entry4.hostname);
     free(new_entry2.hostname);
 
-    free(new_entry);
+    nicklist_deinit();
+
 
     exit(0);
 }

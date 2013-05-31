@@ -1052,7 +1052,7 @@ int add_text_to_conductor_list(char *buffer1, LONG colour, int activitylevel)
         status_conductor->conductor->log_file = Open((_s_cs)file_name, MODE_READWRITE);
         if (status_conductor->conductor->log_file)
         {
-
+            char buffer_text[800];
             //get the date and current time for logging stamps and renaming
             get_sys_time(systime); // Get current system time
 #ifdef __amigaos4__
@@ -1062,14 +1062,7 @@ int add_text_to_conductor_list(char *buffer1, LONG colour, int activitylevel)
 #endif
 
             timestamp_2_string();
-            if (hrs < 10)
-                sprintf(timestamp_hrs, "0%ld", hrs);
-            else
-                sprintf(timestamp_hrs, "%ld", hrs);
-            if (mins < 10)
-                sprintf(timestamp_mins, "0%ld", mins);
-            else
-                sprintf(timestamp_mins, "%ld", mins);
+
             sprintf(buffer_text, "* * %s %d-%d-%d, at %s:%s * *", GCS(catalog, 156, "Logging started at"),
                     clockdata->year, clockdata->month, clockdata->mday, timestamp_hrs, timestamp_mins);
 
@@ -2221,6 +2214,7 @@ void process_incoming()
 
                 //if(string10 && string11)
                 {
+                    ULONG secs, mins, hrs, days;
                     time_t rawtime = atoi(string11);
                     struct tm *timeinfo;
                     timeinfo = localtime(&rawtime);
@@ -4893,14 +4887,6 @@ void process_incoming()
 #endif
 
                     timestamp_2_string();
-                    if (hrs < 10)
-                        sprintf(timestamp_hrs, "0%ld", hrs);
-                    else
-                        sprintf(timestamp_hrs, "%ld", hrs);
-                    if (mins < 10)
-                        sprintf(timestamp_mins, "0%ld", mins);
-                    else
-                        sprintf(timestamp_mins, "%ld", mins);
 
                     char month[10];
                     switch (clockdata->month)

@@ -223,12 +223,13 @@ int use_graphical_smilies(struct query_window *new_tab)
 
 void exit_delete_smiley_objects()
 {
-
+    APTR member_object = NULL;
+    struct MinList *list = NULL;
     if (DEBUG)
         printf("exit_delete_smiley_objects()\n");
 
     getmacro((Object*) WookieChat->GR_graphical_smileys_choose, MUIA_Group_ChildList, &list);
-    object_state = list->mlh_Head;
+    APTR object_state = list->mlh_Head;
     while ((member_object = NextObject((Object**) &object_state)))
     {
         if (member_object)
@@ -364,12 +365,14 @@ int load_graphical_smilies(void)
         sprintf(work_buffer, "progdir:smilies/%s", graphical_smiley_themes[my_settings.graphical_smilies_background]);
         if (DEBUG)
             printf("opening \"%s\"\n", work_buffer);
-        newbptr_file = Open((_s_cs)work_buffer, MODE_OLDFILE);
+        BPTR newbptr_file = Open((_s_cs)work_buffer, MODE_OLDFILE);
 
         if (newbptr_file)
         {
+            APTR member_object = NULL;
+            struct MinList *list = NULL;
             getmacro((Object*) WookieChat->GR_graphical_smileys_choose, MUIA_Group_ChildList, &list);
-            object_state = list->mlh_Head;
+            APTR object_state = list->mlh_Head;
             while ((member_object = NextObject((Object**) &object_state)))
             {
                 if (member_object)
@@ -572,7 +575,7 @@ char * convert_graphical_smilies_2_text(char *work_buffer)
     if (my_settings.graphical_smilies)
     {
 
-        for (count4 = 1; count4 <= total_smileys && count4 <= MAXIMUM_SMILEYS; count4++)
+        for (int count4 = 1; count4 <= total_smileys && count4 <= MAXIMUM_SMILEYS; count4++)
         {
 
             remove_smiley(work_buffer, smilies[count4].remove_ascii, count4);
@@ -628,9 +631,9 @@ void insert_graphical_smilies(void)
     if (my_settings.graphical_smilies)
     {
 
-        for (count4 = 1; count4 <= total_smileys && count4 <= MAXIMUM_SMILEYS; count4++)
+        for (int count4 = 1; count4 <= total_smileys && count4 <= MAXIMUM_SMILEYS; count4++)
         {
-            for (count3 = 0; count3 < smilies[count4].ascii_total && count3 <= MAXIMUM_SMILEY_ASCII; count3++)
+            for (int count3 = 0; count3 < smilies[count4].ascii_total && count3 <= MAXIMUM_SMILEY_ASCII; count3++)
             {
                 insert_smiley(smilies[count4].ascii[count3], count4);
 

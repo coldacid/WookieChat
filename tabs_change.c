@@ -78,9 +78,10 @@ void remove_tab_listview()
 
         if (DoMethod((Object*) status_current->current_query->GR_nicklist_and_tabs, MUIM_Group_InitChange))
         {
-
+            APTR member_object = NULL;
+            struct MinList *list = NULL;
             getmacro((Object*) status_current->current_query->GR_nicklist_and_tabs, MUIA_Group_ChildList, &list);
-            object_state = list->mlh_Head;
+            APTR object_state = list->mlh_Head;
 
             if (GEIT)
                 printf("remove 2-5 \n");
@@ -215,13 +216,16 @@ void add_tabs_to_nicklist_group()
             if (1)
             {
                 {
+                    APTR member_object = NULL;
+                    struct MinList *list = NULL;
+
                     if (GEIT)
                         printf("adding 1-6\n");
 
                     is_it_there = FALSE;
 
                     getmacro((Object*) status_conductor->conductor->GR_nicklist_and_tabs, MUIA_Group_ChildList, &list);
-                    object_state = list->mlh_Head;
+                    APTR object_state = list->mlh_Head;
 
                     while ((member_object = NextObject((Object**) &object_state)))
                     {
@@ -748,6 +752,8 @@ void setup_notifys(void)
 //retrying to remove crash on geits machine
 void remove_tab_listview2()
 {
+    APTR member_object = NULL;
+    struct MinList *list = NULL;
 
     if (!status_conductor)
         return;
@@ -760,7 +766,7 @@ void remove_tab_listview2()
         printf("remove2 1-5 \n");
 
     getmacro((Object*) status_conductor->conductor->GR_nicklist_and_tabs, MUIA_Group_ChildList, &list);
-    object_state = list->mlh_Head;
+    APTR object_state = list->mlh_Head;
 
     if (GEIT)
         printf("remove2 2-5 \n");

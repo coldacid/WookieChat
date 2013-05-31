@@ -16,6 +16,7 @@
 static int count_the_linefeeds=0;
 static LONG char_read_storage;
 static char file_name[800];
+static char buffer_text[800];
 
 #ifndef __AROS__
 struct TagItem my_incoming_charset11_taglist[] =
@@ -47,6 +48,7 @@ int display_last_few_lines_of_logfile_conductor()
 {
 
     count_the_linefeeds = 0;
+    int how_many_lines = 0;
 
     if (wookie_folder[strlen(wookie_folder) - 1] == ':' || wookie_folder[strlen(wookie_folder) - 1] == '/')
         sprintf(file_name, "%slogs/%s_%s", wookie_folder, status_conductor->networkname,
@@ -101,7 +103,7 @@ int display_last_few_lines_of_logfile_conductor()
     }
 
     int count = 0;
-#ifdef __aamigaos4__
+#ifdef __amigaos4__
     if(count_the_linefeeds >= how_many_lines+1) ChangeFilePosition(status_conductor->conductor->log_file, 1, OFFSET_CURRENT);
     else
     {   ChangeFilePosition(status_conductor->conductor->log_file, -1, OFFSET_CURRENT); count=1;}
@@ -124,6 +126,7 @@ int display_last_few_lines_of_logfile_conductor()
 
         if (char_read_storage == '\n')
         {
+            char new_array[20];
             count++;
             buffer_text[a] = '\0';
             a = -1;

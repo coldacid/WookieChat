@@ -1045,8 +1045,6 @@ extern char *local_charsets[45];
 extern char *remote_charsets[45];
 extern int total_charsets;
 
-extern char timestamp[12]; // FIXME make this a local variable in each function
-
 extern fd_set read_master;
 extern fd_set write_master;
 extern int fdmax;
@@ -1068,17 +1066,10 @@ extern struct dcc *dcc_send_work;
 extern struct dcc *dcc_send_root;
 extern struct dcc *dcc_send_conductor;
 
-extern ULONG days; // FIXME make this a local variable in each function
-extern ULONG hrs; // FIXME make this a local variable in each function
-extern ULONG secs; // FIXME make this a local variable in each function
-extern ULONG mins; // FIXME make this a local variable in each function
 extern char sendstuff[1500];
 extern struct dcc_entry *find;
 
-extern int how_many_lines; // FIXME make this a local variable in each function
-extern char buffer_text[800];  // FIXME make this a local variable in each function
 extern struct channel_entry *centry;
-extern char new_array[20];  // FIXME make this a local variable in each function
 extern ULONG custom_pen_colours[24];
 extern ULONG visible;
 extern ULONG first;
@@ -1087,31 +1078,17 @@ extern fd_set read_fds;
 extern fd_set write_fds;
 extern int queued_messages_total;
 extern BOOL start_reconnect_delay_timer;
-extern char dcctimestamp[12];
 
 extern struct graphical_smilies_struct graphical_nicklist[3];
 extern char graphical_smiley_themes[10][100];
-extern struct MinList *list; // FIXME make this a local variable in each function
-extern APTR object_state; // FIXME make this a local variable in each function
-extern APTR member_object; // FIXME make this a local variable in each function
-extern LONG count3; // FIXME make this a local variable in each function
-extern LONG count4; // FIXME make this a local variable in each function
-extern BPTR newbptr_file; // FIXME make this a local variable in each function
 
 extern char string_to_send[BUFFERSIZE];
-extern char pingtimestamp[12];
-
-extern struct list_entry *new_entry; // FIXME make this a local variable in each function
 
 extern BOOL RECENTLY_CREATED_A_TAB;
-extern char timestamp_hrs[4];
-extern char timestamp_mins[4];
 extern struct ClockData *clockdata;
 extern char activity[64];
 extern char activity_chat[64];
 extern char activity_highlight[64];
-extern char pingtimestamp_mins[4];
-extern char pingtimestamp_secs[4];
 extern STRPTR text3;
 extern char *channel_display;
 extern char *NewPreParse_NewText;
@@ -1187,11 +1164,18 @@ extern int GEIT;
 extern int GEIT2;
 extern int GEIT3;
 extern int NEWDEBUG;
+
+extern char timestamp[12];
+extern char timestamp_hrs[4];
+extern char timestamp_mins[4];
+void timestamp_2_string();
+extern char pingtimestamp_mins[4];
+extern char pingtimestamp_secs[4];
+char * ping_time();
+char * dcc_time();
+
 struct timeval get_sys_time(struct timeval *tv);
-void timestamp_2_string(); // FIXME chang to return value instead of setting global variable
-void dcc_time(); // FIXME chang to return value instead of setting global variable
 void send_text(char*);
-void ping_time();
 void send_current(char*);
 void set_channel_clipboard_hook();
 
@@ -1338,6 +1322,8 @@ int ReplaceNicksWithVoiceOps(char *string1, char prefix, int option);
 int ChangeNick(char *oldnick, char *newnick, char *buffer3);
 void change_window_titlebar_text();
 void DisplayNicks();
+void nicklist_init();
+void nicklist_deinit();
 
 /* sortnicks.c */
 int sort_nicks(int);

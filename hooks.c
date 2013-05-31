@@ -781,7 +781,7 @@ static void Display_channellist_TextFunc(void)
 
     if(a_entry)
     {
-
+        char new_array[20];
         sprintf(new_array,"\033P[%ld]",custom_pen_colours[a_entry->colour]);
 
         strcpy(channellist_work,a_entry->entry);
@@ -1197,7 +1197,7 @@ static void DisplayLI2_channel_TextFunc(void)
 
             if(a_entry->colour >= 0 && a_entry->colour <= 23)
             {
-
+                char new_array[20];
                 sprintf(new_array,"\033P[%ld]",custom_pen_colours[a_entry->colour]);
 
                 if(strlen(new_array) == 5)
@@ -1333,6 +1333,7 @@ static void DisplayLI2_channel_TextFunc(void)
         }
         else
         {
+            char new_array[20];
             sprintf(new_array,"\033P[%ld]",custom_pen_colours[1]);
 
             if(strlen(new_array) == 5)
@@ -1413,61 +1414,55 @@ static void DisplayLI_channel_TextFunc(void)
 
     if(a_entry)
     {
-        /*if(a_entry==(void *)0x00000001) {
-        array[0]=""; return; }
-          */
-        //static char new_array[20];
-        //IExec->DebugPrintF("a_entry=%08lx\n",a_entry);
-
-            //copy a colour code to the start of our line, this will make our black and white
-            //text appear in colour. Theres a 10 character gap at the start of each Entry
-            //for us to put our colour code
-            if(a_entry->colour >= 0 && a_entry->colour <= 24)
-                sprintf(new_array,"\033P[%ld]",(LONG)custom_pen_colours[a_entry->colour]);
-            else
-                sprintf(new_array,"\033P[%ld]",custom_pen_colours[1]);
+        char new_array[20];
+        //copy a colour code to the start of our line, this will make our black and white
+        //text appear in colour. Theres a 10 character gap at the start of each Entry
+        //for us to put our colour code
+        if(a_entry->colour >= 0 && a_entry->colour <= 24)
+            sprintf(new_array,"\033P[%ld]",(LONG)custom_pen_colours[a_entry->colour]);
+        else
+            sprintf(new_array,"\033P[%ld]",custom_pen_colours[1]);
 
 
-            //lets pad out the blank space in our 10 character colour code
-            if(strlen(new_array) == 5)
-            {
-                new_array[4]=' ';
-                new_array[5]=' ';
-                new_array[6]=' ';
-                new_array[7]=' ';
-                new_array[8]=' ';
-                new_array[9]=']';
-                new_array[10]='\0';
+        //lets pad out the blank space in our 10 character colour code
+        if(strlen(new_array) == 5)
+        {
+            new_array[4]=' ';
+            new_array[5]=' ';
+            new_array[6]=' ';
+            new_array[7]=' ';
+            new_array[8]=' ';
+            new_array[9]=']';
+            new_array[10]='\0';
 
-            }
-            else if(strlen(new_array) == 6)
-            {
-                new_array[5]=' ';
-                new_array[6]=' ';
-                new_array[7]=' ';
-                new_array[8]=' ';
-                new_array[9]=']';
-                new_array[10]='\0';
-
-
-            }
-            else if(strlen(new_array) == 7)
-            {
-                new_array[6]=' ';
-                new_array[7]=' ';
-                new_array[8]=' ';
-                new_array[9]=']';
-                new_array[10]='\0';
-
-            }
+        }
+        else if(strlen(new_array) == 6)
+        {
+            new_array[5]=' ';
+            new_array[6]=' ';
+            new_array[7]=' ';
+            new_array[8]=' ';
+            new_array[9]=']';
+            new_array[10]='\0';
 
 
-            //put the new colour code over the start of our Entry
-            stccpy(a_entry->Display_entry,a_entry->entry,600);
-            strncpy(a_entry->Display_entry,new_array,strlen(new_array));
+        }
+        else if(strlen(new_array) == 7)
+        {
+            new_array[6]=' ';
+            new_array[7]=' ';
+            new_array[8]=' ';
+            new_array[9]=']';
+            new_array[10]='\0';
 
-            array[0]=(char*)a_entry->Display_entry;
+        }
 
+
+        //put the new colour code over the start of our Entry
+        stccpy(a_entry->Display_entry,a_entry->entry,600);
+        strncpy(a_entry->Display_entry,new_array,strlen(new_array));
+
+        array[0]=(char*)a_entry->Display_entry;
     }
     else array[0]=(char*)"";
 
@@ -1499,61 +1494,56 @@ static void Display_listviewtabs_TextFunc(void)
 
     if(a_entry)
     {
-        /*if(a_entry==(void *)0x00000001) {
-        array[0]=""; return; }
-          */
-        //static char new_array[20];
-        //IExec->DebugPrintF("a_entry=%08lx\n",a_entry);
+        char new_array[20];
 
-            //copy a colour code to the start of our line, this will make our black and white
-            //text appear in colour. Theres a 10 character gap at the start of each Entry
-            //for us to put our colour code
-            if(a_entry->colour >= 0 && a_entry->colour <= 24)
-                sprintf(new_array,"\033P[%ld]",(LONG)custom_pen_colours[a_entry->colour]);
-            else
-                sprintf(new_array,"\033P[%ld]",custom_pen_colours[1]);
+        //copy a colour code to the start of our line, this will make our black and white
+        //text appear in colour. Theres a 10 character gap at the start of each Entry
+        //for us to put our colour code
+        if(a_entry->colour >= 0 && a_entry->colour <= 24)
+            sprintf(new_array,"\033P[%ld]",(LONG)custom_pen_colours[a_entry->colour]);
+        else
+            sprintf(new_array,"\033P[%ld]",custom_pen_colours[1]);
 
 
-            //lets pad out the blank space in our 10 character colour code
-            if(strlen(new_array) == 5)
-            {
-                new_array[4]=' ';
-                new_array[5]=' ';
-                new_array[6]=' ';
-                new_array[7]=' ';
-                new_array[8]=' ';
-                new_array[9]=']';
-                new_array[10]='\0';
+        //lets pad out the blank space in our 10 character colour code
+        if(strlen(new_array) == 5)
+        {
+            new_array[4]=' ';
+            new_array[5]=' ';
+            new_array[6]=' ';
+            new_array[7]=' ';
+            new_array[8]=' ';
+            new_array[9]=']';
+            new_array[10]='\0';
 
-            }
-            else if(strlen(new_array) == 6)
-            {
-                new_array[5]=' ';
-                new_array[6]=' ';
-                new_array[7]=' ';
-                new_array[8]=' ';
-                new_array[9]=']';
-                new_array[10]='\0';
-
-
-            }
-            else if(strlen(new_array) == 7)
-            {
-                new_array[6]=' ';
-                new_array[7]=' ';
-                new_array[8]=' ';
-                new_array[9]=']';
-                new_array[10]='\0';
-
-            }
+        }
+        else if(strlen(new_array) == 6)
+        {
+            new_array[5]=' ';
+            new_array[6]=' ';
+            new_array[7]=' ';
+            new_array[8]=' ';
+            new_array[9]=']';
+            new_array[10]='\0';
 
 
-            //put the new colour code over the start of our Entry
-            stccpy(a_entry->Display_entry,a_entry->entry,600);
-            strncpy(a_entry->Display_entry,new_array,strlen(new_array));
+        }
+        else if(strlen(new_array) == 7)
+        {
+            new_array[6]=' ';
+            new_array[7]=' ';
+            new_array[8]=' ';
+            new_array[9]=']';
+            new_array[10]='\0';
 
-            array[0]=(char*)a_entry->Display_entry;
+        }
 
+
+        //put the new colour code over the start of our Entry
+        stccpy(a_entry->Display_entry,a_entry->entry,600);
+        strncpy(a_entry->Display_entry,new_array,strlen(new_array));
+
+        array[0]=(char*)a_entry->Display_entry;
     }
     else array[0]=(char*)"";
 
@@ -1590,6 +1580,7 @@ static void DisplayLI_tabs_TextFunc(void)
 
     if(a_entry)
     {
+        char new_array[20];
         if(a_entry->colour >= 0 && a_entry->colour <= 24)
             sprintf(new_array,"\033P[%ld]",(LONG)custom_pen_colours[a_entry->colour]);
         else

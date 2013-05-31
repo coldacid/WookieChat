@@ -18,6 +18,7 @@
 
 /* Locals */
 static char windowtitlestring[110];
+static struct list_entry *new_entry;
 
 void update_nicks_hostname(char *nick, char *hostname)
 {
@@ -495,81 +496,14 @@ int RemoveNick(char *string1)
 
 }
 
-/*int RemoveNick(char *string1)
- {
+void nicklist_init()
+{
+    new_entry = malloc(sizeof(struct list_entry));
+    new_entry->hostname = malloc(sizeof(char) * (HOSTNAME_STRING_SIZE + 1));
+}
 
- entries=status_conductor->conductor->nicks;
- unsigned int a=0;
-
- while(a < entries)
- {
- //printf("2: entries:%i a:%i\n",entries,a);
- DoMethod((Object*)status_conductor->conductor->LV_nicklist,MUIM_NList_GetEntry,a, &work_entry);
- if(work_entry)
- {
- if(!strcmp(work_entry->name, string1))
- {
- DoMethod((Object*)status_conductor->conductor->LV_nicklist,MUIM_NList_Remove,a);
- a=entries+1;
- }
- //a++;
- }
- else
- {
-
- //printf("work_entry is null, entries:%lu a:%i string1:%s\n",entries,a,string1);
- a=entries+1;
-
- }
- a++;
-
- }
-
- a=0;
-
- while(a < entries)
- {
- //printf("2: entries:%i a:%i\n",entries,a);
- if(string1 && status_conductor->conductor->nicklist[a].name)
- {
- if( strcmp(string1,status_conductor->conductor->nicklist[a].name) == 0 )
- {
- //printf("2nd level, a=%i\n",a);
-
- unsigned int b=a+1;
-
- while(a < entries)
- {
- strcpy(status_conductor->conductor->nicklist[a].name, status_conductor->conductor->nicklist[b].name);
- strcpy(status_conductor->conductor->nicklist[a].modes, status_conductor->conductor->nicklist[b].modes);
-
- if(status_conductor->conductor->nicklist[a].hostname && status_conductor->conductor->nicklist[b].hostname)
- {
- strncpy(status_conductor->conductor->nicklist[a].hostname, status_conductor->conductor->nicklist[b].hostname,HOSTNAME_STRING_SIZE-1);
- status_conductor->conductor->nicklist[a].hostname[HOSTNAME_STRING_SIZE]='\0';
- }
- a++; b++;
- }
- strcpy(status_conductor->conductor->nicklist[a].name,"");
- strcpy(status_conductor->conductor->nicklist[a].modes," ");
- if(status_conductor->conductor->nicklist[a].hostname)
- strcpy(status_conductor->conductor->nicklist[a].hostname,"");
-
-
- status_conductor->conductor->nicks--;
-
- change_window_titlebar_text();
-
- return 1;
- }
-
- }
- a++;
-
- }
-
- change_window_titlebar_text();
-
- return 0;
-
- } */
+void nicklist_deinit()
+{
+    free(new_entry->hostname);
+    free(new_entry);
+}

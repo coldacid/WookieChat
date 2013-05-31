@@ -217,7 +217,7 @@ LONG actual_read;
 
 void dcc_time_to_send(void)
 {
-
+    ULONG secs, mins, hrs, days;
     //add_text_to_current_list(buffer3, 9, ACTIVITY_CHAT);
     sprintf(buffer3, "%s%sDCC%s %s %s [%lu bytes] >> %s. ", timestamp, GCS(catalog, 217, "["),
             GCS(catalog, 218, "]"), GCS(catalog, 175, "Finished sending"),
@@ -259,7 +259,7 @@ void dcc_time_to_send(void)
 
 void dcc_time_to_recv(void)
 {
-
+    ULONG secs, mins, hrs, days;
     //add_text_to_current_list(buffer3, 9, ACTIVITY_CHAT);
 
     /*    if(dcc_conductor->filepath[strlen(dcc_conductor->filepath)-1] != '/' && dcc_conductor->filepath[strlen(dcc_conductor->filepath)-1] != ':')

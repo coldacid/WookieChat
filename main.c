@@ -46,6 +46,11 @@ int GEIT3 = 0;
 #include "objapp.h"
 #include "audio.h"
 
+char timestamp[12];
+char timestamp_hrs[4];
+char timestamp_mins[4];
+char pingtimestamp_mins[4];
+char pingtimestamp_secs[4];
 
 /* Locals */
 static int delay_b4_ping_server_count=0;
@@ -58,7 +63,6 @@ static char old_alias_entry[800];
 static char new_filename[1000];
 static char orig_filename[1000];
 static char filename[1000];
-static char timestamp_secs[4];
 static char *text;
 static char pingtimestamp_hrs[4];
 static ULONG mics;
@@ -479,6 +483,8 @@ void make_paste_pause_delay(void)
 }
 void timestamp_2_string()
 {
+    ULONG secs, mins, hrs, days;
+    char timestamp_secs[4];
     DoIO((struct IORequest *) TimerIO); // Get the results
 #ifdef __amigaos4__
             mics=TimerIO->tr_time.tv_usec; secs=TimerIO->tr_time.tv_sec;
@@ -547,8 +553,10 @@ void timestamp_2_string()
         strcpy(timestamp, "");
 }
 
-void ping_time()
+char * ping_time()
 {
+    ULONG secs, mins, hrs, days;
+    static char pingtimestamp[12];
     DoIO((struct IORequest *) TimerIO); // Get the results
 #ifdef __amigaos4__
             mics=TimerIO->tr_time.tv_usec; secs=TimerIO->tr_time.tv_sec;
@@ -575,18 +583,23 @@ void ping_time()
     else
         sprintf(pingtimestamp_secs, "%ld", secs);
     sprintf(pingtimestamp, "%s%s", pingtimestamp_mins, pingtimestamp_secs);
+
+    return pingtimestamp; /* Yes, return internal state */
 }
 
-void dcc_time()
+char * dcc_time()
 {
+    ULONG secs;
+    static char dcctimestamp[12];
     DoIO((struct IORequest *) TimerIO); // Get the results
 #ifdef __amigaos4__
-            mics=TimerIO->tr_time.tv_usec; secs=TimerIO->tr_time.tv_sec;
+    mics = TimerIO->tr_time.tv_usec; secs=TimerIO->tr_time.tv_sec;
 #else
     mics = TimerIO->tr_time.tv_micro;
     secs = TimerIO->tr_time.tv_secs;
 #endif
     sprintf(dcctimestamp, "%lu", secs);
+    return dcctimestamp; /* Yes, return internal state */
 }
 
 struct timeval get_sys_time(struct timeval *tv)
@@ -742,7 +755,7 @@ void read_list_of_servers(void)
     char *work1=malloc(sizeof(char) * 100);
     char *len2; //variable used for file access
     char work_buffer3[600];
-    newbptr_file = Open((_s_cs)"progdir:servers.txt",MODE_OLDFILE);
+    BPTR newbptr_file = Open((_s_cs)"progdir:servers.txt",MODE_OLDFILE);
 
     int running3=1;
     len2=(char*)FGets(newbptr_file,(STRPTR)work_buffer,600);
@@ -1562,7 +1575,7 @@ int main(int argc, char *argv[])
     char *work1 = malloc(sizeof(char) * 100);
     char *len2; //variable used for file access
 
-    newbptr_file = Open((_s_cs)"progdir:servers.txt", MODE_OLDFILE);
+    BPTR newbptr_file = Open((_s_cs)"progdir:servers.txt", MODE_OLDFILE);
     int running3 = 1;
 
     while (running3)
@@ -4039,7 +4052,7 @@ int main(int argc, char *argv[])
 
                         }
 
-                        for (count4 = 1; count4 <= preview_total_smileys && count4 <= MAXIMUM_SMILEYS; count4++)
+                        for (int count4 = 1; count4 <= preview_total_smileys && count4 <= MAXIMUM_SMILEYS; count4++)
                         {
                             sprintf(work_buffer, "\033o[%lu] ", count4);
 
@@ -4051,7 +4064,7 @@ int main(int argc, char *argv[])
 
                             centry->colour = 8;
 
-                            for (count3 = 0;
+                            for (int count3 = 0;
                                     count3 < preview_smilies[count4].ascii_total && count3 <= MAXIMUM_SMILEY_ASCII;
                                     count3++)
                             {
@@ -5058,7 +5071,7 @@ int main(int argc, char *argv[])
                             {
                                 if (dcc_conductor->entry)
                                 {
-
+                                    ULONG mins, hrs;
                                     //Amount Transferred
                                     if (dcc_conductor->total_recv > 0)
                                         sprintf(dcc_conductor->entry->bytes_transferred, "%lukB",
@@ -5076,9 +5089,8 @@ int main(int argc, char *argv[])
                                     sprintf(dcc_conductor->entry->percentage, "%.0f%%", (float) (pct * 100));
 
                                     //Speed
-                                    dcc_time();
                                     ULONG orig_time = atol(dcc_conductor->timestarted);
-                                    ULONG current_time = atol(dcctimestamp);
+                                    ULONG current_time = atol(dcc_time());
                                     current_time = current_time - orig_time;
                                     float cps;
                                     if (dcc_conductor->total_recv > 0 && current_time > 0)
@@ -5142,6 +5154,7 @@ int main(int argc, char *argv[])
                             {
                                 if (dcc_send_conductor->entry)
                                 {
+                                    ULONG mins, hrs;
                                     //Amount Transferred
                                     if (dcc_send_conductor->total_recv > 0)
                                         sprintf(dcc_send_conductor->entry->bytes_transferred, "%lukB",
@@ -5160,9 +5173,8 @@ int main(int argc, char *argv[])
                                     sprintf(dcc_send_conductor->entry->percentage, "%.0f%%", (float) (pct * 100));
 
                                     //Speed
-                                    dcc_time();
                                     ULONG orig_time = atol(dcc_send_conductor->timestarted);
-                                    ULONG current_time = atol(dcctimestamp);
+                                    ULONG current_time = atol(dcc_time());
                                     current_time = current_time - orig_time;
                                     //float cps = (float) dcc_send_conductor->total_recv / (float) current_time;
                                     float cps;
@@ -5390,15 +5402,8 @@ int main(int argc, char *argv[])
 #else
                     Amiga2Date(systime->tv_secs, clockdata);
 #endif
+                    timestamp_2_string();
 
-                    if (hrs < 10)
-                        sprintf(timestamp_hrs, "0%ld", hrs);
-                    else
-                        sprintf(timestamp_hrs, "%ld", hrs);
-                    if (mins < 10)
-                        sprintf(timestamp_mins, "0%ld", mins);
-                    else
-                        sprintf(timestamp_mins, "%ld", mins);
                     sprintf(buffer3, "%s%s%s%s * * %d-%d-%d * *", timestamp, GCS(catalog, 217, "["),
                             GCS(catalog, 344, "Info"), GCS(catalog, 218, "]"), clockdata->year,
                             clockdata->month, clockdata->mday); //,timestamp_hrs,timestamp_mins);

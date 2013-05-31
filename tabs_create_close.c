@@ -993,10 +993,11 @@ int create_new_status(int first)
                 {
                     if (DoMethod((Object*) status_current->current_query->GR_nicklist_and_tabs, MUIM_Group_InitChange))
                     {
-
+                        APTR member_object = NULL;
+                        struct MinList *list = NULL;
                         getmacro((Object*) status_current->current_query->GR_nicklist_and_tabs, MUIA_Group_ChildList,
                                 &list);
-                        object_state = list->mlh_Head;
+                        APTR object_state = list->mlh_Head;
                         while ((member_object = NextObject((Object**) &object_state)))
                         {
                             DoMethod((Object*) status_current->current_query->GR_nicklist_and_tabs, OM_REMMEMBER,
@@ -1121,6 +1122,8 @@ int create_new_status(int first)
 void give_each_tab_a_page_group_number()
 {
     BOOL is_our_reset_pointer_valid = TRUE;
+    APTR member_object = NULL;
+    struct MinList *list = NULL;
     if (status_conductor)
     {
         status_work = status_conductor;
@@ -1130,7 +1133,7 @@ void give_each_tab_a_page_group_number()
         is_our_reset_pointer_valid = FALSE;
 
     getmacro((Object*) GR_top, MUIA_Group_ChildList, &list);
-    object_state = list->mlh_Head;
+    APTR object_state = list->mlh_Head;
     int count = 0;
     while ((member_object = NextObject((Object**) &object_state)))
     {
@@ -1222,7 +1225,8 @@ struct query_window *query_previous, *query_next;
 
 void close_tab(void)
 {
-
+    APTR member_object = NULL;
+    struct MinList *list = NULL;
     status_conductor = status_current;
 
     status_conductor = status_current;
@@ -1349,7 +1353,7 @@ void close_tab(void)
             {
 
                 getmacro((Object*) status_conductor->conductor->GR_listviews, MUIA_Group_ChildList, &list);
-                object_state = list->mlh_Head;
+                APTR object_state = list->mlh_Head;
 
                 while ((member_object = NextObject((Object**) &object_state)))
                 {
@@ -1373,7 +1377,7 @@ void close_tab(void)
     //does this belong here?
 
     getmacro((Object*) GR_top, MUIA_Group_ChildList, &list);
-    object_state = list->mlh_Head;
+    APTR object_state = list->mlh_Head;
 
     while ((member_object = NextObject((Object**) &object_state)))
     {
