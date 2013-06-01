@@ -29,6 +29,23 @@ static char *string3;
 static char *string1;
 static char work_buffer[900];
 
+
+static int which_clipboard_style()
+{
+    if(my_settings.which_clipboard_style==COLUMNS)
+    {
+        if(DEBUG) printf("columns code used\n");
+        return 0;
+    }
+    else
+    {
+        if(DEBUG) printf("normal code used\n");
+        return 1;
+    }
+    return 1;
+}
+
+
 #ifdef __amigaos4__
 void Custom_Clipboard2_Func(REG(a0, struct Hook *hook),REG(a2, char **array),REG(a1, char *new_entry)) {
 #elif __MORPHOS__

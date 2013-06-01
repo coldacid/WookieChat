@@ -141,19 +141,3 @@ struct ClockData *clockdata2;
 BOOL is_chooser_window_open;
 struct DiskObject *dobj; //for the iconified icon
 struct MsgPort *arexx_quit_replyport;
-
-int which_clipboard_style()
-{
-    if(my_settings.which_clipboard_style==COLUMNS)
-    {
-        if(DEBUG) printf("columns code used\n");
-        return 0;
-    }
-    else
-    {
-        if(DEBUG) printf("normal code used\n");
-        return 1;
-    }
-    return 1;
-}
-

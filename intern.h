@@ -1109,11 +1109,6 @@ extern BOOL is_chooser_window_open;
 extern struct DiskObject *dobj;
 extern struct MsgPort *arexx_quit_replyport;
 
-int which_clipboard_style();
-
-
-
-
 /* arexx_hooks.c */
 #define MAX_AREXX_SCRIPTS 20
 extern TEXT maintask_basename[100];

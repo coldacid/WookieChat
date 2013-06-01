@@ -901,8 +901,6 @@ int main(int argc, char *argv[])
     }
 //
 
-    struct MUI_NList_TestPos_Result *last_clicked_res = malloc(sizeof(struct MUI_NList_TestPos_Result));
-
 #ifdef __amigaos4__
     struct MUI_EventHandlerNode ehnode;
     ehnode.ehn_Object = (Object*)WookieChat->WI_main;
