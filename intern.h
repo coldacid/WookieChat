@@ -1108,7 +1108,6 @@ extern struct ClockData *clockdata2;
 extern BOOL is_chooser_window_open;
 extern struct DiskObject *dobj;
 extern struct MsgPort *arexx_quit_replyport;
-extern struct MUI_NList_TestPos_Result *last_clicked_res;
 
 int which_clipboard_style();
 

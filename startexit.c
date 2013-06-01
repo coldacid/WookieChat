@@ -613,10 +613,6 @@ void cleanexit(char *str)
         //printf("13\n");
         if (GEIT)
             printf("11\n");
-
-        if (last_clicked_res)
-            free(last_clicked_res);
-        last_clicked_res = NULL;
     }
 
     if (WookieChat)

@@ -141,7 +141,6 @@ struct ClockData *clockdata2;
 BOOL is_chooser_window_open;
 struct DiskObject *dobj; //for the iconified icon
 struct MsgPort *arexx_quit_replyport;
-struct MUI_NList_TestPos_Result *last_clicked_res;
 
 int which_clipboard_style()
 {

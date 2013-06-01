@@ -3647,74 +3647,73 @@ int main(int argc, char *argv[])
             else if (result == 96) //double click in LV_channel. Lets see if its a URL we can visit!
             {
 // double click in LV_channel. Lets see if its a URL we can visit!
-
+                struct MUI_NList_TestPos_Result last_clicked_res;
                 DoMethod((Object*) status_current->current_query->LV_channel, MUIM_NList_TestPos, MUI_MAXMAX,
-                        MUI_MAXMAX, last_clicked_res);
-                if (last_clicked_res)
+                        MUI_MAXMAX, &last_clicked_res);
+
+                DoMethod((Object*) status_current->current_query->LV_channel, MUIM_NList_GetEntry,
+                        last_clicked_res.entry, &string1);
+
+                if (string1)
                 {
-                    DoMethod((Object*) status_current->current_query->LV_channel, MUIM_NList_GetEntry,
-                            last_clicked_res->entry, &string1);
+                    strcpy(work_buffer, string1);
+
+                    if (DEBUG)
+                        printf("double clicked buffer:%s\n", work_buffer);
+
+                    //strtok(work_buffer,"]:");
+                    //string1=strtok(NULL,"");
+                    //undo the above for old working double click code
+                    string1 = strtok(work_buffer, "");
 
                     if (string1)
+                        string1 = doubleclick_url_action(string1, last_clicked_res.char_number,
+                                last_clicked_res.column);
+                    if (string1)
                     {
-                        strcpy(work_buffer, string1);
-
-                        if (DEBUG)
-                            printf("double clicked buffer:%s\n", work_buffer);
-
-                        //strtok(work_buffer,"]:");
-                        //string1=strtok(NULL,"");
-                        //undo the above for old working double click code
-                        string1 = strtok(work_buffer, "");
-
-                        if (string1)
-                            string1 = doubleclick_url_action(string1, last_clicked_res->char_number,
-                                    last_clicked_res->column);
-                        if (string1)
+                        if (!strcmp(my_settings.browser, ""))
                         {
-                            if (!strcmp(my_settings.browser, ""))
-                            {
-                                sprintf(
-                                        buffer3,
-                                        "%s%s%s%s %s",
-                                        timestamp,
-                                        GCS(catalog, 217, "["),
-                                        GCS(catalog, 0, "Error"),
-                                        GCS(catalog, 218, "]"),
-                                        GCS(
-                                                catalog,
-                                                136,
-                                                "Please go to the \"Main Settings\" window, and choose a browser for WookieChat to open web sites with"));
+                            sprintf(
+                                    buffer3,
+                                    "%s%s%s%s %s",
+                                    timestamp,
+                                    GCS(catalog, 217, "["),
+                                    GCS(catalog, 0, "Error"),
+                                    GCS(catalog, 218, "]"),
+                                    GCS(
+                                            catalog,
+                                            136,
+                                            "Please go to the \"Main Settings\" window, and choose a browser for WookieChat to open web sites with"));
 
-                                status_conductor = status_current;
-                                status_conductor->conductor = status_conductor->current_query;
+                            status_conductor = status_current;
+                            status_conductor->conductor = status_conductor->current_query;
 
-                                add_text_to_conductor_list(buffer3, 9, ACTIVITY_CHAT);
+                            add_text_to_conductor_list(buffer3, 9, ACTIVITY_CHAT);
 
-                            }
-                            else
-                            {
+                        }
+                        else
+                        {
 
-                                if (DEBUG)
-                                    printf("end result, now visiting %s\n", string1);
+                            if (DEBUG)
+                                printf("end result, now visiting %s\n", string1);
 
-                                sprintf(file_name, "run >nil: %s \"%s\"", my_settings.browser, string1);
+                            sprintf(file_name, "run >nil: %s \"%s\"", my_settings.browser, string1);
 
 #ifdef __amigaos4__
-                                SystemTags((_s_cs)file_name,TAG_DONE);
+                            SystemTags((_s_cs)file_name,TAG_DONE);
 #else
-                                Execute((_s_cs)file_name, 0, 0);
+                            Execute((_s_cs)file_name, 0, 0);
 #endif
 
 //[13:20:14] <jahc> look at this picture of NeRP http://tinyurl.com/2d9z3a
 //[13:23:22] <spotUP> released some mins ago: http://www.os4depot.net/index.php?function=showfile&file=demo/music/planethively.lha
 
-                            }
                         }
-
                     }
 
                 }
+
+
 
 //
             }
