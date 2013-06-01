@@ -29,7 +29,6 @@ static char *string2;
 static char *string3;
 static char *string1;
 
-
 void setup_background_colours(void)
 {
     //return;
@@ -1012,31 +1011,6 @@ ULONG BetterString_HandleEvent(struct IClass *cl, Object *obj, struct MUIP_Handl
             {
 
 
-                        //this is a test to change tabs with ramiga + cursor left/right
-                        //.. it doesnt work yet!
-
-                        /*case CURSORLEFT:
-                            switch_between_tabs_with_keys2(LEFT);
-                            setmacro(current_query->BT_querybutton,MUIA_Selected,TRUE);
-                            return MUI_EventHandlerRC_Eat; //<- when we want to eat the event
-
-                            break;
-
-                        case CURSORRIGHT:
-                            switch_between_tabs_with_keys2(RIGHT);
-                            setmacro(current_query->BT_querybutton,MUIA_Selected,TRUE);
-                            return MUI_EventHandlerRC_Eat; //<- when we want to eat the event
-
-
-                            break;
-                         */
-
-                    /*char *tabwork_string; //original string gadget contents
-                    char *tabwork2_string; //text before cursor position
-                    char *tabwork3_string; //text after cursor position
-                    char *tabwork4_string; //nick text to complete
-                    char *tabwork5_string;*/
-
                     int length;
                     int typed_length;
                     int begin_tab;
@@ -1134,41 +1108,14 @@ ULONG BetterString_HandleEvent(struct IClass *cl, Object *obj, struct MUIP_Handl
                     return MUI_EventHandlerRC_Eat; //<- when we want to eat the event
                     break;
 
-                /*case CURSORUP:
-                    if(status_current->current_query->string_conductor)
-                    {
-
-                        if(status_current->current_query->string_conductor->previous)
-                        {
-                            status_current->current_query->string_conductor=status_current->current_query->string_conductor->previous;
-                            setmacro((Object*)WookieChat->STR_usertext,MUIA_String_Contents,status_current->current_query->string_conductor->buffer_history);
-
-                        }
-
-                    }
-                    nickcomp_state=0;
-                    return MUI_EventHandlerRC_Eat; //<- when we want to eat the event
-                    break;
-
-                case CURSORDOWN:
-                    if(status_current->current_query->string_conductor)
-                    {
-
-                        if(status_current->current_query->string_conductor->next)
-                        {
-                            status_current->current_query->string_conductor=status_current->current_query->string_conductor->next;
-                            setmacro((Object*)WookieChat->STR_usertext,MUIA_String_Contents,status_current->current_query->string_conductor->buffer_history);
-                        }
-                        else setmacro((Object*)WookieChat->STR_usertext,MUIA_String_Contents,"");
-
-                    }
-                    nickcomp_state=0;
-                    return MUI_EventHandlerRC_Eat; //<- when we want to eat the event
-                    break;
-                  */
-
                 case 0xC2: // TAB has been pressed, now do nick completion stuff
-
+                {
+                    char tabwork4_string[100];
+                    char tabwork5_string[100];
+                    char tabwork3_string[900]; //text after cursor position
+                    char tabwork2_string[900]; //text before cursor position
+                    char tabwork_string[900]; //original string gadget contents
+                    char * ptr;
                     /*tabwork_string //original string gadget contents
                     tabwork2_string  //text before cursor position
                     tabwork3_string  //text after cursor position
@@ -1177,9 +1124,10 @@ ULONG BetterString_HandleEvent(struct IClass *cl, Object *obj, struct MUIP_Handl
                      */
 
                     getmacro((Object*)WookieChat->STR_usertext,MUIA_String_BufferPos,&position);
-                    getmacro((Object*)WookieChat->STR_usertext,MUIA_String_Contents,&tabwork_string);
+                    getmacro((Object*)WookieChat->STR_usertext,MUIA_String_Contents,&ptr);
 
-                    length=strlen(tabwork_string);
+                    length=strlen(ptr);
+                    strncpy(tabwork_string, ptr, 900);
                     typed_length=0,a=position,b=0,c=0;
                     begin_tab=0;
                     found_nicks=0;
@@ -1354,7 +1302,7 @@ ULONG BetterString_HandleEvent(struct IClass *cl, Object *obj, struct MUIP_Handl
                     return MUI_EventHandlerRC_Eat; //<- when we want to eat the event
 
                     break;
-
+                }
                 case 0xC0:
                 case 0xC1:
                 case 0xC4:

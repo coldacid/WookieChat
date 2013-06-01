@@ -1099,14 +1099,6 @@ extern char listview_format[100];
 
 extern struct list_entry work_entry4;
 
-extern char *tabwork2_string;
-extern char *tabwork3_string;
-extern char *tabwork4_string;
-extern char *tabwork5_string;
-extern char *tabwork_string;
-extern struct ClockData *clockdata2;
-extern BOOL is_chooser_window_open;
-extern struct DiskObject *dobj;
 extern struct MsgPort *arexx_quit_replyport;
 
 /* arexx_hooks.c */
@@ -1372,6 +1364,7 @@ void load_nick_settings();
 
 
 /* startexit.c */
+extern struct DiskObject *dobj;
 extern struct NewMenu MenuData1[];
 void cleanexit(char*);
 void LoadAllLibs();

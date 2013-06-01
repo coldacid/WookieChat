@@ -132,12 +132,4 @@ char listview_format[100];
 
 struct list_entry work_entry4;
 
-char *tabwork2_string; //text before cursor position
-char *tabwork3_string; //text after cursor position
-char *tabwork4_string; //nick text to complete
-char *tabwork5_string; //completed nick text to insert
-char *tabwork_string; //original string gadget contents
-struct ClockData *clockdata2;
-BOOL is_chooser_window_open;
-struct DiskObject *dobj; //for the iconified icon
 struct MsgPort *arexx_quit_replyport;

@@ -139,6 +139,7 @@ BOOL TimerWait_Open(void)
     if (Timer4_WaitCheck)
     {
         struct timeval systime;
+        struct ClockData clockdata2;
         get_sys_time(&systime); // Get current system time
 #ifdef __amigaos4__
         Amiga2Date(systime.tv_sec, clockdata);
@@ -146,18 +147,18 @@ BOOL TimerWait_Open(void)
         Amiga2Date(systime.tv_secs, clockdata);
 #endif
         timestamp_2_string();
-        clockdata2->sec = 0;
-        clockdata2->min = 59;
-        clockdata2->hour = 23;
-        clockdata2->mday = clockdata->mday;
-        clockdata2->month = clockdata->month;
-        clockdata2->year = clockdata->year;
-        clockdata2->wday = clockdata->wday;
+        clockdata2.sec = 0;
+        clockdata2.min = 59;
+        clockdata2.hour = 23;
+        clockdata2.mday = clockdata->mday;
+        clockdata2.month = clockdata->month;
+        clockdata2.year = clockdata->year;
+        clockdata2.wday = clockdata->wday;
 #ifdef __amigaos4__
-        Timer4IO->tr_time.tv_sec = Date2Amiga(clockdata2)+60;
+        Timer4IO->tr_time.tv_sec = Date2Amiga(&clockdata2)+60;
         Timer4IO->tr_time.tv_usec = 100;
 #else
-        Timer4IO->tr_time.tv_secs = Date2Amiga(clockdata2) + 60;
+        Timer4IO->tr_time.tv_secs = Date2Amiga(&clockdata2) + 60;
         Timer4IO->tr_time.tv_micro = 100;
 #endif
         SendIO((struct IORequest *) Timer4IO); // Get the results

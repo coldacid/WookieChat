@@ -74,6 +74,7 @@ static char string7[900];
 static char *string1;
 static char buffer3[BUFFERSIZE*2];
 static char file_name[800];
+static BOOL is_chooser_window_open = FALSE;
 
 void copy_settings_to_undo_buffer()
 {
@@ -4536,16 +4537,22 @@ int main(int argc, char *argv[])
                     else if (result > GRAPHICAL_SMILEY_VALUES)
                     {
 // Insert a graphical smiley ascii into the chat entry string gadget
+                        char tabwork3_string[900]; //text after cursor position
+                        char tabwork2_string[900]; //text before cursor position
+                        char tabwork_string[900]; //original string gadget contents
+                        char * ptr;
                         int count = result - GRAPHICAL_SMILEY_VALUES;
 
                         setmacro((Object*)WookieChat->WI_graphical_smileys_choose, MUIA_Window_Open, FALSE);
                         is_chooser_window_open = FALSE;
 
                         getmacro((Object*)WookieChat->STR_usertext, MUIA_String_BufferPos, &position);
-                        getmacro((Object*)WookieChat->STR_usertext, MUIA_String_Contents, &tabwork_string);
+                        getmacro((Object*)WookieChat->STR_usertext, MUIA_String_Contents, &ptr);
 
                         int a = 0;
                         int b = 0;
+
+                        strncpy(tabwork_string, ptr, 900);
 
                         if (position != 0)
                         {

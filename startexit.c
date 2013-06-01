@@ -103,6 +103,8 @@ struct NewMenu MenuData1[] =
     { NM_END,NULL,0,0,0,(APTR)0 },
 };
 
+struct DiskObject *dobj; //for the iconified icon
+
 /* Locals */
 static char *string1;
 static char file_name[800];
@@ -123,11 +125,6 @@ void LoadAllLibs(void)
     nick2 = malloc(sizeof(char) * 30);
     nick3 = malloc(sizeof(char) * 30);
     nick = malloc(sizeof(char) * 30);
-    tabwork2_string = malloc(sizeof(char) * 900); //text before cursor position
-    tabwork3_string = malloc(sizeof(char) * 900); //text after cursor position
-    tabwork4_string = malloc(sizeof(char) * 100); //nick text to complete
-    tabwork5_string = malloc(sizeof(char) * 100); //completed nick text to insert
-    tabwork_string = malloc(sizeof(char) * 900); //original string gadget contents
 
     nicklist_init();
 
@@ -382,10 +379,7 @@ void LoadAllLibs(void)
 
     strcpy(sendstuff, "");
 
-    is_chooser_window_open = FALSE;
-
     clockdata = malloc(sizeof(struct ClockData));
-    clockdata2 = malloc(sizeof(struct ClockData));
 
     if ((slist = (struct SharedList*) AllocMem(sizeof(struct SharedList), MEMF_PUBLIC | MEMF_CLEAR)))
     {
@@ -875,7 +869,6 @@ void cleanexit(char *str)
     //printf("7\n");
 
     free(clockdata);
-    free(clockdata2);
 
     free(work_entry4.hostname);
     free(new_entry2.hostname);

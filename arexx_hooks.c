@@ -2181,7 +2181,6 @@ int AREXX_Task(void)
         MUIA_Application_Version, VERSION_MUI,
         MUIA_Application_Copyright, "James Carroll",
         MUIA_Application_Description, "IRC Client",
-        //MUIA_Application_DiskObject, dobj,
         MUIA_Application_UseRexx, TRUE,
         MUIA_Application_Commands, &commands,
     End;
