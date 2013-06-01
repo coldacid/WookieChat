@@ -1032,7 +1032,7 @@ ULONG BetterString_HandleEvent(struct IClass *cl, Object *obj, struct MUIP_Handl
                                 //strcpy(status_current->current_query->string_conductor->buffer_history,string123);
                                 strncpy(status_current->current_query->string_conductor->buffer_history,string123,800-1);
 
-                                work_history=status_current->current_query->string_conductor;
+                                struct history *work_history=status_current->current_query->string_conductor;
                                 status_current->current_query->string_conductor->next = malloc(sizeof(struct history));
                                 status_current->current_query->string_conductor=status_current->current_query->string_conductor->next;
                                 status_current->current_query->string_conductor->previous=work_history;
@@ -1049,7 +1049,7 @@ ULONG BetterString_HandleEvent(struct IClass *cl, Object *obj, struct MUIP_Handl
 
                             if(status_current->current_query->string_conductor->buffer_history[0] != '\0')
                             {
-                                work_history=status_current->current_query->string_conductor;
+                                struct history *work_history=status_current->current_query->string_conductor;
 
                                 setmacro((Object*)WookieChat->STR_usertext,MUIA_String_Contents,work_history->buffer_history);
                             }
@@ -1077,7 +1077,7 @@ ULONG BetterString_HandleEvent(struct IClass *cl, Object *obj, struct MUIP_Handl
                         }
                         else
                         {
-                            work_history=status_current->current_query->string_conductor->previous;
+                            struct history *work_history=status_current->current_query->string_conductor->previous;
 
                             if(work_history)
                             {

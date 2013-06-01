@@ -126,10 +126,6 @@ BPTR urlgrabber_file;
 char urlgrabber_str[2000];
 struct codeset *charsets[45];
 
-struct history *work_history;
-
 char listview_format[100];
-
-struct list_entry work_entry4;
 
 struct MsgPort *arexx_quit_replyport;

@@ -21,11 +21,14 @@ int sort_nicks(int a)
         unsigned int flipped;
         unsigned int indx = 1;
         unsigned int indx2 = 0;
+        struct list_entry work_entry4;
 
         entries = status_conductor->conductor->nicks;
 
         if (entries <= 1)
             return 0;
+
+        work_entry4.hostname = malloc(sizeof(char) * (HOSTNAME_STRING_SIZE + 1));
 
         //SORT EVERYTHING ALPHABETICALLY
         do
@@ -56,10 +59,12 @@ int sort_nicks(int a)
 
         } while ((++indx < entries) && flipped);
 
+        free(work_entry4.hostname);
     }
 
-    return 0;
 
+
+    return 0;
 }
 
 int num_nodes;

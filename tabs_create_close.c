@@ -1439,6 +1439,7 @@ void close_tab(void)
 
     if (status_conductor->current_query == status_conductor->root)
     {
+        struct history *work_history = NULL;
         if (DEBUG)
             printf("closing root tab\n");
 
@@ -1560,6 +1561,7 @@ void close_tab(void)
     }
     else //we want to close a tab, remove its entry in the linked list, and pretend it never existed!
     {
+        struct history *work_history = NULL;
 
         if (DEBUG)
             printf("closing regular tab\n");

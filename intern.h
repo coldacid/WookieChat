@@ -1093,11 +1093,7 @@ extern BPTR urlgrabber_file;
 extern char urlgrabber_str[2000];
 extern struct codeset *charsets[45];
 
-extern struct history *work_history;
-
 extern char listview_format[100];
-
-extern struct list_entry work_entry4;
 
 extern struct MsgPort *arexx_quit_replyport;
 

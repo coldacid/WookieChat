@@ -157,7 +157,7 @@ void process_outgoing(char *string123, int usestringgadget)
 
             strcpy(status_conductor->current_query->string_conductor->buffer_history, string123);
 
-            work_history = status_conductor->current_query->string_conductor;
+            struct history *work_history = status_conductor->current_query->string_conductor;
             status_conductor->current_query->string_conductor->next = malloc(sizeof(struct history));
             status_conductor->current_query->string_conductor = status_conductor->current_query->string_conductor->next;
             status_conductor->current_query->string_conductor->previous = work_history;

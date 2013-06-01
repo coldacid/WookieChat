@@ -128,8 +128,6 @@ void LoadAllLibs(void)
 
     nicklist_init();
 
-    work_entry4.hostname = malloc(sizeof(char) * (HOSTNAME_STRING_SIZE + 1));
-
     fdmax = -1;
 
     local_charset = 0;
@@ -712,6 +710,8 @@ void cleanexit(char *str)
                 work_query = status_conductor->conductor->next;
                 if (status_conductor->conductor)
                 {
+                    struct history * work_history = NULL;
+
                     if (status_conductor->conductor->log_file)
                     {
                         Close(status_conductor->conductor->log_file);
@@ -870,7 +870,6 @@ void cleanexit(char *str)
 
     free(clockdata);
 
-    free(work_entry4.hostname);
     free(new_entry2.hostname);
 
     nicklist_deinit();
