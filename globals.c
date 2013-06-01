@@ -121,7 +121,7 @@ char server[50];
 struct MsgPort *app_process_replyport;
 struct MsgPort *send_text_replyport;
 struct codeset *cs;
-struct SharedList *slist;
+
 BPTR urlgrabber_file;
 char urlgrabber_str[2000];
 struct codeset *charsets[45];

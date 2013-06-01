@@ -906,12 +906,6 @@ enum
     COLUMNS = 1, NORMAL
 };
 
-struct SharedList
-{
-    struct SignalSemaphore sl_Semaphore;
-    struct List sl_List;
-};
-
 enum
 {
     AMIRC_STYLE = 0, MIRC_STYLE
@@ -1088,13 +1082,13 @@ extern char server[50];
 extern struct MsgPort *app_process_replyport;
 extern struct MsgPort *send_text_replyport;
 extern struct codeset *cs;
-extern struct SharedList *slist;
+
+
+
 extern BPTR urlgrabber_file;
 extern char urlgrabber_str[2000];
 extern struct codeset *charsets[45];
-
 extern char listview_format[100];
-
 extern struct MsgPort *arexx_quit_replyport;
 
 /* arexx_hooks.c */
@@ -1178,6 +1172,7 @@ int add_text_to_current_list(char*, LONG, int);
 void process_incoming();
 void process_dcc_chat_incoming();
 char *doubleclick_url_action(char*, int, int);
+void pincoming_init();
 
 /* dcc.c */
 extern LONG recv_thing;

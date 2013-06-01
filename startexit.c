@@ -379,15 +379,7 @@ void LoadAllLibs(void)
 
     clockdata = malloc(sizeof(struct ClockData));
 
-    if ((slist = (struct SharedList*) AllocMem(sizeof(struct SharedList), MEMF_PUBLIC | MEMF_CLEAR)))
-    {
-        NewList(&slist->sl_List); // initialise the minlist
-        InitSemaphore((struct SignalSemaphore*) slist); //initialise the semaphore, it can now be used
-
-    }
-    else
-        printf("cant allocate memory for the semaphore structure\n");
-
+    pincoming_init();
 }
 
 void DisposeApp(struct ObjApp * MBObj)

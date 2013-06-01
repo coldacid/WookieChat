@@ -2170,11 +2170,7 @@ int AREXX_Task(void)
 
     AREXX_started=TRUE;
 
-    //APTR AREXX_App = AllocVec(sizeof(Object*), MEMF_PUBLIC|MEMF_CLEAR);
-    //printf("arexx 1\n");
-
     AREXX_App =(Object*) ApplicationObject,
-        //MUIA_Application_UsedClasses, classlist,
         MUIA_Application_Author, "James Carroll",
         MUIA_Application_Base, "WOOKIECHAT_AREXX",
         MUIA_Application_Title, "WookieChat AREXX",

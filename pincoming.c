@@ -13,6 +13,7 @@
    =================================================================== */
 #include "includes.h"
 
+#include <clib/alib_protos.h>
 #include <proto/codesets.h>
 
 #include "intern.h"
@@ -23,6 +24,13 @@
 struct list_entry new_entry2;
 
 /* Locals */
+
+struct SharedList
+{
+    struct SignalSemaphore sl_Semaphore;
+    struct List sl_List;
+};
+
 #define MAX_CLONE_FIELDS    25
 #define WORK_BUFFER_SIZE    800
 #define STRING_BUFFERSIZE   800
@@ -49,6 +57,7 @@ static char work_buffer[900];
 static char buffer2[BUFFERSIZE*2];
 static char buffer3[BUFFERSIZE*2];
 static char file_name[800];
+static struct SharedList slist;
 
 #ifdef __AROS__
 struct TagItem my_incoming_charset3_taglist[] =
@@ -484,7 +493,7 @@ int add_text_to_conductor_list(char *buffer1, LONG colour, int activitylevel)
 
     //struct channel_entry *centry=(struct channel_entry*) AllocMem(sizeof(struct channel_entry),MEMF_ANY);
 
-    ObtainSemaphore((struct SignalSemaphore*) slist);
+    ObtainSemaphore(&slist.sl_Semaphore);
 
 #ifdef __AROS__
     strcpy(centry->entry, "        :");
@@ -650,22 +659,22 @@ int add_text_to_conductor_list(char *buffer1, LONG colour, int activitylevel)
 
     if (!status_conductor)
     {
-        ReleaseSemaphore((struct SignalSemaphore*) slist);
+        ReleaseSemaphore(&slist.sl_Semaphore);
         return 0;
     }
     if (!status_conductor->GR_server1_buttons)
     {
-        ReleaseSemaphore((struct SignalSemaphore*) slist);
+        ReleaseSemaphore(&slist.sl_Semaphore);
         return 0;
     }
     if (!status_conductor->conductor)
     {
-        ReleaseSemaphore((struct SignalSemaphore*) slist);
+        ReleaseSemaphore(&slist.sl_Semaphore);
         return 0;
     }
     if (!status_conductor->conductor->LV_channel)
     {
-        ReleaseSemaphore((struct SignalSemaphore*) slist);
+        ReleaseSemaphore(&slist.sl_Semaphore);
         return 0;
     }
 
@@ -920,7 +929,7 @@ int add_text_to_conductor_list(char *buffer1, LONG colour, int activitylevel)
 #endif
     }
 
-    ReleaseSemaphore((struct SignalSemaphore*) slist);
+    ReleaseSemaphore(&slist.sl_Semaphore);
 
     return 0;
 
@@ -5401,4 +5410,10 @@ void process_dcc_chat_incoming()
 
     }
 
+}
+
+void pincoming_init()
+{
+    NewList(&slist.sl_List); // initialise the minlist
+    InitSemaphore(&slist.sl_Semaphore); //initialise the semaphore, it can now be used
 }
