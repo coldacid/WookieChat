@@ -143,19 +143,6 @@ struct DiskObject *dobj; //for the iconified icon
 struct MsgPort *arexx_quit_replyport;
 struct MUI_NList_TestPos_Result *last_clicked_res;
 
-struct timerequest *TimerIO;
-// second timer device variables for the 2 second delays
-struct MsgPort *Timer2MP;
-struct timerequest *Timer2IO;
-//check if its midnight yet, if it is then inform the user in all open tabs
-struct MsgPort *Timer4MP;
-struct timerequest *Timer4IO;
-// signal us when its time to send another line of our paste
-struct MsgPort *Timer5MP;
-struct timerequest *Timer5IO;
-ULONG timer_signal;
-LONG error;
-
 int which_clipboard_style()
 {
     if(my_settings.which_clipboard_style==COLUMNS)

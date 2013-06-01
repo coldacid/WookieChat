@@ -1110,17 +1110,6 @@ extern struct DiskObject *dobj;
 extern struct MsgPort *arexx_quit_replyport;
 extern struct MUI_NList_TestPos_Result *last_clicked_res;
 
-extern struct timerequest *TimerIO;
-extern struct MsgPort *Timer2MP;
-extern struct timerequest *Timer2IO;
-extern struct MsgPort *Timer4MP;
-extern struct timerequest *Timer4IO;
-extern struct MsgPort *Timer5MP;
-extern struct timerequest *Timer5IO;
-extern ULONG timer_signal;
-extern LONG error;
-
-
 int which_clipboard_style();
 
 
@@ -1157,16 +1146,6 @@ extern BOOL USE_AREXX;
 extern BOOL USING_A_PROXY;
 extern BOOL PRO_CHARSETS_ENABLED;
 
-extern char timestamp[12];
-extern char timestamp_hrs[4];
-extern char timestamp_mins[4];
-void timestamp_2_string();
-extern char pingtimestamp_mins[4];
-extern char pingtimestamp_secs[4];
-char * ping_time();
-char * dcc_time();
-
-struct timeval get_sys_time(struct timeval *tv);
 void send_text(char*);
 void send_current(char*);
 void set_channel_clipboard_hook();
@@ -1404,8 +1383,24 @@ void cleanexit(char*);
 void LoadAllLibs();
 
 /* timers.c */
+extern ULONG timer_signal;
+extern char timestamp[12];
+extern char timestamp_hrs[4];
+extern char timestamp_mins[4];
+void timestamp_2_string();
+extern char pingtimestamp_mins[4];
+extern char pingtimestamp_secs[4];
+char * ping_time();
+char * dcc_time();
+struct timeval get_sys_time(struct timeval *tv);
 BOOL TimerWait_Close();
 BOOL TimerWait_Open();
+void init_2s_delay();
+struct Message * getmsg_2s_delay();
+void init_paste_pause_delay();
+struct Message * getmsg_paste_pause_delay();
+void init_midnight_wait();
+struct Message * getmsg_midnight_wait();
 
 /* do_waitselect_code.c */
 int do_waitselect_code();

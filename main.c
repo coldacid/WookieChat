@@ -49,12 +49,6 @@ BOOL USE_AREXX              = FALSE;
 BOOL USING_A_PROXY          = FALSE;
 BOOL PRO_CHARSETS_ENABLED   = FALSE;
 
-char timestamp[12];
-char timestamp_hrs[4];
-char timestamp_mins[4];
-char pingtimestamp_mins[4];
-char pingtimestamp_secs[4];
-
 /* Locals */
 static int delay_b4_ping_server_count=0;
 static ULONG arexx_wants_to_send_signal;
@@ -67,8 +61,6 @@ static char new_filename[1000];
 static char orig_filename[1000];
 static char filename[1000];
 static char *text;
-static char pingtimestamp_hrs[4];
-static ULONG mics;
 static char wookie_dir[400]; //the pathname wookiechat is located in
 static ULONG iconified_and_new_text;
 static char string11[900];
@@ -426,164 +418,6 @@ void send_current(char *text2)
         printf("no connection\n");
 }
 
-void make_paste_pause_delay(void)
-{
-
-    if (CheckIO((struct IORequest *) Timer5IO))
-    {
-        struct timeval *systime;
-        get_sys_time(systime); // Get current system time
-        Timer5IO->tr_node.io_Command = TR_ADDREQUEST;
-
-#ifdef __amigaos4__
-        Timer5IO->tr_time.tv_sec = systime.tv_sec+my_settings.paste_delay_seconds; //QUEUED_MESSAGES_DELAY_IN_SECONDS;
-        Timer5IO->tr_time.tv_usec = systime.tv_usec+my_settings.paste_delay_microseconds;//QUEUED_MESSAGES_DELAY_IN_MICROSECONDS;
-#else
-        Timer5IO->tr_time.tv_secs = systime->tv_secs + my_settings.paste_delay_seconds; //QUEUED_MESSAGES_DELAY_IN_SECONDS;
-        Timer5IO->tr_time.tv_micro = systime->tv_micro + my_settings.paste_delay_microseconds; //QUEUED_MESSAGES_DELAY_IN_MICROSECONDS;
-#endif
-
-        SendIO((struct IORequest *) Timer5IO); // signal us when its time to send another line of our paste
-    }
-}
-void timestamp_2_string()
-{
-    ULONG secs, mins, hrs, days;
-    char timestamp_secs[4];
-    DoIO((struct IORequest *) TimerIO); // Get the results
-#ifdef __amigaos4__
-            mics=TimerIO->tr_time.tv_usec; secs=TimerIO->tr_time.tv_sec;
-#else
-    mics = TimerIO->tr_time.tv_micro;
-    secs = TimerIO->tr_time.tv_secs;
-#endif
-    mins = secs / 60;
-    hrs = mins / 60;
-    days = hrs / 24;
-    secs = secs % 60;
-    mins = mins % 60;
-    hrs = hrs % 24; // Compute days, hours, etc.
-    if (hrs < 10)
-        sprintf(timestamp_hrs, "0%ld", hrs);
-    else
-        sprintf(timestamp_hrs, "%ld", hrs);
-    if (mins < 10)
-        sprintf(timestamp_mins, "0%ld", mins);
-    else
-        sprintf(timestamp_mins, "%ld", mins);
-    if (secs < 10)
-        sprintf(timestamp_secs, "0%ld", secs);
-    else
-        sprintf(timestamp_secs, "%ld", secs);
-
-    if (my_settings.timestamp_config)
-    {
-        int a = 0;
-        int b = 0;
-
-        memset(timestamp, '\0', 12);
-
-        while (my_settings.time_stamp_string[a] != '\0')
-        {
-            if (my_settings.time_stamp_string[a] == '%')
-            {
-                a++;
-                if (my_settings.time_stamp_string[a] == 'h' || my_settings.time_stamp_string[a] == 'H')
-                    strcat(timestamp, timestamp_hrs);
-
-                else if (my_settings.time_stamp_string[a] == 'm' || my_settings.time_stamp_string[a] == 'M')
-                    strcat(timestamp, timestamp_mins);
-
-                else if (my_settings.time_stamp_string[a] == 's' || my_settings.time_stamp_string[a] == 'S')
-                    strcat(timestamp, timestamp_secs);
-
-                b++;
-
-            }
-            else
-            {
-                timestamp[b] = my_settings.time_stamp_string[a];
-            }
-
-            a++;
-            b++;
-        }
-
-        timestamp[b] = ' ';
-        b++;
-        timestamp[b] = '\0';
-
-    }
-    else
-        strcpy(timestamp, "");
-}
-
-char * ping_time()
-{
-    ULONG secs, mins, hrs, days;
-    static char pingtimestamp[12];
-    DoIO((struct IORequest *) TimerIO); // Get the results
-#ifdef __amigaos4__
-            mics=TimerIO->tr_time.tv_usec; secs=TimerIO->tr_time.tv_sec;
-#else
-    mics = TimerIO->tr_time.tv_micro;
-    secs = TimerIO->tr_time.tv_secs;
-#endif
-    mins = secs / 60;
-    hrs = mins / 60;
-    days = hrs / 24;
-    secs = secs % 60;
-    mins = mins % 60;
-    hrs = hrs % 24; // Compute days, hours, etc
-    if (hrs < 10)
-        sprintf(pingtimestamp_hrs, "0%ld", hrs);
-    else
-        sprintf(pingtimestamp_hrs, "%ld", hrs);
-    if (mins < 10)
-        sprintf(pingtimestamp_mins, "0%ld", mins);
-    else
-        sprintf(pingtimestamp_mins, "%ld", mins);
-    if (secs < 10)
-        sprintf(pingtimestamp_secs, "0%ld", secs);
-    else
-        sprintf(pingtimestamp_secs, "%ld", secs);
-    sprintf(pingtimestamp, "%s%s", pingtimestamp_mins, pingtimestamp_secs);
-
-    return pingtimestamp; /* Yes, return internal state */
-}
-
-char * dcc_time()
-{
-    ULONG secs;
-    static char dcctimestamp[12];
-    DoIO((struct IORequest *) TimerIO); // Get the results
-#ifdef __amigaos4__
-    mics = TimerIO->tr_time.tv_usec; secs=TimerIO->tr_time.tv_sec;
-#else
-    mics = TimerIO->tr_time.tv_micro;
-    secs = TimerIO->tr_time.tv_secs;
-#endif
-    sprintf(dcctimestamp, "%lu", secs);
-    return dcctimestamp; /* Yes, return internal state */
-}
-
-struct timeval get_sys_time(struct timeval *tv)
-{
-
-    DoIO((struct IORequest *) TimerIO); // Get the results
-#ifdef __amigaos4__
-    tv->tv_sec=TimerIO->tr_time.tv_sec;
-    tv->tv_usec=TimerIO->tr_time.tv_usec;
-
-#else
-    tv->tv_secs = TimerIO->tr_time.tv_secs;
-    tv->tv_micro = TimerIO->tr_time.tv_micro;
-#endif
-
-    return *tv;
-
-}
-
 struct WBStartup *WBenchMsg;
 struct WBArg *wbarg;
 
@@ -708,8 +542,6 @@ void set_channel_clipboard_hook(void)
     }
 
 }
-
-BOOL open_timers();
 
 void read_list_of_servers(void)
 {
@@ -1916,7 +1748,7 @@ int main(int argc, char *argv[])
                 setmacro((Object*)WookieChat->STR_usertext, MUIA_String_Contents, "");
                 setmacro((Object*)WookieChat->WI_main, MUIA_Window_ActiveObject, (Object*)WookieChat->STR_usertext);
                 if (queued_messages_total > 0)
-                    make_paste_pause_delay();
+                    init_paste_pause_delay();
 
 //
             }
@@ -5025,7 +4857,7 @@ int main(int argc, char *argv[])
                     struct timeval systime;
 // Update the dcc transfers window entries every 2 seconds!
 
-                    while (GetMsg(Timer2MP))
+                    while (getmsg_2s_delay())
                     {
 
                         dcc_conductor = dcc_root->next;
@@ -5203,18 +5035,7 @@ int main(int argc, char *argv[])
                             dcc_send_conductor = dcc_send_conductor->next;
                         }
 
-                        // Get current system then wait 2 seconds before signalling again
-                        get_sys_time(&systime);
-
-#ifdef __amigaos4__
-                        Timer2IO->tr_time.tv_sec = systime.tv_sec+2;
-                        Timer2IO->tr_time.tv_usec = systime.tv_usec;
-#else
-                        Timer2IO->tr_time.tv_secs = systime.tv_secs + 2;
-                        Timer2IO->tr_time.tv_micro = systime.tv_micro;
-#endif
-
-                        SendIO((struct IORequest *) Timer2IO);
+                        init_2s_delay();
 
                         //to detect if our connection has been lost, we will ping the server every few minutes
                         delay_b4_ping_server_count++;
@@ -5306,7 +5127,7 @@ int main(int argc, char *argv[])
                 timestamp_2_string();
 
                 //process the queued messages, send one out every second.
-                if (GetMsg(Timer5MP))
+                if (getmsg_paste_pause_delay())
                 {
                     for (status_conductor = status_root; status_conductor; status_conductor = status_conductor->next)
                     {
@@ -5358,10 +5179,10 @@ int main(int argc, char *argv[])
                     status_conductor->conductor = status_conductor->root;
 
                     if (queued_messages_total > 0)
-                        make_paste_pause_delay();
+                        init_paste_pause_delay();
 
                 }
-                if (GetMsg(Timer4MP))
+                if (getmsg_midnight_wait())
                 {
                     struct timeval systime;
                     get_sys_time(&systime); // Get current system time
@@ -5391,22 +5212,7 @@ int main(int argc, char *argv[])
                     status_conductor = status_current;
                     status_conductor->conductor = status_conductor->root;
 
-                    get_sys_time(&systime); // Get current system time
-#ifdef __amigaos4__
-                    Amiga2Date(systime.tv_sec, clockdata);
-#else
-                    Amiga2Date(systime.tv_secs, clockdata);
-#endif
-
-#ifdef __amigaos4__
-                    Timer4IO->tr_time.tv_sec = systime.tv_sec+(60*60*24);
-                    Timer4IO->tr_time.tv_usec = 0;
-#else
-                    Timer4IO->tr_time.tv_secs = systime.tv_secs + (60 * 60 * 24);
-                    Timer4IO->tr_time.tv_micro = 0;
-#endif
-                    SendIO((struct IORequest *) Timer4IO); // Get the results
-
+                    init_midnight_wait();
                 }
 
                 if (select_result > 0)
