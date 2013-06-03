@@ -5189,17 +5189,18 @@ int main(int argc, char *argv[])
                 if (getmsg_midnight_wait())
                 {
                     struct timeval systime;
+                    struct ClockData clockdata;
                     get_sys_time(&systime); // Get current system time
 #ifdef __amigaos4__
-                    Amiga2Date(systime.tv_sec, clockdata);
+                    Amiga2Date(systime.tv_sec, &clockdata);
 #else
-                    Amiga2Date(systime.tv_secs, clockdata);
+                    Amiga2Date(systime.tv_secs, &clockdata);
 #endif
                     timestamp_2_string();
 
                     sprintf(buffer3, "%s%s%s%s * * %d-%d-%d * *", timestamp, GCS(catalog, 217, "["),
-                            GCS(catalog, 344, "Info"), GCS(catalog, 218, "]"), clockdata->year,
-                            clockdata->month, clockdata->mday); //,timestamp_hrs,timestamp_mins);
+                            GCS(catalog, 344, "Info"), GCS(catalog, 218, "]"), clockdata.year,
+                            clockdata.month, clockdata.mday); //,timestamp_hrs,timestamp_mins);
 
                     for (status_conductor = status_root; status_conductor; status_conductor = status_conductor->next)
                     {

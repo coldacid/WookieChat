@@ -58,6 +58,11 @@ static char buffer2[BUFFERSIZE*2];
 static char buffer3[BUFFERSIZE*2];
 static char file_name[800];
 static struct SharedList slist;
+static char NewPreParse_NewText[100];
+static char channel_display[100];
+static char activity[64];
+static char activity_chat[64];
+static char activity_highlight[64];
 
 #ifdef __AROS__
 struct TagItem my_incoming_charset3_taglist[] =
@@ -861,18 +866,19 @@ int add_text_to_conductor_list(char *buffer1, LONG colour, int activitylevel)
         {
             char buffer_text[800];
             struct timeval systime;
+            struct ClockData clockdata;
             //get the date and current time for logging stamps and renaming
             get_sys_time(&systime); // Get current system time
 #ifdef __amigaos4__
-            Amiga2Date(systime.tv_sec, clockdata);
+            Amiga2Date(systime.tv_sec, &clockdata);
 #else
-            Amiga2Date(systime.tv_secs, clockdata);
+            Amiga2Date(systime.tv_secs, &clockdata);
 #endif
 
             timestamp_2_string();
 
             sprintf(buffer_text, "* * %s %d-%d-%d, at %s:%s * *", GCS(catalog, 156, "Logging started at"),
-                    clockdata->year, clockdata->month, clockdata->mday, timestamp_hrs, timestamp_mins);
+                    clockdata.year, clockdata.month, clockdata.mday, timestamp_hrs, timestamp_mins);
 
             //if the filesize is over our max logfile size, lets rename it and create a new logfile!
             //but only do this if the user has configured wookie to do it
@@ -884,7 +890,7 @@ int add_text_to_conductor_list(char *buffer1, LONG colour, int activitylevel)
                 {
                     if (a_fib.fib_Size > (ULONG) my_settings.max_log_size * 1024)
                     {
-                        sprintf(string7, "%s_%d-%d-%d", file_name, clockdata->year, clockdata->month, clockdata->mday);
+                        sprintf(string7, "%s_%d-%d-%d", file_name, clockdata.year, clockdata.month, clockdata.mday);
                         Rename((_s_cs)file_name, (_s_cs)string7);
                         Close(status_conductor->conductor->log_file);
                         status_conductor->conductor->log_file = Open((_s_cs)file_name, MODE_READWRITE);
@@ -1094,7 +1100,7 @@ void process_incoming()
     char * pch = strstr(status_conductor->str, "\r\n");
     if (pch)
     {
-
+        STRPTR text3 = NULL;
         /* make the default colour the "normal" text pen */
 
         colour = 8;
@@ -1322,7 +1328,7 @@ void process_incoming()
         }
         else if (!strcmp(incoming_2, "001"))
         {
-
+            char server[50];
             //status_conductor->quit_requested=FALSE;
 
             int a = 0;
@@ -4681,6 +4687,7 @@ void process_incoming()
                         && string10[strlen(string10) - 1] == '\001')
                 {
                     struct timeval systime;
+                    struct ClockData clockdata;
                     if (strcspn(string9, status_conductor->chantypes) == 0)
                         sprintf(buffer3, "%s%sCTCP%s CTCP TIME %s %s %s", timestamp, GCS(catalog, 217, "["),
                                 GCS(catalog, 218, "]"), string9, GCS(catalog, 210, "from"),
@@ -4691,15 +4698,15 @@ void process_incoming()
 
                     get_sys_time(&systime); // Get current system time
 #ifdef __amigaos4__
-                    Amiga2Date(systime.tv_sec, clockdata);
+                    Amiga2Date(systime.tv_sec, &clockdata);
 #else
-                    Amiga2Date(systime.tv_secs, clockdata);
+                    Amiga2Date(systime.tv_secs, &clockdata);
 #endif
 
                     timestamp_2_string();
 
                     char month[10];
-                    switch (clockdata->month)
+                    switch (clockdata.month)
                     {
                     case 1:
                         strcpy(month, "Jan");
@@ -4740,8 +4747,8 @@ void process_incoming()
 
                     }
 
-                    sprintf(sendstuff, "NOTICE %s :\001TIME %d-%s-%d %s:%s\001\r\n", string7, clockdata->mday, month,
-                            clockdata->year, timestamp_hrs, timestamp_mins);
+                    sprintf(sendstuff, "NOTICE %s :\001TIME %d-%s-%d %s:%s\001\r\n", string7, clockdata.mday, month,
+                            clockdata.year, timestamp_hrs, timestamp_mins);
 
                     colour = 6;
 
@@ -5410,6 +5417,16 @@ void process_dcc_chat_incoming()
 
     }
 
+}
+
+void set_activity(const char * act, const char * actchat, const char * acthlight)
+{
+    memset(activity,'\0',63); strcpy(activity," "); strcat(activity, act);
+    activity[0]='2'; activity[1]=':';
+    memset(activity_chat,'\0',63); strcpy(activity_chat," "); strcat(activity_chat, actchat);
+    activity_chat[0]='2'; activity_chat[1]=':';
+    memset(activity_highlight,'\0',63); strcpy(activity_highlight," "); strcat(activity_highlight, acthlight);
+    activity_highlight[0]='2'; activity_highlight[1]=':';
 }
 
 void pincoming_init()

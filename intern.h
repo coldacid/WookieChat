@@ -1071,25 +1071,18 @@ extern char graphical_smiley_themes[10][100];
 
 extern char string_to_send[BUFFERSIZE];
 
-extern struct ClockData *clockdata;
-extern char activity[64];
-extern char activity_chat[64];
-extern char activity_highlight[64];
-extern STRPTR text3;
-extern char *channel_display;
-extern char *NewPreParse_NewText;
-extern char server[50];
-extern struct MsgPort *app_process_replyport;
-extern struct MsgPort *send_text_replyport;
+
+
+
+
 extern struct codeset *cs;
-
-
-
 extern BPTR urlgrabber_file;
 extern char urlgrabber_str[2000];
 extern struct codeset *charsets[45];
 extern char listview_format[100];
 extern struct MsgPort *arexx_quit_replyport;
+extern struct MsgPort *app_process_replyport;
+extern struct MsgPort *send_text_replyport;
 
 /* arexx_hooks.c */
 #define MAX_AREXX_SCRIPTS 20
@@ -1172,6 +1165,7 @@ int add_text_to_current_list(char*, LONG, int);
 void process_incoming();
 void process_dcc_chat_incoming();
 char *doubleclick_url_action(char*, int, int);
+void set_activity(const char * act, const char * actchat, const char * acthightlight);
 void pincoming_init();
 
 /* dcc.c */

@@ -142,12 +142,8 @@ void setup_background_colours(void)
 
     //if(GEIT) printf("setup_background_colours() 5\n");
 
-    memset(activity,'\0',63); strcpy(activity," "); strcat(activity,pendisplay_specs[19]->buf);
-    activity[0]='2'; activity[1]=':';
-    memset(activity_chat,'\0',63); strcpy(activity_chat," "); strcat(activity_chat,pendisplay_specs[20]->buf);
-    activity_chat[0]='2'; activity_chat[1]=':';
-    memset(activity_highlight,'\0',63); strcpy(activity_highlight," "); strcat(activity_highlight,pendisplay_specs[21]->buf);
-    activity_highlight[0]='2'; activity_highlight[1]=':';
+    set_activity(pendisplay_specs[19]->buf, pendisplay_specs[20]->buf, pendisplay_specs[21]->buf);
+
     //if(GEIT) printf("setup_background_colours() 6\n");
 
 

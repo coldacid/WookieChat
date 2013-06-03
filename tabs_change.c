@@ -137,37 +137,6 @@ void check_if_at_bottom()
         else
             status_current->current_query->jump_to_bottom = FALSE;
     }
-
-    /*else
-     {
-     DoMethod((Object*)status_current->current_query->LV_channel,MUIM_NList_InsertSingleWrap,centry,MUIV_NList_Insert_Bottom,WRAPCOL0,ALIGN_LEFT);
-     DoMethod((Object*)status_current->current_query->LV_channel, MUIM_NList_Jump, MUIV_NList_Jump_Bottom);
-
-     } */
-
-    /*
-     getmacro((Object*)switchboard_conductor->gui->LV_chat,MUIA_NList_Visible, &visible);
-
-     if(visible > 0)
-     {
-     getmacro((Object*)switchboard_conductor->gui->LV_chat,MUIA_NList_Entries, &entries);
-     getmacro((Object*)switchboard_conductor->gui->LV_chat,MUIA_NList_First, &first);
-     //DoMethod((Object*)switchboard_conductor->gui->LV_chat,MUIM_NList_InsertSingleWrap,work_buffer2,MUIV_NList_Insert_Bottom,WRAPCOL0,ALIGN_LEFT);
-     if(!text3) DoMethod((Object*)switchboard_conductor->gui->LV_chat,MUIM_NList_InsertSingleWrap,work_buffer2,MUIV_NList_Insert_Bottom,WRAPCOL0,ALIGN_LEFT);
-     else DoMethod((Object*)switchboard_conductor->gui->LV_chat,MUIM_NList_InsertSingleWrap,text3,MUIV_NList_Insert_Bottom,WRAPCOL0,ALIGN_LEFT);
-     if ((first + visible) >= (entries - 1))
-     DoMethod((Object*)switchboard_conductor->gui->LV_chat, MUIM_NList_Jump, MUIV_NList_Jump_Bottom);
-
-     }
-     else
-     {
-     //DoMethod((Object*)switchboard_conductor->gui->LV_chat,MUIM_NList_InsertSingleWrap,work_buffer2,MUIV_NList_Insert_Bottom,WRAPCOL0,ALIGN_LEFT);
-     if(!text3) DoMethod((Object*)switchboard_conductor->gui->LV_chat,MUIM_NList_InsertSingleWrap,work_buffer2,MUIV_NList_Insert_Bottom,WRAPCOL0,ALIGN_LEFT);
-     else DoMethod((Object*)switchboard_conductor->gui->LV_chat,MUIM_NList_InsertSingleWrap,text3,MUIV_NList_Insert_Bottom,WRAPCOL0,ALIGN_LEFT);
-     DoMethod((Object*)switchboard_conductor->gui->LV_chat,MUIM_NList_Jump, MUIV_NList_Jump_Bottom);
-
-     }*/
-
 }
 
 //trying to fix geit crashes
@@ -181,15 +150,6 @@ void add_tabs_to_nicklist_group()
             return;
 
         setmacro((Object*) status_conductor->conductor->GR_tabs, MUIA_Weight, my_settings.listview_tabs_weight);
-
-        /*setmacro((Object*)status_conductor->conductor->GR_tabs, MUIA_Width, my_settings.nicklist_horizontal_weight);
-         setmacro((Object*)status_conductor->conductor->GR_nicklist_and_tabs, MUIA_Width, my_settings.nicklist_horizontal_weight);
-         setmacro((Object*)status_conductor->conductor->GR_nicklist_and_tabs, MUIA_MaxWidth, my_settings.nicklist_horizontal_weight);
-         setmacro((Object*)status_conductor->conductor->LV_nicklist, MUIA_Width, my_settings.nicklist_horizontal_weight);
-         setmacro((Object*)status_conductor->conductor->LV_nicklist, MUIA_MaxWidth, my_settings.nicklist_horizontal_weight);
-         setmacro((Object*)WookieChat->LV_tabs, MUIA_Width, my_settings.nicklist_horizontal_weight);
-         setmacro((Object*)WookieChat->LV_tabs, MUIA_MaxWidth, my_settings.nicklist_horizontal_weight);
-         */
 
         if (1)
         {

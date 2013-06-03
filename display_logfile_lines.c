@@ -127,6 +127,9 @@ int display_last_few_lines_of_logfile_conductor()
         if (char_read_storage == '\n')
         {
             char new_array[20];
+#ifndef __AROS__
+            STRPTR text3 = NULL;
+#endif
             count++;
             buffer_text[a] = '\0';
             a = -1;

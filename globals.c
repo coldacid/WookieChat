@@ -110,14 +110,10 @@ char graphical_smiley_themes[10][100];
 
 char string_to_send[BUFFERSIZE];
 
-struct ClockData *clockdata;
-char activity[64];
-char activity_chat[64];
-char activity_highlight[64];
-STRPTR text3;
-char *channel_display;
-char *NewPreParse_NewText;
-char server[50];
+
+
+
+
 struct MsgPort *app_process_replyport;
 struct MsgPort *send_text_replyport;
 struct codeset *cs;

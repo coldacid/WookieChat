@@ -120,8 +120,6 @@ void LoadAllLibs(void)
     find = malloc(sizeof(struct dcc_entry));
     centry = malloc(sizeof(struct channel_entry));
 
-    channel_display = malloc(sizeof(char) * 100);
-    NewPreParse_NewText = malloc(sizeof(char) * 100);
     nick2 = malloc(sizeof(char) * 30);
     nick3 = malloc(sizeof(char) * 30);
     nick = malloc(sizeof(char) * 30);
@@ -376,8 +374,6 @@ void LoadAllLibs(void)
     FD_ZERO(&write_master);
 
     strcpy(sendstuff, "");
-
-    clockdata = malloc(sizeof(struct ClockData));
 
     pincoming_init();
 }
@@ -859,8 +855,6 @@ void cleanexit(char *str)
         printf("23\n");
 
     //printf("7\n");
-
-    free(clockdata);
 
     free(new_entry2.hostname);
 
