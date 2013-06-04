@@ -896,11 +896,6 @@ enum
     INVITE
 };
 
-struct graphical_smilies_struct
-{
-    APTR   icon;
-};
-
 enum
 {
     COLUMNS = 1, NORMAL
@@ -1000,8 +995,6 @@ extern struct list_entry *work_entry;
 extern struct Settings my_settings;
 extern struct Settings temp_settings;
 
-extern ULONG entries;
-
 extern struct MUI_PenSpec *pendisplay_specs[25];
 extern STRPTR popimage_background;
 extern STRPTR popimage_nicklistbackground;
@@ -1040,41 +1033,23 @@ extern int fdmax;
 
 extern struct hostent *he;
 
-extern struct dcc_chat *dcc_chat_work;
+
+
+
+
+
+
 extern struct dcc_chat *dcc_chat_root;
 extern struct dcc_chat *dcc_chat_conductor;
-
-extern struct dcc *dcc_prev;
-extern struct dcc *dcc_next;
-extern struct dcc *dcc_work;
 extern struct dcc *dcc_root;
 extern struct dcc *dcc_conductor;
-extern struct dcc *dcc_send_work;
 extern struct dcc *dcc_send_root;
 extern struct dcc *dcc_send_conductor;
-
-extern char sendstuff[1500];
-extern struct dcc_entry *find;
-
 extern struct channel_entry *centry;
 extern ULONG custom_pen_colours[24];
-extern ULONG visible;
-extern ULONG first;
-
 extern fd_set read_fds;
 extern fd_set write_fds;
 extern int queued_messages_total;
-extern BOOL start_reconnect_delay_timer;
-
-extern struct graphical_smilies_struct graphical_nicklist[3];
-extern char graphical_smiley_themes[10][100];
-
-extern char string_to_send[BUFFERSIZE];
-
-
-
-
-
 extern struct codeset *cs;
 extern BPTR urlgrabber_file;
 extern char urlgrabber_str[2000];
@@ -1114,6 +1089,8 @@ extern BOOL QUIET_DCC;
 extern BOOL USE_AREXX;
 extern BOOL USING_A_PROXY;
 extern BOOL PRO_CHARSETS_ENABLED;
+
+extern BOOL start_reconnect_delay_timer;
 
 void send_text(char*);
 void send_current(char*);
@@ -1214,6 +1191,7 @@ extern int total_smileys;
 extern int preview_total_smileys;
 extern struct smilies_struct smilies[MAXIMUM_SMILEYS];
 extern struct smilies_struct preview_smilies[MAXIMUM_SMILEYS];
+extern char graphical_smiley_themes[10][100];
 void insert_graphical_smilies();
 void delete_smiley_objects();
 void delete_preview_smiley_objects();

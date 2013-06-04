@@ -118,6 +118,7 @@ BOOL is_it_there;
 
 void check_if_at_bottom()
 {
+    ULONG visible;
 
     if (!status_current)
         return;
@@ -130,6 +131,8 @@ void check_if_at_bottom()
 
     if (visible > 0)
     {
+        ULONG first;
+        ULONG entries;
         getmacro((Object*) status_current->current_query->LV_channel, MUIA_NList_Entries, &entries);
         getmacro((Object*) status_current->current_query->LV_channel, MUIA_NList_First, &first);
         if ((first + visible) >= (entries - 1))

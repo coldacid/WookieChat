@@ -19,11 +19,18 @@ int total_smileys, preview_total_smileys;
 
 struct smilies_struct smilies[MAXIMUM_SMILEYS];
 struct smilies_struct preview_smilies[MAXIMUM_SMILEYS];
+char graphical_smiley_themes[10][100];
 
 /* Locals */
+struct graphical_smilies_struct
+{
+    APTR   icon;
+};
+
 static char string7[900];
 static char *string1;
 static char work_buffer[900];
+static struct graphical_smilies_struct graphical_nicklist[3];
 
 int find_themes()
 {
@@ -93,9 +100,6 @@ int find_themes()
                 }
                 if (count >= 10)
                     break;
-
-                //strcpy(graphical_smiley_themes[count],"");
-
             }
 
         }

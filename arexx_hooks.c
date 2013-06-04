@@ -1847,6 +1847,7 @@ int sel14hookfunc(void) {
   register struct Hook *a0 __asm("a0");                  struct Hook *hook = a0;
 #endif
 
+    ULONG entries;
 
     getmacro((Object*)status_current->current_query->LV_channel,MUIA_NList_Entries, &entries);
 

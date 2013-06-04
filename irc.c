@@ -18,6 +18,8 @@
 
 /* Locals */
 static char buffer3[BUFFERSIZE*2];
+static char string_to_send[BUFFERSIZE];
+static char sendstuff[1500];
 
 void SWhoIs(char *selnick)
 {
@@ -53,27 +55,6 @@ void SJoin(char *selchannel)
 
 void SMsg(char *selnick, char *message)
 {
-
-    /*#ifndef __AROS__
-     struct TagItem my_send_charset1_taglist[] = { {CSA_Source, (ULONG)message },
-     {CSA_SourceCodeset, (ULONG)charsets[local_charset]}, {CSA_DestCodeset, (ULONG)charsets[status_conductor->remote_charset]}, {TAG_DONE, 0} };
-     charset_convert_1 = CodesetsConvertStrA(my_send_charset1_taglist);
-     if(charset_convert_1)
-     {
-     sprintf(buffer3,"%s-> *%s* %s",timestamp,selnick, (char*)charset_convert_1);
-     sprintf(string_to_send,"PRIVMSG %s :%s\r\n",(char*)selnick, (char*)charset_convert_1);
-     CodesetsFreeA(charset_convert_1,NULL);
-     }
-     else
-     {
-     sprintf(buffer3,"%s-> *%s* %s",timestamp,selnick, message);
-     sprintf(string_to_send,"PRIVMSG %s :%s\r\n",(char*)selnick, (char*)message);
-     }
-     #else
-     sprintf(buffer3,"%s-> *%s* %s",timestamp,selnick, message);
-     sprintf(string_to_send,"PRIVMSG %s :%s\r\n",(char*)selnick, (char*)message);
-     #endif
-     */
 
     //if the nick doesnt equal "." then lets copy the previous nick you message to a string for a shortcut!
     if (stricmp(selnick, "."))
@@ -115,31 +96,6 @@ void SNames(char *selchannel)
 
 void SNotice(char *selnick, char *message)
 {
-
-    /*
-     #ifndef __AROS__
-     struct TagItem my_send_charset1_taglist[] = { {CSA_Source, (ULONG)message },
-     {CSA_SourceCodeset, (ULONG)charsets[local_charset]}, {CSA_DestCodeset, (ULONG)charsets[status_conductor->remote_charset]}, {TAG_DONE, 0} };
-     charset_convert_1 = CodesetsConvertStrA(my_send_charset1_taglist);
-     if(charset_convert_1)
-     {
-     sprintf(buffer3,"%s-> -%s- %s",timestamp,selnick, (char*)charset_convert_1);
-     sprintf(string_to_send,"NOTICE %s :%s\r\n",(char*)selnick, (char*)charset_convert_1);
-     CodesetsFreeA(charset_convert_1,NULL);
-     }
-     else
-     {
-     sprintf(buffer3,"%s-> -%s- %s",timestamp,selnick, message);
-     sprintf(string_to_send,"NOTICE %s :%s\r\n",(char*)selnick, (char*)message);
-     }
-     #else
-     sprintf(buffer3,"%s-> -%s- %s",timestamp,selnick, message);
-     sprintf(string_to_send,"NOTICE %s :%s\r\n",(char*)selnick, (char*)message);
-     #endif
-
-     send_text(string_to_send);
-     add_text_to_conductor_list((char*)buffer3, 12, ACTIVITY);
-     */
 
     if (stricmp(selnick, "."))
         strcpy(status_conductor->last_notice_nick, selnick);
@@ -196,30 +152,6 @@ void SAction(char *message)
 
     if (message)
     {
-        /*
-         #ifndef __AROS__
-         struct TagItem my_send_charset1_taglist[] = { {CSA_Source, (ULONG)message },
-         {CSA_SourceCodeset, (ULONG)charsets[local_charset]}, {CSA_DestCodeset, (ULONG)charsets[status_conductor->remote_charset]}, {TAG_DONE, 0} };
-         charset_convert_1 = CodesetsConvertStrA(my_send_charset1_taglist);
-         if(charset_convert_1)
-         {
-         sprintf(sendstuff,"PRIVMSG %s :\001ACTION %s\001\r\n",status_conductor->current_query->name, (char*)charset_convert_1);
-         sprintf(buffer3,"%s* %s %s",timestamp, status_current->nick,(char*)charset_convert_1);
-
-         CodesetsFreeA(charset_convert_1,NULL);
-         }
-         else
-         {
-         sprintf(sendstuff,"PRIVMSG %s :\001ACTION %s\001\r\n",status_conductor->current_query->name, message);
-         sprintf(buffer3,"%s* %s %s",timestamp, status_current->nick,message);
-
-         }
-         #else
-         sprintf(sendstuff,"PRIVMSG %s :\001ACTION %s\001\r\n",status_conductor->current_query->name, message);
-         sprintf(buffer3,"%s* %s %s",timestamp, status_current->nick,message);
-         #endif
-         */
-
         sprintf(sendstuff, "PRIVMSG %s :\001ACTION %s\001\r\n", status_conductor->current_query->name, message);
         sprintf(buffer3, "%s* %s %s", timestamp, status_current->nick, message);
 

@@ -198,7 +198,7 @@ void AddNick(char *nick, char *hostname)
     strcpy(work_entry3->modes, " ");
     strcpy(work_entry3->name, nick);
 
-    entries = status_conductor->conductor->nicks;
+    ULONG entries = status_conductor->conductor->nicks;
     unsigned long a = 0, b = 0;
 
     strncpy(work_entry3->hostname, hostname, HOSTNAME_STRING_SIZE - 1);
@@ -261,7 +261,7 @@ void AddNick(char *nick, char *hostname)
 int ChangeNick(char *oldnick, char *newnick, char *buffer3)
 {
 
-    entries = status_conductor->conductor->nicks;
+    ULONG entries = status_conductor->conductor->nicks;
 
     unsigned int a = 0;
 
@@ -285,8 +285,7 @@ int ChangeNick(char *oldnick, char *newnick, char *buffer3)
 
 int ReplaceNicksWithVoiceOps(char *string1, char prefix, int option)
 {
-
-    //printf("Replacing mode change..\n");
+    ULONG entries;
 
     getmacro((Object*) status_conductor->conductor->LV_nicklist, MUIA_NList_Entries, &entries);
 
@@ -414,8 +413,8 @@ int ReplaceNicksWithVoiceOps(char *string1, char prefix, int option)
 
 int RemoveNick(char *string1)
 {
+    ULONG entries;
 
-    //entries=status_conductor->conductor->nicks;
     unsigned int a = 0;
     getmacro((Object*) status_conductor->conductor->LV_nicklist, MUIA_NList_Entries, &entries);
 

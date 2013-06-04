@@ -49,6 +49,8 @@ BOOL USE_AREXX              = FALSE;
 BOOL USING_A_PROXY          = FALSE;
 BOOL PRO_CHARSETS_ENABLED   = FALSE;
 
+BOOL start_reconnect_delay_timer;
+
 /* Locals */
 static int delay_b4_ping_server_count=0;
 static ULONG arexx_wants_to_send_signal;
@@ -75,6 +77,7 @@ static char *string1;
 static char buffer3[BUFFERSIZE*2];
 static char file_name[800];
 static BOOL is_chooser_window_open = FALSE;
+static char sendstuff[1500];
 
 void copy_settings_to_undo_buffer()
 {
@@ -2497,7 +2500,7 @@ int main(int argc, char *argv[])
             else if (result == 60) // auto-rename the incoming dcc file transfer
             {
                 LONG a = 0;
-
+                struct dcc_entry *find = NULL;
                 DoMethod((Object*) WookieChat->LV_dcc, MUIM_NList_GetEntry, MUIV_NList_GetEntry_Active, &find);
 
                 dcc_conductor = dcc_root->next;
@@ -2670,7 +2673,7 @@ int main(int argc, char *argv[])
             {
 // DCC Cancel Button Pressed
                 LONG a = 0;
-
+                struct dcc_entry *find = NULL;
                 DoMethod((Object*) WookieChat->LV_dcc, MUIM_NList_GetEntry, MUIV_NList_GetEntry_Active, &find);
 
                 dcc_conductor = dcc_root->next;
@@ -2731,7 +2734,7 @@ int main(int argc, char *argv[])
             else if (result == 67) // DCC Remove From List Button Pressed
             {
 // DCC Remove From List Button Pressed
-
+                struct dcc_entry *find = NULL;
                 DoMethod((Object*) WookieChat->LV_dcc, MUIM_NList_GetEntry, MUIV_NList_GetEntry_Active, &find);
                 LONG a = 0;
 
@@ -2747,7 +2750,8 @@ int main(int argc, char *argv[])
                                 && !stricmp(find->filename, dcc_conductor->entry->filename)
                                 && !stricmp(find->port, dcc_conductor->entry->port)) //experimental, adding port string to entry struct
                         {
-
+                            struct dcc *dcc_prev;
+                            struct dcc *dcc_next;
                             shutdown_my_dcc_recv_socket();
 
                             dcc_conductor->cancelled = 1;
@@ -2832,7 +2836,7 @@ int main(int argc, char *argv[])
             else if (result == 70) //user has selected to RESUME a DCC transfer
             {
 // User has selected to RESUME a DCC transfer
-
+                struct dcc_entry *find = NULL;
                 DoMethod((Object*) WookieChat->LV_dcc, MUIM_NList_GetEntry, MUIV_NList_GetEntry_Active, &find);
 
                 dcc_conductor = dcc_root->next;
@@ -2888,7 +2892,7 @@ int main(int argc, char *argv[])
             else if (result == 71) //user has selected to OVERWRITE existing file in a DCC transfer
             {
 // User has selected to OVERWRITE existing file in a DCC transfer
-
+                struct dcc_entry *find = NULL;
                 DoMethod((Object*) WookieChat->LV_dcc, MUIM_NList_GetEntry, MUIV_NList_GetEntry_Active, &find);
 
                 dcc_conductor = dcc_root->next;
@@ -2991,7 +2995,7 @@ int main(int argc, char *argv[])
 
                     if (newbptr_file)
                     {
-
+                        ULONG entries;
                         getmacro((Object*)status_conductor->current_query->LV_channel, MUIA_NList_Entries, &entries);
 
                         sprintf(buffer3, "%s%sBuffer%s %s %s", timestamp, GCS(catalog, 217, "["),
@@ -3050,7 +3054,7 @@ int main(int argc, char *argv[])
 // User wants to CANCEL an outgoing file transfer
 
                 LONG a = 0;
-
+                struct dcc_entry *find = NULL;
                 DoMethod((Object*) WookieChat->LV_send_dcc, MUIM_NList_GetEntry, MUIV_NList_GetEntry_Active, &find);
 
                 dcc_send_conductor = dcc_send_root->next;
@@ -3100,7 +3104,7 @@ int main(int argc, char *argv[])
             else if (result == 76) // Remove DCC SEND From List
             {
 // Remove DCC SEND From List
-
+                struct dcc_entry *find = NULL;
                 DoMethod((Object*) WookieChat->LV_send_dcc, MUIM_NList_GetEntry, MUIV_NList_GetEntry_Active, &find);
                 LONG a = 0;
 
@@ -3117,12 +3121,10 @@ int main(int argc, char *argv[])
                                 && !stricmp(find->port, dcc_send_conductor->entry->port))
                         {
 
-                            //if(dcc_send_conductor->completed!=1 && dcc_send_conductor->connected!=0)
-                            //{
-
+                            struct dcc *dcc_prev;
+                            struct dcc *dcc_next;
                             shutdown_my_dcc_send_socket();
 
-                            //}
                             dcc_send_conductor->cancelled = 1;
                             dcc_send_conductor->removed = 1;
 
@@ -3246,7 +3248,7 @@ int main(int argc, char *argv[])
             else if (result == 79) //reoffer dcc transfer
             {
 // Reoffer DCC SEND transfer
-
+                struct dcc_entry *find = NULL;
                 DoMethod((Object*) WookieChat->LV_send_dcc, MUIM_NList_GetEntry, MUIV_NList_GetEntry_Active, &find);
                 LONG a = 0;
 
@@ -3411,6 +3413,8 @@ int main(int argc, char *argv[])
                     {
                         if (stricmp(string4, ""))
                         {
+                            ULONG entries;
+
                             if (strstr(string4, "*"))
                             {
                                 strcpy(urlgrabber_str, string4);
@@ -3880,7 +3884,7 @@ int main(int argc, char *argv[])
                     else if (result == 100) //rename the incoming dcc transfer because it already exists
                     {
                         LONG a = 0;
-
+                        struct dcc_entry *find = NULL;
                         DoMethod((Object*) WookieChat->LV_dcc, MUIM_NList_GetEntry, MUIV_NList_GetEntry_Active, &find);
 
                         dcc_conductor = dcc_root->next;
@@ -3981,6 +3985,7 @@ int main(int argc, char *argv[])
                             {
 //#define USERLIST_NAME_SIZE 40
 //#define USERLIST_COMMAND_SIZE 800
+                                ULONG entries;
                                 stccpy(work_buffer, string1, USERLIST_NAME_SIZE);
                                 strcat(work_buffer, "\033");
                                 //sprintf(work_buffer,"%s\033",string1);
@@ -4048,7 +4053,7 @@ int main(int argc, char *argv[])
 
                         else if (result == 4) //User List Buttons config: Add New Entry
                         {
-
+                            ULONG entries;
                             getmacro((Object*)WookieChat->LV_user_list_buttons, MUIA_NList_Entries, &entries);
                             if (entries < MAX_BUTTONS)
                             {
@@ -4066,7 +4071,7 @@ int main(int argc, char *argv[])
                         }
                         else if (result == 6) //User List Buttons config: Move Entry Up
                         {
-
+                            ULONG entries;
                             DoMethod((Object*) WookieChat->LV_user_list_buttons, MUIM_NList_GetEntry,
                                     MUIV_NList_GetEntry_Active, &string3);
                             getmacro((Object*)WookieChat->LV_user_list_buttons, MUIA_NList_Entries, &entries);
@@ -4094,7 +4099,7 @@ int main(int argc, char *argv[])
                         }
                         else if (result == 7) //User List Buttons config: Move Entry Down
                         {
-
+                            ULONG entries;
                             DoMethod((Object*) WookieChat->LV_user_list_buttons, MUIM_NList_GetEntry,
                                     MUIV_NList_GetEntry_Active, &string3);
                             getmacro((Object*)WookieChat->LV_user_list_buttons, MUIA_NList_Entries, &entries);
@@ -4177,7 +4182,7 @@ int main(int argc, char *argv[])
 
                             if (string1)
                             {
-
+                                ULONG entries;
                                 sprintf(work_buffer, "%lu %s\033", active_event, string1);
 
                                 if (string2)
@@ -5051,6 +5056,7 @@ int main(int argc, char *argv[])
                             {
                                 if (status_conductor->connection_active) // && !status_conductor->waiting_for_ping)
                                 {
+                                    char string_to_send[512];
                                     sprintf(string_to_send, "PING %s\r\n", status_conductor->servername);
                                     send_text(string_to_send);
                                     delay_b4_ping_server_count = 0;

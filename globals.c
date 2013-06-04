@@ -38,7 +38,7 @@ struct Settings my_settings;
 struct Settings temp_settings;
 
 
-ULONG entries;
+
 
 struct MUI_PenSpec *pendisplay_specs[25];
 
@@ -79,36 +79,33 @@ int fdmax=-1;        // maximum file descriptor number
 
 struct hostent *he;
 
-struct dcc_chat *dcc_chat_work;
+
 struct dcc_chat *dcc_chat_root;
 struct dcc_chat *dcc_chat_conductor;
 
-struct dcc *dcc_prev;
-struct dcc *dcc_next;
-struct dcc *dcc_work;
+
+
 struct dcc *dcc_root;
 struct dcc *dcc_conductor;
-struct dcc *dcc_send_work;
+
 struct dcc *dcc_send_root;
 struct dcc *dcc_send_conductor;
 
-char sendstuff[1500];
-struct dcc_entry *find;
+
+
 
 struct channel_entry *centry;
 ULONG custom_pen_colours[24];
-ULONG visible;
-ULONG first;
+
+
 
 fd_set read_fds;          // temp file descriptor list for select()
 fd_set write_fds;         // temp file descriptor list for select()
 int queued_messages_total;
-BOOL start_reconnect_delay_timer;
 
-struct graphical_smilies_struct graphical_nicklist[3];
-char graphical_smiley_themes[10][100];
 
-char string_to_send[BUFFERSIZE];
+
+
 
 
 

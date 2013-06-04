@@ -63,6 +63,7 @@ static char channel_display[100];
 static char activity[64];
 static char activity_chat[64];
 static char activity_highlight[64];
+static char sendstuff[1500];
 
 #ifdef __AROS__
 struct TagItem my_incoming_charset3_taglist[] =
@@ -416,6 +417,7 @@ void search_for_url_then_add(char *buffer1)
 
     while (bb < strlen(buffer1))
     {
+        ULONG entries;
         for (aa = 0; bb < strlen(buffer1); aa++, bb++)
         {
             urlgrabber_str[aa] = buffer1[bb];
@@ -723,6 +725,7 @@ int add_text_to_conductor_list(char *buffer1, LONG colour, int activitylevel)
     else
 #endif
     {
+        ULONG visible;
 
         search_for_url_then_add(work_incoming);
 
@@ -733,6 +736,8 @@ int add_text_to_conductor_list(char *buffer1, LONG colour, int activitylevel)
 
             if (visible > 0)
             {
+                ULONG first;
+                ULONG entries;
                 getmacro((Object*) status_conductor->conductor->LV_channel, MUIA_NList_Entries, &entries);
                 getmacro((Object*) status_conductor->conductor->LV_channel, MUIA_NList_First, &first);
                 DoMethod((Object*) status_conductor->conductor->LV_channel, MUIM_NList_InsertSingleWrap, centry,
@@ -756,17 +761,6 @@ int add_text_to_conductor_list(char *buffer1, LONG colour, int activitylevel)
                     MUIV_NList_Insert_Bottom, WRAPCOL0, ALIGN_LEFT);
 
         }
-
-        //this feature crashes wookiechat users, so its now removed
-        /*status_conductor->conductor->entries_count++;
-         if(status_conductor->conductor->entries_count > my_settings.max_lines_for_buffers) // && status_conductor->conductor==status_current->current_query)
-         {
-         setmacro((Object*)status_conductor->conductor->LV_channel,MUIA_NList_Quiet, TRUE);
-         DoMethod((Object*)status_conductor->conductor->LV_channel,MUIM_NList_Remove,MUIV_NList_Remove_First);
-         status_conductor->conductor->entries_count--;
-         setmacro((Object*)status_conductor->conductor->LV_channel,MUIA_NList_Quiet, FALSE);
-
-         } */
 
 #ifndef __AROS__
         if(activitylevel == 2 || activitylevel == 3)

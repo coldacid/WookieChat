@@ -23,7 +23,7 @@ int sort_nicks(int a)
         unsigned int indx2 = 0;
         struct list_entry work_entry4;
 
-        entries = status_conductor->conductor->nicks;
+        ULONG entries = status_conductor->conductor->nicks;
 
         if (entries <= 1)
             return 0;

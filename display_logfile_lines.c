@@ -127,6 +127,7 @@ int display_last_few_lines_of_logfile_conductor()
         if (char_read_storage == '\n')
         {
             char new_array[20];
+            ULONG visible;
 #ifndef __AROS__
             STRPTR text3 = NULL;
 #endif
@@ -190,17 +191,13 @@ int display_last_few_lines_of_logfile_conductor()
 
             if (visible > 0)
             {
-                getmacro((Object*) status_conductor->conductor->LV_channel, MUIA_NList_Entries, &entries);
-                getmacro((Object*) status_conductor->conductor->LV_channel, MUIA_NList_First, &first);
                 DoMethod((Object*) status_conductor->conductor->LV_channel, MUIM_NList_InsertSingleWrap, centry,
                         MUIV_NList_Insert_Bottom, WRAPCOL0, ALIGN_LEFT);
-
             }
             else
             {
                 DoMethod((Object*) status_conductor->conductor->LV_channel, MUIM_NList_InsertSingleWrap, centry,
                         MUIV_NList_Insert_Bottom, WRAPCOL0, ALIGN_LEFT);
-
             }
 
         }

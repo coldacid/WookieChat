@@ -17,6 +17,7 @@ static LONG dcc_transfers=0;
 static char *string1;
 static char buffer2[BUFFERSIZE*2];
 static char buffer3[BUFFERSIZE*2];
+static char sendstuff[1500];
 
 void shutdown_my_dcc_recv_socket(void)
 {
@@ -306,7 +307,7 @@ void dcc_time_to_recv(void)
 
 void accept_dcc(char *b)
 {
-
+    struct dcc_entry *find = NULL;
     DoMethod((Object*) WookieChat->LV_dcc, MUIM_NList_GetEntry, MUIV_NList_GetEntry_Active, &find);
     LONG a = 0;
 
@@ -789,7 +790,7 @@ int offer_dcc(char *networkname, char *string1, char *string2, char *string3, in
 
 void create_send_dcc(char *nick, char *string3, int filesize, int portnumber)
 {
-
+    struct dcc *dcc_work;
     //string3 == filename including path
 
     dcc_send_conductor = dcc_send_root;
@@ -980,6 +981,8 @@ void create_recv_dcc_chat(char *nick, char *address, char *port)
 
     if (!dcc_chat_conductor) //if we didnt find a tab already open, create another
     {
+        struct dcc_chat *dcc_chat_work;
+
         dcc_chat_conductor = dcc_chat_root;
 
         while (dcc_chat_conductor->next)
@@ -1085,6 +1088,7 @@ void initiate_outgoing_dcc_chat(char *nick)
 
     if (!dcc_chat_conductor) //if we didnt find a tab already open, create another
     {
+        struct dcc_chat *dcc_chat_work;
         //printf("didnt find already open tab, create another\n");
 
         dcc_chat_conductor = dcc_chat_root;
@@ -1189,7 +1193,7 @@ void initiate_outgoing_dcc_chat(char *nick)
 
 void create_recv_dcc(char *nick, char *filename, char *address, unsigned short port, char *filesize)
 {
-
+    struct dcc *dcc_work;
     if (DEBUG)
         printf("dcc 1\n");
 

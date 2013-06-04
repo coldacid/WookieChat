@@ -28,6 +28,7 @@ static char string11[900];
 static char *string2;
 static char *string3;
 static char *string1;
+static char sendstuff[1500];
 
 void setup_background_colours(void)
 {

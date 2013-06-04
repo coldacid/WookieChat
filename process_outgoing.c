@@ -22,7 +22,9 @@
 static char *pch2;
 static char new_filtered_string1[550];
 static char buffer3[BUFFERSIZE*2];
+static char string_to_send[BUFFERSIZE];
 static char file_name[800];
+static char sendstuff[1500];
 #ifndef __AROS__
 static STRPTR charset_convert_1;
 static STRPTR charset_convert_2;
@@ -721,30 +723,6 @@ void process_outgoing(char *string123, int usestringgadget)
         {
             if (string2)
             {
-                /*
-                 #ifndef __AROS__
-                 struct TagItem my_send_charset1_taglist[] = { {CSA_Source, (ULONG)string2 },
-                 {CSA_SourceCodeset, (ULONG)charsets[local_charset]}, {CSA_DestCodeset, (ULONG)charsets[status_conductor->remote_charset]}, {TAG_DONE, 0} };
-                 charset_convert_1 = CodesetsConvertStrA(my_send_charset1_taglist);
-
-                 if(charset_convert_1)
-                 {
-                 sprintf(string_to_send,"PRIVMSG %s :%s\r\n",(char*)string1, (char*)charset_convert_1);
-                 sprintf(buffer3,"%s<%s> %s",timestamp,status_conductor->nick, (char*)charset_convert_1);
-                 CodesetsFreeA(charset_convert_1,NULL);
-                 }
-                 else
-                 {
-                 sprintf(string_to_send,"PRIVMSG %s :%s\r\n",(char*)string1, (char*)string2);
-                 sprintf(buffer3,"%s<%s> %s",timestamp,status_conductor->nick, string2);
-
-                 }
-                 #else
-                 sprintf(string_to_send,"PRIVMSG %s :%s\r\n",(char*)string1, (char*)string2);
-                 sprintf(buffer3,"%s<%s> %s",timestamp,status_conductor->nick, string2);
-                 #endif
-                 */
-
                 sprintf(string_to_send, "PRIVMSG %s :%s\r\n", (char*) string1, (char*) string2);
                 sprintf(buffer3, "%s<%s> %s", timestamp, status_conductor->nick, string2);
 
@@ -1069,11 +1047,8 @@ void process_outgoing(char *string123, int usestringgadget)
         }
 
         add_text_to_conductor_list(buffer3, 10, ACTIVITY);
-        //printf("string to send:%s",string_to_send);
 
         send_text(string_to_send);
-
-        //send_text(string_to_send);
 
     }
     else if (!(stricmp(pch, "/rx")))

@@ -20,6 +20,7 @@ static char string10[900];
 static char *string1;
 static char buffer2[BUFFERSIZE*2];
 static char buffer3[BUFFERSIZE*2];
+static char sendstuff[1500];
 
 int do_waitselect_code(void)
 {
@@ -1023,7 +1024,7 @@ int do_waitselect_code(void)
                             //remove this entry out of the DCC CHAT linked list
                             if (dcc_chat_conductor->next)
                             {
-                                dcc_chat_work = dcc_chat_conductor->previous;
+                                struct dcc_chat *dcc_chat_work = dcc_chat_conductor->previous;
                                 dcc_chat_work->next = dcc_chat_conductor->next;
                                 if (dcc_chat_conductor)
                                     free(dcc_chat_conductor);
@@ -1031,7 +1032,7 @@ int do_waitselect_code(void)
                             }
                             else
                             {
-                                dcc_chat_work = dcc_chat_conductor->previous;
+                                struct dcc_chat *dcc_chat_work = dcc_chat_conductor->previous;
                                 dcc_chat_work->next = NULL;
                                 if (dcc_chat_conductor)
                                     free(dcc_chat_conductor);

@@ -69,7 +69,7 @@ void load_colours_choice()
 void save_ignore_list()
 {
     BPTR save_file;
-
+    ULONG entries;
     char *work_buffer;
 
     getmacro((Object*) WookieChat->LV_ignore, MUIA_NList_Entries, &entries);
@@ -221,6 +221,7 @@ void save_nick_settings()
 void save_settings()
 {
     char *work_buffer = malloc(sizeof(char) * 800);
+    ULONG entries;
 
     BPTR save_file = Open((_s_cs)"progdir:settings.txt", MODE_NEWFILE);
 
@@ -439,14 +440,6 @@ void save_settings()
     sprintf(output_string, "USER_MODES_BESIDE_NICKS %i\n", my_settings.user_modes_beside_nicks);
     FPuts(save_file, (l_in) output_string);
 
-    /*
-     sprintf(output_string,"DCC_RECV_FORMAT %s\n",my_settings.dcc_recv_format);
-     FPuts(save_file,(l_in)output_string);
-
-     sprintf(output_string,"DCC_SEND_FORMAT %s\n",my_settings.dcc_send_format);
-     FPuts(save_file,(l_in)output_string);
-     */
-
     //save all entries in the LV_alias nlist
     getmacro((Object*) WookieChat->LV_alias, MUIA_NList_Entries, &entries);
 
@@ -471,6 +464,7 @@ void retrieve_settings()
     LONG a;
     char *b = malloc(sizeof(char) * 800);
     char *work_buffer = malloc(sizeof(char) * 800);
+    ULONG entries;
 
     getmacro((Object*) WookieChat->STR_nickname1, MUIA_String_Contents, &b);
     if (b)
@@ -1989,11 +1983,12 @@ struct user_list_buttons_array buttons[MAX_BUTTONS + 1];
 
 void get_events_settings(void)
 {
-
-    getmacro((Object*) LV_events, MUIA_NList_Entries, &entries);
+    ULONG entries;
     char *work_buffer;
     char *string1;
     char breakup_buffer[800];
+
+    getmacro((Object*) LV_events, MUIA_NList_Entries, &entries);
 
     for (unsigned int count = 0; count < MAX_EVENTS; count++)
     {
@@ -2024,7 +2019,7 @@ void get_events_settings(void)
 
 int save_events_settings(void)
 {
-
+    ULONG entries;
     BPTR save_file = Open((_s_cs)EVENTS_SETTINGS_FILE, MODE_NEWFILE);
     if (!save_file)
         return 0;
@@ -2216,75 +2211,66 @@ int load_user_list_buttons_config(void)
 
 int create_user_list_buttons(void)
 {
-    //if(DoMethod((Object*)WookieChat->GR_click_user_list_buttons,MUIM_Group_InitChange))
+    ULONG entries;
+    char *work_buffer;
+    char work_buffer2[1000];
+    APTR member_object = NULL;
+    struct MinList *list = NULL;
+
+    getmacro((Object*) WookieChat->LV_user_list_buttons, MUIA_NList_Entries, &entries);
+
+    for (unsigned int count = 0; count < entries && count < 100; count++)
     {
-
-        char *work_buffer;
-        char work_buffer2[1000];
-        APTR member_object = NULL;
-        struct MinList *list = NULL;
-
-        getmacro((Object*) WookieChat->LV_user_list_buttons, MUIA_NList_Entries, &entries);
-
-        for (unsigned int count = 0; count < entries && count < 100; count++)
+        DoMethod((Object*) WookieChat->LV_user_list_buttons, MUIM_NList_GetEntry, count, &work_buffer);
+        if (work_buffer)
         {
-            DoMethod((Object*) WookieChat->LV_user_list_buttons, MUIM_NList_GetEntry, count, &work_buffer);
-            if (work_buffer)
+            strcpy(work_buffer2, work_buffer);
+            string1 = strtok(work_buffer2, "\033");
+            string2 = strtok(NULL, "");
+            if (string2)
             {
-                strcpy(work_buffer2, work_buffer);
-                string1 = strtok(work_buffer2, "\033");
-                string2 = strtok(NULL, "");
-                if (string2)
-                {
-                    buttons[count].num = count + SECOND_SET_OF_RETURNIDS + 100;
-                    strcpy(buttons[count].name, string1);
-                    strcpy(buttons[count].command, string2);
-
-                }
-                else
-                    break;
+                buttons[count].num = count + SECOND_SET_OF_RETURNIDS + 100;
+                strcpy(buttons[count].name, string1);
+                strcpy(buttons[count].command, string2);
 
             }
             else
                 break;
-        }
-
-        getmacro((Object*) WookieChat->GR_click_user_list_buttons, MUIA_Group_ChildList, &list);
-        APTR object_state = list->mlh_Head;
-        while ((member_object = NextObject((Object**) &object_state)))
-        {
-            DoMethod((Object*) WookieChat->GR_click_user_list_buttons, OM_REMMEMBER, (Object*) member_object);
-            MUI_DisposeObject((Object*) member_object);
-            //member_object=NULL;
-        }
-
-        getmacro((Object*) WookieChat->LV_user_list_buttons, MUIA_NList_Entries, &entries);
-
-        for (unsigned int count2 = 0; count2 < entries && count2 < MAX_BUTTONS; count2++)
-        {
-            buttons[count2].BT_click = SimpleButton(buttons[count2].name);
-            setmacro((Object*) buttons[count2].BT_click, MUIA_Text_SetMin, FALSE);
-            DoMethod((Object*) WookieChat->GR_click_user_list_buttons, OM_ADDMEMBER,
-                    (Object*) buttons[count2].BT_click);
-            DoMethod((Object*) buttons[count2].BT_click, MUIM_Notify, MUIA_Pressed, FALSE, (Object*) WookieChat->App, 2,
-                    MUIM_Application_ReturnID, buttons[count2].num);
 
         }
+        else
+            break;
+    }
 
-        if (entries == 0)
-        {
-            //printf("no userlist buttons config to load!\n");
-            buttons[0].BT_click = SimpleButton("(empty)");
-            //buttons[1].BT_click=SimpleButton("(empty)");
+    getmacro((Object*) WookieChat->GR_click_user_list_buttons, MUIA_Group_ChildList, &list);
+    APTR object_state = list->mlh_Head;
+    while ((member_object = NextObject((Object**) &object_state)))
+    {
+        DoMethod((Object*) WookieChat->GR_click_user_list_buttons, OM_REMMEMBER, (Object*) member_object);
+        MUI_DisposeObject((Object*) member_object);
+        //member_object=NULL;
+    }
 
-            DoMethod((Object*) WookieChat->GR_click_user_list_buttons, OM_ADDMEMBER, (Object*) buttons[0].BT_click);
-            //DoMethod((Object*)WookieChat->GR_click_user_list_buttons, OM_ADDMEMBER, (Object*)buttons[1].BT_click);
-            //DoMethod((Object*)buttons[count2].BT_click,MUIM_Notify,MUIA_Pressed,FALSE,(Object*)WookieChat->App,2,MUIM_Application_ReturnID,buttons[count2].num);
+    getmacro((Object*) WookieChat->LV_user_list_buttons, MUIA_NList_Entries, &entries);
 
-        }
+    for (unsigned int count2 = 0; count2 < entries && count2 < MAX_BUTTONS; count2++)
+    {
+        buttons[count2].BT_click = SimpleButton(buttons[count2].name);
+        setmacro((Object*) buttons[count2].BT_click, MUIA_Text_SetMin, FALSE);
+        DoMethod((Object*) WookieChat->GR_click_user_list_buttons, OM_ADDMEMBER,
+                (Object*) buttons[count2].BT_click);
+        DoMethod((Object*) buttons[count2].BT_click, MUIM_Notify, MUIA_Pressed, FALSE, (Object*) WookieChat->App, 2,
+                MUIM_Application_ReturnID, buttons[count2].num);
 
-        //DoMethod((Object*)WookieChat->GR_click_user_list_buttons,MUIM_Group_ExitChange);
+    }
 
+    if (entries == 0)
+    {
+        //printf("no userlist buttons config to load!\n");
+        buttons[0].BT_click = SimpleButton("(empty)");
+        //buttons[1].BT_click=SimpleButton("(empty)");
+
+        DoMethod((Object*) WookieChat->GR_click_user_list_buttons, OM_ADDMEMBER, (Object*) buttons[0].BT_click);
     }
 
     return 0;
@@ -2300,7 +2286,7 @@ int get_user_list_buttons_config(void)
 
 int save_user_list_buttons_config(void)
 {
-
+    ULONG entries;
     BPTR save_file;
     if (DEBUG)
         printf("saving user list buttins config..\n");

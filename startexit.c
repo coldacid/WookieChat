@@ -117,7 +117,6 @@ void LoadAllLibs(void)
     int a;
 
     work_entry =  malloc(sizeof(struct list_entry));
-    find = malloc(sizeof(struct dcc_entry));
     centry = malloc(sizeof(struct channel_entry));
 
     nick2 = malloc(sizeof(char) * 30);
@@ -373,8 +372,6 @@ void LoadAllLibs(void)
     FD_ZERO(&write_fds);
     FD_ZERO(&write_master);
 
-    strcpy(sendstuff, "");
-
     pincoming_init();
 }
 
@@ -500,6 +497,7 @@ void cleanexit(char *str)
         urlgrabber_file = Open((_s_cs)file_name, MODE_NEWFILE);
         if (urlgrabber_file)
         {
+            ULONG entries;
             getmacro((Object*) WookieChat->LV_urlgrabber, MUIA_NList_Entries, &entries);
             //printf("3\n");
 
@@ -549,6 +547,10 @@ void cleanexit(char *str)
 
     if (WookieChat)
     {
+        struct dcc *dcc_send_work;
+        struct dcc *dcc_work;
+        struct dcc_chat *dcc_chat_work;
+
         if (GEIT)
             printf("10\n");
 
