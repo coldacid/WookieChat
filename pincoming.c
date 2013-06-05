@@ -268,14 +268,12 @@ BOOL user_being_ignored(char *nick, char *hostname, int type)
 
             if (my_settings.ignorelist[count].ignore_ctcp == TRUE && type == CTCP)
             {
-                colour = 6;
                 ignore_ctcp = TRUE;
                 //if(DEBUG) printf("ignoring ctcp, ");
                 return TRUE;
             }
             if (my_settings.ignorelist[count].ignore_dcc == TRUE && type == DCC)
             {
-                colour = 9;
                 ignore_dcc = TRUE;
                 //if(DEBUG) printf("ignoring dcc\n");
                 return TRUE;
@@ -4250,10 +4248,6 @@ void process_incoming()
                 }
 
             }
-            /*else if(!stricmp(string7,nick2))
-             {
-             ChangeMyNick(nick2);
-             } */
 
         }
         else if (!strcmp(incoming_2, "NICK"))
@@ -5377,7 +5371,7 @@ void process_dcc_chat_incoming()
 {
 
     /* make the default colour the "normal" text pen */
-    colour = 8;
+    LONG colour = 8;
 
     /* insert /r's where there are none */
     pch3 = strstr(dcc_chat_conductor->str, "\n");

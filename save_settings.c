@@ -15,6 +15,12 @@
 #include "intern.h"
 #include "objapp.h"
 
+char realname[100];
+char username[20];
+char nick2[30];
+char nick3[30];
+char nick[30];
+
 /* Locals */
 static char output_string[800];
 static char string11[900];

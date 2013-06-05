@@ -17,6 +17,26 @@
 /* Locals */
 static char *string1;
 static char buffer3[BUFFERSIZE*2];
+static int total_charsets;
+static char server_nick[128];
+static char server_nick2[128];
+static char server_nick3[128];
+static char server_real_name[256];
+static char server_user_name[256];
+
+
+char * get_server_info(int id)
+{
+    switch(id)
+    {
+    case(SI_NICK_1): return server_nick;
+    case(SI_NICK_2): return server_nick2;
+    case(SI_NICK_3): return server_nick3;
+    case(SI_REAL_NAME): return server_real_name;
+    case(SI_USER_NAME): return server_user_name;
+    default:return NULL;
+    }
+}
 
 void acquire_connect_details(char *work_buffer)
 {
@@ -110,6 +130,8 @@ int connect2server(char *servername, char *port_number, int typedservercommand, 
         int connect_in_current_tab, char *requested_remote_charset, int write_new_passwords_to_this_node)
 {
     int count;
+    struct hostent *he;
+
     if (use_global)
     {
         strcpy(status_conductor->nick, nick);
@@ -427,16 +449,10 @@ int connect2server(char *servername, char *port_number, int typedservercommand, 
 
     connect(status_conductor->a_socket, (struct sockaddr*) &status_conductor->slapshot_in, sizeof(struct sockaddr));
 
-    //IoctlSocket(status_conductor->a_socket, FIOASYNC, (char*)&i);
-
-    /*
-     if(write_new_passwords_to_this_node==1)
-     {
-     strcpy(status_conductor->pass,server_password);
-     strcpy(status_conductor->nick_pass,nick_password);
-     strcpy(status_conductor->auto_joins,auto_joins);
-     }*/
-
     return 0;
 }
 
+void set_total_charsets(int val)
+{
+    total_charsets = val;
+}

@@ -78,6 +78,7 @@ static char buffer3[BUFFERSIZE*2];
 static char file_name[800];
 static BOOL is_chooser_window_open = FALSE;
 static char sendstuff[1500];
+static char group_name[100];
 
 void copy_settings_to_undo_buffer()
 {
@@ -1448,13 +1449,6 @@ int main(int argc, char *argv[])
                     {
                         if (!connecting)
                         {
-                            /*
-                             strcpy(status_conductor->nick,server_nick);
-                             strcpy(status_conductor->nick2,server_nick2);
-                             strcpy(status_conductor->nick3,server_nick3);
-                             strcpy(status_conductor->user_name,server_user_name);
-                             strcpy(status_conductor->real_name,server_real_name);
-                             */
                             connect2server(server_name, port_number, 0, 0, CONNECT_IN_CURRENT_TAB, server_charset, 1);
                             strcpy(status_conductor->groupname, group_name);
                             connecting = 1;
@@ -1465,34 +1459,11 @@ int main(int argc, char *argv[])
                         {
                             create_new_status(0);
 
-                            /*
-                             strcpy(status_conductor->nick,server_nick);
-                             strcpy(status_conductor->nick2,server_nick2);
-                             strcpy(status_conductor->nick3,server_nick3);
-                             strcpy(status_conductor->user_name,server_user_name);
-                             strcpy(status_conductor->real_name,server_real_name);
-                             */
                             connect2server(server_name, port_number, 0, 0, CONNECT_IN_CURRENT_TAB, server_charset, 1);
                             strcpy(status_conductor->groupname, group_name);
                             //printf("connecting2.. to %s\n",group_name);
 
                         }
-
-                        /*
-                         if(!connecting)
-                         {
-                         connect2server(server_name,port_number,0,0,CONNECT_IN_CURRENT_TAB,server_charset,1);
-                         strcpy(status_conductor->groupname,group_name);
-                         connecting=1;
-                         }
-                         else
-                         {
-                         create_new_status(0);
-                         connect2server(server_name,port_number,0,0,CONNECT_IN_CURRENT_TAB,server_charset,1);
-                         strcpy(status_conductor->groupname,group_name);
-
-                         }*/
-
                     }
 
                 }
@@ -2083,11 +2054,11 @@ int main(int argc, char *argv[])
                         setmacro((Object*)WookieChat->CH_use_global, MUIA_Selected, use_global);
 
                         //fill in the GUI with values we've extracted from the line we've pulled from the Server window
-                        setmacro((Object*)WookieChat->STR_server_realname, MUIA_String_Contents, server_real_name);
-                        setmacro((Object*)WookieChat->STR_server_username, MUIA_String_Contents, server_user_name);
-                        setmacro((Object*)WookieChat->STR_server_nickname1, MUIA_String_Contents, server_nick);
-                        setmacro((Object*)WookieChat->STR_server_nickname2, MUIA_String_Contents, server_nick2);
-                        setmacro((Object*)WookieChat->STR_server_nickname3, MUIA_String_Contents, server_nick3);
+                        setmacro((Object*)WookieChat->STR_server_realname, MUIA_String_Contents, get_server_info(SI_REAL_NAME));
+                        setmacro((Object*)WookieChat->STR_server_username, MUIA_String_Contents, get_server_info(SI_USER_NAME));
+                        setmacro((Object*)WookieChat->STR_server_nickname1, MUIA_String_Contents, get_server_info(SI_NICK_1));
+                        setmacro((Object*)WookieChat->STR_server_nickname2, MUIA_String_Contents, get_server_info(SI_NICK_2));
+                        setmacro((Object*)WookieChat->STR_server_nickname3, MUIA_String_Contents, get_server_info(SI_NICK_3));
 
                         //we're editing a server now, so make all these fields editable .. (they're not editable when you edit a group)
                         setmacro((Object*)WookieChat->CH_autoconnect, MUIA_Disabled, FALSE);
@@ -2435,13 +2406,6 @@ int main(int argc, char *argv[])
 
                     acquire_connect_details(work_buffer);
 
-                    /*
-                     strcpy(status_conductor->nick,server_nick);
-                     strcpy(status_conductor->nick2,server_nick2);
-                     strcpy(status_conductor->nick3,server_nick3);
-                     strcpy(status_conductor->user_name,server_user_name);
-                     strcpy(status_conductor->real_name,server_real_name);
-                     */
                     close_server_select_window();
 
                     status_conductor = status_current; // 2004-10-13 change to make connects
@@ -2476,14 +2440,6 @@ int main(int argc, char *argv[])
                     create_new_status(0);
 
                     acquire_connect_details(work_buffer);
-
-                    /*
-                     strcpy(status_conductor->nick,server_nick);
-                     strcpy(status_conductor->nick2,server_nick2);
-                     strcpy(status_conductor->nick3,server_nick3);
-                     strcpy(status_conductor->user_name,server_user_name);
-                     strcpy(status_conductor->real_name,server_real_name);
-                     */
 
                     status_conductor->quit_requested = TRUE;
                     status_conductor->trying_to_reconnect = FALSE;

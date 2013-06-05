@@ -351,7 +351,7 @@ if(AMIX) printf("9\n");
 
 
             charsets[i]=NULL;
-            total_charsets=i-1;
+            set_total_charsets(i-1);
 
             local_charsets[i+1]=NULL;
             remote_charsets[i+1]=NULL;

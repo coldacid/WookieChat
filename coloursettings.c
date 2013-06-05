@@ -198,8 +198,6 @@ void load_colours(char *load_this_theme)
 
         strcpy(pendisplay_specs[24]->buf, "2:00000000,00000000,00000000");
 
-        colour = 8;
-
         set_colours();
 
         return;
@@ -408,8 +406,6 @@ void load_colours(char *load_this_theme)
         strcpy(pendisplay_specs[24]->buf, work);
     else
         strcpy(pendisplay_specs[24]->buf, "2:00000000,00000000,00000000");
-
-    colour = 8;
 
     if (open_file)
         Close(open_file);

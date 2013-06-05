@@ -119,10 +119,6 @@ void LoadAllLibs(void)
     work_entry =  malloc(sizeof(struct list_entry));
     centry = malloc(sizeof(struct channel_entry));
 
-    nick2 = malloc(sizeof(char) * 30);
-    nick3 = malloc(sizeof(char) * 30);
-    nick = malloc(sizeof(char) * 30);
-
     nicklist_init();
 
     fdmax = -1;

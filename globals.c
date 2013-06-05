@@ -46,9 +46,9 @@ STRPTR popimage_background;
 STRPTR popimage_nicklistbackground;
 STRPTR popimage_tabsbackground;
 
-LONG colour=8; //default colour for listview text
 
-char group_name[100];
+
+
 char server_name[100];
 char port_number[10];
 char server_password[50];
@@ -56,28 +56,20 @@ char auto_joins[100];
 char auto_connect[10];
 char nick_password[50];
 char server_charset[30];
-char server_nick[128];
-char server_nick2[128];
-char server_nick3[128];
-char server_real_name[256];
-char server_user_name[256];
+
 LONG use_global=1;
-char *nick2;
-char *nick3;
-char *nick;
-char username[20];
-char realname[100];
+
+
 int local_charset;
-int remote_charset;
 char *local_charsets[45];
 char *remote_charsets[45];
-int total_charsets;
+
 
 fd_set read_master;       // master file descriptor list
 fd_set write_master;      // master file descriptor list
 int fdmax=-1;        // maximum file descriptor number
 
-struct hostent *he;
+
 
 
 struct dcc_chat *dcc_chat_root;

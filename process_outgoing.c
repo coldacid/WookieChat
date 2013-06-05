@@ -137,10 +137,6 @@ void censor_swear_words(char *string1)
 
 void process_outgoing(char *string123, int usestringgadget)
 {
-
-    //printf("outgoing:%s\n",string123);
-    colour = 8;
-
     if (usestringgadget)
     {
         status_conductor = status_current;

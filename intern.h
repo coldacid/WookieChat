@@ -1000,9 +1000,13 @@ extern STRPTR popimage_background;
 extern STRPTR popimage_nicklistbackground;
 extern STRPTR popimage_tabsbackground;
 
-extern LONG colour;
 
-extern char group_name[100];
+
+
+
+
+
+
 extern char server_name[100];
 extern char port_number[10];
 extern char server_password[50];
@@ -1010,35 +1014,13 @@ extern char auto_joins[100];
 extern char auto_connect[10];
 extern char nick_password[50];
 extern char server_charset[30];
-extern char server_nick[128];
-extern char server_nick2[128];
-extern char server_nick3[128];
-extern char server_real_name[256];
-extern char server_user_name[256];
 extern LONG use_global;
-extern char *nick2;
-extern char *nick3;
-extern char *nick;
-extern char username[20];
-extern char realname[100];
 extern int local_charset;
-extern int remote_charset;
 extern char *local_charsets[45];
 extern char *remote_charsets[45];
-extern int total_charsets;
-
 extern fd_set read_master;
 extern fd_set write_master;
 extern int fdmax;
-
-extern struct hostent *he;
-
-
-
-
-
-
-
 extern struct dcc_chat *dcc_chat_root;
 extern struct dcc_chat *dcc_chat_conductor;
 extern struct dcc *dcc_root;
@@ -1131,9 +1113,17 @@ ULONG Window_Dispatcher(Class *cl, Object *obj, Msg msg);
 ULONG Group_Dispatcher(Class *cl, Object *obj, Msg msg);
 
 /* connect2server.c */
+#define SI_NICK_1       0
+#define SI_NICK_2       1
+#define SI_NICK_3       2
+#define SI_REAL_NAME    3
+#define SI_USER_NAME    4
+#define SI_MAX          5
 int connect2server(char *servername, char *port_number, int typedservercommand, int set_connect_script_name,
         int connect_in_current_tab, char *requested_remote_charset, int write_new_passwords_to_this_node);
 void acquire_connect_details(char*);
+void set_total_charsets(int val);
+char * get_server_info(int id);
 
 /* pincoming.c */
 extern struct list_entry new_entry2;
@@ -1308,6 +1298,11 @@ struct user_list_buttons_array
 
 };
 extern struct user_list_buttons_array buttons[MAX_BUTTONS + 1];
+extern char nick2[30];
+extern char nick3[30];
+extern char nick[30];
+extern char username[20];
+extern char realname[100];
 
 void set_settings();
 void load_settings();
