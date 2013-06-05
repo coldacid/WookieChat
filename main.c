@@ -79,6 +79,7 @@ static char file_name[800];
 static BOOL is_chooser_window_open = FALSE;
 static char sendstuff[1500];
 static char group_name[100];
+static struct Settings temp_settings;
 
 void copy_settings_to_undo_buffer()
 {
@@ -4292,6 +4293,8 @@ int main(int argc, char *argv[])
 
                                 for (LONG id = MUIV_NList_NextSelected_Start;;)
                                 {
+                                    struct list_entry *work_entry = NULL;
+
                                     if (buttons[result].command[0] != '/')
                                         strcpy(work_buffer, "/");
                                     else
@@ -4425,11 +4428,14 @@ int main(int argc, char *argv[])
                                         {
                                             work_buffer2[count2] = '%';
                                         }
+#if 0
+                                        // FIXME: This code was accessing global work_entry of unknow state!
                                         else if (work_buffer[count] == 's') //selected nick
                                         {
                                             strcat(work_buffer2, work_entry->name);
                                             count2 = strlen(work_buffer2) - 1;
                                         }
+#endif
                                         else if (work_buffer[count] == 'c') //current channel
                                         {
                                             strcat(work_buffer2, status_conductor->conductor->name);

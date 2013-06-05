@@ -28,23 +28,16 @@ struct status_window *status_previous;
 struct status_window *status_next;
 
 struct query_window *current_query;
-struct query_window *work_query;
 
-struct list_entry *work_list_entry;
-struct list_entry *work_list_entry2;
-struct list_entry *work_entry;
+
 
 struct Settings my_settings;
-struct Settings temp_settings;
 
 
 
 
-struct MUI_PenSpec *pendisplay_specs[25];
 
-STRPTR popimage_background;
-STRPTR popimage_nicklistbackground;
-STRPTR popimage_tabsbackground;
+
 
 
 

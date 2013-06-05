@@ -51,7 +51,7 @@ static struct query_window *init_conductor(int a)
     test->next=NULL;
     test->removed=0;
     test->nicks=0;
-    work_query=NULL;
+
     //test->queued_messages_current=0;
     test->queued_messages_total=0;
 
@@ -1126,6 +1126,8 @@ void give_each_tab_a_page_group_number()
     BOOL is_our_reset_pointer_valid = TRUE;
     APTR member_object = NULL;
     struct MinList *list = NULL;
+    struct query_window *work_query = NULL;
+
     if (status_conductor)
     {
         status_work = status_conductor;
@@ -1163,14 +1165,6 @@ void give_each_tab_a_page_group_number()
         count++;
     }
 
-    /*for(count=0,status_conductor=status_root; status_conductor; status_conductor=status_conductor->next)
-     {
-     for(status_conductor->conductor=status_conductor->root; status_conductor->conductor; status_conductor->conductor=status_conductor->conductor->next,count++)
-     {
-     printf("tab %d has the active page %d\n",count,status_conductor->conductor->page_number);
-     }
-     } */
-
     if (is_our_reset_pointer_valid == TRUE)
     {
         status_conductor = status_work;
@@ -1185,6 +1179,7 @@ int give_each_tab_a_listview_number_for_switching_tabs()
 {
     int count;
     BOOL is_our_reset_pointer_valid = TRUE;
+    struct query_window *work_query = NULL;
     if (status_conductor)
     {
         status_work = status_conductor;
@@ -1232,6 +1227,7 @@ void close_tab(void)
 {
     APTR member_object = NULL;
     struct MinList *list = NULL;
+    struct list_entry *work_list_entry = NULL;
     status_conductor = status_current;
 
     status_conductor = status_current;
@@ -1592,7 +1588,6 @@ void close_tab(void)
 
         }
 
-        work_query = query_previous;
 
         FreeVec(status_conductor->current_query);
         status_conductor->current_query = NULL;

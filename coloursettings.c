@@ -12,6 +12,11 @@
 
 #include "intern.h"
 
+struct MUI_PenSpec *pendisplay_specs[25];
+STRPTR popimage_background;
+STRPTR popimage_nicklistbackground;
+STRPTR popimage_tabsbackground;
+
 /* Locals */
 static char background2[64];
 static char file_name[800];

@@ -119,13 +119,6 @@ int free_graphical_smilies(struct query_window *new_tab)
 
     if (DEBUG)
         printf("freeing all graphical smilies() so they can be used in a new tab..\n");
-    //if(new_tab==status_conductor->conductor)
-    /*if(new_tab == status_conductor->conductor)
-     {
-     printf("not doing free_graphical_smilies()\n");
-     work_query=status_conductor->conductor;
-     return 0;
-     } */
 
     if (my_settings.graphical_smilies == TRUE)
     {
@@ -284,10 +277,6 @@ void delete_smiley_objects()
     if (status_conductor)
     {
         work_status = status_conductor;
-
-        if (status_conductor->conductor)
-            work_query = status_conductor->conductor;
-
     }
 
     for (status_conductor = status_root; status_conductor; status_conductor = status_conductor->next)
@@ -315,9 +304,6 @@ void delete_smiley_objects()
         }
 
     }
-
-    //status_conductor=work_status;
-    //if(status_conductor) status_conductor->conductor=work_query;
 
     for (int count = 1; count <= total_smileys; count++)
     {

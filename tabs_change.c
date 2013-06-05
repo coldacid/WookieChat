@@ -771,10 +771,7 @@ void remove_tab_listview2()
 
 void switch_between_tabs(int result)
 {
-
     check_if_at_bottom();
-
-    work_query = status_current->current_query;
 
     if (DEBUG)
         printf("switching to tab: %i\n", result);
@@ -844,6 +841,7 @@ void switch_between_tabs(int result)
 
     if (DoMethod((Object*) GROUP_ROOT_0, MUIM_Group_InitChange))
     {
+        struct list_entry *work_list_entry = NULL;
         if (DoMethod((Object*) GR_top, MUIM_Group_InitChange))
         {
             while (status_conductor)
@@ -938,8 +936,6 @@ int switch_between_tabs_with_keys(int result)
         printf("switching with keys..\n");
     check_if_at_bottom();
 
-    work_query = status_current->current_query;
-
     //if(ZUNE_SYSTEM==TRUE) setmacro((Object*)WookieChat->WI_main,MUIA_Window_Open, FALSE);
 
     if (DEBUG)
@@ -994,7 +990,7 @@ int switch_between_tabs_with_keys(int result)
 
     if (DoMethod((Object*) GROUP_ROOT_0, MUIM_Group_InitChange))
     {
-
+        struct list_entry *work_list_entry = NULL;
         if (DoMethod((Object*) GR_top, MUIM_Group_InitChange))
         {
 
@@ -1103,10 +1099,9 @@ int switch_between_tabs_with_keys(int result)
 int switch_between_tabs_with_nlisttabclick(LONG result, BOOL saving_prefs)
 {
     int count;
+    struct list_entry *work_list_entry = NULL;
 
     check_if_at_bottom();
-
-    work_query = status_current->current_query;
 
     if (NEWDEBUG)
         printf("switching to tab: %ld\n", result);
@@ -1160,8 +1155,6 @@ int switch_between_tabs_with_nlisttabclick(LONG result, BOOL saving_prefs)
         }
 
     }
-
-    //work_query=status_conductor->conductor;
 
     if (!status_conductor || !status_current)
     {
@@ -1275,7 +1268,7 @@ int switch_between_tabs_with_nlisttabclick(LONG result, BOOL saving_prefs)
         if (work_list_entry)
         {
 
-            work_list_entry2 = malloc(sizeof(struct list_entry));
+            struct list_entry *work_list_entry2 = malloc(sizeof(struct list_entry));
 
             strcpy(work_list_entry2->modes, string8);
             strcpy(work_list_entry2->name, string9);

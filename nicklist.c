@@ -208,6 +208,7 @@ void AddNick(char *nick, char *hostname)
     //the area of regular users, with no channel status modes.
     while (a < entries && b != 1)
     {
+        struct list_entry *work_entry = NULL;
         DoMethod((Object*) status_conductor->conductor->LV_nicklist, MUIM_NList_GetEntry, a, &work_entry);
 
         result = 0;
@@ -233,6 +234,7 @@ void AddNick(char *nick, char *hostname)
 
     while (a != entries)
     {
+        struct list_entry *work_entry = NULL;
         DoMethod((Object*) status_conductor->conductor->LV_nicklist, MUIM_NList_GetEntry, a, &work_entry);
 
         if (work_entry && work_entry3)
@@ -293,7 +295,7 @@ int ReplaceNicksWithVoiceOps(char *string1, char prefix, int option)
 
     while (a < entries)
     {
-
+        struct list_entry *work_entry = NULL;
         DoMethod((Object*) status_conductor->conductor->LV_nicklist, MUIM_NList_GetEntry, a, &work_entry);
 
         strcpy(new_entry->modes, work_entry->modes);
@@ -420,7 +422,7 @@ int RemoveNick(char *string1)
 
     for (a = 0; a < entries; a++)
     {
-        //printf("2: entries:%i a:%i\n",entries,a);
+        struct list_entry *work_entry = NULL;
         DoMethod((Object*) status_conductor->conductor->LV_nicklist, MUIM_NList_GetEntry, a, &work_entry);
 
         if (work_entry)

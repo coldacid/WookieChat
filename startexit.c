@@ -116,7 +116,6 @@ void LoadAllLibs(void)
 {
     int a;
 
-    work_entry =  malloc(sizeof(struct list_entry));
     centry = malloc(sizeof(struct channel_entry));
 
     nicklist_init();
@@ -358,9 +357,6 @@ void LoadAllLibs(void)
 #endif
 
     total_smileys = 0;
-
-    //lets create some more structures
-    work_entry = malloc(sizeof(struct list_entry));
 
     //zero the socket filedescriptor sets
     FD_ZERO(&read_master);
@@ -617,6 +613,7 @@ void cleanexit(char *str)
             while (status_conductor->conductor)
             {
                 int count;
+                struct query_window *work_query = NULL;
                 // printf("4\n");
 
                 for (count = 0; count < 2500; count++)

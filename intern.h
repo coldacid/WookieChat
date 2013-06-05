@@ -985,28 +985,19 @@ extern struct status_window *status_work;
 extern struct status_window *status_previous;
 extern struct status_window *status_next;
 
+
+
+
+
+
+
+
+
+
+
+
 extern struct query_window *current_query;
-extern struct query_window *work_query;
-
-extern struct list_entry *work_list_entry;
-extern struct list_entry *work_list_entry2;
-extern struct list_entry *work_entry;
-
 extern struct Settings my_settings;
-extern struct Settings temp_settings;
-
-extern struct MUI_PenSpec *pendisplay_specs[25];
-extern STRPTR popimage_background;
-extern STRPTR popimage_nicklistbackground;
-extern STRPTR popimage_tabsbackground;
-
-
-
-
-
-
-
-
 extern char server_name[100];
 extern char port_number[10];
 extern char server_password[50];
@@ -1082,6 +1073,10 @@ void set_channel_clipboard_hook();
 void process_outgoing(char*, int);
 
 /* coloursettings.c */
+extern struct MUI_PenSpec *pendisplay_specs[25];
+extern STRPTR popimage_background;
+extern STRPTR popimage_nicklistbackground;
+extern STRPTR popimage_tabsbackground;
 void save_colours();
 void get_colours();
 void set_colours();

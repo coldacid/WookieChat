@@ -517,7 +517,7 @@ int add_text_to_conductor_list(char *buffer1, LONG colour, int activitylevel)
         {
             if (status_conductor->away == TRUE && status_conductor->connection_active)
             {
-                work_query = status_conductor->conductor;
+                struct query_window *work_query = status_conductor->conductor;
 
                 if (status_conductor == status_current)
                     status_conductor->conductor = status_conductor->current_query;
@@ -708,7 +708,7 @@ int add_text_to_conductor_list(char *buffer1, LONG colour, int activitylevel)
         if(status_conductor->conductor->waiting_to_be_displayed_count>=49)
         {
             work_status=status_conductor;
-            work_query=status_conductor->conductor;
+            struct query_window *work_query=status_conductor->conductor;
             selectup_code();
             status_conductor=work_status;
             status_conductor->conductor=work_query;

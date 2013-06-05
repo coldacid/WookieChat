@@ -163,21 +163,13 @@ void sort_linked_list(void)
 
         for (status_conductor->conductor = status_conductor->root; status_conductor->conductor;)
         {
-            work_query = status_conductor->conductor;
+            struct query_window *work_query = status_conductor->conductor;
             status_conductor->conductor = status_conductor->conductor->next;
 
             if (status_conductor->conductor)
-                status_conductor->conductor->previous = work_query; //status_conductor->conductor;
+                status_conductor->conductor->previous = work_query;
 
-            //status_conductor->conductor=status_conductor->conductor->next
         }
-
-        /*while(current!=NULL)
-         {
-         current->previous=current;
-         current=current->next;
-
-         } */
 
         //For display the sorted numbers
         if (DEBUG)

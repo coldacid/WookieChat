@@ -586,7 +586,7 @@ ULONG NList_ContextMenu(struct IClass *cl, Object *obj, struct MUIP_ContextMenuC
 
     for(LONG id = MUIV_NList_NextSelected_Start;;)
     {
-
+    struct list_entry *work_entry = NULL;
     DoMethod((Object*)obj,MUIM_NList_NextSelected,&id);
     DoMethod((Object*)obj,MUIM_NList_GetEntry,id, &work_entry);
     if(id == MUIV_NList_NextSelected_End) break;
@@ -1193,6 +1193,8 @@ ULONG BetterString_HandleEvent(struct IClass *cl, Object *obj, struct MUIP_Handl
                     }
                     else
                     {
+                        struct query_window *work_query = NULL;
+
                         for(a=0; a!=11; a++) strcpy(list_found_nicks[a],""); //wipe the list of partially found nicks
 
                         d=0; found_nicks=0; a=0;

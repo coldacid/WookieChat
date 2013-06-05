@@ -701,6 +701,7 @@ int sel10hookfunc(void) {
             {
                 if(!stricmp(status_conductor->conductor->name,(char*)parameters[1]))
                 {
+                    struct list_entry *work_entry = NULL;
                     DoMethod((Object*)status_conductor->conductor->LV_nicklist,MUIM_NList_GetEntry,MUIV_NList_GetEntry_Active, &work_entry);
                     if(work_entry) setmacro((Object*)app, MUIA_Application_RexxString, work_entry->name);
                     break;
@@ -712,6 +713,7 @@ int sel10hookfunc(void) {
     {
         if(status_current->current_query)
         {
+            struct list_entry *work_entry = NULL;
             DoMethod((Object*)status_current->current_query->LV_nicklist,MUIM_NList_GetEntry,MUIV_NList_GetEntry_Active, &work_entry);
             if(work_entry) setmacro((Object*)app, MUIA_Application_RexxString, work_entry->name);
 
@@ -777,6 +779,7 @@ int sel11hookfunc(void) {
     {
         if(status_conductor->conductor)
         {
+            struct list_entry *work_entry = NULL;
             DoMethod((Object*)status_conductor->conductor->LV_nicklist,MUIM_NList_GetEntry,atol((char*)parameters[1]), &work_entry);
             if(work_entry) setmacro((Object*)app, MUIA_Application_RexxString, work_entry->name);
         }
