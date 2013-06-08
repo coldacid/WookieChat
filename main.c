@@ -32,6 +32,7 @@
 #include "intern.h"
 #include "objapp.h"
 #include "audio.h"
+#include "locale.h"
 
 /* Global flags */
 BOOL NEWDEBUG               = FALSE;
@@ -241,8 +242,11 @@ void send_dcc_chat(char *text)
 
     if (!dcc_chat_conductor->connected)
     {
-        sprintf(buffer3, "%s%s%s%s %s", timestamp, GCS(217, "["), GCS(0, "Error"),
-                GCS(218, "]"), GCS(135, "Not connected to a user"));
+		sprintf(buffer3, "%s%s%s%s %s", timestamp,
+				LGS( MSG_OPENING_BRACKET ),
+				LGS( MSG_ERROR ),
+				LGS( MSG_CLOSING_BRACKET ),
+				LGS( MSG_NOT_CONNECTED_TO_USER ) );
         add_text_to_conductor_list(buffer3, 9, ACTIVITY_CHAT);
         return;
     }
@@ -283,9 +287,11 @@ void send_dcc_chat(char *text)
 
             if (dcc_chat_conductor->connected == 1)
             {
-                sprintf(buffer3, "%s%s%s%s %s", timestamp, GCS(217, "["),
-                        GCS(0, "Error"), GCS(218, "]"),
-                        GCS(135, "Not connected to a user"));
+				sprintf(buffer3, "%s%s%s%s %s", timestamp,
+						LGS( MSG_OPENING_BRACKET ),
+						LGS( MSG_ERROR ),
+						LGS( MSG_CLOSING_BRACKET ),
+						LGS( MSG_NOT_CONNECTED_TO_USER ) );
                 if (dcc_chat_conductor->conductor->LV_channel)
                     add_text_to_conductor_list(buffer3, 9, ACTIVITY_CHAT);
                 dcc_chat_conductor->connected = 0;
@@ -335,8 +341,11 @@ void send_current(char *text2)
 
     if (!status_current->connection_active)
     {
-        sprintf(buffer3, "%s%s%s%s %s", timestamp, GCS(217, "["), GCS(0, "Error"),
-                GCS(218, "]"), GCS(134, "Not connected to a server"));
+		sprintf(buffer3, "%s%s%s%s %s", timestamp,
+				LGS( MSG_OPENING_BRACKET ),
+				LGS( MSG_ERROR ),
+				LGS( MSG_CLOSING_BRACKET ),
+				LGS( MSG_NOT_CONNECTED ) );
 
         add_text_to_current_list(buffer3, 9, ACTIVITY_CHAT);
         return;
@@ -385,8 +394,10 @@ void send_current(char *text2)
             if (DEBUG)
                 printf("error:%li\nunable to send:%s", Errno(), text);
             sprintf(buffer3, "%s%s%s%s Unable to send text: error number: %li", timestamp,
-                    GCS(217, "["), GCS(0, "Error"),
-                    GCS(218, "]"), Errno());
+					LGS( MSG_OPENING_BRACKET ),
+					LGS( MSG_ERROR ),
+					LGS( MSG_CLOSING_BRACKET ),
+					Errno());
             if (status_current->conductor->LV_channel)
                 add_text_to_current_list(buffer3, 9, ACTIVITY_CHAT);
 
@@ -396,9 +407,11 @@ void send_current(char *text2)
                 if (status_current->connection_active == 1)
                 {
 
-                    sprintf(buffer3, "%s%s%s%s %s", timestamp, GCS(217, "["),
-                            GCS(0, "Error"), GCS(218, "]"),
-                            GCS(134, "Not connected to a server"));
+					sprintf(buffer3, "%s%s%s%s %s", timestamp,
+							LGS( MSG_OPENING_BRACKET ),
+							LGS( MSG_ERROR ),
+							LGS( MSG_CLOSING_BRACKET ),
+							LGS( MSG_NOT_CONNECTED ) );
 
                     status_current->conductor = status_current->root;
                     while (status_current->conductor)
@@ -450,7 +463,7 @@ BOOL ParseToolTypes(struct WBArg *wbarg)
     if (!wbarg->wa_Name)
         return 0;
 
-    if ((*wbarg->wa_Name) && (dobj = GetDiskObject((c1_in) (wbarg->wa_Name))))
+	if ((*wbarg->wa_Name) && (dobj = GetDiskObject((c1_in) (wbarg->wa_Name))))
     {
         toolarray = /*(char **)*/ dobj->do_ToolTypes;
         if ((s = (char *) FindToolType((c2_in) toolarray, (c1_in) "SMALLTABS")))
@@ -785,13 +798,12 @@ int main(int argc, char *argv[])
         cleanexit((char*) "cant create timers\n");
 
     if (!create_custom_classes())
-        cleanexit((char*) GCS(140,
-                    "These missing classes can be downloaded from http://www.aminet.net/ or http://os4depot.net. Check the WookieChat readme for direct links to these classes\n"));
+		cleanexit((char*) LGS( MSG_ERROR_MISSING ) );
 //
 
     WookieChat = CreateApp();
     if (!WookieChat)
-        cleanexit((char*) GCS(133, "cant create application\n"));
+		cleanexit((char*) LGS( MSG_UNABLE_TO_CREATE_APP ) );
 
     arexx_add_scripts_to_menu();
 
@@ -1397,7 +1409,7 @@ int main(int argc, char *argv[])
                 if (port_number[0] != '\0')
                 {
 
-                    if (!stricmp(auto_connect, "Yes") || !stricmp(auto_connect, (char *)GCS(27, "Yes")))
+					if (!stricmp(auto_connect, "Yes") || !stricmp(auto_connect, (char *) LGS( MSG_YES ))) /* geit FIXME: NO LOCALE SETTINGS */
                     {
                         if (!connecting)
                         {
@@ -2045,7 +2057,7 @@ int main(int argc, char *argv[])
                         setmacro((Object*)WookieChat->STR_autojoin, MUIA_String_BufferPos, 0);
                         setmacro((Object*)WookieChat->STR_nick_registration_command, MUIA_String_BufferPos, 0);
 
-                        if (!stricmp(auto_connect, "Yes") || !stricmp(auto_connect, (char *)GCS(27, "Yes")))
+						if (!stricmp(auto_connect, "Yes") || !stricmp(auto_connect, (char *) LGS( MSG_YES ) )) /* geit FIXME: NO TRANSLATIONS IN SETTINGS */
                             setmacro((Object*)WookieChat->CH_autoconnect, MUIA_Selected, TRUE);
                         else
                             setmacro((Object*)WookieChat->CH_autoconnect, MUIA_Selected, FALSE);
@@ -2145,9 +2157,9 @@ int main(int argc, char *argv[])
                     strcat(work_buffer3, " AUTOCONNECT=");
 
                     if (my_auto_connect)
-                        strcat(work_buffer3, (char *)GCS(27, "Yes"));
+						strcat(work_buffer3, (char *) "Yes"); /*fixed local saving here */
                     else
-                        strcat(work_buffer3, (char *)GCS(28, "No"));
+						strcat(work_buffer3, (char *) "No" ); /* fixed local saving here */
 
                     strcat(work_buffer3, " SERVER_CHARSET=");
                     //#ifdef __AROS__
@@ -2489,7 +2501,7 @@ int main(int argc, char *argv[])
 
                                     dcc_conductor->total_recv = 0;
 
-                                    strcpy(dcc_conductor->entry->status, (char *)GCS(201, "Connecting"));
+									strcpy(dcc_conductor->entry->status, (char *) LGS( MSG_CONNECTING ));
                                     strcpy(dcc_conductor->entry->percentage, "0%");
 
                                     DoMethod((Object*) WookieChat->LV_dcc, MUIM_NList_ReplaceSingle,
@@ -2602,7 +2614,7 @@ int main(int argc, char *argv[])
 
                                 if (dcc_conductor->entry)
                                 {
-                                    strcpy(dcc_conductor->entry->status, (char *)GCS(142, "Cancelled"));
+									strcpy(dcc_conductor->entry->status, (char *) LGS( MSG_CANCELLED ) );
                                     strcpy(dcc_conductor->entry->percentage, "N/A");
 
                                     dcc_conductor->cancelled = 1;
@@ -2877,17 +2889,27 @@ int main(int argc, char *argv[])
 
                 status_conductor = status_current;
 
-                //filerequester=(struct FileRequester*)AllocAslRequestTags(ASL_FileRequest,ASLFR_PopToFront,TRUE,ASLFR_TitleText,GCS(catalog,87,"Choose filename to save buffer as.."),ASLFR_DoMultiSelect,TRUE,ASLFR_InitialDrawer,"progdir:",TAG_DONE, NULL);
+				//filerequester=(struct FileRequester*)AllocAslRequestTags(ASL_FileRequest,ASLFR_PopToFront,TRUE,ASLFR_TitleText,LGS( MSG_CHOOSE_FILENAME ),ASLFR_DoMultiSelect,TRUE,ASLFR_InitialDrawer,"progdir:",TAG_DONE, NULL);
                 getmacro((Object*)WookieChat->WI_main, MUIA_Window_Window, &my_window);
 
 #ifdef __amigaos4__
-                filerequester=(struct FileRequester*)AllocAslRequestTags(ASL_FileRequest,ASLFR_Window,my_window,ASLFR_PopToFront,TRUE,ASLFR_TitleText,GCS(catalog,87,"Choose filename to save buffer as.."),ASLFR_DoMultiSelect,TRUE,ASLFR_InitialDrawer,"progdir:",TAG_DONE, NULL);
+				filerequester=(struct FileRequester * ) AllocAslRequestTags( ASL_FileRequest, ASLFR_Window, my_window,
+																							ASLFR_PopToFront,TRUE,
+																							ASLFR_TitleText, LGS( MSG_CHOOSE_FILENAME ),
+																							ASLFR_DoMultiSelect, TRUE,
+																							ASLFR_InitialDrawer, "progdir:",
+																							TAG_DONE );
 #elif __MORPHOS__
-                filerequester=(struct FileRequester*)AllocAslRequestTags(ASL_FileRequest,/*ASLFR_TitleText,GCS(catalog,87,"Choose filename to save buffer as.."),ASLFR_DoMultiSelect,TRUE,ASLFR_InitialDrawer,"progdir:",*/TAG_DONE, NULL);
+				filerequester=(struct FileRequester*) AllocAslRequestTags( ASL_FileRequest, ASLFR_TitleText, LGS( MSG_CHOOSE_FILENAME ),
+																								ASLFR_DoMultiSelect, TRUE,
+																								ASLFR_InitialDrawer, "progdir:",
+																								TAG_DONE );
 #else
-                filerequester = (struct FileRequester*) AllocAslRequestTags(ASL_FileRequest, ASLFR_TitleText,
-                        GCS(87, "Choose filename to save buffer as.."), ASLFR_DoMultiSelect, TRUE,
-                        ASLFR_InitialDrawer, "progdir:", TAG_DONE, NULL);
+				filerequester = (struct FileRequester*) AllocAslRequestTags(ASL_FileRequest,
+																							ASLFR_TitleText, LGS( MSG_CHOOSE_FILENAME ),
+																							ASLFR_DoMultiSelect, TRUE,
+																							ASLFR_InitialDrawer, "progdir:",
+																							TAG_DONE );
 #endif
 
                 aslresult = AslRequest(filerequester, NULL);
@@ -2906,8 +2928,10 @@ int main(int argc, char *argv[])
                         ULONG entries;
                         getmacro((Object*)status_conductor->current_query->LV_channel, MUIA_NList_Entries, &entries);
 
-                        sprintf(buffer3, "%s%sBuffer%s %s %s", timestamp, GCS(217, "["),
-                                GCS(218, "]"), GCS(141, "Saving buffer to file:"),
+						sprintf(buffer3, "%s%sBuffer%s %s %s", timestamp,
+								LGS( MSG_OPENING_BRACKET ),
+								LGS( MSG_PART ),
+								LGS( MSG_SAVING_BUFFER_TO ),
                                 work_buffer);
                         add_text_to_current_list(buffer3, 9, ACTIVITY_CHAT);
 
@@ -2983,7 +3007,7 @@ int main(int argc, char *argv[])
 
                                 if (dcc_send_conductor->entry)
                                 {
-                                    strcpy(dcc_send_conductor->entry->status, (char *)GCS(142, "Cancelled"));
+									strcpy(dcc_send_conductor->entry->status, (char *) LGS( MSG_CANCELLED ) );
                                     strcpy(dcc_send_conductor->entry->percentage, "N/A");
                                     dcc_send_conductor->cancelled = 1;
                                     //if(dcc_send_conductor->completed!=1 && dcc_send_conductor->connected!=0)
@@ -3122,24 +3146,25 @@ int main(int argc, char *argv[])
                             buffer3,
                             "%s%sDCC%s %s",
                             timestamp,
-                            GCS(217, "["),
-                            GCS(218, "]"),
-                            GCS(143,
-                                    "Please select a file to send, and a nick to offer the file to"));
+							LGS( MSG_OPENING_BRACKET ),
+							LGS( MSG_CLOSING_BRACKET ),
+							LGS( MSG_DCC_SEND_MESSAGE ) );
                     add_text_to_current_list(buffer3, 9, ACTIVITY_CHAT);
                 }
                 else if (!strcmp(string1, ""))
                 {
-                    sprintf(buffer3, "%s%sDCC%s %s", timestamp, GCS(217, "["),
-                            GCS(218, "]"),
-                            GCS(144, "Please select a file to send"));
+					sprintf(buffer3, "%s%sDCC%s %s", timestamp,
+							LGS( MSG_OPENING_BRACKET ),
+							LGS( MSG_CLOSING_BRACKET ),
+							LGS( MSG_DCC_SEND_MESSAGE2 ) );
                     add_text_to_current_list(buffer3, 9, ACTIVITY_CHAT);
                 }
                 else if (!strcmp(string2, ""))
                 {
-                    sprintf(buffer3, "%s%sDCC%s %s", timestamp, GCS(217, "["),
-                            GCS(218, "]"),
-                            GCS(145, "Please select a nick to offer the file to"));
+					sprintf(buffer3, "%s%sDCC%s %s", timestamp,
+							LGS( MSG_OPENING_BRACKET ),
+							LGS( MSG_CLOSING_BRACKET ),
+							LGS( MSG_DCC_SEND_MESSAGE3 ) );
                     add_text_to_current_list(buffer3, 9, ACTIVITY_CHAT);
                 }
                 else if (string1 && string2)
@@ -3244,16 +3269,16 @@ int main(int argc, char *argv[])
             {
 // ADD an ignore entry to the ignore list
                 setmacro((Object*)WookieChat->STR_addignore, MUIA_String_Contents, "");
-                setmacro((Object*)WookieChat->WI_addignore, MUIA_Window_Title, GCS(273,"Add"));
-                setmacro((Object*)WookieChat->BT_addignore, MUIA_Text_Contents, GCS(273,"Add"));
+				setmacro((Object*)WookieChat->WI_addignore, MUIA_Window_Title,  LGS( MSG_IGNORE_ADD ));
+				setmacro((Object*)WookieChat->BT_addignore, MUIA_Text_Contents, LGS( MSG_IGNORE_ADD ));
                 setmacro((Object*)WookieChat->WI_addignore, MUIA_Window_Open, TRUE);
 //
             }
             else if (result == 86) //EDIT an ignore entry in the ignore list
             {
 // EDIT an ignore entry in the ignore list
-                setmacro((Object*)WookieChat->WI_addignore, MUIA_Window_Title, GCS(274,"Edit"));
-                setmacro((Object*)WookieChat->BT_addignore, MUIA_Text_Contents, GCS(274,"Edit"));
+				setmacro((Object*)WookieChat->WI_addignore, MUIA_Window_Title, LGS( MSG_IGNORE_EDIT ));
+				setmacro((Object*)WookieChat->BT_addignore, MUIA_Text_Contents, LGS( MSG_IGNORE_EDIT ));
 
                 DoMethod((Object*) WookieChat->LV_ignore, MUIM_NList_GetEntry, MUIV_NList_GetEntry_Active, &string4);
 
@@ -3376,7 +3401,7 @@ int main(int argc, char *argv[])
                     }
 
                 }
-                else if (!stricmp(string1, "add") || !stricmp(string1, (char *)GCS(273, "Add")))
+				else if (!stricmp(string1, "add") || !stricmp(string1, (char *) LGS( MSG_IGNORE_ADD )));
                 {
 
                     LONG string1, string2, string3;
@@ -3588,11 +3613,10 @@ int main(int argc, char *argv[])
                                     buffer3,
                                     "%s%s%s%s %s",
                                     timestamp,
-                                    GCS(217, "["),
-                                    GCS(0, "Error"),
-                                    GCS(218, "]"),
-                                    GCS(136,
-                                            "Please go to the \"Main Settings\" window, and choose a browser for WookieChat to open web sites with"));
+									LGS( MSG_OPENING_BRACKET ),
+									LGS( MSG_ERROR ),
+									LGS( MSG_CLOSING_BRACKET ),
+									LGS( MSG_NO_BROWSER_SELECTED ) );
 
                             status_conductor = status_current;
                             status_conductor->conductor = status_conductor->current_query;
@@ -3666,11 +3690,11 @@ int main(int argc, char *argv[])
                                 buffer3,
                                 "%s%s%s%s %s",
                                 timestamp,
-                                GCS(217, "["),
-                                GCS(0, "Error"),
-                                GCS(218, "]"),
-                                GCS(136,
-                                        "Please go to the \"Main Settings\" window, and choose a browser for WookieChat to open web sites with"));
+								LGS( MSG_OPENING_BRACKET ),
+								LGS( MSG_ERROR ),
+								LGS( MSG_CLOSING_BRACKET ),
+								LGS( MSG_NO_BROWSER_SELECTED ) );
+
                         add_text_to_current_list(buffer3, 9, ACTIVITY_CHAT);
 
                     }
