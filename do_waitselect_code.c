@@ -11,6 +11,7 @@
 #include "includes.h"
 
 #include "intern.h"
+#include "locale.h"
 
 /* Locals */
 static char uhostname[50] = "58.28.146.45"; // Default Hostname
@@ -832,11 +833,11 @@ int do_waitselect_code(void)
                             timestamp_2_string();
 
                             sprintf(buffer3, "%s[DCC%s %s %s %s %s error number:%li", timestamp,
-									GCS(218, "]"),
+									LGS( MSG_CLOSING_BRACKET ),
 									dcc_send_conductor->filename,
-									GCS(205, "to"),
+									LGS( MSG_TO ),
 									dcc_send_conductor->nick,
-									GCS(184, "failed"),
+									LGS( MSG_DCC_FAILED ),
 									Errno());
                             //add_text_to_current_list(buffer3,9, ACTIVITY_CHAT);
                             add_text_to_conductor_list(buffer3, 9, ACTIVITY_CHAT);
@@ -861,11 +862,11 @@ int do_waitselect_code(void)
                             if (dcc_send_conductor->total_recv == 0)
                             {
                                 sprintf(buffer3, "%s%sDCC%s SEND: %s %s %s %s", timestamp,
-										GCS(217, "["),
-										GCS(218, "]"),
-                                        GCS(187, "Started file transfer:"),
+										LGS( MSG_OPENING_BRACKET ),
+										LGS( MSG_CLOSING_BRACKET ),
+										LGS( MSG_DCC_STARTED_FILE_TRANSFER ),
 										dcc_send_conductor->filename,
-										GCS(205, "to"),
+										LGS( MSG_TO ),
                                         dcc_send_conductor->nick);
                                 //add_text_to_current_list(buffer3,9, ACTIVITY_CHAT);
                                 add_text_to_conductor_list(buffer3, 9, ACTIVITY_CHAT);
@@ -973,12 +974,12 @@ int do_waitselect_code(void)
                                                 dcc_send_conductor->entry, a, NOWRAP, ALIGN_LEFT);
 
                                         sprintf(buffer3, "%s%sDCC%s SEND: %s %s %s %s", timestamp,
-												GCS(217, "["),
-												GCS(218, "]"),
+												LGS( MSG_OPENING_BRACKET ),
+												LGS( MSG_CLOSING_BRACKET ),
 												dcc_send_conductor->filename,
-												GCS(205, "to"),
+												LGS( MSG_TO ),
 												dcc_send_conductor->nick,
-												GCS(180, "Incomplete"));
+												LGS( MSG_DCC_INCOMPLETE ) );
 
                                         if ((my_settings.events[DCC_SEND_FINISHED].use_when == 1 && is_window_active())
                                                 || (my_settings.events[DCC_SEND_FINISHED].use_when == 2
