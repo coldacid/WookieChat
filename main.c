@@ -144,8 +144,11 @@ void send_text(char *text2)
     timestamp_2_string();
     if (!status_conductor->connection_active)
     {
-        sprintf(buffer3, "%s%s%s%s %s", timestamp, GCS(217, "["), GCS(0, "Error"),
-                GCS(218, "]"), GCS(134, "Not connected to a server"));
+		sprintf(buffer3, "%s%s%s%s %s", timestamp,
+				LGS( MSG_OPENING_BRACKET ),
+				LGS( MSG_ERROR ),
+				LGS( MSG_CLOSING_BRACKET ),
+				LGS( MSG_NOT_CONNECTED ));
         add_text_to_conductor_list(buffer3, 9, ACTIVITY_CHAT);
         return;
     }
@@ -172,7 +175,7 @@ void send_text(char *text2)
          canread = WaitSelect(status_conductor->a_socket + 1, NULL, &rd, NULL, &t, NULL);
          if(canread == 0) // && !FD_ISSET(status_conductor->a_socket, &rd))
          {
-         sprintf(buffer3,"%s%s%s%s Unable to write text to socket: error number: %li",timestamp,GCS(catalog,217,"["),GCS(catalog,0,"Error"),GCS(catalog,218,"]"),Errno());
+		 sprintf(buffer3,"%s%s%s%s Unable to write text to socket: error number: %li",timestamp,LGS(catalog,217,"["),LGS(catalog,0,"Error"),LGS(catalog,218,"]"),Errno());
          add_text_to_current_list(buffer3,9, ACTIVITY_CHAT);
          return;
          } */
@@ -199,8 +202,10 @@ void send_text(char *text2)
                 printf("error:%li\nunable to send:%s", Errno(), text);
 
             sprintf(buffer3, "%s%s%s%s Unable to send text: error number: %li", timestamp,
-                    GCS(217, "["), GCS(0, "Error"),
-                    GCS(218, "]"), Errno());
+					LGS( MSG_OPENING_BRACKET ),
+					LGS( MSG_ERROR ),
+					LGS( MSG_CLOSING_BRACKET ),
+					Errno());
             if (status_conductor->conductor->LV_channel)
                 add_text_to_conductor_list(buffer3, 9, ACTIVITY_CHAT);
 
@@ -209,9 +214,11 @@ void send_text(char *text2)
 
                 if (status_conductor->connection_active == 1)
                 {
-                    sprintf(buffer3, "%s%s%s%s %s", timestamp, GCS(217, "["),
-                            GCS(0, "Error"), GCS(218, "]"),
-                            GCS(134, "Not connected to a server"));
+					sprintf(buffer3, "%s%s%s%s %s", timestamp,
+							LGS( MSG_OPENING_BRACKET ),
+							LGS( MSG_ERROR ),
+							LGS( MSG_CLOSING_BRACKET ),
+							LGS( MSG_NOT_CONNECTED ) );
 
                     status_conductor->connection_active = 0;
                     status_conductor->pass[0] = '\0';
@@ -372,7 +379,7 @@ void send_current(char *text2)
          canread = WaitSelect(status_current->a_socket + 1, NULL, &rd, NULL, &t, NULL);
          if(canread == 0) // && !FD_ISSET(status_current->a_socket, &rd))
          {
-         sprintf(buffer3,"%s%s%s%s Unable to write text to socket: error number: %li",timestamp,GCS(catalog,217,"["),GCS(catalog,0,"Error"),GCS(catalog,218,"]"),Errno());
+		 sprintf(buffer3,"%s%s%s%s Unable to write text to socket: error number: %li",timestamp,LGS(catalog,217,"["),LGS(catalog,0,"Error"),LGS(catalog,218,"]"),Errno());
          add_text_to_current_list(buffer3,9, ACTIVITY_CHAT);
          return;
          } */
@@ -3331,7 +3338,7 @@ int main(int argc, char *argv[])
 
                 if (DEBUG)
                     printf("add or edit ignore? %s\n", string1);
-                if (!stricmp(string1, "edit") || !stricmp(string1, (char *)GCS(274, "Edit")))
+				if (!stricmp(string1, "edit") || !stricmp(string1, (char *) LGS( MSG_IGNORE_EDIT )))
                 {
                     //printf("edit!\n");
                     LONG string1, string2, string3;
@@ -4632,7 +4639,7 @@ int main(int argc, char *argv[])
                                 setmacro((Object*)WookieChat->WI_ban, MUIA_Window_Open, TRUE);
 
                                 sprintf(ban_window_title, "%s %s",
-                                        GCS(146, "List of banmasks for channel"),
+										LGS( MSG_WINDOW_TITLE_BANMASKS ),
                                         status_conductor->conductor->name);
 
                                 setmacro((Object*)WookieChat->WI_ban, MUIA_Window_Title, ban_window_title);
@@ -4650,9 +4657,11 @@ int main(int argc, char *argv[])
                                     send_text(sendstuff);
 
                                     sprintf(buffer3, "%s%sMode%s %s %s %s %s", timestamp,
-                                            GCS(217, "["), GCS(218, "]"),
-                                            GCS(147, "Removing banmask"), string2,
-                                            GCS(155, "for channel"),
+											LGS( MSG_OPENING_BRACKET ),
+											LGS( MSG_REMOVING_BAN ),
+											LGS( MSG_CLOSING_BRACKET ),
+											string2,
+											LGS( MSG_REMOVING_BAN_FOR_CHANNEL ),
                                             status_conductor->conductor->name);
                                     add_text_to_current_list(buffer3, 5, ACTIVITY_CHAT);
 
@@ -4872,7 +4881,7 @@ int main(int argc, char *argv[])
                                         sprintf(dcc_conductor->entry->timeleft, "00:00:%02lu", seconds_left);
 
                                     if (!stricmp(dcc_conductor->entry->status,
-                                            (char *)GCS(148, "Transferring")))
+											(char *) LGS( MSG_TRANSFERRING )))
                                         DoMethod((Object*) WookieChat->LV_dcc, MUIM_NList_ReplaceSingle,
                                                 dcc_conductor->entry, a, NOWRAP, ALIGN_LEFT);
 
@@ -4959,7 +4968,7 @@ int main(int argc, char *argv[])
                                         sprintf(dcc_send_conductor->entry->timeleft, "00:00:%02lu", seconds_left);
 
                                     if (!stricmp(dcc_send_conductor->entry->status,
-                                            (char *)GCS(148, "Transferring")))
+											(char *) LGS( MSG_TRANSFERRING )))
                                         DoMethod((Object*) WookieChat->LV_send_dcc, MUIM_NList_ReplaceSingle,
                                                 dcc_send_conductor->entry, a, NOWRAP, ALIGN_LEFT);
 
@@ -5042,8 +5051,9 @@ int main(int argc, char *argv[])
                                     if (my_settings.Maximum_Retries > 0)
                                     {
                                         sprintf(buffer3, "%s%sConnect%s %s", timestamp,
-                                                GCS(217, "["), GCS(218, "]"),
-                                                GCS(279, "Unable to connect, giving up"));
+												LGS( MSG_OPENING_BRACKET ),
+												LGS( MSG_CLOSING_BRACKET ),
+												LGS( MSG_UNABLE_TO_RECONNECT_TO_SERVER ) );
                                         add_text_to_conductor_list(buffer3, 9, ACTIVITY_CHAT);
 
                                         if (status_conductor->a_socket != -1)
@@ -5138,9 +5148,13 @@ int main(int argc, char *argv[])
 #endif
                     timestamp_2_string();
 
-                    sprintf(buffer3, "%s%s%s%s * * %d-%d-%d * *", timestamp, GCS(217, "["),
-                            GCS(344, "Info"), GCS(218, "]"), clockdata.year,
-                            clockdata.month, clockdata.mday); //,timestamp_hrs,timestamp_mins);
+					sprintf(buffer3, "%s%s%s%s * * %d-%d-%d * *", timestamp,
+							LGS( MSG_OPENING_BRACKET ),
+							LGS( MSG_COLOUR_SETTINGS_LABEL_INFO ),
+							LGS( MSG_CLOSING_BRACKET ),
+							clockdata.year,
+							clockdata.month,
+							clockdata.mday); //,timestamp_hrs,timestamp_mins);
 
                     for (status_conductor = status_root; status_conductor; status_conductor = status_conductor->next)
                     {
