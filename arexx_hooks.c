@@ -1599,7 +1599,7 @@ int sel23hookfunc(void) {
         {
        if(DEBUG)  printf("parseline 2\n");
 
-            int count;
+			int count, count2;
             strcpy(line_buffer,(char*)parameters[1]);
 
             for(count=0,status_conductor=status_root; status_conductor && status_conductor!=work_status; count++,status_conductor=status_conductor->next);
@@ -1657,7 +1657,7 @@ int sel23hookfunc(void) {
         #elif __morphos__
         if(status_conductor)
         {
-            int count;
+			int count, count2;
 
             //strcpy(line_buffer,status_conductor->last_incoming_line_unparsed);
             strcpy(line_buffer,(char*)parameters[1]);

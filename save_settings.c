@@ -14,6 +14,7 @@
 
 #include "intern.h"
 #include "objapp.h"
+#include "audio.h"
 
 char realname[100];
 char username[20];

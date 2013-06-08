@@ -12,6 +12,7 @@
 
 #include <proto/codesets.h>
 #include <proto/muimaster.h>
+#include <mui/NList_mcc.h>
 #include <mui/NListtree_mcc.h>
 #include <mui/BetterString_mcc.h>
 #include <libraries/gadtools.h>
@@ -20,6 +21,7 @@
 #include "intern.h"
 #include "objapp.h"
 #include "version_info.h"
+
 
 APTR MN1_Hide, MN1_SelectServer, MN1_NewTAB, MN1_NewGTAB,MN1_CloseTAB, MN_ClearAllHistory,MN_ClearHistory,  MN_SaveHistory, MN_MainSettings;
 APTR MN_SaveSettings, MN_MUISettings, MN_ColourSettings, MN_windows_dcc2,  MN_windows_dcc, MN_urlgrabber, MN_ignorelist, MN_about, MN_quit, MN_MultiColumnDisplay, MN_Clipboard;
@@ -3225,6 +3227,11 @@ BOOL create_custom_classes()
         printf("Could not create custom class for groups\n");
 
 #else
+DISPATCHERPROTO(BetterString_Dispatcher);
+DISPATCHERPROTO(NList_Dispatcher);
+DISPATCHERPROTO(Window_Dispatcher);
+DISPATCHERPROTO(Group_Dispatcher);
+
     classes[CC_MUIC_BETTERSTRING] = MUI_CreateCustomClass(NULL, (ClassID)MUIC_BetterString,NULL,sizeof(struct InstanceData),ENTRY(BetterString_Dispatcher));
     if(!classes[CC_MUIC_BETTERSTRING]) printf("%s\n",GCS(137,"Please download and install the BetterString.mcc MUI Class"));
 

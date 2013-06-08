@@ -18,31 +18,6 @@ static LONG char_read_storage;
 static char file_name[800];
 static char buffer_text[800];
 
-#ifndef __AROS__
-struct TagItem my_incoming_charset11_taglist[] =
-{
-    {   CSA_Source, (ULONG)buffer_text},
-    {   CSA_SourceCodeset, (ULONG)cs},
-    {   CSA_DestCodeset, (ULONG)charsets[local_charset]},
-    {   TAG_DONE, 0}
-};
-
-struct TagItem my_incoming_charset22_taglist[] =
-{
-    {   CSA_Source, (ULONG)buffer_text},
-    {   CSA_SourceCodeset, (ULONG)charsets[0]},
-    {   CSA_DestCodeset, (ULONG)charsets[local_charset]},
-    {   TAG_DONE, 0}
-};
-
-struct TagItem my_incoming_charset33_taglist[] =
-{
-    {   CSA_Source, (ULONG)buffer_text},
-    {   CSA_CodesetFamily, CSV_CodesetFamily_Latin},
-    {   CSA_FallbackToDefault, TRUE},
-    {   TAG_DONE,0}
-};
-#endif
 
 int display_last_few_lines_of_logfile_conductor()
 {
@@ -146,31 +121,57 @@ int display_last_few_lines_of_logfile_conductor()
             strncpy(centry->entry, new_array, strlen(new_array));
 
 #ifndef __AROS__
-            if((cs = CodesetsFindBestA(my_incoming_charset33_taglist)))
-            {
-                if(FindUTF8Chars(buffer_text))
-                {
-                    text3 = CodesetsUTF8ToStrA(my_incoming_charset22_taglist);
-                }
-                else
-                {
-                    text3 = CodesetsConvertStrA(my_incoming_charset11_taglist);
-                }
-            }
-            else
-            {
-                struct TagItem my_incoming_charset4_taglist[] =
-                {
-                    {   CSA_Source, (ULONG)buffer_text},
-                    {   CSA_SourceCodeset, (ULONG)charsets[status_conductor->remote_charset]},
-                    {   CSA_DestCodeset, (ULONG)charsets[local_charset]},
-                    {   TAG_DONE, 0}};
+			{
+struct TagItem my_incoming_charset11_taglist[] =
+{
+    {   CSA_Source, (ULONG)buffer_text},
+    {   CSA_SourceCodeset, (ULONG)cs},
+    {   CSA_DestCodeset, (ULONG)charsets[local_charset]},
+    {   TAG_DONE, 0}
+};
 
-                if(status_conductor->remote_charset==0)
-                text3 = CodesetsUTF8ToStrA(my_incoming_charset4_taglist);
-                else
-                text3 = CodesetsConvertStrA(my_incoming_charset4_taglist);
-            }
+struct TagItem my_incoming_charset22_taglist[] =
+{
+    {   CSA_Source, (ULONG)buffer_text},
+    {   CSA_SourceCodeset, (ULONG)charsets[0]},
+    {   CSA_DestCodeset, (ULONG)charsets[local_charset]},
+    {   TAG_DONE, 0}
+};
+
+struct TagItem my_incoming_charset33_taglist[] =
+{
+    {   CSA_Source, (ULONG)buffer_text},
+    {   CSA_CodesetFamily, CSV_CodesetFamily_Latin},
+    {   CSA_FallbackToDefault, TRUE},
+    {   TAG_DONE,0}
+};
+			
+				if((cs = CodesetsFindBestA(my_incoming_charset33_taglist)))
+	            {
+	                if(FindUTF8Chars(buffer_text))
+	                {
+						text3 = CodesetsUTF8ToStrA(my_incoming_charset22_taglist);
+	                }
+	                else
+	                {
+						text3 = CodesetsConvertStrA(my_incoming_charset11_taglist);
+	                }
+	            }
+	            else
+	            {
+	                struct TagItem my_incoming_charset4_taglist[] =
+	                {
+	                    {   CSA_Source, (ULONG)buffer_text},
+	                    {   CSA_SourceCodeset, (ULONG)charsets[status_conductor->remote_charset]},
+	                    {   CSA_DestCodeset, (ULONG)charsets[local_charset]},
+	                    {   TAG_DONE, 0}};
+
+	                if(status_conductor->remote_charset==0)
+	                text3 = CodesetsUTF8ToStrA(my_incoming_charset4_taglist);
+	                else
+	                text3 = CodesetsConvertStrA(my_incoming_charset4_taglist);
+	            }
+			}
             if(text3)
             {
                 strcat(centry->entry,text3);

@@ -761,17 +761,19 @@ int add_text_to_conductor_list(char *buffer1, LONG colour, int activitylevel)
         }
 
 #ifndef __AROS__
+#if 0
         if(activitylevel == 2 || activitylevel == 3)
         {
 
             if(iconified_and_new_text==0)
             {
-                setmacro((Object*)WookieChat->App,MUIA_Application_IconifyTitle,GCS(catalog,370,"New Messages Waiting"));
+				setmacro((Object*)WookieChat->App,MUIA_Application_IconifyTitle,GCS(catalog,370,"New Messages Waiting"));
                 iconified_and_new_text=1;
 
             }
 
         }
+#endif
 #endif
 
         if (status_conductor->conductor != current_query)
@@ -805,11 +807,13 @@ int add_text_to_conductor_list(char *buffer1, LONG colour, int activitylevel)
                 add_unread_lines_num();
 
 #ifndef __AROS__
+#if 0
                 if(iconified_and_new_text==0)
                 {
                     setmacro((Object*)WookieChat->App,MUIA_Application_IconifyTitle,"New Messages Waiting");
                     iconified_and_new_text=1;
                 }
+#endif
 #endif
 
                 setmacro(status_conductor->conductor->BT_querybutton, MUIA_Text_Contents, channel_display);

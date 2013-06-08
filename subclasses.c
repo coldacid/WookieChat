@@ -840,7 +840,7 @@ ULONG NList_Cleanup(struct IClass *cl,Object *obj, struct Message *msg)
 DISPATCHERPROTO(NList_Dispatcher)
 {
 #elif __MORPHOS__
-DISPATCHERPROTO(NList_Dispatcher)
+DISPATCHER(NList_Dispatcher)
 {
 #elif __AROS__
 //SAVEDS ULONG NList_Dispatcher( REG(a0, IClass *cl), REG(a2, Object * obj), REG(a1, Msg msg))
@@ -877,7 +877,7 @@ ULONG BetterString_Cleanup(struct IClass *cl,Object *obj, struct Message *msg);
 DISPATCHERPROTO(BetterString_Dispatcher)
 {
 #elif __MORPHOS__
-DISPATCHERPROTO(BetterString_Dispatcher)
+DISPATCHER(BetterString_Dispatcher)
 {
 #elif __AROS__
 //DISPATCHERPROTO(BetterString_Dispatcher)
@@ -1424,7 +1424,7 @@ SAVEDS ULONG Group_Cleanup(struct IClass *cl,Object *obj,struct Message *msg)
 DISPATCHERPROTO(Group_Dispatcher)
 {
 #elif __MORPHOS__
-DISPATCHERPROTO(Group_Dispatcher)
+DISPATCHER(Group_Dispatcher)
 {
 #elif __AROS__
 ULONG Group_Dispatcher(Class *cl, Object *obj, Msg msg)
@@ -1543,7 +1543,7 @@ SAVEDS ULONG Window_Draw(struct IClass *cl,Object *obj,struct MUIP_Draw *msg)
 DISPATCHERPROTO(Window_Dispatcher)
 {
 #elif __MORPHOS__
-DISPATCHERPROTO(Window_Dispatcher)
+DISPATCHER(Window_Dispatcher)
 {
 #elif __AROS__
 //DISPATCHERPROTO(Window_Dispatcher)

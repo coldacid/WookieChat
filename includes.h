@@ -12,6 +12,9 @@
 #include <proto/intuition.h>
 #include <proto/dos.h>
 #include <proto/utility.h>
+#include <proto/codesets.h>
+
+#include <dos/dostags.h>
 
 #define MUI_OBSOLETE
 #include <libraries/mui.h>
@@ -30,15 +33,22 @@
 #include <proto/bsdsocket.h>
 #include "os4.h"
 #elif __MORPHOS__
-#include <proto/socket.h>
-#include <netinet/in.h>
-#include <sys/types.h>
-#include <sys/filio.h>
+#include <arpa/inet.h>
+#include <clib/alib_protos.h>
+#include <clib/macros.h>
+#include <devices/timer.h>
 #include <netdb.h>
+#include <sys/filio.h>
+#include <netinet/in.h>
+#include <string.h>
+#include <sys/socket.h>
+#include <proto/socket.h>
+
 #elif __AROS__
 #include <sys/types.h>
 #include <netinet/in.h>
 #include <sys/ioctl.h>
+#include <clib/alib_protos.h>
 #include <sys/socket.h>
 #include <bsdsocket/socketbasetags.h>
 #include <proto/socket.h>

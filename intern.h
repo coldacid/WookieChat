@@ -22,6 +22,10 @@
 
 #include <libraries/gadtools.h>
 
+#ifndef MAKE_ID
+#define MAKE_ID(a,b,c,d)  ((ULONG) (a)<<24 | (ULONG) (b)<<16 | (ULONG) (c)<<8 | (ULONG) (d))
+#endif
+
 
 #define MAX_QUEUED_MESSAGES         500
 #define BUFFERSIZE                  30000

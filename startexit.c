@@ -731,14 +731,14 @@ void cleanexit(char *str)
     if(CodesetsBase) CloseLibrary(CodesetsBase);
     if(UtilityBase) CloseLibrary(UtilityBase);
     if(SocketBase) CloseLibrary(SocketBase);
-    if(IntuitionBase) CloseLibrary((Library*)IntuitionBase);
+	if(IntuitionBase) CloseLibrary((struct Library*)IntuitionBase);
     if(LocaleBase) CloseLibrary(LocaleBase);
 #endif
 
 #ifdef __MORPHOS__
     if(AslBase) CloseLibrary(AslBase);
     if(DataTypesBase) CloseLibrary(DataTypesBase);
-    if(GfxBase) CloseLibrary((Library*)GfxBase);
+	if(GfxBase) CloseLibrary((struct Library*)GfxBase);
 #endif
 
     if (MUIMasterBase)
