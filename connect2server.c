@@ -259,9 +259,9 @@ int connect2server(char *servername, char *port_number, int typedservercommand, 
     if (!SocketBase)
     {
 
-        sprintf(buffer3, "%s%s%s%s %s", timestamp, GCS(217, "["), GCS(0, "Error"),
-                GCS(218, "]"),
-                GCS(198, "Please start a TCP/IP stack and try again."));
+		sprintf(buffer3, "%s%s%s%s %s", timestamp, LGS( MSG_OPENING_BRACKET ), LGS( MSG_ERROR ),
+				LGS( MSG_CLOSING_BRACKET ),
+				LGS( MSG_UNABLE_TO_OPEN_TCPIP_STACK ) );
 
         add_text_to_current_list(buffer3, 9, ACTIVITY);
         return 0;
@@ -288,9 +288,8 @@ int connect2server(char *servername, char *port_number, int typedservercommand, 
 #endif
     {
         timestamp_2_string();
-        sprintf(buffer3, "%s%s%s%s %s: gethostbyname() %s.", timestamp, GCS(217, "["),
-                GCS(0, "Error"), GCS(218, "]"), servername,
-                GCS(184, "Failed"));
+		sprintf(buffer3, "%s%s%s%s %s: gethostbyname() %s.", timestamp, LGS( MSG_OPENING_BRACKET ),
+				LGS( MSG_ERROR ), LGS( MSG_CLOSING_BRACKET ), servername, LGS( MSG_DCC_FAILED ));
         add_text_to_current_list(buffer3, 9, ACTIVITY);
         //perror("gethostbyname");
         return 0;
@@ -322,8 +321,10 @@ int connect2server(char *servername, char *port_number, int typedservercommand, 
         status_conductor->servername[0] = '\0';
         status_conductor->networkname[0] = '\0';
 
-        sprintf(buffer3, "%s%sConnect%s %s", timestamp, GCS(217, "["),
-                GCS(218, "]"), GCS(199, "Connecting to a new server"));
+		sprintf(buffer3, "%s%sConnect%s %s", timestamp,
+					LGS( MSG_OPENING_BRACKET ), LGS( MSG_CLOSING_BRACKET ),
+					LGS( MSG_CONNECT_TO_A_NEW_SERVER ) ),
+
         status_conductor->conductor = status_conductor->root;
         while (status_conductor->conductor)
         {

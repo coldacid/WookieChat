@@ -11,8 +11,6 @@
 #define CATCOMP_BLOCK 1
 #define NEW_CATCOMP_ARRAY_IDS
 #include "locale.h"
-//#include "includes.h"
-//#include "intern.h"
 
 #include <proto/locale.h>
 #include <proto/exec.h>
@@ -31,10 +29,13 @@ static struct Locale  *locale_locale;
 
 BOOL Locale_Open( STRPTR catname, ULONG version, ULONG revision)
 {
+
 	if( ( LocaleBase ) ) {
 		RemLibrary( (struct Library *) LocaleBase );
+
 		if( ( locale_locale = OpenLocale( NULL ) ) ) {
 			if( ( locale_catalog = OpenCatalogA( locale_locale, catname, TAG_DONE ) ) ) {
+
 				if(    locale_catalog->cat_Version  ==  version &&
 					   locale_catalog->cat_Revision == revision ) {
 					return( TRUE );

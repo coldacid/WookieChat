@@ -15,6 +15,7 @@
 #include <proto/muimaster.h>
 
 #include "intern.h"
+#include "locale.h"
 
 LONG position;
 
@@ -245,14 +246,14 @@ static void DisplayDCC_send_TextFunc(void)
     else
     {
 
-        array[0]= (char*)GCS(150,"Status");
-        array[1]= (char*)GCS(240,"Reciever");
-        array[2]= (char*)GCS(215,"Filename");
+		array[0]= (char*)LGS(MSG_STATUS);
+		array[1]= (char*)LGS(MSG_RECIEVER);
+		array[2]= (char*)LGS(MSG_FILENAME);
         array[3]= (char*)"kB/s";
-        array[4]= (char*)GCS(151,"Sent");
-        array[5]= (char*)GCS(152,"File size");
+		array[4]= (char*)LGS(MSG_SENT);
+		array[5]= (char*)LGS(MSG_FILE_SIZE);
         array[6]= (char*)"%";
-        array[7]= (char*)GCS(153,"Time Left");
+		array[7]= (char*)LGS(MSG_TIME_LEFT);
 
     }
 

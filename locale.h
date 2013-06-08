@@ -7,6 +7,7 @@
 #include <dos/dos.h>
 #include <libraries/locale.h>
 
+#define CATCOMP_NUMBERS
 #include "WookieChat_strings.h"
 
 #define MSG_ERROR_NOERROR 0
@@ -18,6 +19,8 @@
 BOOL   Locale_Open( STRPTR catname, ULONG version, ULONG revision);
 void   Locale_Close(void);
 STRPTR Locale_GetString(long ID);
+
+#define LGS( id ) Locale_GetString( id )
 
 /*
 ** backward compatibly, we should be able to remove

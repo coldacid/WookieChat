@@ -12,7 +12,7 @@
                            Start-Exit Code
    =================================================================== */
 #include "includes.h"
-
+#include <workbench/icon.h>
 #include <clib/alib_protos.h>
 #include <proto/muimaster.h>
 #include <proto/icon.h>
@@ -298,36 +298,36 @@ void LoadAllLibs(void)
 
 #endif
 
-	Locale_Open( APPLICATIONNAME, VERSION, REVISION );
+	Locale_Open( APPLICATIONNAME "avoid catalog for now", VERSION, REVISION );
 
     //now that the catalog is open and locale library is open, lets give our context menu titles/items some labels
 
-    MenuData1[0].nm_Label = (nml) GCS(219, "Nicklist Options");
-    MenuData1[1].nm_Label = (nml) GCS(220, "Whois");
-    MenuData1[2].nm_Label = (nml) GCS(221, "Open Query");
-    MenuData1[3].nm_Label = (nml) GCS(222, "Open Global Query");
-    MenuData1[4].nm_Label = (nml) GCS(223, "CTCP");
-    MenuData1[5].nm_Label = (nml) GCS(224, "Ping");
-    MenuData1[6].nm_Label = (nml) GCS(225, "Version");
-    MenuData1[7].nm_Label = (nml) GCS(226, "Time");
-    MenuData1[8].nm_Label = (nml) GCS(227, "Direct Connection");
-    MenuData1[9].nm_Label = (nml) GCS(228, "Send file");
-    MenuData1[10].nm_Label = (nml) GCS(229, "Chat");
-    MenuData1[11].nm_Label = (nml) GCS(230, "Control");
-    MenuData1[12].nm_Label = (nml) GCS(231, "Op");
-    MenuData1[13].nm_Label = (nml) GCS(232, "DeOp");
-    MenuData1[14].nm_Label = (nml) GCS(233, "HalfOp");
-    MenuData1[15].nm_Label = (nml) GCS(234, "DeHalfOp");
-    MenuData1[16].nm_Label = (nml) GCS(235, "Voice");
-    MenuData1[17].nm_Label = (nml) GCS(236, "DeVoice");
-    MenuData1[18].nm_Label = (nml) GCS(237, "Kick");
-    MenuData1[19].nm_Label = (nml) GCS(238, "Ban");
+	MenuData1[0].nm_Label = (nml) LGS( MSG_NICKLIST_OPTIONS );
+	MenuData1[1].nm_Label = (nml) LGS( MSG_WHOIS_MENU_ITEM );
+	MenuData1[2].nm_Label = (nml) LGS( MSG_QUERY_MENU_ITEM );
+	MenuData1[3].nm_Label = (nml) LGS( MSG_GLOBAL_QUERY_MENU_ITEM );
+	MenuData1[4].nm_Label = (nml) LGS( MSG_CTCP_MENU_TITLE );
+	MenuData1[5].nm_Label = (nml) LGS( MSG_PING_MENU_ITEM );
+	MenuData1[6].nm_Label = (nml) LGS( MSG_VERSION_MENU_ITEM );
+	MenuData1[7].nm_Label = (nml) LGS( MSG_TIME_MENU_ITEM );
+	MenuData1[8].nm_Label = (nml) LGS( MSG_DIRECT_CONNECTION_MENU_TITLE );
+	MenuData1[9].nm_Label = (nml) LGS( MSG_SEND_FILE_MENU_ITEM );
+	MenuData1[10].nm_Label = (nml) LGS( MSG_CHAT_MENU_ITEM );
+	MenuData1[11].nm_Label = (nml) LGS( MSG_CONTROL_MENU_TITLE );
+	MenuData1[12].nm_Label = (nml) LGS( MSG_OP_MENU_ITEM );
+	MenuData1[13].nm_Label = (nml) LGS( MSG_DEOP_MENU_ITEM );
+	MenuData1[14].nm_Label = (nml) LGS( MSG_HALFOP_MENU_ITEM );
+	MenuData1[15].nm_Label = (nml) LGS( MSG_DEHALFOP_MENU_ITEM );
+	MenuData1[16].nm_Label = (nml) LGS( MSG_VOICE_MENU_ITEM );
+	MenuData1[17].nm_Label = (nml) LGS( MSG_DEVOICE_MENU_ITEM );
+	MenuData1[18].nm_Label = (nml) LGS( MSG_KICK_MENU_ITEM );
+	MenuData1[19].nm_Label = (nml) LGS( MSG_BAN_MENU_ITEM );
 
-    dobj = (struct DiskObject*) GetDiskObject((_ub_cs) "PROGDIR:WookieChat_OS4");
+	dobj = (struct DiskObject *) GetDiskObject((_ub_cs) "PROGDIR:WookieChat_OS4");
     if (!dobj)
-        dobj = (struct DiskObject*) GetDiskObject((_ub_cs) "PROGDIR:WookieChat_OS3");
+		dobj = (struct DiskObject *) GetDiskObject((_ub_cs) "PROGDIR:WookieChat_OS3");
     if (!dobj)
-        dobj = (struct DiskObject*) GetDiskObject((_ub_cs) "PROGDIR:WookieChat");
+		dobj = (struct DiskObject *) GetDiskObject((_ub_cs) "PROGDIR:WookieChat");
 
 #ifdef __AROS__
     BPTR my_lock;
@@ -361,25 +361,11 @@ void DisposeApp(struct ObjApp * MBObj)
 
 void cleanexit(char *str)
 {
-    if (GEIT)
-        printf("closing\n1\n");
-
     TimerWait_Close();
 
     //if(local_charset) CodesetsFreeA(local_charset,blank_taglist);// my_utf8_taglist);
-//printf("2\n");
-    //printf("1\n");
-    if (GEIT)
-        printf("2\n");
 
     arexx_deinit_messageports();
-
-    //printf("2\n");
-
-    //printf("quit 7\n");
-
-    if (GEIT)
-        printf("7\n");
 
     if (WookieChat)
     {
@@ -410,41 +396,18 @@ void cleanexit(char *str)
 
         }
 
-        //printf("4\n");
-
-        //printf("5\n");
-
-        if (GEIT)
-            printf("8\n");
-
-//printf("3\n");
-
         status_conductor = status_root;
         while (status_conductor)
         {
-            //printf("6\n");
-            //printf("7\n");
-            //printf("8\n");
             status_conductor = status_conductor->next;
-            //printf("9\n");
         }
-
-//printf("4\n");
-        if (GEIT)
-            printf("9\n");
-
     }
-
-    //printf("10\n");
 
     if (WookieChat)
     {
         struct dcc *dcc_send_work;
         struct dcc *dcc_work;
         struct dcc_chat *dcc_chat_work;
-
-        if (GEIT)
-            printf("10\n");
 
         //free up dcc recv linked list
         for (dcc_conductor = dcc_root->next; dcc_conductor; dcc_conductor = dcc_work)
@@ -484,9 +447,6 @@ void cleanexit(char *str)
 
             }
         }
-        //printf("13\n");
-        if (GEIT)
-            printf("11\n");
     }
 
     if (WookieChat)
@@ -494,34 +454,23 @@ void cleanexit(char *str)
         status_conductor = status_root;
 
         setmacro((Object*) WookieChat->WI_main, MUIA_Window_Open, FALSE);
-        if (GEIT)
-            printf("12\n");
 
-        // //printf("2\n");
-        //printf("14\n");
-
-        //printf("5a\n");
         delete_smiley_objects();
-        if (GEIT)
-            printf("13\n");
 
         while (status_conductor)
         {
             status_conductor->conductor = status_conductor->root;
-            // //printf("3\n");
 
             while (status_conductor->conductor)
             {
                 int count;
                 struct query_window *work_query = NULL;
-                // printf("4\n");
 
                 for (count = 0; count < 2500; count++)
                 {
                     if (status_conductor->conductor->nicklist[count].hostname)
                         free(status_conductor->conductor->nicklist[count].hostname);
                 }
-                // printf("5\n");
 
                 if (DoMethod((Object*) GROUP_ROOT_0, MUIM_Group_InitChange))
                 {
@@ -588,8 +537,6 @@ void cleanexit(char *str)
                     MUI_DisposeObject((Object*) status_conductor->conductor->GR_conductor);
                 }
 
-                // printf("6\n");
-
                 work_query = status_conductor->conductor->next;
                 if (status_conductor->conductor)
                 {
@@ -636,19 +583,10 @@ void cleanexit(char *str)
             status_conductor = work_status;
 
         }
-        if (GEIT)
-            printf("14\n");
-
-        //printf("5b\n");
-
-        //printf("7\n");
 
         exit_delete_smiley_objects();
-        if (GEIT)
-            printf("15\n");
+
         DisposeApp(WookieChat);
-        if (GEIT)
-            printf("16\n");
 
         if (status_current)
         {
@@ -662,39 +600,11 @@ void cleanexit(char *str)
 
             }
         }
-        if (GEIT)
-            printf("17\n");
-
-        //printf("8\n");
-
     }
-    //printf("15\n");
-
-    //printf("6\n");
 
     samples_dispose();
 
-    if (GEIT)
-        printf("18\n");
-
-    //printf("9\n");
-
     delete_custom_classes();
-
-    //printf("16\n");
-
-    if (GEIT)
-        printf("19\n");
-    //printf("8\n");
-
-    //printf("17\n");
-
-    //printf("9\n");
-
-    if (GEIT)
-        printf("20\n");
-
-    //printf("10\n");
 
     if (str)
         printf("Error: %s\n", str);
@@ -737,11 +647,6 @@ void cleanexit(char *str)
 
     if (MUIMasterBase)
         CloseLibrary(MUIMasterBase);
-
-    if (GEIT)
-        printf("23\n");
-
-    //printf("7\n");
 
     free(new_entry2.hostname);
 
