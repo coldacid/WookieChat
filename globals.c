@@ -12,10 +12,10 @@
 
 #include "intern.h"
 
-struct XYMessage *my_message;
+
+struct Catalog *catalog;
 
 struct ObjApp *WookieChat;
-struct Catalog *catalog;
 char wookie_folder[400]; //the pathname wookiechat is located in
 
 struct status_window *work_status;
@@ -92,7 +92,7 @@ int queued_messages_total;
 
 
 
-struct MsgPort *app_process_replyport;
+
 struct MsgPort *send_text_replyport;
 struct codeset *cs;
 
@@ -102,4 +102,4 @@ struct codeset *charsets[45];
 
 char listview_format[100];
 
-struct MsgPort *arexx_quit_replyport;
+

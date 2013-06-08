@@ -53,7 +53,6 @@ BOOL start_reconnect_delay_timer;
 
 /* Locals */
 static int delay_b4_ping_server_count=0;
-static ULONG arexx_wants_to_send_signal;
 static char ban_window_title[200];
 static BOOL aslresult;
 static struct FileRequester *filerequester;
@@ -732,26 +731,7 @@ int main(int argc, char *argv[])
     struct Window *my_window;
 
 // Setup some MsgPort's if we're going to use AREXX
-    if (USE_AREXX == TRUE)
-    {
-        app_process_replyport = CreatePort(0, 0);
-        arexx_quit_replyport = CreatePort(0, 0);
-
-        if (app_process_replyport)
-        {
-            my_message = (struct XYMessage*) AllocMem(sizeof(struct XYMessage), MEMF_PUBLIC | MEMF_CLEAR);
-
-            my_message->xy_Msg.mn_Node.ln_Type = NT_MESSAGE;
-            my_message->xy_Msg.mn_Length = sizeof(struct XYMessage);
-            my_message->xy_Msg.mn_ReplyPort = app_process_replyport;
-            my_message->xy_Getline = 1;
-            my_message->xy_QuitArexx = 0;
-            my_message->xy_Sendtext = 0;
-
-        }
-        else
-            printf("cant create process reply port\n");
-    }
+    arexx_setup_messageports();
 //
 
     NameFromLock(GetProgramDir(), (STRPTR) wookie_folder, 300);
@@ -814,38 +794,10 @@ int main(int argc, char *argv[])
     if (!WookieChat)
         cleanexit((char*) GCS(catalog, 133, "cant create application\n"));
 
-    add_scripts_to_menu();
+    arexx_add_scripts_to_menu();
 
 // Create AREXX Process
-    if (USE_AREXX == TRUE)
-    {
-
-        getmacro((Object*)WookieChat->App, MUIA_Application_Base, &string1);
-        strcpy((char *)maintask_basename, string1);
-        strcat((char *)maintask_basename, "_msgport");
-
-        send_text_replyport = CreatePort((STRPTR)maintask_basename, 0);
-        arexx_wants_to_send_signal = 1L << send_text_replyport->mp_SigBit;
-
-        if (DEBUG)
-            printf("Main Task Port: %s\n", maintask_basename);
-
-        if (app_process_replyport)
-        {
-            wanna_quit = FALSE;
-
-#ifdef __amigaos4__
-            IDOS->CreateNewProcTags(NP_Entry,(APTR)AREXX_Task,NP_Name,"WookieChat_AREXX_Task",NP_StackSize,20000,NP_Child,TRUE,TAG_DONE);
-#elif __MORPHOS__
-            CreateNewProcTags(NP_Entry,(APTR)AREXX_Task,NP_Name,"WookieChat_AREXX_Task",NP_CodeType, CODETYPE_PPC,NP_PPCStackSize, 20000, TAG_DONE);
-#else
-            CreateNewProcTags(NP_Entry, (APTR) AREXX_Task, NP_Name, "WookieChat_AREXX_Task", NP_StackSize, 20000,
-                    TAG_DONE);
-#endif
-        }
-        else
-            printf("problems, AREXX process not started\n");
-    }
+    arexx_create_process();
 //
 
 // Loading settings for colours, nicks, graphical smileys, and create our initial Server tab
@@ -4470,14 +4422,14 @@ int main(int argc, char *argv[])
                     }
                     else if (result == AREXX_MENU_VALUES) //rescan arexx scripts directory and add them to the arexx scripts pulldown menu
                     {
-                        add_scripts_to_menu();
+                        arexx_add_scripts_to_menu();
                     }
                     else if (result > AREXX_MENU_VALUES && result < GRAPHICAL_SMILEY_VALUES)
                     {
 // Execute an AREXX script
                         int count = result - AREXX_MENU_VALUES;
 
-                        sprintf(file_name, "run rx %s", AREXX_Menu_Items[count].MenuItem_String);
+                        sprintf(file_name, "run rx %s", arexx_get_menu_item_string(count));
                         if (DEBUG)
                             printf("%s\n", file_name);
 

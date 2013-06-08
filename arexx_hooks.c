@@ -18,25 +18,34 @@
 
 #include "version_info.h"
 
-int disable_getline_hook(void);
-
+ULONG arexx_wants_to_send_signal;
 char string_to_send2[800];
 
-struct NewMenu AREXX_Menu[MAX_AREXX_SCRIPTS];
-
-APTR MN1_AREXX;
-TEXT maintask_basename[100];
-
-struct AREXX_Menu AREXX_Menu_Items[MAX_AREXX_SCRIPTS];
-
 /* Locals */
+#define MAX_AREXX_SCRIPTS 20
+
 static struct MsgPort *arexx_process_port;
 static struct MsgPort *arexx_quit_port;
 static char *string1;
 static char work_buffer[900];
 static char buffer2[BUFFERSIZE*2];
+static struct XYMessage *my_message;
+static TEXT maintask_basename[100];
+static BOOL wanna_quit;
+static BOOL getline_wait;
+static TEXT basename[100];
+static BOOL AREXX_started;
+static APTR AREXX_App;
+static TEXT arexxquit_portname[100];
+static struct MsgPort *arexx_quit_replyport;
+static struct MsgPort *app_process_replyport;
+static APTR MN1_AREXX;
+static struct AREXX_Menu AREXX_Menu_Items[MAX_AREXX_SCRIPTS];
 
-BOOL SafePutToPort(struct XYMessage *message, STRPTR portname)
+static int disable_getline_hook(void);
+
+
+static BOOL SafePutToPort(struct XYMessage *message, STRPTR portname)
 {
     struct MsgPort *port;
     Forbid();
@@ -47,7 +56,7 @@ BOOL SafePutToPort(struct XYMessage *message, STRPTR portname)
     return(port ? TRUE : FALSE);
 }
 
-int add_scripts_to_menu()
+int arexx_add_scripts_to_menu()
 {
 
     int count=0;
@@ -171,7 +180,7 @@ int add_scripts_to_menu()
 
 }
 
-int get_right_network(LONG **parameters)
+static int get_right_network(LONG **parameters)
 {
 
     if(parameters[0])
@@ -1232,8 +1241,6 @@ struct Hook sel20hook = { { NULL,NULL }, (ULONG(*)())sel20hookfunc, NULL,NULL };
     SetRexxVar(), CheckRexxMsg()
 
 */
-BOOL wanna_quit;
-BOOL getline_wait;
 char *line_string;
 char network_result[5];
 char line_buffer[800];
@@ -2157,19 +2164,15 @@ static struct MUI_Command commands2[] =
 };
 
 
-APTR AREXX_App;
-TEXT basename[100];
-BOOL AREXX_started;
-TEXT arexxquit_portname[100];
 
-int disable_getline_hook(void)
+static int disable_getline_hook(void)
 {
     if(DEBUG)  printf("disable hooks\n");
     setmacro((Object*)AREXX_App,MUIA_Application_Commands, &commands2);
     return 0;
 }
 
-int AREXX_Task(void)
+static int AREXX_Task(void)
 {
 
     AREXX_started=TRUE;
@@ -2291,3 +2294,185 @@ int AREXX_Task(void)
 }
 
 
+void arexx_setup_messageports()
+{
+    if (USE_AREXX == TRUE)
+    {
+        app_process_replyport = CreatePort(0, 0);
+        arexx_quit_replyport = CreatePort(0, 0);
+
+        if (app_process_replyport)
+        {
+            my_message = (struct XYMessage*) AllocMem(sizeof(struct XYMessage), MEMF_PUBLIC | MEMF_CLEAR);
+
+            my_message->xy_Msg.mn_Node.ln_Type = NT_MESSAGE;
+            my_message->xy_Msg.mn_Length = sizeof(struct XYMessage);
+            my_message->xy_Msg.mn_ReplyPort = app_process_replyport;
+            my_message->xy_Getline = 1;
+            my_message->xy_QuitArexx = 0;
+            my_message->xy_Sendtext = 0;
+
+        }
+        else
+            printf("cant create process reply port\n");
+    }
+}
+
+void arexx_wait_for_getline_to_be_false()
+{
+    if (getline_wait == TRUE)
+    {
+        //printf("# getline is true, sending to port:\n%s\n",status_conductor->last_incoming_line_unparsed);
+
+        my_message->xy_Getline = 1;
+
+        //if(SafePutToPort((struct XYMessage*)my_message,"WookieChatAREXX"))
+        if (SafePutToPort((struct XYMessage*) my_message, basename))
+        {
+            //printf("getline message successfully sent\n");
+            //while(getline_wait==TRUE)
+            {
+                //printf("waiting for getline_wait to equal FALSE..\n");
+                WaitPort(app_process_replyport);
+                GetMsg(app_process_replyport);
+                Delay(1);
+            }
+        }
+        else
+        {
+
+        }
+        my_message->xy_Getline = 1;
+    }
+    //else printf("getline is NOT true, not sending anything to GETLINE hook..\n");
+    else
+    {
+
+    }
+}
+
+void arexx_deinit_messageports()
+{
+    if (USE_AREXX == TRUE)
+    {
+        //printf("quit 1\n");
+        if (GEIT)
+            printf("2a\n");
+
+        if (AREXX_started == TRUE)
+        {
+            if (GEIT)
+                printf("2b\n");
+
+            //edit
+            //printf("quit 1aa\n");
+
+            //cleanup GETLINE
+            if (getline_wait == TRUE)
+            {
+                //printf("quit 1a .. getline equal true\n");
+
+                getline_wait = FALSE;
+                wanna_quit = TRUE;
+
+                my_message->xy_Getline = 1;
+                my_message->xy_QuitArexx = 1;
+                my_message->xy_Msg.mn_Node.ln_Type = NT_MESSAGE;
+                my_message->xy_Msg.mn_Length = sizeof(struct XYMessage);
+                my_message->xy_Msg.mn_ReplyPort = app_process_replyport;
+
+                //if(SafePutToPort((struct XYMessage*)my_message, "WookieChatAREXX"))
+                if (SafePutToPort((struct XYMessage*) my_message, basename))
+                {
+                    //printf("quit 1ab\n");
+                    disable_getline_hook();
+
+                    WaitPort(app_process_replyport);
+                    //printf("quit 1ac\n");
+                }
+
+            }
+
+            my_message->xy_Getline = 0;
+            my_message->xy_QuitArexx = 1;
+            my_message->xy_Msg.mn_Node.ln_Type = NT_MESSAGE;
+            my_message->xy_Msg.mn_Length = sizeof(struct XYMessage);
+            my_message->xy_Msg.mn_ReplyPort = arexx_quit_replyport;
+
+            //if(SafePutToPort((struct XYMessage*)my_message, "WookieChatAREXX_Quit"))
+            if (SafePutToPort((struct XYMessage*) my_message, arexxquit_portname))
+            {
+                //printf("quit 1ad\n");
+                WaitPort(arexx_quit_replyport);
+                //printf("quit 1ae\n");
+
+            }
+
+            //printf("quit 1af\n");
+
+        }
+
+        //printf("quit 2\n");
+
+        if (GEIT)
+            printf("3\n");
+
+        DeletePort(app_process_replyport);
+        if (GEIT)
+            printf("4\n");
+
+        while (GetMsg(send_text_replyport))
+            ;
+
+        if (GEIT)
+            printf("5\n");
+
+        DeletePort(send_text_replyport);
+
+        if (GEIT)
+            printf("6\n");
+
+        DeletePort(arexx_quit_replyport);
+
+        //printf("quit 3\n");
+
+    }
+}
+
+void arexx_create_process()
+{
+    if (USE_AREXX == TRUE)
+    {
+
+        getmacro((Object*)WookieChat->App, MUIA_Application_Base, &string1);
+        strcpy((char *)maintask_basename, string1);
+        strcat((char *)maintask_basename, "_msgport");
+
+        send_text_replyport = CreatePort((STRPTR)maintask_basename, 0);
+        arexx_wants_to_send_signal = 1L << send_text_replyport->mp_SigBit;
+
+        if (DEBUG)
+            printf("Main Task Port: %s\n", maintask_basename);
+
+        if (app_process_replyport)
+        {
+            wanna_quit = FALSE;
+
+#ifdef __amigaos4__
+            IDOS->CreateNewProcTags(NP_Entry,(APTR)AREXX_Task,NP_Name,"WookieChat_AREXX_Task",NP_StackSize,20000,NP_Child,TRUE,TAG_DONE);
+#elif __MORPHOS__
+            CreateNewProcTags(NP_Entry,(APTR)AREXX_Task,NP_Name,"WookieChat_AREXX_Task",NP_CodeType, CODETYPE_PPC,NP_PPCStackSize, 20000, TAG_DONE);
+#else
+            CreateNewProcTags(NP_Entry, (APTR) AREXX_Task, NP_Name, "WookieChat_AREXX_Task", NP_StackSize, 20000,
+                    TAG_DONE);
+#endif
+        }
+        else
+            printf("problems, AREXX process not started\n");
+    }
+}
+
+char * arexx_get_menu_item_string(int pos)
+{
+    return AREXX_Menu_Items[pos].MenuItem_String;
+}

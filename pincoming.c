@@ -1241,39 +1241,7 @@ void process_incoming()
             else
                 sprintf(status_conductor->last_incoming_line_unparsed, "%s %s", incoming_1, incoming_2);
 
-            //Delay(50);
-            //printf("# unparsed pincoming:\n%s\n",status_conductor->last_incoming_line_unparsed);
-
-            if (getline_wait == TRUE)
-            {
-                //printf("# getline is true, sending to port:\n%s\n",status_conductor->last_incoming_line_unparsed);
-
-                my_message->xy_Getline = 1;
-
-                //if(SafePutToPort((struct XYMessage*)my_message,"WookieChatAREXX"))
-                if (SafePutToPort((struct XYMessage*) my_message, basename))
-                {
-                    //printf("getline message successfully sent\n");
-                    //while(getline_wait==TRUE)
-                    {
-                        //printf("waiting for getline_wait to equal FALSE..\n");
-                        WaitPort(app_process_replyport);
-                        GetMsg(app_process_replyport);
-                        Delay(1);
-                    }
-
-                }
-                else
-                {
-
-                }
-                my_message->xy_Getline = 1;
-            }
-            //else printf("getline is NOT true, not sending anything to GETLINE hook..\n");
-            else
-            {
-
-            }
+            arexx_wait_for_getline_to_be_false();
         }
 
         timestamp_2_string();

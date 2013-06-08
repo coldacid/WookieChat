@@ -972,8 +972,6 @@ enum
 /* globals.c */
 extern struct Catalog *catalog;
 
-extern struct XYMessage *my_message;
-
 
 
 
@@ -1021,25 +1019,18 @@ extern BPTR urlgrabber_file;
 extern char urlgrabber_str[2000];
 extern struct codeset *charsets[45];
 extern char listview_format[100];
-extern struct MsgPort *arexx_quit_replyport;
-extern struct MsgPort *app_process_replyport;
 extern struct MsgPort *send_text_replyport;
 
 /* arexx_hooks.c */
-#define MAX_AREXX_SCRIPTS 20
-extern TEXT maintask_basename[100];
-extern BOOL wanna_quit;
-extern BOOL getline_wait;
 extern char string_to_send2[800];
-extern struct AREXX_Menu AREXX_Menu_Items[MAX_AREXX_SCRIPTS];
-extern TEXT basename[100];
-extern BOOL AREXX_started;
-extern TEXT arexxquit_portname[100];
+extern ULONG arexx_wants_to_send_signal;
 
-int add_scripts_to_menu();
-int AREXX_Task();
-int disable_getline_hook();
-BOOL SafePutToPort(struct XYMessage *message, STRPTR portname);
+int arexx_add_scripts_to_menu();
+void arexx_setup_messageports();
+void arexx_wait_for_getline_to_be_false();
+void arexx_deinit_messageports();
+void arexx_create_process();
+char * arexx_get_menu_item_string(int pos);
 
 /* main.c */
 extern BOOL DEBUG;

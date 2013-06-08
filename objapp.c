@@ -2534,7 +2534,6 @@ if(AMIX) printf("110\n");
         MUIA_Family_Child, MN_Edit,
         MUIA_Family_Child, MN_Settings,
         MUIA_Family_Child, MN_windows,
-        //MUIA_Family_Child, MN1_AREXX,
     End;
 
     //below are edit window stuff
