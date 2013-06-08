@@ -4934,3 +4934,15 @@ Only when Tab is inactive
 Only when Tab is inactive
 ;sound alerts: Only when Tab is inactive
 ;
+MSG_INVITE
+Invite
+Einladen
+Invite
+Invite
+Invite
+Invite
+Invite
+Invite
+Invite
+Invite
+;
