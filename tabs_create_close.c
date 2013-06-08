@@ -15,6 +15,7 @@
 
 #include "intern.h"
 #include "objapp.h"
+#include "locale.h"
 
 #define FW  13
 
@@ -73,7 +74,7 @@ static struct query_window *init_conductor(int a)
         MUIA_Background, MUII_ButtonBack,
         MUIA_Text_Contents, (char*)"X",
         MUIA_Text_PreParse, (char*)"\033c",
-        MUIA_ShortHelp, (char*)GCS(4,(char*)"Close the current tab"),
+		MUIA_ShortHelp, (char*) LGS( MSG_MODE_X ),
         MUIA_InputMode, MUIV_InputMode_RelVerify,
     End;
 
@@ -84,7 +85,7 @@ static struct query_window *init_conductor(int a)
         MUIA_Background, MUII_ButtonBack,
         MUIA_Text_Contents, (char*)"T",
         MUIA_Text_PreParse, (char*)"\033c",
-        MUIA_ShortHelp, GCS(6,"Topic protection. This setting prevents regular users from changing the channel topic"),
+		MUIA_ShortHelp, LGS( MSG_MODE_T ),
         MUIA_InputMode, MUIV_InputMode_Toggle,
     End;
 
@@ -95,7 +96,7 @@ static struct query_window *init_conductor(int a)
         MUIA_Background, MUII_ButtonBack,
         MUIA_Text_Contents, "N",
         MUIA_Text_PreParse, "\033c",
-        MUIA_ShortHelp, GCS(7,"No messaging. This setting forces users to be in the channel to be able to talk in it"),
+		MUIA_ShortHelp, LGS( MSG_MODE_N ),
         MUIA_InputMode, MUIV_InputMode_Toggle,
     End;
 
@@ -106,7 +107,7 @@ static struct query_window *init_conductor(int a)
         MUIA_Background, MUII_ButtonBack,
         MUIA_Text_Contents, "S",
         MUIA_Text_PreParse, "\033c",
-        MUIA_ShortHelp, GCS(8,"Secret mode. If this is set, the channel is invisible until you have joined"),
+		MUIA_ShortHelp, LGS( MSG_MODE_S ),
         MUIA_InputMode, MUIV_InputMode_Toggle,
     End;
 
@@ -117,7 +118,7 @@ static struct query_window *init_conductor(int a)
         MUIA_Background, MUII_ButtonBack,
         MUIA_Text_Contents, "I",
         MUIA_Text_PreParse, "\033c",
-        MUIA_ShortHelp, GCS(9,"Invite only. Only users who have been invited to the channel may join"),
+		MUIA_ShortHelp, LGS( MSG_MODE_I ),
         MUIA_InputMode, MUIV_InputMode_Toggle,
     End;
 
@@ -128,7 +129,7 @@ static struct query_window *init_conductor(int a)
         MUIA_Background, MUII_ButtonBack,
         MUIA_Text_Contents, "P",
         MUIA_Text_PreParse, "\033c",
-        MUIA_ShortHelp, GCS(10,"Private mode. If set, channel topic is not shown on global channel lists"),
+		MUIA_ShortHelp, LGS( MSG_MODE_P ),
         MUIA_InputMode, MUIV_InputMode_Toggle,
     End;
 
@@ -139,7 +140,7 @@ static struct query_window *init_conductor(int a)
         MUIA_Background, MUII_ButtonBack,
         MUIA_Text_Contents, "M",
         MUIA_Text_PreParse, "\033c",
-        MUIA_ShortHelp, GCS(11,"Moderated mode. Only users with operator, halfop or voice status (thats @ % or +) may talk in channel when set"),
+		MUIA_ShortHelp, LGS( MSG_MODE_M ),
         MUIA_InputMode, MUIV_InputMode_Toggle,
     End;
 
@@ -150,7 +151,7 @@ static struct query_window *init_conductor(int a)
         MUIA_Background, MUII_ButtonBack,
         MUIA_Text_Contents, "B",
         MUIA_Text_PreParse, "\033c",
-        MUIA_ShortHelp, GCS(12,"Click to view a list of all banmasks for this channel"),
+		MUIA_ShortHelp, LGS( MSG_MODE_B ),
         MUIA_InputMode, MUIV_InputMode_RelVerify,
     End;
 
@@ -161,14 +162,14 @@ static struct query_window *init_conductor(int a)
         MUIA_Background, MUII_ButtonBack,
         MUIA_Text_Contents, "K",
         MUIA_Text_PreParse, "\033c",
-        MUIA_ShortHelp, GCS(13,"Keyword mode. When this is set, users need to supply a keyword (password) to enter"),
+		MUIA_ShortHelp, LGS( MSG_MODE_K ),
         MUIA_InputMode, MUIV_InputMode_Toggle,
     End;
 
         test->STR_keyword = (Object*)BetterStringObject,
         MUIA_Weight, 10,
         MUIA_Frame, MUIV_Frame_String,
-        MUIA_ShortHelp, GCS(14,"Current channel keyword"),
+		MUIA_ShortHelp, LGS( MSG_MODE_K_STRING ),
         MUIA_String_Secret, TRUE,
         End;
 
@@ -179,14 +180,14 @@ static struct query_window *init_conductor(int a)
         MUIA_Background, MUII_ButtonBack,
         MUIA_Text_Contents, "L",
         MUIA_Text_PreParse, "\033c",
-        MUIA_ShortHelp, GCS(15,"Enforce a limit to how many users can currently join the channel"),
+		MUIA_ShortHelp, LGS( MSG_MODE_L ),
         MUIA_InputMode, MUIV_InputMode_Toggle,
     End;
 
         test->STR_limit = (Object*)BetterStringObject,
         MUIA_Weight, 10,
         MUIA_Frame, MUIV_Frame_String,
-        MUIA_ShortHelp, GCS(16,"Current user limit"),
+		MUIA_ShortHelp, LGS( MSG_MODE_L_STRING ),
          MUIA_String_Accept, "0123456789",
         End;
 
@@ -239,7 +240,7 @@ static struct query_window *init_conductor(int a)
 
     }
 
-    if(!test->LV_channel) cleanexit((char*)GCS(18,"Please download and install the NList MUI Class from aminet\n"));
+	if(!test->LV_channel) cleanexit((char*) LGS( MSG_ERROR_NLIST ));
 
     test->LV_channel = (Object*)NListviewObject,
         MUIA_HelpNode, "LV_channel",
@@ -256,7 +257,7 @@ static struct query_window *init_conductor(int a)
             MUIA_Weight, 80,
             //MUIA_Textinput_Multiline, FALSE,
             MUIA_Frame, MUIV_Frame_String,
-            MUIA_ShortHelp, GCS(5,"This is the channels current topic"),
+			MUIA_ShortHelp, LGS( MSG_TOPIC ),
             MUIA_String_MaxLen, 500,
         End;
 
@@ -292,7 +293,7 @@ static struct query_window *init_conductor(int a)
         test->LV_nicklist = (Object*)NewObject(nlist->mcc_Class,NULL,
             #endif
             MUIA_ContextMenu, test->strip = (Object*)MUI_MakeObject(MUIO_MenustripNM,MenuData1,0),
-            MUIA_ShortHelp,GCS(319,"Graphical Usermodes Key:\nGreen = Channel Operators or @\nBlue = HalfOps or \%\nYellow = Voiced Users or +"),
+			MUIA_ShortHelp, LGS( MSG_GRAPHICAL_NICKLIST_HELP_BUBBLE ),
             MUIA_NList_MultiSelect, MUIV_NList_MultiSelect_Default,
             MUIA_NList_ConstructHook, &ConstructLI_TextHook,
             MUIA_NList_DisplayHook, &DisplayLI_TextHook,
@@ -329,8 +330,7 @@ static struct query_window *init_conductor(int a)
             //MUIA_Textinput_Multiline, FALSE,
             MUIA_String_MaxLen, 500,
             MUIA_Frame, MUIV_Frame_String,
-            MUIA_ShortHelp, GCS(17,"This is the hostname of the user you are currently talking to"),
-            //MUIA_ShortHelp, "This is the hostname of the user you are currently talking to",
+			MUIA_ShortHelp, LGS( MSG_HOSTNAME_STR ),
         End;
 
         /*if(ZUNE_SYSTEM==TRUE)
@@ -1254,8 +1254,11 @@ void close_tab(void)
             DoMethod((Object*) WookieChat->LV_tabs, MUIM_NList_ReplaceSingle, &status_conductor->conductor->nlist_tab,
                     status_conductor->conductor->nlist_tab_number, 0, 0);
 
-            sprintf(buffer3, "%s%s%s%s %s", timestamp, GCS(217, "["),
-                    GCS(165, "Part"), GCS(218, "]"), status_conductor->nick);
+			sprintf(buffer3, "%s%s%s%s %s", timestamp,
+					LGS( MSG_OPENING_BRACKET ),
+					LGS( MSG_PART ),
+					LGS( MSG_CLOSING_BRACKET ),
+					status_conductor->nick);
             add_text_to_current_list((char*) buffer3, 3, ACTIVITY);
 
         }
