@@ -153,9 +153,7 @@ int free_graphical_smilies(struct query_window *new_tab)
         setmacro(
                 (Object*) new_tab->LV_nicklist,
                 MUIA_ShortHelp,
-                GCS(
-                        catalog,
-                        319,
+                GCS(319,
                         "Graphical Usermodes Key:\nGreen = Channel Operators or @\nBlue = HalfOps or \%\nYellow = Voiced Users or +"));
     else
         setmacro((Object*) new_tab->LV_nicklist, MUIA_ShortHelp, "The list of users on this channel");
@@ -207,9 +205,7 @@ int use_graphical_smilies(struct query_window *new_tab)
         setmacro(
                 (Object*) new_tab->LV_nicklist,
                 MUIA_ShortHelp,
-                GCS(
-                        catalog,
-                        319,
+                GCS(319,
                         "Graphical Usermodes Key:\nGreen = Channel Operators or @\nBlue = HalfOps or \%\nYellow = Voiced Users or +"));
     else
         setmacro((Object*) new_tab->LV_nicklist, MUIA_ShortHelp, "The list of users on this channel");

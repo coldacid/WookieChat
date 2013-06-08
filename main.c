@@ -143,8 +143,8 @@ void send_text(char *text2)
     timestamp_2_string();
     if (!status_conductor->connection_active)
     {
-        sprintf(buffer3, "%s%s%s%s %s", timestamp, GCS(catalog, 217, "["), GCS(catalog, 0, "Error"),
-                GCS(catalog, 218, "]"), GCS(catalog, 134, "Not connected to a server"));
+        sprintf(buffer3, "%s%s%s%s %s", timestamp, GCS(217, "["), GCS(0, "Error"),
+                GCS(218, "]"), GCS(134, "Not connected to a server"));
         add_text_to_conductor_list(buffer3, 9, ACTIVITY_CHAT);
         return;
     }
@@ -198,8 +198,8 @@ void send_text(char *text2)
                 printf("error:%li\nunable to send:%s", Errno(), text);
 
             sprintf(buffer3, "%s%s%s%s Unable to send text: error number: %li", timestamp,
-                    GCS(catalog, 217, "["), GCS(catalog, 0, "Error"),
-                    GCS(catalog, 218, "]"), Errno());
+                    GCS(217, "["), GCS(0, "Error"),
+                    GCS(218, "]"), Errno());
             if (status_conductor->conductor->LV_channel)
                 add_text_to_conductor_list(buffer3, 9, ACTIVITY_CHAT);
 
@@ -208,9 +208,9 @@ void send_text(char *text2)
 
                 if (status_conductor->connection_active == 1)
                 {
-                    sprintf(buffer3, "%s%s%s%s %s", timestamp, GCS(catalog, 217, "["),
-                            GCS(catalog, 0, "Error"), GCS(catalog, 218, "]"),
-                            GCS(catalog, 134, "Not connected to a server"));
+                    sprintf(buffer3, "%s%s%s%s %s", timestamp, GCS(217, "["),
+                            GCS(0, "Error"), GCS(218, "]"),
+                            GCS(134, "Not connected to a server"));
 
                     status_conductor->connection_active = 0;
                     status_conductor->pass[0] = '\0';
@@ -241,8 +241,8 @@ void send_dcc_chat(char *text)
 
     if (!dcc_chat_conductor->connected)
     {
-        sprintf(buffer3, "%s%s%s%s %s", timestamp, GCS(catalog, 217, "["), GCS(catalog, 0, "Error"),
-                GCS(catalog, 218, "]"), GCS(catalog, 135, "Not connected to a user"));
+        sprintf(buffer3, "%s%s%s%s %s", timestamp, GCS(217, "["), GCS(0, "Error"),
+                GCS(218, "]"), GCS(135, "Not connected to a user"));
         add_text_to_conductor_list(buffer3, 9, ACTIVITY_CHAT);
         return;
     }
@@ -283,9 +283,9 @@ void send_dcc_chat(char *text)
 
             if (dcc_chat_conductor->connected == 1)
             {
-                sprintf(buffer3, "%s%s%s%s %s", timestamp, GCS(catalog, 217, "["),
-                        GCS(catalog, 0, "Error"), GCS(catalog, 218, "]"),
-                        GCS(catalog, 135, "Not connected to a user"));
+                sprintf(buffer3, "%s%s%s%s %s", timestamp, GCS(217, "["),
+                        GCS(0, "Error"), GCS(218, "]"),
+                        GCS(135, "Not connected to a user"));
                 if (dcc_chat_conductor->conductor->LV_channel)
                     add_text_to_conductor_list(buffer3, 9, ACTIVITY_CHAT);
                 dcc_chat_conductor->connected = 0;
@@ -335,8 +335,8 @@ void send_current(char *text2)
 
     if (!status_current->connection_active)
     {
-        sprintf(buffer3, "%s%s%s%s %s", timestamp, GCS(catalog, 217, "["), GCS(catalog, 0, "Error"),
-                GCS(catalog, 218, "]"), GCS(catalog, 134, "Not connected to a server"));
+        sprintf(buffer3, "%s%s%s%s %s", timestamp, GCS(217, "["), GCS(0, "Error"),
+                GCS(218, "]"), GCS(134, "Not connected to a server"));
 
         add_text_to_current_list(buffer3, 9, ACTIVITY_CHAT);
         return;
@@ -385,8 +385,8 @@ void send_current(char *text2)
             if (DEBUG)
                 printf("error:%li\nunable to send:%s", Errno(), text);
             sprintf(buffer3, "%s%s%s%s Unable to send text: error number: %li", timestamp,
-                    GCS(catalog, 217, "["), GCS(catalog, 0, "Error"),
-                    GCS(catalog, 218, "]"), Errno());
+                    GCS(217, "["), GCS(0, "Error"),
+                    GCS(218, "]"), Errno());
             if (status_current->conductor->LV_channel)
                 add_text_to_current_list(buffer3, 9, ACTIVITY_CHAT);
 
@@ -396,9 +396,9 @@ void send_current(char *text2)
                 if (status_current->connection_active == 1)
                 {
 
-                    sprintf(buffer3, "%s%s%s%s %s", timestamp, GCS(catalog, 217, "["),
-                            GCS(catalog, 0, "Error"), GCS(catalog, 218, "]"),
-                            GCS(catalog, 134, "Not connected to a server"));
+                    sprintf(buffer3, "%s%s%s%s %s", timestamp, GCS(217, "["),
+                            GCS(0, "Error"), GCS(218, "]"),
+                            GCS(134, "Not connected to a server"));
 
                     status_current->conductor = status_current->root;
                     while (status_current->conductor)
@@ -785,14 +785,13 @@ int main(int argc, char *argv[])
         cleanexit((char*) "cant create timers\n");
 
     if (!create_custom_classes())
-        cleanexit((char*) GCS(
-                    catalog, 140,
+        cleanexit((char*) GCS(140,
                     "These missing classes can be downloaded from http://www.aminet.net/ or http://os4depot.net. Check the WookieChat readme for direct links to these classes\n"));
 //
 
     WookieChat = CreateApp();
     if (!WookieChat)
-        cleanexit((char*) GCS(catalog, 133, "cant create application\n"));
+        cleanexit((char*) GCS(133, "cant create application\n"));
 
     arexx_add_scripts_to_menu();
 
@@ -1398,7 +1397,7 @@ int main(int argc, char *argv[])
                 if (port_number[0] != '\0')
                 {
 
-                    if (!stricmp(auto_connect, "Yes") || !stricmp(auto_connect, (char *)GCS(catalog, 27, "Yes")))
+                    if (!stricmp(auto_connect, "Yes") || !stricmp(auto_connect, (char *)GCS(27, "Yes")))
                     {
                         if (!connecting)
                         {
@@ -2046,7 +2045,7 @@ int main(int argc, char *argv[])
                         setmacro((Object*)WookieChat->STR_autojoin, MUIA_String_BufferPos, 0);
                         setmacro((Object*)WookieChat->STR_nick_registration_command, MUIA_String_BufferPos, 0);
 
-                        if (!stricmp(auto_connect, "Yes") || !stricmp(auto_connect, (char *)GCS(catalog, 27, "Yes")))
+                        if (!stricmp(auto_connect, "Yes") || !stricmp(auto_connect, (char *)GCS(27, "Yes")))
                             setmacro((Object*)WookieChat->CH_autoconnect, MUIA_Selected, TRUE);
                         else
                             setmacro((Object*)WookieChat->CH_autoconnect, MUIA_Selected, FALSE);
@@ -2146,9 +2145,9 @@ int main(int argc, char *argv[])
                     strcat(work_buffer3, " AUTOCONNECT=");
 
                     if (my_auto_connect)
-                        strcat(work_buffer3, (char *)GCS(catalog, 27, "Yes"));
+                        strcat(work_buffer3, (char *)GCS(27, "Yes"));
                     else
-                        strcat(work_buffer3, (char *)GCS(catalog, 28, "No"));
+                        strcat(work_buffer3, (char *)GCS(28, "No"));
 
                     strcat(work_buffer3, " SERVER_CHARSET=");
                     //#ifdef __AROS__
@@ -2490,7 +2489,7 @@ int main(int argc, char *argv[])
 
                                     dcc_conductor->total_recv = 0;
 
-                                    strcpy(dcc_conductor->entry->status, (char *)GCS(catalog, 201, "Connecting"));
+                                    strcpy(dcc_conductor->entry->status, (char *)GCS(201, "Connecting"));
                                     strcpy(dcc_conductor->entry->percentage, "0%");
 
                                     DoMethod((Object*) WookieChat->LV_dcc, MUIM_NList_ReplaceSingle,
@@ -2603,7 +2602,7 @@ int main(int argc, char *argv[])
 
                                 if (dcc_conductor->entry)
                                 {
-                                    strcpy(dcc_conductor->entry->status, (char *)GCS(catalog, 142, "Cancelled"));
+                                    strcpy(dcc_conductor->entry->status, (char *)GCS(142, "Cancelled"));
                                     strcpy(dcc_conductor->entry->percentage, "N/A");
 
                                     dcc_conductor->cancelled = 1;
@@ -2887,7 +2886,7 @@ int main(int argc, char *argv[])
                 filerequester=(struct FileRequester*)AllocAslRequestTags(ASL_FileRequest,/*ASLFR_TitleText,GCS(catalog,87,"Choose filename to save buffer as.."),ASLFR_DoMultiSelect,TRUE,ASLFR_InitialDrawer,"progdir:",*/TAG_DONE, NULL);
 #else
                 filerequester = (struct FileRequester*) AllocAslRequestTags(ASL_FileRequest, ASLFR_TitleText,
-                        GCS(catalog, 87, "Choose filename to save buffer as.."), ASLFR_DoMultiSelect, TRUE,
+                        GCS(87, "Choose filename to save buffer as.."), ASLFR_DoMultiSelect, TRUE,
                         ASLFR_InitialDrawer, "progdir:", TAG_DONE, NULL);
 #endif
 
@@ -2907,8 +2906,8 @@ int main(int argc, char *argv[])
                         ULONG entries;
                         getmacro((Object*)status_conductor->current_query->LV_channel, MUIA_NList_Entries, &entries);
 
-                        sprintf(buffer3, "%s%sBuffer%s %s %s", timestamp, GCS(catalog, 217, "["),
-                                GCS(catalog, 218, "]"), GCS(catalog, 141, "Saving buffer to file:"),
+                        sprintf(buffer3, "%s%sBuffer%s %s %s", timestamp, GCS(217, "["),
+                                GCS(218, "]"), GCS(141, "Saving buffer to file:"),
                                 work_buffer);
                         add_text_to_current_list(buffer3, 9, ACTIVITY_CHAT);
 
@@ -2984,7 +2983,7 @@ int main(int argc, char *argv[])
 
                                 if (dcc_send_conductor->entry)
                                 {
-                                    strcpy(dcc_send_conductor->entry->status, (char *)GCS(catalog, 142, "Cancelled"));
+                                    strcpy(dcc_send_conductor->entry->status, (char *)GCS(142, "Cancelled"));
                                     strcpy(dcc_send_conductor->entry->percentage, "N/A");
                                     dcc_send_conductor->cancelled = 1;
                                     //if(dcc_send_conductor->completed!=1 && dcc_send_conductor->connected!=0)
@@ -3123,24 +3122,24 @@ int main(int argc, char *argv[])
                             buffer3,
                             "%s%sDCC%s %s",
                             timestamp,
-                            GCS(catalog, 217, "["),
-                            GCS(catalog, 218, "]"),
-                            GCS(catalog, 143,
+                            GCS(217, "["),
+                            GCS(218, "]"),
+                            GCS(143,
                                     "Please select a file to send, and a nick to offer the file to"));
                     add_text_to_current_list(buffer3, 9, ACTIVITY_CHAT);
                 }
                 else if (!strcmp(string1, ""))
                 {
-                    sprintf(buffer3, "%s%sDCC%s %s", timestamp, GCS(catalog, 217, "["),
-                            GCS(catalog, 218, "]"),
-                            GCS(catalog, 144, "Please select a file to send"));
+                    sprintf(buffer3, "%s%sDCC%s %s", timestamp, GCS(217, "["),
+                            GCS(218, "]"),
+                            GCS(144, "Please select a file to send"));
                     add_text_to_current_list(buffer3, 9, ACTIVITY_CHAT);
                 }
                 else if (!strcmp(string2, ""))
                 {
-                    sprintf(buffer3, "%s%sDCC%s %s", timestamp, GCS(catalog, 217, "["),
-                            GCS(catalog, 218, "]"),
-                            GCS(catalog, 145, "Please select a nick to offer the file to"));
+                    sprintf(buffer3, "%s%sDCC%s %s", timestamp, GCS(217, "["),
+                            GCS(218, "]"),
+                            GCS(145, "Please select a nick to offer the file to"));
                     add_text_to_current_list(buffer3, 9, ACTIVITY_CHAT);
                 }
                 else if (string1 && string2)
@@ -3245,16 +3244,16 @@ int main(int argc, char *argv[])
             {
 // ADD an ignore entry to the ignore list
                 setmacro((Object*)WookieChat->STR_addignore, MUIA_String_Contents, "");
-                setmacro((Object*)WookieChat->WI_addignore, MUIA_Window_Title, GCS(catalog,273,"Add"));
-                setmacro((Object*)WookieChat->BT_addignore, MUIA_Text_Contents, GCS(catalog,273,"Add"));
+                setmacro((Object*)WookieChat->WI_addignore, MUIA_Window_Title, GCS(273,"Add"));
+                setmacro((Object*)WookieChat->BT_addignore, MUIA_Text_Contents, GCS(273,"Add"));
                 setmacro((Object*)WookieChat->WI_addignore, MUIA_Window_Open, TRUE);
 //
             }
             else if (result == 86) //EDIT an ignore entry in the ignore list
             {
 // EDIT an ignore entry in the ignore list
-                setmacro((Object*)WookieChat->WI_addignore, MUIA_Window_Title, GCS(catalog,274,"Edit"));
-                setmacro((Object*)WookieChat->BT_addignore, MUIA_Text_Contents, GCS(catalog,274,"Edit"));
+                setmacro((Object*)WookieChat->WI_addignore, MUIA_Window_Title, GCS(274,"Edit"));
+                setmacro((Object*)WookieChat->BT_addignore, MUIA_Text_Contents, GCS(274,"Edit"));
 
                 DoMethod((Object*) WookieChat->LV_ignore, MUIM_NList_GetEntry, MUIV_NList_GetEntry_Active, &string4);
 
@@ -3307,7 +3306,7 @@ int main(int argc, char *argv[])
 
                 if (DEBUG)
                     printf("add or edit ignore? %s\n", string1);
-                if (!stricmp(string1, "edit") || !stricmp(string1, (char *)GCS(catalog, 274, "Edit")))
+                if (!stricmp(string1, "edit") || !stricmp(string1, (char *)GCS(274, "Edit")))
                 {
                     //printf("edit!\n");
                     LONG string1, string2, string3;
@@ -3377,7 +3376,7 @@ int main(int argc, char *argv[])
                     }
 
                 }
-                else if (!stricmp(string1, "add") || !stricmp(string1, (char *)GCS(catalog, 273, "Add")))
+                else if (!stricmp(string1, "add") || !stricmp(string1, (char *)GCS(273, "Add")))
                 {
 
                     LONG string1, string2, string3;
@@ -3589,12 +3588,10 @@ int main(int argc, char *argv[])
                                     buffer3,
                                     "%s%s%s%s %s",
                                     timestamp,
-                                    GCS(catalog, 217, "["),
-                                    GCS(catalog, 0, "Error"),
-                                    GCS(catalog, 218, "]"),
-                                    GCS(
-                                            catalog,
-                                            136,
+                                    GCS(217, "["),
+                                    GCS(0, "Error"),
+                                    GCS(218, "]"),
+                                    GCS(136,
                                             "Please go to the \"Main Settings\" window, and choose a browser for WookieChat to open web sites with"));
 
                             status_conductor = status_current;
@@ -3669,12 +3666,10 @@ int main(int argc, char *argv[])
                                 buffer3,
                                 "%s%s%s%s %s",
                                 timestamp,
-                                GCS(catalog, 217, "["),
-                                GCS(catalog, 0, "Error"),
-                                GCS(catalog, 218, "]"),
-                                GCS(
-                                        catalog,
-                                        136,
+                                GCS(217, "["),
+                                GCS(0, "Error"),
+                                GCS(218, "]"),
+                                GCS(136,
                                         "Please go to the \"Main Settings\" window, and choose a browser for WookieChat to open web sites with"));
                         add_text_to_current_list(buffer3, 9, ACTIVITY_CHAT);
 
@@ -4613,7 +4608,7 @@ int main(int argc, char *argv[])
                                 setmacro((Object*)WookieChat->WI_ban, MUIA_Window_Open, TRUE);
 
                                 sprintf(ban_window_title, "%s %s",
-                                        GCS(catalog, 146, "List of banmasks for channel"),
+                                        GCS(146, "List of banmasks for channel"),
                                         status_conductor->conductor->name);
 
                                 setmacro((Object*)WookieChat->WI_ban, MUIA_Window_Title, ban_window_title);
@@ -4631,9 +4626,9 @@ int main(int argc, char *argv[])
                                     send_text(sendstuff);
 
                                     sprintf(buffer3, "%s%sMode%s %s %s %s %s", timestamp,
-                                            GCS(catalog, 217, "["), GCS(catalog, 218, "]"),
-                                            GCS(catalog, 147, "Removing banmask"), string2,
-                                            GCS(catalog, 155, "for channel"),
+                                            GCS(217, "["), GCS(218, "]"),
+                                            GCS(147, "Removing banmask"), string2,
+                                            GCS(155, "for channel"),
                                             status_conductor->conductor->name);
                                     add_text_to_current_list(buffer3, 5, ACTIVITY_CHAT);
 
@@ -4853,7 +4848,7 @@ int main(int argc, char *argv[])
                                         sprintf(dcc_conductor->entry->timeleft, "00:00:%02lu", seconds_left);
 
                                     if (!stricmp(dcc_conductor->entry->status,
-                                            (char *)GCS(catalog, 148, "Transferring")))
+                                            (char *)GCS(148, "Transferring")))
                                         DoMethod((Object*) WookieChat->LV_dcc, MUIM_NList_ReplaceSingle,
                                                 dcc_conductor->entry, a, NOWRAP, ALIGN_LEFT);
 
@@ -4940,7 +4935,7 @@ int main(int argc, char *argv[])
                                         sprintf(dcc_send_conductor->entry->timeleft, "00:00:%02lu", seconds_left);
 
                                     if (!stricmp(dcc_send_conductor->entry->status,
-                                            (char *)GCS(catalog, 148, "Transferring")))
+                                            (char *)GCS(148, "Transferring")))
                                         DoMethod((Object*) WookieChat->LV_send_dcc, MUIM_NList_ReplaceSingle,
                                                 dcc_send_conductor->entry, a, NOWRAP, ALIGN_LEFT);
 
@@ -5023,8 +5018,8 @@ int main(int argc, char *argv[])
                                     if (my_settings.Maximum_Retries > 0)
                                     {
                                         sprintf(buffer3, "%s%sConnect%s %s", timestamp,
-                                                GCS(catalog, 217, "["), GCS(catalog, 218, "]"),
-                                                GCS(catalog, 279, "Unable to connect, giving up"));
+                                                GCS(217, "["), GCS(218, "]"),
+                                                GCS(279, "Unable to connect, giving up"));
                                         add_text_to_conductor_list(buffer3, 9, ACTIVITY_CHAT);
 
                                         if (status_conductor->a_socket != -1)
@@ -5119,8 +5114,8 @@ int main(int argc, char *argv[])
 #endif
                     timestamp_2_string();
 
-                    sprintf(buffer3, "%s%s%s%s * * %d-%d-%d * *", timestamp, GCS(catalog, 217, "["),
-                            GCS(catalog, 344, "Info"), GCS(catalog, 218, "]"), clockdata.year,
+                    sprintf(buffer3, "%s%s%s%s * * %d-%d-%d * *", timestamp, GCS(217, "["),
+                            GCS(344, "Info"), GCS(218, "]"), clockdata.year,
                             clockdata.month, clockdata.mday); //,timestamp_hrs,timestamp_mins);
 
                     for (status_conductor = status_root; status_conductor; status_conductor = status_conductor->next)

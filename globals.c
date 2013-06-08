@@ -13,7 +13,7 @@
 #include "intern.h"
 
 
-struct Catalog *catalog;
+
 
 struct ObjApp *WookieChat;
 char wookie_folder[400]; //the pathname wookiechat is located in

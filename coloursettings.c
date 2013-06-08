@@ -210,7 +210,7 @@ void load_colours(char *load_this_theme)
 
     //strcpy(my_settings.default_colour_theme,colours_theme);
 
-    sprintf(colour_settings_title, "%s %s", (char *)GCS(catalog, 102, "Colour Settings..."),
+    sprintf(colour_settings_title, "%s %s", (char *)GCS( 102, "Colour Settings..."),
             my_settings.default_colours_theme);
     setmacro((Object*) WookieChat->WI_colour_settings, MUIA_Window_Title, colour_settings_title);
 
@@ -446,7 +446,7 @@ void save_colours(void)
             return;
     }
 
-    sprintf(colour_settings_title, "%s %s", (char *)GCS(catalog, 102, "Colour Settings..."),
+    sprintf(colour_settings_title, "%s %s", (char *)GCS( 102, "Colour Settings..."),
             my_settings.default_colours_theme);
     setmacro((Object*) WookieChat->WI_colour_settings, MUIA_Window_Title, colour_settings_title);
 

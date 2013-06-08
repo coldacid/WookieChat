@@ -160,13 +160,13 @@ if(AMIX) printf("2\n");
         NULL
     };
 
-    titles2[0] = GCS(catalog,19,"General");
-    titles2[2] = GCS(catalog,260,"Servers");
-    titles2[3] = GCS(catalog,20,"Logging");
-    titles2[5] = GCS(catalog,21,"Sounds");
-    titles2[6] = GCS(catalog,22,"Aliases");
-    titles2[7] = GCS(catalog,374,"Nick List Buttons");
-    titles2[8] = GCS(catalog,800,"Events");
+    titles2[0] = GCS(19,"General");
+    titles2[2] = GCS(260,"Servers");
+    titles2[3] = GCS(20,"Logging");
+    titles2[5] = GCS(21,"Sounds");
+    titles2[6] = GCS(22,"Aliases");
+    titles2[7] = GCS(374,"Nick List Buttons");
+    titles2[8] = GCS(800,"Events");
 
 if(AMIX) printf("3\n");
         #ifdef __AROS__
@@ -216,7 +216,7 @@ if(AMIX) printf("4\n");
     End;
 
     MBObj->TX_about3 = (Object*)TextObject,
-        MUIA_Text_Contents,GCS(catalog,333,"AREXX port: "),
+        MUIA_Text_Contents,GCS(333,"AREXX port: "),
         MUIA_Weight, 100,
     End;
 if(AMIX) printf("5\n");
@@ -322,7 +322,7 @@ if(AMIX) printf("7\n");
 if(AMIX) printf("8\n");
     //load graphical smilies
 
-    MBObj->LA_local_charset=(Object*)Label(GCS(catalog,328,"Local Charset:"));
+    MBObj->LA_local_charset=(Object*)Label(GCS(328,"Local Charset:"));
 
     STRPTR *array;
 if(AMIX) printf("9\n");
@@ -384,8 +384,8 @@ if(AMIX) printf("10\n");
         MUIA_NListview_NList, MBObj->LV_urlgrabber,
     End;
 if(AMIX) printf("11\n");
-    MBObj->BT_urlgrabber_clear=(Object*)SimpleButton(GCS(catalog,23,"Remove URL(s) From List"));
-    MBObj->BT_urlgrabber_clearall=(Object*)SimpleButton(GCS(catalog,24,"Clear All"));
+    MBObj->BT_urlgrabber_clear=(Object*)SimpleButton(GCS(23,"Remove URL(s) From List"));
+    MBObj->BT_urlgrabber_clearall=(Object*)SimpleButton(GCS(24,"Clear All"));
 if(AMIX) printf("12\n");
     URLGRABBER_GRP1 =(Object*)GroupObject,
         MUIA_Group_Horiz, TRUE,
@@ -400,7 +400,7 @@ if(AMIX) printf("12\n");
     End;
 if(AMIX) printf("13\n");
     MBObj->WI_urlgrabber = (Object*)WindowObject,
-        MUIA_Window_Title, GCS(catalog,25,"URL Grabber - Double Click to Open"),
+        MUIA_Window_Title, GCS(25,"URL Grabber - Double Click to Open"),
         MUIA_Window_CloseGadget, TRUE,
         MUIA_Window_ID, MAKE_ID('7', '1', '1', 'N'),
         MUIA_Background, MUII_SHINE,
@@ -418,13 +418,13 @@ if(AMIX) printf("13\n");
 
     MBObj->BT_addignore = (Object*)TextObject,
         ButtonFrame,
-        MUIA_Text_Contents,"blah", //GCS(catalog,812,"blah"),
+        MUIA_Text_Contents,"blah", //GCS(812,"blah"),
         MUIA_Text_PreParse, "\033c",
         MUIA_InputMode, MUIV_InputMode_RelVerify,
         //MUIA_InputMode, MUIV_InputMode_Toggle,
     End;
 
-    MBObj->LA_addignore_privmsg = (Object*)Label2(GCS(catalog,265,"Text"));
+    MBObj->LA_addignore_privmsg = (Object*)Label2(GCS(265,"Text"));
     MBObj->CH_addignore_privmsg = (Object*)CheckMark(FALSE);
 
     MBObj->LA_addignore_ctcp = (Object*)Label2("CTCP");
@@ -437,13 +437,13 @@ if(AMIX) printf("13\n");
     MBObj->TX_addignore =(Object*)TextObject,
         MUIA_Weight, 100,
         MUIA_Text_PreParse, NULL,
-        MUIA_Text_Contents, GCS(catalog,270, "Hostmarks look like this: nick!userid@hostname\ni.e.«Join» jahc (~jahc00@jahc.Amigaworld.Net)\njahc is the nick, jahc00 is the userid, and jahc.Amigaworld.Net is the hostname\nTo ignore this person, you could insert an ignore entry of: jahc*!*@*\nThis will ignore all people with a nick starting with the letters jahc.\nThe use of wildcards makes this ignore command very powerful.\nThings like this are possible: guru*editatio*!*userid@*.se\nor if you want to keep it simple, you could just use: roberto*"),
+        MUIA_Text_Contents, GCS(270, "Hostmarks look like this: nick!userid@hostname\ni.e.«Join» jahc (~jahc00@jahc.Amigaworld.Net)\njahc is the nick, jahc00 is the userid, and jahc.Amigaworld.Net is the hostname\nTo ignore this person, you could insert an ignore entry of: jahc*!*@*\nThis will ignore all people with a nick starting with the letters jahc.\nThe use of wildcards makes this ignore command very powerful.\nThings like this are possible: guru*editatio*!*userid@*.se\nor if you want to keep it simple, you could just use: roberto*"),
         MUIA_InnerLeft, 0,
         MUIA_InnerRight, 0,
     End;
 if(AMIX) printf("14\n");
-    MBObj->LA_ignore_hostmask=(Object*)Label(GCS(catalog,271,"Ignore entry:"));
-    MBObj->LA_ignore_actions=(Object*)Label(GCS(catalog,272,"Which events to ignore:"));
+    MBObj->LA_ignore_hostmask=(Object*)Label(GCS(271,"Ignore entry:"));
+    MBObj->LA_ignore_actions=(Object*)Label(GCS(272,"Which events to ignore:"));
 
 
     ADDIGNORE_GRP1 = (Object*)GroupObject,
@@ -476,9 +476,9 @@ if(AMIX) printf("15\n");
 if(AMIX) printf("16\n");
         //MUIA_Background, MUII_BACKGROUND,
 
-    MBObj->BT_ignore_add=(Object*)SimpleButton(GCS(catalog,273,"Add"));
-    MBObj->BT_ignore_edit=(Object*)SimpleButton(GCS(catalog,274,"Edit"));
-    MBObj->BT_ignore_remove=(Object*)SimpleButton(GCS(catalog,275,"Remove"));
+    MBObj->BT_ignore_add=(Object*)SimpleButton(GCS(273,"Add"));
+    MBObj->BT_ignore_edit=(Object*)SimpleButton(GCS(274,"Edit"));
+    MBObj->BT_ignore_remove=(Object*)SimpleButton(GCS(275,"Remove"));
 
     MBObj->LV_ignore = (Object*) NListObject,
         MUIA_Frame, MUIV_Frame_InputList,
@@ -512,7 +512,7 @@ if(AMIX) printf("17\n");
     End;
 if(AMIX) printf("18\n");
     MBObj->WI_ignore = (Object*)WindowObject,
-        MUIA_Window_Title, GCS(catalog,276,"Ignore List"),
+        MUIA_Window_Title, GCS(276,"Ignore List"),
         MUIA_Window_CloseGadget, TRUE,
         MUIA_Window_ID, MAKE_ID('7', '1', 'I', 'N'),
         MUIA_Background, MUII_SHINE,
@@ -522,7 +522,7 @@ if(AMIX) printf("19\n");
     //end of ignore stuff
 
     MBObj->WI_about = (Object*)WindowObject,
-        MUIA_Window_Title, GCS(catalog,26,"About"),
+        MUIA_Window_Title, GCS(26,"About"),
         MUIA_Window_CloseGadget, TRUE,
         MUIA_Window_ID, MAKE_ID('7', 'W', 'I', 'N'),
         MUIA_Background, MUII_SHINE,
@@ -531,10 +531,10 @@ if(AMIX) printf("19\n");
 
     // quit yes/no window
 
-    quit_label = (Object*)Label(GCS(catalog,60,"Quit Program?"));
+    quit_label = (Object*)Label(GCS(60,"Quit Program?"));
 
-    MBObj->BT_quit_yes = (Object*)SimpleButton(GCS(catalog,27,"Yes"));
-    MBObj->BT_quit_no = (Object*)SimpleButton(GCS(catalog,28,"No"));
+    MBObj->BT_quit_yes = (Object*)SimpleButton(GCS(27,"Yes"));
+    MBObj->BT_quit_no = (Object*)SimpleButton(GCS(28,"No"));
 
     QUIT_ROOT = (Object*)GroupObject,
         MUIA_Group_Columns, 3,
@@ -544,7 +544,7 @@ if(AMIX) printf("19\n");
     End;
 if(AMIX) printf("20\n");
     MBObj->WI_quit = (Object*)WindowObject,
-        MUIA_Window_Title, GCS(catalog,60,"Quit Program?"), //"Quit",
+        MUIA_Window_Title, GCS(60,"Quit Program?"), //"Quit",
         MUIA_Window_CloseGadget, FALSE,
         MUIA_Window_ID, MAKE_ID('9', 'W', 'I', 'N'),
         MUIA_Background, MUII_SHINE,
@@ -553,22 +553,22 @@ if(AMIX) printf("20\n");
 
 
     MBObj->WI_change_nick = (Object*)WindowObject,
-        MUIA_Window_Title, GCS(catalog,800,"Change nick"), //"Quit",
+        MUIA_Window_Title, GCS(800,"Change nick"), //"Quit",
         MUIA_Window_CloseGadget, TRUE,
         MUIA_Window_ID, MAKE_ID('9', 'z', 'z', 'z'),
         //MUIA_Background, MUII_SHINE,
         WindowContents, GroupObject,
             MUIA_Group_Columns, 2,
-            Child,MBObj->LA_change_nick=Label(GCS(catalog,800,"Enter new nick")),
+            Child,MBObj->LA_change_nick=Label(GCS(800,"Enter new nick")),
             Child,MBObj->STR_change_nick=StringObject,MUIA_Frame, MUIV_Frame_String,MUIA_String_Reject," ./",End,
-            Child,MBObj->BT_change_nick_change=SimpleButton(GCS(catalog,800,"Change")),
-            Child,MBObj->BT_change_nick_cancel=SimpleButton(GCS(catalog,800,"Cancel")),
+            Child,MBObj->BT_change_nick_change=SimpleButton(GCS(800,"Change")),
+            Child,MBObj->BT_change_nick_cancel=SimpleButton(GCS(800,"Cancel")),
         End,
     End;
 
     //dcc send initiate window
 
-    LA_dcc_send_file = (Object*)Label(GCS(catalog,61,"File to send"));
+    LA_dcc_send_file = (Object*)Label(GCS(61,"File to send"));
 
     MBObj->STR_PA_dcc_send_file = (Object*)String(my_settings.upload_path, 800);
 
@@ -577,7 +577,7 @@ if(AMIX) printf("20\n");
     MBObj->PA_dcc_send_file = (Object*)PopaslObject,
         MUIA_HelpNode, "PA_dcc_send_file",
         MUIA_Popasl_Type, ASL_FileRequest,
-        ASLFR_TitleText,GCS(catalog,29,"Choose filename to send"),
+        ASLFR_TitleText,GCS(29,"Choose filename to send"),
         ASLFR_InitialDrawer,my_settings.upload_path,
         //ASLFR_InitialDrawer,"ram:",
         MUIA_Popstring_String, MBObj->STR_PA_dcc_send_file,
@@ -591,7 +591,7 @@ if(AMIX) printf("21\n");
         Child, MBObj->PA_dcc_send_file,
     End;
 
-    LA_dcc_send_nick = (Object*)Label((char*)GCS(catalog,240,"Reciever"));
+    LA_dcc_send_nick = (Object*)Label((char*)GCS(240,"Reciever"));
 
     MBObj->STR_dcc_send_nick = (Object*)StringObject,
         MUIA_Frame, MUIV_Frame_String,
@@ -606,7 +606,7 @@ if(AMIX) printf("22\n");
         Child, MBObj->STR_dcc_send_nick,
     End;
 
-    MBObj->BT_dcc_send = (Object*)SimpleButton(GCS(catalog,30,"Send File"));
+    MBObj->BT_dcc_send = (Object*)SimpleButton(GCS(30,"Send File"));
 
     GROUP_ROOT_10 = (Object*)GroupObject,
         Child, GR_grp_19,
@@ -615,7 +615,7 @@ if(AMIX) printf("22\n");
     End;
 if(AMIX) printf("34\n");
     MBObj->WI_dcc_send = (Object*)WindowObject,
-        MUIA_Window_Title, GCS(catalog,31,"DCC Send File"),
+        MUIA_Window_Title, GCS(31,"DCC Send File"),
         MUIA_Window_ID, MAKE_ID('9', 'W', 'I', 'N'),
         WindowContents, GROUP_ROOT_10,
     End;
@@ -636,7 +636,7 @@ if(AMIX) printf("35\n");
     End;
 if(AMIX) printf("36\n");
     MBObj->WI_graphical_smileys_preview = (Object*)WindowObject,
-        MUIA_Window_Title, GCS(catalog,320,"Graphical Smileys Preview"),
+        MUIA_Window_Title, GCS(320,"Graphical Smileys Preview"),
         MUIA_Window_CloseGadget, TRUE,
         MUIA_Window_ID, MAKE_ID('9', 'A', 'I', 'N'),
         WindowContents, MBObj->LV_graphical_smileys_preview,
@@ -685,10 +685,10 @@ if(AMIX) printf("38\n");
     End;
 
 if(AMIX) printf("39\n");
-    MBObj->BT_dcc_send_reoffer = (Object*)SimpleButton(GCS(catalog,32,"Reoffer file"));
-    MBObj->BT_dcc_send_cancel = (Object*)SimpleButton(GCS(catalog,33,"Cancel Send"));
-    MBObj->BT_dcc_send_remove = (Object*)SimpleButton(GCS(catalog,34,"Remove"));
-    MBObj->BT_dcc_send_new = (Object*)SimpleButton(GCS(catalog,30,"Send File"));
+    MBObj->BT_dcc_send_reoffer = (Object*)SimpleButton(GCS(32,"Reoffer file"));
+    MBObj->BT_dcc_send_cancel = (Object*)SimpleButton(GCS(33,"Cancel Send"));
+    MBObj->BT_dcc_send_remove = (Object*)SimpleButton(GCS(34,"Remove"));
+    MBObj->BT_dcc_send_new = (Object*)SimpleButton(GCS(30,"Send File"));
 
     GR_send_dcc = (Object*)GroupObject,
         MUIA_Group_Columns, 4,
@@ -697,10 +697,10 @@ if(AMIX) printf("39\n");
         Child, MBObj->BT_dcc_send_remove,
     End;
 if(AMIX) printf("40\n");
-    MBObj->BT_dcc_resume = (Object*)SimpleButton(GCS(catalog,35,"Resume"));
-    MBObj->BT_dcc_overwrite = (Object*)SimpleButton(GCS(catalog,36,"Overwrite"));
-    MBObj->BT_dcc_abort = (Object*)SimpleButton(GCS(catalog,37,"Abort"));
-    MBObj->BT_dcc_rename = (Object*)SimpleButton(GCS(catalog,369,"Rename"));
+    MBObj->BT_dcc_resume = (Object*)SimpleButton(GCS(35,"Resume"));
+    MBObj->BT_dcc_overwrite = (Object*)SimpleButton(GCS(36,"Overwrite"));
+    MBObj->BT_dcc_abort = (Object*)SimpleButton(GCS(37,"Abort"));
+    MBObj->BT_dcc_rename = (Object*)SimpleButton(GCS(369,"Rename"));
 
     GR_dcc_file_exists = (Object*)GroupObject,
         MUIA_Group_Columns, 4,
@@ -727,7 +727,7 @@ if(AMIX) printf("41\n");
     End;
 if(AMIX) printf("42\n");
     MBObj->WI_dcc_file_exists = (Object*)WindowObject,
-        MUIA_Window_Title, GCS(catalog,38,"Incoming File already exists"),
+        MUIA_Window_Title, GCS(38,"Incoming File already exists"),
         MUIA_Window_ID, MAKE_ID('6', 'W', 'I', 'N'),
         MUIA_Window_CloseGadget, FALSE,
         MUIA_Window_NoMenus, FALSE,
@@ -735,7 +735,7 @@ if(AMIX) printf("42\n");
         MUIA_Window_Activate,FALSE,
     End;
 
-    MBObj->LA_upload_path = (Object*)Label2(GCS(catalog, 371,"Upload Path"));
+    MBObj->LA_upload_path = (Object*)Label2(GCS( 371,"Upload Path"));
 
     MBObj->STR_dcc_PA_label_1 = (Object*)String("",200);
 if(AMIX) printf("43\n");
@@ -743,7 +743,7 @@ if(AMIX) printf("43\n");
 
     MBObj->PA_dcc_label_1 = (Object*)PopaslObject,
         ASLFR_DrawersOnly, TRUE,
-        //MUIA_ShortHelp, GCS(catalog,39,"Choose a path to save your downloads to"),
+        //MUIA_ShortHelp, GCS(39,"Choose a path to save your downloads to"),
         MUIA_Popasl_Type, 0,
         MUIA_Popstring_String, MBObj->STR_dcc_PA_label_1,
         MUIA_Popstring_Button, MBObj->PA_dcc_label_1,
@@ -756,7 +756,7 @@ if(AMIX) printf("43\n");
         Child, MBObj->PA_dcc_label_1,
     End;
 if(AMIX) printf("44\n");
-    MBObj->LA_download_path = (Object*)Label2(GCS(catalog, 305,"Download Path"));
+    MBObj->LA_download_path = (Object*)Label2(GCS( 305,"Download Path"));
 
     MBObj->STR_dcc_PA_label_0 = (Object*)String("",200);
 
@@ -764,7 +764,7 @@ if(AMIX) printf("44\n");
 
     MBObj->PA_dcc_label_0 = (Object*)PopaslObject,
         ASLFR_DrawersOnly, TRUE,
-        MUIA_ShortHelp, GCS(catalog,39,"Choose a path to save your downloads to"),
+        MUIA_ShortHelp, GCS(39,"Choose a path to save your downloads to"),
         MUIA_Popasl_Type, 0,
         MUIA_Popstring_String, MBObj->STR_dcc_PA_label_0,
         MUIA_Popstring_Button, MBObj->PA_dcc_label_0,
@@ -777,9 +777,9 @@ if(AMIX) printf("45\n");
         Child, MBObj->PA_dcc_label_0,
     End;
 
-    MBObj->BT_dcc_accept = (Object*)SimpleButton(GCS(catalog,40,"Accept"));
-    MBObj->BT_dcc_cancel = (Object*)SimpleButton(GCS(catalog,41,"Cancel"));
-    MBObj->BT_dcc_remove = (Object*)SimpleButton(GCS(catalog,34,"Remove"));
+    MBObj->BT_dcc_accept = (Object*)SimpleButton(GCS(40,"Accept"));
+    MBObj->BT_dcc_cancel = (Object*)SimpleButton(GCS(41,"Cancel"));
+    MBObj->BT_dcc_remove = (Object*)SimpleButton(GCS(34,"Remove"));
 if(AMIX) printf("46\n");
     GR_dcc = (Object*)GroupObject,
         MUIA_Group_Columns, 3,
@@ -811,7 +811,7 @@ if(AMIX) printf("47\n");
         MUIA_NListview_NList, MBObj->LV_dcc,
     End;
 
-    MBObj->LA_download_path2 = (Object*)Label2(GCS(catalog, 305,"Download Path"));
+    MBObj->LA_download_path2 = (Object*)Label2(GCS( 305,"Download Path"));
     MBObj->TX_download_path = (Object*)TextObject,
         MUIA_Frame, MUIV_Frame_Text,
         MUIA_Weight, 100,
@@ -840,7 +840,7 @@ if(AMIX) printf("49\n");
     End;
 
     MBObj->WI_dcc = (Object*)WindowObject,
-        MUIA_Window_Title, GCS(catalog,62,"Incoming File Transfers"),
+        MUIA_Window_Title, GCS(62,"Incoming File Transfers"),
         MUIA_Window_ID, MAKE_ID('5', 'W', 'I', 'N'),
         MUIA_Window_NoMenus, FALSE,
         WindowContents, GROUP_ROOT_7,
@@ -848,7 +848,7 @@ if(AMIX) printf("49\n");
     End;
 
     MBObj->WI_dcc2 = (Object*)WindowObject,
-        MUIA_Window_Title, GCS(catalog,63,"Outgoing DCC File Transfers"),
+        MUIA_Window_Title, GCS(63,"Outgoing DCC File Transfers"),
         MUIA_Window_ID, MAKE_ID('8', 'W', 'I', 'N'),
         MUIA_Window_NoMenus, FALSE,
         WindowContents, GROUP_ROOT_9,
@@ -857,7 +857,7 @@ if(AMIX) printf("49\n");
 
     //below is the main settings window and objects
 if(AMIX) printf("50\n");
-    MBObj->RA_nick_completion_style_Label= (Object*)Label2(GCS(catalog,42,"Nick Completion Style"));
+    MBObj->RA_nick_completion_style_Label= (Object*)Label2(GCS(42,"Nick Completion Style"));
 
     static const char *RA_nick_completion_style_Titles[] =
     {
@@ -866,7 +866,7 @@ if(AMIX) printf("50\n");
 
     MBObj->RA_nick_completion_style = (Object*)CycleObject,
        MUIA_Cycle_Entries, RA_nick_completion_style_Titles,
-        MUIA_ShortHelp, GCS(catalog,43,"AmIRC style puts a colon and a space\nafter users nicks if used at the beginning\nof a line, or just a space afterwards\nanywhere else.\nmIRC style: No colon\nor spaces are used, only the nick is\ndisplayed"),
+        MUIA_ShortHelp, GCS(43,"AmIRC style puts a colon and a space\nafter users nicks if used at the beginning\nof a line, or just a space afterwards\nanywhere else.\nmIRC style: No colon\nor spaces are used, only the nick is\ndisplayed"),
     End;
 if(AMIX) printf("51\n");
     GR_grp_32=(Object*)GroupObject,
@@ -889,11 +889,11 @@ if(AMIX) printf("52\n");
        NULL
     };
 
-    RA_GroupTitleColor[0] = GCS(catalog,36,"Overwrite");
-    RA_GroupTitleColor[1] = GCS(catalog,35,"Resume");
-    RA_GroupTitleColor[2] = GCS(catalog,37,"Abort");
-    RA_GroupTitleColor[3] = GCS(catalog,44,"Ask");
-    RA_GroupTitleColor[4] = GCS(catalog,369,"Rename");
+    RA_GroupTitleColor[0] = GCS(36,"Overwrite");
+    RA_GroupTitleColor[1] = GCS(35,"Resume");
+    RA_GroupTitleColor[2] = GCS(37,"Abort");
+    RA_GroupTitleColor[3] = GCS(44,"Ask");
+    RA_GroupTitleColor[4] = GCS(369,"Rename");
 
 if(AMIX) printf("53\n");
     MBObj->RA_autoaccept = (Object*)CycleObject,
@@ -916,11 +916,11 @@ if(AMIX) printf("54\n");
 if(AMIX) printf("55\n");
     MBObj->CH_autojoin_channels_when_kicked = (Object*)CheckMark(FALSE);
 
-    obj_autojoin_channels_when_kicked_label = (Object*)Label2(GCS(catalog,45,"Auto-rejoin channels when kicked"));
+    obj_autojoin_channels_when_kicked_label = (Object*)Label2(GCS(45,"Auto-rejoin channels when kicked"));
 
     MBObj->CH_auto_open_query_tabs_when_msged = (Object*)CheckMark(FALSE);
 
-    obj_auto_open_query_tabs_when_msged_label = (Object*)Label2(GCS(catalog,46,"Auto-open private tabs when messaged"));
+    obj_auto_open_query_tabs_when_msged_label = (Object*)Label2(GCS(46,"Auto-open private tabs when messaged"));
 
     grp_autojoin_channels_when_kicked = (Object*)GroupObject,
         MUIA_Group_Horiz, TRUE,
@@ -948,7 +948,7 @@ if(AMIX) printf("56\n");
         MUIA_String_MaxLen, 15,
     End;
 
-    obj_aux3 = (Object*)Label2(GCS(catalog,47,"Maximum number of lines to keep in buffer"));
+    obj_aux3 = (Object*)Label2(GCS(47,"Maximum number of lines to keep in buffer"));
 
     obj_aux2 = (Object*)GroupObject,
         MUIA_Group_Columns, 2,
@@ -964,12 +964,12 @@ if(AMIX) printf("57\n");
 
     MBObj->CH_label_2 = (Object*)CheckMark(FALSE);
 
-    obj_aux5 = (Object*)Label2(GCS(catalog,48,"Log channels"));
+    obj_aux5 = (Object*)Label2(GCS(48,"Log channels"));
 
 
     MBObj->CH_label_3 = (Object*)CheckMark(FALSE);
 
-    obj_aux7 = (Object*)Label2(GCS(catalog,49,"Log private chats"));
+    obj_aux7 = (Object*)Label2(GCS(49,"Log private chats"));
 if(AMIX) printf("58\n");
     obj_aux6 = (Object*)GroupObject,
         //MUIA_Group_Columns, 2,
@@ -982,7 +982,7 @@ if(AMIX) printf("58\n");
 
     GR_grp_23 = (Object*)GroupObject,
         MUIA_HelpNode, "GR_grp_23",
-        //MUIA_FrameTitle, GCS(catalog,20,"Logging"),
+        //MUIA_FrameTitle, GCS(20,"Logging"),
         MUIA_Group_Horiz, TRUE,
         MUIA_Weight, 100,
         //Child, HSpace(0),
@@ -1005,7 +1005,7 @@ if(AMIX) printf("59\n");
         MUIA_String_MaxLen, 800,
     End;
 if(AMIX) printf("60\n");
-    obj_aux9 = (Object*)Label2(GCS(catalog,50,"Default Kick Message"));
+    obj_aux9 = (Object*)Label2(GCS(50,"Default Kick Message"));
 
     obj_aux8 = (Object*)GroupObject,
         MUIA_Group_Columns, 2,
@@ -1019,7 +1019,7 @@ if(AMIX) printf("60\n");
         MUIA_String_MaxLen, 800,
     End;
 if(AMIX) printf("61\n");
-    obj_aux11 = (Object*)Label2(GCS(catalog,51,"Default Ban Message"));
+    obj_aux11 = (Object*)Label2(GCS(51,"Default Ban Message"));
 
     obj_aux10 = (Object*)GroupObject,
         MUIA_Group_Columns, 2,
@@ -1033,7 +1033,7 @@ if(AMIX) printf("61\n");
         MUIA_String_MaxLen, 400,
     End;
 
-    obj_aux13 = (Object*)Label2(GCS(catalog,52,"Quit Message"));
+    obj_aux13 = (Object*)Label2(GCS(52,"Quit Message"));
 if(AMIX) printf("62\n");
     obj_aux12 = (Object*)GroupObject,
         MUIA_Group_Columns, 2,
@@ -1047,7 +1047,7 @@ if(AMIX) printf("62\n");
         MUIA_String_MaxLen, 400,
     End;
 
-    obj_aux15 = (Object*)Label2(GCS(catalog,53,"Part Message"));
+    obj_aux15 = (Object*)Label2(GCS(53,"Part Message"));
 
     obj_aux14 = (Object*)GroupObject,
         MUIA_Group_Columns, 2,
@@ -1072,11 +1072,11 @@ if(AMIX) printf("63\n");
 if(AMIX) printf("64\n");
     MBObj->CH_label_4 = (Object*)CheckMark(FALSE);
 
-    obj_aux17 = (Object*)Label2(GCS(catalog,54,"Request Whois information"));
+    obj_aux17 = (Object*)Label2(GCS(54,"Request Whois information"));
 
     MBObj->CH_label_5 = (Object*)CheckMark(FALSE);
 
-    obj_aux19 = (Object*)Label2(GCS(catalog,55,"Open private tab"));
+    obj_aux19 = (Object*)Label2(GCS(55,"Open private tab"));
 
     obj_aux18 = (Object*)GroupObject,
         MUIA_Group_Horiz, TRUE,
@@ -1099,7 +1099,7 @@ if(AMIX) printf("65\n");
     GR_grp_doubleclickactions = (Object*)GroupObject,
         MUIA_HelpNode, "GR_grp_25",
         MUIA_Weight, 100,
-        MUIA_FrameTitle, GCS(catalog,56,"Nicklist doubleclick action(s)"),
+        MUIA_FrameTitle, GCS(56,"Nicklist doubleclick action(s)"),
         MUIA_Frame, MUIV_Frame_Group,
         MUIA_Group_Horiz, FALSE,
         Child, obj_aux18,
@@ -1115,25 +1115,25 @@ if(AMIX) printf("65\n");
     MBObj->STR_label_0 = (Object*)StringObject,
         MUIA_Weight, 100,
         MUIA_Frame, MUIV_Frame_String,
-        MUIA_ShortHelp,GCS(catalog,57,"Customise your timestamps! use %h for the hour, %m for the minute, and %s for the second. This is useful to see what time an event happened (such as a user joining, or speaking)"),
+        MUIA_ShortHelp,GCS(57,"Customise your timestamps! use %h for the hour, %m for the minute, and %s for the second. This is useful to see what time an event happened (such as a user joining, or speaking)"),
         MUIA_HelpNode, "STR_label_0",
         MUIA_String_MaxLen, 50,
     End;
 if(AMIX) printf("66\n");
-    obj_aux21 = (Object*)Label2(GCS(catalog,58,"Timestamp Format"));
+    obj_aux21 = (Object*)Label2(GCS(58,"Timestamp Format"));
 
-    MBObj->TX_highlight_label = (Object*)Label2(GCS(catalog,59,"Words to Highlight"));
+    MBObj->TX_highlight_label = (Object*)Label2(GCS(59,"Words to Highlight"));
 
     MBObj->STR_highlight_label = (Object*)StringObject,
         MUIA_Frame, MUIV_Frame_String,
-        MUIA_ShortHelp,GCS(catalog,258,"Enter words here for WookieChat to watch for. Lines of text will appear in the highlight colour if one of these words is found. Enter the words you want to highlight, separated by spaces"),
+        MUIA_ShortHelp,GCS(258,"Enter words here for WookieChat to watch for. Lines of text will appear in the highlight colour if one of these words is found. Enter the words you want to highlight, separated by spaces"),
         MUIA_String_MaxLen, 800,
     End;
 
 
     GR_grp_26 = (Object*)GroupObject,
         MUIA_Group_Columns, 2,
-        //MUIA_FrameTitle, GCS(catalog,64,"Highlight"),
+        //MUIA_FrameTitle, GCS(64,"Highlight"),
         Child, MBObj->TX_highlight_label,
         Child, MBObj->STR_highlight_label,
     End;
@@ -1141,10 +1141,10 @@ if(AMIX) printf("66\n");
 
     MBObj->CH_label_0 = (Object*)CheckMark(FALSE);
 if(AMIX) printf("67\n");
-    obj_aux23 = (Object*)Label2(GCS(catalog,65,"Use timestamps"));
+    obj_aux23 = (Object*)Label2(GCS(65,"Use timestamps"));
 
     obj_aux22 = (Object*)GroupObject,
-        MUIA_FrameTitle, GCS(catalog,66,"Timestamps"),
+        MUIA_FrameTitle, GCS(66,"Timestamps"),
         MUIA_Group_Horiz, TRUE,
         MUIA_Weight, 100,
         Child, MBObj->CH_label_0,
@@ -1153,7 +1153,7 @@ if(AMIX) printf("67\n");
     End;
 
     APTR obj_aux222 = (Object*)GroupObject,
-        //MUIA_FrameTitle, GCS(catalog,66,"Timestamps"),
+        //MUIA_FrameTitle, GCS(66,"Timestamps"),
         MUIA_Group_Horiz, TRUE,
         Child, obj_aux21,
         Child, MBObj->STR_label_0,
@@ -1171,7 +1171,7 @@ if(AMIX) printf("68\n");
 
     MBObj->PA_label_0 = (Object*)PopaslObject,
         MUIA_HelpNode, "PA_label_0",
-        MUIA_ShortHelp, GCS(catalog,67,"This text editor is used when you edit your \"Perform on Connect\" scripts (from the Server Selection window)"),
+        MUIA_ShortHelp, GCS(67,"This text editor is used when you edit your \"Perform on Connect\" scripts (from the Server Selection window)"),
         MUIA_Popstring_String, MBObj->STR_PA_label_0,
         MUIA_Popstring_Button, MBObj->PA_label_0,
     End;
@@ -1181,7 +1181,7 @@ if(AMIX) printf("68\n");
         MUIA_FixHeight, 8,
     End;
 
-    MBObj->LA_texteditor = (Object*)Label2(GCS(catalog,68,"Text Editor"));
+    MBObj->LA_texteditor = (Object*)Label2(GCS(68,"Text Editor"));
 if(AMIX) printf("69\n");
     GR_grp_28 = (Object*)GroupObject,
         MUIA_HelpNode, "GR_grp_28",
@@ -1191,19 +1191,19 @@ if(AMIX) printf("69\n");
         Child, MBObj->PA_label_0,
     End;
 
-    MBObj->PA_browser_label = (Object*)Label2(GCS(catalog,69,"Web Browser"));
+    MBObj->PA_browser_label = (Object*)Label2(GCS(69,"Web Browser"));
 
     MBObj->PA_browser = (Object*)PopButton(MUII_PopFile);
 
     MBObj->STR_browser = (Object*)StringObject,
         MUIA_Frame, MUIV_Frame_String,
-        MUIA_ShortHelp, GCS(catalog,70,"Choose a web browser to use with WookieChat's \"URL Grabber\" Window. Double clicking an address there will load in this chosen browser"),
+        MUIA_ShortHelp, GCS(70,"Choose a web browser to use with WookieChat's \"URL Grabber\" Window. Double clicking an address there will load in this chosen browser"),
         MUIA_String_MaxLen, 1000,
     End;
 
     MBObj->PA_browser = (Object*)PopaslObject,
         MUIA_Popasl_Type, ASL_FileRequest,
-        ASLFR_TitleText,GCS(catalog,71,"Choose browser to use"),
+        ASLFR_TitleText,GCS(71,"Choose browser to use"),
         ASLFR_InitialDrawer,"progdir:",
         MUIA_Popstring_String, MBObj->STR_browser,
         MUIA_Popstring_Button, MBObj->PA_browser,
@@ -1220,13 +1220,13 @@ if(AMIX) printf("70\n");
         Child, MBObj->PA_browser,
     End;
 
-    MBObj->BT_label_0 = (Object*)SimpleButton(GCS(catalog,72,"Save"));
+    MBObj->BT_label_0 = (Object*)SimpleButton(GCS(72,"Save"));
 
-    MBObj->BT_label_1 = (Object*)SimpleButton(GCS(catalog,73,"Use"));
+    MBObj->BT_label_1 = (Object*)SimpleButton(GCS(73,"Use"));
 
-    MBObj->BT_label_2 = (Object*)SimpleButton(GCS(catalog,74,"Cancel"));
+    MBObj->BT_label_2 = (Object*)SimpleButton(GCS(74,"Cancel"));
 
-    MBObj->BT_label_3 = (Object*)SimpleButton(GCS(catalog,361,"Apply"));
+    MBObj->BT_label_3 = (Object*)SimpleButton(GCS(361,"Apply"));
 
     GR_grp_29 = (Object*)GroupObject,
         MUIA_HelpNode, "GR_grp_29",
@@ -1238,33 +1238,33 @@ if(AMIX) printf("70\n");
     End;
 if(AMIX) printf("71\n");
 
-    obj_settings1_dcc = (Object*)Label2(GCS(catalog,75,"Auto accept incoming DCC File Transfers"));
-    obj_settings2_dcc = (Object*)Label2(GCS(catalog,76,"Action to take if file exists"));
+    obj_settings1_dcc = (Object*)Label2(GCS(75,"Auto accept incoming DCC File Transfers"));
+    obj_settings2_dcc = (Object*)Label2(GCS(76,"Action to take if file exists"));
 
-    obj_gethostid_dcc = (Object*)Label2(GCS(catalog,77,"Use local address for DCC connections"));
+    obj_gethostid_dcc = (Object*)Label2(GCS(77,"Use local address for DCC connections"));
     MBObj->CH_gethostid = (Object*)CheckMark(FALSE);
 
     MBObj->CH_ipaddr_dcc = (Object*)CheckMark(FALSE);
-    obj_ipaddr_dcc = (Object*)Label2(GCS(catalog,294,"Specify DCC address?"));
+    obj_ipaddr_dcc = (Object*)Label2(GCS(294,"Specify DCC address?"));
     MBObj->STR_ipaddr_dcc = (Object*)StringObject,
         MUIA_Frame, MUIV_Frame_String,
-        MUIA_ShortHelp, GCS(catalog,295,"WookieChat attempts to obtain your address automatically for outgoing DCC connections. If this address is incorrect, you can specify it here"),
+        MUIA_ShortHelp, GCS(295,"WookieChat attempts to obtain your address automatically for outgoing DCC connections. If this address is incorrect, you can specify it here"),
     End;
 if(AMIX) printf("72\n");
 
-    obj_port1_dcc = (Object*)Label2(GCS(catalog,78,"DCC port range from "));
-    obj_port2_dcc = (Object*)Label2(GCS(catalog,79," to "));
+    obj_port1_dcc = (Object*)Label2(GCS(78,"DCC port range from "));
+    obj_port2_dcc = (Object*)Label2(GCS(79," to "));
 
     MBObj->STR_port1_dcc = (Object*)StringObject,
         MUIA_Frame, MUIV_Frame_String,
         MUIA_String_Reject," ",
-        MUIA_ShortHelp, GCS(catalog,80,"This is the start of the port range for incoming DCC connections. This is configurable so you can choose which ports to use and open up on any firewall you might have"),
+        MUIA_ShortHelp, GCS(80,"This is the start of the port range for incoming DCC connections. This is configurable so you can choose which ports to use and open up on any firewall you might have"),
     End;
 
     MBObj->STR_port2_dcc = (Object*)StringObject,
         MUIA_Frame, MUIV_Frame_String,
         MUIA_String_Reject," ",
-        MUIA_ShortHelp, GCS(catalog,81,"This is the end of the port range for incoming DCC connections. This is configurable so you can choose which ports to use and open up on any firewall you might have"),
+        MUIA_ShortHelp, GCS(81,"This is the end of the port range for incoming DCC connections. This is configurable so you can choose which ports to use and open up on any firewall you might have"),
     End;
 
     REC_label_7 = (Object*)RectangleObject,
@@ -1322,7 +1322,7 @@ if(AMIX) printf("74\n");
     End;
 
 
-    MBObj->LA_Maximum_Retries = (Object*)Label2(GCS(catalog,261,"Maximum attempts to reconnect after non-requested disconnection"));
+    MBObj->LA_Maximum_Retries = (Object*)Label2(GCS(261,"Maximum attempts to reconnect after non-requested disconnection"));
 
     MBObj->NB_Maximum_Retries = (Object*)StringObject,
         MUIA_Frame, MUIV_Frame_String,
@@ -1330,7 +1330,7 @@ if(AMIX) printf("74\n");
         MUIA_String_Accept, "0123456789",
     End;
 
-    MBObj->LA_clone_detection = (Object*)Label2(GCS(catalog,285,"Clone detection"));
+    MBObj->LA_clone_detection = (Object*)Label2(GCS(285,"Clone detection"));
     MBObj->CH_clone_detection = (Object*)CheckMark(FALSE);
 
     APTR GR_clone_detection = (Object*)GroupObject,
@@ -1343,7 +1343,7 @@ if(AMIX) printf("74\n");
 
 
 if(AMIX) printf("75\n");
-    MBObj->LA_Reconnect_Delay = (Object*)Label2(GCS(catalog,262,"Delay (in seconds) in between reconnection attempts"));
+    MBObj->LA_Reconnect_Delay = (Object*)Label2(GCS(262,"Delay (in seconds) in between reconnection attempts"));
     MBObj->NB_Reconnect_Delay = (Object*)StringObject,
         MUIA_Frame, MUIV_Frame_String,
         MUIA_Weight, 100,
@@ -1375,20 +1375,20 @@ if(AMIX) printf("75\n");
             MUIA_Weight, 100,
             MUIA_Group_Horiz, TRUE,
             Child, MBObj->CH_hide_joins_parts=(Object*)CheckMark(FALSE),
-            Child, MBObj->LA_hide_joins_parts=(Object*)Label2(GCS(catalog,383,"Hide Join and Part messages in Channels")),
+            Child, MBObj->LA_hide_joins_parts=(Object*)Label2(GCS(383,"Hide Join and Part messages in Channels")),
             Child, HSpace(0),
         End,
         Child, (Object*)GroupObject,
             MUIA_Weight, 100,
             MUIA_Group_Horiz, TRUE,
             Child, MBObj->CH_hide_channel_mode_gadgets=(Object*)CheckMark(FALSE),
-            Child, MBObj->LA_hide_channel_mode_gadgets=(Object*)Label2(GCS(catalog,800,"Hide the channel mode buttons at the top of the display")),
+            Child, MBObj->LA_hide_channel_mode_gadgets=(Object*)Label2(GCS(800,"Hide the channel mode buttons at the top of the display")),
             Child, HSpace(0),
         End,
     End;
 if(AMIX) printf("76\n");
     //GUI SETTINGS objects
-    MBObj->LA_no_server_tabs = (Object*)Label2(GCS(catalog,292,"Disable server tabs"));
+    MBObj->LA_no_server_tabs = (Object*)Label2(GCS(292,"Disable server tabs"));
     MBObj->CH_no_server_tabs = (Object*)CheckMark(FALSE);
 
     static CONST_STRPTR CYCLE_tabs_entries[] =
@@ -1398,12 +1398,12 @@ if(AMIX) printf("76\n");
        NULL,
     };
 
-    CYCLE_tabs_entries[0] = GCS(catalog,375,"Listview");
-    CYCLE_tabs_entries[1] = GCS(catalog,376,"Buttons");
+    CYCLE_tabs_entries[0] = GCS(375,"Listview");
+    CYCLE_tabs_entries[1] = GCS(376,"Buttons");
 
-    //MBObj->LA_tabs = (Object*)Label2(GCS(catalog,296,"Use button-style tabs"));
+    //MBObj->LA_tabs = (Object*)Label2(GCS(296,"Use button-style tabs"));
     //MBObj->CH_tabs = (Object*)CheckMark(TRUE);
-    MBObj->LA_tabs = (Object*)Label2(GCS(catalog,377,"Method of displaying Tabs for channels and private messages"));
+    MBObj->LA_tabs = (Object*)Label2(GCS(377,"Method of displaying Tabs for channels and private messages"));
     MBObj->CYCLE_tabs = (Object*)CycleObject,
        MUIA_Weight,0,
        MUIA_Cycle_Entries, CYCLE_tabs_entries,
@@ -1412,7 +1412,7 @@ if(AMIX) printf("76\n");
 
 
 
-    MBObj->LA_listview_tabs_weight = (Object*)Label2(GCS(catalog,306,"Listview tabs vertical weight"));
+    MBObj->LA_listview_tabs_weight = (Object*)Label2(GCS(306,"Listview tabs vertical weight"));
     MBObj->NB_listview_tabs_weight = (Object*)StringObject,
         MUIA_Frame, MUIV_Frame_String,
         MUIA_Weight, 100,
@@ -1420,7 +1420,7 @@ if(AMIX) printf("76\n");
     End;
 
 if(AMIX) printf("77\n");
-    MBObj->LA_nicklist_horiz_weight = (Object*)Label2(GCS(catalog,321,"Nicklist horizontal weight"));
+    MBObj->LA_nicklist_horiz_weight = (Object*)Label2(GCS(321,"Nicklist horizontal weight"));
 
     MBObj->NB_nicklist_horiz_weight = (Object*)StringObject,
         MUIA_Frame, MUIV_Frame_String,
@@ -1452,12 +1452,12 @@ if(AMIX) printf("77\n");
     End;
 if(AMIX) printf("78\n");
     GR_grp_33 = (Object*)GroupObject,
-        MUIA_FrameTitle,GCS(catalog,307,"Tab Preferences"),
+        MUIA_FrameTitle,GCS(307,"Tab Preferences"),
         //MUIA_Frame,MUIV_Frame_Group,
         MUIA_HelpNode, "GR_grp_29",
         MUIA_Group_Horiz, TRUE,
         //MUIA_Group_Columns, 4,
-        //MUIA_ShortHelp,GCS(catalog,297,"Turn off this option to use Listview-style tabs (the listview is better having a large amount of tabs open, such as 20 or 30)"),
+        //MUIA_ShortHelp,GCS(297,"Turn off this option to use Listview-style tabs (the listview is better having a large amount of tabs open, such as 20 or 30)"),
         //Child, HSpace(0),
         Child,MBObj->CYCLE_tabs,
         Child,MBObj->LA_tabs,
@@ -1467,7 +1467,7 @@ if(AMIX) printf("78\n");
     End;
 if(AMIX) printf("79\n");
     APTR GR_grp_332 = (Object*)GroupObject,
-        //MUIA_FrameTitle,GCS(catalog,307,"Tab Preferences"),
+        //MUIA_FrameTitle,GCS(307,"Tab Preferences"),
         //MUIA_Frame,MUIV_Frame_Group,
         MUIA_HelpNode, "GR_grp_29",
         MUIA_Group_Horiz, TRUE,
@@ -1477,19 +1477,19 @@ if(AMIX) printf("79\n");
     End;
 
 if(AMIX) printf("80\n");
-    setmacro((Object*)MBObj->LA_tabs,MUIA_ShortHelp,GCS(catalog,297,"Turn off this option to use Listview-style tabs (the listview is better having a large amount of tabs open, such as 20 or 30)"));
-    setmacro((Object*)MBObj->LA_listview_tabs_weight,MUIA_ShortHelp,GCS(catalog,308,"If you have disabled button style tabs, you can configure the size of the \"tabs listview\""));
-    setmacro((Object*)MBObj->LA_no_server_tabs,MUIA_ShortHelp,GCS(catalog,309,"You can turn off keeping a dedicated tab for server messages to conserve memory and valuable screen space"));
+    setmacro((Object*)MBObj->LA_tabs,MUIA_ShortHelp,GCS(297,"Turn off this option to use Listview-style tabs (the listview is better having a large amount of tabs open, such as 20 or 30)"));
+    setmacro((Object*)MBObj->LA_listview_tabs_weight,MUIA_ShortHelp,GCS(308,"If you have disabled button style tabs, you can configure the size of the \"tabs listview\""));
+    setmacro((Object*)MBObj->LA_no_server_tabs,MUIA_ShortHelp,GCS(309,"You can turn off keeping a dedicated tab for server messages to conserve memory and valuable screen space"));
 if(AMIX) printf("81\n");
 
-    MBObj->LA_graphical_smileys = (Object*)Label2(GCS(catalog,300,"Enable Graphical Smileys"));
+    MBObj->LA_graphical_smileys = (Object*)Label2(GCS(300,"Enable Graphical Smileys"));
     MBObj->CH_graphical_smileys = (Object*)CheckMark(TRUE);
 
-    MBObj->LA_graphical_nicklist = (Object*)Label2(GCS(catalog,310,"Enable Graphical Nicklist"));
+    MBObj->LA_graphical_nicklist = (Object*)Label2(GCS(310,"Enable Graphical Nicklist"));
     MBObj->CH_graphical_nicklist = (Object*)CheckMark(TRUE);
 
 
-    MBObj->RA_graphical_smileys_background_colour_label= (Object*)Label2(GCS(catalog,322,"Smileys theme"));
+    MBObj->RA_graphical_smileys_background_colour_label= (Object*)Label2(GCS(322,"Smileys theme"));
 if(AMIX) printf("82\n");
     //char graphical_smiley_themes[10][100];
 
@@ -1525,7 +1525,7 @@ if(AMIX) printf("84\n");
     setmacro((Object*)MBObj->BT_graphical_smileys_preview,MUIA_Weight,0);
 
     GR_graphical_smileys=(Object*)GroupObject,
-        MUIA_ShortHelp, GCS(catalog,302,"This option will display common ASCII \"smiley faces\" such as :) and :D in aa graphical way.\n(This feature is reliant on picture datatypes)"),
+        MUIA_ShortHelp, GCS(302,"This option will display common ASCII \"smiley faces\" such as :) and :D in aa graphical way.\n(This feature is reliant on picture datatypes)"),
         MUIA_HelpNode, "GR_grp_31",
         MUIA_Group_Horiz, FALSE,
         MUIA_Group_Horiz, TRUE,
@@ -1535,7 +1535,7 @@ if(AMIX) printf("84\n");
     End;
 
     APTR GR_graphical_nicklist=(Object*)GroupObject,
-        MUIA_ShortHelp, GCS(catalog,302,"This option will display common ASCII \"smiley faces\" such as :) and :D in aa graphical way.\n(This feature is reliant on picture datatypes)"),
+        MUIA_ShortHelp, GCS(302,"This option will display common ASCII \"smiley faces\" such as :) and :D in aa graphical way.\n(This feature is reliant on picture datatypes)"),
         MUIA_HelpNode, "GR_grp_31",
         MUIA_Group_Horiz, FALSE,
         MUIA_Group_Horiz, TRUE,
@@ -1544,7 +1544,7 @@ if(AMIX) printf("84\n");
         Child, HSpace(0),
     End;
 if(AMIX) printf("85\n");
-    MBObj->LA_column_width_timestamp = (Object*)Label2(GCS(catalog,312,"Column width (in Pixels) for timestamps"));
+    MBObj->LA_column_width_timestamp = (Object*)Label2(GCS(312,"Column width (in Pixels) for timestamps"));
 
     MBObj->NB_column_width_timestamp = (Object*)StringObject,
         MUIA_Frame, MUIV_Frame_String,
@@ -1553,7 +1553,7 @@ if(AMIX) printf("85\n");
     End;
 
 
-    MBObj->LA_column_width_nick = (Object*)Label2(GCS(catalog,313,"Column width (in Pixels) for the middle/nicks column"));
+    MBObj->LA_column_width_nick = (Object*)Label2(GCS(313,"Column width (in Pixels) for the middle/nicks column"));
 
     MBObj->NB_column_width_nick = (Object*)StringObject,
         MUIA_Frame, MUIV_Frame_String,
@@ -1562,7 +1562,7 @@ if(AMIX) printf("85\n");
     End;
 
 
-    MBObj->LA_column_spacing = (Object*)Label2(GCS(catalog,314,"Amount of space surrounding columns divider bar"));
+    MBObj->LA_column_spacing = (Object*)Label2(GCS(314,"Amount of space surrounding columns divider bar"));
 
     //MBObj->NB_column_spacing = (Object*)NumericbuttonObject,
     MBObj->NB_column_spacing = (Object*)StringObject,
@@ -1572,12 +1572,12 @@ if(AMIX) printf("85\n");
     End;
 
 
-    MBObj->LA_remove_brackets = (Object*)Label2(GCS(catalog,315,"Remove < and > from around nicks"));
+    MBObj->LA_remove_brackets = (Object*)Label2(GCS(315,"Remove < and > from around nicks"));
     MBObj->CH_remove_brackets = (Object*)CheckMark(TRUE);
 
     APTR GR_column_width = (Object*)GroupObject,
         MUIA_Group_Horiz,TRUE,
-        MUIA_FrameTitle, GCS(catalog,316,"Multicolumn display settings"),
+        MUIA_FrameTitle, GCS(316,"Multicolumn display settings"),
         Child, MBObj->LA_column_width_timestamp,
         Child, MBObj->NB_column_width_timestamp,
         //Child,HSpace(0),
@@ -1586,7 +1586,7 @@ if(AMIX) printf("85\n");
     APTR GR_column_width2 = (Object*)GroupObject,
         MUIA_Group_Horiz,TRUE,
         //MUIA_Group_Columns,2,
-        //MUIA_FrameTitle, GCS(catalog,316,"Multicolumn display settings"),
+        //MUIA_FrameTitle, GCS(316,"Multicolumn display settings"),
         //MUIA_Frame,MUIV_Frame_Group,
         Child, MBObj->LA_column_width_nick,
         Child, MBObj->NB_column_width_nick,
@@ -1596,7 +1596,7 @@ if(AMIX) printf("85\n");
     APTR GR_column_width3 = (Object*)GroupObject,
         MUIA_Group_Horiz,TRUE,
         //MUIA_Group_Columns,2,
-        //MUIA_FrameTitle, GCS(catalog,316,"Multicolumn display settings"),
+        //MUIA_FrameTitle, GCS(316,"Multicolumn display settings"),
         //MUIA_Frame,MUIV_Frame_Group,
         Child, MBObj->LA_column_spacing,
         Child, MBObj->NB_column_spacing,
@@ -1606,7 +1606,7 @@ if(AMIX) printf("85\n");
     APTR GR_column_width4 = (Object*)GroupObject,
         MUIA_Group_Horiz,TRUE,
         //MUIA_Group_Columns,2,
-        //MUIA_FrameTitle, GCS(catalog,316,"Multicolumn display settings"),
+        //MUIA_FrameTitle, GCS(316,"Multicolumn display settings"),
         //MUIA_Frame,MUIV_Frame_Group,
         Child, MBObj->CH_remove_brackets,
         Child, MBObj->LA_remove_brackets,
@@ -1639,7 +1639,7 @@ if(AMIX) printf("86\n");
         Child, (Object*)GroupObject,
             MUIA_Group_Horiz,TRUE,
             Child, MBObj->CH_user_modes = (Object*)CheckMark(FALSE),
-            Child, MBObj->LA_user_modes = (Object*)Label2(GCS(catalog,800,"Display usermodes beside a persons nick when they talk")),
+            Child, MBObj->LA_user_modes = (Object*)Label2(GCS(800,"Display usermodes beside a persons nick when they talk")),
             Child, HSpace(0),
         End,
         //Child, GR_column_width,
@@ -1682,26 +1682,26 @@ if(AMIX) printf("89\n");
        NULL,
     };
 
-    RA_sound_sample_newmsg_entries[0] = GCS(catalog,82,"Never");
-    RA_sound_sample_newmsg_entries[1] = GCS(catalog,367,"When private tab is not selected");
-    RA_sound_sample_newmsg_entries[2] = GCS(catalog,83,"Always");
-    RA_sound_sample_newmsg_entries[3] = GCS(catalog,84,"Only when Window is inactive");
+    RA_sound_sample_newmsg_entries[0] = GCS(82,"Never");
+    RA_sound_sample_newmsg_entries[1] = GCS(367,"When private tab is not selected");
+    RA_sound_sample_newmsg_entries[2] = GCS(83,"Always");
+    RA_sound_sample_newmsg_entries[3] = GCS(84,"Only when Window is inactive");
 
 if(AMIX) printf("90\n");
-    MBObj->LA_sound_sample_newmsg = (Object*)Label2(GCS(catalog,366,"Sample to play when a new PRIVMSG arrives"));
+    MBObj->LA_sound_sample_newmsg = (Object*)Label2(GCS(366,"Sample to play when a new PRIVMSG arrives"));
 
     MBObj->STR_sound_sample_newmsg = (Object*)StringObject,
         MUIA_Frame, MUIV_Frame_String,
         MUIA_ShortHelp, " ",
     End;
 
-    MBObj->PA_sound_sample_newmsg_label = (Object*)Label2(GCS(catalog,86,"Play sample"));
+    MBObj->PA_sound_sample_newmsg_label = (Object*)Label2(GCS(86,"Play sample"));
 
     MBObj->PA_sound_sample_newmsg = (Object*)PopButton(MUII_PopFile);
 
     MBObj->PA_sound_sample_newmsg = (Object*)PopaslObject,
         MUIA_Popasl_Type, ASL_FileRequest,
-        ASLFR_TitleText,GCS(catalog,87,"Choose filename"),
+        ASLFR_TitleText,GCS(87,"Choose filename"),
         ASLFR_InitialDrawer,"progdir:",
         MUIA_Popstring_String, MBObj->STR_sound_sample_newmsg,
         MUIA_Popstring_Button, MBObj->PA_sound_sample_newmsg,
@@ -1721,25 +1721,25 @@ if(AMIX) printf("90\n");
        NULL,
     };
 
-    RA_sound_sample_tabopen_entries[0] = GCS(catalog,82,"Never");
-    RA_sound_sample_tabopen_entries[1] = GCS(catalog,83,"Always");
-    RA_sound_sample_tabopen_entries[2] = GCS(catalog,84,"Only when Window is inactive");
+    RA_sound_sample_tabopen_entries[0] = GCS(82,"Never");
+    RA_sound_sample_tabopen_entries[1] = GCS(83,"Always");
+    RA_sound_sample_tabopen_entries[2] = GCS(84,"Only when Window is inactive");
 
 if(AMIX) printf("91\n");
-    MBObj->LA_sound_sample_tabopen = (Object*)Label2(GCS(catalog,85,"Sample to play when a tab opens"));
+    MBObj->LA_sound_sample_tabopen = (Object*)Label2(GCS(85,"Sample to play when a tab opens"));
 
     MBObj->STR_sound_sample_tabopen = (Object*)StringObject,
         MUIA_Frame, MUIV_Frame_String,
         MUIA_ShortHelp, " ",
     End;
 
-    MBObj->PA_sound_sample_tabopen_label = (Object*)Label2(GCS(catalog,86,"Play sample"));
+    MBObj->PA_sound_sample_tabopen_label = (Object*)Label2(GCS(86,"Play sample"));
 
     MBObj->PA_sound_sample_tabopen = (Object*)PopButton(MUII_PopFile);
 
     MBObj->PA_sound_sample_tabopen = (Object*)PopaslObject,
         MUIA_Popasl_Type, ASL_FileRequest,
-        ASLFR_TitleText,GCS(catalog,87,"Choose filename"),
+        ASLFR_TitleText,GCS(87,"Choose filename"),
         ASLFR_InitialDrawer,"progdir:",
         MUIA_Popstring_String, MBObj->STR_sound_sample_tabopen,
         MUIA_Popstring_Button, MBObj->PA_sound_sample_tabopen,
@@ -1762,25 +1762,25 @@ if(AMIX) printf("92\n");
        NULL
     };
 
-    RA_sound_sample_highlight_entries[0] = GCS(catalog,82,"Never");
-    RA_sound_sample_highlight_entries[1] = GCS(catalog,83,"Always");
-    RA_sound_sample_highlight_entries[2] = GCS(catalog,84,"Only when Window is inactive");
-    RA_sound_sample_highlight_entries[3] = GCS(catalog,373,"Only when Tab is inactive");
+    RA_sound_sample_highlight_entries[0] = GCS(82,"Never");
+    RA_sound_sample_highlight_entries[1] = GCS(83,"Always");
+    RA_sound_sample_highlight_entries[2] = GCS(84,"Only when Window is inactive");
+    RA_sound_sample_highlight_entries[3] = GCS(373,"Only when Tab is inactive");
 
-    MBObj->LA_sound_sample_highlight = (Object*)Label2(GCS(catalog,88,"Sample to play on highlight"));
+    MBObj->LA_sound_sample_highlight = (Object*)Label2(GCS(88,"Sample to play on highlight"));
 
     MBObj->STR_sound_sample_highlight = (Object*)StringObject,
         MUIA_Frame, MUIV_Frame_String,
         MUIA_ShortHelp, " ",
     End;
 
-    MBObj->PA_sound_sample_highlight_label = (Object*)Label2(GCS(catalog,86,"Play sample"));
+    MBObj->PA_sound_sample_highlight_label = (Object*)Label2(GCS(86,"Play sample"));
 
     MBObj->PA_sound_sample_highlight = (Object*)PopButton(MUII_PopFile);
 if(AMIX) printf("93\n");
     MBObj->PA_sound_sample_highlight = (Object*)PopaslObject,
         MUIA_Popasl_Type, ASL_FileRequest,
-        ASLFR_TitleText,GCS(catalog,87,"Choose filename"),
+        ASLFR_TitleText,GCS(87,"Choose filename"),
         ASLFR_InitialDrawer,"progdir:",
         MUIA_Popstring_String, MBObj->STR_sound_sample_highlight,
         MUIA_Popstring_Button, MBObj->PA_sound_sample_highlight,
@@ -1790,11 +1790,11 @@ if(AMIX) printf("93\n");
        MUIA_Cycle_Entries, RA_sound_sample_highlight_entries,
     End;
 
-    MBObj->LA_samples_path = (Object*)Label2(GCS(catalog,89,"Samples Path for CTCP SOUND"));
+    MBObj->LA_samples_path = (Object*)Label2(GCS(89,"Samples Path for CTCP SOUND"));
 
     MBObj->STR_samples_path = (Object*)StringObject,
         MUIA_Frame, MUIV_Frame_String,
-        MUIA_ShortHelp, GCS(catalog,90,"When you recieve a CTCP SOUND request, WookieChat will\nlook in this path for sound samples"),
+        MUIA_ShortHelp, GCS(90,"When you recieve a CTCP SOUND request, WookieChat will\nlook in this path for sound samples"),
         MUIA_String_MaxLen, 400,
     End;
 
@@ -1802,7 +1802,7 @@ if(AMIX) printf("93\n");
 
     MBObj->PA_samples_path = (Object*)PopaslObject,
         MUIA_Popasl_Type, ASL_FileRequest,
-        ASLFR_TitleText,GCS(catalog,91,"Choose directory"),
+        ASLFR_TitleText,GCS(91,"Choose directory"),
         ASLFR_InitialDrawer,"progdir:",
         MUIA_Popstring_String, MBObj->STR_samples_path,
         MUIA_Popstring_Button, MBObj->PA_samples_path,
@@ -1810,14 +1810,14 @@ if(AMIX) printf("93\n");
 
 if(AMIX) printf("94\n");
     //external sound player for CTCP SOUND
-    MBObj->LA_sound_replayer = (Object*)Label2(GCS(catalog,303,"Use External Replayer For CTCP SOUND"));
+    MBObj->LA_sound_replayer = (Object*)Label2(GCS(303,"Use External Replayer For CTCP SOUND"));
     MBObj->CH_sound_replayer = (Object*)CheckMark(FALSE);
     MBObj->STR_sound_replayer = (Object*)StringObject,MUIA_Frame, MUIV_Frame_String,MUIA_ShortHelp, " ",End;
-    MBObj->PA_sound_replayer_label = (Object*)Label2(GCS(catalog,304,"Sound player"));
+    MBObj->PA_sound_replayer_label = (Object*)Label2(GCS(304,"Sound player"));
     MBObj->PA_sound_replayer = (Object*)PopButton(MUII_PopFile);
     MBObj->PA_sound_replayer = (Object*)PopaslObject,
         MUIA_Popasl_Type, ASL_FileRequest,
-        //ASLFR_TitleText,GCS(catalog,87,"Choose Sound Player"),
+        //ASLFR_TitleText,GCS(87,"Choose Sound Player"),
         ASLFR_InitialDrawer,"progdir:",
         MUIA_Popstring_String, MBObj->STR_sound_replayer,
         MUIA_Popstring_Button, MBObj->PA_sound_replayer,
@@ -1922,7 +1922,7 @@ if(AMIX) printf("97\n");
     // log reloading gui objects
 
     MBObj->TX_how_many_lines_to_reload = (Object*)TextObject,
-        MUIA_Text_Contents, GCS(catalog,92,"# of lines to display from the end of logfiles when opening a tab\n(Put 0 to disable this feature)"),
+        MUIA_Text_Contents, GCS(92,"# of lines to display from the end of logfiles when opening a tab\n(Put 0 to disable this feature)"),
     End;
 if(AMIX) printf("98\n");
     APTR GR_how_many_lines_to_reload = (Object*)GroupObject,
@@ -1932,20 +1932,20 @@ if(AMIX) printf("98\n");
         Child, HSpace(0),
     End;
 
-    APTR obj_how_many_lines_to_reload_channel = (Object*)Label2(GCS(catalog,93,"channel"));
+    APTR obj_how_many_lines_to_reload_channel = (Object*)Label2(GCS(93,"channel"));
 
     MBObj->STR_how_many_lines_to_reload_channel = (Object*)StringObject,
         MUIA_Frame, MUIV_Frame_String,
-        MUIA_ShortHelp, GCS(catalog,94,"How many lines to reload from the end of log files when you join a channel"),
+        MUIA_ShortHelp, GCS(94,"How many lines to reload from the end of log files when you join a channel"),
         MUIA_String_Accept, "0123456789",
         MUIA_String_MaxLen, 4,
     End;
 if(AMIX) printf("99\n");
-    APTR obj_how_many_lines_to_reload_private = (Object*)Label2(GCS(catalog,95,"private"));
+    APTR obj_how_many_lines_to_reload_private = (Object*)Label2(GCS(95,"private"));
 
     MBObj->STR_how_many_lines_to_reload_private = (Object*)StringObject,
         MUIA_Frame, MUIV_Frame_String,
-        MUIA_ShortHelp, GCS(catalog,96,"How many lines to reload from the end of log files when you open a private query tab to another user"),
+        MUIA_ShortHelp, GCS(96,"How many lines to reload from the end of log files when you open a private query tab to another user"),
         MUIA_String_Accept, "0123456789",
         MUIA_String_MaxLen, 4,
     End;
@@ -1964,16 +1964,16 @@ if(AMIX) printf("99\n");
     if(AMIX) printf("100\n");
 
     MBObj->CH_split_logs = (Object*)CheckMark(FALSE);
-    MBObj->LA_split_logs = (Object*)Label(GCS(catalog,289,"Split up logfiles into smaller chunks"));
+    MBObj->LA_split_logs = (Object*)Label(GCS(289,"Split up logfiles into smaller chunks"));
 
-    MBObj->LA_logsize = (Object*)Label(GCS(catalog,290,"If the above is enabled, choose a log file size (in kbytes)"));
+    MBObj->LA_logsize = (Object*)Label(GCS(290,"If the above is enabled, choose a log file size (in kbytes)"));
     MBObj->STR_logsize = (Object*)StringObject,
         MUIA_Frame, MUIV_Frame_String,
         MUIA_HelpNode, "STR_servername",
     End;
 
     GR_logging_splitup = (Object*)GroupObject,
-        MUIA_ShortHelp, GCS(catalog,291,"When a tab is opened, the logfile will be examined. If it is over a certain size, then it will be renamed with the date appended to the end, and WookieChat will resume logging in a new empty logfile. This is implemented for performance reasons. It can take a few seconds to reload large logfiles that are a few MB in size."),
+        MUIA_ShortHelp, GCS(291,"When a tab is opened, the logfile will be examined. If it is over a certain size, then it will be renamed with the date appended to the end, and WookieChat will resume logging in a new empty logfile. This is implemented for performance reasons. It can take a few seconds to reload large logfiles that are a few MB in size."),
         //MUIA_Group_Columns, 2,
         MUIA_Group_Horiz, TRUE,
         Child, MBObj->CH_split_logs,
@@ -1982,7 +1982,7 @@ if(AMIX) printf("99\n");
     End;
 
     GR_logging_splitup2 = (Object*)GroupObject,
-        MUIA_ShortHelp, GCS(catalog,291,"When a tab is opened, the logfile will be examined. If it is over a certain size, then it will be renamed with the date appended to the end, and WookieChat will resume logging in a new empty logfile. This is implemented for performance reasons, because it can sometimes take a few seconds to reload large logfiles that are a few MB in size."),
+        MUIA_ShortHelp, GCS(291,"When a tab is opened, the logfile will be examined. If it is over a certain size, then it will be renamed with the date appended to the end, and WookieChat will resume logging in a new empty logfile. This is implemented for performance reasons, because it can sometimes take a few seconds to reload large logfiles that are a few MB in size."),
         MUIA_Group_Columns, 2,
         Child, MBObj->LA_logsize,
         Child, MBObj->STR_logsize,
@@ -2009,7 +2009,7 @@ if(AMIX) printf("102\n");
     End;
 
     MBObj->LV_alias = (Object*) NListObject,
-        MUIA_ShortHelp, GCS(catalog,98,"Enter an alias name, then the command you want it to use\nE.g. With this line added to the alias list..\n/j /join\n..then the \"/j\" command will be replaced with \"/join\""),
+        MUIA_ShortHelp, GCS(98,"Enter an alias name, then the command you want it to use\nE.g. With this line added to the alias list..\n/j /join\n..then the \"/j\" command will be replaced with \"/join\""),
         MUIA_Frame, MUIV_Frame_InputList,
         MUIA_NList_ConstructHook, MUIV_NList_ConstructHook_String,
         MUIA_NList_DestructHook, MUIV_NList_DestructHook_String,
@@ -2031,8 +2031,8 @@ if(AMIX) printf("102\n");
         Child, MBObj->LV_alias,
     End;
 
-    MBObj->BT_add_alias = (Object*)SimpleButton(GCS(catalog,99,"Add alias"));
-    MBObj->BT_remove_alias = (Object*)SimpleButton(GCS(catalog,100,"Remove alias"));
+    MBObj->BT_add_alias = (Object*)SimpleButton(GCS(99,"Add alias"));
+    MBObj->BT_remove_alias = (Object*)SimpleButton(GCS(100,"Remove alias"));
 
     GR_alias2 = (Object*)GroupObject,
         MUIA_Group_Columns, 2,
@@ -2047,9 +2047,9 @@ if(AMIX) printf("102\n");
         Child, (Object*)GroupObject,
         MUIA_Group_Horiz, TRUE,
         MUIA_Group_Columns, 4,
-            Child, Label(GCS(catalog,280,"Alias")),
+            Child, Label(GCS(280,"Alias")),
             Child, MBObj->STR_edit_alias_name=(Object*)StringObject,MUIA_Weight, 30, MUIA_Frame, MUIV_Frame_String,MUIA_String_Reject," ",MUIA_String_MaxLen, 50,End,
-            Child, Label(GCS(catalog,281,"Command")),
+            Child, Label(GCS(281,"Command")),
             Child, MBObj->STR_edit_alias_command=(Object*)StringObject,MUIA_Weight, 70, MUIA_Frame, MUIV_Frame_String,MUIA_String_MaxLen, 650,End,
         End,
     End;
@@ -2078,15 +2078,15 @@ if(AMIX) printf("102\n");
                 MUIA_Group_Columns,4,
                 MUIA_Group_Horiz,TRUE,
                 MUIA_Weight, 100,
-                Child, MBObj->BT_user_list_buttons_add=SimpleButton(GCS(catalog,378,"Add New")),
-                Child, MBObj->BT_user_list_buttons_delete=SimpleButton(GCS(catalog,379,"Delete")),
-                Child, MBObj->BT_user_list_buttons_move_up=SimpleButton(GCS(catalog,380,"Move up")),
-                Child, MBObj->BT_user_list_buttons_move_down=SimpleButton(GCS(catalog,381,"Move down")),
+                Child, MBObj->BT_user_list_buttons_add=SimpleButton(GCS(378,"Add New")),
+                Child, MBObj->BT_user_list_buttons_delete=SimpleButton(GCS(379,"Delete")),
+                Child, MBObj->BT_user_list_buttons_move_up=SimpleButton(GCS(380,"Move up")),
+                Child, MBObj->BT_user_list_buttons_move_down=SimpleButton(GCS(381,"Move down")),
             End,
             Child, GroupObject,
                 MUIA_Group_Columns,2,
                 MUIA_Group_Horiz,TRUE,
-                Child, MBObj->LA_user_list_buttons_help=Label(GCS(catalog,382,"\033lCodes:\n%s = selected nick, %h = hostname of the selected nick,\n%c = current channel, %n = your own nick")),
+                Child, MBObj->LA_user_list_buttons_help=Label(GCS(382,"\033lCodes:\n%s = selected nick, %h = hostname of the selected nick,\n%c = current channel, %n = your own nick")),
                 Child, HSpace(0),
             End,
             Child, MBObj->LV_user_list_buttons2 = (Object*)NListviewObject,
@@ -2104,16 +2104,16 @@ if(AMIX) printf("102\n");
                     MUIA_Weight, 30,
                     MUIA_String_MaxLen, 30,
                     MUIA_Frame, MUIV_Frame_String,
-                    //MUIA_ShortHelp, GCS(catalog,17,"This is the hostname of the user you are currently talking to"),
+                    //MUIA_ShortHelp, GCS(17,"This is the hostname of the user you are currently talking to"),
                 End,
                 Child, Label("Command"),
                 Child, MBObj->STR_user_list_buttons_command=(Object*)BetterStringObject,
                     MUIA_Weight, 70,
                     MUIA_String_MaxLen, 800,
                     MUIA_Frame, MUIV_Frame_String,
-                    //MUIA_ShortHelp, GCS(catalog,17,"This is the hostname of the user you are currently talking to"),
+                    //MUIA_ShortHelp, GCS(17,"This is the hostname of the user you are currently talking to"),
                 End,
-                Child, MBObj->LA_user_list_buttons_disable=Label(GCS(catalog,384,"Hide all from the display")),
+                Child, MBObj->LA_user_list_buttons_disable=Label(GCS(384,"Hide all from the display")),
                 Child, MBObj->CH_user_list_buttons_disable=CheckMark(FALSE),
             End,
         End;
@@ -2121,7 +2121,7 @@ if(AMIX) printf("102\n");
 
 
     LV_events = (Object*) NListObject,
-            MUIA_ShortHelp, GCS(catalog,98,"Enter an alias name, then the command you want it to use\nE.g. With this line added to the alias list..\n/j /join\n..then the \"/j\" command will be replaced with \"/join\""),
+            MUIA_ShortHelp, GCS(98,"Enter an alias name, then the command you want it to use\nE.g. With this line added to the alias list..\n/j /join\n..then the \"/j\" command will be replaced with \"/join\""),
             MUIA_Frame, MUIV_Frame_InputList,
             MUIA_NList_ConstructHook, MUIV_NList_ConstructHook_String,
             MUIA_NList_DestructHook, MUIV_NList_DestructHook_String,
@@ -2149,13 +2149,13 @@ if(AMIX) printf("102\n");
         MUIA_Group_Horiz, FALSE,
         /*Child, (Object*)GroupObject,
             MUIA_Group_Columns, 2,
-            Child, (Object*)SimpleButton(GCS(catalog,800,"Add")),
-            Child, (Object*)SimpleButton(GCS(catalog,800,"Remove")),
+            Child, (Object*)SimpleButton(GCS(800,"Add")),
+            Child, (Object*)SimpleButton(GCS(800,"Remove")),
         End, */
         Child, GroupObject,
             MUIA_Group_Columns,2,
             MUIA_Group_Horiz,TRUE,
-            Child, (Object*)Label(GCS(catalog,800,"\033lCodes:\n%b = text being displayed in the window, %t = timestamp,\n%g = network name, %s = servername, %c = channel, %n = own nick, %m = nick")),
+            Child, (Object*)Label(GCS(800,"\033lCodes:\n%b = text being displayed in the window, %t = timestamp,\n%g = network name, %s = servername, %c = channel, %n = own nick, %m = nick")),
             Child, HSpace(0),
         End,
         Child, LV_events,
@@ -2165,18 +2165,18 @@ if(AMIX) printf("102\n");
             Child, Label("Use when:"),
             Child, CYCLE_events=(Object*)CycleObject,
              MUIA_Cycle_Entries, CYCLE_events_entries,
-                MUIA_ShortHelp, GCS(catalog,800,"Choose when you want to execute this ARexx script"),
+                MUIA_ShortHelp, GCS(800,"Choose when you want to execute this ARexx script"),
             End,
             Child, HSpace(0),
         End,
         Child, (Object*)GroupObject,
         MUIA_Group_Horiz, TRUE,
         MUIA_Group_Columns, 4,
-            Child, Label(GCS(catalog,800,"ARexx Script")),
+            Child, Label(GCS(800,"ARexx Script")),
             Child, STR_events_script= (Object*)PopaslObject,
                 MUIA_HelpNode, "PA_dcc_send_file",
                 MUIA_Popasl_Type, ASL_FileRequest,
-                ASLFR_TitleText,"ARexx Event File..",//GCS(catalog,29,"Choose filename to send"),
+                ASLFR_TitleText,"ARexx Event File..",//GCS(29,"Choose filename to send"),
                 ASLFR_InitialDrawer,wookie_folder,
                 MUIA_Popstring_String, (Object*)BetterStringObject,
                     MUIA_Weight, 30,
@@ -2186,7 +2186,7 @@ if(AMIX) printf("102\n");
                 MUIA_Popstring_Button, (Object*)PopButton(MUII_PopFile), //MBObj->PA_dcc_send_file,
             End,
 
-            Child, Label(GCS(catalog,800,"Text for script")),
+            Child, Label(GCS(800,"Text for script")),
             Child, STR_events_args= (Object*)StringObject,MUIA_Weight, 70, MUIA_Frame, MUIV_Frame_String,MUIA_String_MaxLen, 800,End,
         End,
     End;
@@ -2210,7 +2210,7 @@ if(AMIX) printf("105\n");
     End;
 
     MBObj->WI_mainsettings = (Object*)WindowObject,
-        MUIA_Window_Title, GCS(catalog,101,"Settings"),
+        MUIA_Window_Title, GCS(101,"Settings"),
         MUIA_Window_ID, MAKE_ID('4', 'W', 'I', 'N'),
         MUIA_Window_NoMenus, FALSE,
         MUIA_Window_CloseGadget, TRUE,
@@ -2222,84 +2222,84 @@ if(AMIX) printf("106\n");
 
 
     //below is the colour settings window objects
-    LA_CSW_background = (Object*)Label(GCS(catalog,335,"background"));
-    MBObj->PP_CSW_background = (Object*)MUI_NewObject((char*)MUIC_Popimage,MUIA_Window_Title, GCS(catalog,360,"Choose Colour"),End;
+    LA_CSW_background = (Object*)Label(GCS(335,"background"));
+    MBObj->PP_CSW_background = (Object*)MUI_NewObject((char*)MUIC_Popimage,MUIA_Window_Title, GCS(360,"Choose Colour"),End;
 
-    LA_CSW_nicklistbackground = (Object*)Label(GCS(catalog,336,"nicklistbackground"));
-    MBObj->PP_CSW_nicklistbackground = (Object*)MUI_NewObject((char*)MUIC_Popimage,MUIA_Window_Title, GCS(catalog,360,"Choose Colour"),End;
+    LA_CSW_nicklistbackground = (Object*)Label(GCS(336,"nicklistbackground"));
+    MBObj->PP_CSW_nicklistbackground = (Object*)MUI_NewObject((char*)MUIC_Popimage,MUIA_Window_Title, GCS(360,"Choose Colour"),End;
 
-    LA_CSW_listviewtabs_background= (Object*)Label(GCS(catalog,357,"tabs background"));
-    MBObj->PP_CSW_listviewtabs_background = (Object*)MUI_NewObject((char*)MUIC_Popimage,MUIA_Window_Title, GCS(catalog,360,"Choose Colour"),End;
+    LA_CSW_listviewtabs_background= (Object*)Label(GCS(357,"tabs background"));
+    MBObj->PP_CSW_listviewtabs_background = (Object*)MUI_NewObject((char*)MUIC_Popimage,MUIA_Window_Title, GCS(360,"Choose Colour"),End;
 
 
-    LA_CSW_join = (Object*)Label(GCS(catalog,337,"join"));
-    MBObj->PP_CSW_join = (Object*)MUI_NewObject((char*)MUIC_Poppen,MUIA_Window_Title, GCS(catalog,360,"Choose Colour"),End;
+    LA_CSW_join = (Object*)Label(GCS(337,"join"));
+    MBObj->PP_CSW_join = (Object*)MUI_NewObject((char*)MUIC_Poppen,MUIA_Window_Title, GCS(360,"Choose Colour"),End;
 
-    LA_CSW_part = (Object*)Label(GCS(catalog,338,"part"));
-    MBObj->PP_CSW_part = (Object*)MUI_NewObject((char*)MUIC_Poppen,MUIA_Window_Title, GCS(catalog,360,"Choose Colour"),End;
+    LA_CSW_part = (Object*)Label(GCS(338,"part"));
+    MBObj->PP_CSW_part = (Object*)MUI_NewObject((char*)MUIC_Poppen,MUIA_Window_Title, GCS(360,"Choose Colour"),End;
 
-    LA_CSW_quit = (Object*)Label(GCS(catalog,339,"quit"));
-    MBObj->PP_CSW_quit = (Object*)MUI_NewObject((char*)MUIC_Poppen,MUIA_Window_Title, GCS(catalog,360,"Choose Colour"),End;
+    LA_CSW_quit = (Object*)Label(GCS(339,"quit"));
+    MBObj->PP_CSW_quit = (Object*)MUI_NewObject((char*)MUIC_Poppen,MUIA_Window_Title, GCS(360,"Choose Colour"),End;
 
-    LA_CSW_modes = (Object*)Label(GCS(catalog,340,"modes"));
-    MBObj->PP_CSW_modes = (Object*)MUI_NewObject((char*)MUIC_Poppen,MUIA_Window_Title, GCS(catalog,360,"Choose Colour"),End;
+    LA_CSW_modes = (Object*)Label(GCS(340,"modes"));
+    MBObj->PP_CSW_modes = (Object*)MUI_NewObject((char*)MUIC_Poppen,MUIA_Window_Title, GCS(360,"Choose Colour"),End;
 
-    LA_CSW_ctcp = (Object*)Label(GCS(catalog,341,"ctcp"));
-    MBObj->PP_CSW_ctcp = (Object*)MUI_NewObject((char*)MUIC_Poppen,MUIA_Window_Title, GCS(catalog,360,"Choose Colour"),End;
+    LA_CSW_ctcp = (Object*)Label(GCS(341,"ctcp"));
+    MBObj->PP_CSW_ctcp = (Object*)MUI_NewObject((char*)MUIC_Poppen,MUIA_Window_Title, GCS(360,"Choose Colour"),End;
 
-    LA_CSW_actions = (Object*)Label(GCS(catalog,342,"actions"));
-    MBObj->PP_CSW_actions = (Object*)MUI_NewObject((char*)MUIC_Poppen,MUIA_Window_Title, GCS(catalog,360,"Choose Colour"),End;
+    LA_CSW_actions = (Object*)Label(GCS(342,"actions"));
+    MBObj->PP_CSW_actions = (Object*)MUI_NewObject((char*)MUIC_Poppen,MUIA_Window_Title, GCS(360,"Choose Colour"),End;
 
-    LA_CSW_normal = (Object*)Label(GCS(catalog,343,"normal"));
-    MBObj->PP_CSW_normal = (Object*)MUI_NewObject((char*)MUIC_Poppen,MUIA_Window_Title, GCS(catalog,360,"Choose Colour"),End;
+    LA_CSW_normal = (Object*)Label(GCS(343,"normal"));
+    MBObj->PP_CSW_normal = (Object*)MUI_NewObject((char*)MUIC_Poppen,MUIA_Window_Title, GCS(360,"Choose Colour"),End;
 
-    LA_CSW_info = (Object*)Label(GCS(catalog,344,"info"));
-    MBObj->PP_CSW_info = (Object*)MUI_NewObject((char*)MUIC_Poppen,MUIA_Window_Title, GCS(catalog,360,"Choose Colour"),End;
+    LA_CSW_info = (Object*)Label(GCS(344,"info"));
+    MBObj->PP_CSW_info = (Object*)MUI_NewObject((char*)MUIC_Poppen,MUIA_Window_Title, GCS(360,"Choose Colour"),End;
 
-    LA_CSW_owntext = (Object*)Label(GCS(catalog,345,"owntext"));
-    MBObj->PP_CSW_owntext = (Object*)MUI_NewObject((char*)MUIC_Poppen,MUIA_Window_Title, GCS(catalog,360,"Choose Colour"),End;
+    LA_CSW_owntext = (Object*)Label(GCS(345,"owntext"));
+    MBObj->PP_CSW_owntext = (Object*)MUI_NewObject((char*)MUIC_Poppen,MUIA_Window_Title, GCS(360,"Choose Colour"),End;
 
-    LA_CSW_highlight = (Object*)Label(GCS(catalog,346,"highlight"));
-    MBObj->PP_CSW_highlight = (Object*)MUI_NewObject((char*)MUIC_Poppen,MUIA_Window_Title, GCS(catalog,360,"Choose Colour"),End;
+    LA_CSW_highlight = (Object*)Label(GCS(346,"highlight"));
+    MBObj->PP_CSW_highlight = (Object*)MUI_NewObject((char*)MUIC_Poppen,MUIA_Window_Title, GCS(360,"Choose Colour"),End;
 
-    LA_CSW_invite = (Object*)Label(GCS(catalog,347,"invite"));
-    MBObj->PP_CSW_invite = (Object*)MUI_NewObject((char*)MUIC_Poppen,MUIA_Window_Title, GCS(catalog,360,"Choose Colour"),End;
+    LA_CSW_invite = (Object*)Label(GCS(347,"invite"));
+    MBObj->PP_CSW_invite = (Object*)MUI_NewObject((char*)MUIC_Poppen,MUIA_Window_Title, GCS(360,"Choose Colour"),End;
 
-    LA_CSW_kick = (Object*)Label(GCS(catalog,348,"kick"));
-    MBObj->PP_CSW_kick = (Object*)MUI_NewObject((char*)MUIC_Poppen,MUIA_Window_Title, GCS(catalog,360,"Choose Colour"),End;
+    LA_CSW_kick = (Object*)Label(GCS(348,"kick"));
+    MBObj->PP_CSW_kick = (Object*)MUI_NewObject((char*)MUIC_Poppen,MUIA_Window_Title, GCS(360,"Choose Colour"),End;
 
-    LA_CSW_nickchange = (Object*)Label(GCS(catalog,349,"nickchange"));
-    MBObj->PP_CSW_nickchange = (Object*)MUI_NewObject((char*)MUIC_Poppen,MUIA_Window_Title, GCS(catalog,360,"Choose Colour"),End;
+    LA_CSW_nickchange = (Object*)Label(GCS(349,"nickchange"));
+    MBObj->PP_CSW_nickchange = (Object*)MUI_NewObject((char*)MUIC_Poppen,MUIA_Window_Title, GCS(360,"Choose Colour"),End;
 
-    LA_CSW_topic = (Object*)Label(GCS(catalog,350,"topic"));
-    MBObj->PP_CSW_topic = (Object*)MUI_NewObject((char*)MUIC_Poppen,MUIA_Window_Title, GCS(catalog,360,"Choose Colour"),End;
+    LA_CSW_topic = (Object*)Label(GCS(350,"topic"));
+    MBObj->PP_CSW_topic = (Object*)MUI_NewObject((char*)MUIC_Poppen,MUIA_Window_Title, GCS(360,"Choose Colour"),End;
 
-    LA_CSW_wallops = (Object*)Label(GCS(catalog,351,"wallops"));
-    MBObj->PP_CSW_wallops = (Object*)MUI_NewObject((char*)MUIC_Poppen,MUIA_Window_Title, GCS(catalog,360,"Choose Colour"),End;
+    LA_CSW_wallops = (Object*)Label(GCS(351,"wallops"));
+    MBObj->PP_CSW_wallops = (Object*)MUI_NewObject((char*)MUIC_Poppen,MUIA_Window_Title, GCS(360,"Choose Colour"),End;
 
-    LA_CSW_notices = (Object*)Label(GCS(catalog,352,"notices"));
-    MBObj->PP_CSW_notices = (Object*)MUI_NewObject((char*)MUIC_Poppen,MUIA_Window_Title, GCS(catalog,360,"Choose Colour"),End;
+    LA_CSW_notices = (Object*)Label(GCS(352,"notices"));
+    MBObj->PP_CSW_notices = (Object*)MUI_NewObject((char*)MUIC_Poppen,MUIA_Window_Title, GCS(360,"Choose Colour"),End;
 
-    LA_CSW_activity = (Object*)Label(GCS(catalog,353,"activity"));
-    MBObj->PP_CSW_activity = (Object*)MUI_NewObject((char*)MUIC_Poppen,MUIA_Window_Title, GCS(catalog,360,"Choose Colour"),End;
+    LA_CSW_activity = (Object*)Label(GCS(353,"activity"));
+    MBObj->PP_CSW_activity = (Object*)MUI_NewObject((char*)MUIC_Poppen,MUIA_Window_Title, GCS(360,"Choose Colour"),End;
 
-    LA_CSW_chatactivity = (Object*)Label(GCS(catalog,354,"chatactivity"));
-    MBObj->PP_CSW_chatactivity = (Object*)MUI_NewObject((char*)MUIC_Poppen,MUIA_Window_Title, GCS(catalog,360,"Choose Colour"),End;
+    LA_CSW_chatactivity = (Object*)Label(GCS(354,"chatactivity"));
+    MBObj->PP_CSW_chatactivity = (Object*)MUI_NewObject((char*)MUIC_Poppen,MUIA_Window_Title, GCS(360,"Choose Colour"),End;
 
-    LA_CSW_highlightactivity = (Object*)Label(GCS(catalog,355,"highlightactivity"));
-    MBObj->PP_CSW_highlightactivity = (Object*)MUI_NewObject((char*)MUIC_Poppen,MUIA_Window_Title, GCS(catalog,360,"Choose Colour"),End;
+    LA_CSW_highlightactivity = (Object*)Label(GCS(355,"highlightactivity"));
+    MBObj->PP_CSW_highlightactivity = (Object*)MUI_NewObject((char*)MUIC_Poppen,MUIA_Window_Title, GCS(360,"Choose Colour"),End;
 
-    LA_CSW_nicklisttext = (Object*)Label(GCS(catalog,356,"nicklisttext"));
-    MBObj->PP_CSW_nicklisttext = (Object*)MUI_NewObject((char*)MUIC_Poppen,MUIA_Window_Title, GCS(catalog,360,"Choose Colour"),End;
+    LA_CSW_nicklisttext = (Object*)Label(GCS(356,"nicklisttext"));
+    MBObj->PP_CSW_nicklisttext = (Object*)MUI_NewObject((char*)MUIC_Poppen,MUIA_Window_Title, GCS(360,"Choose Colour"),End;
 
-    LA_CSW_listviewtabs_normaltext = (Object*)Label(GCS(catalog,358,"tabs pen"));
-    MBObj->PP_CSW_listviewtabs_normaltext = (Object*)MUI_NewObject((char*)MUIC_Poppen,MUIA_Window_Title, GCS(catalog,360,"Choose Colour"),End;
+    LA_CSW_listviewtabs_normaltext = (Object*)Label(GCS(358,"tabs pen"));
+    MBObj->PP_CSW_listviewtabs_normaltext = (Object*)MUI_NewObject((char*)MUIC_Poppen,MUIA_Window_Title, GCS(360,"Choose Colour"),End;
 
 if(AMIX) printf("107\n");
-    MBObj->BT_colour_settings_load = (Object*)SimpleButton(GCS(catalog,323,"Load"));
-    MBObj->BT_colour_settings_apply = (Object*)SimpleButton(GCS(catalog,324,"Apply"));
-    MBObj->BT_colour_settings_save = (Object*)SimpleButton(GCS(catalog,325,"Save"));
-    MBObj->BT_colour_settings_save_as = (Object*)SimpleButton(GCS(catalog,326,"Save As..."));
+    MBObj->BT_colour_settings_load = (Object*)SimpleButton(GCS(323,"Load"));
+    MBObj->BT_colour_settings_apply = (Object*)SimpleButton(GCS(324,"Apply"));
+    MBObj->BT_colour_settings_save = (Object*)SimpleButton(GCS(325,"Save"));
+    MBObj->BT_colour_settings_save_as = (Object*)SimpleButton(GCS(326,"Save As..."));
 
 
     APTR colour_settings_actions = (Object*)GroupObject,//VirtgroupObject,
@@ -2369,36 +2369,36 @@ if(AMIX) printf("107\n");
     End;
 if(AMIX) printf("108\n");
     MBObj->WI_colour_settings = (Object*)WindowObject,
-        MUIA_Window_Title, GCS(catalog,102,"Colour Settings"),
+        MUIA_Window_Title, GCS(102,"Colour Settings"),
         MUIA_Window_ID, MAKE_ID('3', 'W', 'I', 'N'),
         WindowContents, GROUP_ROOT_6,
     End;
 if(AMIX) printf("109\n");
     //below are menu items
     MN1_SelectServer = (Object*)MenuitemObject,
-        MUIA_Menuitem_Title, GCS(catalog,103,"Select server"),
+        MUIA_Menuitem_Title, GCS(103,"Select server"),
         MUIA_Menuitem_Shortcut, "S",
     End;
 
     MN1_CloseTAB = (Object*)MenuitemObject,
-        MUIA_Menuitem_Title, GCS(catalog,104,"Close current tab"),
+        MUIA_Menuitem_Title, GCS(104,"Close current tab"),
         MUIA_Menuitem_Shortcut, "Z",
     End;
 
     MNmenuBarLabel2 = (Object*)MUI_MakeObject(MUIO_Menuitem, NM_BARLABEL, 0, 0, 0);
 
     MN1_Hide = (Object*)MenuitemObject,
-        MUIA_Menuitem_Title, GCS(catalog,293,"Hide"),
+        MUIA_Menuitem_Title, GCS(293,"Hide"),
         MUIA_Menuitem_Shortcut, "H",
     End;
 
     MN1_NewTAB = (Object*)MenuitemObject,
-        MUIA_Menuitem_Title, GCS(catalog,105,"New server tab"),
+        MUIA_Menuitem_Title, GCS(105,"New server tab"),
         MUIA_Menuitem_Shortcut, "T",
     End;
 
     MN1_NewGTAB = (Object*)MenuitemObject,
-        MUIA_Menuitem_Title, GCS(catalog,106,"Open global query tab"),
+        MUIA_Menuitem_Title, GCS(106,"Open global query tab"),
     End;
 
     MNmenuBarLabel0 = (Object*)MUI_MakeObject(MUIO_Menuitem, NM_BARLABEL, 0, 0, 0);
@@ -2407,28 +2407,28 @@ if(AMIX) printf("109\n");
 
 
     MN_about = (Object*)MenuitemObject,
-        MUIA_Menuitem_Title, GCS(catalog,26,"About"),
+        MUIA_Menuitem_Title, GCS(26,"About"),
     End;
 
     MN_quit = (Object*)MenuitemObject,
-        MUIA_Menuitem_Title, GCS(catalog,107,"Quit"),
+        MUIA_Menuitem_Title, GCS(107,"Quit"),
         MUIA_Menuitem_Shortcut, "Q",
     End;
 
     MN_ClearHistory = (Object*)MenuitemObject,
-        MUIA_Menuitem_Title, GCS(catalog,108,"Clear buffer"),
+        MUIA_Menuitem_Title, GCS(108,"Clear buffer"),
     End;
 
     MN_ClearAllHistory = (Object*)MenuitemObject,
-        MUIA_Menuitem_Title, GCS(catalog,334,"Clear all buffers"),
+        MUIA_Menuitem_Title, GCS(334,"Clear all buffers"),
     End;
 
     MN_SaveHistory = (Object*)MenuitemObject,
-        MUIA_Menuitem_Title, GCS(catalog,109,"Save buffer as"),
+        MUIA_Menuitem_Title, GCS(109,"Save buffer as"),
     End;
 
     MN1_Main = (Object*)MenuObject,
-        MUIA_Menu_Title, GCS(catalog,110,"Main"),
+        MUIA_Menu_Title, GCS(110,"Main"),
         MUIA_Family_Child, MN1_SelectServer,
         MUIA_Family_Child, MN1_NewTAB,
         MUIA_Family_Child, MN1_NewGTAB,
@@ -2445,53 +2445,53 @@ if(AMIX) printf("109\n");
     End;
 if(AMIX) printf("110\n");
     MN_MainSettings  = (Object*)MenuitemObject,
-        MUIA_Menuitem_Title, GCS(catalog,111,"Main Settings..."),
+        MUIA_Menuitem_Title, GCS(111,"Main Settings..."),
         //MUIA_Menuitem_Shortcut, "S",
     End;
 
     MN_ColourSettings = (Object*)MenuitemObject,
-        MUIA_Menuitem_Title, GCS(catalog,102,"Colour Settings..."),
+        MUIA_Menuitem_Title, GCS(102,"Colour Settings..."),
     End;
 
     MN_MUISettings = (Object*)MenuitemObject,
-        MUIA_Menuitem_Title, GCS(catalog,112,"MUI Settings..."),
+        MUIA_Menuitem_Title, GCS(112,"MUI Settings..."),
         //MUIA_Menuitem_Shortcut, "S",
     End;
 
     MN_MultiColumnDisplay  = (Object*)MenuitemObject,
-        MUIA_Menuitem_Title, GCS(catalog,317,"Multi-column chat display"),
+        MUIA_Menuitem_Title, GCS(317,"Multi-column chat display"),
         MUIA_Menuitem_Checkit, TRUE,
         MUIA_Menuitem_Toggle, TRUE,
         //MUIA_Menuitem_Shortcut, "S",
     End;
 
     MN_Clipboard = (Object*)MenuitemObject,
-        MUIA_Menuitem_Title, GCS(catalog,318,"Column-marking Clipboard"),
+        MUIA_Menuitem_Title, GCS(318,"Column-marking Clipboard"),
         MUIA_Menuitem_Checkit, TRUE,
         MUIA_Menuitem_Toggle, TRUE,
     End;
 
 
     MN_SaveSettings = (Object*)MenuitemObject,
-        MUIA_Menuitem_Title, GCS(catalog,288,"Save settings"),
+        MUIA_Menuitem_Title, GCS(288,"Save settings"),
     End;
 
 
     MN_MuteSound = (Object*)MenuitemObject,
-        MUIA_Menuitem_Title, GCS(catalog,372,"Mute all sound"),
+        MUIA_Menuitem_Title, GCS(372,"Mute all sound"),
         MUIA_Menuitem_Checkit, TRUE,
         MUIA_Menuitem_Toggle, TRUE,
     End;
 
     MN_Edit = (Object*)MenuObject,
-        MUIA_Menu_Title, GCS(catalog,800,"Edit"),
-        MUIA_Family_Child, MN_cut  = (Object*)MenuitemObject,MUIA_Menuitem_Title, GCS(catalog,800,"Cut"),MUIA_Menuitem_Shortcut, "X", End,
-        MUIA_Family_Child, MN_copy = (Object*)MenuitemObject,MUIA_Menuitem_Title, GCS(catalog,800,"Copy"),MUIA_Menuitem_Shortcut, "C", End,
-        MUIA_Family_Child, MN_paste = (Object*)MenuitemObject,MUIA_Menuitem_Title, GCS(catalog,800,"Paste"),MUIA_Menuitem_Shortcut, "V", End,
+        MUIA_Menu_Title, GCS(800,"Edit"),
+        MUIA_Family_Child, MN_cut  = (Object*)MenuitemObject,MUIA_Menuitem_Title, GCS(800,"Cut"),MUIA_Menuitem_Shortcut, "X", End,
+        MUIA_Family_Child, MN_copy = (Object*)MenuitemObject,MUIA_Menuitem_Title, GCS(800,"Copy"),MUIA_Menuitem_Shortcut, "C", End,
+        MUIA_Family_Child, MN_paste = (Object*)MenuitemObject,MUIA_Menuitem_Title, GCS(800,"Paste"),MUIA_Menuitem_Shortcut, "V", End,
     End;
 
     MN_Settings = (Object*)MenuObject,
-        MUIA_Menu_Title, GCS(catalog,101,"Settings"),
+        MUIA_Menu_Title, GCS(101,"Settings"),
         MUIA_Family_Child, MN_MainSettings,
         MUIA_Family_Child, MN_ColourSettings,
         MUIA_Family_Child, MN_MUISettings,
@@ -2502,27 +2502,27 @@ if(AMIX) printf("110\n");
     End;
 
     MN_windows_dcc = (Object*)MenuitemObject,
-        MUIA_Menuitem_Title, GCS(catalog,62,"Incoming DCC File Transfers..."),
+        MUIA_Menuitem_Title, GCS(62,"Incoming DCC File Transfers..."),
         MUIA_Menuitem_Shortcut, "D",
     End;
 
     MN_windows_dcc2 = (Object*)MenuitemObject,
-        MUIA_Menuitem_Title, GCS(catalog,63,"Outgoing DCC File Transfers..."),
+        MUIA_Menuitem_Title, GCS(63,"Outgoing DCC File Transfers..."),
         MUIA_Menuitem_Shortcut, "R",
     End;
 
     MN_urlgrabber = (Object*)MenuitemObject,
-        MUIA_Menuitem_Title, GCS(catalog,114,"URL Grabber..."),
+        MUIA_Menuitem_Title, GCS(114,"URL Grabber..."),
         MUIA_Menuitem_Shortcut, "U",
     End;
 
     MN_ignorelist = (Object*)MenuitemObject,
-        MUIA_Menuitem_Title, GCS(catalog,276,"Ignore List..."),
+        MUIA_Menuitem_Title, GCS(276,"Ignore List..."),
         MUIA_Menuitem_Shortcut, "I",
     End;
 
     MN_windows = (Object*)MenuObject,
-        MUIA_Menu_Title, GCS(catalog,214,"Windows"),
+        MUIA_Menu_Title, GCS(214,"Windows"),
         MUIA_Family_Child, MN_windows_dcc,
         MUIA_Family_Child, MN_windows_dcc2,
         MUIA_Family_Child, MN_urlgrabber,
@@ -2538,7 +2538,7 @@ if(AMIX) printf("110\n");
 
     //below are edit window stuff
 
-    LA_servername = (Object*)Label(GCS(catalog,115,"Servername"));
+    LA_servername = (Object*)Label(GCS(115,"Servername"));
 
     MBObj->STR_servername = (Object*)StringObject,
         MUIA_Frame, MUIV_Frame_String,
@@ -2553,7 +2553,7 @@ if(AMIX) printf("110\n");
         Child, MBObj->STR_servername,
     End;
 
-    LA_port = (Object*)Label(GCS(catalog,116,"Port number"));
+    LA_port = (Object*)Label(GCS(116,"Port number"));
 if(AMIX) printf("111\n");
     MBObj->STR_port = (Object*)StringObject,
         MUIA_Frame, MUIV_Frame_String,
@@ -2568,7 +2568,7 @@ if(AMIX) printf("111\n");
         Child, MBObj->STR_port,
     End;
 
-    MBObj->LA_autojoin = (Object*)Label(GCS(catalog,362,"Automatically join these channels"));
+    MBObj->LA_autojoin = (Object*)Label(GCS(362,"Automatically join these channels"));
 
     MBObj->STR_autojoin = (Object*)StringObject,
         MUIA_Frame, MUIV_Frame_String,
@@ -2576,11 +2576,11 @@ if(AMIX) printf("111\n");
         MUIA_String_MaxLen, 400,
     End;
 
-    MBObj->LA_nick_registration_command = (Object*)Label(GCS(catalog,363,"Nick registration password"));
+    MBObj->LA_nick_registration_command = (Object*)Label(GCS(363,"Nick registration password"));
 
     MBObj->STR_nick_registration_command = (Object*)StringObject,
         MUIA_Frame, MUIV_Frame_String,
-        MUIA_ShortHelp, GCS(catalog,364,"This option will only work with a registered nick on a network with a Nickserv service"),
+        MUIA_ShortHelp, GCS(364,"This option will only work with a registered nick on a network with a Nickserv service"),
         MUIA_String_Secret, TRUE,
         MUIA_String_Reject," ",
     End;
@@ -2601,7 +2601,7 @@ if(AMIX) printf("111\n");
         Child,MBObj->STR_nick_registration_command,
     End;
 
-    LA_pass = (Object*)Label(GCS(catalog,117,"Server password"));
+    LA_pass = (Object*)Label(GCS(117,"Server password"));
 
     MBObj->STR_pass = (Object*)StringObject,
         MUIA_Frame, MUIV_Frame_String,
@@ -2617,9 +2617,9 @@ if(AMIX) printf("111\n");
         Child, MBObj->STR_pass,
     End;
 
-    MBObj->BT_acceptserver = (Object*)SimpleButton(GCS(catalog,365,"Accept Changes"));
+    MBObj->BT_acceptserver = (Object*)SimpleButton(GCS(365,"Accept Changes"));
 
-    MBObj->BT_cancelserver = (Object*)SimpleButton(GCS(catalog,74,"Cancel"));
+    MBObj->BT_cancelserver = (Object*)SimpleButton(GCS(74,"Cancel"));
 
     GR_grp_12 = (Object*)GroupObject,
         MUIA_HelpNode, "GR_grp_12",
@@ -2629,7 +2629,7 @@ if(AMIX) printf("111\n");
     End;
 
     MBObj->CH_autoconnect = (Object*)CheckMark(FALSE);
-    MBObj->LA_autoconnect = (Object*)Label(GCS(catalog,277,"Automatically connect here when WookieChat is started"));
+    MBObj->LA_autoconnect = (Object*)Label(GCS(277,"Automatically connect here when WookieChat is started"));
 
     APTR LA_space7 =(Object*)TextObject,
         MUIA_Weight, 1,
@@ -2650,7 +2650,7 @@ if(AMIX) printf("111\n");
         Child, HSpace(0),
     End;
 
-    MBObj->LA_remote_charset=(Object*)Label(GCS(catalog,327,"Server Charset"));
+    MBObj->LA_remote_charset=(Object*)Label(GCS(327,"Server Charset"));
 
     MBObj->CYCLE_remote_charset = CycleObject,
        MUIA_Cycle_Entries, remote_charsets,
@@ -2694,9 +2694,9 @@ if(AMIX) printf("113\n");
     End;
 
 if(AMIX) printf("114\n");
-    LA_groupname = (Object*)Label(GCS(catalog,119,"Group name"));
+    LA_groupname = (Object*)Label(GCS(119,"Group name"));
 
-    MBObj->BT_perform = (Object*)SimpleButton(GCS(catalog,120,"Perform on connect"));
+    MBObj->BT_perform = (Object*)SimpleButton(GCS(120,"Perform on connect"));
 
     MBObj->STR_groupname = (Object*)StringObject,
         MUIA_Frame, MUIV_Frame_String,
@@ -2710,9 +2710,9 @@ if(AMIX) printf("114\n");
         Child, MBObj->STR_groupname,
     End;
 
-    MBObj->BT_acceptgroup =(Object*)SimpleButton(GCS(catalog,40,"Accept"));
+    MBObj->BT_acceptgroup =(Object*)SimpleButton(GCS(40,"Accept"));
 
-    MBObj->BT_cancelgroup =(Object*)SimpleButton(GCS(catalog,74,"Cancel"));
+    MBObj->BT_cancelgroup =(Object*)SimpleButton(GCS(74,"Cancel"));
 
     GR_grp_16 =(Object*)GroupObject,
         MUIA_HelpNode, "GR_grp_16",
@@ -2727,7 +2727,7 @@ if(AMIX) printf("114\n");
     End;
 if(AMIX) printf("115\n");
     MBObj->WI_edit_group =(Object*)WindowObject,
-        MUIA_Window_Title, GCS(catalog,121,"Edit Group"),
+        MUIA_Window_Title, GCS(121,"Edit Group"),
         MUIA_Window_ID, MAKE_ID('3', 'W', 'I', 'N'),
         MUIA_Window_CloseGadget, FALSE,
         WindowContents, GROUP_ROOT_5,
@@ -2735,7 +2735,7 @@ if(AMIX) printf("115\n");
 
 // above is edit window stuff
 
-    LA_nicknames =(Object*)Label(GCS(catalog,216,"Nick Names"));
+    LA_nicknames =(Object*)Label(GCS(216,"Nick Names"));
 
     MBObj->STR_nickname1 =(Object*)StringObject,
         MUIA_Frame, MUIV_Frame_String,
@@ -2764,7 +2764,7 @@ if(AMIX) printf("116\n");
         Child, MBObj->STR_nickname3,
     End;
 
-    LA_realname =(Object*)Label(GCS(catalog,122,"Real Name"));
+    LA_realname =(Object*)Label(GCS(122,"Real Name"));
 
     MBObj->STR_realname =(Object*)StringObject,
         MUIA_Frame, MUIV_Frame_String,
@@ -2774,7 +2774,7 @@ if(AMIX) printf("116\n");
 
 
 
-    MBObj->LA_display_server_win=(Object*)Label(GCS(catalog,278,"Display Server Window upon startup:"));
+    MBObj->LA_display_server_win=(Object*)Label(GCS(278,"Display Server Window upon startup:"));
     MBObj->CH_display_server_win=(Object*)CheckMark(FALSE);
 
     DISPLAY_SERVER_WIN_GRP=(Object*)GroupObject,
@@ -2820,7 +2820,7 @@ if(AMIX) printf("117\n");
     End;
 if(AMIX) printf("118\n");
 
-    LA_username =(Object*)Label(GCS(catalog,123,"User Name"));
+    LA_username =(Object*)Label(GCS(123,"User Name"));
 
     MBObj->STR_username =(Object*)StringObject,
         MUIA_Frame, MUIV_Frame_String,
@@ -2867,7 +2867,7 @@ if(AMIX) printf("118\n");
         MUIA_NListview_NList, MBObj->NLT_Servers,
     End;
 if(AMIX) printf("119\n");
-    if(!MBObj->NLT_Servers) cleanexit((char*)GCS(catalog,19,"Please download and install the NListtree and NList MUI Classes from aminet\n"));
+    if(!MBObj->NLT_Servers) cleanexit((char*)GCS(19,"Please download and install the NListtree and NList MUI Classes from aminet\n"));
 if(AMIX) printf("120\n");
     GR_grp_8 =(Object*)GroupObject, //VirtgroupObject,
         MUIA_Group_Horiz, TRUE,
@@ -2885,13 +2885,13 @@ if(AMIX) printf("120\n");
         Child, REC_label_0CC,
     End;
 
-    MBObj->BT_addserver =(Object*)SimpleButton(GCS(catalog,124,"New Server"));
+    MBObj->BT_addserver =(Object*)SimpleButton(GCS(124,"New Server"));
 
-    MBObj->BT_addgroup =(Object*)SimpleButton(GCS(catalog,125,"New Group"));
+    MBObj->BT_addgroup =(Object*)SimpleButton(GCS(125,"New Group"));
 
-    MBObj->BT_delete_server =(Object*)SimpleButton(GCS(catalog,127,"Delete Entry"));
+    MBObj->BT_delete_server =(Object*)SimpleButton(GCS(127,"Delete Entry"));
 
-    MBObj->BT_edit =(Object*)SimpleButton(GCS(catalog,126,"Edit Entry"));
+    MBObj->BT_edit =(Object*)SimpleButton(GCS(126,"Edit Entry"));
 
     GR_grp_9 =(Object*)GroupObject,
         MUIA_HelpNode, "GR_grp_9",
@@ -2903,9 +2903,9 @@ if(AMIX) printf("120\n");
         //Child, MBObj->BT_acceptserver,
     End;
 
-    MBObj->BT_connect =(Object*)SimpleButton(GCS(catalog,128,"Connect to server"));
+    MBObj->BT_connect =(Object*)SimpleButton(GCS(128,"Connect to server"));
 
-    MBObj->BT_connect_tab =(Object*)SimpleButton(GCS(catalog,129,"Connect in new tab"));
+    MBObj->BT_connect_tab =(Object*)SimpleButton(GCS(129,"Connect in new tab"));
 
     GR_grp_6 =(Object*)GroupObject,
         MUIA_HelpNode, "GR_grp_6",
@@ -2939,7 +2939,7 @@ if(AMIX) printf("123\n");
             Child, MBObj->GR_server_specific_user_prefs = (Object*)GroupObject,
                 Child, GroupObject,
                     MUIA_Group_Horiz, TRUE,
-                    Child, (Object*)Label(GCS(catalog,216,"Nick Names")),
+                    Child, (Object*)Label(GCS(216,"Nick Names")),
                     Child, MBObj->STR_server_nickname1 =(Object*)StringObject,
                         MUIA_Frame, MUIV_Frame_String,
                         MUIA_HelpNode, "STR_nickname1",
@@ -2959,13 +2959,13 @@ if(AMIX) printf("123\n");
                 End,
                 Child, GroupObject,
                     MUIA_Group_Horiz, TRUE,
-                    Child, (Object*)Label(GCS(catalog,123,"User Name")),
+                    Child, (Object*)Label(GCS(123,"User Name")),
                     Child, MBObj->STR_server_username =(Object*)StringObject,
                         MUIA_Frame, MUIV_Frame_String,
                         MUIA_String_Reject," ",
                         MUIA_HelpNode, "STR_username",
                     End,
-                    Child, (Object*)Label(GCS(catalog,122,"Real Name")),
+                    Child, (Object*)Label(GCS(122,"Real Name")),
                     Child, MBObj->STR_server_realname =(Object*)StringObject,
                         MUIA_Frame, MUIV_Frame_String,
                         MUIA_String_Reject," ",
@@ -2980,7 +2980,7 @@ if(AMIX) printf("123\n");
 
 if(AMIX) printf("124\n");
     MBObj->WI_label_2 =(Object*)WindowObject,
-        MUIA_Window_Title, GCS(catalog,130,"Select a server"),
+        MUIA_Window_Title, GCS(130,"Select a server"),
         MUIA_Window_ID, MAKE_ID('1', 'W', 'I', 'N'),
         WindowContents, GROUP_ROOT_3,
     End;
@@ -3126,8 +3126,8 @@ if(AMIX) printf("130\n");
         MUIA_NListview_NList, MBObj->LV_ban,
     End;
 
-    MBObj->BT_unban = (Object*)SimpleButton(GCS(catalog,131,"Unban"));
-    MBObj->BT_refreshban = (Object*)SimpleButton(GCS(catalog,132,"Refresh List"));
+    MBObj->BT_unban = (Object*)SimpleButton(GCS(131,"Unban"));
+    MBObj->BT_refreshban = (Object*)SimpleButton(GCS(132,"Refresh List"));
 
     GR_ban_subgroup = (Object*)GroupObject,
         MUIA_Group_Horiz, TRUE,
@@ -3192,7 +3192,7 @@ if(AMIX) printf("131\n");
     {
         //if(AMIX) printf("134.. THE END..\n");
         FreeVec(MBObj);
-        printf("%s",GCS(catalog,133,"unable to create app\n"));
+        printf("%s",GCS(133,"unable to create app\n"));
         return(NULL);
     }
 
@@ -3210,11 +3210,11 @@ BOOL create_custom_classes()
     classes[CC_MUIC_BETTERSTRING] = MUI_CreateCustomClass(NULL, (ClassID)MUIC_BetterString, NULL, sizeof(struct InstanceData),
             (APTR) BetterString_Dispatcher);
     if (!classes[CC_MUIC_BETTERSTRING])
-        printf("%s\n", GCS(catalog, 137, "Please download and install the BetterString.mcc MUI Class"));
+        printf("%s\n", GCS( 137, "Please download and install the BetterString.mcc MUI Class"));
 
     classes[CC_MUIC_NLIST] = MUI_CreateCustomClass(NULL, (ClassID)MUIC_NList, NULL, sizeof(struct MyData), (APTR) NList_Dispatcher);
     if (!classes[CC_MUIC_NLIST])
-        printf("%s\n", GCS(catalog, 138, "Please download and install the NList.mcc MUI Class"));
+        printf("%s\n", GCS( 138, "Please download and install the NList.mcc MUI Class"));
 
     classes[CC_MUIC_WINDOW] = MUI_CreateCustomClass(NULL, (ClassID)MUIC_Window, NULL, sizeof(struct MyData), (APTR) Window_Dispatcher);
     if (!classes[CC_MUIC_WINDOW])
@@ -3226,10 +3226,10 @@ BOOL create_custom_classes()
 
 #else
     classes[CC_MUIC_BETTERSTRING] = MUI_CreateCustomClass(NULL, (ClassID)MUIC_BetterString,NULL,sizeof(struct InstanceData),ENTRY(BetterString_Dispatcher));
-    if(!classes[CC_MUIC_BETTERSTRING]) printf("%s\n",GCS(catalog,137,"Please download and install the BetterString.mcc MUI Class"));
+    if(!classes[CC_MUIC_BETTERSTRING]) printf("%s\n",GCS(137,"Please download and install the BetterString.mcc MUI Class"));
 
     classes[CC_MUIC_NLIST] = MUI_CreateCustomClass(NULL, (ClassID)MUIC_NList,NULL,sizeof(struct MyData),ENTRY(NList_Dispatcher));
-    if(!classes[CC_MUIC_NLIST]) printf("%s\n",GCS(catalog,138,"Please download and install the NList.mcc MUI Class"));
+    if(!classes[CC_MUIC_NLIST]) printf("%s\n",GCS(138,"Please download and install the NList.mcc MUI Class"));
 
     classes[CC_MUIC_WINDOW] = MUI_CreateCustomClass(NULL, (ClassID)MUIC_Window,NULL,sizeof(struct MyData),ENTRY(Window_Dispatcher));
     if(!classes[CC_MUIC_WINDOW]) printf("Could not create custom class for windows\n");

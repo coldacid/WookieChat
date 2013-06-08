@@ -99,8 +99,8 @@ void dcc_chat_connect()
     {
         timestamp_2_string();
 
-        sprintf(buffer3, "%s%sDCC%s %s", timestamp, GCS(catalog, 217, "["), GCS(catalog, 218, "]"),
-                GCS(catalog, 188, "Unable to establish DCC CHAT Connection"));
+        sprintf(buffer3, "%s%sDCC%s %s", timestamp, GCS(217, "["), GCS(218, "]"),
+                GCS(188, "Unable to establish DCC CHAT Connection"));
         status_conductor->conductor = dcc_chat_conductor->conductor;
         add_text_to_conductor_list(buffer3, 9, ACTIVITY_CHAT);
 
@@ -113,8 +113,8 @@ void dcc_chat_connect()
 
         dcc_chat_conductor->connected = 1;
 
-        sprintf(buffer3, "%s%sDCC%s %s", timestamp, GCS(catalog, 217, "["), GCS(catalog, 218, "]"),
-                GCS(catalog, 189, "DCC CHAT Connection Established"));
+        sprintf(buffer3, "%s%sDCC%s %s", timestamp, GCS(217, "["), GCS(218, "]"),
+                GCS(189, "DCC CHAT Connection Established"));
         status_conductor->conductor = dcc_chat_conductor->conductor;
         add_text_to_conductor_list(buffer3, 9, ACTIVITY_CHAT);
 
@@ -220,8 +220,8 @@ void dcc_time_to_send(void)
 {
     ULONG secs, mins, hrs, days;
     //add_text_to_current_list(buffer3, 9, ACTIVITY_CHAT);
-    sprintf(buffer3, "%s%sDCC%s %s %s [%lu bytes] >> %s. ", timestamp, GCS(catalog, 217, "["),
-            GCS(catalog, 218, "]"), GCS(catalog, 175, "Finished sending"),
+    sprintf(buffer3, "%s%sDCC%s %s %s [%lu bytes] >> %s. ", timestamp, GCS(217, "["),
+            GCS(218, "]"), GCS(175, "Finished sending"),
             dcc_send_conductor->filename, dcc_send_conductor->filesize, dcc_send_conductor->nick);
 
     dcc_time();
@@ -237,7 +237,7 @@ void dcc_time_to_send(void)
 
     //strcat(buffer3," Sent in ");
 
-    strcat(buffer3, (char *)GCS(catalog, 190, "Transfer time:"));
+    strcat(buffer3, (char *)GCS(190, "Transfer time:"));
     strcat(buffer3, " ");
 
     if (hrs > 0)
@@ -250,7 +250,7 @@ void dcc_time_to_send(void)
     strcat(buffer3, buffer2);
     //strcat(buffer3,", at an average speed of ");
     strcat(buffer3, ". ");
-    strcat(buffer3, (char *)GCS(catalog, 178, "Average speed: "));
+    strcat(buffer3, (char *)GCS(178, "Average speed: "));
     strcat(buffer3, " ");
 
     strcat(buffer3, dcc_send_conductor->entry->cps);
@@ -268,10 +268,10 @@ void dcc_time_to_recv(void)
      else
      sprintf(buffer3,"%s%sDCC%s %s %s%s [%lu bytes] %s %s. ",timestamp,GCS(catalog,217,"["),GCS(catalog,218,"]"),GCS(catalog,176,"Finished recieving"),dcc_conductor->filepath,dcc_conductor->filename,dcc_conductor->filesize,GCS(catalog,210,"From"),dcc_conductor->nick);*/
 
-    sprintf(buffer3, "%s%sDCC%s %s %s%s [%lu bytes] %s %s. ", timestamp, GCS(catalog, 217, "["),
-            GCS(catalog, 218, "]"), GCS(catalog, 176, "Finished recieving"),
+    sprintf(buffer3, "%s%sDCC%s %s %s%s [%lu bytes] %s %s. ", timestamp, GCS(217, "["),
+            GCS(218, "]"), GCS(176, "Finished recieving"),
             dcc_conductor->filepath, dcc_conductor->filename, dcc_conductor->filesize,
-            GCS(catalog, 210, "From"), dcc_conductor->nick);
+            GCS(210, "From"), dcc_conductor->nick);
 
     //sprintf(buffer3,"%s%sDCC%s %s %s%s [%lu bytes] %s %s. ",timestamp,GCS(catalog,217,"["),GCS(catalog,218,"]"),GCS(catalog,176,"Finished recieving"),dcc_conductor->filepath,dcc_conductor->filename,dcc_conductor->filesize,GCS(catalog,210,"From"),dcc_conductor->nick);
 
@@ -286,7 +286,7 @@ void dcc_time_to_recv(void)
     mins = mins % 60;
     hrs = hrs % 24;
 
-    strcat(buffer3, (char *)GCS(catalog, 190, "Transfer time:"));
+    strcat(buffer3, (char *)GCS(190, "Transfer time:"));
     strcat(buffer3, " ");
 
     if (hrs > 0)
@@ -298,7 +298,7 @@ void dcc_time_to_recv(void)
 
     strcat(buffer3, buffer2);
     strcat(buffer3, ". ");
-    strcat(buffer3, (char *)GCS(catalog, 178, "Average speed: "));
+    strcat(buffer3, (char *)GCS(178, "Average speed: "));
     strcat(buffer3, " ");
     strcat(buffer3, dcc_conductor->entry->cps);
     strcat(buffer3, "kB/s");
@@ -344,7 +344,7 @@ void accept_dcc(char *b)
 
                         if (dcc_conductor->entry)
                         {
-                            strcpy(dcc_conductor->entry->status, (char *)GCS(catalog, 201, "Connecting"));
+                            strcpy(dcc_conductor->entry->status, (char *)GCS(201, "Connecting"));
                             strcpy(dcc_conductor->entry->percentage, "0%");
                         }
                         //if(DEBUG) printf("dcc 5\n");
@@ -384,11 +384,11 @@ void accept_dcc(char *b)
                                         //printf("file already exists\n");
                                         char c[100], d[100], e[1100];
                                         sprintf(e, "\"%s\" %s", dcc_conductor->full_filename_with_path,
-                                                GCS(catalog, 202, "already exists!"));
+                                                GCS(202, "already exists!"));
                                         sprintf(c, "%s: %lu bytes",
-                                                GCS(catalog, 203, "Size of existing file"), a_fib->fib_Size);
+                                                GCS(203, "Size of existing file"), a_fib->fib_Size);
                                         sprintf(d, "%s: %lu bytes",
-                                                GCS(catalog, 204, "Size of file being offered"),
+                                                GCS(204, "Size of file being offered"),
                                                 dcc_conductor->filesize);
                                         setmacro((Object*) WookieChat->TX_oldname, MUIA_Text_Contents, e);
                                         setmacro((Object*) WookieChat->TX_oldsize, MUIA_Text_Contents, c);
@@ -498,7 +498,7 @@ void dcc_send_data(int a)
             if (dcc_send_conductor->entry)
             {
 
-                strcpy(dcc_send_conductor->entry->status, (char *)GCS(catalog, 179, "Completed")); //"Completed");
+                strcpy(dcc_send_conductor->entry->status, (char *)GCS(179, "Completed")); //"Completed");
                 strcpy(dcc_send_conductor->entry->timeleft, "N/A");
                 sprintf(dcc_send_conductor->entry->bytes_transferred, "%ldkB", dcc_send_conductor->total_recv / 1024);
                 float pct = (float) dcc_send_conductor->total_recv / (float) dcc_send_conductor->filesize;
@@ -510,9 +510,9 @@ void dcc_send_data(int a)
 
             timestamp_2_string();
 
-            sprintf(buffer3, "%s%sDCC%s SEND: %s %s %s %s", timestamp, GCS(catalog, 217, "["),
-                    GCS(catalog, 218, "]"), dcc_send_conductor->filename, GCS(catalog, 205, "to"),
-                    dcc_send_conductor->nick, GCS(catalog, 179, "Completed"));
+            sprintf(buffer3, "%s%sDCC%s SEND: %s %s %s %s", timestamp, GCS(217, "["),
+                    GCS(218, "]"), dcc_send_conductor->filename, GCS(205, "to"),
+                    dcc_send_conductor->nick, GCS(179, "Completed"));
             dcc_time_to_send();
 
             cleanup_dcc_send(FLAG_AS_COMPLETED);
@@ -535,7 +535,7 @@ void dcc_send_data(int a)
             if (dcc_send_conductor->entry)
             {
 
-                strcpy(dcc_send_conductor->entry->status, (char *)GCS(catalog, 180, "Incomplete"));
+                strcpy(dcc_send_conductor->entry->status, (char *)GCS(180, "Incomplete"));
                 strcpy(dcc_send_conductor->entry->timeleft, "N/A");
 
                 float pct = 0;
@@ -553,9 +553,9 @@ void dcc_send_data(int a)
             DoMethod((Object*) WookieChat->LV_send_dcc, MUIM_NList_ReplaceSingle, dcc_send_conductor->entry, a, NOWRAP,
                     ALIGN_LEFT);
 
-            sprintf(buffer3, "%s%sDCC%s SEND: %s %s %s %s", timestamp, GCS(catalog, 217, "["),
-                    GCS(catalog, 218, "]"), dcc_send_conductor->filename, GCS(catalog, 205, "to"),
-                    dcc_send_conductor->nick, GCS(catalog, 180, "Incomplete"));
+            sprintf(buffer3, "%s%sDCC%s SEND: %s %s %s %s", timestamp, GCS(217, "["),
+                    GCS(218, "]"), dcc_send_conductor->filename, GCS(205, "to"),
+                    dcc_send_conductor->nick, GCS(180, "Incomplete"));
 
             cleanup_dcc_send(FLAG_AS_COMPLETED);
 
@@ -610,8 +610,8 @@ int reoffer_dcc(char *networkname, char *string1, char *string2, char *string3, 
     a_fib = (struct FileInfoBlock*) AllocDosObject(DOS_FIB, NULL);
     if (!examined_file)
     {
-        sprintf(buffer3, "%s%sDCC%s SEND: %s", timestamp, GCS(catalog, 217, "["),
-                GCS(catalog, 218, "]"), GCS(catalog, 191, "Error, file doesnt exist"));
+        sprintf(buffer3, "%s%sDCC%s SEND: %s", timestamp, GCS(217, "["),
+                GCS(218, "]"), GCS(191, "Error, file doesnt exist"));
         add_text_to_current_list(buffer3, 9, ACTIVITY_CHAT);
 
         return 0;
@@ -635,7 +635,7 @@ int reoffer_dcc(char *networkname, char *string1, char *string2, char *string3, 
 #endif
 
         strcpy(dcc_send_conductor->entry->percentage, "0%");
-        strcpy(dcc_send_conductor->entry->status, (char *)GCS(catalog, 206, "Waiting"));
+        strcpy(dcc_send_conductor->entry->status, (char *)GCS(206, "Waiting"));
 
         //sprintf(sendstuff,"PRIVMSG %s :\001DCC SEND %s %lu %d %u 10870\001\r\n",dcc_send_conductor->entry->nick, dcc_send_conductor->entry->filename, addr, my_settings.current_port, dcc_send_conductor->filesize);
         sprintf(sendstuff, "PRIVMSG %s :\001DCC SEND %s %lu %d %lu\001\r\n", dcc_send_conductor->entry->nick,
@@ -702,7 +702,7 @@ int offer_dcc(char *networkname, char *string1, char *string2, char *string3, in
             else
             {
                 sprintf(buffer3, "%s%sDCC%s Unable to use specified DCC address", timestamp,
-                        GCS(catalog, 217, "["), GCS(catalog, 218, "]"));
+                        GCS(217, "["), GCS(218, "]"));
                 add_text_to_current_list(buffer3, 9, ACTIVITY_CHAT);
                 return 0;
             }
@@ -741,8 +741,8 @@ int offer_dcc(char *networkname, char *string1, char *string2, char *string3, in
         {
             timestamp_2_string();
 
-            sprintf(buffer3, "%s%sDCC%s SEND: %s", timestamp, GCS(catalog, 217, "["),
-                    GCS(catalog, 218, "]"), GCS(catalog, 191, "Error, file doesnt exist"));
+            sprintf(buffer3, "%s%sDCC%s SEND: %s", timestamp, GCS(217, "["),
+                    GCS(218, "]"), GCS(191, "Error, file doesnt exist"));
             add_text_to_current_list(buffer3, 9, ACTIVITY_CHAT);
 
             return 0;
@@ -849,7 +849,7 @@ void create_send_dcc(char *nick, char *string3, int filesize, int portnumber)
     else
         strcpy(dcc_send_conductor->entry->nick, "Unknown?");
     strcpy(dcc_send_conductor->entry->percentage, "0%");
-    strcpy(dcc_send_conductor->entry->status, (char *)GCS(catalog, 206, "Waiting"));
+    strcpy(dcc_send_conductor->entry->status, (char *)GCS(206, "Waiting"));
 
     char *file_name = malloc(sizeof(char) * 500);
 
@@ -938,10 +938,10 @@ void create_send_dcc(char *nick, char *string3, int filesize, int portnumber)
 
     timestamp_2_string();
 
-    sprintf(buffer3, "%s%sDCC%s SEND: %s %s %s %s %s port %i", timestamp, GCS(catalog, 217, "["),
-            GCS(catalog, 218, "]"), GCS(catalog, 192, "Offering file"),
-            dcc_send_conductor->filepath, GCS(catalog, 194, "to"), dcc_send_conductor->nick,
-            GCS(catalog, 193, "on"), portnumber);
+    sprintf(buffer3, "%s%sDCC%s SEND: %s %s %s %s %s port %i", timestamp, GCS(217, "["),
+            GCS(218, "]"), GCS(192, "Offering file"),
+            dcc_send_conductor->filepath, GCS(194, "to"), dcc_send_conductor->nick,
+            GCS(193, "on"), portnumber);
     add_text_to_current_list(buffer3, 9, ACTIVITY_CHAT);
 
     if (QUIET_DCC == FALSE)
@@ -1180,9 +1180,9 @@ void initiate_outgoing_dcc_chat(char *nick)
     sprintf(sendstuff, "PRIVMSG %s :\001DCC CHAT CHAT %lu %d\001\r\n", nick, addr, my_settings.current_port);
     send_text(sendstuff);
 
-    sprintf(buffer3, "%s%sDCC%s %s %s %s %s port %i", timestamp, GCS(catalog, 217, "["),
-            GCS(catalog, 218, "]"), GCS(catalog, 195, "Sending DCC CHAT request"),
-            GCS(catalog, 194, "to"), dcc_chat_conductor->nick, GCS(catalog, 193, "on"),
+    sprintf(buffer3, "%s%sDCC%s %s %s %s %s port %i", timestamp, GCS(217, "["),
+            GCS(218, "]"), GCS(195, "Sending DCC CHAT request"),
+            GCS(194, "to"), dcc_chat_conductor->nick, GCS(193, "on"),
             my_settings.current_port);
     status_conductor->conductor = dcc_chat_conductor->conductor;
     add_text_to_conductor_list(buffer3, 9, ACTIVITY_CHAT);
@@ -1251,7 +1251,7 @@ void create_recv_dcc(char *nick, char *filename, char *address, unsigned short p
     dcc_conductor->removed = 0;
 
     strcpy(dcc_conductor->entry->port, dcc_conductor->port);
-    strcpy(dcc_conductor->entry->status, (char *)GCS(catalog, 206, "Waiting"));
+    strcpy(dcc_conductor->entry->status, (char *)GCS(206, "Waiting"));
     if (nick)
         strcpy(dcc_conductor->entry->nick, nick);
     if (nick)

@@ -85,7 +85,7 @@ void SNames(char *selchannel)
         DoMethod((Object*) status_conductor->conductor->LV_nicklist, MUIM_NList_Clear);
         status_conductor->conductor->nicks = 0;
 
-        sprintf(buffer3, "%s** %s %s", timestamp, GCS(catalog, 207, "Updating Names list for channel"),
+        sprintf(buffer3, "%s** %s %s", timestamp, GCS(207, "Updating Names list for channel"),
                 selchannel);
         add_text_to_conductor_list((char*) buffer3, 9, ACTIVITY);
     }
@@ -176,9 +176,9 @@ void SPing(char *string1)
     send_text(sendstuff);
 
     timestamp_2_string();
-    sprintf(buffer3, "%s%sCTCP%s %s PING %s %s", timestamp, GCS(catalog, 217, "["),
-            GCS(catalog, 218, "]"), GCS(catalog, 213, "Sending CTCP"),
-            GCS(catalog, 205, "to"), string1);
+    sprintf(buffer3, "%s%sCTCP%s %s PING %s %s", timestamp, GCS(217, "["),
+            GCS(218, "]"), GCS(213, "Sending CTCP"),
+            GCS(205, "to"), string1);
 
     add_text_to_current_list((char*) buffer3, 6, ACTIVITY);
 

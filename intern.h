@@ -967,20 +967,9 @@ enum
 
 #endif
 
-#define GCS(a, b, c) GetCatalogStr(a, b, (loc_in)c)
+
 
 /* globals.c */
-extern struct Catalog *catalog;
-
-
-
-
-
-
-
-
-
-
 extern struct ObjApp *WookieChat;
 extern char wookie_folder[400]; //the pathname wookiechat is located in
 extern struct status_window *work_status;
@@ -1331,3 +1320,9 @@ int do_waitselect_code();
 
 /* closeserverselectwin.c */
 void close_server_select_window();
+
+/* locale.c */
+CONST_STRPTR GCS(ULONG stringNum, char * defaultString);
+void locale_opencatalog(char * language);
+void locale_openbuiltincatalog();
+void locale_closecatalog();

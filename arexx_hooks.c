@@ -83,7 +83,7 @@ int arexx_add_scripts_to_menu()
     if(MN1_AREXX) DoMethod((Object*)WookieChat->MN_, OM_REMMEMBER, (Object*)MN1_AREXX);
 
     MN1_AREXX = (Object*)MenuObject,
-        MUIA_Menu_Title, GCS(catalog,331,"ARexx"),
+        MUIA_Menu_Title, GCS(331,"ARexx"),
     End;
 
     if(!my_lock)
@@ -96,7 +96,7 @@ int arexx_add_scripts_to_menu()
 
 
 
-    strcpy(AREXX_Menu_Items[count].MenuItem_String,(char *)GCS(catalog,330,"<Rescan scripts directory>"));
+    strcpy(AREXX_Menu_Items[count].MenuItem_String,(char *)GCS(330,"<Rescan scripts directory>"));
     strcpy(AREXX_Menu_Items[count].MenuItem_FullFilename,"");
     AREXX_Menu_Items[count].return_id=AREXX_MENU_VALUES+count;
 

@@ -194,9 +194,9 @@ void process_outgoing(char *string123, int usestringgadget)
             SWhoIs(string1);
         else
         {
-            sprintf(buffer3, "%s%s%s%s /whois %s", timestamp, GCS(catalog, 217, "["),
-                    GCS(catalog, 149, "Syntax"), GCS(catalog, 218, "]"),
-                    GCS(catalog, 242, "<nick>"));
+            sprintf(buffer3, "%s%s%s%s /whois %s", timestamp, GCS(217, "["),
+                    GCS(149, "Syntax"), GCS(218, "]"),
+                    GCS(242, "<nick>"));
 
             add_text_to_conductor_list(buffer3, 9, ACTIVITY);
         }
@@ -215,26 +215,7 @@ void process_outgoing(char *string123, int usestringgadget)
         string1 = strtok(NULL, " ");
 
         if (string1)
-        {
-
-            CloseCatalog(catalog);
-
-            printf("loading catalog for language %s\n", string1);
-
-            catalog = OpenCatalog(NULL, (loc_in)"WookieChat.catalog", OC_Language, string1, TAG_DONE);
-
-            if (!catalog)
-            {
-                printf("unable to use default language\n");
-
-                catalog = OpenCatalog(NULL, (loc_in)"WookieChat.catalog", OC_Language, "english", TAG_DONE);
-
-                if (!catalog)
-                    printf("unable to load english catalog, using built in strings\n");
-
-            }
-        }
-
+            locale_opencatalog(string1);
     }
     else if (!stricmp(pch, "/invite"))
     {
@@ -262,9 +243,9 @@ void process_outgoing(char *string123, int usestringgadget)
         }
         else
         {
-            sprintf(buffer3, "%s%s%s%s /invite %s %s", timestamp, GCS(catalog, 217, "["),
-                    GCS(catalog, 149, "Syntax"), GCS(catalog, 218, "]"),
-                    GCS(catalog, 242, "<nick>"), GCS(catalog, 241, "<channel_name>"));
+            sprintf(buffer3, "%s%s%s%s /invite %s %s", timestamp, GCS(217, "["),
+                    GCS(149, "Syntax"), GCS(218, "]"),
+                    GCS(242, "<nick>"), GCS(241, "<channel_name>"));
             add_text_to_conductor_list(buffer3, 9, ACTIVITY);
         }
 
@@ -307,14 +288,14 @@ void process_outgoing(char *string123, int usestringgadget)
         }
         else
         {
-            sprintf(buffer3, "%s%s%s%s /dcc send %s %s", timestamp, GCS(catalog, 217, "["),
-                    GCS(catalog, 149, "Syntax"), GCS(catalog, 218, "]"),
-                    GCS(catalog, 242, "<nick>"), GCS(catalog, 255, "<filename>"));
+            sprintf(buffer3, "%s%s%s%s /dcc send %s %s", timestamp, GCS(217, "["),
+                    GCS(149, "Syntax"), GCS(218, "]"),
+                    GCS(242, "<nick>"), GCS(255, "<filename>"));
             add_text_to_conductor_list(buffer3, 9, ACTIVITY);
 
-            sprintf(buffer3, "%s%s%s%s /dcc chat %s", timestamp, GCS(catalog, 217, "["),
-                    GCS(catalog, 149, "Syntax"), GCS(catalog, 218, "]"),
-                    GCS(catalog, 242, "<nick>"));
+            sprintf(buffer3, "%s%s%s%s /dcc chat %s", timestamp, GCS(217, "["),
+                    GCS(149, "Syntax"), GCS(218, "]"),
+                    GCS(242, "<nick>"));
             add_text_to_conductor_list(buffer3, 9, ACTIVITY);
 
         }
@@ -326,16 +307,16 @@ void process_outgoing(char *string123, int usestringgadget)
         if (my_settings.which_clipboard_style == NORMAL)
         {
             my_settings.which_clipboard_style = COLUMNS;
-            sprintf(buffer3, "%s%s%s%s Changing style to: Column marking", timestamp, GCS(catalog, 217, "["),
-                    GCS(catalog, 800, "Clipboard"), GCS(catalog, 218, "]"));
+            sprintf(buffer3, "%s%s%s%s Changing style to: Column marking", timestamp, GCS(217, "["),
+                    GCS(800, "Clipboard"), GCS(218, "]"));
             add_text_to_current_list(buffer3, 9, ACTIVITY);
             setmacro((Object*) MN_Clipboard, MUIA_Menuitem_Checked, TRUE);
         }
         else
         {
             my_settings.which_clipboard_style = NORMAL;
-            sprintf(buffer3, "%s%s%s%s Changing style to: Normal", timestamp, GCS(catalog, 217, "["),
-                    GCS(catalog, 800, "Clipboard"), GCS(catalog, 218, "]"));
+            sprintf(buffer3, "%s%s%s%s Changing style to: Normal", timestamp, GCS(217, "["),
+                    GCS(800, "Clipboard"), GCS(218, "]"));
             add_text_to_current_list(buffer3, 9, ACTIVITY);
             setmacro((Object*) MN_Clipboard, MUIA_Menuitem_Checked, FALSE);
 
@@ -362,11 +343,11 @@ void process_outgoing(char *string123, int usestringgadget)
             send_text((char*) "\001\r\n");
 
             if (string2)
-                sprintf(buffer3, "%s%sSound%s %s %s to %s", timestamp, GCS(catalog, 217, "["),
-                        GCS(catalog, 218, "]"), GCS(catalog, 212, "playing"), string1, string2);
+                sprintf(buffer3, "%s%sSound%s %s %s to %s", timestamp, GCS(217, "["),
+                        GCS(218, "]"), GCS(212, "playing"), string1, string2);
             else
-                sprintf(buffer3, "%s%sSound%s %s %s", timestamp, GCS(catalog, 217, "["),
-                        GCS(catalog, 218, "]"), GCS(catalog, 212, "playing"), string1);
+                sprintf(buffer3, "%s%sSound%s %s %s", timestamp, GCS(217, "["),
+                        GCS(218, "]"), GCS(212, "playing"), string1);
 
             add_text_to_conductor_list(buffer3, 6, ACTIVITY);
 
@@ -375,9 +356,9 @@ void process_outgoing(char *string123, int usestringgadget)
         }
         else
         {
-            sprintf(buffer3, "%s%s%s%s /sound %s %s", timestamp, GCS(catalog, 217, "["),
-                    GCS(catalog, 149, "Syntax"), GCS(catalog, 218, "]"),
-                    GCS(catalog, 244, "<sound_sample_name>"), GCS(catalog, 242, "<nick>"));
+            sprintf(buffer3, "%s%s%s%s /sound %s %s", timestamp, GCS(217, "["),
+                    GCS(149, "Syntax"), GCS(218, "]"),
+                    GCS(244, "<sound_sample_name>"), GCS(242, "<nick>"));
 
             add_text_to_conductor_list(buffer3, 9, ACTIVITY);
         }
@@ -403,9 +384,9 @@ void process_outgoing(char *string123, int usestringgadget)
                 send_text(string2);
                 send_text((char*) "\001\r\n");
 
-                sprintf(buffer3, "%s%sCTCP%s %s %s %s %s", timestamp, GCS(catalog, 217, "["),
-                        GCS(catalog, 218, "]"), GCS(catalog, 213, "Sending CTCP"), string2,
-                        GCS(catalog, 205, "to"), string1);
+                sprintf(buffer3, "%s%sCTCP%s %s %s %s %s", timestamp, GCS(217, "["),
+                        GCS(218, "]"), GCS(213, "Sending CTCP"), string2,
+                        GCS(205, "to"), string1);
                 add_text_to_conductor_list(buffer3, 6, ACTIVITY);
 
             }
@@ -413,9 +394,9 @@ void process_outgoing(char *string123, int usestringgadget)
         }
         else
         {
-            sprintf(buffer3, "%s%s%s%s /ctcp %s %s", timestamp, GCS(catalog, 217, "["),
-                    GCS(catalog, 149, "Syntax"), GCS(catalog, 218, "]"),
-                    GCS(catalog, 242, "<nick>"), GCS(catalog, 243, "<command>"));
+            sprintf(buffer3, "%s%s%s%s /ctcp %s %s", timestamp, GCS(217, "["),
+                    GCS(149, "Syntax"), GCS(218, "]"),
+                    GCS(242, "<nick>"), GCS(243, "<command>"));
 
             add_text_to_conductor_list(buffer3, 9, ACTIVITY);
         }
@@ -464,9 +445,9 @@ void process_outgoing(char *string123, int usestringgadget)
         }
         else
         {
-            sprintf(buffer3, "%s%s%s%s /op %s", timestamp, GCS(catalog, 217, "["),
-                    GCS(catalog, 149, "Syntax"), GCS(catalog, 218, "]"),
-                    GCS(catalog, 242, "<nick>"));
+            sprintf(buffer3, "%s%s%s%s /op %s", timestamp, GCS(217, "["),
+                    GCS(149, "Syntax"), GCS(218, "]"),
+                    GCS(242, "<nick>"));
             add_text_to_conductor_list(buffer3, 9, ACTIVITY);
         }
     }
@@ -482,9 +463,9 @@ void process_outgoing(char *string123, int usestringgadget)
         }
         else
         {
-            sprintf(buffer3, "%s%s%s%s /deop %s", timestamp, GCS(catalog, 217, "["),
-                    GCS(catalog, 149, "Syntax"), GCS(catalog, 218, "]"),
-                    GCS(catalog, 242, "<nick>"));
+            sprintf(buffer3, "%s%s%s%s /deop %s", timestamp, GCS(217, "["),
+                    GCS(149, "Syntax"), GCS(218, "]"),
+                    GCS(242, "<nick>"));
             add_text_to_conductor_list(buffer3, 9, ACTIVITY);
         }
     }
@@ -501,9 +482,9 @@ void process_outgoing(char *string123, int usestringgadget)
         }
         else
         {
-            sprintf(buffer3, "%s%s%s%s /ban %s", timestamp, GCS(catalog, 217, "["),
-                    GCS(catalog, 149, "Syntax"), GCS(catalog, 218, "]"),
-                    GCS(catalog, 245, "<ban_mask>"));
+            sprintf(buffer3, "%s%s%s%s /ban %s", timestamp, GCS(217, "["),
+                    GCS(149, "Syntax"), GCS(218, "]"),
+                    GCS(245, "<ban_mask>"));
             add_text_to_conductor_list(buffer3, 9, ACTIVITY);
         }
     }
@@ -520,9 +501,9 @@ void process_outgoing(char *string123, int usestringgadget)
         }
         else
         {
-            sprintf(buffer3, "%s%s%s%s /unban %s", timestamp, GCS(catalog, 217, "["),
-                    GCS(catalog, 149, "Syntax"), GCS(catalog, 218, "]"),
-                    GCS(catalog, 245, "<ban_mask>"));
+            sprintf(buffer3, "%s%s%s%s /unban %s", timestamp, GCS(217, "["),
+                    GCS(149, "Syntax"), GCS(218, "]"),
+                    GCS(245, "<ban_mask>"));
 
             add_text_to_conductor_list(buffer3, 9, ACTIVITY);
         }
@@ -545,9 +526,9 @@ void process_outgoing(char *string123, int usestringgadget)
         }
         else
         {
-            sprintf(buffer3, "%s%s%s%s /kick %s %s", timestamp, GCS(catalog, 217, "["),
-                    GCS(catalog, 149, "Syntax"), GCS(catalog, 218, "]"),
-                    GCS(catalog, 242, "<nick>"), GCS(catalog, 246, "<message>"));
+            sprintf(buffer3, "%s%s%s%s /kick %s %s", timestamp, GCS(217, "["),
+                    GCS(149, "Syntax"), GCS(218, "]"),
+                    GCS(242, "<nick>"), GCS(246, "<message>"));
 
             add_text_to_conductor_list(buffer3, 9, ACTIVITY);
         }
@@ -589,13 +570,13 @@ void process_outgoing(char *string123, int usestringgadget)
 
         if (recv_thing > 0)
         {
-            sprintf(buffer3, "%s%s%s%s recv() text: \"%s\"", timestamp, GCS(catalog, 217, "["),
-                    GCS(catalog, 149, "Syntax"), GCS(catalog, 218, "]"), status_conductor->str);
+            sprintf(buffer3, "%s%s%s%s recv() text: \"%s\"", timestamp, GCS(217, "["),
+                    GCS(149, "Syntax"), GCS(218, "]"), status_conductor->str);
         }
         else
         {
-            sprintf(buffer3, "%s%s%s%s No text to recv(): \"%s\"", timestamp, GCS(catalog, 217, "["),
-                    GCS(catalog, 149, "Syntax"), GCS(catalog, 218, "]"), status_conductor->str);
+            sprintf(buffer3, "%s%s%s%s No text to recv(): \"%s\"", timestamp, GCS(217, "["),
+                    GCS(149, "Syntax"), GCS(218, "]"), status_conductor->str);
         }
 
         add_text_to_conductor_list(buffer3, 9, ACTIVITY);
@@ -637,9 +618,9 @@ void process_outgoing(char *string123, int usestringgadget)
             SPing(string1);
         else
         {
-            sprintf(buffer3, "%s%s%s%s /ping %s", timestamp, GCS(catalog, 217, "["),
-                    GCS(catalog, 149, "Syntax"), GCS(catalog, 218, "]"),
-                    GCS(catalog, 242, "<nick>"));
+            sprintf(buffer3, "%s%s%s%s /ping %s", timestamp, GCS(217, "["),
+                    GCS(149, "Syntax"), GCS(218, "]"),
+                    GCS(242, "<nick>"));
             add_text_to_conductor_list(buffer3, 9, ACTIVITY);
 
         }
@@ -663,9 +644,9 @@ void process_outgoing(char *string123, int usestringgadget)
         else
         {
 
-            sprintf(buffer3, "%s%s%s%s /version %s", timestamp, GCS(catalog, 217, "["),
-                    GCS(catalog, 149, "Syntax"), GCS(catalog, 218, "]"),
-                    GCS(catalog, 242, "<nick>"));
+            sprintf(buffer3, "%s%s%s%s /version %s", timestamp, GCS(217, "["),
+                    GCS(149, "Syntax"), GCS(218, "]"),
+                    GCS(242, "<nick>"));
             add_text_to_conductor_list(buffer3, 9, ACTIVITY);
         }
 
@@ -684,9 +665,9 @@ void process_outgoing(char *string123, int usestringgadget)
         }
         else
         {
-            sprintf(buffer3, "%s%s%s%s /time %s", timestamp, GCS(catalog, 217, "["),
-                    GCS(catalog, 149, "Syntax"), GCS(catalog, 218, "]"),
-                    GCS(catalog, 242, "<nick>"));
+            sprintf(buffer3, "%s%s%s%s /time %s", timestamp, GCS(217, "["),
+                    GCS(149, "Syntax"), GCS(218, "]"),
+                    GCS(242, "<nick>"));
 
             add_text_to_conductor_list(buffer3, 9, ACTIVITY);
 
@@ -709,9 +690,9 @@ void process_outgoing(char *string123, int usestringgadget)
         }
         else
         {
-            sprintf(buffer3, "%s%s%s%s /query %s", timestamp, GCS(catalog, 217, "["),
-                    GCS(catalog, 149, "Syntax"), GCS(catalog, 218, "]"),
-                    GCS(catalog, 242, "<nick>"));
+            sprintf(buffer3, "%s%s%s%s /query %s", timestamp, GCS(217, "["),
+                    GCS(149, "Syntax"), GCS(218, "]"),
+                    GCS(242, "<nick>"));
             add_text_to_conductor_list(buffer3, 9, ACTIVITY);
 
         }
@@ -754,9 +735,9 @@ void process_outgoing(char *string123, int usestringgadget)
             ChangeMyNick(string1);
         else
         {
-            sprintf(buffer3, "%s%s%s%s /nick %s", timestamp, GCS(catalog, 217, "["),
-                    GCS(catalog, 149, "Syntax"), GCS(catalog, 218, "]"),
-                    GCS(catalog, 247, "<new nick>"));
+            sprintf(buffer3, "%s%s%s%s /nick %s", timestamp, GCS(217, "["),
+                    GCS(149, "Syntax"), GCS(218, "]"),
+                    GCS(247, "<new nick>"));
 
             add_text_to_conductor_list(buffer3, 9, ACTIVITY);
         }
@@ -781,9 +762,9 @@ void process_outgoing(char *string123, int usestringgadget)
         //if(string1) SJoin(string1);
         else
         {
-            sprintf(buffer3, "%s%s%s%s /join %s", timestamp, GCS(catalog, 217, "["),
-                    GCS(catalog, 149, "Syntax"), GCS(catalog, 218, "]"),
-                    GCS(catalog, 241, "<channel_name>"));
+            sprintf(buffer3, "%s%s%s%s /join %s", timestamp, GCS(217, "["),
+                    GCS(149, "Syntax"), GCS(218, "]"),
+                    GCS(241, "<channel_name>"));
 
             add_text_to_conductor_list(buffer3, 9, ACTIVITY);
         }
@@ -803,9 +784,9 @@ void process_outgoing(char *string123, int usestringgadget)
         }
         else
         {
-            sprintf(buffer3, "%s%s%s%s /msg %s %s", timestamp, GCS(catalog, 217, "["),
-                    GCS(catalog, 149, "Syntax"), GCS(catalog, 218, "]"),
-                    GCS(catalog, 242, "<nick>"), GCS(catalog, 246, "<message>"));
+            sprintf(buffer3, "%s%s%s%s /msg %s %s", timestamp, GCS(217, "["),
+                    GCS(149, "Syntax"), GCS(218, "]"),
+                    GCS(242, "<nick>"), GCS(246, "<message>"));
             add_text_to_conductor_list(buffer3, 9, ACTIVITY);
         }
     }
@@ -841,9 +822,9 @@ void process_outgoing(char *string123, int usestringgadget)
         }
         else
         {
-            sprintf(buffer3, "%s%s%s%s /notice %s %s", timestamp, GCS(catalog, 217, "["),
-                    GCS(catalog, 149, "Syntax"), GCS(catalog, 218, "]"),
-                    GCS(catalog, 254, "<nick or channel>"), GCS(catalog, 246, "<message>"));
+            sprintf(buffer3, "%s%s%s%s /notice %s %s", timestamp, GCS(217, "["),
+                    GCS(149, "Syntax"), GCS(218, "]"),
+                    GCS(254, "<nick or channel>"), GCS(246, "<message>"));
 
             add_text_to_conductor_list(buffer3, 9, ACTIVITY);
         }
@@ -896,9 +877,9 @@ void process_outgoing(char *string123, int usestringgadget)
             SAction(string1);
         else
         {
-            sprintf(buffer3, "%s%s%s%s /me %s", timestamp, GCS(catalog, 217, "["),
-                    GCS(catalog, 149, "Syntax"), GCS(catalog, 218, "]"),
-                    GCS(catalog, 256, "<action>"));
+            sprintf(buffer3, "%s%s%s%s /me %s", timestamp, GCS(217, "["),
+                    GCS(149, "Syntax"), GCS(218, "]"),
+                    GCS(256, "<action>"));
 
             add_text_to_conductor_list(buffer3, 9, ACTIVITY);
         }
@@ -934,9 +915,9 @@ void process_outgoing(char *string123, int usestringgadget)
         }
         else
         {
-            sprintf(buffer3, "%s%s%s%s /server %s %s", timestamp, GCS(catalog, 217, "["),
-                    GCS(catalog, 149, "Syntax"), GCS(catalog, 218, "]"),
-                    GCS(catalog, 249, "<servername>"), GCS(catalog, 250, "<port>"));
+            sprintf(buffer3, "%s%s%s%s /server %s %s", timestamp, GCS(217, "["),
+                    GCS(149, "Syntax"), GCS(218, "]"),
+                    GCS(249, "<servername>"), GCS(250, "<port>"));
 
             add_text_to_conductor_list(buffer3, 9, ACTIVITY);
         }
@@ -952,17 +933,17 @@ void process_outgoing(char *string123, int usestringgadget)
         status_conductor->filter_swear_words = 1 - status_conductor->filter_swear_words;
         if (status_conductor->filter_swear_words == 1)
         {
-            sprintf(buffer3, "%s%s%s%s %s", timestamp, GCS(catalog, 217, "["),
-                    GCS(catalog, 251, "SwearFilter"), GCS(catalog, 218, "]"),
-                    GCS(catalog, 252, "Enabled"));
+            sprintf(buffer3, "%s%s%s%s %s", timestamp, GCS(217, "["),
+                    GCS(251, "SwearFilter"), GCS(218, "]"),
+                    GCS(252, "Enabled"));
 
             add_text_to_conductor_list(buffer3, 9, ACTIVITY);
         }
         else
         {
-            sprintf(buffer3, "%s%s%s%s %s", timestamp, GCS(catalog, 217, "["),
-                    GCS(catalog, 251, "SwearFilter"), GCS(catalog, 218, "]"),
-                    GCS(catalog, 253, "Disabled"));
+            sprintf(buffer3, "%s%s%s%s %s", timestamp, GCS(217, "["),
+                    GCS(251, "SwearFilter"), GCS(218, "]"),
+                    GCS(253, "Disabled"));
 
             add_text_to_conductor_list(buffer3, 9, ACTIVITY);
         }

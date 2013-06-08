@@ -63,16 +63,15 @@ void change_window_titlebar_text(void)
     {
         if (status_conductor->conductor->nicks == 0)
             sprintf(windowtitlestring, "WookieChat - %s %s %s - %s", status_conductor->nick,
-                    GCS(catalog, 177, "connected to"), status_conductor->servername,
+                    GCS(177, "connected to"), status_conductor->servername,
                     status_conductor->conductor->name);
         else
             sprintf(windowtitlestring, "WookieChat - %s %s %s - %s [%i %s]", status_conductor->nick,
-                    GCS(catalog, 177, "connected to"), status_conductor->servername,
+                    GCS(177, "connected to"), status_conductor->servername,
                     status_conductor->conductor->name, status_conductor->conductor->nicks,
-                    GCS(catalog, 257, "users"));
+                    GCS(257, "users"));
 
         setmacro((Object*) WookieChat->WI_main, MUIA_Window_Title, windowtitlestring);
-        //setmacro((Object*)WookieChat->TX_nickname,MUIA_Text_Contents,status_conductor->nick);
     }
 
 }

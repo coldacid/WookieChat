@@ -245,14 +245,14 @@ static void DisplayDCC_send_TextFunc(void)
     else
     {
 
-        array[0]= (char*)GCS(catalog,150,"Status");
-        array[1]= (char*)GCS(catalog,240,"Reciever");
-        array[2]= (char*)GCS(catalog,215,"Filename");
+        array[0]= (char*)GCS(150,"Status");
+        array[1]= (char*)GCS(240,"Reciever");
+        array[2]= (char*)GCS(215,"Filename");
         array[3]= (char*)"kB/s";
-        array[4]= (char*)GCS(catalog,151,"Sent");
-        array[5]= (char*)GCS(catalog,152,"File size");
+        array[4]= (char*)GCS(151,"Sent");
+        array[5]= (char*)GCS(152,"File size");
         array[6]= (char*)"%";
-        array[7]= (char*)GCS(catalog,153,"Time Left");
+        array[7]= (char*)GCS(153,"Time Left");
 
     }
 
@@ -298,14 +298,14 @@ static void DisplayDCC_recv_TextFunc(void)
     else
     {
 
-        array[0]= (char*)GCS(catalog,150,"Status");
-        array[1]= (char*)GCS(catalog,239,"Sender");
-        array[2]= (char*)GCS(catalog,215,"Filename");
+        array[0]= (char*)GCS(150,"Status");
+        array[1]= (char*)GCS(239,"Sender");
+        array[2]= (char*)GCS(215,"Filename");
         array[3]= (char*)"kB/s";
-        array[4]= (char*)GCS(catalog,154,"Recieved");
-        array[5]= (char*)GCS(catalog,152,"File size");
+        array[4]= (char*)GCS(154,"Recieved");
+        array[5]= (char*)GCS(152,"File size");
         array[6]= (char*)"%";
-        array[7]= (char*)GCS(catalog,153,"Time Left");
+        array[7]= (char*)GCS(153,"Time Left");
 
 
     }

@@ -296,47 +296,30 @@ void LoadAllLibs(void)
 
 #endif
 
-    catalog = OpenCatalog(NULL, (loc_in)"WookieChat.catalog", OC_BuiltInLanguage, NULL, TAG_DONE);
-
-    if (!catalog)
-    {
-
-        if (DEBUG)
-            printf("unable to use default language\n");
-
-        catalog = OpenCatalog(NULL, (loc_in)"WookieChat.catalog", OC_Language, "english", TAG_DONE);
-
-        if (!catalog)
-        {
-            if (DEBUG)
-                printf("unable to load english catalog, using built in strings\n");
-
-        }
-
-    }
+    locale_openbuiltincatalog();
 
     //now that the catalog is open and locale library is open, lets give our context menu titles/items some labels
 
-    MenuData1[0].nm_Label = (nml) GCS(catalog, 219, "Nicklist Options");
-    MenuData1[1].nm_Label = (nml) GCS(catalog, 220, "Whois");
-    MenuData1[2].nm_Label = (nml) GCS(catalog, 221, "Open Query");
-    MenuData1[3].nm_Label = (nml) GCS(catalog, 222, "Open Global Query");
-    MenuData1[4].nm_Label = (nml) GCS(catalog, 223, "CTCP");
-    MenuData1[5].nm_Label = (nml) GCS(catalog, 224, "Ping");
-    MenuData1[6].nm_Label = (nml) GCS(catalog, 225, "Version");
-    MenuData1[7].nm_Label = (nml) GCS(catalog, 226, "Time");
-    MenuData1[8].nm_Label = (nml) GCS(catalog, 227, "Direct Connection");
-    MenuData1[9].nm_Label = (nml) GCS(catalog, 228, "Send file");
-    MenuData1[10].nm_Label = (nml) GCS(catalog, 229, "Chat");
-    MenuData1[11].nm_Label = (nml) GCS(catalog, 230, "Control");
-    MenuData1[12].nm_Label = (nml) GCS(catalog, 231, "Op");
-    MenuData1[13].nm_Label = (nml) GCS(catalog, 232, "DeOp");
-    MenuData1[14].nm_Label = (nml) GCS(catalog, 233, "HalfOp");
-    MenuData1[15].nm_Label = (nml) GCS(catalog, 234, "DeHalfOp");
-    MenuData1[16].nm_Label = (nml) GCS(catalog, 235, "Voice");
-    MenuData1[17].nm_Label = (nml) GCS(catalog, 236, "DeVoice");
-    MenuData1[18].nm_Label = (nml) GCS(catalog, 237, "Kick");
-    MenuData1[19].nm_Label = (nml) GCS(catalog, 238, "Ban");
+    MenuData1[0].nm_Label = (nml) GCS(219, "Nicklist Options");
+    MenuData1[1].nm_Label = (nml) GCS(220, "Whois");
+    MenuData1[2].nm_Label = (nml) GCS(221, "Open Query");
+    MenuData1[3].nm_Label = (nml) GCS(222, "Open Global Query");
+    MenuData1[4].nm_Label = (nml) GCS(223, "CTCP");
+    MenuData1[5].nm_Label = (nml) GCS(224, "Ping");
+    MenuData1[6].nm_Label = (nml) GCS(225, "Version");
+    MenuData1[7].nm_Label = (nml) GCS(226, "Time");
+    MenuData1[8].nm_Label = (nml) GCS(227, "Direct Connection");
+    MenuData1[9].nm_Label = (nml) GCS(228, "Send file");
+    MenuData1[10].nm_Label = (nml) GCS(229, "Chat");
+    MenuData1[11].nm_Label = (nml) GCS(230, "Control");
+    MenuData1[12].nm_Label = (nml) GCS(231, "Op");
+    MenuData1[13].nm_Label = (nml) GCS(232, "DeOp");
+    MenuData1[14].nm_Label = (nml) GCS(233, "HalfOp");
+    MenuData1[15].nm_Label = (nml) GCS(234, "DeHalfOp");
+    MenuData1[16].nm_Label = (nml) GCS(235, "Voice");
+    MenuData1[17].nm_Label = (nml) GCS(236, "DeVoice");
+    MenuData1[18].nm_Label = (nml) GCS(237, "Kick");
+    MenuData1[19].nm_Label = (nml) GCS(238, "Ban");
 
     dobj = (struct DiskObject*) GetDiskObject((_ub_cs) "PROGDIR:WookieChat_OS4");
     if (!dobj)
@@ -729,7 +712,7 @@ void cleanexit(char *str)
 
     //printf("18\n");
 
-    CloseCatalog(catalog);
+    locale_closecatalog();
     if (GEIT)
         printf("22\n");
 
