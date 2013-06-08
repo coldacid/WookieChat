@@ -928,7 +928,7 @@ int do_waitselect_code(void)
                                     DoMethod((Object*) WookieChat->LV_send_dcc, MUIM_NList_ReplaceSingle,
                                             dcc_send_conductor->entry, a, NOWRAP, ALIGN_LEFT);
 
-                                    //sprintf(buffer3,"%s%sDCC%s SEND: %s to %s complete",timestamp,GCS(catalog,217,"["),GCS(catalog,218,"]"),dcc_send_conductor->filename,dcc_send_conductor->nick);
+									//sprintf(buffer3,"%s%sDCC%s SEND: %s to %s complete",timestamp,LGS(catalog,217,"["),LGS(catalog,218,"]"),dcc_send_conductor->filename,dcc_send_conductor->nick);
 
                                     //commented out the bottom part to see if small files can be labelled "complete" instead of stuck on "transffering"
                                     //dcc_time_to_send();

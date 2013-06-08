@@ -14,6 +14,7 @@
 
 #include "intern.h"
 #include "objapp.h"
+#include "locale.h"
 
 int total_smileys, preview_total_smileys;
 
@@ -153,8 +154,8 @@ int free_graphical_smilies(struct query_window *new_tab)
         setmacro(
                 (Object*) new_tab->LV_nicklist,
                 MUIA_ShortHelp,
-                GCS(319,
-                        "Graphical Usermodes Key:\nGreen = Channel Operators or @\nBlue = HalfOps or \%\nYellow = Voiced Users or +"));
+				LGS( MSG_GRAPHICAL_NICKLIST_HELP_BUBBLE )
+				);
     else
         setmacro((Object*) new_tab->LV_nicklist, MUIA_ShortHelp, "The list of users on this channel");
 
@@ -204,9 +205,8 @@ int use_graphical_smilies(struct query_window *new_tab)
     if (my_settings.graphical_nicklist)
         setmacro(
                 (Object*) new_tab->LV_nicklist,
-                MUIA_ShortHelp,
-                GCS(319,
-                        "Graphical Usermodes Key:\nGreen = Channel Operators or @\nBlue = HalfOps or \%\nYellow = Voiced Users or +"));
+				MUIA_ShortHelp, LGS( MSG_GRAPHICAL_NICKLIST_HELP_BUBBLE )
+				);
     else
         setmacro((Object*) new_tab->LV_nicklist, MUIA_ShortHelp, "The list of users on this channel");
 

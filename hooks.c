@@ -753,10 +753,10 @@ static void Display_ignore_TextFunc(void)
     else
     {
 
-        array[0]= (char*)GCS(264,"Ignore Mask");
-        array[1]= (char*)GCS(265,"Text");
-        array[2]= (char*)"CTCP";
-        array[3]= (char*)"DCC";
+		array[0]= (char*) LGS( MSG_IGNORE_MASK );
+		array[1]= (char*) LGS( MSG_IGNORE_TEXT );
+		array[2]= (char*) "CTCP";
+		array[3]= (char*) "DCC";
 
     }
 
@@ -889,8 +889,8 @@ static void Display_alias_TextFunc(void)
     else
     {
 
-        array[0]= (char*)GCS(280,"Alias");
-        array[1]= (char*)GCS(281,"Command");
+		array[0]= (char*) LGS( MSG_COMMAND_ALIAS_WINDOW_COLUMN1_TITLE );
+		array[1]= (char*) LGS( MSG_COMMAND_ALIAS_WINDOW_COLUMN2_TITLE );
 
     }
 
@@ -972,10 +972,10 @@ static void Display_events_TextFunc(void)
     else
     {
 
-        array[0]= (char*)GCS(800,"Event");
-        array[1]= (char*)GCS(800,"Use when");
-        array[2]= (char*)GCS(800,"ARexx script");
-        array[3]= (char*)GCS(800,"Text to send to script");
+		array[0]= (char*) LGS( MSG_EVENT );
+		array[1]= (char*) LGS( MSG_USEWHEN );
+		array[2]= (char*) LGS( MSG_AREXXSCRIPT );
+		array[3]= (char*) LGS( MSG_TEXTTOSENDTOSCRIPT );
 
     }
 
@@ -1032,11 +1032,11 @@ static void Display_servers_TextFunc(void)
     else
     {
 
-        a_entry->Array[0]= (STRPTR)GCS(266,"Servers");
-        a_entry->Array[1]= (STRPTR)GCS(267,"Port");
-        a_entry->Array[2]= (STRPTR)GCS(268,"Auto-Connect");
+		a_entry->Array[0]= (STRPTR) LGS( MSG_SERVERS_WINDOW_SERVERS );
+		a_entry->Array[1]= (STRPTR) LGS( MSG_SERVERS_WINDOW_PORT );
+		a_entry->Array[2]= (STRPTR) LGS( MSG_SERVERS_WINDOW_AUTOCONNECT );
         if(PRO_CHARSETS_ENABLED)
-            a_entry->Array[3]= (STRPTR)GCS(329,"Charset");
+			a_entry->Array[3]= (STRPTR) LGS( MSG_COLUMN_TITLE_CHARSET );
 
 
     }
@@ -1105,9 +1105,9 @@ static void DisplayLI_ban_TextFunc(void)
     }
     else
     {
-        array[0]=(char*)GCS(1,"Ban mask");
-        array[1]=(char*)GCS(2,"Set by");
-        array[2]=(char*)GCS(3,"Date placed");
+		array[0]=(char*) LGS( MSG_BANMASK );
+		array[1]=(char*) LGS( MSG_BANSETBY );
+		array[2]=(char*) LGS( MSG_BANDATEPLACED );
 
     }
 
@@ -1162,8 +1162,8 @@ static void DisplayLV_userlist_buttons_TextFunc(void)
     }
     else
     {
-        array[0]=(char*)GCS(800,"Name");
-        array[1]=(char*)GCS(800,"Command");
+		array[0]=(char*) LGS( MSG_NAME );
+		array[1]=(char*) LGS( MSG_COMMAND );
 
     }
 

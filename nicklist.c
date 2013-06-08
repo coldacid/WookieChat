@@ -15,6 +15,7 @@
 #include "includes.h"
 
 #include "intern.h"
+#include "locale.h"
 
 /* Locals */
 static char windowtitlestring[110];
@@ -62,14 +63,18 @@ void change_window_titlebar_text(void)
     if (status_conductor->conductor == status_current->current_query)
     {
         if (status_conductor->conductor->nicks == 0)
-            sprintf(windowtitlestring, "WookieChat - %s %s %s - %s", status_conductor->nick,
-                    GCS(177, "connected to"), status_conductor->servername,
+			sprintf(windowtitlestring, "WookieChat - %s %s %s - %s",
+					status_conductor->nick,
+					LGS( MSG_CONNECTED_TO ),
+					status_conductor->servername,
                     status_conductor->conductor->name);
         else
-            sprintf(windowtitlestring, "WookieChat - %s %s %s - %s [%i %s]", status_conductor->nick,
-                    GCS(177, "connected to"), status_conductor->servername,
+			sprintf(windowtitlestring, "WookieChat - %s %s %s - %s [%i %s]",
+					status_conductor->nick,
+					LGS( MSG_CONNECTED_TO ),
+					status_conductor->servername,
                     status_conductor->conductor->name, status_conductor->conductor->nicks,
-                    GCS(257, "users"));
+					LGS( MSG_USERS ) );
 
         setmacro((Object*) WookieChat->WI_main, MUIA_Window_Title, windowtitlestring);
     }

@@ -5140,8 +5140,12 @@ void process_incoming()
                         create_recv_dcc(string7, work1, work2, work6, work7);
 
                         sprintf(buffer3, "%s%sDCC%s SEND: %s %s %s port %i", timestamp,
-                                GCS(217, "["), GCS(218, "]"), work1,
-                                GCS(173, "offered from"), string7, work6);
+								LGS( MSG_OPENING_BRACKET ),
+								LGS( MSG_CLOSING_BRACKET ),
+								work1,
+								LGS( MSG_OFFERED_FROM ),
+								string7,
+								work6);
                         colour = 9;
 
                         if ((my_settings.events[DCC_RECV_OFFERED].use_when == 1 && is_window_active())
@@ -5353,8 +5357,11 @@ void process_incoming()
 
             //update_nicks_hostname(string1, string8);
 
-            sprintf(buffer3, "%s%sTopic%s %s %s '%s'", timestamp, GCS(217, "["),
-                    GCS(218, "]"), string7, GCS(174, "changes the topic to"),
+			sprintf(buffer3, "%s%sTopic%s %s %s '%s'", timestamp,
+					LGS( MSG_OPENING_BRACKET ),
+					LGS( MSG_CLOSING_BRACKET ),
+					string7,
+					LGS( MSG_TOPIC_CHANGED ),
                     string10);
 
             status_conductor->conductor = status_conductor->root;
@@ -5395,8 +5402,11 @@ void process_incoming()
 
             if (string2)
             {
-                sprintf(buffer3, "%s%s%s%s %s", timestamp, GCS(217, "["),
-                        GCS(0, "Error"), GCS(218, "]"), string2);
+				sprintf(buffer3, "%s%s%s%s %s", timestamp,
+						LGS( MSG_OPENING_BRACKET ),
+						LGS( MSG_ERROR ),
+						LGS( MSG_CLOSING_BRACKET ),
+						string2);
                 add_text_to_current_list((char*) buffer3, 9, ACTIVITY);
             }
 
@@ -5410,11 +5420,18 @@ void process_incoming()
             if (string1 && string2)
             {
                 if (!stricmp(string1, status_conductor->nick))
-                    sprintf(buffer3, "%s%s%s%s %s", timestamp, GCS(217, "["),
-                            GCS(359, "Server"), GCS(218, "]"), string2);
+					sprintf(buffer3, "%s%s%s%s %s", timestamp,
+							LGS( MSG_OPENING_BRACKET ),
+							LGS( MSG_SERVER ),
+							LGS( MSG_CLOSING_BRACKET ),
+							string2);
                 else
-                    sprintf(buffer3, "%s%s%s%s %s %s", timestamp, GCS(217, "["),
-                            GCS(359, "Server"), GCS(218, "]"), string1, string2);
+					sprintf(buffer3, "%s%s%s%s %s %s", timestamp,
+							LGS( MSG_OPENING_BRACKET ),
+							LGS( MSG_SERVER ),
+							LGS( MSG_CLOSING_BRACKET ),
+							string1,
+							string2);
 
                 //status_conductor->conductor=status_conductor->root;
                 for (status_conductor->conductor = status_conductor->root; status_conductor->conductor;
@@ -5445,8 +5462,10 @@ void process_incoming()
                                 send_text(sendstuff);
 
                                 sprintf(buffer3, "%s%s%s%s Automatically sending: %s", timestamp,
-                                        GCS(217, "["), GCS(359, "Server"),
-                                        GCS(218, "]"), sendstuff);
+										LGS( MSG_OPENING_BRACKET ),
+										LGS( MSG_SERVER ),
+										LGS( MSG_CLOSING_BRACKET ),
+										sendstuff);
 
                                 if (status_conductor == status_current && !status_conductor->root->server_tab) //stricmp(status_conductor->root->displayed_name,"Status"))
                                 {

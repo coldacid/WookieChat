@@ -12,6 +12,7 @@
 
 #include "intern.h"
 #include "objapp.h"
+#include "locale.h"
 
 /* Locals */
 static char string8[900];
@@ -70,9 +71,6 @@ void remove_tab_listview()
     if (!status_current->current_query)
         return;
 
-    if (GEIT)
-        printf("removing 1-5 \n");
-
     if (DoMethod((Object*) status_current->current_query->GR_listviews, MUIM_Group_InitChange))
     {
 
@@ -83,9 +81,6 @@ void remove_tab_listview()
             getmacro((Object*) status_current->current_query->GR_nicklist_and_tabs, MUIA_Group_ChildList, &list);
             APTR object_state = list->mlh_Head;
 
-            if (GEIT)
-                printf("remove 2-5 \n");
-
             while ((member_object = NextObject((Object**) &object_state)))
             {
 
@@ -95,23 +90,13 @@ void remove_tab_listview()
 
             }
 
-            if (GEIT)
-                printf("remove 3-5 \n");
-
             DoMethod((Object*) status_current->current_query->GR_nicklist_and_tabs, MUIM_Group_ExitChange);
 
         }
 
-        if (GEIT)
-            printf("remove 4-5 \n");
-
         DoMethod((Object*) status_current->current_query->GR_listviews, MUIM_Group_ExitChange);
 
     }
-
-    if (GEIT)
-        printf("removing 5-5 \n");
-
 }
 
 BOOL is_it_there;
@@ -356,15 +341,17 @@ int update_TX_nicklist(void)
     if (strcspn(status_conductor->conductor->name, status_conductor->chantypes) == 0)
     {
         sprintf(status_conductor->conductor->nicklist_info, "\033c%d ops, %d %s",
-                status_conductor->conductor->nicks_ops, status_conductor->conductor->nicks,
-                GCS(257, "users"));
+				status_conductor->conductor->nicks_ops,
+				status_conductor->conductor->nicks,
+				LGS( MSG_USERS ));
+
         setmacro((Object*) status_conductor->conductor->TX_nicklist, MUIA_Text_Contents,
                 status_conductor->conductor->nicklist_info);
         //setmacro((Object*)status_conductor->conductor->TX_nicklist,MUIA_ShowMe, TRUE);
     }
     else
     {
-        sprintf(status_conductor->conductor->nicklist_info, " "); //, status_conductor->conductor->nicks_ops,status_conductor->conductor->nicks,GCS(catalog,257,"users"));
+		sprintf(status_conductor->conductor->nicklist_info, " "); //, status_conductor->conductor->nicks_ops,status_conductor->conductor->nicks,LCS( MSG_USERS ));
         setmacro((Object*) status_conductor->conductor->TX_nicklist, MUIA_Text_Contents,
                 status_conductor->conductor->nicklist_info);
         //setmacro((Object*)status_conductor->conductor->TX_nicklist,MUIA_ShowMe, FALSE);

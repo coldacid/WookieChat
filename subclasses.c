@@ -284,7 +284,6 @@ static void DisplayDCC_recv_TextFunc(void)
 
     if(a_entry)
     {
-
         array[0]=a_entry->status;
         array[1]=a_entry->nick;
         array[2]=a_entry->filename;
@@ -293,22 +292,17 @@ static void DisplayDCC_recv_TextFunc(void)
         array[5]=a_entry->filesize;
         array[6]=a_entry->percentage;
         array[7]=a_entry->timeleft;
-
-
     }
     else
     {
-
-        array[0]= (char*)GCS(150,"Status");
-        array[1]= (char*)GCS(239,"Sender");
-        array[2]= (char*)GCS(215,"Filename");
+		array[0]= (char*) LGS( MSG_STATUS );
+		array[1]= (char*) LGS( MSG_SENDER );
+		array[2]= (char*) LGS( MSG_FILENAME );
         array[3]= (char*)"kB/s";
-        array[4]= (char*)GCS(154,"Recieved");
-        array[5]= (char*)GCS(152,"File size");
+		array[4]= (char*) LGS( MSG_RECIEVED );
+		array[5]= (char*) LGS( MSG_FILE_SIZE );
         array[6]= (char*)"%";
-        array[7]= (char*)GCS(153,"Time Left");
-
-
+		array[7]= (char*) LGS( MSG_TIME_LEFT );
     }
 
 }

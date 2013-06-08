@@ -5,27 +5,22 @@
 MSG_ERROR
 Σφάλμα
 ; Error
-;error
 ;
-MSG_BAN_WINDOW_COLUMN_TITLE_1
+MSG_BANMASK
 Μάσκα Ban
 ; Ban mask
-;"Ban mask" column title in the banlist window
 ;
-MSG_BAN_WINDOW_COLUMN_TITLE_2
+MSG_BANSETBY
 Ορισθέν από
 ; Set by
-;"Set by" column title in the banlist window
 ;
-MSG_BAN_WINDOW_COLUMN_TITLE_3
+MSG_BANDATEPLACED
 Ορισθέν ημερ/νία
 ; Date placed
-;"Date placed" column title in the banlist window
 ;
 MSG_MODE_X
 Κλείσιμο της τωρινής καρτέλας.
 ; Close the current tab.
-;MUI help bubble for the X gadget
 ;
 MSG_TOPIC
 Το θέμα του καναλιού.
@@ -1882,3 +1877,26 @@ MSG_INVITE
 Invite
 ; Invite
 ;
+MSG_EVENT
+Event
+; Event
+;
+MSG_USEWHEN
+Use when
+; Use when
+;
+MSG_AREXXSCRIPT
+Arexx Script
+; Arexx Script
+;
+MSG_TEXTTOSENDTOSCRIPT
+Text to send to script
+; Text to send to script
+;
+MSG_NAME
+Name
+; Name
+;
+MSG_COMMAND
+Command
+; Command

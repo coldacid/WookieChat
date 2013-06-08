@@ -5,27 +5,22 @@
 MSG_ERROR
 Errore
 ; Error
-;error
 ;
-MSG_BAN_WINDOW_COLUMN_TITLE_1
+MSG_BANMASK
 Maschera Ban
 ; Ban mask
-;"Ban mask" column title in the banlist window
 ;
-MSG_BAN_WINDOW_COLUMN_TITLE_2
+MSG_BANSETBY
 Eseguito da
 ; Set by
-;"Set by" column title in the banlist window
 ;
-MSG_BAN_WINDOW_COLUMN_TITLE_3
+MSG_BANDATEPLACED
 Data stabilita
 ; Date placed
-;"Date placed" column title in the banlist window
 ;
 MSG_MODE_X
 Chiudi questo Tab.
 ; Close the current tab.
-;MUI help bubble for the X gadget
 ;
 MSG_TOPIC
 Questo è l'oggetto del canale.
@@ -1882,3 +1877,26 @@ MSG_INVITE
 Invite
 ; Invite
 ;
+MSG_EVENT
+Event
+; Event
+;
+MSG_USEWHEN
+Use when
+; Use when
+;
+MSG_AREXXSCRIPT
+Arexx Script
+; Arexx Script
+;
+MSG_TEXTTOSENDTOSCRIPT
+Text to send to script
+; Text to send to script
+;
+MSG_NAME
+Name
+; Name
+;
+MSG_COMMAND
+Command
+; Command

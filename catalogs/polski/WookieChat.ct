@@ -5,27 +5,22 @@
 MSG_ERROR
 B³±d
 ; Error
-;error
 ;
-MSG_BAN_WINDOW_COLUMN_TITLE_1
+MSG_BANMASK
 Maska blokady
 ; Ban mask
-;"Ban mask" column title in the banlist window
 ;
-MSG_BAN_WINDOW_COLUMN_TITLE_2
+MSG_BANSETBY
 Ustawiona przez
 ; Set by
-;"Set by" column title in the banlist window
 ;
-MSG_BAN_WINDOW_COLUMN_TITLE_3
+MSG_BANDATEPLACED
 Data umieszczenia
 ; Date placed
-;"Date placed" column title in the banlist window
 ;
 MSG_MODE_X
 Zamyka aktualn± zak³adkê.
 ; Close the current tab.
-;MUI help bubble for the X gadget
 ;
 MSG_TOPIC
 To jest temat aktualnego kana³u.
@@ -1881,3 +1876,26 @@ MSG_INVITE
 Invite
 ; Invite
 ;
+MSG_EVENT
+Event
+; Event
+;
+MSG_USEWHEN
+Use when
+; Use when
+;
+MSG_AREXXSCRIPT
+Arexx Script
+; Arexx Script
+;
+MSG_TEXTTOSENDTOSCRIPT
+Text to send to script
+; Text to send to script
+;
+MSG_NAME
+Name
+; Name
+;
+MSG_COMMAND
+Command
+; Command

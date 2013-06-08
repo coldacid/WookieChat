@@ -23,9 +23,8 @@ Hiba
 Feil
 B³±d
 Fel
-;error
 ;
-MSG_BAN_WINDOW_COLUMN_TITLE_1 (1//)
+MSG_BANMASK (1//)
 Ban mask
 Bann Maske
 Máscara de Prohibir
@@ -36,9 +35,8 @@ Ban maszk
 Banmaske
 Maska blokady
 Ban mask
-;"Ban mask" column title in the banlist window
 ;
-MSG_BAN_WINDOW_COLUMN_TITLE_2 (2//)
+MSG_BANSETBY (2//)
 Set by
 erstellt von
 Establecido por
@@ -49,9 +47,8 @@ Beállító
 Satt av
 Ustawiona przez
 Satt av
-;"Set by" column title in the banlist window
 ;
-MSG_BAN_WINDOW_COLUMN_TITLE_3 (3//)
+MSG_BANDATEPLACED (3//)
 Date placed
 Datum gesetzt
 Fecha
@@ -62,7 +59,6 @@ Dátum
 Dato satt
 Data umieszczenia
 Ban datum
-;"Date placed" column title in the banlist window
 ;
 MSG_MODE_X (4//)
 Close the current tab.
@@ -75,7 +71,6 @@ Jelenlegi panelt bezár.
 Steng denne taben.
 Zamyka aktualn± zak³adkê.
 Stäng flik.
-;MUI help bubble for the X gadget
 ;
 MSG_TOPIC (5//)
 This is the channels current topic.
@@ -4946,3 +4941,75 @@ Invite
 Invite
 Invite
 ;
+MSG_EVENT
+Event
+Ereignis
+Event
+Event
+Event
+Event
+Event
+Event
+Event
+Event
+;
+MSG_USEWHEN
+Use when
+Benutzen wenn
+Use when
+Use when
+Use when
+Use when
+Use when
+Use when
+Use when
+Use when
+;
+MSG_AREXXSCRIPT
+Arexx Script
+Arexx Skript
+Arexx Script
+Arexx Script
+Arexx Script
+Arexx Script
+Arexx Script
+Arexx Script
+Arexx Script
+Arexx Script
+;
+MSG_TEXTTOSENDTOSCRIPT
+Text to send to script
+Text to send to script
+Text to send to script
+Text to send to script
+Text to send to script
+Text to send to script
+Text to send to script
+Text to send to script
+Text to send to script
+Text to send to script
+;
+MSG_NAME
+Name
+Name
+Name
+Name
+Name
+Name
+Name
+Name
+Name
+Name
+;
+MSG_COMMAND
+Command
+Kommando
+Command
+Command
+Command
+Command
+Command
+Command
+Command
+Command
+

@@ -13,6 +13,7 @@
 #include <mui/NListtree_mcc.h>
 
 #include "intern.h"
+#include "locale.h"
 
 /* Locals */
 static char *string1;
@@ -432,16 +433,24 @@ int connect2server(char *servername, char *port_number, int typedservercommand, 
     {
         //memset(status_conductor->nick,'\0',30);
         //strcpy(status_conductor->nick,nick);
-        sprintf(buffer3, "%s%sConnect%s %s %s (%i)", timestamp, GCS(217, "["),
-                GCS(218, "]"), GCS(200, "Attempting to connect to"), servername,
+		sprintf(buffer3, "%s%sConnect%s %s %s (%i)", timestamp,
+				LGS( MSG_OPENING_BRACKET ),
+				LGS( MSG_CLOSING_BRACKET ),
+				LGS( MSG_ATTEMPTING_TO_CONNECT_TO_SERVER ),
+				servername,
                 status_conductor->portnumber);
         add_text_to_current_list(buffer3, 9, ACTIVITY);
     }
     else
     {
-        sprintf(buffer3, "%s%sConnect%s %s %s (%i) %s%i", timestamp, GCS(217, "["),
-                GCS(218, "]"), GCS(200, "Attempting to connect to"), servername,
-                status_conductor->portnumber, GCS(263, "Retry #"), status_conductor->retry_number);
+		sprintf(buffer3, "%s%sConnect%s %s %s (%i) %s%i", timestamp,
+				LGS( MSG_OPENING_BRACKET ),
+				LGS( MSG_CLOSING_BRACKET ),
+				LGS( MSG_ATTEMPTING_TO_CONNECT_TO_SERVER ),
+				servername,
+				status_conductor->portnumber,
+				LGS( MSG_RETRY ),
+				status_conductor->retry_number);
         add_text_to_conductor_list(buffer3, 9, ACTIVITY);
 
     }

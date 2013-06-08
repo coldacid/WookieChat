@@ -5,27 +5,22 @@
 MSG_ERROR
 Fehler
 ; Error
-;error
 ;
-MSG_BAN_WINDOW_COLUMN_TITLE_1
+MSG_BANMASK
 Bann Maske
 ; Ban mask
-;"Ban mask" column title in the banlist window
 ;
-MSG_BAN_WINDOW_COLUMN_TITLE_2
+MSG_BANSETBY
 erstellt von
 ; Set by
-;"Set by" column title in the banlist window
 ;
-MSG_BAN_WINDOW_COLUMN_TITLE_3
+MSG_BANDATEPLACED
 Datum gesetzt
 ; Date placed
-;"Date placed" column title in the banlist window
 ;
 MSG_MODE_X
 Diesen Tabulator Schliessen.
 ; Close the current tab.
-;MUI help bubble for the X gadget
 ;
 MSG_TOPIC
 Das ist das Grundthema.
@@ -1880,3 +1875,26 @@ MSG_INVITE
 Einladen
 ; Invite
 ;
+MSG_EVENT
+Ereignis
+; Event
+;
+MSG_USEWHEN
+Benutzen wenn
+; Use when
+;
+MSG_AREXXSCRIPT
+Arexx Skript
+; Arexx Script
+;
+MSG_TEXTTOSENDTOSCRIPT
+Text to send to script
+; Text to send to script
+;
+MSG_NAME
+Name
+; Name
+;
+MSG_COMMAND
+Kommando
+; Command

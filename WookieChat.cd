@@ -1,23 +1,18 @@
 ;
 MSG_ERROR (0//)
 Error
-;error
 ;
-MSG_BAN_WINDOW_COLUMN_TITLE_1 (1//)
+MSG_BANMASK (1//)
 Ban mask
-;"Ban mask" column title in the banlist window
 ;
-MSG_BAN_WINDOW_COLUMN_TITLE_2 (2//)
+MSG_BANSETBY (2//)
 Set by
-;"Set by" column title in the banlist window
 ;
-MSG_BAN_WINDOW_COLUMN_TITLE_3 (3//)
+MSG_BANDATEPLACED (3//)
 Date placed
-;"Date placed" column title in the banlist window
 ;
 MSG_MODE_X (4//)
 Close the current tab.
-;MUI help bubble for the X gadget
 ;
 MSG_TOPIC (5//)
 This is the channels current topic.
@@ -1502,3 +1497,20 @@ Only when Tab is inactive
 MSG_INVITE (//)
 Invite
 ;
+MSG_EVENT (//)
+Event
+;
+MSG_USEWHEN (//)
+Use when
+;
+MSG_AREXXSCRIPT (//)
+Arexx Script
+;
+MSG_TEXTTOSENDTOSCRIPT (//)
+Text to send to script
+;
+MSG_NAME (//)
+Name
+;
+MSG_COMMAND (//)
+Command
