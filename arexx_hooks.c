@@ -1256,7 +1256,7 @@ int sel21hookfunc(void) {
   register LONG **a1 __asm("a1");                        LONG **parameters = a1;
   register struct Hook *a0 __asm("a0");                  struct Hook *hook = a0;
 #endif
-
+    struct XYMessage *incoming_message = NULL;
     getline_wait=TRUE;
 
     //printf("1 getline incoming message\n");
@@ -2211,6 +2211,7 @@ int AREXX_Task(void)
             LONG quit_signal = 1L << arexx_quit_port->mp_SigBit;
             LONG port_signal = 1L << arexx_process_port->mp_SigBit;
             arexx_process_port->mp_Flags=PA_SIGNAL;
+            struct XYMessage *incoming_message = NULL;
 
             while(running)
             {
@@ -2225,7 +2226,7 @@ int AREXX_Task(void)
 
                     if(sigs & quit_signal)
                     {
-                       if(DEBUG)  printf("arexx quit port hit!\n");
+                        if(DEBUG)  printf("arexx quit port hit!\n");
 
                         incoming_message=(struct XYMessage*)GetMsg(arexx_quit_port);
                         if(incoming_message)

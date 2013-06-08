@@ -970,32 +970,25 @@ enum
 #define GCS(a, b, c) GetCatalogStr(a, b, (loc_in)c)
 
 /* globals.c */
+extern struct Catalog *catalog;
+
 extern struct XYMessage *my_message;
-extern struct XYMessage *incoming_message;
+
+
+
+
+
+
+
+
+
 
 extern struct ObjApp *WookieChat;
-extern struct Catalog *catalog;
 extern char wookie_folder[400]; //the pathname wookiechat is located in
-
 extern struct status_window *work_status;
 extern struct status_window *status_root;
 extern struct status_window *status_conductor;
 extern struct status_window *status_current;
-extern struct status_window *status_work;
-extern struct status_window *status_previous;
-extern struct status_window *status_next;
-
-
-
-
-
-
-
-
-
-
-
-
 extern struct query_window *current_query;
 extern struct Settings my_settings;
 extern char server_name[100];

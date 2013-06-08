@@ -473,9 +473,6 @@ void cleanexit(char *str)
     }
     //printf("2\n");
 
-    //FreeMem(my_message,sizeof(struct XYMessage));
-    //FreeMem(incoming_message,sizeof(struct XYMessage));
-
     //printf("quit 7\n");
 
     if (GEIT)

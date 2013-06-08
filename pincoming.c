@@ -510,7 +510,7 @@ int add_text_to_conductor_list(char *buffer1, LONG colour, int activitylevel)
 
     if (colour == 10)
     {
-        status_work = status_conductor;
+        struct status_window *status_work = status_conductor;
         sprintf(sendstuff, "away :\r\n");
 
         for (status_conductor = status_root; status_conductor; status_conductor = status_conductor->next)
@@ -1217,6 +1217,7 @@ void process_incoming()
 
         if (USE_AREXX == TRUE)
         {
+            struct XYMessage *incoming_message = NULL;
             while ((incoming_message = (struct XYMessage*) GetMsg(send_text_replyport)))
             {
                 if (incoming_message->xy_Sendtext == 1)

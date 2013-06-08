@@ -4804,6 +4804,7 @@ int main(int argc, char *argv[])
                 {
                     if (USE_AREXX == TRUE)
                     {
+                        struct XYMessage *incoming_message = NULL;
                         while ((incoming_message = (struct XYMessage*) GetMsg(send_text_replyport)))
                         {
                             if (incoming_message->xy_Sendtext == 1)

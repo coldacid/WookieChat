@@ -13,7 +13,6 @@
 #include "intern.h"
 
 struct XYMessage *my_message;
-struct XYMessage *incoming_message;
 
 struct ObjApp *WookieChat;
 struct Catalog *catalog;
@@ -23,9 +22,6 @@ struct status_window *work_status;
 struct status_window *status_root;
 struct status_window *status_conductor;
 struct status_window *status_current;
-struct status_window *status_work;
-struct status_window *status_previous;
-struct status_window *status_next;
 
 struct query_window *current_query;
 

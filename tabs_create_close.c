@@ -863,8 +863,6 @@ int create_new_status(int first)
                 status_root = status_conductor;
                 status_root->next = NULL;
 
-                //status_work=NULL;
-
             }
             else
             {
@@ -1071,8 +1069,6 @@ int create_new_status(int first)
         DoMethod((Object*) status_conductor->conductor->BT_querybutton, MUIM_Notify, MUIA_Selected, TRUE,
                 (Object*) WookieChat->App, 2, MUIM_Application_ReturnID, status_conductor->iv);
 
-        //if(status_work) status_conductor->conductor->previous=status_work->current_query;
-
         status_conductor->current_query = status_conductor->conductor;
 
         //channel_entry nlist_tab;
@@ -1127,6 +1123,7 @@ void give_each_tab_a_page_group_number()
     APTR member_object = NULL;
     struct MinList *list = NULL;
     struct query_window *work_query = NULL;
+    struct status_window *status_work = NULL;
 
     if (status_conductor)
     {
@@ -1180,6 +1177,7 @@ int give_each_tab_a_listview_number_for_switching_tabs()
     int count;
     BOOL is_our_reset_pointer_valid = TRUE;
     struct query_window *work_query = NULL;
+    struct status_window *status_work = NULL;
     if (status_conductor)
     {
         status_work = status_conductor;
@@ -1228,6 +1226,7 @@ void close_tab(void)
     APTR member_object = NULL;
     struct MinList *list = NULL;
     struct list_entry *work_list_entry = NULL;
+    struct status_window *status_work = NULL;
     status_conductor = status_current;
 
     status_conductor = status_current;
@@ -1537,8 +1536,8 @@ void close_tab(void)
 
                 if (status_conductor)
                 {
-                    status_previous = status_conductor->previous;
-                    status_next = status_conductor->next;
+                    struct status_window *status_previous = status_conductor->previous;
+                    struct status_window *status_next = status_conductor->next;
                     if (status_conductor)
                         status_next = status_conductor->next;
                     if (status_previous)
