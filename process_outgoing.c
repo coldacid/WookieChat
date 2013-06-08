@@ -213,9 +213,10 @@ void process_outgoing(char *string123, int usestringgadget)
     else if (!stricmp(pch, "/catalog"))
     {
         string1 = strtok(NULL, " ");
-
-        if (string1)
-            locale_opencatalog(string1);
+		/* geit: I disabled this right now. seems to be a feature to change catalog while running, which
+		** IMHO does not make much sense. Anyway we can reapply this feature later.  */
+		//if (string1)
+		//	  locale_opencatalog(string1);
     }
     else if (!stricmp(pch, "/invite"))
     {

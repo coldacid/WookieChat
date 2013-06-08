@@ -20,7 +20,7 @@
 
 #include "intern.h"
 #include "objapp.h"
-#include "version_info.h"
+#include "version.h"
 
 
 APTR MN1_Hide, MN1_SelectServer, MN1_NewTAB, MN1_NewGTAB,MN1_CloseTAB, MN_ClearAllHistory,MN_ClearHistory,  MN_SaveHistory, MN_MainSettings;

@@ -10,7 +10,7 @@ SOURCES   = arexx_hooks.c auto_reconnect_server.c closeserverselectwin.c colours
             events_arexx.c globals.c graphical_smilies.c highlight_search.c hooks.c \
             irc.c main.c nicklist.c pincoming.c process_outgoing.c save_settings.c \
             sortnicks.c startexit.c subclasses.c tabs_change.c tabs_create_close.c \
-            timers.c objapp.c audio.c locale.c
+			timers.c objapp.c audio.c locale.c version.c
 
 OBJECTS   = $(SOURCES:.c=.o)
 

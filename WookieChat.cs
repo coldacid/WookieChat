@@ -1,4 +1,4 @@
-## Version $VER: WookieChat.catalog 2.7 (27.11.2007)
+## Version $VER: WookieChat.catalog 3.0 (05.06.2013)
 ## Languages english deutsch español français greek italiano magyar norsk polski svenska
 ## Codeset english 0
 ## Codeset deutsch 0

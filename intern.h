@@ -1325,8 +1325,4 @@ int do_waitselect_code();
 /* closeserverselectwin.c */
 void close_server_select_window();
 
-/* locale.c */
-CONST_STRPTR GCS(ULONG stringNum, char * defaultString);
-void locale_opencatalog(char * language);
-void locale_openbuiltincatalog();
-void locale_closecatalog();
+

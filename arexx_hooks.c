@@ -15,8 +15,7 @@
 #include <libraries/gadtools.h>
 
 #include "intern.h"
-
-#include "version_info.h"
+#include "version.h"
 
 ULONG arexx_wants_to_send_signal;
 char string_to_send2[800];

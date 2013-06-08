@@ -8,59 +8,89 @@
     for the specific language governing rights and limitations under the License.
 */
 
-#include "includes.h"
+#define CATCOMP_BLOCK 1
+#define NEW_CATCOMP_ARRAY_IDS
+#include "locale.h"
+//#include "includes.h"
+//#include "intern.h"
 
 #include <proto/locale.h>
+#include <proto/exec.h>
 
-#include "intern.h"
 
-/* Locals */
-static struct Catalog *catalog = NULL;
+static struct Catalog *locale_catalog = NULL;
+static struct Locale  *locale_locale;
 
-CONST_STRPTR GCS(ULONG stringNum, char * defaultString)
+/*************************************************************************/
+
+/* /// Locale_Open()
+**
+*/
+
+/*************************************************************************/
+
+BOOL Locale_Open( STRPTR catname, ULONG version, ULONG revision)
 {
-    return GetCatalogStr(catalog, stringNum, (loc_in)defaultString);
-}
-
-void locale_openbuiltincatalog()
-{
-    if (catalog) CloseCatalog(catalog);
-
-    catalog = OpenCatalog(NULL, (loc_in)"WookieChat.catalog", OC_BuiltInLanguage, NULL, TAG_DONE);
-
-    if (!catalog)
-    {
-
-        if (DEBUG)
-            printf("unable to use default language\n");
-
-        catalog = OpenCatalog(NULL, (loc_in)"WookieChat.catalog", OC_Language, "english", TAG_DONE);
-
-        if (!catalog)
-        {
-            if (DEBUG)
-                printf("unable to load english catalog, using built in strings\n");
-
-        }
-
+	if( ( LocaleBase ) ) {
+		RemLibrary( (struct Library *) LocaleBase );
+		if( ( locale_locale = OpenLocale( NULL ) ) ) {
+			if( ( locale_catalog = OpenCatalogA( locale_locale, catname, TAG_DONE ) ) ) {
+				if(    locale_catalog->cat_Version  ==  version &&
+					   locale_catalog->cat_Revision == revision ) {
+					return( TRUE );
+				}
+				CloseCatalog( locale_catalog );         /* so close catalog */
+				locale_catalog = NULL;                  /* and use default (if present) */
+			}
+		}
     }
 }
+/* \\\ */
+/* /// Locale_Close()
+**
+*/
 
-void locale_opencatalog(char * language)
+/*************************************************************************/
+
+void Locale_Close(void)
 {
-    if (catalog) CloseCatalog(catalog);
-
-    printf("loading catalog for language %s\n", language);
-
-    catalog = OpenCatalog(NULL, (loc_in)"WookieChat.catalog", OC_Language, language, TAG_DONE);
-
-    if (!catalog)
-        locale_openbuiltincatalog();
+    if( LocaleBase) {
+        if( locale_catalog) {
+            CloseCatalog(locale_catalog);
+            locale_catalog = NULL;
+        }
+        if( locale_locale) {
+            CloseLocale(locale_locale);
+            locale_locale = NULL;
+        }
+		RemLibrary( (struct Library *) LocaleBase ); /* flush our catalog */
+    }
 }
+/* \\\ */
+/* /// Locale_GetString()
+**
+*/
 
+/*************************************************************************/
 
-
-void locale_closecatalog()
+STRPTR Locale_GetString( long id )
 {
-    CloseCatalog(catalog);
+LONG   *l;
+UWORD  *w;
+STRPTR  builtin;
+
+	l = (LONG *) CatCompBlock;
+
+    while (*l != id ) {
+        w = (UWORD *)((ULONG)l + 4);
+        l = (LONG *)((ULONG)l + (ULONG)*w + 6);
+    }
+    builtin = (STRPTR)((ULONG)l + 6);
+
+    if ( locale_catalog && LocaleBase ) {
+		return( (STRPTR) GetCatalogStr( locale_catalog, id, builtin ) );
+    }
+	return( builtin );
 }
+/* \\\ */
+

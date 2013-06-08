@@ -21,6 +21,8 @@
 #include "intern.h"
 #include "objapp.h"
 #include "audio.h"
+#include "locale.h"
+#include "version.h"
 
 #ifdef __AROS__
 struct Library * AslBase = NULL;
@@ -296,7 +298,7 @@ void LoadAllLibs(void)
 
 #endif
 
-    locale_openbuiltincatalog();
+	Locale_Open( APPLICATIONNAME, VERSION, REVISION );
 
     //now that the catalog is open and locale library is open, lets give our context menu titles/items some labels
 
@@ -707,16 +709,8 @@ void cleanexit(char *str)
 
     if (dobj)
         FreeDiskObject(dobj);
-    if (GEIT)
-        printf("21\n");
 
-    //printf("18\n");
-
-    locale_closecatalog();
-    if (GEIT)
-        printf("22\n");
-
-    //printf("11\n");
+	Locale_Close();
 
 #ifdef __AROS__
     if (UtilityBase)

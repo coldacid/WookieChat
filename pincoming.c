@@ -17,7 +17,7 @@
 #include <proto/codesets.h>
 
 #include "intern.h"
-#include "version_info.h"
+#include "version.h"
 #include "objapp.h"
 #include "audio.h"
 
