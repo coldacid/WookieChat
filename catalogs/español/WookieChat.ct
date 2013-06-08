@@ -1,0 +1,1875 @@
+## version $VER: WookieChat.catalog 2.7 (27.11.2007)
+## codeset 0
+## language español
+;
+MSG_ERROR
+ERROR
+; Error
+;error
+;
+MSG_BAN_WINDOW_COLUMN_TITLE_1
+Máscara de Prohibir
+; Ban mask
+;"Ban mask" column title in the banlist window
+;
+MSG_BAN_WINDOW_COLUMN_TITLE_2
+Establecido por
+; Set by
+;"Set by" column title in the banlist window
+;
+MSG_BAN_WINDOW_COLUMN_TITLE_3
+Fecha
+; Date placed
+;"Date placed" column title in the banlist window
+;
+MSG_MODE_X
+Cerrar la pestaña actual.
+; Close the current tab.
+;MUI help bubble for the X gadget
+;
+MSG_TOPIC
+La temática actual del canal.
+; This is the channels current topic.
+;MUI help bubble for the channels topic string gadget.
+;
+MSG_MODE_T
+Proteger temática. Evita a usuarios regulares\nque cambien la temática del canal.
+; Topic protection. This setting prevents regular users from changing the channel topic.
+;MUI help bubble for the T gadget
+;
+MSG_MODE_N
+No mensajes. Obliga a los usuarios del\ncanal a permitir hablar en el mismo.
+; No messaging. This setting forces users to be in the channel to be able to talk in it.
+;MUI help bubble for the N gadget
+;
+MSG_MODE_S
+Modo secreto. Hace al canal "invisible"\nhasta que accede a él.
+; Secret mode. If this is set, the channel is invisible until you have joined.
+;MUI help bubble for the S gadget
+;
+MSG_MODE_I
+Sólo invitados. Permite acceder unicamente\na usuarios que han sido invitados.
+; Invite only. Only users who have been invited to the channel may join.
+;MUI help bubble for the I gadget
+;
+MSG_MODE_P
+Modo privado. La temática del canal no se\nmuestra en la lista global de canales.
+; Private mode. If set, channel topic is not shown on global channel lists.
+;MUI help bubble for the P gadget
+;
+MSG_MODE_M
+Modo moderado. Pueden hablar solamente\noperadores, medio-operadores o con voz\n(op[@], halfop[%%], voice[+]).
+; Moderated mode. Only users with operator, halfop or voice status (thats @ % or +) may talk in channel when set.
+;MUI help bubble for the M gadget
+;
+MSG_MODE_B
+Pulse para ver la lista de todas\nlas prohibiciones en este canal.
+; Click to view a list of all banmasks for this channel.
+;MUI help bubble for the B gadget
+;
+MSG_MODE_K
+Modo palabra clave. El usuario\ndebe indicar una palabra clave\n(contraseña) para entrar.
+; Keyword mode. When this is set, users need to supply a keyword (password) to enter.
+;MUI help bubble for the K gadget
+;
+MSG_MODE_K_STRING
+Contraseña actual del canal.
+; Current channel keyword.
+;MUI help bubble for the keyword string gadget
+;
+MSG_MODE_L
+Forzar el límite de usuarios\nposibles a acceder al canal.
+; Enforce a limit to how many users can currently join the channel.
+;MUI help bubble for the L gadget
+;
+MSG_MODE_L_STRING
+Límite actual de usuarios.
+; Current user limit.
+;MUI help bubble for the Current user limit
+;
+MSG_HOSTNAME_STR
+Nombre del anfitrión del usuario\ncon el que está hablando.
+; This is the hostname of the user you are currently talking to.
+;MUI help bubble for the hostname string gadget in a private tab
+;
+MSG_ERROR_NLIST
+Descargue e instale la clase NList de MUI de AMINET.\n
+; Please download and install the NList MUI Class from aminet\n
+;Error message when NList.mcc fails to load
+;
+MSG_GENERAL
+General
+; General
+;General "settings tab name"
+;
+MSG_LOGGING
+Registrar
+; Logging
+;Logging "settings tab name"
+;
+MSG_SOUNDS
+Sonidos
+; Sounds
+;Sounds "settings tab name"
+;
+MSG_ALIASES
+Aliases
+; Aliases
+;Aliases "settings tab name"
+;
+MSG_REMOVE_URL
+Eliminar URLs
+; Remove URL(s)
+;URL Grabber window .. "remove" button to remove url from the list
+;
+MSG_CLEAR_ALL_URL
+Limpiar todo
+; Clear All
+;URL Grabber window .. "clear all button" to clear all urls from the list
+;
+MSG_URL_GRABBER_WINDOW_TITLE
+Gestor URLs - Doble pulsación para abrirla
+; URL Grabber - Double click URL to Open
+;URL Grabber window title
+;
+MSG_ABOUT
+Acerca de...
+; About...
+;about...
+;
+MSG_YES
+Sí
+; Yes
+;yes
+;
+MSG_NO
+No
+; No
+;no
+;
+MSG_DCC_CHOOSE_FILENAME
+Elija fichero a enviar
+; File To Send
+;ASL Requester title for selecting a file to DCC SEND
+;
+MSG_BUTTON_SEND_FILE
+Enviar fichero
+; Send File
+;button for sending a file with DCC SEND
+;
+MSG_DCC_SEND_WINDOW
+DCC SEND
+; DCC SEND File
+;title text for the initiate dcc send window
+;
+MSG_REOFFER
+Reintentar
+; Reoffer File
+;reoffer a dcc send file
+;
+MSG_CANCEL_SEND
+Cancelar envío
+; Cancel Send
+;cancel a dcc send transfer
+;
+MSG_REMOVE
+Eliminar
+; Remove
+;remove a dcc send transfer from the list
+;
+MSG_RESUME
+Reanudar
+; Resume
+;resume
+;
+MSG_OVERWRITE
+Sobreescribir
+; Overwrite
+;overwrite
+;
+MSG_ABORT
+Cancelar
+; Abort
+;abort
+;
+MSG_ALREADY_EXISTS_WINDOW_TITLE
+WookieChat: Aviso
+; Incoming File already exists
+;incoming File already exists
+;
+MSG_CHOOSE_DOWNLOAD_PATH
+Senda para las descargas.
+; Choose a path to save your downloads to.
+;choose a path to save your downloads to.
+;
+MSG_ACCEPT
+Aceptar
+; Accept
+;accept transfer
+;
+MSG_CANCEL_TRANSFER
+Cancelar
+; Cancel
+;cancel transfer
+;
+MSG_PREFS_NICK_COMPLETION_STYLE
+Estilo en los aliases:
+; Nick Completion Style
+;nick Completion Style
+;
+MSG_PREFS_NICK_COMPLETION_STYLE_HELP
+AmIRC pone dos puntos y un espacio después\ndel alias, si está al inicio de una línea,\no un espacio si está en otra parte. mIRC\nno añade nada, sólo muestra el alias.
+; AmIRC style puts a colon and a space after users nicks if used at the beginning of a line, or just a space afterwards anywhere else. mIRC style: No colon or spaces are used, only the nick is displayed.
+;amIRC style puts a colon and a space after users nicks if used at the beginning of a line, or just a space afterwards anywhere else. mIRC style: No colon or spaces are used, only the nick is displayed
+;
+MSG_ASK
+Preguntar
+; Ask
+;ask .. [ask what user wants to do]
+;
+MSG_PREFS_AUTO_REJOIN
+Auto-reacceder al ser expulsado.
+; Auto-rejoin channels when kicked.
+;auto-rejoin channels when kicked
+;
+MSG_PREFS_AUTO_OPEN_TAB
+Abrir pestaña privada al recibir mensaje.
+; Auto-open private query tabs when messaged.
+;auto-open private query tabs when messaged
+;
+MSG_PREFS_MAX_LINES_BUFFER
+Líneas máximas de búfer.
+; Maximum number of lines to keep in buffer.
+;maximum number of lines to keep in buffer
+;
+MSG_PREFS_LOG_CHANNELS
+Canales
+; Log channels
+;log channels
+;
+MSG_PREFS_LOG_PRIVATE
+ Charlas privadas
+; Log private chats
+;log private chats
+;
+MSG_DEFAULT_KICK_MESSAGE
+Al expulsar
+; Default kick message
+;default Kick Message
+;
+MSG_DEFAULT_BAN_MESSAGE
+Mensaje al prohibir
+; Default ban message
+;default Ban Message
+;
+MSG_QUIT_MESSAGE
+Al salir:
+; Quit message
+;quit Message
+;
+MSG_PART_MESSAGE
+Al abandonar:
+; Part message
+;part Message
+;
+MSG_REQUEST_WHOIS
+Información del usuario (WHOIS)
+; Request whois information
+;"request whois information" when double clicking on a persons nick in the nicklist
+;
+MSG_OPEN_TAB
+Abrir pestaña privada
+; Open private query tab
+;"Open private query tab" when double clicking on a persons nick in the nicklist
+;
+MSG_DOUBLECLICK_GROUP_FRAME_TITLE
+Doble Pulsación Sobre Aliases
+; Nicklist doubleclick actions
+;nicklist doubleclick actions
+;
+MSG_CUSTOM_TIMESTAMPS
+Configurar el formato de la hora.\nÚtil para saber cuando pasó un evento\n(acceder a un canal, hablar,...).\n\033b%h\033n - hora; \033b%m\033n - minutos; \033b%s\033n - segundos.
+; Customise your timestamps! use these codes: %h for the hour, %m for the minute, and %s for the second. This is useful to see what time an event happened (such as a user joining, or speaking).
+;MUI help bubble on how to configure timestamps
+;
+MSG_TIMESTAMP_FORMAT
+ Formato:
+; Timestamp Format
+;timestamp format
+;
+MSG_HIGHLIGHT
+Resaltar:
+; Words to Highlight
+;label name "Words to Highlight"
+;
+MSG_QUIT_REQUESTER
+¿Salir de WookieChat?
+; Quit Program?
+;quit program?
+;
+MSG_FILE_TO_SEND
+Fichero:
+; File to send
+;dcc send initiate window, "file to send" label
+;
+MSG_WINDOW_TITLE_DCC_INCOMING
+Recibir ficheros...
+; Incoming File Transfers...
+;the window titlebar text for incoming dcc transfers
+;
+MSG_WINDOW_TITLE_DCC_OUTGOING
+Enviar ficheros...
+; Outgoing File Transfers...
+;the window titlebar text for outgoing dcc transfers
+;
+MSG_HIGHLIGHT_TITLE
+Lista De Palabras A Resaltar
+; Highlight
+;the title of the "highlight prefs" group
+;
+MSG_PREFS_USE_TIMESTAMPS
+Mostrar
+; Use timestamps
+;the label for the "use timestamps" checkmark
+;
+MSG_TIMESTAMPS_TITLE
+Hora
+; Timestamps
+;the title of the "timestamp prefs" group
+;
+MSG_TEXT_EDITOR_HELP
+Editor de scripts al pulsar el\nbotón "Al conectar realizar..."\nde la ventana/lista de servidores.
+; This text editor is used when you edit your "Perform on Connect" scripts (from the Server Selection window).
+;mui help bubble explaining that this text editor is used for editing the "perform on connect" scripts in the server selection window
+;
+MSG_TEXT_EDITOR
+Editor:
+; Text Editor
+;label for the "Text Editor" setting
+;
+MSG_WEB_BROWSER_LABEL
+Navegador:
+; Web Browser
+;label for the "Web Browser" setting
+;
+MSG_WEB_BROWSER_HELP
+Navegador que usa WookiChat en el "Gestor URLs"\nal pulsar dos veces en una de sus entradas.
+; Choose a web browser to use with WookieChat's "URL Grabber" Window. Double clicking an address there will load in this chosen browser.
+;MUI short help explaining what this setting is for in wookiechat
+;
+MSG_WEB_BROWSER_REQUESTER
+Elija navegador
+; Choose a browser
+;Text to appear in an ASL requester asking user to choose a browser
+;
+MSG_SAVE
+Guardar
+; Save
+;save
+;
+MSG_USE
+Usar
+; Use
+;use
+;
+MSG_CANCEL
+Cancelar
+; Cancel
+;cancel
+;
+MSG_DCC_AUTO_ACCEPT
+Auto-aceptar transferencias de ficheros DCC
+; Auto accept incoming DCC File Transfers
+;auto accept incoming DCC File Transfers
+;
+MSG_DCC_ACTION
+Acción si el fichero existe:
+; Action to take if file exists
+;action to take if file exists
+;
+MSG_DCC_LOCAL_ADDRESS
+Usar dirección local para conexiones DCC
+; Use local address for DCC connections
+;use local address for DCC connections
+;
+MSG_PORT_RANGE_START
+Rango puerto DCC de:
+; DCC Port range from
+;DCC port range from
+;
+MSG_PORT_RANGE_END
+ a:
+; to
+;To
+;
+MSG_PORT_RANGE_START_HELP
+Inicio del rango de puertos para conexiones\nDCC. Es configurable y puede elegir el\nrango que desee usar y habilitarlos en su\ncortafuegos (firewall).
+; This is the start of the port range for incoming DCC connections. This is configurable so you can choose which ports to use and open up on any firewall you might have.
+;this is the start of the port range for incoming DCC connections. This is configurable so you can choose which ports to use and open up on any firewall you might have
+;
+MSG_PORT_RANGE_END_HELP
+Fin del rango de puertos para conexiones\nDCC. Es configurable y puede elegir el\nrango que desee usar y habilitarlos en\nsu cortafuegos (firewall).
+; This is the end of the port range for incoming DCC connections. This is configurable so you can choose which ports to use and open up on any firewall you might have.
+;this is the end of the port range for incoming DCC connections. This is configurable so you can choose which ports to use and open up on any firewall you might have
+;
+MSG_NEVER
+Nunca
+; Never
+;sound alerts: never
+;
+MSG_ALWAYS
+Siempre
+; Always
+;sound alerts: always
+;
+MSG_ONLY_WHEN_WINDOW_INACTIVE
+Sólo si la ventana está inactiva
+; Only when window is inactive
+;sound alerts: only when window is inactive
+;
+MSG_SOUND_SAMPLE_TAB_OPEN
+Al abrir pestaña:
+; Sample to play when a tab opens
+;label "sample to play when a tab opens"
+;
+MSG_PLAY_SAMPLE
+Reproducir:
+; Play sample
+;play sample
+;
+MSG_CHOOSE_FILENAME
+Elija fichero
+; Choose a filename
+;"choose a filename" from the ASL requester
+;
+MSG_SOUND_SAMPLE_HIGHLIGHT
+Al resaltar:
+; Sample to play on highlight
+;label "sample to play on highlight"
+;
+MSG_SAMPLES_PATH
+Senda sonidos:
+; Samples Path for CTCP SOUND
+;label "Samples Path for CTCP SOUND"
+;
+MSG_SAMPLES_PATH_HELP
+Al recibir una petición CTCP SOUND,\n'WookieChat' escoje los sonidos de\nesta senda.
+; When you recieve a CTCP SOUND request, WookieChat will\nlook in this path for sound samples.
+;mui help bubble "When you recieve a CTCP SOUND request, WookieChat will\nlook in this path for sound samples"
+;
+MSG_CHOOSE_DIR
+Elija directorio
+; Choose a directory
+;"choose a directory" from the ASL requester
+;
+MSG_LOGFILE_RELOADING_LABEL
+\033cLíneas a mostrar del final de los registros\nal abrir una pestaña (0 para desactivar).
+; Num of lines to display from the end of logfiles when opening a tab\n(Put 0 to disable this feature).
+;num of lines to display from the end of logfiles when opening a tab\n[Put 0 to disable this feature]
+;
+MSG_CHANNEL
+Canal:
+; Channel
+;channel
+;
+MSG_CHANNEL_LOG_RELOAD
+Número de líneas a recargar del final\ndel registro al acceder a un canal.
+; How many lines to reload from the end of log files when you join a channel.
+;how many lines to reload from the end of log files when you join a channel.
+;
+MSG_PRIVATE
+ Pestaña privada:
+; Private tab
+;private tab
+;
+MSG_PRIVATE_LOG_RELOAD_HELP
+Número de líneas a recargar del final del\nregistro al abrir una pestaña privada.
+; How many lines to reload from the end of log files when you open a private query tab to another user.
+;how many lines to reload from the end of log files when you open a private query tab to another user.
+;
+MSG_LOG_RELOADING_TITLE
+Recarga De Registro
+; Log Reloading
+;log reloading
+;
+MSG_ALIAS_HELP
+Alias para comandos. Ejemplo: \033b/j /join\033n,\ncon lo que escribiendo sólo \033i/j <canal> \033n\npodrá acceder al <canal> en lugar de\nescribir \033i/join <canal>.\033n.
+; Enter an alias name, then the command you want it to use\nE.g. With this line added to the alias list..\n/j /join\n..then the "/j" command will be replaced with "/join".
+;MUI help bubble for the alias section
+;
+MSG_BUTTON_ADD_ALIAS
+Añadir alias >>
+; Add alias >>
+;add alias >>
+;
+MSG_BUTTON_REMOVE_ALIAS
+Eliminar
+; Remove
+;remove
+;
+MSG_SETTINGS_WINDOW_TITLE
+Ajustes
+; Settings
+;settings
+;
+MSG_COLOUR_SETTINGS_WINDOW_TITLE
+Colores...
+; Colour settings...
+;colour settings...
+;
+MSG_MENU_SELECT_SERVER
+Elegir servidor...
+; Select server...
+;select server...
+;
+MSG_MENU_CLOSE_TAB
+Cerrar pestaña actual
+; Close current tab
+;close current tab
+;
+MSG_MENU_NEW_SERVER_TAB
+Nueva pestaña
+; New server tab
+;new server tab
+;
+MSG_MENU_OPEN_GLOBAL_TAB
+Abrir pestaña global
+; Open global query tab
+;open global query tab
+;
+MSG_MENU_QUIT
+Salir...
+; Quit...
+;quit...
+;
+MSG_MENU_CLEAR_BUFFER
+Limpiar búfer
+; Clear buffer
+;clear buffer
+;
+MSG_MENU_SAVE_BUFFER
+Guardar búfer como...
+; Save buffer as...
+;save buffer as...
+;
+MSG_MENU_MAIN_TITLE
+Principal
+; Main
+;main
+;
+MSG_MENU_MAIN_SETTINGS
+Globales...
+; Main settings...
+;main settings...
+;
+MSG_MENU_MUI_SETTINGS
+Ajustes MUI...
+; MUI settings...
+;mui settings...
+;
+MSG_MENU_MULITCOLUMN_DISPLAY
+Múltiples columnas
+; Multi-column chat display
+;multi-column chat display
+;
+MSG_URL_GRABBER
+Gestor URLs...
+; URL Grabber...
+;url Grabber...
+;
+MSG_SERVER_NAME
+Servidor:
+; Server Name
+;server name
+;
+MSG_PORT_NUMBER
+Puerto:
+; Port Number
+;port number
+;
+MSG_SERVER_PASSWORD
+Contraseña:
+; Server Password
+;server password
+;
+MSG_WINDOW_EDIT_SERVER
+Editar servidor
+; Edit Server
+;edit server
+;
+MSG_GROUP_NAME
+Nombre grupo:
+; Group Name
+;group name
+;
+MSG_PERFORM_ON_CONNECT
+Al conectar realizar...
+; Perform on connect...
+;perform on connect...
+;
+MSG_EDIT_GROUP
+Editar grupo...
+; Edit Group...
+;edit group...
+;
+MSG_REAL_NAME
+ Nombre real:
+; Real Name
+;real name
+;
+MSG_USER_NAME
+Usuario:
+; User Name
+;user name
+;
+MSG_NEW_SERVER
+Nuevo servidor
+; New Server
+;new server
+;
+MSG_NEW_GROUP
+Nuevo grupo
+; New Group
+;new group
+;
+MSG_EDIT_ENTRY
+Editar entrada...
+; Edit Entry...
+;edit entry...
+;
+MSG_DELETE_ENTRY
+Borrar entrada
+; Delete Entry
+;delete entry
+;
+MSG_CONNECT_TO_SERVER
+Conectar a servidor
+; Connect to server
+;connect to server
+;
+MSG_CONNECT_TO_SERVER_IN_NEW_TAB
+Conec. en nueva pestaña
+; Connect in new tab
+;connect in new tab
+;
+MSG_WINDOW_SELECT_SERVER
+WookieChat: Elija servidor
+; Select server
+;select server
+;
+MSG_UNBAN
+Eliminar entrada
+; Unban
+;unban
+;
+MSG_REFRESH_BAN_LIST
+Refrescar lista
+; Refresh banlist
+;refresh banlist
+;
+MSG_UNABLE_TO_CREATE_APP
+No se ha podido crear aplicación.\n
+; Unable to create app\n
+;unable to create app\n
+;
+MSG_NOT_CONNECTED
+No está conectado a un servidor.
+; Not connected to a server.
+;not connected to a server
+;
+MSG_NOT_CONNECTED_TO_USER
+No está conectado a un usuario.
+; Not connected to a user.
+;not connected to a user
+;
+MSG_NO_BROWSER_SELECTED
+Elija el navegador que 'WookieChat'\nusará con páginas web en\n"Ajustes->Globales.../General".
+; Please go to the "Main Settings" window, and choose a browser for WookieChat to open web sites with.
+;please go to the "Main Settings" window, and choose a browser for WookieChat to open web sites with
+;
+MSG_ERROR_MISSING_MCC_BETTERSTRING
+Descarge e instale la clase de MUI 'BetterString.mcc'.
+; Please download and install the BetterString.mcc MUI Class.
+;please download and install the BetterString.mcc MUI Class
+;
+MSG_ERROR_MISSING_MCC_NLIST
+Descarge e instale la clase de MUI 'NList.mcc'.
+; Please download and install the NList.mcc MUI Class.
+;please download and install the NList.mcc MUI Class
+;
+MSG_ERROR_MISSING_MCC_NLISTVIEW
+Descarge e instale la clase de MUI 'NListview.mcc'.
+; Please download and install the NListview.mcc MUI Class.
+;please download and install the NListview.mcc MUI Class
+;
+MSG_ERROR_MISSING
+Las clases que faltan, puede descargarlas de 'http://www.aminet.net/' o 'http://os4depot.net'. Lea "readme.txt" para los enlaces directos a esas clases.\n
+; These missing classes can be downloaded from http://www.aminet.net/ or http://os4depot.net. Check the WookieChat readme for direct links to these classes\n
+;these missing classes can be downloaded from http://www.aminet.net/ or http://os4depot.net. Check the WookieChat readme for direct links to these classes\n
+;
+MSG_SAVING_BUFFER_TO
+Guardando búfer en
+; Saving buffer to file:
+;saving buffer to file:
+;
+MSG_CANCELLED
+Cancelado
+; Cancelled
+;cancelled
+;
+MSG_DCC_SEND_MESSAGE
+Elija fichero a enviar y a quien (alias) desea ofrecerlo.
+; Please select a file to send, and a nick to offer the file to.
+;please select a file to send, and a nick to offer the file to
+;
+MSG_DCC_SEND_MESSAGE2
+Elija fichero a enviar
+; Please select a file to send
+;please select a file to send
+;
+MSG_DCC_SEND_MESSAGE3
+Elija a quien (alias) desea enviar el fichero.
+; Please select a nick to offer the file to.
+;please select a nick to offer the file to.
+;
+MSG_WINDOW_TITLE_BANMASKS
+Lista de prohibiciones del canal
+; List of banmasks for channel
+;List of banmasks for channel (channel name is supplied by WookieChat at the end of this string)
+;
+MSG_REMOVING_BAN
+Eliminando prohibiciones
+; Removing banmask
+;Removing banmask [banmask string is supplied by wookie at the end of this string]
+;
+MSG_TRANSFERRING
+Transfirendo
+; Transferring
+;transferring
+;
+MSG_SYNTAX
+Sintáxis
+; Syntax
+;syntax
+;
+MSG_STATUS
+Estado
+; Status
+;status .. dcc transfers column title
+;
+MSG_SENT
+Enviado
+; Amount sent
+;amount sent.. dcc transfers column title
+;
+MSG_FILE_SIZE
+Tamaño
+; Size
+;size of file being send/recieved.. dcc transfers column title
+;
+MSG_TIME_LEFT
+Restan
+; Time Left
+;time left in dcc transfer, column title
+;
+MSG_RECIEVED
+Recibido
+; Recieved
+;amount recieved.. dcc transfers column title
+;
+MSG_REMOVING_BAN_FOR_CHANNEL
+para el canal\x20
+; for channel\x20
+;for channel [channelname is supplied by wookie at the end of this string]
+;
+MSG_LOGGING_STARTED_AT
+Registro iniciado\x20
+; Logging started at\x20
+;logging started at
+;
+MSG_HAS_BEEN_INVITED_TO_CHANNEL
+ha sido invitado la canal\x20
+; has been invited to channel\x20
+;[nick] has been invited to channel [#channelname]
+;
+MSG_INVITED_BY_USER
+por
+; by user
+;by user [nick]
+;
+MSG_YOU_HAVE_INVITED
+ha invitado a\x20
+; you have invited\x20
+;you have invited [nick]
+;
+MSG_TO_CHANNEL
+al canal\x20
+; to channel\x20
+;[you have invited nick] to channel [channel]
+;
+MSG_TOPIC_SET_BY
+establecida por\x20
+; set by\x20
+;set by [nick]
+;
+MSG_TOPIC_DATE
+el\x20
+; on\x20
+;on [date - e.g july 20th 2005]
+;
+MSG_NICK_IN_USE_RETRYING_WITH
+en uso, reintentándolo con\x20
+; in use, retrying with\x20
+;[nick] in use, retrying with [nick]
+;
+MSG_JOIN
+Acceder
+; Join
+;join
+;
+MSG_PART
+Abandonar
+; Part
+;part
+;
+MSG_QUIT
+Salir
+; Quit
+;quit
+;
+MSG_USER_WAS_KICKED_BY
+fue expulsado por
+; was kicked by
+;[nick] was kicked by [nick]
+;
+MSG_YOU_WERE_KICKED_BY
+Ha sido expulsado por
+; You were kicked by
+;You were kicked by [nick]
+;
+MSG_IS_NOW_KNOWN_AS
+cambia el alias por\x20
+; is now known as\x20
+;[nick] is now known as [new nick]
+;
+MSG_PLAYS
+reproducir
+; plays
+;[nick] plays [sound.wav]
+;
+MSG_ATTEMPTING_TO_RESUME
+Intentando reanudar
+; Attempting to resume
+;Attempting to resume [file from user]
+;
+MSG_ATTEMPT_TO_ACCEPT
+Intentando aceptar petición DCC CHAT
+; Attempting to accept DCC CHAT request
+;attempting to accept DCC CHAT request
+;
+MSG_OFFERED_FROM
+ofrecido por
+; offered from
+;[file] offered from [nick]
+;
+MSG_TOPIC_CHANGED
+cambia la temática a
+; changes the topic to
+;[nick] changes the topic to [new topic]
+;
+MSG_FINISHED_SENDING
+Finalizado envío\x20
+; Finished sending\x20
+;finished sending [file]
+;
+MSG_FINISHED_RECIEVING
+Finalizada recepción
+; Finished recieving
+;finished recieving [file]
+;
+MSG_CONNECTED_TO
+conectado a\x20
+; connected to\x20
+;information for the window title.... [nick] connected to [servername]
+;
+MSG_AT_AN_AVERAGE_SPEED_OF
+CPS:
+; Average speed:
+;[file sent in x minutes x seconds] Average speed: [x KB per/sec]
+;
+MSG_DCC_COMPLETE
+Completado
+; Complete
+;[dcc file transfer status] complete
+;
+MSG_DCC_INCOMPLETE
+Incompleto
+; Incomplete
+;[dcc file transfer status] incomplete
+;
+MSG_DCC_CANCELLED
+Cancelado
+; Cancelled
+;[dcc file transfer status] cancelled
+;
+MSG_CONNECTED
+Conectado
+; Connected
+;connected
+;
+MSG_DISCONNECTED
+Desconectado
+; Disconnected
+;disconnected
+;
+MSG_DCC_FAILED
+fallido
+; Failed
+;[dcc file transfer status] failed
+;
+MSG_CREATE_FILE_FAILED
+no se ha podido crear fichero recibido
+; unable to create new file for incoming transfer
+;dcc file transfer error message: unable to create new file for incoming transfer
+;
+MSG_OPEN_FILE_FOR_DCC_SEND_FAILED
+no se ha podido abrir fichero elegido
+; unable to open requested file
+;user tried to send a file but the file doesnt exist
+;
+MSG_DCC_STARTED_FILE_TRANSFER
+Iniciada transferencia:
+; Started file transfer:
+;started file transfer: [filename] to [nick]
+;
+MSG_UNABLE_TO_CONNECT
+No se ha podido establecer DCC CHAT
+; Unable to establish DCC CHAT Connection
+;unable to establish DCC CHAT Connection
+;
+MSG_CONNECTED_DCC_CHAT
+Establecida DCC CHAT
+; DCC CHAT Connection Established
+;DCC CHAT Connection established
+;
+MSG_TRANSFER_TIME
+Estimado
+; Transfer time:
+;Transfer time: [2 minutes, 11 seconds, at an average speed of etc]
+;
+MSG_FILE_DOESNT_EXIST
+¡ERROR! Fichero no existe
+; Error, file doesnt exist
+;[DCC SEND message] Error, file doesnt exist
+;
+MSG_OFFERING_FILE
+Ofreciendo
+; Offering file
+;Offering file [to user on port 1024]
+;
+MSG_OFFERED_ON
+en
+; on
+;[file offered to user] on [port 1024]
+;
+MSG_OFFERED_TO
+a
+; to
+;[file offered] to [user on port 1024]
+;
+MSG_DCC_CHAT_REQUEST
+Enviando petición DCC CHAT
+; Sending DCC CHAT request
+;Sending DCC CHAT request [to user on port 1024]
+;
+MSG_COLOUR_SETTINGS_LOAD_ERROR
+No se han podido cargar los ajustes de colores,\nusando ajustes por omisión. Para evitar este\naviso, cree un cajón llamado "Colours" en\ndonde reside 'WookieChat' y reinícielo.
+; Unable to load colour settings, using default settings. To avoid seeing this message again, create a drawer called 'Colours' inside WookieChat's drawer, then open and close the Colour Settings window the next time you run WookieChat.
+;unable to load colour settings, using default settings. To avoid seeing this message again, create a drawer called 'Colours' inside WookieChat's drawer, then open and close the Colour Settings window the next time you run WookieChat.
+;
+MSG_COLOUR_SETTINGS_SAVE_ERROR
+No se han podido guardar los ajustes de colores.\nAsegúrese de tener un cajón llamado "Colours"\nen donde reside 'WookieChat' para poder guardarlos.
+; Unable to save your colour settings. Make sure you have a drawer called 'Colours' inside WookieChat's drawer, for it to save your colour preferences to.
+;unable to save your colour settings. Make sure you have a drawer called 'Colours' inside WookieChat's drawer, for it to save your colour preferences to.
+;
+MSG_UNABLE_TO_OPEN_TCPIP_STACK
+¡Debe tener activa una pila TCP/IP.
+; Please start a TCP/IP stack and try again.
+;please start a TCP/IP stack and try again.
+;
+MSG_CONNECT_TO_A_NEW_SERVER
+Conectando a un nuevo servidor
+; Connecting to a new server
+;connecting to a new server
+;
+MSG_ATTEMPTING_TO_CONNECT_TO_SERVER
+Intentando conectarse a\x20
+; Attempting to connect to\x20
+;attempting to connect to [servername + portnumber]
+;
+MSG_CONNECTING
+Conectando
+; Connecting
+;connecting (dcc file transfer status)
+;
+MSG_FILE_ALREADY_EXISTS
+ya existe.\n
+; already exists!
+;[file] already exists!
+;
+MSG_INCOMING_FILE_SIZE
+\033cFichero existente
+; Size of existing file
+;size of existing file [x bytes]
+;
+MSG_FILE_SIZE_OFFERED
+\033cFichero ofrecido
+; Size of file being offered
+;size of file being offered [x bytes]
+;
+MSG_TO
+a
+; to
+;[DCC SEND file] to [user has completed/failed]
+;
+MSG_DCC_WAITING
+Esperando
+; Waiting
+;Waiting .. file transfer status
+;
+MSG_UPDATING_NAMES_LIST
+Actualizando lista de nombres del canal
+; Updating Names list for channel
+;Updating Names list for channel [channelname]
+;
+MSG_USERS_IN_CHANNEL
+Usuarios en el canal
+; Users in channel
+;Users in channel [channelname]
+;
+MSG_AUTO_REJOINING
+Auto-reacceder\x20
+; Auto-rejoining\x20
+;Auto-rejoining [channelname] ... after being kicked
+;
+MSG_FROM
+de
+; from
+;from [user]
+;
+MSG_SETS_MODE
+establece
+; sets mode
+;[user] sets mode
+;
+MSG_PLAYING
+reproduciendo
+; playing
+;playing [sound to user]
+;
+MSG_SENDING_CTCP
+Enviando CTCP
+; Sending CTCP
+;Sending CTCP [COMMAND to user]
+;
+MSG_WINDOWS_MENU
+Ventanas
+; Windows
+;"Windows" menu title
+;
+MSG_FILENAME
+Fichero
+; Filename
+;Filename column title in DCC Transfer Listviews
+;
+MSG_NICKNAMES
+Aliases:
+; Nick Names
+;Nick names label in the server selection window
+;
+MSG_OPENING_BRACKET
+[
+; [
+;a bracket to enclose messages around.. e.g. [Join]
+;
+MSG_CLOSING_BRACKET
+]
+; ]
+;a bracket to enclose messages around.. e.g. [Join]
+;
+MSG_NICKLIST_OPTIONS
+Opciones Aliases
+; Nicklist Options
+;popup/context menu title
+;
+MSG_WHOIS_MENU_ITEM
+WHOIS
+; Whois
+;/whois a user
+;
+MSG_QUERY_MENU_ITEM
+Preguntar
+; Open Query
+;/query .. open a private tab to a user
+;
+MSG_GLOBAL_QUERY_MENU_ITEM
+Preguntar Global
+; Open Global Query
+;open a private tab to display all private messages in
+;
+MSG_CTCP_MENU_TITLE
+CTCP
+; CTCP
+;CTCP Command popup/context menu title
+;
+MSG_PING_MENU_ITEM
+PING
+; Ping
+;/ping a user
+;
+MSG_VERSION_MENU_ITEM
+Versión
+; Version
+;/version a user
+;
+MSG_TIME_MENU_ITEM
+Hora
+; Time
+;/time a user
+;
+MSG_DIRECT_CONNECTION_MENU_TITLE
+Conexión Directa
+; Direct Connection
+;DCC popup/context menu title
+;
+MSG_SEND_FILE_MENU_ITEM
+Enviar fichero
+; Send file
+;send a file with dcc send
+;
+MSG_CHAT_MENU_ITEM
+Charlar
+; Chat
+;start a directly connected dcc chat session
+;
+MSG_CONTROL_MENU_TITLE
+Control
+; Control
+;channel operator controls popup/context menu title
+;
+MSG_OP_MENU_ITEM
+OP
+; Op
+;give user operator status
+;
+MSG_DEOP_MENU_ITEM
+Quitar OP
+; DeOp
+;take away operator status
+;
+MSG_HALFOP_MENU_ITEM
+HalfOP
+; HalfOp
+;give a user half ops
+;
+MSG_DEHALFOP_MENU_ITEM
+Quitar HalfOP
+; DeHalfOp
+;take away halfops
+;
+MSG_VOICE_MENU_ITEM
+Voz
+; Voice
+;give voice status
+;
+MSG_DEVOICE_MENU_ITEM
+Quitar voz
+; DeVoice
+;take away voice status
+;
+MSG_KICK_MENU_ITEM
+Expulsar
+; Kick
+;kick a user out of a channel
+;
+MSG_BAN_MENU_ITEM
+Prohibir
+; Ban
+;ban a user from a channel
+;
+MSG_SENDER
+Remitente
+; Sender
+;sender column in file transfers window
+;
+MSG_RECIEVER
+Destinatario
+; Reciever
+;reciever column in file transfers window
+;
+MSG_CHANNEL_NAME_HELP
+<canal>
+; <channelname>
+;used for help strings
+;
+MSG_NICK_HELP
+<alias>
+; <nick>
+;used for help strings
+;
+MSG_COMMAND_NAME_HELP
+<comando>
+; <command>
+;used for help strings
+;
+MSG_SOUND_SAMPLE_NAME_HELP
+<sonido>
+; <sound_sample_name>
+;used for help strings
+;
+MSG_SOUND_BAN_MASK_HELP
+<máscara_prohibir>
+; <ban_mask>
+;used for help strings
+;
+MSG_MESSAGE_HELP
+<mensaje>
+; <message>
+;used for help strings
+;
+MSG_NEW_NICK_HELP
+<nuevo_alias>
+; <new_nick>
+;used for help strings
+;
+MSG_TOPIC_HELP
+<nueva_temática>
+; <new_topic>
+;used for help strings
+;
+MSG_SERVERNAME_HELP
+<servidor>
+; <servername>
+;used for help strings
+;
+MSG_PORT_HELP
+<puerto>
+; <port>
+;used for help strings
+;
+MSG_SWEAR_FILTER
+Filtro palabrotas
+; SwearFilter
+;swear word filter message
+;
+MSG_ENABLED
+Activado
+; Enabled
+;<option> enabled
+;
+MSG_DISABLED
+Desactivado
+; Disabled
+;<option> disabled
+;
+MSG_NICK_OR_CHANNEL_HELP
+<alias o canal>
+; <nick or channel>
+;used for help strings
+;
+MSG_FILENAME_HELP
+<fichero>
+; <filename>
+;used for help strings
+;
+MSG_ACTION_HELP
+<acción>
+; <action>
+; used for help strings
+;
+MSG_USERS
+usuarios
+; users
+;[amount of] users [in channel]
+;
+MSG_HIGHLIGHT_STRINGGADGET_HELP_BUBBLE
+Palabras con las que se resaltarán las líneas\nen las que aparecen. Puede añadir tantas como\ndesee, separándolas por espacios.
+; Enter words here for WookieChat to watch for. Lines of text will appear in the highlight colour if one of these words is found. Enter the words you want to highlight, separated by spaces.
+;help bubble text in prefs
+;
+MSG_RESUME_FILE
+REANUDAR fichero
+; RESUME file
+; RESUME file [filename] >> [reciever] @ [size of file] bytes
+;
+MSG_SERVERS_GROUP
+Servidores
+; Servers
+; "Servers" preferences tab in the Main Settings window
+;
+MSG_MAX_RECONNECT_RETRIES
+Intentos máx. reconectar al auto-desconectarse
+; Maximum attempts to reconnect after non-requested disconnection
+;"Maximum attempts to reconnect after non-requested disconnection" preferences option
+;
+MSG_RECONNECT_DELAY
+Espera entre reconexiones (segundos)
+; Delay (in seconds) in between reconnection attempts
+;"Delay (in seconds) in between reconnection attempts" preferences option
+;
+MSG_RETRY
+Reintento #
+; Retry #
+;"Attempting to connect to [servername] Retry #[number]"
+;
+MSG_IGNORE_MASK
+Máscara a Ignorar
+; Ignore Mask
+;Ignore Window, Listview, Column 1.. the entry to ignore.
+;
+MSG_IGNORE_TEXT
+Texto
+; Text
+;Ignore Window, Listview, Column 2.. "ignore normal or privmsg text". This string is also a label for the "Text" checkbox in the Add/Edit ignore window
+;
+MSG_SERVERS_WINDOW_SERVERS
+Servidor
+; Servers
+;Server Selection window, Listview, Column 1, "Servers"
+;
+MSG_SERVERS_WINDOW_PORT
+Puerto
+; Port
+;Server Selection window, Listview, Column 2, "Port" (to connect on)
+;
+MSG_SERVERS_WINDOW_AUTOCONNECT
+Auto-Conectar
+; Auto-Connect
+;Server Selection window, Listview, Column 3, "Auto-Connect" (do you want to connect to this server automatically on startup)
+;
+MSG_SERVERS_WINDOW_PASSWORD
+Contraseña
+; Password
+;Server Selection window, Listview, Column 4, "Password"
+;
+MSG_IGNORE_LONG_DETAILED_HELP
+\033cLas marcas de anfitrión suelen ser: alias!usuarioID@anfitrión\nEjemplo: .. [Acceder] jahc (~jahc00@Amigaworld.Net) ..\n\033bjahc\033n es el alias, \033bjahc00\033n el usuarioID y \
+\033bAmigaworld.Net\033n el anfitrión.\nPara ignorar a esta persona, puede insertar la cadena: \033bjahc*!*@*\033n\nEl uso de comodines hace que este comando sea muy potente.\nPuede hacer cosas como: \
+\033bguru*editatio*!*usuarioID@*.se\033n\no si desea hacerlo más simple: \033broberto*\033n
+; Hostmarks look like this: nick!userid@hostname\ni.e.«Join» jahc (~jahc00@jahc.Amigaworld.Net)\njahc is the nick, jahc00 is the userid, and jahc.Amigaworld.Net is the hostname\nTo ignore this person, you could insert an ignore entry of: jahc*!*@*\nThis will ignore all people with a nick starting with the letters jahc.\nThe use of wildcards makes this ignore command very powerful.\nThings like this are possible: guru*editatio*!*userid@*.se\nor if you want to keep it simple, you could just use: jahc*
+;This help is displayed at the bottom of the "Add/Edit ignore entry" window
+;
+MSG_IGNORE_ENTRY
+Ignorar:
+; Ignore Entry:
+;this is the label for the ignore mask string gadget, in the add/edit ignore entry window
+;
+MSG_IGNORE_EVENTS
+Eventos a ignorar:
+; Which events to ignore:
+;which events do you want to ignore (three checkboxes follow), in the add/edit ignore entry window
+;
+MSG_IGNORE_ADD
+Añadir
+; Add
+;Add an ignore entry to your ignore list
+;
+MSG_IGNORE_EDIT
+Editar
+; Edit
+;Edit an ignore entry in your ignore list
+;
+MSG_IGNORE_REMOVE
+Eliminar
+; Remove
+;Remove an ignore entry in your ignore list
+;
+MSG_IGNORE_LIST_WINDOW_TITLE
+Lista ignorar...
+; Ignore List...
+;window title, and menu item
+;
+MSG_AUTO_CONNECT_OPTION
+Conectarse automáticamente al inicio
+; Automatically connect here when WookieChat is started
+;this option appears in the "Edit server" window
+;
+MSG_DISPLAY_SERVER_SELECTION_WINDOW
+Mostrar esta ventana al inicio
+; Display Server Window upon startup:
+;this option appears in the Server Selection window
+;
+MSG_UNABLE_TO_RECONNECT_TO_SERVER
+No se ha podido conectar; abandonando!
+; Unable to connect, giving up!
+;this message is displayed after it has reached the maximum reconnection attempts
+;
+MSG_COMMAND_ALIAS_WINDOW_COLUMN1_TITLE
+Alias
+; Alias
+;"Alias" .. the alias for a command.
+;
+MSG_COMMAND_ALIAS_WINDOW_COLUMN2_TITLE
+Comando
+; Command
+;"Command" .. the command that the alias triggers.
+;
+MSG_EDIT_ALIAS
+Editar...
+; Edit...
+;Edit - the text used in the button for "editing an alias" and the "edit alias" window title
+;
+MSG_EDIT_ALIAS_CHANGE
+Cambiar
+; Change
+;Change - update the alias with the new alias in the string gadget
+;
+MSG_EDIT_ALIAS_CANCEL
+Cancelar
+; Cancel
+;Cancel - do not change the alias that you are editing
+;
+MSG_MENU_ITEM_CLONE_DETECTION
+Detectar duplicados
+; Clone detection
+;
+MSG_CLONES
+Duplicados
+; Clones
+;
+MSG_CLONE_DETECTED
+Detectados duplicados de
+; Detected clones from
+;Detected clones from
+;
+MSG_SAVE_SETTINGS
+Guardar ajustes
+; Save settings
+;Save settings
+;
+MSG_SPLIT_UP_LOGS_PREFS_LABEL
+Separar registros en ficheros pequeños
+; Split up logfiles into smaller chunks
+;Split up logfiles into smaller chunks
+;
+MSG_LOGSIZE_PREFS_LABEL
+Tamaño de los ficheros pequeños (kB):
+; If the above is enabled, choose a log file size (in kbytes)
+;If the above is enabled, choose a log file size (in kbytes)
+;
+MSG_SPLIT_UP_LOGS_PREFS_HELP
+Al abrir una nueva pestaña, se examina el fichero de\nregistro. Si su tamaño es mayor que el especificado,\neste se renombra con la fecha y se crea uno nuevo.\nEsto se hace por razones de rendimiento \
+(pueden\npasar varios segundos al cargar uno muy grande).
+; When a tab is opened, the logfile will be examined. If it is over a certain size, then it will be renamed with the date appended to the end, and WookieChat will resume logging in a new empty logfile. This is implemented for performance reasons. It can take a few seconds to reload large logfiles that are a few MB in size.
+;When a tab is opened, the logfile will be examined. If it is over a certain size, then it will be renamed with the date appended to the end, and WookieChat will resume logging in a new empty logfile. This is implemented for performance reasons. It can take a few seconds to reload large logfiles that are a few MB in size.
+;
+MSG_NO_SERVER_TABS_PREFS
+ No mostrar servidores
+; Disable server tabs
+;Disable server tabs
+;
+MSG_HIDE_WINDOW
+Iconificar
+; Hide
+;Hide (iconify wookiechat)
+;
+MSG_PREFS_DCC_ADDRESS
+Dirección DCC específica
+; Specify DCC address?
+;Specify DCC address?
+;
+MSG_PREFS_DCC_ADDRESS_HELP
+WookieChat intenta obtener su dirección de forma\nautomática para conexiones DCC de salida. Si\nesta es incorrecta, puede especificar una aquí.
+; WookieChat attempts to obtain your address automatically for outgoing DCC connections. If this address is incorrect, you can specify it here.
+;WookieChat attempts to obtain your address automatically for outgoing DCC connections. If this address is incorrect, you can specify it here.
+;
+MSG_PREFS_TOGGLE_BUTTON_TABS
+Canales/servidores como botones
+; Use button-style tabs
+;Use buttons for tabs instead of a listview
+;
+MSG_PREFS_TOGGLE_BUTTON_TABS_HELP
+Desactivado muestra canales/servidores en una lista\nen vez de botones (permitiendo "ver" más entradas).
+; Turn off this option to use Listview-style tabs (the listview is better having a large amount of tabs open, such as 20 or 30).
+;Turn off this option to use Listview-style tabs (the listview is better having a large amount of tabs open, such as 20 or 30).
+;
+MSG_USER_HAS_QUIT_IRC
+abandona el IRC...
+; has left IRC..
+;has left IRC...
+;
+MSG_USER_HAS_RETURNED_TO_IRC
+vuelve al IRC...
+; has returned to IRC...
+;has returned to IRC..
+;
+MSG_CHECKBOX_ENABLE_GRAPHICAL_SMILEYS
+Emoticonos gráficos
+; Enable Graphical Smileys
+;Enable Graphical Smileys
+;
+MSG_BACKGROUND_COLOUR_FOR_GRAPHICAL_SMILEYS
+ Fondo de emoticonos:
+; Background Colour for Smileys
+;Background Colour for Smileys
+;
+MSG_GRAPHICAL_SMILEY_SHORTHELP
+Mostrar los emoticonos :) :/ como gráficos.
+; This option will display common ASCII "smiley faces" such as :) and :D with graphical pictures.
+;This option will display common ASCII "smiley faces" such as :) and :D with graphical pictures.
+;
+MSG_CHECKBOX_EXTERNAL_PLAYER_FOR_CTCP_SOUND
+Programa externo para CTCP SOUND
+; Use External Replayer For CTCP SOUND
+;Use External Replayer For CTCP SOUND
+;
+MSG_EXTERNAL_PLAYER_FOR_CTCP_SOUND
+Reproductor:
+; Sound Player
+;Sound Player
+;
+MSG_DOWNLOAD_PATH
+Descargas:
+; Download Path:
+;Download Path
+;
+MSG_LABEL_LISTVIEW_TABS_WEIGHT
+Altura de la lista de canales/servidores (pixels)
+; Listview tabs vertical weight
+;Listview-style tabs size/weight
+;
+MSG_GROUP_FRAME_TITLE_TAB_PREFERENCES
+Mostrar Canales/Servidores
+; Tab Preferences
+;Tab Preferences
+;
+MSG_PREFS_HELP_BUBBLE_LISTVIEW_TABS_WEIGHT
+Altura de la lista de canales/servidores,\nsi ha elegido no mostrarlos como botones.
+; If you have disabled button style tabs, you can configure the size of the "tabs listview".
+;If you have disabled button style tabs, you can configure the size of the "tabs listview".
+;
+MSG_PREFS_HELP_BUBBLE_NO_SERVER_TABS
+No mostrar el servidor en pestaña/lista, ahorrando\nespacio en la ventana principal y memoria.
+; You can turn off keeping a dedicated tab for server messages to conserve memory and valuable screen space.
+;You can turn off keeping a dedicated tab for server messages to conserve memory and valuable screen space.
+;
+MSG_PREFS_GRAPHICAL_NICKLIST_CHECKBOX
+ Lista de alias con colores
+; Enable Graphical Nicklist
+;Enable Graphical Nicklist
+;
+MSG_PREFS_GRAPHICAL_NICKLIST_HELP_BUBBLE
+Mostrar a operarios, medio-operarios y con\nvoz con colores en lugar de los típicos\ncaracteres @, % + (requiere picture.datatype).
+; This will display the three most common nicklist usermodes in a graphical way.\nOperators (or @) are Green, Halfops (or \% ) are Blue, Voiced users (or +) are Yellow\n(This feature is reliant on picture datatypes).
+;This will display the three most common nicklist usermodes in a graphical way.\nOperators (or @) are Green, Halfops (or \%) are Blue, Voiced users (or +) are Yellow\n(This feature is reliant on picture datatypes)
+;
+MSG_PREFS_COLUMN_WIDTH_TIMESTAMP
+Anchura columna Fecha/Hora (pixels)
+; Column width (in Pixels) for timestamps
+;Column width (in Pixels) for timestamps
+;
+MSG_PREFS_COLUMN_WIDTH_MIDDLE_NICKS
+Anchura columna alias (pixels)
+; Column width (in Pixels) for the middle/nicks column
+;Column width (in Pixels) for the middle/nicks column
+;
+MSG_PREFS_DIVIDER_BAR_SPACE
+Espacio libre entre columnas y texto (pixels)
+; Amount of space surrounding columns divider bar
+;Amount of space surrounding columns divider bar
+;
+MSG_PREFS_MULTICOLUMN_NICK_DISPLAY
+Eliminar '<' y '>' de los alias
+; Remove < and > from around nicks
+;Remove < and > from around nicks
+;
+MSG_GROUP_FRAME_TITLE_MULTICOLUMN_DISPLAY_SETTINGS
+Al Mostrar V. Charla En Columnas
+; Multicolumn display settings
+;Multicolumn display settings
+;
+MSG_MENU_ITEM_TOGGLE_MULTICOLUMN_CHAT_DISPLAY
+Ventana de charla en columnas
+; Multi-column chat display
+;Multi-column chat display
+;
+MSG_MENU_ITEM_TOGGLE_COLUMN_MARKING_CLIPBOARD
+Marcar/Copiar por columnas
+; Column-marking Clipboard
+;Column-marking Clipboard
+;
+MSG_GRAPHICAL_NICKLIST_HELP_BUBBLE
+Colores según el tipo de usuario:\nVerde = operadores (@)\nAzul = medio-operadores (%)\nAmarillo = con voz (+)
+; Graphical Usermodes Key:\nGreen = Channel Operators or @\nBlue = HalfOps or \% \nYellow = Voiced Users or +
+;Graphical Usermodes Key:\nGreen = Channel Operators or @\nBlue = HalfOps or \% \nYellow = Voiced Users or +
+;
+MSG_GRAPHICAL_SMILEYS_PREVIEW
+Muestra emoticonos gráficos
+; Graphical Smileys Preview
+;Graphical Smileys Preview (window title)
+;
+MSG_PREFS_NICKLIST_HORIZONTAL_WEIGHT
+Anchura de la lista de aliases (pixels)
+; Nicklist horizontal weight
+;Nicklist horizontal weight
+;
+MSG_PREFS_SMILEYS_THEME
+Emoticonos
+; Smileys theme
+;Smileys Theme
+;
+MSG_COLOUR_SETTINGS_LOAD
+Cargar...
+; Load...
+;Load
+;
+MSG_COLOUR_SETTINGS_APPLY
+Aplicar
+; Apply
+;Apply
+;
+MSG_COLOUR_SETTINGS_SAVE
+Guardar
+; Save
+;Save
+;
+MSG_COLOUR_SETTINGS_SAVE_AS
+Guardar como...
+; Save as...
+;Save as...
+;
+MSG_SERVER_CHARSET
+ Juego caracteres
+; Server charset
+;Server charset
+;
+MSG_LOCAL_CHARSET
+Juego caracteres local
+; Local charset
+;Local charset
+;
+MSG_COLUMN_TITLE_CHARSET
+J. Caracteres
+; Charset
+;Charset
+;
+MSG_MENU_ITEM_RESCAN_AREXX_DIR
+<Releer dir. scripts>
+; <Rescan scripts directory>
+;<Rescan scripts directory>
+;
+MSG_MENU_TITLE_AREXX
+ARexx
+; ARexx
+;Arexx
+;
+MSG_ABOUT_WINDOW_TEXT
+\033cEsponsorado con orgullo por Guru Meditation,\nvendedor de AMIGA y consultor Linux.\nhttp://gurumeditation.se/
+; \033cProudly sponsored by Guru Meditation\nAmiga reseller and Linux consulting\nhttp://gurumeditation.se/
+;\033cProudly sponsored by Guru Meditation\nAmiga reseller and Linux consulting\nhttp://gurumeditation.se/
+;
+MSG_ABOUT_WINDOW_TEXT_2
+\n
+; AREXX port:
+;AREXX port: <portname>
+;
+MSG_MENU_ITEM_CLEAR_ALL_BUFFERS
+Limpiar todos los bufers
+; Clear all buffers
+;Clear all buffers
+;
+MSG_COLOUR_SETTINGS_LABEL_BACKGROUND
+Fondo
+; Background
+;Background
+;
+MSG_COLOUR_SETTINGS_LABEL_NICKLIST_BACKGROUND
+Lista aliases (fondo)
+; Nicklist background
+;Nicklist background
+;
+MSG_COLOUR_SETTINGS_LABEL_JOIN
+Acceder
+; Join
+;Join
+;
+MSG_COLOUR_SETTINGS_LABEL_PART
+Abandonar
+; Part
+;Part
+;
+MSG_COLOUR_SETTINGS_LABEL_QUIT
+Salir
+; Quit
+;Quit
+;
+MSG_COLOUR_SETTINGS_LABEL_MODES
+Modos
+; Modes
+;Modes
+;
+MSG_COLOUR_SETTINGS_LABEL_CTCP
+ CTCP
+; CTCP
+;CTCP
+;
+MSG_COLOUR_SETTINGS_LABEL_ACTIONS
+Acciones
+; Actions
+;Actions
+;
+MSG_COLOUR_SETTINGS_LABEL_NORMAL
+ Normal
+; Normal
+;Normal
+;
+MSG_COLOUR_SETTINGS_LABEL_INFO
+Información
+; Info
+;Info
+;
+MSG_COLOUR_SETTINGS_LABEL_OWN_TEXT
+Texto propio
+; Own text
+;Own text
+;
+MSG_COLOUR_SETTINGS_LABEL_HIGHLIGHT
+Resaltar
+; Highlight
+;Highlight
+;
+MSG_COLOUR_SETTINGS_LABEL_INVITE
+Invitar
+; Invite
+;Invite
+;
+MSG_COLOUR_SETTINGS_LABEL_KICK
+Expulsar
+; Kick
+;Kick
+;
+MSG_COLOUR_SETTINGS_LABEL_NICK_CHANGE
+Cambiar alias
+; Nick change
+;Nick change
+;
+MSG_COLOUR_SETTINGS_LABEL_TOPIC
+Temática
+; Topic
+;Topic
+;
+MSG_COLOUR_SETTINGS_LABEL_WALLOPS
+OPs
+; Wall ops
+;Wall ops
+;
+MSG_COLOUR_SETTINGS_LABEL_NOTICES
+Noticias
+; Notices
+;Notices
+;
+MSG_COLOUR_SETTINGS_LABEL_ACTIVITY
+Actividad
+; Activity
+;Activity
+;
+MSG_COLOUR_SETTINGS_LABEL_CHAT_ACTIVITY
+Actividad (charla)
+; Chat activity
+;Chat activity
+;
+MSG_COLOUR_SETTINGS_LABEL_HIGHLIGHT_ACTIVITY
+Actividad (resaltar)
+; Highlight activity
+;Highlight activity
+;
+MSG_COLOUR_SETTINGS_LABEL_NICKLIST_TEXT
+Lista aliases (texto)
+; Nicklist text
+;Nicklist text
+;
+MSG_COLOUR_SETTINGS_LABEL_TABS_BACKGROUND
+ Lista cans./servs. (fondo)
+; Tabs background
+;Tabs background
+;
+MSG_COLOUR_SETTINGS_LABEL_TAGS_PEN
+ Lista cans./servs. (texto)
+; Tabs pen
+;Tabs pen
+;
+MSG_SERVER
+Servidor
+; Server
+;Server - the prefix for displayed Server messages.
+;
+MSG_WINDOW_TITLE_CHOOSE_A_COLOUR
+Elija color
+; Choose Colour
+;Choose Colour
+;
+MSG_APPLY
+Aplicar
+; Apply
+;Apply (apply settings without closing the Main Settings window)
+;
+MSG_AUTO_JOIN_CHANNELS
+ Canales acceder auto.:
+; Automatically join these channels
+;Automatically join these channels
+;
+MSG_NICK_REGISTER_PASSWORD
+ Contraseña registrar alias:
+; Nick registration password
+;Nick registration password
+;
+MSG_NICK_REGISTER_PASSWORD_SHORT_HELP
+Funciona sólo con alias registrados en una red con un servicio de servidor de alias (Nickserv).
+; This option will only work with a registered nick on a network with a Nickserv service.
+;This option will only work with a registered nick on a network with a Nickserv service
+;
+MSG_ACCEPT_CHANGES
+Aceptar cambios
+; Accept Changes
+;Accept Changes (THIS OPTION IS NOW UNUSED, DO NOT WORRY ABOUT TRANSLATING THIS)
+;
+MSG_SOUND_SAMPLE_NEW_MSG
+Mensaje privado (PRIVMSG):
+; Sample to play when a new PRIVMSG arrives
+;LABEL "Sample to play when a new PRIVMSG arrives"
+;
+MSG_SOUND_SAMPLE_PLAY_OPTION
+Si la pestaña no está seleccionada
+; When private tab is not selected
+;sound alerts: When private tab is not selected
+;
+MSG_UNABLE_TO_RECONNECT_TO_SERVER_2
+No se ha podido conectar!
+; Unable to connect!
+;this message is displayed when you cannot connect to a server
+;
+MSG_RENAME
+Rename
+; Rename
+;Rename
+;
+MSG_ICONIFY_TEXT_NEW_MESSAGES_WAITING
+New Messages Waiting
+; New Messages Waiting
+;New Messages Waiting
+;
+MSG_UPLOAD_PATH
+Upload Path
+; Upload Path
+;Upload Path
+;
+MSG_MUTE_ALL_SOUND
+Mute all sound
+; Mute all sound
+;Mute all sound
+;
+MSG_ONLY_WHEN_TAB_IS_INACTIVE
+Only when Tab is inactive
+; Only when Tab is inactive
+;sound alerts: Only when Tab is inactive
+;

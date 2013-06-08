@@ -1,9 +1,12 @@
-CC        = ppc-morphos-gcc-4
-LIBS      = -laboxstubs -labox
-INCS      = 
-DEFINES   = 
-CFLAGS    = $(INCS) $(DEFINES) -std=gnu99 -noixemul
-TARGET    = WookieChat_MorphOS
+CC          = ppc-morphos-gcc-4
+LIBS        = -laboxstubs -labox
+INCS        =
+DEFINES     =
+CFLAGS      = $(INCS) $(DEFINES) -std=gnu99 -noixemul
+APPLICATION = WookieChat
+SYSTEM      = MorphOS
+CATALOGS    = english deutsch español français greek italiano magyar norsk polski svenska
+NEWCATCOMP  = catcomp.pl
 
 SOURCES   = arexx_hooks.c auto_reconnect_server.c closeserverselectwin.c coloursettings.c \
             connect2server.c dcc.c display_logfile_lines.c do_waitselect_code.c \
@@ -14,19 +17,58 @@ SOURCES   = arexx_hooks.c auto_reconnect_server.c closeserverselectwin.c colours
 
 OBJECTS   = $(SOURCES:.c=.o)
 
-all: $(TARGET)
+all: catalogs $(APPLICATION)
  
-$(TARGET): $(OBJECTS)
-	$(CC) $(CFLAGS) -o $(TARGET) $(OBJECTS) $(LIBS)
+$(APPLICATION): $(OBJECTS)
+	$(CC) $(CFLAGS) -o $(APPLICATION)_$(SYSTEM) $(OBJECTS) $(LIBS)
 
 clean:
 	-rm -f $(OBJECTS)
 	-rm -f $(OBJECTS:.o=.d)
-	-rm -f $(TARGET)
+	-rm -f $(APPLICATION)
+	-rm -f catalogs/*/*.catalog
 
 -include $(OBJECTS:.o=.d)
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c -o $@ $<
 	@$(CC) -MM $(CFLAGS) $< > $*.d
+
+#  locale
+#
+
+$(APPLICATION)_strings.h: $(APPLICATION).cd
+	@echo "    [CATCOMP] $@"
+	@$(NEWCATCOMP) --no-code -cd $(APPLICATION).cd --cfile $@
+
+.PHONY: catalogs
+catalogs: $(patsubst %,catalogs/%/$(APPLICATION).catalog,$(CATALOGS))
+
+%.catalog: %.ct $(APPLICATION).cd
+	@echo "    [CATCOMP] $@"
+	@$(NEWCATCOMP) -u -cd $(APPLICATION).cd -ct $< -o $@
+
+#  simplecat export
+#
+
+scexport:
+	@echo "    [SCEXPORT] $(APPLICATION).cd"
+	@c:SimpleCat QUIET $(APPLICATION).cs export files $(APPLICATION).cd english
+	@for language in $(CATALOGS); \
+	do\
+		echo "    [SCEXPORT] catalogs/$$language/$(APPLICATION).ct";\
+		mkdir -p catalogs/$$language;\
+		c:SimpleCat QUIET $(APPLICATION).cs export files catalogs/$$language/$(APPLICATION).ct $$language;\
+	done
+
+#  simplecat import
+#
+scimport:
+	@echo "    [SCIMPORT] $(APPLICATION).cd"
+	@c:SimpleCat QUIET import files $(APPLICATION).cd english to $(APPLICATION).cs
+	@for language in $(CATALOGS); \
+	do\
+		echo "    [SCIMPORT] catalogs/$$language/$(APPLICATION).ct";\
+		c:SimpleCat QUIET $(APPLICATION).cs import files catalogs/$$language/$(APPLICATION).ct $$language to $(APPLICATION).cs;\
+	done
 	
