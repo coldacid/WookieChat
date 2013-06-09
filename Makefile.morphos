@@ -6,7 +6,7 @@ CFLAGS      = $(INCS) $(DEFINES) -std=gnu99 -noixemul
 APPLICATION = WookieChat
 SYSTEM      = MorphOS
 CATALOGS    = english deutsch español français greek italiano magyar norsk polski svenska
-NEWCATCOMP  = catcomp.pl
+FLEXCAT     = flexcat
 
 SOURCES   = arexx_hooks.c auto_reconnect_server.c closeserverselectwin.c coloursettings.c \
             connect2server.c dcc.c display_logfile_lines.c do_waitselect_code.c \
@@ -39,15 +39,16 @@ clean:
 #
 
 $(APPLICATION)_strings.h: $(APPLICATION).cd
-	@echo "    [CATCOMP] $@"
-	@$(NEWCATCOMP) --no-code -cd $(APPLICATION).cd --cfile $@
+	@echo "    [FLEXCAT] $@"
+	@$(FLEXCAT) $(APPLICATION).cd $@=catalogs/C_h_orig.sd
 
 .PHONY: catalogs
 catalogs: $(patsubst %,catalogs/%/$(APPLICATION).catalog,$(CATALOGS))
 
 %.catalog: %.ct $(APPLICATION).cd
-	@echo "    [CATCOMP] $@"
-	@$(NEWCATCOMP) -u -cd $(APPLICATION).cd -ct $< -o $@
+	@echo "    [FLEXCAT] $@"
+	@$(FLEXCAT) $(APPLICATION).cd $< CATALOG=$@ MODIFIED
+
 
 #  simplecat export
 #
