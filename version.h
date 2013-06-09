@@ -17,8 +17,8 @@
 
 /***************************************************************************/
 
-#define	VERSION	 3
-#define	REVISION 0
+#define VERSION  3
+#define REVISION 0
 #define DAY      05
 #define MONTH    06
 #define YEAR     2013
