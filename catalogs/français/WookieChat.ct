@@ -540,7 +540,7 @@ Quitter...
 ; Quit...
 ;quit...
 ;
-MSG_MENU_CLEAR_BUFFER
+MSG_MENU_CLEARBUFFER_ITEM
 Vider le tampon
 ; Clear buffer
 ;clear buffer
@@ -560,7 +560,7 @@ Réglages principaux...
 ; Main settings...
 ;main settings...
 ;
-MSG_MENU_MUI_SETTINGS
+MSG_MENU_MUISETTINGS_ITEM
 Réglages MUI...
 ; MUI settings...
 ;mui settings...
@@ -1588,12 +1588,12 @@ Réglages de l'affichage multi colonnes
 ; Multicolumn display settings
 ;Multicolumn display settings
 ;
-MSG_MENU_ITEM_TOGGLE_MULTICOLUMN_CHAT_DISPLAY
+MSG_MENU_MULTICOLUMNCHATDISPLAY_ITEM
 Affichage multi colonne
 ; Multi-column chat display
 ;Multi-column chat display
 ;
-MSG_MENU_ITEM_TOGGLE_COLUMN_MARKING_CLIPBOARD
+MSG_MENU_COLUMNMARKINGCLIPBOARD_ITEM
 Presse-papiers multi colonne
 ; Column-marking Clipboard
 ;Column-marking Clipboard
@@ -1673,7 +1673,7 @@ Port ARexx :
 ; AREXX port:
 ;AREXX port: <portname>
 ;
-MSG_MENU_ITEM_CLEAR_ALL_BUFFERS
+MSG_MENU_CLEARALLBUFFERS_ITEM
 Effacer tous les tampons
 ; Clear all buffers
 ;Clear all buffers
@@ -1863,7 +1863,7 @@ Upload Path
 ; Upload Path
 ;Upload Path
 ;
-MSG_MUTE_ALL_SOUND
+MSG_MENU_MUTEALLSOUNDS
 Mute all sound
 ; Mute all sound
 ;Mute all sound
@@ -1972,4 +1972,44 @@ MSG_USERLIST_HELP
 MSG_USERLIST_HIDEALL
 Hide all from the display
 ; Hide all from the display
+;
+MSG_MENU_EDIT_TITLE
+Edit
+; Edit
+;
+MSG_MENU_CUT_ITEM
+Cut
+; Cut
+;
+MSG_MENU_CUT_KEY
+X
+; X
+;
+MSG_MENU_COPY_ITEM
+Copy
+; Copy
+;
+MSG_MENU_COPY_KEY
+C
+; C
+;
+MSG_MENU_PASTE_ITEM
+Paste
+; Paste
+;
+MSG_MENU_PASTE_KEY
+V
+; V
+;
+MSG_EVENTPLAYHOLDER_HELP
+\033lCodes:\n%b = text being displayed in the window, %t = timestamp,\n%g = network name, %s = servername, %c = channel, %n = own nick, %m = nick
+; \033lCodes:\n%b = text being displayed in the window, %t = timestamp,\n%g = network name, %s = servername, %c = channel, %n = own nick, %m = nick
+;
+MSG_EVENTMODE
+Use when
+; Use when
+;
+MSG_EVENTMODE_HELP
+Choose when you want to execute this ARexx script
+; Choose when you want to execute this ARexx script
 ;

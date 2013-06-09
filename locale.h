@@ -32,14 +32,6 @@ STRPTR Locale_GetString(long ID);
 
 #define LGS( id ) Locale_GetString( id )
 
-/*
-** backward compatibly, we should be able to remove
-** them at some point of reconstruction
-*/
-
-#include "version.h"
-#define GCS(stringNum, String) Locale_GetString( stringNum )
-
 /*************************************************************************/
 
 #endif /* LOCALE_H */

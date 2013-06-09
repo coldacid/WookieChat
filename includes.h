@@ -16,8 +16,6 @@
 
 #include <dos/dostags.h>
 
-#include "locale.h"
-
 #define MUI_OBSOLETE
 #include <libraries/mui.h>
 #include <mui/NListview_mcc.h>

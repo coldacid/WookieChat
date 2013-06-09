@@ -1423,7 +1423,7 @@ Skoñcz...
 Avsluta ...
 ;quit...
 ;
-MSG_MENU_CLEAR_BUFFER (108//)
+MSG_MENU_CLEARBUFFER_ITEM (108//)
 Clear buffer
 Fensterinhalt leeren
 Limpiar búfer
@@ -1475,7 +1475,7 @@ Ustawienia programu...
 Huvudinställningar ...
 ;main settings...
 ;
-MSG_MENU_MUI_SETTINGS (112//)
+MSG_MENU_MUISETTINGS_ITEM (112//)
 MUI settings...
 MUI Einstellungen ...
 Ajustes MUI...
@@ -4188,7 +4188,7 @@ Ustawienia wy¶wietlania wielokolumnowego
 Inställning för visning med flera kolumner
 ;Multicolumn display settings
 ;
-MSG_MENU_ITEM_TOGGLE_MULTICOLUMN_CHAT_DISPLAY (317//)
+MSG_MENU_MULTICOLUMNCHATDISPLAY_ITEM (317//)
 Multi-column chat display
 Mehrspaltige Chatanzeige
 Ventana de charla en columnas
@@ -4201,7 +4201,7 @@ Wy¶wietlaj rozmowy w wielu kolumnach
 Chat med flera kolumner
 ;Multi-column chat display
 ;
-MSG_MENU_ITEM_TOGGLE_COLUMN_MARKING_CLIPBOARD (318//)
+MSG_MENU_COLUMNMARKINGCLIPBOARD_ITEM (318//)
 Column-marking Clipboard
 Spaltenmarkierung Zwischenspeicher
 Marcar/Copiar por columnas
@@ -4409,7 +4409,7 @@ Port Arexx'a:
 AREXX port:
 ;AREXX port: <portname>
 ;
-MSG_MENU_ITEM_CLEAR_ALL_BUFFERS (334//)
+MSG_MENU_CLEARALLBUFFERS_ITEM (334//)
 Clear all buffers
 Alle Fenster leeren
 Limpiar todos los bufers
@@ -4903,7 +4903,7 @@ Upload sti
 Upload Path
 ;Upload Path
 ;
-MSG_MUTE_ALL_SOUND (372//)
+MSG_MENU_MUTEALLSOUNDS (372//)
 Mute all sound
 Mute all sound
 Mute all sound
@@ -5229,5 +5229,123 @@ Hide all from the display
 Hide all from the display
 Hide all from the display
 ;
-
-
+MSG_MENU_EDIT_TITLE
+Edit
+Edit
+Edit
+Edit
+Edit
+Edit
+Edit
+Edit
+Edit
+Edit
+;
+MSG_MENU_CUT_ITEM
+Cut
+Cut
+Cut
+Cut
+Cut
+Cut
+Cut
+Cut
+Cut
+Cut
+;
+MSG_MENU_CUT_KEY
+X
+X
+X
+X
+X
+X
+X
+X
+X
+X
+;
+MSG_MENU_COPY_ITEM
+Copy
+Copy
+Copy
+Copy
+Copy
+Copy
+Copy
+Copy
+Copy
+Copy
+;
+MSG_MENU_COPY_KEY
+C
+C
+C
+C
+C
+C
+C
+C
+C
+C
+;
+MSG_MENU_PASTE_ITEM
+Paste
+Paste
+Paste
+Paste
+Paste
+Paste
+Paste
+Paste
+Paste
+Paste
+;
+MSG_MENU_PASTE_KEY
+V
+V
+V
+V
+V
+V
+V
+V
+V
+V
+;
+MSG_EVENTPLAYHOLDER_HELP
+\033lCodes:\n%b = text being displayed in the window, %t = timestamp,\n%g = network name, %s = servername, %c = channel, %n = own nick, %m = nick
+\033lCodes:\n%b = text being displayed in the window, %t = timestamp,\n%g = network name, %s = servername, %c = channel, %n = own nick, %m = nick
+\033lCodes:\n%b = text being displayed in the window, %t = timestamp,\n%g = network name, %s = servername, %c = channel, %n = own nick, %m = nick
+\033lCodes:\n%b = text being displayed in the window, %t = timestamp,\n%g = network name, %s = servername, %c = channel, %n = own nick, %m = nick
+\033lCodes:\n%b = text being displayed in the window, %t = timestamp,\n%g = network name, %s = servername, %c = channel, %n = own nick, %m = nick
+\033lCodes:\n%b = text being displayed in the window, %t = timestamp,\n%g = network name, %s = servername, %c = channel, %n = own nick, %m = nick
+\033lCodes:\n%b = text being displayed in the window, %t = timestamp,\n%g = network name, %s = servername, %c = channel, %n = own nick, %m = nick
+\033lCodes:\n%b = text being displayed in the window, %t = timestamp,\n%g = network name, %s = servername, %c = channel, %n = own nick, %m = nick
+\033lCodes:\n%b = text being displayed in the window, %t = timestamp,\n%g = network name, %s = servername, %c = channel, %n = own nick, %m = nick
+\033lCodes:\n%b = text being displayed in the window, %t = timestamp,\n%g = network name, %s = servername, %c = channel, %n = own nick, %m = nick
+;
+MSG_EVENTMODE
+Use when
+Use when
+Use when
+Use when
+Use when
+Use when
+Use when
+Use when
+Use when
+Use when
+;
+MSG_EVENTMODE_HELP
+Choose when you want to execute this ARexx script
+Choose when you want to execute this ARexx script
+Choose when you want to execute this ARexx script
+Choose when you want to execute this ARexx script
+Choose when you want to execute this ARexx script
+Choose when you want to execute this ARexx script
+Choose when you want to execute this ARexx script
+Choose when you want to execute this ARexx script
+Choose when you want to execute this ARexx script
+Choose when you want to execute this ARexx script
+;

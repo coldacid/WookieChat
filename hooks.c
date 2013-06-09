@@ -13,6 +13,7 @@
 #include <mui/NListtree_mcc.h>
 
 #include "intern.h"
+#include "locale.h"
 
 /* Locals */
 static int last_line = 999999;

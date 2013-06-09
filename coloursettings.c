@@ -11,6 +11,7 @@
 #include "includes.h"
 
 #include "intern.h"
+#include "locale.h"
 
 struct MUI_PenSpec *pendisplay_specs[25];
 STRPTR popimage_background;

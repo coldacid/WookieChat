@@ -427,7 +427,7 @@ MSG_MENU_QUIT (107//)
 Quit...
 ;quit...
 ;
-MSG_MENU_CLEAR_BUFFER (108//)
+MSG_MENU_CLEARBUFFER_ITEM (108//)
 Clear buffer
 ;clear buffer
 ;
@@ -443,7 +443,7 @@ MSG_MENU_MAIN_SETTINGS (111//)
 Main settings...
 ;main settings...
 ;
-MSG_MENU_MUI_SETTINGS (112//)
+MSG_MENU_MUISETTINGS_ITEM (112//)
 MUI settings...
 ;mui settings...
 ;
@@ -1266,11 +1266,11 @@ MSG_GROUP_FRAME_TITLE_MULTICOLUMN_DISPLAY_SETTINGS (316//)
 Multicolumn display settings
 ;Multicolumn display settings
 ;
-MSG_MENU_ITEM_TOGGLE_MULTICOLUMN_CHAT_DISPLAY (317//)
+MSG_MENU_MULTICOLUMNCHATDISPLAY_ITEM (317//)
 Multi-column chat display
 ;Multi-column chat display
 ;
-MSG_MENU_ITEM_TOGGLE_COLUMN_MARKING_CLIPBOARD (318//)
+MSG_MENU_COLUMNMARKINGCLIPBOARD_ITEM (318//)
 Column-marking Clipboard
 ;Column-marking Clipboard
 ;
@@ -1334,7 +1334,7 @@ MSG_ABOUT_WINDOW_TEXT_2 (333//)
 AREXX port:
 ;AREXX port: <portname>
 ;
-MSG_MENU_ITEM_CLEAR_ALL_BUFFERS (334//)
+MSG_MENU_CLEARALLBUFFERS_ITEM (334//)
 Clear all buffers
 ;Clear all buffers
 ;
@@ -1486,7 +1486,7 @@ MSG_UPLOAD_PATH (371//)
 Upload Path
 ;Upload Path
 ;
-MSG_MUTE_ALL_SOUND (372//)
+MSG_MENU_MUTEALLSOUNDS (372//)
 Mute all sound
 ;Mute all sound
 ;
@@ -1568,4 +1568,34 @@ MSG_USERLIST_HELP (//)
 ;
 MSG_USERLIST_HIDEALL (//)
 Hide all from the display
+;
+MSG_MENU_EDIT_TITLE (//)
+Edit
+;
+MSG_MENU_CUT_ITEM (//)
+Cut
+;
+MSG_MENU_CUT_KEY (//)
+X
+;
+MSG_MENU_COPY_ITEM (//)
+Copy
+;
+MSG_MENU_COPY_KEY (//)
+C
+;
+MSG_MENU_PASTE_ITEM (//)
+Paste
+;
+MSG_MENU_PASTE_KEY (//)
+V
+;
+MSG_EVENTPLAYHOLDER_HELP (//)
+\033lCodes:\n%b = text being displayed in the window, %t = timestamp,\n%g = network name, %s = servername, %c = channel, %n = own nick, %m = nick
+;
+MSG_EVENTMODE (//)
+Use when
+;
+MSG_EVENTMODE_HELP (//)
+Choose when you want to execute this ARexx script
 ;
