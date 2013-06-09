@@ -17,7 +17,6 @@
 #include <proto/muimaster.h>
 #include <proto/intuition.h>
 #include <proto/utility.h>
-#include <proto/dos.h>
 #include <proto/exec.h>
 #include <SDI_hook.h>
 #include <string.h>
@@ -55,13 +54,13 @@ struct mccdata
 
 /*************************************************************************/
 
-/* /// MCC_OM_New()
+/* /// OM_New()
 **
 */
 
 /*************************************************************************/
 
-static ULONG MCC_OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
+static ULONG OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
 {
 Object *objs[ GID_LAST ];
 
@@ -93,13 +92,13 @@ Object *objs[ GID_LAST ];
 	return( (ULONG) NULL );
 }
 /* \\\ */
-/* /// MCC_OM_Dispose()
+/* /// OM_Dispose()
 **
 */
 
 /*************************************************************************/
 
-static ULONG MCC_OM_Dispose( struct IClass *cl, Object *obj, Msg msg )
+static ULONG OM_Dispose( struct IClass *cl, Object *obj, Msg msg )
 {
 //struct mccdata *mccdata = INST_DATA( cl, obj );
 
@@ -146,10 +145,10 @@ DISPATCHER(MCC_WindowAbout_Dispatcher)
 {
     switch (msg->MethodID)
     {
-		case OM_NEW                          : return( MCC_OM_New                           ( cl, obj, (APTR) msg ) );
-		case OM_DISPOSE                      : return( MCC_OM_Dispose                       ( cl, obj, (APTR) msg ) );
+		case OM_NEW                          : return( OM_New                           ( cl, obj, (APTR) msg ) );
+		case OM_DISPOSE                      : return( OM_Dispose                       ( cl, obj, (APTR) msg ) );
 
-		case OM_SET                          : return( OM_Set                               ( cl, obj, (APTR) msg ) );
+		case OM_SET                          : return( OM_Set                           ( cl, obj, (APTR) msg ) );
 
 /* application specific methods */
 
@@ -166,7 +165,7 @@ DISPATCHER(MCC_WindowAbout_Dispatcher)
 
 ULONG MCC_WindowAbout_InitClass( void )
 {
-	appclasses[ CLASSID_WINDOWABOUT ] = MUI_CreateCustomClass( NULL, MUIC_Window, NULL, sizeof( struct mccdata) ,  (APTR) ENTRY(MCC_WindowAbout_Dispatcher) );
+	appclasses[ CLASSID_WINDOWABOUT ] = MUI_CreateCustomClass( NULL, MUIC_Window, NULL, sizeof( struct mccdata ) ,  (APTR) ENTRY(MCC_WindowAbout_Dispatcher) );
 	return( appclasses[ CLASSID_WINDOWABOUT ] ? MSG_ERROR_NOERROR : MSG_ERROR_UNABLETOSETUPMUICLASS );
 }
 /* \\\ */
