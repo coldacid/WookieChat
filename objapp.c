@@ -2251,166 +2251,44 @@ struct ObjApp *CreateApp(void)
         WindowContents, GROUP_ROOT_6,
     End;
     //below are menu items
-    MN1_SelectServer = (Object*)MenuitemObject,
-		MUIA_Menuitem_Title, LGS( MSG_MENU_SELECT_SERVER ),
-        MUIA_Menuitem_Shortcut, "S",
-    End;
 
-    MN1_CloseTAB = (Object*)MenuitemObject,
-		MUIA_Menuitem_Title, LGS( MSG_MENU_CLOSE_TAB ),
-        MUIA_Menuitem_Shortcut, "Z",
-    End;
-
-    MNmenuBarLabel2 = (Object*)MUI_MakeObject(MUIO_Menuitem, NM_BARLABEL, 0, 0, 0);
-
-    MN1_Hide = (Object*)MenuitemObject,
-		MUIA_Menuitem_Title, LGS( MSG_HIDE_WINDOW ),
-        MUIA_Menuitem_Shortcut, "H",
-    End;
-
-    MN1_NewTAB = (Object*)MenuitemObject,
-		MUIA_Menuitem_Title, LGS( MSG_MENU_NEW_SERVER_TAB ),
-        MUIA_Menuitem_Shortcut, "T",
-    End;
-
-    MN1_NewGTAB = (Object*)MenuitemObject,
-		MUIA_Menuitem_Title, LGS( MSG_MENU_OPEN_GLOBAL_TAB ),
-    End;
-
-    MNmenuBarLabel0 = (Object*)MUI_MakeObject(MUIO_Menuitem, NM_BARLABEL, 0, 0, 0);
-
-    MNmenuBarLabel1 = (Object*)MUI_MakeObject(MUIO_Menuitem, NM_BARLABEL, 0, 0, 0);
-
-
-    MN_about = (Object*)MenuitemObject,
-		MUIA_Menuitem_Title, LGS( MSG_ABOUT ),
-    End;
-
-    MN_quit = (Object*)MenuitemObject,
-		MUIA_Menuitem_Title, LGS( MSG_MENU_QUIT ),
-        MUIA_Menuitem_Shortcut, "Q",
-    End;
-
-    MN_ClearHistory = (Object*)MenuitemObject,
-		MUIA_Menuitem_Title, LGS( MSG_MENU_CLEARBUFFER_ITEM ),
-    End;
-
-    MN_ClearAllHistory = (Object*)MenuitemObject,
-		MUIA_Menuitem_Title, LGS( MSG_MENU_CLEARALLBUFFERS_ITEM ),
-    End;
-
-    MN_SaveHistory = (Object*)MenuitemObject,
-		MUIA_Menuitem_Title, LGS( MSG_MENU_SAVE_BUFFER ),
-    End;
-
-    MN1_Main = (Object*)MenuObject,
-		MUIA_Menu_Title,  LGS( MSG_MENU_MAIN_TITLE ),
-        MUIA_Family_Child, MN1_SelectServer,
-        MUIA_Family_Child, MN1_NewTAB,
-        MUIA_Family_Child, MN1_NewGTAB,
-        MUIA_Family_Child, MN1_CloseTAB,
-        MUIA_Family_Child, MNmenuBarLabel0,
-        MUIA_Family_Child, MN1_Hide,
-        MUIA_Family_Child, MNmenuBarLabel2,
-        MUIA_Family_Child, MN_ClearHistory,
-        MUIA_Family_Child, MN_ClearAllHistory,
-        MUIA_Family_Child, MN_SaveHistory,
-        MUIA_Family_Child, MNmenuBarLabel1,
-        MUIA_Family_Child, MN_about,
-        MUIA_Family_Child, MN_quit,
-    End;
-    MN_MainSettings  = (Object*)MenuitemObject,
-		MUIA_Menuitem_Title, LGS( MSG_MENU_MAIN_SETTINGS ),
-        //MUIA_Menuitem_Shortcut, "S",
-    End;
-
-    MN_ColourSettings = (Object*)MenuitemObject,
-		MUIA_Menuitem_Title, LGS( MSG_COLOUR_SETTINGS_WINDOW_TITLE ),
-    End;
-
-    MN_MUISettings = (Object*)MenuitemObject,
-		MUIA_Menuitem_Title, LGS( MSG_MENU_MUISETTINGS_ITEM ),
-        //MUIA_Menuitem_Shortcut, "S",
-    End;
-
-    MN_MultiColumnDisplay  = (Object*)MenuitemObject,
-		MUIA_Menuitem_Title, LGS( MSG_MENU_MULTICOLUMNCHATDISPLAY_ITEM ),
-        MUIA_Menuitem_Checkit, TRUE,
-        MUIA_Menuitem_Toggle, TRUE,
-        //MUIA_Menuitem_Shortcut, "S",
-    End;
-
-    MN_Clipboard = (Object*)MenuitemObject,
-		MUIA_Menuitem_Title, LGS( MSG_MENU_COLUMNMARKINGCLIPBOARD_ITEM ),
-        MUIA_Menuitem_Checkit, TRUE,
-        MUIA_Menuitem_Toggle, TRUE,
-    End;
-
-
-    MN_SaveSettings = (Object*)MenuitemObject,
-		MUIA_Menuitem_Title, LGS( MSG_SAVE_SETTINGS ),
-    End;
-
-
-    MN_MuteSound = (Object*)MenuitemObject,
-		MUIA_Menuitem_Title, LGS( MSG_MENU_MUTEALLSOUNDS ),
-        MUIA_Menuitem_Checkit, TRUE,
-        MUIA_Menuitem_Toggle, TRUE,
-    End;
-
-    MN_Edit = (Object*)MenuObject,
-		MUIA_Menu_Title, LGS( MSG_MENU_EDIT_TITLE ),
-		MUIA_Family_Child, MN_cut   = (Object*) MenuitemObject, MUIA_Menuitem_Title , LGS( MSG_MENU_CUT_ITEM )  , MUIA_Menuitem_Shortcut, LGS( MSG_MENU_CUT_KEY )  , End,
-		MUIA_Family_Child, MN_copy  = (Object*) MenuitemObject, MUIA_Menuitem_Title , LGS( MSG_MENU_COPY_ITEM ) , MUIA_Menuitem_Shortcut, LGS( MSG_MENU_COPY_KEY ) , End,
-		MUIA_Family_Child, MN_paste = (Object*) MenuitemObject, MUIA_Menuitem_Title , LGS( MSG_MENU_PASTE_ITEM ), MUIA_Menuitem_Shortcut, LGS( MSG_MENU_PASTE_KEY ), End,
-    End;
-
-    MN_Settings = (Object*)MenuObject,
-		MUIA_Menu_Title, LGS( MSG_SETTINGS_WINDOW_TITLE ),
-        MUIA_Family_Child, MN_MainSettings,
-        MUIA_Family_Child, MN_ColourSettings,
-        MUIA_Family_Child, MN_MUISettings,
-        MUIA_Family_Child, MN_MultiColumnDisplay,
-        MUIA_Family_Child, MN_Clipboard,
-        MUIA_Family_Child, MN_MuteSound,
-        MUIA_Family_Child, MN_SaveSettings,
-    End;
-
-    MN_windows_dcc = (Object*)MenuitemObject,
-		MUIA_Menuitem_Title, LGS( MSG_WINDOW_TITLE_DCC_INCOMING ),
-        MUIA_Menuitem_Shortcut, "D",
-    End;
-
-    MN_windows_dcc2 = (Object*)MenuitemObject,
-		MUIA_Menuitem_Title, LGS( MSG_WINDOW_TITLE_DCC_OUTGOING ),
-        MUIA_Menuitem_Shortcut, "R",
-    End;
-
-    MN_urlgrabber = (Object*)MenuitemObject,
-		MUIA_Menuitem_Title, LGS( MSG_URL_GRABBER ),
-        MUIA_Menuitem_Shortcut, "U",
-    End;
-
-    MN_ignorelist = (Object*)MenuitemObject,
-		MUIA_Menuitem_Title, LGS( MSG_IGNORE_LIST_WINDOW_TITLE ),
-        MUIA_Menuitem_Shortcut, "I",
-    End;
-
-    MN_windows = (Object*)MenuObject,
-		MUIA_Menu_Title, LGS( MSG_WINDOWS_MENU ),
-        MUIA_Family_Child, MN_windows_dcc,
-        MUIA_Family_Child, MN_windows_dcc2,
-        MUIA_Family_Child, MN_urlgrabber,
-        MUIA_Family_Child, MN_ignorelist,
-    End;
-
-    MBObj->MN_ = (Object*)MenustripObject,
-        MUIA_Family_Child, MN1_Main,
-        MUIA_Family_Child, MN_Edit,
-        MUIA_Family_Child, MN_Settings,
-        MUIA_Family_Child, MN_windows,
-    End;
-
+	MBObj->MN_ = MenustripObject,
+		Child, MN1_Main = MenuObject, MUIA_Menu_Title, LGS( MSG_MENU_PROJECT_TITLE ),
+			Child, MN1_SelectServer       = MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MENU_SELECTSERVER_ITEM ), MUIA_Menuitem_Shortcut, LGS( MSG_MENU_SELECTSERVER_KEY ), End,
+			Child, MN1_NewTAB             = MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MENU_NEWSERVERTAB_ITEM ), MUIA_Menuitem_Shortcut, LGS( MSG_MENU_NEWSERVERTAB_KEY ), End,
+			Child, MN1_NewGTAB            = MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MENU_NEWGLOBALQUERYTAB_ITEM ), MUIA_Menuitem_Shortcut, LGS( MSG_MENU_NEWGLOBALQUERYTAB_KEY ), End,
+			Child, MN1_CloseTAB           = MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MENU_CLOSESERVERTAB_ITEM ), MUIA_Menuitem_Shortcut, LGS( MSG_MENU_CLOSESERVERTAB_KEY ), End,
+			Child, MNmenuBarLabel0        = MUI_MakeObject(MUIO_Menuitem, NM_BARLABEL, 0, 0, 0),
+			Child, MN1_Hide               = MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MENU_HIDE_ITEM ), MUIA_Menuitem_Shortcut, LGS( MSG_MENU_HIDE_KEY ), End,
+			Child, MNmenuBarLabel1        = MUI_MakeObject(MUIO_Menuitem, NM_BARLABEL, 0, 0, 0),
+			Child, MN_ClearHistory        = MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MENU_CLEARBUFFER_ITEM ), End,
+			Child, MN_ClearAllHistory     = MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MENU_CLEARALLBUFFERS_ITEM ), End,
+			Child, MN_SaveHistory         = MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MENU_SAVEBUFFERAS_ITEM ), End,
+			Child, MNmenuBarLabel2        = MUI_MakeObject(MUIO_Menuitem, NM_BARLABEL, 0, 0, 0),
+			Child, MN_about               = MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MENU_ABOUT_ITEM ), MUIA_Menuitem_Shortcut, LGS( MSG_MENU_ABOUT_KEY ), End,
+			Child, MN_quit                = MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MENU_QUIT_ITEM ), MUIA_Menuitem_Shortcut, LGS( MSG_MENU_QUIT_KEY ), End,
+		End,
+		Child, MN_Edit = MenuObject, MUIA_Menu_Title, LGS( MSG_MENU_EDIT_TITLE ),
+			Child, MN_cut                 = MenuitemObject, MUIA_Menuitem_Title , LGS( MSG_MENU_CUT_ITEM )  , MUIA_Menuitem_Shortcut, LGS( MSG_MENU_CUT_KEY )  , End,
+			Child, MN_copy                = MenuitemObject, MUIA_Menuitem_Title , LGS( MSG_MENU_COPY_ITEM ) , MUIA_Menuitem_Shortcut, LGS( MSG_MENU_COPY_KEY ) , End,
+			Child, MN_paste               = MenuitemObject, MUIA_Menuitem_Title , LGS( MSG_MENU_PASTE_ITEM ), MUIA_Menuitem_Shortcut, LGS( MSG_MENU_PASTE_KEY ), End,
+		End,
+		Child, MN_Settings = MenuObject, MUIA_Menu_Title, LGS( MSG_MENU_SETTINGS_TITLE ),
+			Child, MN_MainSettings        = MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MENU_MAINSETTINGS_ITEM ), End,
+			Child, MN_ColourSettings      = MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MENU_COLOURSETTINGS_ITEM ), End,
+			Child, MN_MUISettings         = MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MENU_MUISETTINGS_ITEM ), End,
+			Child, MN_MultiColumnDisplay  = MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MENU_MULTICOLUMNCHATDISPLAY_ITEM ), MUIA_Menuitem_Checkit, TRUE, MUIA_Menuitem_Toggle, TRUE, End,
+			Child, MN_Clipboard           = MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MENU_COLUMNMARKINGCLIPBOARD_ITEM ), MUIA_Menuitem_Checkit, TRUE, MUIA_Menuitem_Toggle, TRUE, End,
+			Child, MN_MuteSound           = MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MENU_MUTEALLSOUNDS_ITEM ), MUIA_Menuitem_Checkit, TRUE, MUIA_Menuitem_Toggle, TRUE, End,
+			Child, MN_SaveSettings        = MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_SAVE_SETTINGS ), End,
+		End,
+		Child, MN_windows = MenuObject, MUIA_Menu_Title, LGS( MSG_MENU_WINDOWS_TITLE ),
+			Child, MN_windows_dcc         = MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MENU_DCCINCOMING_ITEM ), MUIA_Menuitem_Shortcut, LGS( MSG_MENU_DCCINCOMING_KEY ), End,
+			Child, MN_windows_dcc2        = MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MENU_DCCOUTGOING_ITEM ), MUIA_Menuitem_Shortcut, LGS( MSG_MENU_DCCOUTGOING_KEY ), End,
+			Child, MN_urlgrabber          = MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MENU_URLGRABBER_ITEM  ), MUIA_Menuitem_Shortcut, LGS( MSG_MENU_URLGRABBER_KEY ), End,
+			Child, MN_ignorelist          = MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MENU_IGNORELIST_ITEM  ), MUIA_Menuitem_Shortcut, LGS( MSG_MENU_IGNORELIST_KEY ), End,
+		End,
+	End;
     //below are edit window stuff
 
 	LA_servername = (Object*)Label( LGS( MSG_SERVER_NAME ));

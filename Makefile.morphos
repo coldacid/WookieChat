@@ -17,7 +17,7 @@ SOURCES   = arexx_hooks.c auto_reconnect_server.c closeserverselectwin.c colours
 
 OBJECTS   = $(SOURCES:.c=.o)
 
-all: $(APPLICATION)_strings.h catalogs $(APPLICATION)
+all: $(APPLICATION)_strings.h $(APPLICATION) catalogs
  
 $(APPLICATION): $(OBJECTS)
 	$(CC) $(CFLAGS) -o $(APPLICATION)_$(SYSTEM) $(OBJECTS) $(LIBS)

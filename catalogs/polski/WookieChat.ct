@@ -435,10 +435,6 @@ MSG_MENU_QUIT
 Skoñcz...
 ; Quit...
 ;
-MSG_MENU_CLEARBUFFER_ITEM
-Wyczy¶æ bufor
-; Clear buffer
-;
 MSG_MENU_SAVE_BUFFER
 Zapisz bufor jako...
 ; Save buffer as...
@@ -450,10 +446,6 @@ G³ówne
 MSG_MENU_MAIN_SETTINGS
 Ustawienia programu...
 ; Main settings...
-;
-MSG_MENU_MUISETTINGS_ITEM
-Ustawienia MUI...
-; MUI settings...
 ;
 MSG_MENU_MULITCOLUMN_DISPLAY
 Wy¶wietlaj rozmowy w wielu kolumnach
@@ -1281,10 +1273,6 @@ MSG_MENU_MULTICOLUMNCHATDISPLAY_ITEM
 Wy¶wietlaj rozmowy w wielu kolumnach
 ; Multi-column chat display
 ;
-MSG_MENU_COLUMNMARKINGCLIPBOARD_ITEM
-Kopiuj do schowka zaznaczane kolumny
-; Column-marking Clipboard
-;
 MSG_GRAPHICAL_NICKLIST_HELP_BUBBLE
 Graficzne tryby u¿ytkowników - podpowied¼:\nzielony = operator kana³u lub @\nniebieski = pó³operator kana³u lub \%\n¿ó³ty = u¿ytkownik z przyznanym g³osem lub +
 ; Graphical Usermodes Key:\nGreen = Channel Operators or @\nBlue = HalfOps or \% \nYellow = Voiced Users or +
@@ -1344,10 +1332,6 @@ MSG_ABOUT_WINDOW_TEXT
 MSG_ABOUT_WINDOW_TEXT_2
 Port Arexx'a:
 ; AREXX port:
-;
-MSG_MENU_CLEARALLBUFFERS_ITEM
-Wyczy¶æ wszystkie bufory
-; Clear all buffers
 ;
 MSG_COLOUR_SETTINGS_LABEL_BACKGROUND
 T³o
@@ -1497,10 +1481,6 @@ MSG_UPLOAD_PATH
 ¦cie¿ka wysy³ania
 ; Upload Path
 ;
-MSG_MENU_MUTEALLSOUNDS
-Wycisz wszystkie d¼wiêki
-; Mute all sound
-;
 MSG_ONLY_WHEN_TAB_IS_INACTIVE
 Only when Tab is inactive
 ; Only when Tab is inactive
@@ -1605,34 +1585,6 @@ MSG_USERLIST_HIDEALL
 Hide all from the display
 ; Hide all from the display
 ;
-MSG_MENU_EDIT_TITLE
-Edit
-; Edit
-;
-MSG_MENU_CUT_ITEM
-Cut
-; Cut
-;
-MSG_MENU_CUT_KEY
-X
-; X
-;
-MSG_MENU_COPY_ITEM
-Copy
-; Copy
-;
-MSG_MENU_COPY_KEY
-C
-; C
-;
-MSG_MENU_PASTE_ITEM
-Paste
-; Paste
-;
-MSG_MENU_PASTE_KEY
-V
-; V
-;
 MSG_EVENTPLAYHOLDER_HELP
 \033lCodes:\n%b = text being displayed in the window, %t = timestamp,\n%g = network name, %s = servername, %c = channel, %n = own nick, %m = nick
 ; \033lCodes:\n%b = text being displayed in the window, %t = timestamp,\n%g = network name, %s = servername, %c = channel, %n = own nick, %m = nick
@@ -1686,4 +1638,175 @@ Nick List Buttons
 MSG_PREFS_EVENT_GROUPTITLE
 Event
 ; Event
+;
+;---------------------------------------------------------
+; MAIN WINDOW MENU
+;
+MSG_MENU_PROJECT_TITLE
+Project
+; Project
+;
+MSG_MENU_SELECTSERVER_ITEM
+Wybierz serwer...
+; Select server...
+;
+MSG_MENU_SELECTSERVER_KEY
+S
+; S
+;
+MSG_MENU_NEWSERVERTAB_ITEM
+Nowa zak³adka serwera
+; New server tab
+;
+MSG_MENU_NEWSERVERTAB_KEY
+T
+; T
+;
+MSG_MENU_NEWGLOBALQUERYTAB_ITEM
+Otwórz globaln± zak³adkê rozmów
+; Open global query tab
+;
+MSG_MENU_NEWGLOBALQUERYTAB_KEY
+G
+; G
+;
+MSG_MENU_CLOSESERVERTAB_ITEM
+Zamknij aktualn± zak³adkê
+; Close current tab
+;
+MSG_MENU_CLOSESERVERTAB_KEY
+Z
+; Z
+;
+MSG_MENU_HIDE_ITEM
+Ikonifikuj
+; Hide
+;
+MSG_MENU_HIDE_KEY
+H
+; H
+;
+MSG_MENU_CLEARBUFFER_ITEM
+Wyczy¶æ bufor
+; Clear buffer
+;
+MSG_MENU_CLEARALLBUFFERS_ITEM
+Wyczy¶æ wszystkie bufory
+; Clear all buffers
+;
+MSG_MENU_SAVEBUFFERAS_ITEM
+Zapisz bufor jako...
+; Save buffer as...
+;
+MSG_MENU_ABOUT_ITEM
+O programie...
+; About...
+;
+MSG_MENU_ABOUT_KEY
+?
+; ?
+;
+MSG_MENU_QUIT_ITEM
+Skoñcz...
+; Quit...
+;
+MSG_MENU_QUIT_KEY
+Q
+; Q
+;
+MSG_MENU_EDIT_TITLE
+Edit
+; Edit
+;
+MSG_MENU_CUT_ITEM
+Cut
+; Cut
+;
+MSG_MENU_CUT_KEY
+X
+; X
+;
+MSG_MENU_COPY_ITEM
+Copy
+; Copy
+;
+MSG_MENU_COPY_KEY
+C
+; C
+;
+MSG_MENU_PASTE_ITEM
+Paste
+; Paste
+;
+MSG_MENU_PASTE_KEY
+V
+; V
+;
+MSG_MENU_SETTINGS_TITLE
+Ustawienia
+; Settings
+;
+MSG_MENU_MAINSETTINGS_ITEM
+Ustawienia programu...
+; Main settings...
+;
+MSG_MENU_COLOURSETTINGS_ITEM
+Ustawienia kolorów...
+; Colour settings...
+;
+MSG_MENU_MUISETTINGS_ITEM
+Ustawienia MUI...
+; MUI settings...
+;
+MSG_MENU_MULITCOLUMNCHATDISPLAY_ITEM
+Wy¶wietlaj rozmowy w wielu kolumnach
+; Multi-column chat display
+;
+MSG_MENU_COLUMNMARKINGCLIPBOARD_ITEM
+Kopiuj do schowka zaznaczane kolumny
+; Column-marking Clipboard
+;
+MSG_MENU_MUTEALLSOUNDS_ITEM
+Mute all sounds
+; Mute all sounds
+;
+MSG_MENU_SAVESETTINGS_ITEM
+Zapisz ustawienia
+; Save settings
+;
+MSG_MENU_WINDOWS_TITLE
+Okna
+; Windows
+;
+MSG_MENU_DCCINCOMING_ITEM
+Pliki przychodz±ce...
+; Incoming File Transfers...
+;
+MSG_MENU_DCCINCOMING_KEY
+D
+; D
+;
+MSG_MENU_DCCOUTGOING_ITEM
+Pliki wychodz±ce...
+; Outgoing File Transfers...
+;
+MSG_MENU_DCCOUTGOING_KEY
+R
+; R
+;
+MSG_MENU_URLGRABBER_ITEM
+Kolekcjoner adresów URL...
+; URL Grabber...
+;
+MSG_MENU_URLGRABBER_KEY
+U
+; U
+;
+MSG_MENU_IGNORELIST_ITEM
+Lista ignorowania...
+; Ignore List...
+;
+MSG_MENU_IGNORELIST_KEY
+I
+; I
 ;

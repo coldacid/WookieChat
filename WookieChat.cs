@@ -1321,18 +1321,6 @@ Avslutte...
 Skoñcz...
 Avsluta ...
 ;
-MSG_MENU_CLEARBUFFER_ITEM
-Clear buffer
-Fensterinhalt leeren
-Limpiar búfer
-Vider le tampon
-ÅêêáèÜñéóç ğñïó. ìíŞìçò
-Cancella il buffer
-Buffer törlése
-Rense buffer
-Wyczy¶æ bufor
-Töm bufferten
-;
 MSG_MENU_SAVE_BUFFER
 Save buffer as...
 Fensterinhalt speichern als ...
@@ -1368,18 +1356,6 @@ Elsõdleges beállítások...
 Innstillinger...
 Ustawienia programu...
 Huvudinställningar ...
-;
-MSG_MENU_MUISETTINGS_ITEM
-MUI settings...
-MUI Einstellungen ...
-Ajustes MUI...
-Réglages MUI...
-Ñõèìßóåéò MUI...
-Impostazioni MUI...
-MUI beállítások...
-MUI-innstillinger...
-Ustawienia MUI...
-MUI-inställningar ...
 ;
 MSG_MENU_MULITCOLUMN_DISPLAY
 Multi-column chat display
@@ -3891,18 +3867,6 @@ Multikolonne chat-visning
 Wy¶wietlaj rozmowy w wielu kolumnach
 Chat med flera kolumner
 ;
-MSG_MENU_COLUMNMARKINGCLIPBOARD_ITEM
-Column-marking Clipboard
-Spaltenmarkierung Zwischenspeicher
-Marcar/Copiar por columnas
-Presse-papiers multi colonne
-Column-marking Clipboard
-Clipboard marcante a colonna
-Kijelölés vágólapra
-Kolonne-markerende utklippstavle
-Kopiuj do schowka zaznaczane kolumny
-Urklippshanterare med kolumnmarkering
-;
 MSG_GRAPHICAL_NICKLIST_HELP_BUBBLE
 Graphical Usermodes Key:\nGreen = Channel Operators or @\nBlue = HalfOps or \% \nYellow = Voiced Users or +
 Grafische Nutzermodi:\nGrün = KanalOperator oder @\nBlau = HalbOperator oder %\nGelb = Sprachberechtigte Nutzer oder +
@@ -4082,18 +4046,6 @@ AREXX port:
 ARexx-port:
 Port Arexx'a:
 AREXX port:
-;
-MSG_MENU_CLEARALLBUFFERS_ITEM
-Clear all buffers
-Alle Fenster leeren
-Limpiar todos los bufers
-Effacer tous les tampons
-Clear all buffers
-Pulisci il buffer
-Clear all buffers
-Rense alle buffere
-Wyczy¶æ wszystkie bufory
-Rensa alla buffertar
 ;
 MSG_COLOUR_SETTINGS_LABEL_BACKGROUND
 Background
@@ -4539,18 +4491,6 @@ Upload sti
 ¦cie¿ka wysy³ania
 Upload Path
 ;
-MSG_MENU_MUTEALLSOUNDS
-Mute all sound
-Mute all sound
-Mute all sound
-Mute all sound
-Mute all sound
-Mute all sound
-Mute all sound
-Fjern all lyd
-Wycisz wszystkie d¼wiêki
-Mute all sound
-;
 MSG_ONLY_WHEN_TAB_IS_INACTIVE
 Only when Tab is inactive
 Only when Tab is inactive
@@ -4863,90 +4803,6 @@ Hide all from the display
 Hide all from the display
 Hide all from the display
 ;
-MSG_MENU_EDIT_TITLE
-Edit
-Edit
-Edit
-Edit
-Edit
-Edit
-Edit
-Edit
-Edit
-Edit
-;
-MSG_MENU_CUT_ITEM
-Cut
-Cut
-Cut
-Cut
-Cut
-Cut
-Cut
-Cut
-Cut
-Cut
-;
-MSG_MENU_CUT_KEY
-X
-X
-X
-X
-X
-X
-X
-X
-X
-X
-;
-MSG_MENU_COPY_ITEM
-Copy
-Copy
-Copy
-Copy
-Copy
-Copy
-Copy
-Copy
-Copy
-Copy
-;
-MSG_MENU_COPY_KEY
-C
-C
-C
-C
-C
-C
-C
-C
-C
-C
-;
-MSG_MENU_PASTE_ITEM
-Paste
-Paste
-Paste
-Paste
-Paste
-Paste
-Paste
-Paste
-Paste
-Paste
-;
-MSG_MENU_PASTE_KEY
-V
-V
-V
-V
-V
-V
-V
-V
-V
-V
-;
 MSG_EVENTPLAYHOLDER_HELP
 \033lCodes:\n%b = text being displayed in the window, %t = timestamp,\n%g = network name, %s = servername, %c = channel, %n = own nick, %m = nick
 \033lCodes:\n%b = text being displayed in the window, %t = timestamp,\n%g = network name, %s = servername, %c = channel, %n = own nick, %m = nick
@@ -5096,5 +4952,512 @@ Event
 Event
 Event
 Event
+;
+;---------------------------------------------------------
+; MAIN WINDOW MENU
+;
+MSG_MENU_PROJECT_TITLE
+Project
+Project
+Project
+Project
+Project
+Project
+Project
+Project
+Project
+Project
+;
+MSG_MENU_SELECTSERVER_ITEM
+Select server...
+Server auswählen ...
+Elegir servidor...
+Choisir un serveur...
+ÅğéëïãŞ äéáêïìéóôŞ...
+Scegli server...
+Kiszolgáló választása ...
+Velg server...
+Wybierz serwer...
+Välj server ...
+;
+MSG_MENU_SELECTSERVER_KEY
+S
+S
+S
+S
+S
+S
+S
+S
+S
+S
+;
+MSG_MENU_NEWSERVERTAB_ITEM
+New server tab
+Neuen Server Tab öffnen
+Nueva pestaña
+Nouvel onglet serveur
+Íİá êáñôİëá äéáêïìéóôŞ
+Apri un Tab "server"
+Új kiszolgáló panel
+Ny servertab
+Nowa zak³adka serwera
+Ny serverflik
+;
+MSG_MENU_NEWSERVERTAB_KEY
+T
+T
+T
+T
+T
+T
+T
+T
+T
+T
+;
+MSG_MENU_NEWGLOBALQUERYTAB_ITEM
+Open global query tab
+Globalen Tab öffnen
+Abrir pestaña global
+Ouvrir onglet de requête global
+¶íïéãìá ãåíéêŞò êáñôİëáò
+Apri un tab "globale"
+Globális panel megnyitása
+Åpne global spørretab
+Otwórz globaln± zak³adkê rozmów
+Öppna flik för global förfrågan
+;
+MSG_MENU_NEWGLOBALQUERYTAB_KEY
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+;
+MSG_MENU_CLOSESERVERTAB_ITEM
+Close current tab
+Aktiven Tab schliessen
+Cerrar pestaña actual
+Fermer l'onglet actif
+Êëåßóéìï êáñôİëáò
+Chiudi questo Tab
+Jelenlegi panel bezárása
+Lukk aktiv tab
+Zamknij aktualn± zak³adkê
+Stäng gällande flik
+;
+MSG_MENU_CLOSESERVERTAB_KEY
+Z
+Z
+Z
+Z
+Z
+Z
+Z
+Z
+Z
+Z
+;
+MSG_MENU_HIDE_ITEM
+Hide
+Verbergen
+Iconificar
+Masquer
+Hide
+Nascondi
+Elrejt
+Gjem
+Ikonifikuj
+Göm
+;
+MSG_MENU_HIDE_KEY
+H
+H
+H
+H
+H
+H
+H
+H
+H
+H
+;
+MSG_MENU_CLEARBUFFER_ITEM
+Clear buffer
+Fensterinhalt leeren
+Limpiar búfer
+Vider le tampon
+ÅêêáèÜñéóç ğñïó. ìíŞìçò
+Cancella il buffer
+Buffer törlése
+Rense buffer
+Wyczy¶æ bufor
+Töm bufferten
+;
+MSG_MENU_CLEARALLBUFFERS_ITEM
+Clear all buffers
+Alle Fenster leeren
+Limpiar todos los bufers
+Effacer tous les tampons
+Clear all buffers
+Pulisci il buffer
+Clear all buffers
+Rense alle buffere
+Wyczy¶æ wszystkie bufory
+Rensa alla buffertar
+;
+MSG_MENU_SAVEBUFFERAS_ITEM
+Save buffer as...
+Fensterinhalt speichern als ...
+Guardar búfer como...
+Enregistrer le tampon sous...
+ÁğïèŞêåõóç ğñïó. ìíŞìçò ùò...
+Salva il buffer come...
+Buffer mentése, mint...
+Lagre buffer som...
+Zapisz bufor jako...
+Spara buffert som ...
+;
+MSG_MENU_ABOUT_ITEM
+About...
+Über ...
+Acerca de...
+À propos...
+Ğİñé ôïõ...
+Informazioni...
+Névjegy...
+Om...
+O programie...
+Om ...
+;
+MSG_MENU_ABOUT_KEY
+?
+?
+?
+?
+?
+?
+?
+?
+?
+?
+;
+MSG_MENU_QUIT_ITEM
+Quit...
+Programm beenden ...
+Salir...
+Quitter...
+¸îïäïò...
+Esci...
+Kilépés...
+Avslutte...
+Skoñcz...
+Avsluta ...
+;
+MSG_MENU_QUIT_KEY
+Q
+Q
+Q
+Q
+Q
+Q
+Q
+Q
+Q
+Q
+;
+MSG_MENU_EDIT_TITLE
+Edit
+Edit
+Edit
+Edit
+Edit
+Edit
+Edit
+Edit
+Edit
+Edit
+;
+MSG_MENU_CUT_ITEM
+Cut
+Cut
+Cut
+Cut
+Cut
+Cut
+Cut
+Cut
+Cut
+Cut
+;
+MSG_MENU_CUT_KEY
+X
+X
+X
+X
+X
+X
+X
+X
+X
+X
+;
+MSG_MENU_COPY_ITEM
+Copy
+Copy
+Copy
+Copy
+Copy
+Copy
+Copy
+Copy
+Copy
+Copy
+;
+MSG_MENU_COPY_KEY
+C
+C
+C
+C
+C
+C
+C
+C
+C
+C
+;
+MSG_MENU_PASTE_ITEM
+Paste
+Paste
+Paste
+Paste
+Paste
+Paste
+Paste
+Paste
+Paste
+Paste
+;
+MSG_MENU_PASTE_KEY
+V
+V
+V
+V
+V
+V
+V
+V
+V
+V
+;
+MSG_MENU_SETTINGS_TITLE
+Settings
+Einstellungen
+Ajustes
+Réglages
+Ñõèìßóåéò
+Impostazioni
+Beállítások
+Innstillinger
+Ustawienia
+Inställningar
+;
+MSG_MENU_MAINSETTINGS_ITEM
+Main settings...
+Haupteinstellungen ...
+Globales...
+Réglages principaux...
+Êıñéåò ñõèìßóåéò...
+Impostazioni principali...
+Elsõdleges beállítások...
+Innstillinger...
+Ustawienia programu...
+Huvudinställningar ...
+;
+MSG_MENU_COLOURSETTINGS_ITEM
+Colour settings...
+Farbeinsteller ...
+Colores...
+Réglages des couleurs...
+×ñùìáôéêİò ñõèìßóåéò...
+Impostazione colori...
+Szín beállítások...
+Fargeinnstillinger...
+Ustawienia kolorów...
+Färginställningar ...
+;
+MSG_MENU_MUISETTINGS_ITEM
+MUI settings...
+MUI Einstellungen ...
+Ajustes MUI...
+Réglages MUI...
+Ñõèìßóåéò MUI...
+Impostazioni MUI...
+MUI beállítások...
+MUI-innstillinger...
+Ustawienia MUI...
+MUI-inställningar ...
+;
+MSG_MENU_MULITCOLUMNCHATDISPLAY_ITEM
+Multi-column chat display
+Extra Spalte für Anzeige
+Múltiples columnas
+Affichage Multi-colonnes
+ÅìöÜíéóç ğïëëşí óôçëşí
+Schermo chat multicolonna
+Több-oszlopos csevegõ kijelzõ
+Multikolonne snakke-visning
+Wy¶wietlaj rozmowy w wielu kolumnach
+Visning med flera kolumner
+;
+MSG_MENU_COLUMNMARKINGCLIPBOARD_ITEM
+Column-marking Clipboard
+Spaltenmarkierung Zwischenspeicher
+Marcar/Copiar por columnas
+Presse-papiers multi colonne
+Column-marking Clipboard
+Clipboard marcante a colonna
+Kijelölés vágólapra
+Kolonne-markerende utklippstavle
+Kopiuj do schowka zaznaczane kolumny
+Urklippshanterare med kolumnmarkering
+;
+MSG_MENU_MUTEALLSOUNDS_ITEM
+Mute all sounds
+Mute all sounds
+Mute all sounds
+Mute all sounds
+Mute all sounds
+Mute all sounds
+Mute all sounds
+Mute all sounds
+Mute all sounds
+Mute all sounds
+;
+MSG_MENU_SAVESETTINGS_ITEM
+Save settings
+Einstellungen speichern
+Guardar ajustes
+Enregistrer les réglages
+ÁğïèŞêåõóç ñõèìßóåùí
+Salva impostazioni
+Beállítások mentése
+Lagre innstillinger
+Zapisz ustawienia
+Spara inställningar
+;
+MSG_MENU_WINDOWS_TITLE
+Windows
+Fenster
+Ventanas
+Fenêtres
+ĞáñÜèõñá
+Finestre
+Ablakok
+Vindu
+Okna
+Fönster
+;
+MSG_MENU_DCCINCOMING_ITEM
+Incoming File Transfers...
+Ankommender Dateitransfer ...
+Recibir ficheros...
+Transferts des fichiers entrants...
+ÌåôáöïñÜ åéóåñ÷üìåíïõ áñ÷åßïõ...
+Trasmissione dati in ricevimento...
+Beérkezõ fájl átvitel...
+Innkommende filoverføringer...
+Pliki przychodz±ce...
+Inkommande fil ...
+;
+MSG_MENU_DCCINCOMING_KEY
+D
+D
+D
+D
+D
+D
+D
+D
+D
+D
+;
+MSG_MENU_DCCOUTGOING_ITEM
+Outgoing File Transfers...
+Ausgehender Dateitransfer ...
+Enviar ficheros...
+Transferts des fichiers sortants...
+ÌåôáöïñÜ åîåñ÷üìåíïõ áñ÷åßïõ...
+Trasmissione dati uscita...
+Kimenõ fájl átvitel...
+Utgående filoverføringer...
+Pliki wychodz±ce...
+Utgående fil ...
+;
+MSG_MENU_DCCOUTGOING_KEY
+R
+R
+R
+R
+R
+R
+R
+R
+R
+R
+;
+MSG_MENU_URLGRABBER_ITEM
+URL Grabber...
+URL Greifer ...
+Gestor URLs...
+Récupérateur d'URL...
+URL Grabber...
+URL Grabber...
+URL Gyûjtõ...
+URL-fanger...
+Kolekcjoner adresów URL...
+URL-Grabber ...
+;
+MSG_MENU_URLGRABBER_KEY
+U
+U
+U
+U
+U
+U
+U
+U
+U
+U
+;
+MSG_MENU_IGNORELIST_ITEM
+Ignore List...
+Ignorieren Liste ...
+Lista ignorar...
+Liste d'ignorés...
+Ëßóôá áãíüçóçò...
+Lista dei contatti ignorati...
+Mellõzött lista...
+Ignore-liste...
+Lista ignorowania...
+Ignoreringslista ...
+;
+MSG_MENU_IGNORELIST_KEY
+I
+I
+I
+I
+I
+I
+I
+I
+I
+I
 ;
 
