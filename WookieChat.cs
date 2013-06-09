@@ -3157,7 +3157,7 @@ Fortsett filen
 Wznowienie pliku
 ≈teruppta fil
 ;
-MSG_SERVERS_GROUP
+MSG_PREFS_SERVERS_GROUP
 Servers
 Server
 Servidores
@@ -4983,3 +4983,118 @@ Choose when you want to execute this ARexx script
 Choose when you want to execute this ARexx script
 Choose when you want to execute this ARexx script
 ;
+;
+; All strings below are used and renamed properly,
+; so after rework is complete all strings left
+; on top of this line are obsolete
+;
+;
+MSG_PREFS_GENERAL_GROUPTITLE
+General
+Allgemein
+General
+GÈnÈral
+√ÂÌÈÍ‹
+Generale
+¡ltal·nos
+Generell
+G≥Ûwne
+Generellt
+;
+MSG_PREFS_GUI_GROUPTITLE
+GUI
+GUI
+GUI
+GUI
+GUI
+GUI
+GUI
+GUI
+GUI
+GUI
+;
+MSG_PREFS_SERVERS_GROUPTITLE
+Servers
+Server
+Servidores
+Serveurs
+ƒÈ·ÍÔÏÈÛÙ›Ú
+Server
+Kiszolg·lÛk
+Servere
+Serwery
+Servrar
+;
+MSG_PREFS_LOGGING_GROUPTITLE
+Logging
+Mitschnitt
+Registrar
+Logging
+ ·Ù·„Ò·ˆﬁ
+Protocollo
+NaplÛz·s
+Logging
+Raportowanie
+Logga
+;
+MSG_PREFS_DCC_GROUPTITLE
+DCC
+DCC
+DCC
+DCC
+DCC
+DCC
+DCC
+DCC
+DCC
+DCC
+;
+MSG_PREFS_SOUNDS_GROUPTITLE
+Sounds
+Kl‰nge
+Sonidos
+Sons
+π˜ÔÈ
+Suoni
+Hangok
+Lyder
+DºwiÍki
+Ljud
+;
+MSG_PREFS_ALIAS_GROUPTITLE
+Aliases
+Aliases
+Aliases
+Alias
+”ıÌ˛ÌıÏ·
+Alias (sinonimi)
+HelyettesÌtık
+Aliaser
+Aliasy
+Alias
+;
+MSG_PREFS_NICKLISTBUTTONS_GROUPTITLE
+Nick List Buttons
+Nick List Buttons
+Nick List Buttons
+Nick List Buttons
+Nick List Buttons
+Nick List Buttons
+Nick List Buttons
+Nick List Buttons
+Nick List Buttons
+Nick List Buttons
+;
+MSG_PREFS_EVENT_GROUPTITLE
+Event
+Ereignis
+Event
+Event
+Event
+Event
+Event
+Event
+Event
+Event
+;
+

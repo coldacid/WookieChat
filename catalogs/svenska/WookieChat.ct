@@ -1043,7 +1043,7 @@ MSG_RESUME_FILE
 Återuppta fil
 ; RESUME file
 ;
-MSG_SERVERS_GROUP
+MSG_PREFS_SERVERS_GROUP
 Servrar
 ; Servers
 ;
@@ -1642,4 +1642,46 @@ Use when
 MSG_EVENTMODE_HELP
 Choose when you want to execute this ARexx script
 ; Choose when you want to execute this ARexx script
+;
+;
+; All strings below are used and renamed properly,
+; so after rework is complete all strings left
+; on top of this line are obsolete
+;
+;
+MSG_PREFS_GENERAL_GROUPTITLE
+Generellt
+; General
+;
+MSG_PREFS_GUI_GROUPTITLE
+GUI
+; GUI
+;
+MSG_PREFS_SERVERS_GROUPTITLE
+Servrar
+; Servers
+;
+MSG_PREFS_LOGGING_GROUPTITLE
+Logga
+; Logging
+;
+MSG_PREFS_DCC_GROUPTITLE
+DCC
+; DCC
+;
+MSG_PREFS_SOUNDS_GROUPTITLE
+Ljud
+; Sounds
+;
+MSG_PREFS_ALIAS_GROUPTITLE
+Alias
+; Aliases
+;
+MSG_PREFS_NICKLISTBUTTONS_GROUPTITLE
+Nick List Buttons
+; Nick List Buttons
+;
+MSG_PREFS_EVENT_GROUPTITLE
+Event
+; Event
 ;

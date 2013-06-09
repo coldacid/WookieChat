@@ -148,28 +148,18 @@ struct ObjApp *CreateApp(void)
     if (!(MBObj = (struct ObjApp *) AllocVec(sizeof(struct ObjApp), MEMF_PUBLIC|MEMF_CLEAR)))
         return(NULL);
 
-if(AMIX) printf("2\n");
-    static CONST_STRPTR titles2[] =
-    {
-        (CONST_STRPTR)"General",
-        (CONST_STRPTR)"GUI",
-        (CONST_STRPTR)"Servers",
-        (CONST_STRPTR)"Logging",
-        (CONST_STRPTR)"DCC",
-        (CONST_STRPTR)"Sounds",
-        (CONST_STRPTR)"Aliases",
-        (CONST_STRPTR)"Nick List Buttons",
-        (CONST_STRPTR)"Events",
-        NULL
-    };
+	static CONST_STRPTR titles2[ MSG_PREFS_EVENT_GROUPTITLE - MSG_PREFS_GENERAL_GROUPTITLE + 2 ];
 
-	titles2[0] = LGS( MSG_GENERAL );
-	titles2[2] = LGS( MSG_SERVERS_GROUP );
-	titles2[3] = LGS( MSG_LOGGING );
-	titles2[5] = LGS( MSG_SOUNDS );
-	titles2[6] = LGS( MSG_ALIASES );
-	titles2[7] = LGS( MSG_NICKLISTBUTTONS );
-	titles2[8] = LGS( MSG_EVENT );
+	titles2[0] = LGS( MSG_PREFS_GENERAL_GROUPTITLE );
+	titles2[1] = LGS( MSG_PREFS_GUI_GROUPTITLE );
+	titles2[2] = LGS( MSG_PREFS_SERVERS_GROUPTITLE );
+	titles2[3] = LGS( MSG_PREFS_LOGGING_GROUPTITLE );
+	titles2[4] = LGS( MSG_PREFS_DCC_GROUPTITLE );
+	titles2[5] = LGS( MSG_PREFS_SOUNDS_GROUPTITLE );
+	titles2[6] = LGS( MSG_PREFS_ALIAS_GROUPTITLE );
+	titles2[7] = LGS( MSG_PREFS_NICKLISTBUTTONS_GROUPTITLE );
+	titles2[8] = LGS( MSG_PREFS_EVENT_GROUPTITLE );
+	titles2[9] = NULL;
 
 
         #ifdef __AROS__
