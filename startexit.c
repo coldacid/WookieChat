@@ -298,7 +298,7 @@ void LoadAllLibs(void)
 
 #endif
 
-	Locale_Open( APPLICATIONNAME "avoid catalog for now", VERSION, REVISION );
+	Locale_Open( (STRPTR)(APPLICATIONNAME "avoid catalog for now"), VERSION, REVISION );
 
     //now that the catalog is open and locale library is open, lets give our context menu titles/items some labels
 

@@ -1,9 +1,12 @@
-CC        = i386-aros-gcc
-LIBS      = -lamiga -lmui  
-INCS      = 
-DEFINES   = 
-CFLAGS    = $(INCS) $(DEFINES) -std=gnu99 -Wall -Wno-format
-TARGET    = WookieChat_AROS
+CC          = i386-aros-gcc
+LIBS        = -lamiga -lmui
+INCS        =
+DEFINES     =
+CFLAGS      = $(INCS) $(DEFINES) -std=gnu99 -Wall -Wno-format -g -O0
+APPLICATION = WookieChat
+SYSTEM      = AROS
+CATALOGS    = english deutsch español français greek italiano magyar norsk polski svenska
+FLEXCAT     = /data/deadwood/gitV0AROS/master-linux-i386-d/bin/linux-i386/tools/flexcat
 
 SOURCES   = arexx_hooks.c auto_reconnect_server.c closeserverselectwin.c coloursettings.c \
             connect2server.c dcc.c display_logfile_lines.c do_waitselect_code.c \
@@ -14,19 +17,35 @@ SOURCES   = arexx_hooks.c auto_reconnect_server.c closeserverselectwin.c colours
 
 OBJECTS   = $(SOURCES:.c=.o)
 
-all: $(TARGET)
+all: $(APPLICATION)_strings.h catalogs $(APPLICATION)
  
-$(TARGET): $(OBJECTS)
-	$(CC) $(CFLAGS) -o $(TARGET) $(OBJECTS) $(LIBS)
+$(APPLICATION): $(OBJECTS)
+	$(CC) $(CFLAGS) -o $(APPLICATION)_$(SYSTEM) $(OBJECTS) $(LIBS)
 
 clean:
 	-rm -f $(OBJECTS)
 	-rm -f $(OBJECTS:.o=.d)
-	-rm -f $(TARGET)
+	-rm -f $(APPLICATION)_$(SYSTEM)
+	-rm -f catalogs/*/*.catalog
+	-rm -f $(APPLICATION)_strings.h
 
 -include $(OBJECTS:.o=.d)
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c -o $@ $<
 	@$(CC) -MM $(CFLAGS) $< > $*.d
+
+#  locale
+#
+
+$(APPLICATION)_strings.h: $(APPLICATION).cd
+	@echo "    [FLEXCAT] $@"
+	@$(FLEXCAT) $(APPLICATION).cd $@=/data/deadwood/gitV0AROS/master-linux-i386-d/bin/linux-i386/tools/C_h_orig.sd
+
+.PHONY: catalogs
+catalogs: $(patsubst %,catalogs/%/$(APPLICATION).catalog,$(CATALOGS))
+
+%.catalog: %.ct $(APPLICATION).cd
+	@echo "    [FLEXCAT] $@"
+	@$(FLEXCAT) $(APPLICATION).cd $< CATALOG=$@ MODIFIED
 	
