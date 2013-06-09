@@ -11,8 +11,9 @@
 ## Codeset polski 5
 ## Codeset svenska 0
 ## SimpleCatConfig CharsPerLine 200
+## autonum 1
 ;
-MSG_ERROR (0//)
+MSG_ERROR (1//)
 Error
 Fehler
 ERROR
@@ -24,7 +25,7 @@ Feil
 B³±d
 Fel
 ;
-MSG_BANMASK (1//)
+MSG_BANMASK
 Ban mask
 Bann Maske
 Máscara de Prohibir
@@ -36,7 +37,7 @@ Banmaske
 Maska blokady
 Ban mask
 ;
-MSG_BANSETBY (2//)
+MSG_BANSETBY
 Set by
 erstellt von
 Establecido por
@@ -48,7 +49,7 @@ Satt av
 Ustawiona przez
 Satt av
 ;
-MSG_BANDATEPLACED (3//)
+MSG_BANDATEPLACED
 Date placed
 Datum gesetzt
 Fecha
@@ -60,7 +61,7 @@ Dato satt
 Data umieszczenia
 Ban datum
 ;
-MSG_MODE_X (4//)
+MSG_MODE_X
 Close the current tab.
 Diesen Tabulator Schliessen.
 Cerrar la pestaña actual.
@@ -72,7 +73,7 @@ Steng denne taben.
 Zamyka aktualn± zak³adkê.
 Stäng flik.
 ;
-MSG_TOPIC (5//)
+MSG_TOPIC
 This is the channels current topic.
 Das ist das Grundthema.
 La temática actual del canal.
@@ -83,9 +84,8 @@ A csatornák jelenlegi témája.
 Dette er kanalens overskrift.
 To jest temat aktualnego kana³u.
 Detta är kanalens nuvarande ämne (topic).
-;MUI help bubble for the channels topic string gadget.
 ;
-MSG_MODE_T (6//)
+MSG_MODE_T
 Topic protection. This setting prevents regular users from changing the channel topic.
 Themenschutz.\nSie müssen Operator sein, um das Thema ändern zu können.
 Proteger temática. Evita a usuarios regulares\nque cambien la temática del canal.
@@ -96,9 +96,8 @@ Téma rögzítése. Ez a beállítás az általános felhasználók számára megakadályozza 
 Overskriftsbeskyttelse. Denne forhindrer ordinære brukere fra å forandre kanaloverskriften.
 Zabezpieczenie tematu. To ustawienie zapobiega zmianom tematu przez normalnych u¿ytkowników.
 Topic protection. Hindrar vanliga användare från att ändra kanalens ämne.
-;MUI help bubble for the T gadget
 ;
-MSG_MODE_N (7//)
+MSG_MODE_N
 No messaging. This setting forces users to be in the channel to be able to talk in it.
 Keine Nachrichten.\nNachrichten von Clients ausserhalb des Kanals verbieten.
 No mensajes. Obliga a los usuarios del\ncanal a permitir hablar en el mismo.
@@ -109,9 +108,8 @@ Nincs üzenõ. Csak a csatornában lévõ felhasználók szólhatnak bele.
 Ingen beskjeder. Dette tvinger brukerne til å være i kanalen for å kunne snakke i den.
 Przesy³anie wiadomo¶ci zabronione. To ustawienie wymusza na u¿ytkownikach obecno¶æ na kanale aby móc na nim rozmawiaæ.
 No messaging. Kräver att användaren finns i kanalen för att kunna skriva till den.
-;MUI help bubble for the N gadget
 ;
-MSG_MODE_S (8//)
+MSG_MODE_S
 Secret mode. If this is set, the channel is invisible until you have joined.
 Geheim-Modus.\nWenn gesetzt, ist der Kanal bis zum Eintreten unsichtbar.
 Modo secreto. Hace al canal "invisible"\nhasta que accede a él.
@@ -122,9 +120,8 @@ Titkosított. Beállításával a csatorna láthatatlan amíg nem csatlakozol.
 Hemmelig modus. Hvis denne er satt er kanalen usynlig inntil du har entret den.
 Tajny. Je¶li ta opcja jest w³±czona, kana³ jest niewidoczny, dopóki u¿ytkownik siê do niego nie do³±czy.
 Secret mode. Om satt, är kanalen osynlig tills du gått in i den.
-;MUI help bubble for the S gadget
 ;
-MSG_MODE_I (9//)
+MSG_MODE_I
 Invite only. Only users who have been invited to the channel may join.
 Nur für eingeladene Benutzer.
 Sólo invitados. Permite acceder unicamente\na usuarios que han sido invitados.
@@ -135,9 +132,8 @@ Csak meghívóval. Csatlakozni csak a meghívottak részére lehetséges.
 Kun invitasjon. Kun brukere som er invitert til kanalen kan entre den.
 Dostêpny tylko za zaproszeniem. Tylko u¿ytkownicy, którzy zostan± zaproszeni bêd± mogli siê do³±czyæ.
 Invite only. Bara inbjudna användare får komma in.
-;MUI help bubble for the I gadget
 ;
-MSG_MODE_P (10//)
+MSG_MODE_P
 Private mode. If set, channel topic is not shown on global channel lists.
 Privat-Modus.\nWenn gesetzt, wird das Thema dieses Kanals nicht in der allgemeinen Kanalliste angezeigt.
 Modo privado. La temática del canal no se\nmuestra en la lista global de canales.
@@ -148,9 +144,8 @@ Privát. Beállításával a csatorna témája nem jeleneik meg a globális csatorna lis
 Privat modus. Hvis denne er satt vises ikke kanalen i globale kanallister.
 Prywatny. Je¶li ta opcja jest w³±czona, temat kana³u nie zostanie wy¶wietlony na globalnej li¶cie kana³ów.
 Private mode. Om satt, kommer kanalens ämne inte att visas i globala listningar.
-;MUI help bubble for the P gadget
 ;
-MSG_MODE_M (11//)
+MSG_MODE_M
 Moderated mode. Only users with operator, halfop or voice status (thats @ % or +) may talk in channel when set.
 Moderierter Kanal.\nNur Nutzer mit Operator, Halfop oder Voice Status (das sind @ % oder +) dürfen in diesem Kanal sprechen, wenn gesetzt.
 Modo moderado. Pueden hablar solamente\noperadores, medio-operadores o con voz\n(op[@], halfop[%%], voice[+]).
@@ -161,9 +156,8 @@ Moderált. Csak az operator, halfop vagy voice (vagyis @ % vagy +) státuszban leh
 Moderert modus. Bare brukere som er operatør, halvoperatør eller som har voice-status (de med @ % eller +) kan prate i kanalen.
 Tryb moderowany. Po w³±czeniu tej opcji, tylko u¿ytkownicy ze statusem operatora, pó³operatora lub g³osem (@ % lub +) mog± rozmawiaæ na kanale.
 Moderated mode. Bara användare med operator, halfop eller voice (dvs. @ % or +) får tala i kanalen.
-;MUI help bubble for the M gadget
 ;
-MSG_MODE_B (12//)
+MSG_MODE_B
 Click to view a list of all banmasks for this channel.
 Klicke um eine komplette Liste aller Bannmasken für diesen Kanal zu sehen.
 Pulse para ver la lista de todas\nlas prohibiciones en este canal.
@@ -174,9 +168,8 @@ Kattints ide a csatornához tartozó teljes banmaszk listáért.
 Klikk for å vise en liste over alle banmasker for denne kanalen.
 Naci¶nij, aby zobaczyæ listê wszystkich masek blokad dla tego kana³u.
 Klicka för att visa en lista över kanalens ban villkor.
-;MUI help bubble for the B gadget
 ;
-MSG_MODE_K (13//)
+MSG_MODE_K
 Keyword mode. When this is set, users need to supply a keyword (password) to enter.
 Passwort-Modus, wurde er gesetzt, benötigen Nutzer ein Passwort um einzutreten.
 Modo palabra clave. El usuario\ndebe indicar una palabra clave\n(contraseña) para entrar.
@@ -187,9 +180,8 @@ Kulcsszóval. Beállításával a felhasználól egy kulcsszó (jelszó) megadására kötel
 Passordmodus. Når denne er satt, må brukere gi et passord for å entre kanalen.
 Tryb z has³em. Je¶li ta opcja jest w³±czona, u¿ytkownicy bêd± musieli podaæ has³o, aby móc siê do³±czyæ.
 Keyword mode. Om satt, behöver användare ge ett lösenord för att komma in.
-;MUI help bubble for the K gadget
 ;
-MSG_MODE_K_STRING (14//)
+MSG_MODE_K_STRING
 Current channel keyword.
 gegenwärtiges Kanal Kennwort.
 Contraseña actual del canal.
@@ -200,9 +192,8 @@ Jelenlegi csatorna kulcsszava.
 Aktiv kanals passord..
 Aktualne has³o kana³u.
 Gällande lösenord.
-;MUI help bubble for the keyword string gadget
 ;
-MSG_MODE_L (15//)
+MSG_MODE_L
 Enforce a limit to how many users can currently join the channel.
 Limitiert die Anzahl der Nutzer für diesen Kanal.
 Forzar el límite de usuarios\nposibles a acceder al canal.
@@ -213,9 +204,8 @@ Korlátozás bevezetése a csatornához jelenleg csatlakoztatható létszámban.
 Setter en grense på hvor mange brukere som kan entre kanalen.
 Ustala limit maksymalnie po³±czonych u¿ytkowników.
 Sätt en gräns för hur många användare som kan komma in i kanalen.
-;MUI help bubble for the L gadget
 ;
-MSG_MODE_L_STRING (16//)
+MSG_MODE_L_STRING
 Current user limit.
 Gegenwärtiges Benutzerlimit.
 Límite actual de usuarios.
@@ -226,9 +216,8 @@ Létszámkorlát.
 Aktuell grense på brukere.
 Obecny limit u¿ytkowników.
 Nuvarande max användarantal.
-;MUI help bubble for the Current user limit
 ;
-MSG_HOSTNAME_STR (17//)
+MSG_HOSTNAME_STR
 This is the hostname of the user you are currently talking to.
 Das ist der Host-Name des Nutzers mit dem gerade gechattet wird.
 Nombre del anfitrión del usuario\ncon el que está hablando.
@@ -239,9 +228,8 @@ Beszélgetõ partner host neve.
 Dette er hostnavnet på brukeren som du snakker med.
 Jest to nazwa wêz³a u¿ytkownika, z którym aktualnie rozmawiasz.
 Detta är värdnamnet till den du pratar med just nu.
-;MUI help bubble for the hostname string gadget in a private tab
 ;
-MSG_ERROR_NLIST (18//)
+MSG_ERROR_NLIST
 Please download and install the NList MUI Class from aminet\n
 Bitte die MUI Klasse 'nlist.mcc'aus dem Aminet laden und installieren\n
 Descargue e instale la clase NList de MUI de AMINET.\n
@@ -252,9 +240,8 @@ Kérlek töltsd le és telepítsd az NList MUI osztályt az aminetrõl\n
 Vennligst last ned og installer NList MUI klassen fra aminet\n
 Proszê pobraæ i zainstalowaæ klasê MUI NList z Aminetu\n
 Ladda ned och installera MUI-klassen NList från aminet\n
-;Error message when NList.mcc fails to load
 ;
-MSG_GENERAL (19//)
+MSG_GENERAL
 General
 Allgemein
 General
@@ -265,9 +252,8 @@ Generale
 Generell
 G³ówne
 Generellt
-;General "settings tab name"
 ;
-MSG_LOGGING (20//)
+MSG_LOGGING
 Logging
 Mitschnitt
 Registrar
@@ -278,9 +264,8 @@ Naplózás
 Logging
 Raportowanie
 Logga
-;Logging "settings tab name"
 ;
-MSG_SOUNDS (21//)
+MSG_SOUNDS
 Sounds
 Klänge
 Sonidos
@@ -291,9 +276,8 @@ Hangok
 Lyder
 D¼wiêki
 Ljud
-;Sounds "settings tab name"
 ;
-MSG_ALIASES (22//)
+MSG_ALIASES
 Aliases
 Aliases
 Aliases
@@ -304,9 +288,8 @@ Helyettesítõk
 Aliaser
 Aliasy
 Alias
-;Aliases "settings tab name"
 ;
-MSG_REMOVE_URL (23//)
+MSG_REMOVE_URL
 Remove URL(s)
 Entferne URL(s)
 Eliminar URLs
@@ -317,9 +300,8 @@ URL eltávolítása
 Fjerne URL(er)
 Usuñ adres(y)
 Ta bort URL
-;URL Grabber window .. "remove" button to remove url from the list
 ;
-MSG_CLEAR_ALL_URL (24//)
+MSG_CLEAR_ALL_URL
 Clear All
 Lösche alles
 Limpiar todo
@@ -330,9 +312,8 @@ Mindet törli
 Fjerne alle
 Wyczy¶æ wszystko
 Rensa allt
-;URL Grabber window .. "clear all button" to clear all urls from the list
 ;
-MSG_URL_GRABBER_WINDOW_TITLE (25//)
+MSG_URL_GRABBER_WINDOW_TITLE
 URL Grabber - Double click URL to Open
 URL Greifer - Doppelklick um URL zu öffnen
 Gestor URLs - Doble pulsación para abrirla
@@ -343,9 +324,8 @@ URL Gyûjtõ - Dupla kattintás az URL megnyitásához
 URL Fanger - Dobbelklikk URL for å åpne
 Kolekcjoner adresów URL - aby otowrzyæ dwukliknij na adresie
 URL Grabber - Dubbelklicka URL för att öppna
-;URL Grabber window title
 ;
-MSG_ABOUT (26//)
+MSG_ABOUT
 About...
 Über ...
 Acerca de...
@@ -356,9 +336,8 @@ Névjegy...
 Om...
 O programie...
 Om ...
-;about...
 ;
-MSG_YES (27//)
+MSG_YES
 Yes
 Ja
 Sí
@@ -369,9 +348,8 @@ Igen
 Ja
 Tak
 Ja
-;yes
 ;
-MSG_NO (28//)
+MSG_NO
 No
 NEIN
 No
@@ -382,9 +360,8 @@ Nem
 Nei
 Nie
 Nej
-;no
 ;
-MSG_DCC_CHOOSE_FILENAME (29//)
+MSG_DCC_CHOOSE_FILENAME
 File To Send
 Datei zum Senden
 Elija fichero a enviar
@@ -395,9 +372,8 @@ Küldendõ fájl
 Fil å sende
 Plik do wys³ania
 Fil att skicka
-;ASL Requester title for selecting a file to DCC SEND
 ;
-MSG_BUTTON_SEND_FILE (30//)
+MSG_BUTTON_SEND_FILE
 Send File
 Sende Datei
 Enviar fichero
@@ -408,9 +384,8 @@ Fájl küldése
 Send fil
 Wy¶lij plik
 Skicka fil
-;button for sending a file with DCC SEND
 ;
-MSG_DCC_SEND_WINDOW (31//)
+MSG_DCC_SEND_WINDOW
 DCC SEND File
 DCC SEND File
 DCC SEND
@@ -421,9 +396,8 @@ DCC SEND fájlküldés
 DCC SEND fil
 DCC SEND
 DCC SEND Fil
-;title text for the initiate dcc send window
 ;
-MSG_REOFFER (32//)
+MSG_REOFFER
 Reoffer File
 Biete die Datei erneut an
 Reintentar
@@ -434,9 +408,8 @@ Fájlt újra ajánl
 Send på nytt
 Zaoferuj plik ponownie
 Erbjud fil igen
-;reoffer a dcc send file
 ;
-MSG_CANCEL_SEND (33//)
+MSG_CANCEL_SEND
 Cancel Send
 Senden abbrechen
 Cancelar envío
@@ -447,9 +420,8 @@ Küldés megszakítása
 Avbryt sending
 Poniechaj wysy³ania
 Avbryt sändning
-;cancel a dcc send transfer
 ;
-MSG_REMOVE (34//)
+MSG_REMOVE
 Remove
 Entfernen
 Eliminar
@@ -460,9 +432,8 @@ Eltávolítás
 Fjern
 Usuñ
 Ta bort
-;remove a dcc send transfer from the list
 ;
-MSG_RESUME (35//)
+MSG_RESUME
 Resume
 Anfügen
 Reanudar
@@ -473,9 +444,8 @@ Folytatás
 Fortsett
 Wznów
 Återuppta
-;resume
 ;
-MSG_OVERWRITE (36//)
+MSG_OVERWRITE
 Overwrite
 Überschreiben
 Sobreescribir
@@ -486,9 +456,8 @@ Felülírás
 Skriv over
 Nadpisz
 Skriv över
-;overwrite
 ;
-MSG_ABORT (37//)
+MSG_ABORT
 Abort
 Abbrechen
 Cancelar
@@ -499,9 +468,8 @@ Megszakítás
 Stopp!
 Przerwij
 Avbryt
-;abort
 ;
-MSG_ALREADY_EXISTS_WINDOW_TITLE (38//)
+MSG_ALREADY_EXISTS_WINDOW_TITLE
 Incoming File already exists
 Ankommende Datei existiert bereits
 WookieChat: Aviso
@@ -512,9 +480,8 @@ Beérkezõ fájl már létezik
 Innkommene fil eksisterer allerede
 Przychodz±cy plik ju¿ istnieje
 Inkommande fil finns redan
-;incoming File already exists
 ;
-MSG_CHOOSE_DOWNLOAD_PATH (39//)
+MSG_CHOOSE_DOWNLOAD_PATH
 Choose a path to save your downloads to.
 Wähle einen Pfad um Deine Downloads zu speichern.
 Senda para las descargas.
@@ -525,9 +492,8 @@ Válaszd ki a letöltések helyét.
 Velg stinavn for å lagre dine filer til.
 Wybierz ¶cie¿kê dostêpu zapisywania pobieranych plików.
 Välj sökväg att spara fil på.
-;choose a path to save your downloads to.
 ;
-MSG_ACCEPT (40//)
+MSG_ACCEPT
 Accept
 Akzeptieren
 Aceptar
@@ -538,9 +504,8 @@ Elfogad
 Godta
 Akceptuj
 Acceptera
-;accept transfer
 ;
-MSG_CANCEL_TRANSFER (41//)
+MSG_CANCEL_TRANSFER
 Cancel
 Abbrechen
 Cancelar
@@ -551,9 +516,8 @@ Mégsem
 Avbryt
 Poniechaj
 Avbryt
-;cancel transfer
 ;
-MSG_PREFS_NICK_COMPLETION_STYLE (42//)
+MSG_PREFS_NICK_COMPLETION_STYLE
 Nick Completion Style
 Nicknamens Vervollständigung wie :
 Estilo en los aliases:
@@ -564,9 +528,8 @@ Nick kiegészítési stílus
 Nicknavn sluttføringsstil
 Styl uzupe³niania pseudonimów
 Stil för nick-komplettering
-;nick Completion Style
 ;
-MSG_PREFS_NICK_COMPLETION_STYLE_HELP (43//)
+MSG_PREFS_NICK_COMPLETION_STYLE_HELP
 AmIRC style puts a colon and a space after users nicks if used at the beginning of a line, or just a space afterwards anywhere else. mIRC style: No colon or spaces are used, only the nick is displayed.
 AmIRC Stil: Setzt hinter den Nicknamen einen Doppelpunkt und ein Leerzeichen am Satzanfang oder ein Leerzeichen im Satz.\nmIRC Stil: Kein Doppelpunkt oder Leerzeichen, nur der Name wird \
 vervollständigt.
@@ -583,9 +546,8 @@ sluttføringsstil: Verken kolon eller åpenrom brukes, kun nicknavn vises.
 Styl AmIRC-a umieszcza dwukropek i  spacjê po pseudonimie u¿ytkowników je¶li zostanie u¿yte na pocz±tku linii, lub po prostu spacjê po pseudonimie w ka¿dym innym miejscu. Styl mIRC-a: bez dwukropka i \
 odstêpu, tylko pseudonim jest dope³niany.
 AmIRC sätter ett kolon och mellanslag efter ett nick i början på en rad, eller bara ett mellanslag efter överallt annars. mIRC: Inget kolon eller mellanslag, bara nicket visas.
-;amIRC style puts a colon and a space after users nicks if used at the beginning of a line, or just a space afterwards anywhere else. mIRC style: No colon or spaces are used, only the nick is displayed
 ;
-MSG_ASK (44//)
+MSG_ASK
 Ask
 Nachfragen
 Preguntar
@@ -596,9 +558,8 @@ Kérés
 Spør
 Zapytaj
 Fråga
-;ask .. [ask what user wants to do]
 ;
-MSG_PREFS_AUTO_REJOIN (45//)
+MSG_PREFS_AUTO_REJOIN
 Auto-rejoin channels when kicked.
 Automatischer Wiedereintritt in Kanal nachdem man gekickt wurde.
 Auto-reacceder al ser expulsado.
@@ -609,9 +570,8 @@ Automatikus újracsaktlakozás kirúgáskor.
 Re-entre kanaler automatisk ved kick.
 Automatycznie przy³±czaj po wyrzuceniu.
 Återanslut automatiskt efter kick.
-;auto-rejoin channels when kicked
 ;
-MSG_PREFS_AUTO_OPEN_TAB (46//)
+MSG_PREFS_AUTO_OPEN_TAB
 Auto-open private query tabs when messaged.
 Automatisch Tabs öffnen, wenn Nachricht kommt.
 Abrir pestaña privada al recibir mensaje.
@@ -622,9 +582,8 @@ Automatikus privát lekérdezõ nyitás üzenet érkezésekor.
 Auto-åpne private spørre-tab'er ved beskjeder.
 Automatycznie otwieraj zak³adkê rozmów prywatnych po otrzymaniu wiadomo¶ci.
 Öppna flik automatiskt vid privat meddelande.
-;auto-open private query tabs when messaged
 ;
-MSG_PREFS_MAX_LINES_BUFFER (47//)
+MSG_PREFS_MAX_LINES_BUFFER
 Maximum number of lines to keep in buffer.
 Maximale Zeilenzahl des Puffers.
 Líneas máximas de búfer.
@@ -635,9 +594,8 @@ A buffer-ben tartott sorok maximális száma.
 Maksimalt antall linjer å lagre i buffer.
 Maksymalna liczba linii przechowywanych w buforze.
 Max antal rader att hålla i bufferten.
-;maximum number of lines to keep in buffer
 ;
-MSG_PREFS_LOG_CHANNELS (48//)
+MSG_PREFS_LOG_CHANNELS
 Log channels
 Schneide Kanäle mit
 Canales
@@ -648,9 +606,8 @@ Csatornák naplózása
 Logge kanaler
 Raportuj kana³y
 Logga kanaler
-;log channels
 ;
-MSG_PREFS_LOG_PRIVATE (49//)
+MSG_PREFS_LOG_PRIVATE
 Log private chats
 Schneide private Kanäle mit
  Charlas privadas
@@ -661,9 +618,8 @@ Privát beszélgetések naplózása
 Logge private samtaler
 Raportuj rozmowy prywatne
 Logga privata konversationer
-;log private chats
 ;
-MSG_DEFAULT_KICK_MESSAGE (50//)
+MSG_DEFAULT_KICK_MESSAGE
 Default kick message
 Kick Meldung
 Al expulsar
@@ -674,9 +630,8 @@ Alap kick üzenet
 Standard beskjed ved kick
 Domy¶lna wiadomo¶æ przy wyrzuceniu
 Standard kick-meddelande
-;default Kick Message
 ;
-MSG_DEFAULT_BAN_MESSAGE (51//)
+MSG_DEFAULT_BAN_MESSAGE
 Default ban message
 Bann Nachricht
 Mensaje al prohibir
@@ -687,9 +642,8 @@ Alap ban üzenet
 Standard beskjed ved ban
 Domy¶lna wiadomo¶æ przy blokadzie
 Standard ban-meddelande
-;default Ban Message
 ;
-MSG_QUIT_MESSAGE (52//)
+MSG_QUIT_MESSAGE
 Quit message
 Meldung beim Beenden
 Al salir:
@@ -700,9 +654,8 @@ Messaggio di terminazione (quit)
 Avslutningsbeskjed
 Wiadmomo¶æ przy zakoñczeniu pracy
 Avslutningsmeddelande
-;quit Message
 ;
-MSG_PART_MESSAGE (53//)
+MSG_PART_MESSAGE
 Part message
 Meldung beim Verlassen
 Al abandonar:
@@ -713,9 +666,8 @@ Messaggio di uscita (part)
 Avslutningsbeskjed for kanal
 Wiadomo¶æ przy od³±czeniu
 Lämna-meddelande
-;part Message
 ;
-MSG_REQUEST_WHOIS (54//)
+MSG_REQUEST_WHOIS
 Request whois information
 Frage nach 'whois' Information
 Información del usuario (WHOIS)
@@ -726,9 +678,8 @@ Whois (Ki vagy?) információ kérése
 Etterspør whois-informasjon
 ¯±daj informacji "whois"
 Begär whois-information
-;"request whois information" when double clicking on a persons nick in the nicklist
 ;
-MSG_OPEN_TAB (55//)
+MSG_OPEN_TAB
 Open private query tab
 Öffne privaten Tab
 Abrir pestaña privada
@@ -739,9 +690,8 @@ Privát panelt nyit
 Åpne privat spørre-tab
 Otwórz zak³adkê rozmowy prywatnej
 Öppna privat flik
-;"Open private query tab" when double clicking on a persons nick in the nicklist
 ;
-MSG_DOUBLECLICK_GROUP_FRAME_TITLE (56//)
+MSG_DOUBLECLICK_GROUP_FRAME_TITLE
 Nicklist doubleclick actions
 Doppelklick Aktion in der Nicknamensliste
 Doble Pulsación Sobre Aliases
@@ -752,7 +702,6 @@ Nick lista duplaklikk események
 Dobbelklikk-hendelser for nickliste
 Dzia³anie dwukliku na li¶cie pseudonimów
 Dubbelklicksfunktioner för nicklistan
-;nicklist doubleclick actions
 ;
 MSG_CUSTOM_TIMESTAMPS (57//300)
 Customise your timestamps! use these codes: %h for the hour, %m for the minute, and %s for the second. This is useful to see what time an event happened (such as a user joining, or speaking).
@@ -769,9 +718,8 @@ Lag ditt eget tidsstempel! Bruk %h for timer, %m for minutter og %s for sekunder
 Spersonalizuj swoje oznaczenia czasowe! U¿yj %h dla godzin, %m - minut i %s - sekund. Jest to u¿yteczne, je¶li chcesz wiedzieæ kiedy co¶ siê wydarzy³o (np. u¿ytkownik siê do³±czy³ lub co¶ \
 powiedzia³).
 Modifiera tidstämplingen. Använd %h för timmar, %m för minuter, och %s för sekunder. Användbart för att se när något hände (såsom när en användare kom in, eller talade).
-;MUI help bubble on how to configure timestamps
 ;
-MSG_TIMESTAMP_FORMAT (58//)
+MSG_TIMESTAMP_FORMAT
 Timestamp Format
 Uhrzeitformat
  Formato:
@@ -782,9 +730,8 @@ Idõlenyomat alakja
 Format for tidsstempel
 Format oznaczeñ czasowych
 Tidstämplingsformat
-;timestamp format
 ;
-MSG_HIGHLIGHT (59//)
+MSG_HIGHLIGHT
 Words to Highlight
 Worte zum Hervorheben
 Resaltar:
@@ -795,9 +742,8 @@ Kiemelendõ szavak
 Ord som skal høylyses
 S³owa do pod¶wietlania
 Ord att markera
-;label name "Words to Highlight"
 ;
-MSG_QUIT_REQUESTER (60//)
+MSG_QUIT_REQUESTER
 Quit Program?
 Programm beenden?
 ¿Salir de WookieChat?
@@ -808,9 +754,8 @@ Program elhagyása?
 Avslutte programmet?
 Skoñczyæ pracê?
 Avsluta programmet?
-;quit program?
 ;
-MSG_FILE_TO_SEND (61//)
+MSG_FILE_TO_SEND
 File to send
 Datei zum Senden
 Fichero:
@@ -821,9 +766,8 @@ Küldendõ fájl
 Fil å sende
 Plik do wys³ania
 Fil att skicka
-;dcc send initiate window, "file to send" label
 ;
-MSG_WINDOW_TITLE_DCC_INCOMING (62//)
+MSG_WINDOW_TITLE_DCC_INCOMING
 Incoming File Transfers...
 Ankommender Dateitransfer ...
 Recibir ficheros...
@@ -834,9 +778,8 @@ Beérkezõ fájl átvitel...
 Innkommende filoverføringer...
 Pliki przychodz±ce...
 Inkommande fil ...
-;the window titlebar text for incoming dcc transfers
 ;
-MSG_WINDOW_TITLE_DCC_OUTGOING (63//)
+MSG_WINDOW_TITLE_DCC_OUTGOING
 Outgoing File Transfers...
 Ausgehender Dateitransfer ...
 Enviar ficheros...
@@ -847,9 +790,8 @@ Kimenõ fájl átvitel...
 Utgående filoverføringer...
 Pliki wychodz±ce...
 Utgående fil ...
-;the window titlebar text for outgoing dcc transfers
 ;
-MSG_HIGHLIGHT_TITLE (64//)
+MSG_HIGHLIGHT_TITLE
 Highlight
 Hervorheben
 Lista De Palabras A Resaltar
@@ -860,9 +802,8 @@ Kiemelés
 Høylyse
 Pod¶wietlanie
 Markera titel
-;the title of the "highlight prefs" group
 ;
-MSG_PREFS_USE_TIMESTAMPS (65//)
+MSG_PREFS_USE_TIMESTAMPS
 Use timestamps
 Zeige Uhrzeit
 Mostrar
@@ -873,9 +814,8 @@ Idõlenyomat használata
 Bruk tidsstempel
 U¿ywaj oznaczeñ czasowych
 Använd tidstämpling
-;the label for the "use timestamps" checkmark
 ;
-MSG_TIMESTAMPS_TITLE (66//)
+MSG_TIMESTAMPS_TITLE
 Timestamps
 Uhrzeit
 Hora
@@ -886,9 +826,8 @@ Idõlenyomatok
 Tidsstempler
 Oznaczenia czasowe
 Tidstämpling
-;the title of the "timestamp prefs" group
 ;
-MSG_TEXT_EDITOR_HELP (67//)
+MSG_TEXT_EDITOR_HELP
 This text editor is used when you edit your "Perform on Connect" scripts (from the Server Selection window).
 Dieser Texteditor wird benutzt, wenn Verbindungsskripte editiert werden (Vom Serverauswahlfenster/Starte bei Verbindung).
 Editor de scripts al pulsar el\nbotón "Al conectar realizar..."\nde la ventana/lista de servidores.
@@ -899,9 +838,8 @@ A "Kapcsolódáskor Végrehajtandó" szkript készítéséhez használt szövegszerkesztõ 
 Denne teksteditoren brukes når du editerer dine "Utføre ved oppstart"-handlinger (fra Servervalg-vinduet).
 Ten edytor tekstu zustanie u¿yty do edycji skryptu "Wykonaj po po³±czeniu" (z okna wyboru serwera).
 Denna text editor används när du ändrar i "Perform on Connect"-script (från servervals-fönstret).
-;mui help bubble explaining that this text editor is used for editing the "perform on connect" scripts in the server selection window
 ;
-MSG_TEXT_EDITOR (68//)
+MSG_TEXT_EDITOR
 Text Editor
 Texteditor
 Editor:
@@ -912,9 +850,8 @@ Szövegszerkesztõ
 Teksteditor
 Edytor tekstu
 Text Editor
-;label for the "Text Editor" setting
 ;
-MSG_WEB_BROWSER_LABEL (69//)
+MSG_WEB_BROWSER_LABEL
 Web Browser
 Web Browser
 Navegador:
@@ -925,9 +862,8 @@ Böngészõ
 Nettleser
 Przegl±darka stron WWW
 Webbläsare
-;label for the "Web Browser" setting
 ;
-MSG_WEB_BROWSER_HELP (70//)
+MSG_WEB_BROWSER_HELP
 Choose a web browser to use with WookieChat's "URL Grabber" Window. Double clicking an address there will load in this chosen browser.
 Einen Webbrowser wählen, um ihn mit WookieChats "URL Grabber"zu nutzen. Bei einem Doppelklick auf eine Adresse wird automatisch in den voreingestellen Browser geladen.
 Navegador que usa WookiChat en el "Gestor URLs"\nal pulsar dos veces en una de sus entradas.
@@ -938,9 +874,8 @@ A WookieChat "URL Gyûjtõ" ablak használatához válassz egy internet böngészõt. Ez
 Velg en nettleser til bruk for WookieChat sin "URL-fanger". Ved å dobbelklikke en adresse der vil siden lastes i den valgte nettleseren.
 Wybierz przegl±darkê stron WWW, która bêdzie wykorzystywana w oknie "Kolekcjonera adresów URL". Dwuklik na adresie w tym oknie wczyta go w wybranej przegl±darce.
 Välj en webbläsare att använda med WookieChat's "URL Grabber"-fönster. Dubbelklicka på en adress där och den laddas i den valda läsaren.
-;MUI short help explaining what this setting is for in wookiechat
 ;
-MSG_WEB_BROWSER_REQUESTER (71//)
+MSG_WEB_BROWSER_REQUESTER
 Choose a browser
 Einen Browser wählen
 Elija navegador
@@ -951,9 +886,8 @@ Böngészõ választása
 Velg en nettleser
 Wybierz przegl±darkê
 Välj en webbläsare
-;Text to appear in an ASL requester asking user to choose a browser
 ;
-MSG_SAVE (72//)
+MSG_SAVE
 Save
 Speichern
 Guardar
@@ -964,9 +898,8 @@ Mentés
 Lagre
 Zapisz
 Spara
-;save
 ;
-MSG_USE (73//)
+MSG_USE
 Use
 Benutzen
 Usar
@@ -977,9 +910,8 @@ Használat
 Bruk
 U¿yj
 Använd
-;use
 ;
-MSG_CANCEL (74//)
+MSG_CANCEL
 Cancel
 Abbrechen
 Cancelar
@@ -990,9 +922,8 @@ Mégsem
 Avbryt
 Poniechaj
 Avbryt
-;cancel
 ;
-MSG_DCC_AUTO_ACCEPT (75//)
+MSG_DCC_AUTO_ACCEPT
 Auto accept incoming DCC File Transfers
 Automatisch eintreffenden DCC Datei-Transfer akzeptieren
 Auto-aceptar transferencias de ficheros DCC
@@ -1003,9 +934,8 @@ Beérkezõ DCC fájl átvitelek automatikus elfogadása
 Auto-godta innkommende DCC filoverføringer
 Automatycznie akceptuj przychodz±ce transfery plików DCC
 Acceptera inkommande DCC-filer automatiskt
-;auto accept incoming DCC File Transfers
 ;
-MSG_DCC_ACTION (76//)
+MSG_DCC_ACTION
 Action to take if file exists
 Wenn Datei vorhanden, folgendes wählen:
 Acción si el fichero existe:
@@ -1016,9 +946,8 @@ Esemény már létezõ fájl esetén
 Aksjon hvis filen eksisterer
 Co zrobiæ, gdy plik ju¿ istnieje
 Att göra om fil redan finns
-;action to take if file exists
 ;
-MSG_DCC_LOCAL_ADDRESS (77//)
+MSG_DCC_LOCAL_ADDRESS
 Use local address for DCC connections
 Lokale Adresse für DCC Verbindungen benutzen
 Usar dirección local para conexiones DCC
@@ -1029,9 +958,8 @@ Helyi cím használata DCC kapcsolatokhoz
 Bruk lokale adresser for DCC-forbindelser
 U¿yj adresu lokalnego dla po³±czeñ DCC
 Använd lokal adress för DCC-anslutningar
-;use local address for DCC connections
 ;
-MSG_PORT_RANGE_START (78//)
+MSG_PORT_RANGE_START
 DCC Port range from
 DCC Port Bereich von
 Rango puerto DCC de:
@@ -1042,9 +970,8 @@ DCC port sáv eleje
 DCC portområde fra
 Zakres portów DCC
 DCC port-område börjar
-;DCC port range from
 ;
-MSG_PORT_RANGE_END (79//)
+MSG_PORT_RANGE_END
 to
 bis
  a:
@@ -1055,9 +982,8 @@ vége
 til
  do
 DCC port-område slutar
-;To
 ;
-MSG_PORT_RANGE_START_HELP (80//)
+MSG_PORT_RANGE_START_HELP
 This is the start of the port range for incoming DCC connections. This is configurable so you can choose which ports to use and open up on any firewall you might have.
 Dieses ist der Startbereich für ankommende DCC Verbindungen. Das ist konfigurierbar, so kann gewählt werden, welcher Port offen ist und mit jeder Firewall funktioniert.
 Inicio del rango de puertos para conexiones\nDCC. Es configurable y puede elegir el\nrango que desee usar y habilitarlos en su\ncortafuegos (firewall).
@@ -1069,9 +995,8 @@ Itt kezdõdik a beérkezõ DCC kapcsolatok port sávja. Mindez beállítható, hogy az 
 Dette er starten på et portområde for innkommende DCC-forbindelser. Dette er konfigurerbart slik at du kan velge hvilke porter du vil bruke, og åpne opp en eventuell brannmur du har.
 Jest to pocz±tkowy numer zakresu portów dla przychodz±cych po³±czeñ DCC. Mo¿esz wybraæ których portów chcesz u¿ywaæ, lub które porty masz otwarte na zaporze ogniowej.
 Här är början på portområdet för inkommande DCC-anslutningar. Detta är konfigurerbart så att du kan välja vilka portar att använda och öppna i brandväggen.
-;this is the start of the port range for incoming DCC connections. This is configurable so you can choose which ports to use and open up on any firewall you might have
 ;
-MSG_PORT_RANGE_END_HELP (81//)
+MSG_PORT_RANGE_END_HELP
 This is the end of the port range for incoming DCC connections. This is configurable so you can choose which ports to use and open up on any firewall you might have.
 Dieses ist der Endbereich für ankommende DCC Verbindungen. Das ist konfigurierbar, so kann gewählt werden, welcher Port offen ist und mit jeder Firewall funktioniert.
 Fin del rango de puertos para conexiones\nDCC. Es configurable y puede elegir el\nrango que desee usar y habilitarlos en\nsu cortafuegos (firewall).
@@ -1083,9 +1008,8 @@ Ez a vége a beérkezõ DCC kapcsolatok port sávjának. Mindez beállítható, hogy az 
 Dette er slutten på et portområde for innkommende DCC-forbindelser. Dette er konfigurerbart slik at du kan velge hvilke porter du vil bruke, og åpne opp en eventuell brannmur du har.
 Jest to koñcowy numer zakresu portów dla przychodz±cych po³±czeñ DCC. Mo¿esz wybraæ których portów chcesz u¿ywaæ, lub które porty masz otwarte na zaporze ogniowej.
 Här är slutet på portområdet för inkommande DCC-anslutningar. Detta är konfigurerbart så att du kan välja vilka portar att använda och öppna i brandväggen.
-;this is the end of the port range for incoming DCC connections. This is configurable so you can choose which ports to use and open up on any firewall you might have
 ;
-MSG_NEVER (82//)
+MSG_NEVER
 Never
 Nie
 Nunca
@@ -1096,9 +1020,8 @@ Soha
 Aldri
 Nigdy
 Aldrig
-;sound alerts: never
 ;
-MSG_ALWAYS (83//)
+MSG_ALWAYS
 Always
 Immer
 Siempre
@@ -1109,9 +1032,8 @@ Mindig
 Alltid
 Zawsze
 Alltid
-;sound alerts: always
 ;
-MSG_ONLY_WHEN_WINDOW_INACTIVE (84//)
+MSG_ONLY_WHEN_WINDOW_INACTIVE
 Only when window is inactive
 Nur wenn Fenster inaktiv
 Sólo si la ventana está inactiva
@@ -1122,9 +1044,8 @@ Csak akkor ha az ablak inaktív
 Bare når vindu er inaktivt
 Tylko, gdy okno jest nieaktywne
 Bara när fönstret är inaktivt
-;sound alerts: only when window is inactive
 ;
-MSG_SOUND_SAMPLE_TAB_OPEN (85//)
+MSG_SOUND_SAMPLE_TAB_OPEN
 Sample to play when a tab opens
 Klang wird beim Öffnen von Tabs gespielt
 Al abrir pestaña:
@@ -1135,9 +1056,8 @@ Hangminta lejátszása panel megnyitásakor
 Lyd å spille når tab åpner
 D¼wiêk odtwarzany przy otwieraniu zak³adki
 Ljud att spela när en flik öppnas
-;label "sample to play when a tab opens"
 ;
-MSG_PLAY_SAMPLE (86//)
+MSG_PLAY_SAMPLE
 Play sample
 Klang abspielen
 Reproducir:
@@ -1148,9 +1068,8 @@ Hangminta lejátszása
 Spill lyd
 Odtwórz d¼wiêk
 Spela ljud
-;play sample
 ;
-MSG_CHOOSE_FILENAME (87//)
+MSG_CHOOSE_FILENAME
 Choose a filename
 Dateinamen auswählen
 Elija fichero
@@ -1161,9 +1080,8 @@ Válassz egy fájlnevet
 Velg et filnavn
 Wybierz plik
 Välj en fil
-;"choose a filename" from the ASL requester
 ;
-MSG_SOUND_SAMPLE_HIGHLIGHT (88//)
+MSG_SOUND_SAMPLE_HIGHLIGHT
 Sample to play on highlight
 Klang der bei markiertem Text abgespielt wird
 Al resaltar:
@@ -1174,9 +1092,8 @@ Kiemeléskor lejátszott hangminta
 Lyd å spille ved høylysing
 D¼wiêk odtwarzany przy pod¶wietlaniu
 Ljud att spela vid markering
-;label "sample to play on highlight"
 ;
-MSG_SAMPLES_PATH (89//)
+MSG_SAMPLES_PATH
 Samples Path for CTCP SOUND
 Klang Pfad für CTCP Sound
 Senda sonidos:
@@ -1187,9 +1104,8 @@ Hangminta elérési út a CTCP SOUND-hoz
 Stinavn for lyder ved CTCP SOUND
 ¦cie¿ka dostêpu dla CTCP SOUND
 Ljudsökväg för CTCP SOUND
-;label "Samples Path for CTCP SOUND"
 ;
-MSG_SAMPLES_PATH_HELP (90//)
+MSG_SAMPLES_PATH_HELP
 When you recieve a CTCP SOUND request, WookieChat will\nlook in this path for sound samples.
 Bei Empfang einer CTCP Anfrage, sucht WookieChat in diesem Pfad nach der Tondatei.
 Al recibir una petición CTCP SOUND,\n'WookieChat' escoje los sonidos de\nesta senda.
@@ -1200,9 +1116,8 @@ Amikor CTCP SOUND kérés érkezik, WookieChat ezt az elérési\nutat nézi át hangmin
 Når du mottar en forespørsel CTCP SOUND, vil WookieChat\nse etter lyder i denne mappen.
 Gdy otrzymasz ¿±danie CTCP SOUND, program\nprzeszuka podan± ¶cie¿kê w poszukiwaniu d¼wiêków.
 När du får en CTCP SOUND-förfrågan, kommer WookieChat att leta i denna sökvägen efter ljudfiler.
-;mui help bubble "When you recieve a CTCP SOUND request, WookieChat will\nlook in this path for sound samples"
 ;
-MSG_CHOOSE_DIR (91//)
+MSG_CHOOSE_DIR
 Choose a directory
 Ein Verzeichnis auswählen
 Elija directorio
@@ -1213,9 +1128,8 @@ Válassz egy könyvtárat
 Velg en mappe
 Wybierz katalog
 Välj katalog
-;"choose a directory" from the ASL requester
 ;
-MSG_LOGFILE_RELOADING_LABEL (92//)
+MSG_LOGFILE_RELOADING_LABEL
 Num of lines to display from the end of logfiles when opening a tab\n(Put 0 to disable this feature).
 Anzahl der Zeilen die vom Ende eines Logfiles in ein neues Tab übernommen werden. (0 um Auszuschalten).
 \033cLíneas a mostrar del final de los registros\nal abrir una pestaña (0 para desactivar).
@@ -1226,9 +1140,8 @@ A naplófájl végérõl megjelenített sorok száma egy panel megnyitásakor\n(0 értékk
 Antall linjer å vise fra slutten av loggfiler når man åpner en tab\n(Sett 0 for å la denne muligheten være).
 Liczba ostatnich linii z pliku raportu do wy¶wietlenia przy otwieraniu zak³adki\n(0 - wy³±czaa tê opcjê).
 Antal rader att visa från slutet av loggfilerna när en flik öppnas (sätt till 0 för att stänga av funktionen).
-;num of lines to display from the end of logfiles when opening a tab\n[Put 0 to disable this feature]
 ;
-MSG_CHANNEL (93//)
+MSG_CHANNEL
 Channel
 Kanal
 Canal:
@@ -1239,9 +1152,8 @@ Csatorna
 Kanal
 Kana³
 Kanal
-;channel
 ;
-MSG_CHANNEL_LOG_RELOAD_HELP (94//)
+MSG_CHANNEL_LOG_RELOAD_HELP
 How many lines to reload from the end of log files when you join a channel.
 Anzahl der Textreihen die vom Ende eines Logfiles übernommen werden, wenn ein neuer Kanal betreten wird.
 Número de líneas a recargar del final\ndel registro al acceder a un canal.
@@ -1252,9 +1164,8 @@ A naplófájl végérõl megjelenített sorok száma egy csatornához csatlakozáskor.
 Antall linjer å laste på nytt fra slutten av loggfiler når du entrer en kanal.
 Ile linii od koñca pliku raportu wczytaæ podczas do³±czania do kana³u.
 Hur många rader att återladda från slutet av loggfilerna när du ansluter till en kanal.
-;how many lines to reload from the end of log files when you join a channel.
 ;
-MSG_PRIVATE (95//)
+MSG_PRIVATE
 Private tab
 Privater Tab
  Pestaña privada:
@@ -1265,9 +1176,8 @@ Privát panel
 Privat tab
 Zak³adka prywatna
 Privat flik
-;private tab
 ;
-MSG_PRIVATE_LOG_RELOAD_HELP (96//)
+MSG_PRIVATE_LOG_RELOAD_HELP
 How many lines to reload from the end of log files when you open a private query tab to another user.
 Anzahl der Textreihen die vom Ende eines Logfiles übernommen werden, wenn ein privater Kanal betreten wird.
 Número de líneas a recargar del final del\nregistro al abrir una pestaña privada.
@@ -1278,9 +1188,8 @@ A naplófájl végérõl megjelenített sorok száma egy másik felhasználó privát panel
 Antall linjer å laste på nytt fra slutten av loggfiler når du åpner en privat spørretab mot en annen bruker.
 Ile linii od koñca pliku raportu wczytaæ podczas rozpoczêcia rozmowy z innym u¿ytkownikiem.
 Hur många rader att återladda från slutet av loggfilerna när du öppnar en privat flik till en annan användare.
-;how many lines to reload from the end of log files when you open a private query tab to another user.
 ;
-MSG_LOG_RELOADING_TITLE (97//)
+MSG_LOG_RELOADING_TITLE
 Log Reloading
 Mitschnitt Neuladen
 Recarga De Registro
@@ -1291,9 +1200,8 @@ Napló újraolvasás
 Laster logg på nytt
 Wczytywanie raportów
 Ladda logg igen
-;log reloading
 ;
-MSG_ALIAS_HELP (98//)
+MSG_ALIAS_HELP
 Enter an alias name, then the command you want it to use\nE.g. With this line added to the alias list..\n/j /join\n..then the "/j" command will be replaced with "/join".
 Alias Namen eintragen, dann das gewünschte Kommando.\nZ.B. Mit diesem Text: \n/j /join\n... wird das "/j" durch ein "/join" ersetzt.
 Alias para comandos. Ejemplo: \033b/j /join\033n,\ncon lo que escribiendo sólo \033i/j <canal> \033n\npodrá acceder al <canal> en lugar de\nescribir \033i/join <canal>.\033n.
@@ -1304,9 +1212,8 @@ Adj meg egy helyettesítõ nevet, majd a parancsot amit használni kívánsz hozzá\np
 Skriv inn et alias-navn, deretter kommandoen du vil som skal brukes\nF.eks. om du legger til denne linjen\n/j /join\n..da vil "/j"-kommandoen bli erstattet med "/join".
 Wprowad¼ nazwê aliasu, a nastêpnie polecenie, które ma byæ wykonywane\nNp. po dodaniu tej linii do listy aliasów\n/j /join\npolecenie "/j" bêdzie zastêpowane przez "/join".
 Skriv in ett aliasnamn, sedan kommandot du vill använda\n dvs. Med denna raden adderas till aliaslistan..\n/j /join\n..sedan "/j" kommandot kommer att ersättas med "/join".
-;MUI help bubble for the alias section
 ;
-MSG_BUTTON_ADD_ALIAS (99//)
+MSG_BUTTON_ADD_ALIAS
 Add alias >>
 Alias hinzufügen >>
 Añadir alias >>
@@ -1317,9 +1224,8 @@ Helyettesítõt hozzáad >>
 Legg til alias >>
 Dodaj alias >>
 Lägg till alias >>
-;add alias >>
 ;
-MSG_BUTTON_REMOVE_ALIAS (100//)
+MSG_BUTTON_REMOVE_ALIAS
 Remove
 Entfernen
 Eliminar
@@ -1330,9 +1236,8 @@ Eltávolít
 Fjern
 Usuñ
 Ta bort alias
-;remove
 ;
-MSG_SETTINGS_WINDOW_TITLE (101//)
+MSG_SETTINGS_WINDOW_TITLE
 Settings
 Einstellungen
 Ajustes
@@ -1343,9 +1248,8 @@ Beállítások
 Innstillinger
 Ustawienia
 Inställningar
-;settings
 ;
-MSG_COLOUR_SETTINGS_WINDOW_TITLE (102//)
+MSG_COLOUR_SETTINGS_WINDOW_TITLE
 Colour settings...
 Farbeinsteller ...
 Colores...
@@ -1356,9 +1260,8 @@ Szín beállítások...
 Fargeinnstillinger...
 Ustawienia kolorów...
 Färginställningar ...
-;colour settings...
 ;
-MSG_MENU_SELECT_SERVER (103//)
+MSG_MENU_SELECT_SERVER
 Select server...
 Server auswählen ...
 Elegir servidor...
@@ -1369,9 +1272,8 @@ Kiszolgáló választása ...
 Velg server...
 Wybierz serwer...
 Välj server ...
-;select server...
 ;
-MSG_MENU_CLOSE_TAB (104//)
+MSG_MENU_CLOSE_TAB
 Close current tab
 Aktiven Tab schliessen
 Cerrar pestaña actual
@@ -1382,9 +1284,8 @@ Jelenlegi panel bezárása
 Lukk aktiv tab
 Zamknij aktualn± zak³adkê
 Stäng gällande flik
-;close current tab
 ;
-MSG_MENU_NEW_SERVER_TAB (105//)
+MSG_MENU_NEW_SERVER_TAB
 New server tab
 Neuen Server Tab öffnen
 Nueva pestaña
@@ -1395,9 +1296,8 @@ Apri un Tab "server"
 Ny servertab
 Nowa zak³adka serwera
 Ny serverflik
-;new server tab
 ;
-MSG_MENU_OPEN_GLOBAL_TAB (106//)
+MSG_MENU_OPEN_GLOBAL_TAB
 Open global query tab
 Globalen Tab öffnen
 Abrir pestaña global
@@ -1408,9 +1308,8 @@ Globális panel megnyitása
 Åpne global spørretab
 Otwórz globaln± zak³adkê rozmów
 Öppna flik för global förfrågan
-;open global query tab
 ;
-MSG_MENU_QUIT (107//)
+MSG_MENU_QUIT
 Quit...
 Programm beenden ...
 Salir...
@@ -1421,9 +1320,8 @@ Kilépés...
 Avslutte...
 Skoñcz...
 Avsluta ...
-;quit...
 ;
-MSG_MENU_CLEARBUFFER_ITEM (108//)
+MSG_MENU_CLEARBUFFER_ITEM
 Clear buffer
 Fensterinhalt leeren
 Limpiar búfer
@@ -1434,9 +1332,8 @@ Buffer törlése
 Rense buffer
 Wyczy¶æ bufor
 Töm bufferten
-;clear buffer
 ;
-MSG_MENU_SAVE_BUFFER (109//)
+MSG_MENU_SAVE_BUFFER
 Save buffer as...
 Fensterinhalt speichern als ...
 Guardar búfer como...
@@ -1447,9 +1344,8 @@ Buffer mentése, mint...
 Lagre buffer som...
 Zapisz bufor jako...
 Spara buffert som ...
-;save buffer as...
 ;
-MSG_MENU_MAIN_TITLE (110//)
+MSG_MENU_MAIN_TITLE
 Main
 Hauptmenü
 Principal
@@ -1460,9 +1356,8 @@ Fõmenü
 Fil
 G³ówne
 Huvudrubrik
-;main
 ;
-MSG_MENU_MAIN_SETTINGS (111//)
+MSG_MENU_MAIN_SETTINGS
 Main settings...
 Haupteinstellungen ...
 Globales...
@@ -1473,9 +1368,8 @@ Elsõdleges beállítások...
 Innstillinger...
 Ustawienia programu...
 Huvudinställningar ...
-;main settings...
 ;
-MSG_MENU_MUISETTINGS_ITEM (112//)
+MSG_MENU_MUISETTINGS_ITEM
 MUI settings...
 MUI Einstellungen ...
 Ajustes MUI...
@@ -1486,9 +1380,8 @@ MUI beállítások...
 MUI-innstillinger...
 Ustawienia MUI...
 MUI-inställningar ...
-;mui settings...
 ;
-MSG_MENU_MULITCOLUMN_DISPLAY (113//)
+MSG_MENU_MULITCOLUMN_DISPLAY
 Multi-column chat display
 Extra Spalte für Anzeige
 Múltiples columnas
@@ -1499,9 +1392,8 @@ Több-oszlopos csevegõ kijelzõ
 Multikolonne snakke-visning
 Wy¶wietlaj rozmowy w wielu kolumnach
 Visning med flera kolumner
-;multi-column chat display
 ;
-MSG_URL_GRABBER (114//)
+MSG_URL_GRABBER
 URL Grabber...
 URL Greifer ...
 Gestor URLs...
@@ -1512,9 +1404,8 @@ URL Gyûjtõ...
 URL-fanger...
 Kolekcjoner adresów URL...
 URL-Grabber ...
-;url Grabber...
 ;
-MSG_SERVER_NAME (115//)
+MSG_SERVER_NAME
 Server Name
 Server Name
 Servidor:
@@ -1525,9 +1416,8 @@ Kiszolgáló neve
 Servernavn
 Nazwa serwera
 Servernamn
-;server name
 ;
-MSG_PORT_NUMBER (116//)
+MSG_PORT_NUMBER
 Port Number
 Port Nummer
 Puerto:
@@ -1538,9 +1428,8 @@ Port száma
 Portnummer
 Numer portu
 Portnummer
-;port number
 ;
-MSG_SERVER_PASSWORD (117//)
+MSG_SERVER_PASSWORD
 Server Password
 Server Passwort
 Contraseña:
@@ -1551,9 +1440,8 @@ Kiszolgáló jelszó
 Serverpassord
 Has³o do serwera
 Serverlösen
-;server password
 ;
-MSG_WINDOW_EDIT_SERVER (118//)
+MSG_WINDOW_EDIT_SERVER
 Edit Server
 Server ändern
 Editar servidor
@@ -1564,9 +1452,8 @@ Kiszolgáló módosítása
 Editere server
 Edytuj serwer
 Redigera server
-;edit server
 ;
-MSG_GROUP_NAME (119//)
+MSG_GROUP_NAME
 Group Name
 Gruppen-Name
 Nombre grupo:
@@ -1577,9 +1464,8 @@ Csoport név
 Gruppenavn
 Nazwa grupy
 Gruppnamn
-;group name
 ;
-MSG_PERFORM_ON_CONNECT (120//)
+MSG_PERFORM_ON_CONNECT
 Perform on connect...
 Bei Verbindung starten ...
 Al conectar realizar...
@@ -1590,9 +1476,8 @@ Kapcsolódáskor Végrehajtandó...
 Utfør ved forbindelse...
 Wykonaj po po³±czeniu...
 Utför vid anslutning ...
-;perform on connect...
 ;
-MSG_EDIT_GROUP (121//)
+MSG_EDIT_GROUP
 Edit Group...
 Gruppe ändern ...
 Editar grupo...
@@ -1603,9 +1488,8 @@ Csoport szerkesztése...
 Editere gruppe...
 Edytuj grupê...
 Redigera grupp ...
-;edit group...
 ;
-MSG_REAL_NAME (122//)
+MSG_REAL_NAME
 Real Name
 Realname
  Nombre real:
@@ -1616,9 +1500,8 @@ Valódi név
 Virkelig navn
 Prawdziwe imiê
 Verkligt namn
-;real name
 ;
-MSG_USER_NAME (123//)
+MSG_USER_NAME
 User Name
 Nutzer Name
 Usuario:
@@ -1629,9 +1512,8 @@ Felhasználónév
 Brukernavn
 Nazwa u¿ytkownika
 Användarnamn
-;user name
 ;
-MSG_NEW_SERVER (124//)
+MSG_NEW_SERVER
 New Server
 Neuer Server
 Nuevo servidor
@@ -1642,9 +1524,8 @@ Nuovo server
 Ny server
 Nowy serwer
 Ny server
-;new server
 ;
-MSG_NEW_GROUP (125//)
+MSG_NEW_GROUP
 New Group
 Neue Gruppe
 Nuevo grupo
@@ -1655,9 +1536,8 @@ Nuovo gruppo
 Ny gruppe
 Nowa grupa
 Ny grupp
-;new group
 ;
-MSG_EDIT_ENTRY (126//)
+MSG_EDIT_ENTRY
 Edit Entry...
 Eintrag ändern ...
 Editar entrada...
@@ -1668,9 +1548,8 @@ Módosítás...
 Editere valg...
 Edytuj wpis...
 Redigera ...
-;edit entry...
 ;
-MSG_DELETE_ENTRY (127//)
+MSG_DELETE_ENTRY
 Delete Entry
 Eintrag löschen
 Borrar entrada
@@ -1681,9 +1560,8 @@ Törlés
 Ødelegg valg
 Usuñ wpis
 Ta bort
-;delete entry
 ;
-MSG_CONNECT_TO_SERVER (128//)
+MSG_CONNECT_TO_SERVER
 Connect to server
 Mit Server verbinden
 Conectar a servidor
@@ -1694,9 +1572,8 @@ Csatlakozás
 Forbinde til server
 Po³±cz z sererem
 Anslut till server
-;connect to server
 ;
-MSG_CONNECT_TO_SERVER_IN_NEW_TAB (129//)
+MSG_CONNECT_TO_SERVER_IN_NEW_TAB
 Connect in new tab
 In neuem Tab verbinden
 Conec. en nueva pestaña
@@ -1707,9 +1584,8 @@ Csatlakozás új panelen
 Forbinde i ny tab
 Po³±cz w nowej zak³adce
 Anslut i ny flik
-;connect in new tab
 ;
-MSG_WINDOW_SELECT_SERVER (130//)
+MSG_WINDOW_SELECT_SERVER
 Select server
 Server wählen
 WookieChat: Elija servidor
@@ -1720,9 +1596,8 @@ Kiszolgáló választása
 Velg server
 Wybierz serwer
 Välj server
-;select server
 ;
-MSG_UNBAN (131//)
+MSG_UNBAN
 Unban
 Verbannung aufheben
 Eliminar entrada
@@ -1733,9 +1608,8 @@ Ban eltávolítás
 Uban
 Unban
 Unban
-;unban
 ;
-MSG_REFRESH_BAN_LIST (132//)
+MSG_REFRESH_BAN_LIST
 Refresh banlist
 Bannliste erneuern
 Refrescar lista
@@ -1746,9 +1620,8 @@ Ban lista frissítése
 Oppfrisk banliste
 Od¶wie¿ listê blokad
 uppdatera banlistan
-;refresh banlist
 ;
-MSG_UNABLE_TO_CREATE_APP (133//)
+MSG_UNABLE_TO_CREATE_APP
 Unable to create app\n
 Anlegen nicht möglich
 No se ha podido crear aplicación.\n
@@ -1759,9 +1632,8 @@ Alkalmazás nem hozható létre\n
 Kan ikke åpne applikasjon\n
 Nie mo¿na utworzyæ applikacji\n
 Kan inte skapa app\n
-;unable to create app\n
 ;
-MSG_NOT_CONNECTED (134//)
+MSG_NOT_CONNECTED
 Not connected to a server.
 Nicht mit Server verbunden.
 No está conectado a un servidor.
@@ -1772,9 +1644,8 @@ Nincs kiszolgálóhoz csatlakozva.
 Ingen forbindelse til server.
 Nie po³±czony z serwerem.
 Inte ansluten till server.
-;not connected to a server
 ;
-MSG_NOT_CONNECTED_TO_USER (135//)
+MSG_NOT_CONNECTED_TO_USER
 Not connected to a user.
 Nicht mit Nutzer verbunden.
 No está conectado a un usuario.
@@ -1785,9 +1656,8 @@ Nincs felhasználóhoz csatlakozva.
 Ingen forbindelse til bruker.
 Nie po³±czony z u¿ytkownikiem.
 Inte ansluten till användare.
-;not connected to a user
 ;
-MSG_NO_BROWSER_SELECTED (136//)
+MSG_NO_BROWSER_SELECTED
 Please go to the "Main Settings" window, and choose a browser for WookieChat to open web sites with.
 Bitte in den Grundeinstellungen einen Browser auswählen um ausgewählte Seiten zu öffnen.
 Elija el navegador que 'WookieChat'\nusará con páginas web en\n"Ajustes->Globales.../General".
@@ -1798,9 +1668,8 @@ Kérlek menj az "Elsõdleges Beállítások" ablakhoz és válassz egy böngészõt, amell
 Vennligst gå til "Innstillinger" - vinduet, og velg en nettleser for WookieChat.
 Proszê przej¶æ do okna ustawieñ programu i wybraæ przegl±darkê, która ma byæ wykorzystywana do otwierania stron WWW.
 Gå till "Huvudinställningar", och välj en webbläsare att öppna webbsidor med.
-;please go to the "Main Settings" window, and choose a browser for WookieChat to open web sites with
 ;
-MSG_ERROR_MISSING_MCC_BETTERSTRING (137//)
+MSG_ERROR_MISSING_MCC_BETTERSTRING
 Please download and install the BetterString.mcc MUI Class.
 Bitte MUI Klasse 'BetterString.mcc'  runterladen und installieren.
 Descarge e instale la clase de MUI 'BetterString.mcc'.
@@ -1811,9 +1680,8 @@ Kérlek töltsd és telepítsd a BetterString.mcc MUI osztályt.
 Vennligst last ned og installer MUI-klassen BetterString.mcc.
 Proszê pobraæ i zainstalowaæ klasê MUI BetterString.mcc.
 Ladda ned och installera MUI-klassen BetterString.mcc.
-;please download and install the BetterString.mcc MUI Class
 ;
-MSG_ERROR_MISSING_MCC_NLIST (138//)
+MSG_ERROR_MISSING_MCC_NLIST
 Please download and install the NList.mcc MUI Class.
 Bitte MUI Klasse 'NList.mcc' runterladen und installieren.
 Descarge e instale la clase de MUI 'NList.mcc'.
@@ -1824,9 +1692,8 @@ Kérlek töltsd és telepítsd az NList.mcc MUI osztályt.
 Vennligst last ned og installer MUI-klassen NList.mcc.
 Proszê pobraæ i zainstalowaæ klasê MUI NList.mcc.
 Ladda ned och installera MUI-klassen NList.mcc.
-;please download and install the NList.mcc MUI Class
 ;
-MSG_ERROR_MISSING_MCC_NLISTVIEW (139//)
+MSG_ERROR_MISSING_MCC_NLISTVIEW
 Please download and install the NListview.mcc MUI Class.
 Bitte MUI Klasse 'NListview.mcc' runterladen und installieren.
 Descarge e instale la clase de MUI 'NListview.mcc'.
@@ -1837,9 +1704,8 @@ Kérlek töltsd és telepítsd az NListview.mcc MUI osztályt.
 Vennligst last ned og installer MUI-klassen NListview.mcc.
 Proszê pobraæ i zainstalowaæ klasê MUI NListview.mcc.
 Ladda ned och installera MUI-klassen NListview.mcc.
-;please download and install the NListview.mcc MUI Class
 ;
-MSG_ERROR_MISSING (140//)
+MSG_ERROR_MISSING
 These missing classes can be downloaded from http://www.aminet.net/ or http://os4depot.net. Check the WookieChat readme for direct links to these classes\n
 Fehlende Klasse kann unter http://www.aminet.net/ oder http://os4depot.net geladen werden. Bitte WookieChat readme prüfen für direkte Links zu den Klassen\n
 Las clases que faltan, puede descargarlas de 'http://www.aminet.net/' o 'http://os4depot.net'. Lea "readme.txt" para los enlaces directos a esas clases.\n
@@ -1851,9 +1717,8 @@ Ezek a hiányzó osztályok letölthetõek a következõ helyekrõl: http://www.aminet.n
 Disse manglende klassene kan lastes ned fra http://www.aminet.net/ eller http://os4depot.net/. Les WookieChat readme-filene for direkte linker til disse klassene\n
 Te brakuj±ce klasy mo¿esz pobraæ z http://www.aminet.net/ lub http:/os4depot.net/. W pliku "readme" programu znajdziesz bezpo¶rednie odsy³acze do tych klas\n
 De saknade klasserna kan laddas ned från http://www.aminet.net/ eller http://os4depot.net. Se WookieChat readme för direktlänkar till klasserna\n
-;these missing classes can be downloaded from http://www.aminet.net/ or http://os4depot.net. Check the WookieChat readme for direct links to these classes\n
 ;
-MSG_SAVING_BUFFER_TO (141//)
+MSG_SAVING_BUFFER_TO
 Saving buffer to file:
 Puffer speichern unter:
 Guardando búfer en
@@ -1864,9 +1729,8 @@ Buffer mentése fájlba:
 Lagrer buffer til fil:
 Zapisywanie bufora do pliku:
 Spara buffer till fil
-;saving buffer to file:
 ;
-MSG_CANCELLED (142//)
+MSG_CANCELLED
 Cancelled
 Abgebrochen
 Cancelado
@@ -1877,9 +1741,8 @@ Megszakítva
 Avbrutt
 Poniechano
 Avbruten
-;cancelled
 ;
-MSG_DCC_SEND_MESSAGE (143//)
+MSG_DCC_SEND_MESSAGE
 Please select a file to send, and a nick to offer the file to.
 Bitte Datei zum Senden auswählen und den Empfänger.
 Elija fichero a enviar y a quien (alias) desea ofrecerlo.
@@ -1890,9 +1753,8 @@ Válassz egy fájlt elküldésre és egy nick-et, akinek a fájl felkínáható.
 Vennligst velg en fil som skal sendes, og et nicknavn som skal tilbys filen.
 Proszê wybraæ plik do wys³ania, oraz pseudonim u¿ytkownika, dla którego chcesz zaoferowaæ plik.
 Välj en fil att skicka, och ett nick att skicka till.
-;please select a file to send, and a nick to offer the file to
 ;
-MSG_DCC_SEND_MESSAGE2 (144//)
+MSG_DCC_SEND_MESSAGE2
 Please select a file to send
 Bitte Datei zum Senden Auswählen
 Elija fichero a enviar
@@ -1903,9 +1765,8 @@ Válassz egy fájlt elküldésre
 Vennligst velg en fil å sende
 Proszê wybraæ plik do wys³ania
 Välj en fil att skicka
-;please select a file to send
 ;
-MSG_DCC_SEND_MESSAGE3 (145//)
+MSG_DCC_SEND_MESSAGE3
 Please select a nick to offer the file to.
 Bitte Empfänger auswählen.
 Elija a quien (alias) desea enviar el fichero.
@@ -1916,9 +1777,8 @@ Válassz egy nick-et, akinek a fájl felajánlható.
 Vennligst velg et nicknavn å tilby filen til.
 Proszê wybraæ pseudonim u¿ytkownika, dla którego chcesz zaoferowaæ plik.
 Välj ett nick att skicka till.
-;please select a nick to offer the file to.
 ;
-MSG_WINDOW_TITLE_BANMASKS (146//)
+MSG_WINDOW_TITLE_BANMASKS
 List of banmasks for channel
 Liste der Bannmasken im Kanal
 Lista de prohibiciones del canal
@@ -1929,9 +1789,8 @@ A csatorna banmaszk listája
 Liste over banmasker for kanal
 Lista masek blokad dla kana³u
 Lista på kanalens banmasker
-;List of banmasks for channel (channel name is supplied by WookieChat at the end of this string)
 ;
-MSG_REMOVING_BAN (147//)
+MSG_REMOVING_BAN
 Removing banmask
 Bannmasken entfernen
 Eliminando prohibiciones
@@ -1942,9 +1801,8 @@ Banmaszk eltávolítása
 Fjerner banmaske
 Usuwanie maski blokady
 Ta bort banmask
-;Removing banmask [banmask string is supplied by wookie at the end of this string]
 ;
-MSG_TRANSFERRING (148//)
+MSG_TRANSFERRING
 Transferring
 Übertragen
 Transfirendo
@@ -1955,9 +1813,8 @@ Trasferimento dati
 Overfører
 Przesy³anie
 Överför
-;transferring
 ;
-MSG_SYNTAX (149//)
+MSG_SYNTAX
 Syntax
 Schreibweise
 Sintáxis
@@ -1968,9 +1825,8 @@ Szintaxis
 Syntaks
 Sk³adnia
 Syntax
-;syntax
 ;
-MSG_STATUS (150//)
+MSG_STATUS
 Status
 Status
 Estado
@@ -1981,9 +1837,8 @@ Stato
 Status
 Status
 Status
-;status .. dcc transfers column title
 ;
-MSG_SENT (151//)
+MSG_SENT
 Amount sent
 Bereits übertragen
 Enviado
@@ -1994,9 +1849,8 @@ Elküldött mennyiség
 Sendt
 Wys³ano
 Skickat
-;amount sent.. dcc transfers column title
 ;
-MSG_FILE_SIZE (152//)
+MSG_FILE_SIZE
 Size
 Größe
 Tamaño
@@ -2007,9 +1861,8 @@ Méret
 Filstørrelse
 Wielko¶æ
 Storlek
-;size of file being send/recieved.. dcc transfers column title
 ;
-MSG_TIME_LEFT (153//)
+MSG_TIME_LEFT
 Time Left
 Vergangene Zeit
 Restan
@@ -2020,9 +1873,8 @@ Hátralévõ idõ
 Gjenværende tid
 Pozosta³o czasu
 Tid kvar
-;time left in dcc transfer, column title
 ;
-MSG_RECIEVED (154//)
+MSG_RECIEVED
 Recieved
 Empfangen
 Recibido
@@ -2033,9 +1885,8 @@ Fogadott
 Mottatt
 Odebrano
 Mottaget
-;amount recieved.. dcc transfers column title
 ;
-MSG_REMOVING_BAN_FOR_CHANNEL (155//)
+MSG_REMOVING_BAN_FOR_CHANNEL
 for channel\x20
 Für Kanal\x20
 para el canal\x20
@@ -2046,9 +1897,8 @@ csatornának\x20
 for kanal\x20
 dla kana³u\x20
 För kanal\x20
-;for channel [channelname is supplied by wookie at the end of this string]
 ;
-MSG_LOGGING_STARTED_AT (156//)
+MSG_LOGGING_STARTED_AT
 Logging started at\x20
 Mitschnitt begonnen bei\x20
 Registro iniciado\x20
@@ -2059,9 +1909,8 @@ Naplózás megkezdõdött\x20
 Logging startet\x20
 Raportowanie rozpoczêto o\x20
 Loggning startade\x20
-;logging started at
 ;
-MSG_HAS_BEEN_INVITED_TO_CHANNEL (157//)
+MSG_HAS_BEEN_INVITED_TO_CHANNEL
 has been invited to channel\x20
 wurde in den Kanal eingeladen\x20
 ha sido invitado la canal\x20
@@ -2072,9 +1921,8 @@ meghívást kapott ebbe a csatornába:\x20
 har blitt invitert til kanal\x20
 zosta³ zaproszony na kana³\x20
 har blivit inbjuden till kanal\x20
-;[nick] has been invited to channel [#channelname]
 ;
-MSG_INVITED_BY_USER (158//)
+MSG_INVITED_BY_USER
 by user
 von User
 por
@@ -2085,9 +1933,8 @@ meghívó:
 av bruker
 przez u¿ytkownika
 av användare
-;by user [nick]
 ;
-MSG_YOU_HAVE_INVITED (159//)
+MSG_YOU_HAVE_INVITED
 you have invited\x20
 du wurdest eingeladen\x20
 ha invitado a\x20
@@ -2098,9 +1945,8 @@ meghívásod küldõje:\x20
 du har invitert\x20
 zosta³e¶ zaproszony\x20
 Du har bjudit in\x20
-;you have invited [nick]
 ;
-MSG_TO_CHANNEL (160//)
+MSG_TO_CHANNEL
 to channel\x20
 in den Kanal\x20
 al canal\x20
@@ -2111,9 +1957,8 @@ ebbe a csatornába:\x20
 til kanal\x20
 na kana³\x20
 till kanal\x20
-;[you have invited nick] to channel [channel]
 ;
-MSG_TOPIC_SET_BY (161//)
+MSG_TOPIC_SET_BY
 set by\x20
 von\x20
 establecida por\x20
@@ -2124,9 +1969,8 @@ beállította:\x20
 satt av\x20
 ustawiony przez\x20
 satt av\x20
-;set by [nick]
 ;
-MSG_TOPIC_DATE (162//)
+MSG_TOPIC_DATE
 on\x20
 am\x20
 el\x20
@@ -2137,9 +1981,8 @@ ekkor:\x20
 på\x20
 dnia\x20
 den\x20
-;on [date - e.g july 20th 2005]
 ;
-MSG_NICK_IN_USE_RETRYING_WITH (163//)
+MSG_NICK_IN_USE_RETRYING_WITH
 in use, retrying with\x20
 Wird benutzt, wieder versuchen mit\x20
 en uso, reintentándolo con\x20
@@ -2150,9 +1993,8 @@ már hasznát, próbálkozom ezzel:\x20
 i bruk, prøver igjen med\x20
 jest ju¿ u¿ywany, próbujê ponownie u¿ywaj±c\x20
 är i bruk, försöker med\x20
-;[nick] in use, retrying with [nick]
 ;
-MSG_JOIN (164//)
+MSG_JOIN
 Join
 Verbunden
 Acceder
@@ -2163,9 +2005,8 @@ Csatlakozás
 ankommer
 Join
 Anslut
-;join
 ;
-MSG_PART (165//)
+MSG_PART
 Part
 Part
 Abandonar
@@ -2176,9 +2017,8 @@ Szétbomlás
 forlater
 Part
 Lämna
-;part
 ;
-MSG_QUIT (166//)
+MSG_QUIT
 Quit
 Beenden
 Salir
@@ -2189,9 +2029,8 @@ Kilépés
 Avslutte
 Quit
 Avsluta
-;quit
 ;
-MSG_USER_WAS_KICKED_BY (167//)
+MSG_USER_WAS_KICKED_BY
 was kicked by
 wurde gekickt von
 fue expulsado por
@@ -2202,9 +2041,8 @@ a été kické par
 ble kicket av
 zosta³ wyrzucony przez
 utsparkad av
-;[nick] was kicked by [nick]
 ;
-MSG_YOU_WERE_KICKED_BY (168//)
+MSG_YOU_WERE_KICKED_BY
 You were kicked by
 Du wurdest gekickt von
 Ha sido expulsado por
@@ -2215,9 +2053,8 @@ Téged kirúgott:
 Du ble kicket av
 Zosta³e¶ wyrzucony przez
 Du har blivit utsparkad av
-;You were kicked by [nick]
 ;
-MSG_IS_NOW_KNOWN_AS (169//)
+MSG_IS_NOW_KNOWN_AS
 is now known as\x20
 ist bekannt als\x20
 cambia el alias por\x20
@@ -2228,9 +2065,8 @@ ezután\x20
 er nå kjent som\x20
 jest teraz znany jako\x20
 är nu känd som\x20
-;[nick] is now known as [new nick]
 ;
-MSG_PLAYS (170//)
+MSG_PLAYS
 plays
 Spielt
 reproducir
@@ -2241,9 +2077,8 @@ lejátsza ezt:
 spiller
 odtwarza
 spelar
-;[nick] plays [sound.wav]
 ;
-MSG_ATTEMPTING_TO_RESUME (171//)
+MSG_ATTEMPTING_TO_RESUME
 Attempting to resume
 Versuchen wieder aufzunehmen
 Intentando reanudar
@@ -2254,9 +2089,8 @@ Megpróbálom folytatni a
 Forsøker å fortsette
 Próba wznowienia
 Försöker återuppta
-;Attempting to resume [file from user]
 ;
-MSG_ATTEMPT_TO_ACCEPT (172//)
+MSG_ATTEMPT_TO_ACCEPT
 Attempting to accept DCC CHAT request
 Versuchen DCC Chat Anfrage anzunehmen
 Intentando aceptar petición DCC CHAT
@@ -2267,9 +2101,8 @@ Kísérlet DCC CHAT kérés elfogadására
 Forsøker å godta forespørsel om DCC CHAT
 Próba zaakceptowania ¿±dania DCC CHAT
 Försöker acceptera DCC-chat
-;attempting to accept DCC CHAT request
 ;
-MSG_OFFERED_FROM (173//)
+MSG_OFFERED_FROM
 offered from
 Angeboten von
 ofrecido por
@@ -2280,9 +2113,8 @@ fájlt felajánlotta:
 tilbudt fra
 zaoferowany przez
 Erbjuden av
-;[file] offered from [nick]
 ;
-MSG_TOPIC_CHANGED (174//)
+MSG_TOPIC_CHANGED
 changes the topic to
 Thema ändern auf
 cambia la temática a
@@ -2293,9 +2125,8 @@ megváltoztatta a témát erre:
 forandrer overskrift til
 zmieni³ temat na
 ändrar topic till
-;[nick] changes the topic to [new topic]
 ;
-MSG_FINISHED_SENDING (175//)
+MSG_FINISHED_SENDING
 Finished sending\x20
 Senden beendet\x20
 Finalizado envío\x20
@@ -2306,9 +2137,8 @@ Küldés befejezve\x20
 Sluttført sending av\x20
 Zakoñczono wysy³anie\x20
 Sändning slutförd\x20
-;finished sending [file]
 ;
-MSG_FINISHED_RECIEVING (176//)
+MSG_FINISHED_RECIEVING
 Finished recieving
 Empfang beendet
 Finalizada recepción
@@ -2319,9 +2149,8 @@ Fogadás befejezve
 Sluttført mottak av
 Zakoñczono odbieranie
 Mottagning slutförd
-;finished recieving [file]
 ;
-MSG_CONNECTED_TO (177//)
+MSG_CONNECTED_TO
 connected to\x20
 Verbunden mit\x20
 conectado a\x20
@@ -2332,9 +2161,8 @@ Kapcsolódva ide:\x20
 tilkoblet til\x20
 po³±czony z\x20
 Ansluten till\x20
-;information for the window title.... [nick] connected to [servername]
 ;
-MSG_AT_AN_AVERAGE_SPEED_OF (178//)
+MSG_AT_AN_AVERAGE_SPEED_OF
 Average speed:
 Durchschnittsgeschwindigkeit:
 CPS:
@@ -2345,9 +2173,8 @@ VelocitÃ Â media:
 Gjennomsnittlig fart
 ¦rednia prêdko¶æ:
 Genomsnittslig hastighet
-;[file sent in x minutes x seconds] Average speed: [x KB per/sec]
 ;
-MSG_DCC_COMPLETE (179//)
+MSG_DCC_COMPLETE
 Complete
 Komplett
 Completado
@@ -2358,9 +2185,8 @@ Befejezve
 Ferdig
 zakoñczono pomy¶lnie
 Komplett
-;[dcc file transfer status] complete
 ;
-MSG_DCC_INCOMPLETE (180//)
+MSG_DCC_INCOMPLETE
 Incomplete
 Nicht  komplett
 Incompleto
@@ -2371,9 +2197,8 @@ Hiányos
 Uferdig
 niekompletny
 Icke komplett
-;[dcc file transfer status] incomplete
 ;
-MSG_DCC_CANCELLED (181//)
+MSG_DCC_CANCELLED
 Cancelled
 Abgebrochen
 Cancelado
@@ -2384,9 +2209,8 @@ Megszakított
 Avbrutt
 poniechano
 Avbruten
-;[dcc file transfer status] cancelled
 ;
-MSG_CONNECTED (182//)
+MSG_CONNECTED
 Connected
 Verbunden
 Conectado
@@ -2397,9 +2221,8 @@ Kapcsolódva
 Tilkoblet
 po³±czono
 Ansluten
-;connected
 ;
-MSG_DISCONNECTED (183//)
+MSG_DISCONNECTED
 Disconnected
 Nicht verbunden
 Desconectado
@@ -2410,9 +2233,8 @@ Leválasztva
 Avkoblet
 roz³±czono
 Bortkopplad
-;disconnected
 ;
-MSG_DCC_FAILED (184//)
+MSG_DCC_FAILED
 Failed
 Fehlgeschlagen
 fallido
@@ -2423,9 +2245,8 @@ Sikertelen
 Feilet
 nie powiod³o siê
 Misslyckades
-;[dcc file transfer status] failed
 ;
-MSG_CREATE_FILE_FAILED (185//)
+MSG_CREATE_FILE_FAILED
 unable to create new file for incoming transfer
 Erstellen einer neuen Datei für ankommenden Transfer nicht möglich
 no se ha podido crear fichero recibido
@@ -2436,9 +2257,8 @@ nem tudom létrehozni az érkezõ átvitelhez a fájlt
 Kan ikke skape ny fil for innkommende overførsel
 nie mo¿na utworzyæ nowego pliku dla przesy³anego pliku
 Kunde inte skapa ny fil för inkommande sändning
-;dcc file transfer error message: unable to create new file for incoming transfer
 ;
-MSG_OPEN_FILE_FOR_DCC_SEND_FAILED (186//)
+MSG_OPEN_FILE_FOR_DCC_SEND_FAILED
 unable to open requested file
 Öffnen der gewählten Datei nicht möglich
 no se ha podido abrir fichero elegido
@@ -2449,9 +2269,8 @@ a kért fájlt nem tudom megnyitni
 Kan ikke åpne forespurt fil
 nie mo¿na otworzyæ ¿±danego pliku
 Kunde inte öppna begärd fil
-;user tried to send a file but the file doesnt exist
 ;
-MSG_DCC_STARTED_FILE_TRANSFER (187//)
+MSG_DCC_STARTED_FILE_TRANSFER
 Started file transfer:
 Dateitransfer gestartet:
 Iniciada transferencia:
@@ -2462,9 +2281,8 @@ Elkezdett fájl átvitel:
 Startet filoverførsel:
 Rozpoczêto przesy³anie pliku:
 Påbörjade filöverföring:
-;started file transfer: [filename] to [nick]
 ;
-MSG_UNABLE_TO_CONNECT (188//)
+MSG_UNABLE_TO_CONNECT
 Unable to establish DCC CHAT Connection
 DCC Verbindung nicht möglich
 No se ha podido establecer DCC CHAT
@@ -2475,9 +2293,8 @@ DCC CHAT kapcsolatot nem tudok létrehozni
 Kan ikke opprette forbindelse for DCC CHAT
 Nie mo¿na ustanowiæ po³±czenia DCC CHAT
 Kunde inte etablera anslutning för DCC-chat
-;unable to establish DCC CHAT Connection
 ;
-MSG_CONNECTED_DCC_CHAT (189//)
+MSG_CONNECTED_DCC_CHAT
 DCC CHAT Connection Established
 DCC Chat Verbindung hergestellt
 Establecida DCC CHAT
@@ -2488,9 +2305,8 @@ DCC CHAT kapcsolat létrehozva
 Forbindelse opprettet for DCC CHAT
 Ustanowiono po³±czenie DCC CHAT
 Anslutning för DCC-chat etablerad
-;DCC CHAT Connection established
 ;
-MSG_TRANSFER_TIME (190//)
+MSG_TRANSFER_TIME
 Transfer time:
 Übertragungsdauer:
 Estimado
@@ -2501,9 +2317,8 @@ Tempo di trasferimento:
 Overføringstid:
 Czas przesy³ania
 Överföringstid:
-;Transfer time: [2 minutes, 11 seconds, at an average speed of etc]
 ;
-MSG_FILE_DOESNT_EXIST (191//)
+MSG_FILE_DOESNT_EXIST
 Error, file doesnt exist
 Fehler, Datei existiert nicht
 ¡ERROR! Fichero no existe
@@ -2514,9 +2329,8 @@ Hiba, a fájl nem létezik
 Feil, filen eksisterer ikke
 B³±d, plik nie istnieje
 Fel, fil finns inte
-;[DCC SEND message] Error, file doesnt exist
 ;
-MSG_OFFERING_FILE (192//)
+MSG_OFFERING_FILE
 Offering file
 Datei anbieten
 Ofreciendo
@@ -2527,9 +2341,8 @@ Fájl felajánlása
 Tilbyr fil
 Oferowanie pliku
 Erbjuder fil
-;Offering file [to user on port 1024]
 ;
-MSG_OFFERED_ON (193//)
+MSG_OFFERED_ON
 on
 auf
 en
@@ -2540,9 +2353,8 @@ itt:
 på
 wykorzystuj±c
 via
-;[file offered to user] on [port 1024]
 ;
-MSG_OFFERED_TO (194//)
+MSG_OFFERED_TO
 to
 an
 a
@@ -2553,9 +2365,8 @@ neki:
 til
 do
 till
-;[file offered] to [user on port 1024]
 ;
-MSG_DCC_CHAT_REQUEST (195//)
+MSG_DCC_CHAT_REQUEST
 Sending DCC CHAT request
 DCC Chat-Anfrage senden
 Enviando petición DCC CHAT
@@ -2566,9 +2377,8 @@ DCC CHAT kérés küldése
 Sender forespørsel om DCC CHAT
 Wysy³anie ¿±dania DCCCHAT
 Skickar förfrågan om DCC-chat
-;Sending DCC CHAT request [to user on port 1024]
 ;
-MSG_COLOUR_SETTINGS_LOAD_ERROR (196//)
+MSG_COLOUR_SETTINGS_LOAD_ERROR
 Unable to load colour settings, using default settings. To avoid seeing this message again, create a drawer called 'Colours' inside WookieChat's drawer, then open and close the Colour Settings window \
 the next time you run WookieChat.
 Farbeinstellungen konnten nicht geladen werden, darum werden Grundeinstellungen benutzt. Um diese Anzeige nicht wieder zu sehen, bitte einen Ordner namens 'Colours' im Verzeichnis WookieChat \
@@ -2588,9 +2398,8 @@ Nie mo¿na wczytaæ ustawieñ kolorów, wykorzystane zostan± ustawienia domy¶lne. Ab
 przy kolejnym uruchomieniu programu otwórz i zamknij okno ustawieñ kolorów.
 Kunde inte ladda färginställningarna, använder standard istället. För att slippa se detta meddelande igen, skapa en låda kallad 'Colours' i WookieChat's låda, öppna och stäng Färginställningsfönstret \
 nästa gång du kör WookieChat.
-;unable to load colour settings, using default settings. To avoid seeing this message again, create a drawer called 'Colours' inside WookieChat's drawer, then open and close the Colour Settings window the next time you run WookieChat.
 ;
-MSG_COLOUR_SETTINGS_SAVE_ERROR (197//)
+MSG_COLOUR_SETTINGS_SAVE_ERROR
 Unable to save your colour settings. Make sure you have a drawer called 'Colours' inside WookieChat's drawer, for it to save your colour preferences to.
 Kann Farbeinstellungen nicht speichern. Bitte sicherstellen, dass ein Verzeichnis namens 'Colours' im Ordner WookieChat vorhanden ist um die Einstellungen sichern zu können.
 No se han podido guardar los ajustes de colores.\nAsegúrese de tener un cajón llamado "Colours"\nen donde reside 'WookieChat' para poder guardarlos.
@@ -2601,9 +2410,8 @@ Nem tudom elmenteni a színbeállításaidat. Gyõzõdj meg róla, hogy a WookieChat fi
 Kan ikke lagre dine fargeinnstillinger. Vær sikker på at du har en mappe kallt 'Colours" inne i WookieChat sin mappe, slik at dine fargepreferanser blir lagret.
 Nie mo¿na zapisaæ Twoich ustawieñ kolorów. Upewnij siê, i¿ posiadasz katalog "Colours" w katalogu z programem, aby mo¿na by³o w nim zapisaæ Twoje ustawienia kolorów.
 Kunde inte spara färginställningarna. Försäkra dig om att du har en låda kallad 'Colours' i WookieChat's låda, att spara inställningarna i.
-;unable to save your colour settings. Make sure you have a drawer called 'Colours' inside WookieChat's drawer, for it to save your colour preferences to.
 ;
-MSG_UNABLE_TO_OPEN_TCPIP_STACK (198//)
+MSG_UNABLE_TO_OPEN_TCPIP_STACK
 Please start a TCP/IP stack and try again.
 Bitte TCP/IP Stack starten und noch einmal versuchen.
 ¡Debe tener activa una pila TCP/IP.
@@ -2614,9 +2422,8 @@ Kérlek indíts el egy hálózatkezelõt, majd próbálkozz újra.
 Vennligst start en TCP/IP-stakk og prøv igjen.
 Proszê uruchomiæ stos TCP/IP i spróbowaæ ponownie.
 Starta TCP/IP-stacken och försök igen.
-;please start a TCP/IP stack and try again.
 ;
-MSG_CONNECT_TO_A_NEW_SERVER (199//)
+MSG_CONNECT_TO_A_NEW_SERVER
 Connecting to a new server
 Mit neuem Server verbinden
 Conectando a un nuevo servidor
@@ -2627,9 +2434,8 @@ Csatlakozás új kiszolgálóhoz
 Oppretter forbindelse til ny server
 £±czenie z nowym serwerem
 Ansluter till ny server
-;connecting to a new server
 ;
-MSG_ATTEMPTING_TO_CONNECT_TO_SERVER (200//)
+MSG_ATTEMPTING_TO_CONNECT_TO_SERVER
 Attempting to connect to\x20
 Versuche zu verbinden mit\x20
 Intentando conectarse a\x20
@@ -2640,9 +2446,8 @@ Csatlakozási kísérlet ide:\x20
 Forsøker å forbinde til\x20
 Próba po³±czenia z\x20
 Försöker ansluta till\x20
-;attempting to connect to [servername + portnumber]
 ;
-MSG_CONNECTING (201//)
+MSG_CONNECTING
 Connecting
 Verbindung aufnehmen
 Conectando
@@ -2653,9 +2458,8 @@ Kapcsolódás
 Oppretter forbindelse
 £±czenie
 Ansluter
-;connecting (dcc file transfer status)
 ;
-MSG_FILE_ALREADY_EXISTS (202//)
+MSG_FILE_ALREADY_EXISTS
 already exists!
 Existiert bereits!
 ya existe.\n
@@ -2666,9 +2470,8 @@ már létezik!
 eksisterer allerede!
 ju¿ istnieje!
 finns redan!
-;[file] already exists!
 ;
-MSG_INCOMING_FILE_SIZE (203//)
+MSG_INCOMING_FILE_SIZE
 Size of existing file
 Größe der existierenden Datei
 \033cFichero existente
@@ -2679,9 +2482,8 @@ A meglévõ fájl mérete
 Størrelse på eksisterende fil
 Wielko¶æ istniej±cego pliku
 Storlek på filen som redan finns
-;size of existing file [x bytes]
 ;
-MSG_FILE_SIZE_OFFERED (204//)
+MSG_FILE_SIZE_OFFERED
 Size of file being offered
 Größe der angebotenen Datei
 \033cFichero ofrecido
@@ -2692,9 +2494,8 @@ A felajánlott fájl mérete
 Størrelse på tilbudt fil
 Wielko¶æ zaoferowanego pliku
 Storlek på erbjuden fil
-;size of file being offered [x bytes]
 ;
-MSG_TO (205//)
+MSG_TO
 to
 an
 a
@@ -2705,9 +2506,8 @@ neki:
 til
 do
 till
-;[DCC SEND file] to [user has completed/failed]
 ;
-MSG_DCC_WAITING (206//)
+MSG_DCC_WAITING
 Waiting
 Warte
 Esperando
@@ -2718,9 +2518,8 @@ Várakozik
 Venter
 Oczekiwanie
 Väntar
-;Waiting .. file transfer status
 ;
-MSG_UPDATING_NAMES_LIST (207//)
+MSG_UPDATING_NAMES_LIST
 Updating Names list for channel
 Namensliste des Kanals wird neu geladen
 Actualizando lista de nombres del canal
@@ -2731,9 +2530,8 @@ A következõ csatorna névlistájának frissítése:
 Oppdaterer navneliste for kanal
 Uaktualnianie listy pseudonimów dla kana³u
 Uppdaterar kanalens namnlista
-;Updating Names list for channel [channelname]
 ;
-MSG_USERS_IN_CHANNEL (208//)
+MSG_USERS_IN_CHANNEL
 Users in channel
 Anwesende im Kanal
 Usuarios en el canal
@@ -2744,9 +2542,8 @@ Csatorna felhasználói
 Brukere i kanal
 U¿ytkownicy na kanale
 Användare i kanalen
-;Users in channel [channelname]
 ;
-MSG_AUTO_REJOINING (209//)
+MSG_AUTO_REJOINING
 Auto-rejoining\x20
 Neuverbindung\x20
 Auto-reacceder\x20
@@ -2757,9 +2554,8 @@ Automatikus újrakapcsolódás\x20
 Auto-entrer\x20
 Automatyczne do³±czanie\x20
 Återansluter automatiskt\x20
-;Auto-rejoining [channelname] ... after being kicked
 ;
-MSG_FROM (210//)
+MSG_FROM
 from
 von
 de
@@ -2770,9 +2566,8 @@ tõle:
 fra
 od
 från
-;from [user]
 ;
-MSG_SETS_MODE (211//)
+MSG_SETS_MODE
 sets mode
 Modus einstellen
 establece
@@ -2783,9 +2578,8 @@ módbeállítása
 setter modus
 ustawi³ tryb
 sätter mod
-;[user] sets mode
 ;
-MSG_PLAYING (212//)
+MSG_PLAYING
 playing
 Spiele
 reproduciendo
@@ -2796,9 +2590,8 @@ lejátszom
 spiller
 odtwarzanie
 spelar
-;playing [sound to user]
 ;
-MSG_SENDING_CTCP (213//)
+MSG_SENDING_CTCP
 Sending CTCP
 CTCP senden
 Enviando CTCP
@@ -2809,9 +2602,8 @@ CTCP küldés
 Sender CTCP
 Wysy³anie CTCP
 Skickar CTCP
-;Sending CTCP [COMMAND to user]
 ;
-MSG_WINDOWS_MENU (214//)
+MSG_WINDOWS_MENU
 Windows
 Fenster
 Ventanas
@@ -2822,9 +2614,8 @@ Ablakok
 Vindu
 Okna
 Fönster
-;"Windows" menu title
 ;
-MSG_FILENAME (215//)
+MSG_FILENAME
 Filename
 Dateiname
 Fichero
@@ -2835,9 +2626,8 @@ Fájlnév
 Filnavn
 Nazwa pliku
 Filnamn
-;Filename column title in DCC Transfer Listviews
 ;
-MSG_NICKNAMES (216//)
+MSG_NICKNAMES
 Nick Names
 Spitznamen
 Aliases:
@@ -2848,9 +2638,8 @@ NickName
 Nicknavn
 Pseudonimy
 Nicks
-;Nick names label in the server selection window
 ;
-MSG_OPENING_BRACKET (217//)
+MSG_OPENING_BRACKET
 [
 [
 [
@@ -2861,9 +2650,8 @@ MSG_OPENING_BRACKET (217//)
 [
 [
 [
-;a bracket to enclose messages around.. e.g. [Join]
 ;
-MSG_CLOSING_BRACKET (218//)
+MSG_CLOSING_BRACKET
 ]
 ]
 ]
@@ -2874,9 +2662,8 @@ MSG_CLOSING_BRACKET (218//)
 ]
 ]
 ]
-;a bracket to enclose messages around.. e.g. [Join]
 ;
-MSG_NICKLIST_OPTIONS (219//)
+MSG_NICKLIST_OPTIONS
 Nicklist Options
 Nutzer Listen Option
 Opciones Aliases
@@ -2887,9 +2674,8 @@ Becenév opciók
 Nicklistevalg
 Opcje listy pseudonimów
 Val Nicklista
-;popup/context menu title
 ;
-MSG_WHOIS_MENU_ITEM (220//)
+MSG_WHOIS_MENU_ITEM
 Whois
 Whois
 WHOIS
@@ -2900,9 +2686,8 @@ Kicsoda
 Whois
 Whois
 Whois
-;/whois a user
 ;
-MSG_QUERY_MENU_ITEM (221//)
+MSG_QUERY_MENU_ITEM
 Open Query
 Open Query
 Preguntar
@@ -2913,9 +2698,8 @@ Panelt nyit
 Åpne spørring
 Otwórz zak³adkê rozmowy
 Öppna förfrågan
-;/query .. open a private tab to a user
 ;
-MSG_GLOBAL_QUERY_MENU_ITEM (222//)
+MSG_GLOBAL_QUERY_MENU_ITEM
 Open Global Query
 Open Global Query
 Preguntar Global
@@ -2926,9 +2710,8 @@ Globális panelt nyit
 Åpne global spørring
 Otwórz globaln± zak³adkê rozmów
 Öppna Global förfrågan
-;open a private tab to display all private messages in
 ;
-MSG_CTCP_MENU_TITLE (223//)
+MSG_CTCP_MENU_TITLE
 CTCP
 CTCP
 CTCP
@@ -2939,9 +2722,8 @@ CTCP
 CTCP
 CTCP
 CTCP
-;CTCP Command popup/context menu title
 ;
-MSG_PING_MENU_ITEM (224//)
+MSG_PING_MENU_ITEM
 Ping
 Ping
 PING
@@ -2952,9 +2734,8 @@ Ping
 Ping
 Ping
 Ping
-;/ping a user
 ;
-MSG_VERSION_MENU_ITEM (225//)
+MSG_VERSION_MENU_ITEM
 Version
 Version
 Versión
@@ -2965,9 +2746,8 @@ Verzió
 Version
 Wersja
 Version
-;/version a user
 ;
-MSG_TIME_MENU_ITEM (226//)
+MSG_TIME_MENU_ITEM
 Time
 Zeit
 Hora
@@ -2978,9 +2758,8 @@ Idõ
 Time
 czas
 Tid
-;/time a user
 ;
-MSG_DIRECT_CONNECTION_MENU_TITLE (227//)
+MSG_DIRECT_CONNECTION_MENU_TITLE
 Direct Connection
 Direkte Verbindung
 Conexión Directa
@@ -2991,9 +2770,8 @@ Közvetlen kapcsolat
 Direkte forbindelse
 Bezpo¶rednie po³±czenie
 Direktanslutning
-;DCC popup/context menu title
 ;
-MSG_SEND_FILE_MENU_ITEM (228//)
+MSG_SEND_FILE_MENU_ITEM
 Send file
 Datei senden
 Enviar fichero
@@ -3004,9 +2782,8 @@ Fájl küldése
 Send fil
 Wy¶lij plik
 Skicka fil
-;send a file with dcc send
 ;
-MSG_CHAT_MENU_ITEM (229//)
+MSG_CHAT_MENU_ITEM
 Chat
 Chat
 Charlar
@@ -3017,9 +2794,8 @@ Csevegõ
 Chat
 Rozmowa
 Chat
-;start a directly connected dcc chat session
 ;
-MSG_CONTROL_MENU_TITLE (230//)
+MSG_CONTROL_MENU_TITLE
 Control
 Kontrolle
 Control
@@ -3030,9 +2806,8 @@ Vezérlõ
 Kontroll
 Kontrola
 Kontroll
-;channel operator controls popup/context menu title
 ;
-MSG_OP_MENU_ITEM (231//)
+MSG_OP_MENU_ITEM
 Op
 OP
 OP
@@ -3043,9 +2818,8 @@ Op
 Op
 Op
 Op
-;give user operator status
 ;
-MSG_DEOP_MENU_ITEM (232//)
+MSG_DEOP_MENU_ITEM
 DeOp
 DeOp
 Quitar OP
@@ -3056,9 +2830,8 @@ Nem Op
 DeOp
 DeOp
 DeOp
-;take away operator status
 ;
-MSG_HALFOP_MENU_ITEM (233//)
+MSG_HALFOP_MENU_ITEM
 HalfOp
 HalfOp
 HalfOP
@@ -3069,9 +2842,8 @@ HalfOp
 HalfOp
 HalfOp
 HalfOp
-;give a user half ops
 ;
-MSG_DEHALFOP_MENU_ITEM (234//)
+MSG_DEHALFOP_MENU_ITEM
 DeHalfOp
 DeHalfOp
 Quitar HalfOP
@@ -3082,9 +2854,8 @@ Nem HalfOp
 DeHalfOp
 DeHalfOp
 DeHalfOp
-;take away halfops
 ;
-MSG_VOICE_MENU_ITEM (235//)
+MSG_VOICE_MENU_ITEM
 Voice
 Voice
 Voz
@@ -3095,9 +2866,8 @@ Voice
 Voice
 Voice
 Voice
-;give voice status
 ;
-MSG_DEVOICE_MENU_ITEM (236//)
+MSG_DEVOICE_MENU_ITEM
 DeVoice
 DeVoice
 Quitar voz
@@ -3108,9 +2878,8 @@ Nem Voice
 DeVoice
 DeVoice
 DeVoice
-;take away voice status
 ;
-MSG_KICK_MENU_ITEM (237//)
+MSG_KICK_MENU_ITEM
 Kick
 Kick
 Expulsar
@@ -3121,9 +2890,8 @@ Kirúg
 Kick
 Kick
 Kicka
-;kick a user out of a channel
 ;
-MSG_BAN_MENU_ITEM (238//)
+MSG_BAN_MENU_ITEM
 Ban
 Bannen
 Prohibir
@@ -3134,9 +2902,8 @@ Banol
 Ban
 Ban
 Ban
-;ban a user from a channel
 ;
-MSG_SENDER (239//)
+MSG_SENDER
 Sender
 Sender
 Remitente
@@ -3147,9 +2914,8 @@ Küldi
 Avsender
 Nadawca
 Avsändare
-;sender column in file transfers window
 ;
-MSG_RECIEVER (240//)
+MSG_RECIEVER
 Reciever
 Empfänger
 Destinatario
@@ -3160,9 +2926,8 @@ Fogadja
 Mottaker
 Odbiorca
 Mottagare
-;reciever column in file transfers window
 ;
-MSG_CHANNEL_NAME_HELP (241//)
+MSG_CHANNEL_NAME_HELP
 <channelname>
 <Kanalname>
 <canal>
@@ -3173,9 +2938,8 @@ MSG_CHANNEL_NAME_HELP (241//)
 <kanalnavn>
 <nazwa kana³u>
 <kanalnamn>
-;used for help strings
 ;
-MSG_NICK_HELP (242//)
+MSG_NICK_HELP
 <nick>
 <Nutzer>
 <alias>
@@ -3186,9 +2950,8 @@ MSG_NICK_HELP (242//)
 <nick>
 <pseudonim>
 <nick>
-;used for help strings
 ;
-MSG_COMMAND_NAME_HELP (243//)
+MSG_COMMAND_NAME_HELP
 <command>
 <Kommando>
 <comando>
@@ -3199,9 +2962,8 @@ MSG_COMMAND_NAME_HELP (243//)
 <kommando>
 <polecenie>
 <kommando>
-;used for help strings
 ;
-MSG_SOUND_SAMPLE_NAME_HELP (244//)
+MSG_SOUND_SAMPLE_NAME_HELP
 <sound_sample_name>
 <Sound Schnipsel Name>
 <sonido>
@@ -3212,9 +2974,8 @@ MSG_SOUND_SAMPLE_NAME_HELP (244//)
 <lyd_sample_navn>
 <nazwa pliku d¼wiêkowego>
 <ljud_snutt_namn>
-;used for help strings
 ;
-MSG_SOUND_BAN_MASK_HELP (245//)
+MSG_SOUND_BAN_MASK_HELP
 <ban_mask>
 <ban_mask>
 <máscara_prohibir>
@@ -3225,9 +2986,8 @@ MSG_SOUND_BAN_MASK_HELP (245//)
 <ban_maske>
 <maska blokady>
 <ban_mask>
-;used for help strings
 ;
-MSG_MESSAGE_HELP (246//)
+MSG_MESSAGE_HELP
 <message>
 <message>
 <mensaje>
@@ -3238,9 +2998,8 @@ MSG_MESSAGE_HELP (246//)
 <message>
 <wiadomo¶æ>
 <meddelande>
-;used for help strings
 ;
-MSG_NEW_NICK_HELP (247//)
+MSG_NEW_NICK_HELP
 <new_nick>
 <neuer Nutzername>
 <nuevo_alias>
@@ -3251,9 +3010,8 @@ MSG_NEW_NICK_HELP (247//)
 <nytt_nick>
 <nowy pseudonim>
 <nytt_nick>
-;used for help strings
 ;
-MSG_TOPIC_HELP (248//)
+MSG_TOPIC_HELP
 <new_topic>
 <neues Thema>
 <nueva_temática>
@@ -3264,9 +3022,8 @@ MSG_TOPIC_HELP (248//)
 <ny_overskrift>
 <nowy temat>
 <ny_topic>
-;used for help strings
 ;
-MSG_SERVERNAME_HELP (249//)
+MSG_SERVERNAME_HELP
 <servername>
 <Servername>
 <servidor>
@@ -3277,9 +3034,8 @@ MSG_SERVERNAME_HELP (249//)
 <servernavn>
 <nazwa serwera>
 <servernamn>
-;used for help strings
 ;
-MSG_PORT_HELP (250//)
+MSG_PORT_HELP
 <port>
 <Port>
 <puerto>
@@ -3290,9 +3046,8 @@ MSG_PORT_HELP (250//)
 <port>
 <port>
 <port>
-;used for help strings
 ;
-MSG_SWEAR_FILTER (251//)
+MSG_SWEAR_FILTER
 SwearFilter
 SwearFilter
 Filtro palabrotas
@@ -3303,9 +3058,8 @@ Szitokszûrõ
 BanneFilter
 FiltrPrzekleñstw
 SvärFilter
-;swear word filter message
 ;
-MSG_ENABLED (252//)
+MSG_ENABLED
 Enabled
 Eingeschaltet
 Activado
@@ -3316,9 +3070,8 @@ engedélyezve
 Aktivert
 w³±czony
 Till
-;<option> enabled
 ;
-MSG_DISABLED (253//)
+MSG_DISABLED
 Disabled
 Abgeschaltet
 Desactivado
@@ -3329,9 +3082,8 @@ letiltva
 Deaktivert
 wy³±czony
 Från
-;<option> disabled
 ;
-MSG_NICK_OR_CHANNEL_HELP (254//)
+MSG_NICK_OR_CHANNEL_HELP
 <nick or channel>
 <Nutzer oder Kanal>
 <alias o canal>
@@ -3342,9 +3094,8 @@ MSG_NICK_OR_CHANNEL_HELP (254//)
 <nick eller kanal>
 <pseudonim lub kana³>
 <nick eller kanal>
-;used for help strings
 ;
-MSG_FILENAME_HELP (255//)
+MSG_FILENAME_HELP
 <filename>
 <Dateiname>
 <fichero>
@@ -3355,9 +3106,8 @@ MSG_FILENAME_HELP (255//)
 <filnavn>
 <nazwa pliku>
 <filnamn>
-;used for help strings
 ;
-MSG_ACTION_HELP (256//)
+MSG_ACTION_HELP
 <action>
 <Aktion>
 <acción>
@@ -3368,9 +3118,8 @@ MSG_ACTION_HELP (256//)
 <aksjon>
 <dzia³anie>
 <action>
-; used for help strings
 ;
-MSG_USERS (257//)
+MSG_USERS
 users
 Anwesend
 usuarios
@@ -3381,9 +3130,8 @@ felhasználó
 brukere
 u¿ytkowników
 användare
-;[amount of] users [in channel]
 ;
-MSG_HIGHLIGHT_STRINGGADGET_HELP_BUBBLE (258//)
+MSG_HIGHLIGHT_STRINGGADGET_HELP_BUBBLE
 Enter words here for WookieChat to watch for. Lines of text will appear in the highlight colour if one of these words is found. Enter the words you want to highlight, separated by spaces.
 Worte die Wookiechat beobachten soll, hier eintragen. Wenn die entsprechenden Worte gefunden wurden, wird die ganze Zeile gekennzeichnet. Mehrere Worte werden nur durch ein Leerzeichen getrennt.
 Palabras con las que se resaltarán las líneas\nen las que aparecen. Puede añadir tantas como\ndesee, separándolas por espacios.
@@ -3396,9 +3144,8 @@ Skriv inn ord som WookieChat skal se etter. Tekslinjene med de aktuelle ordene v
 Tutaj wpisz s³owa, na które ma program zwracaæ uwagê. Linia tekstu zostanie wy¶wietlona w kolorze pod¶wietlenia, je¶li choæ jedno z tych s³ów zostanie odnalezione. Wprowad¼ s³owa, które chcesz \
 pod¶wietlaæ oddzielaj±c je spacjami.
 Skriv ord här för WookieChat att observera. Om ett av dessa ord upptäcks kommer meningen att markeras. Skriv in de ord du vill markera, separerade med mellanslag.
-;help bubble text in prefs
 ;
-MSG_RESUME_FILE (259//)
+MSG_RESUME_FILE
 RESUME file
 Datei anfügen
 REANUDAR fichero
@@ -3409,9 +3156,8 @@ Fájl folytatása
 Fortsett filen
 Wznowienie pliku
 Återuppta fil
-; RESUME file [filename] >> [reciever] @ [size of file] bytes
 ;
-MSG_SERVERS_GROUP (260//)
+MSG_SERVERS_GROUP
 Servers
 Server
 Servidores
@@ -3422,9 +3168,8 @@ Kiszolgálók
 Servere
 Serwery
 Servrar
-; "Servers" preferences tab in the Main Settings window
 ;
-MSG_MAX_RECONNECT_RETRIES (261//)
+MSG_MAX_RECONNECT_RETRIES
 Maximum attempts to reconnect after non-requested disconnection
 Maximale Neuverbindungs-Versuche nach unfreiwilliger Trennung
 Intentos máx. reconectar al auto-desconectarse
@@ -3435,9 +3180,8 @@ Limite max tentativi di riconnessione dopo una sconnessione non richiesta
 Maksimalt antall reoppkoblingsforsøk etter ikke etterspurt utkobling
 Maksymalna liczba prób ponowienia po nieporz±danym od³±czeniu
 Max antal försök att återansluta efter oavsiktlig nedkoppling
-;"Maximum attempts to reconnect after non-requested disconnection" preferences option
 ;
-MSG_RECONNECT_DELAY (262//)
+MSG_RECONNECT_DELAY
 Delay (in seconds) in between reconnection attempts
 Wartezeit (in Sekunden) zwischen Neuverbindungsversuchen
 Espera entre reconexiones (segundos)
@@ -3448,9 +3192,8 @@ Késleltetés (másodpercekben) az újracsatlakozási kísérletek között
 Pause (i sekunder) mellom reoppkoblingsforsøk
 Opó¼nienie (w sekundach) pomiêdzy kolejnymi próbami ponownego po³±czenia
 Fördröjning (i sekunder) mellan återanslutningsförsök
-;"Delay (in seconds) in between reconnection attempts" preferences option
 ;
-MSG_RETRY (263//)
+MSG_RETRY
 Retry #
 Versuche #
 Reintento #
@@ -3461,9 +3204,8 @@ Próbálkozás #
 Gjenta #
 Próba #
 Försök #
-;"Attempting to connect to [servername] Retry #[number]"
 ;
-MSG_IGNORE_MASK (264//)
+MSG_IGNORE_MASK
 Ignore Mask
 Ignorieren Maske
 Máscara a Ignorar
@@ -3474,9 +3216,8 @@ Figyelmen kívül
 Ignorer-maske
 Maska ignorowania
 Ignoreringsregel
-;Ignore Window, Listview, Column 1.. the entry to ignore.
 ;
-MSG_IGNORE_TEXT (265//)
+MSG_IGNORE_TEXT
 Text
 Text
 Texto
@@ -3487,9 +3228,8 @@ Szöveg
 Tekst
 Tekst
 Text
-;Ignore Window, Listview, Column 2.. "ignore normal or privmsg text". This string is also a label for the "Text" checkbox in the Add/Edit ignore window
 ;
-MSG_SERVERS_WINDOW_SERVERS (266//)
+MSG_SERVERS_WINDOW_SERVERS
 Servers
 Server
 Servidor
@@ -3500,9 +3240,8 @@ Kiszolgálók
 Servere
 Serwery
 Servrar
-;Server Selection window, Listview, Column 1, "Servers"
 ;
-MSG_SERVERS_WINDOW_PORT (267//)
+MSG_SERVERS_WINDOW_PORT
 Port
 Port
 Puerto
@@ -3513,9 +3252,8 @@ Port
 Port
 Port
 Port
-;Server Selection window, Listview, Column 2, "Port" (to connect on)
 ;
-MSG_SERVERS_WINDOW_AUTOCONNECT (268//)
+MSG_SERVERS_WINDOW_AUTOCONNECT
 Auto-Connect
 Automatische Verbindung
 Auto-Conectar
@@ -3526,9 +3264,8 @@ Autom. kapcsolódás
 Auto-oppkoble
 Po³±cz automatycznie
 Anslut automatiskt
-;Server Selection window, Listview, Column 3, "Auto-Connect" (do you want to connect to this server automatically on startup)
 ;
-MSG_SERVERS_WINDOW_PASSWORD (269//)
+MSG_SERVERS_WINDOW_PASSWORD
 Password
 Passwort
 Contraseña
@@ -3539,9 +3276,8 @@ Jelszó
 Passord
 Has³o
 Lösenord
-;Server Selection window, Listview, Column 4, "Password"
 ;
-MSG_IGNORE_LONG_DETAILED_HELP (270//)
+MSG_IGNORE_LONG_DETAILED_HELP
 Hostmarks look like this: nick!userid@hostname\ni.e.«Join» jahc (~jahc00@jahc.Amigaworld.Net)\njahc is the nick, jahc00 is the userid, and jahc.Amigaworld.Net is the hostname\nTo ignore this person, \
 you could insert an ignore entry of: jahc*!*@*\nThis will ignore all people with a nick starting with the letters jahc.\nThe use of wildcards makes this ignore command very powerful.\nThings like this \
 are possible: guru*editatio*!*userid@*.se\nor if you want to keep it simple, you could just use: jahc*
@@ -3572,9 +3308,8 @@ regu³.\nMo¿na np. utworzyæ tak± regu³ê: guru*editatio*!*userid@*.se\nlub je¶li c
 Värdinfo ser ut så här: nick!userid@hostname\ndvs.Join jahc (~jahc00@jahc.Amigaworld.Net)\njahc är nicket, jahc00 är anvädarid och jahc.Amigaworld.Net är värdnamnet\nFör att ignorera användaren kan du \
 skriva in jahc*!*@*\nDetta ignorerar alla nick som börjar med bokstäverna jahc.\nMed wildcards (*) blir detta kommando mycket kraftfullt.\nMöjliga kombinationer: guru*editatio*!*userid@*.se\neller för \
 att göra det enkelt:  roberto*
-;This help is displayed at the bottom of the "Add/Edit ignore entry" window
 ;
-MSG_IGNORE_ENTRY (271//)
+MSG_IGNORE_ENTRY
 Ignore Entry:
 Ignoriere Eintrag:
 Ignorar:
@@ -3585,9 +3320,8 @@ Mellõzõ bejegyzés
 Ignoremaske:
 Ignoruj:
 Ignorera enligt:
-;this is the label for the ignore mask string gadget, in the add/edit ignore entry window
 ;
-MSG_IGNORE_EVENTS (272//)
+MSG_IGNORE_EVENTS
 Which events to ignore:
 Welche Ereignisse sollen ignoriert werden:
 Eventos a ignorar:
@@ -3598,9 +3332,8 @@ Mely eseményt kell mellõzni:
 Hendelser å overse:
 Które zdarzenia ignorowaæ:
 Händelser att ignorera
-;which events do you want to ignore (three checkboxes follow), in the add/edit ignore entry window
 ;
-MSG_IGNORE_ADD (273//)
+MSG_IGNORE_ADD
 Add
 Hinzufügen
 Añadir
@@ -3611,9 +3344,8 @@ Hozzáad
 Legge til
 Dodaj
 Lägg till
-;Add an ignore entry to your ignore list
 ;
-MSG_IGNORE_EDIT (274//)
+MSG_IGNORE_EDIT
 Edit
 Ändern
 Editar
@@ -3624,9 +3356,8 @@ Módosít
 Editere
 Edytuj
 Ändra
-;Edit an ignore entry in your ignore list
 ;
-MSG_IGNORE_REMOVE (275//)
+MSG_IGNORE_REMOVE
 Remove
 Entfernen
 Eliminar
@@ -3637,9 +3368,8 @@ Eltávolít
 Fjerne
 Usuñ
 Ta bort
-;Remove an ignore entry in your ignore list
 ;
-MSG_IGNORE_LIST_WINDOW_TITLE (276//)
+MSG_IGNORE_LIST_WINDOW_TITLE
 Ignore List...
 Ignorieren Liste ...
 Lista ignorar...
@@ -3650,9 +3380,8 @@ Mellõzött lista...
 Ignore-liste...
 Lista ignorowania...
 Ignoreringslista ...
-;window title, and menu item
 ;
-MSG_AUTO_CONNECT_OPTION (277//)
+MSG_AUTO_CONNECT_OPTION
 Automatically connect here when WookieChat is started
 Diesen Server beim Start von WookieChat automatisch verbinden
 Conectarse automáticamente al inicio
@@ -3663,9 +3392,8 @@ Automatikusan csatlakozik ide a WookieChat indításakor
 Koble automatisk til her når WookieChat starter
 Po³±cz automatycznie po uruchomieniu programu
 Anslut hit automatiskt när WookieChat startas
-;this option appears in the "Edit server" window
 ;
-MSG_DISPLAY_SERVER_SELECTION_WINDOW (278//)
+MSG_DISPLAY_SERVER_SELECTION_WINDOW
 Display Server Window upon startup:
 Serverfenster beim Start zeigen:
 Mostrar esta ventana al inicio
@@ -3676,9 +3404,8 @@ Kiszolgáló ablak megjelenítése indításkor:
 Vis servervindu ved oppstart:
 Wy¶wietlaj listê serwerów przy uruchomieniu:
 Visa serverfönstret vid uppstart:
-;this option appears in the Server Selection window
 ;
-MSG_UNABLE_TO_RECONNECT_TO_SERVER (279//)
+MSG_UNABLE_TO_RECONNECT_TO_SERVER
 Unable to connect, giving up!
 Keine Verbindung möglich! Abbruch!
 No se ha podido conectar; abandonando!
@@ -3689,9 +3416,8 @@ Nem csatlakozik, feladom!
 Kunne ikke koble opp, gir opp!
 Nie mo¿na uzyskaæ po³±czenia, zaprzestano prób!
 Anslutning misslyckades, ger upp!
-;this message is displayed after it has reached the maximum reconnection attempts
 ;
-MSG_COMMAND_ALIAS_WINDOW_COLUMN1_TITLE (280//)
+MSG_COMMAND_ALIAS_WINDOW_COLUMN1_TITLE
 Alias
 Alias
 Alias
@@ -3702,9 +3428,8 @@ Helyettesítõ
 Alias
 Alias
 Alias
-;"Alias" .. the alias for a command.
 ;
-MSG_COMMAND_ALIAS_WINDOW_COLUMN2_TITLE (281//)
+MSG_COMMAND_ALIAS_WINDOW_COLUMN2_TITLE
 Command
 Kommando
 Comando
@@ -3715,9 +3440,8 @@ Parancs
 Kommando
 Polecenie
 Kommando
-;"Command" .. the command that the alias triggers.
 ;
-MSG_EDIT_ALIAS (282//)
+MSG_EDIT_ALIAS
 Edit...
 Ändern ...
 Editar...
@@ -3728,9 +3452,8 @@ Módosít...
 Edit...
 Edytuj...
 Ändra...
-;Edit - the text used in the button for "editing an alias" and the "edit alias" window title
 ;
-MSG_EDIT_ALIAS_CHANGE (283//)
+MSG_EDIT_ALIAS_CHANGE
 Change
 Übernehmen
 Cambiar
@@ -3741,9 +3464,8 @@ Változtat
 Forandre
 Zmieñ
 Byt
-;Change - update the alias with the new alias in the string gadget
 ;
-MSG_EDIT_ALIAS_CANCEL (284//)
+MSG_EDIT_ALIAS_CANCEL
 Cancel
 Abbrechen
 Cancelar
@@ -3754,9 +3476,8 @@ Mégsem
 Avbryt
 Poniechaj
 Avbryt
-;Cancel - do not change the alias that you are editing
 ;
-MSG_MENU_ITEM_CLONE_DETECTION (285//)
+MSG_MENU_ITEM_CLONE_DETECTION
 Clone detection
 Doppelerkennung
 Detectar duplicados
@@ -3768,7 +3489,7 @@ Klonedetektering
 Wykrywaj klony
 Klondetektering
 ;
-MSG_CLONES (286//)
+MSG_CLONES
 Clones
 Doppel
 Duplicados
@@ -3780,7 +3501,7 @@ Kloner
 Klony
 Kloner
 ;
-MSG_CLONE_DETECTED (287//)
+MSG_CLONE_DETECTED
 Detected clones from
 Doppel gefunden von
 Detectados duplicados de
@@ -3791,9 +3512,8 @@ Felderített klónok innen:
 Kloner detektert
 Wykryto klony z
 Detekterat kloner från
-;Detected clones from
 ;
-MSG_SAVE_SETTINGS (288//)
+MSG_SAVE_SETTINGS
 Save settings
 Einstellungen speichern
 Guardar ajustes
@@ -3804,9 +3524,8 @@ Beállítások mentése
 Lagre innstillinger
 Zapisz ustawienia
 Spara inställningar
-;Save settings
 ;
-MSG_SPLIT_UP_LOGS_PREFS_LABEL (289//)
+MSG_SPLIT_UP_LOGS_PREFS_LABEL
 Split up logfiles into smaller chunks
 Logdateien in kleinere Stücke splitten
 Separar registros en ficheros pequeños
@@ -3817,9 +3536,8 @@ Naplófájlok felbontása kisebb barabokra
 Splitt opp loggfiler i mindre biter
 Dziel pliki raportów na mniejsze kawa³ki
 Dela upp loggfiler i mindre stycken
-;Split up logfiles into smaller chunks
 ;
-MSG_LOGSIZE_PREFS_LABEL (290//)
+MSG_LOGSIZE_PREFS_LABEL
 If the above is enabled, choose a log file size (in kbytes)
 Wenn obiges aktiviert ist, bitte die Größe der Logdatei angeben (in kbytes)
 Tamaño de los ficheros pequeños (kB):
@@ -3830,9 +3548,8 @@ Ha a fenti bekapcsolva, akkor a naplófájl mérete (kbájtban)
 Hvis denne er aktiv, velg størrelse på loggfil (i kilobytes)
 Je¶li opcja powy¿ej jest zaznaczona, podaj wielko¶æ pliku raportu (w kB)
 Om du valt alternativet ovan, ange storlek på loggfilerna   (i kilobyte)
-;If the above is enabled, choose a log file size (in kbytes)
 ;
-MSG_SPLIT_UP_LOGS_PREFS_HELP (291//)
+MSG_SPLIT_UP_LOGS_PREFS_HELP
 When a tab is opened, the logfile will be examined. If it is over a certain size, then it will be renamed with the date appended to the end, and WookieChat will resume logging in a new empty logfile. \
 This is implemented for performance reasons. It can take a few seconds to reload large logfiles that are a few MB in size.
 Sobald ein Tab geöffnet ist, wird die Logdatei überprüft. Wenn sie über der definierten Größe ist, wird sie umbenannt, mit dem Datum am Ende, und WookieChat schreibt in einer neuen leeren Datei \
@@ -3853,9 +3570,8 @@ Podczas otwierania zak³adki zostanie sprawdzony plik raportu. Je¶li jego wielko¶
 kontynuowa³ raportowanie do nowego, pustego pliku raportu. Opcja ta zosta³a dodana w celu poprawienia wydajno¶ci. Wczytywanie plików raportów zajmuj±cych kilka megabajtów mo¿e zajmowaæ kilka sekund.
 När en ny flik öppnas, kommer loggfilen att undersökas. Om den är över en given storlek, kommer den att få ett nytt namn, med dagens datum lagd till slutet, och WookieChat fortsätter att logga i en ny \
 tom fil. Detta är gjort av prestandaskäl. Det kan ta ett par sekunder att ladda om stora loggfiler.
-;When a tab is opened, the logfile will be examined. If it is over a certain size, then it will be renamed with the date appended to the end, and WookieChat will resume logging in a new empty logfile. This is implemented for performance reasons. It can take a few seconds to reload large logfiles that are a few MB in size.
 ;
-MSG_NO_SERVER_TABS_PREFS (292//)
+MSG_NO_SERVER_TABS_PREFS
 Disable server tabs
 Keine Server Tabs benutzen
  No mostrar servidores
@@ -3866,9 +3582,8 @@ Kiszolgáló panelek tiltása
 Hindre server tabs
 Wy³±cz zak³adki serwerów
 Använd inte serverflikar
-;Disable server tabs
 ;
-MSG_HIDE_WINDOW (293//)
+MSG_HIDE_WINDOW
 Hide
 Verbergen
 Iconificar
@@ -3879,9 +3594,8 @@ Elrejt
 Gjem
 Ikonifikuj
 Göm
-;Hide (iconify wookiechat)
 ;
-MSG_PREFS_DCC_ADDRESS (294//)
+MSG_PREFS_DCC_ADDRESS
 Specify DCC address?
 DCC Adresse eingeben?
 Dirección DCC específica
@@ -3892,9 +3606,8 @@ DCC cím meghatározása?
 Spesifisere DCC adresse
 Okre¶l adres dla po³±czeñ DCC
 Specificera DCC adress?
-;Specify DCC address?
 ;
-MSG_PREFS_DCC_ADDRESS_HELP (295//)
+MSG_PREFS_DCC_ADDRESS_HELP
 WookieChat attempts to obtain your address automatically for outgoing DCC connections. If this address is incorrect, you can specify it here.
 WookieChat versucht die Adresse für ausgehende DCC Verbindungen automatisch zu ermitteln. Sollte diese Adresse fehlerhaft sein, so kann hier eine eingegeben werden.
 WookieChat intenta obtener su dirección de forma\nautomática para conexiones DCC de salida. Si\nesta es incorrecta, puede especificar una aquí.
@@ -3905,9 +3618,8 @@ Kimenõ DCC kapcsolathoz a WookieChat megpróbálja automatikusan beszerezni a címe
 WookieChat prøver å oppnå din adresse automatisk for utgående DCC forbindelser. Hvis denne adressen ikke er korrekt, kan du spesifisere den her.
 Program spróbuje automatycznie okre¶liæ Twój adres dla wychodz±cych po³±czeñ DCC. Je¶li ten adres jest nieprawid³owy, mo¿esz okre¶liæ w³asny adres tutaj.
 WookieChat försöker hämta din adress automatiskt för utgående DCC-anslutningar. Om adressen är fel, kan du ändra den här.
-;WookieChat attempts to obtain your address automatically for outgoing DCC connections. If this address is incorrect, you can specify it here.
 ;
-MSG_PREFS_TOGGLE_BUTTON_TABS (296//)
+MSG_PREFS_TOGGLE_BUTTON_TABS
 Use button-style tabs
 Tabs im Knopfstil benutzen
 Canales/servidores como botones
@@ -3918,9 +3630,8 @@ Panel váltás kapcsolókkal
 Bruk knappestil tabber
 U¿ywaj zak³adek w postaci przycisków
 Använd knappliknande flikar
-;Use buttons for tabs instead of a listview
 ;
-MSG_PREFS_TOGGLE_BUTTON_TABS_HELP (297//)
+MSG_PREFS_TOGGLE_BUTTON_TABS_HELP
 Turn off this option to use Listview-style tabs (the listview is better having a large amount of tabs open, such as 20 or 30).
 Um Tabs im Listenmodus zu erhalten, diese Option abschalten (Der Listenmodus ist optimaler, wenn viele Tabs, so zwischen 20 und 30, offen sind).
 Desactivado muestra canales/servidores en una lista\nen vez de botones (permitiendo "ver" más entradas).
@@ -3931,9 +3642,8 @@ Az opciót kikapcsolva a megnyitott panelek egy listában jelennek meg (nagyobb me
 Skru av denne muligheten for å bruke Listview-stil tabber  (listview er bedre når du har mange tabber åpne, så som 20 eller 30).
 Wy³±cz tê opcjê, aby wy¶wietlaæ zak³adki w postaci listy (widok listy jest wygodniejszy przy wiêkszej ilo¶ci otwartych zak³adek).
 Välj bort detta alternativet för att se flikarna som listvy (listvyn passar bättre när många flikar är öppna, som 20 eller 30).
-;Turn off this option to use Listview-style tabs (the listview is better having a large amount of tabs open, such as 20 or 30).
 ;
-MSG_USER_HAS_QUIT_IRC (298//)
+MSG_USER_HAS_QUIT_IRC
 has left IRC..
 hat das IRC verlassen...
 abandona el IRC...
@@ -3944,9 +3654,8 @@ elhagyta a csatornát..
 har avsluttet IRC...
 opu¶ci³ IRC-a...
 har lämnat IRC...
-;has left IRC...
 ;
-MSG_USER_HAS_RETURNED_TO_IRC (299//)
+MSG_USER_HAS_RETURNED_TO_IRC
 has returned to IRC...
 ist ins IRC zurückgekehrt ...
 vuelve al IRC...
@@ -3957,9 +3666,8 @@ visszatért a csatornába..
 har returnert til IRC...
 powróci³ na IRC-a...
 har kommit tillbaka till IRC...
-;has returned to IRC..
 ;
-MSG_CHECKBOX_ENABLE_GRAPHICAL_SMILEYS (300//)
+MSG_CHECKBOX_ENABLE_GRAPHICAL_SMILEYS
 Enable Graphical Smileys
 Grafische Smilies aktivieren
 Emoticonos gráficos
@@ -3970,9 +3678,8 @@ Grafikus hangulatjelek
 Tillate grafiske smileys
 W³±cz graficzne emotikonki
 Aktivera grafiska Smileys
-;Enable Graphical Smileys
 ;
-MSG_BACKGROUND_COLOUR_FOR_GRAPHICAL_SMILEYS (301//)
+MSG_BACKGROUND_COLOUR_FOR_GRAPHICAL_SMILEYS
 Background Colour for Smileys
 Hintergrund für Smilies
  Fondo de emoticonos:
@@ -3983,9 +3690,8 @@ Háttérszín a hangulatjelekhez
 Bakgrunnsfarge for smileys
 Kolor t³a emotikonek
 Bakgrundsfärg för Smileys
-;Background Colour for Smileys
 ;
-MSG_GRAPHICAL_SMILEY_SHORTHELP (302//)
+MSG_GRAPHICAL_SMILEY_SHORTHELP
 This option will display common ASCII "smiley faces" such as :) and :D with graphical pictures.
 Diese Option stellt die wichtigsten ASCII "Smilie-Gesichter" wie :) und :D als Grafik dar.
 Mostrar los emoticonos :) :/ como gráficos.
@@ -3996,9 +3702,8 @@ Ez a lehetõség a hagyományos ASCII "hangulatjeleket", mint pl. :) és :D grafikus
 Dette vil vise vanlige ASCII "smilefjes" som :) og :D med grafiske bilder.
 Opcja ta zast±pi najczê¶ciej spotykane emotikonki tekstowe, takie jak :) i :D odpowiednimi ich obrazkami.
 Smileys visas med ASCII-kod "smiley faces" såsom :) och :D med grafiska figurer.
-;This option will display common ASCII "smiley faces" such as :) and :D with graphical pictures.
 ;
-MSG_CHECKBOX_EXTERNAL_PLAYER_FOR_CTCP_SOUND (303//)
+MSG_CHECKBOX_EXTERNAL_PLAYER_FOR_CTCP_SOUND
 Use External Replayer For CTCP SOUND
 Externen Abspieler für CTCP-Klang benutzen
 Programa externo para CTCP SOUND
@@ -4009,9 +3714,8 @@ Külsõ lejátszó használata a CTCP SOUND-hoz
 Bruk ekstern avspiller for CTCP SOUND
 U¿ywaj zewnêtrznego odtwarzacza dla ¿±dañ CTCP SOUND
 Använd extern spelare för CTCP SOUND
-;Use External Replayer For CTCP SOUND
 ;
-MSG_EXTERNAL_PLAYER_FOR_CTCP_SOUND (304//)
+MSG_EXTERNAL_PLAYER_FOR_CTCP_SOUND
 Sound Player
 Abspieler für Klänge
 Reproductor:
@@ -4022,9 +3726,8 @@ Lejátszó
 Lydavspiller
 Odtwarzacz d¼wiêku
 Ljudspelare
-;Sound Player
 ;
-MSG_DOWNLOAD_PATH (305//)
+MSG_DOWNLOAD_PATH
 Download Path:
 Pfad zum Laden der Dateien:
 Descargas:
@@ -4035,9 +3738,8 @@ Letöltés helye:
 Nedlastingssti
 ¦cie¿ka pobierania
 Sökväg för nedladdning
-;Download Path
 ;
-MSG_LABEL_LISTVIEW_TABS_WEIGHT (306//)
+MSG_LABEL_LISTVIEW_TABS_WEIGHT
 Listview tabs vertical weight
 Feldgröße im Listenmodus
 Altura de la lista de canales/servidores (pixels)
@@ -4048,9 +3750,8 @@ Panel lista mérete
 Listview-stil tabs størrelse/vekt
 Rozmiar listy zak³adek
 Storlek på listvyflikarna
-;Listview-style tabs size/weight
 ;
-MSG_GROUP_FRAME_TITLE_TAB_PREFERENCES (307//)
+MSG_GROUP_FRAME_TITLE_TAB_PREFERENCES
 Tab Preferences
 Tab Einstellungen
 Mostrar Canales/Servidores
@@ -4061,9 +3762,8 @@ Panel beállítások
 Innstillinger
 Preferencje zak³adek
 Inställningar för flikar
-;Tab Preferences
 ;
-MSG_PREFS_HELP_BUBBLE_LISTVIEW_TABS_WEIGHT (308//)
+MSG_PREFS_HELP_BUBBLE_LISTVIEW_TABS_WEIGHT
 If you have disabled button style tabs, you can configure the size of the "tabs listview".
 Wenn die Knopfansicht der Kanäle abgeschaltet ist, kann  hier die Größe des Kanalanzeigefeldes angegeben werden.
 Altura de la lista de canales/servidores,\nsi ha elegido no mostrarlos como botones.
@@ -4074,9 +3774,8 @@ Ha kikapcsolta a kapcsolókkal történõ panel váltást, akkor itt határozható meg a
 Hvis du ikke har knappestil tabs, kan du konfigurere størrelsen av "tabs listview".
 Je¶li wy³±czy³e¶ reprezentacjê zak³adek poprzez przyciski, mo¿esz skonfigurowaæ wielko¶æ "listy zak³adek".
 Om du har inaktiverat flikar med knapputseende, kan du konfigurera "tabs listview".
-;If you have disabled button style tabs, you can configure the size of the "tabs listview".
 ;
-MSG_PREFS_HELP_BUBBLE_NO_SERVER_TABS (309//)
+MSG_PREFS_HELP_BUBBLE_NO_SERVER_TABS
 You can turn off keeping a dedicated tab for server messages to conserve memory and valuable screen space.
 Um Bildschirmplatz und Speicher zu sparen, kann dieser Tab abgeschaltet werden.
 No mostrar el servidor en pestaña/lista, ahorrando\nespacio en la ventana principal y memoria.
@@ -4087,9 +3786,8 @@ Kikapcsolható a kiszolgáló üzeneteinek fenntartott panel, hogy ne foglaljon memó
 Du kan skru av dedikert tab for serverbeskjeder for å spare minne og verdifull skjermplass.
 W celu zaoszczêdzenia pamiêci oraz cennego miejsca na ekranie mo¿esz wy³±czyæ wy¶wietlanie dedykowanej zak³adki na wiadomo¶ci serwera.
 Du kan stänga särskild flik för servermeddelanden för att spara skärmyta.
-;You can turn off keeping a dedicated tab for server messages to conserve memory and valuable screen space.
 ;
-MSG_PREFS_GRAPHICAL_NICKLIST_CHECKBOX (310//)
+MSG_PREFS_GRAPHICAL_NICKLIST_CHECKBOX
 Enable Graphical Nicklist
 Grafischen Zusatz bei Nicknamen anzeigen
  Lista de alias con colores
@@ -4100,9 +3798,8 @@ Grafikus becenév lista
 Tillate grafisk nickliste
 W³±cz graficzn± listê pseudonimów
 Aktivera grafisk nicklista
-;Enable Graphical Nicklist
 ;
-MSG_PREFS_GRAPHICAL_NICKLIST_HELP_BUBBLE (311//)
+MSG_PREFS_GRAPHICAL_NICKLIST_HELP_BUBBLE
 This will display the three most common nicklist usermodes in a graphical way.\nOperators (or @) are Green, Halfops (or \% ) are Blue, Voiced users (or +) are Yellow\n(This feature is reliant on \
 picture datatypes).
 Das zeigt die drei häufigsten Nutzermodi auf grafische Weise an.\nOperatoren (oder @) sind grün, HalbOperatoren (oder % ) sind blau, sprachberechtigte Nutzer (oder +) sind gelb.\n(Diese Funktion hängt \
@@ -4121,9 +3818,8 @@ Pozwoli to na wy¶wietlanie trzech najpopularniejszych trybów u¿ytkowników na li¶
 przyznanym g³osem (lub +) s± ¿ó³ci.\n(opcja ta wymaga zainstalowanych datatype'ów).
 Visar de tre vanligaste användartyperna på ett grafiskt vis.\nOperator (eller @) är gröna, Halvop (eller \% ) är Blåa, användare med röst (Voice eller +) är gula\n(har beroende i datatyperna för \
 bilder).
-;This will display the three most common nicklist usermodes in a graphical way.\nOperators (or @) are Green, Halfops (or \%) are Blue, Voiced users (or +) are Yellow\n(This feature is reliant on picture datatypes)
 ;
-MSG_PREFS_COLUMN_WIDTH_TIMESTAMP (312//)
+MSG_PREFS_COLUMN_WIDTH_TIMESTAMP
 Column width (in Pixels) for timestamps
 Spaltenbreite (in Pixeln) für Zeiteinträge
 Anchura columna Fecha/Hora (pixels)
@@ -4134,9 +3830,8 @@ Oszlop szélesség (képpontokban) az idõlenyomathoz
 Kolonnebredde (i piksler) for tidsstempel
 Szeroko¶æ kolumny (w pikselach) oznaczeñ czasowych
 Kolumnbredd (i pixlar) för tidstämpel
-;Column width (in Pixels) for timestamps
 ;
-MSG_PREFS_COLUMN_WIDTH_MIDDLE_NICKS (313//)
+MSG_PREFS_COLUMN_WIDTH_MIDDLE_NICKS
 Column width (in Pixels) for the middle/nicks column
 Spaltenbreite (in Pixeln) für die Mitte/Nickamen
 Anchura columna alias (pixels)
@@ -4147,9 +3842,8 @@ A középsõ/becenév oszlop szélessége (képontokban)
 Kolonnebredde (i piksler) for den midtre/nick-kolonnen
 Szeroko¶æ kolumny (w pikselach) pseudonimów
 Bredd (i pixlar) för nick-/mittkolumnen
-;Column width (in Pixels) for the middle/nicks column
 ;
-MSG_PREFS_DIVIDER_BAR_SPACE (314//)
+MSG_PREFS_DIVIDER_BAR_SPACE
 Amount of space surrounding columns divider bar
 Wert des Abstandes zu den Spalten
 Espacio libre entre columnas y texto (pixels)
@@ -4160,9 +3854,8 @@ Az oszlopokat elválasztó hézag mérete
 Mengde av plass som omgir avdeler-baren for kolonner
 Ilo¶æ miejsca otaczaj±cego belkê rozdzielaj±c± kolumny
 Plats runt kolumndelaren
-;Amount of space surrounding columns divider bar
 ;
-MSG_PREFS_MULTICOLUMN_NICK_DISPLAY (315//)
+MSG_PREFS_MULTICOLUMN_NICK_DISPLAY
 Remove < and > from around nicks
 Entferne '<' und '>' um Nicknamen
 Eliminar '<' y '>' de los alias
@@ -4173,9 +3866,8 @@ Rimuovi < e > attorno ai nick
 Fjerne < og > fra nick
 Usuwaj nawiasy otaczaj±ce pseudonimy
 Ta bort < och > runt nick
-;Remove < and > from around nicks
 ;
-MSG_GROUP_FRAME_TITLE_MULTICOLUMN_DISPLAY_SETTINGS (316//)
+MSG_GROUP_FRAME_TITLE_MULTICOLUMN_DISPLAY_SETTINGS
 Multicolumn display settings
 Spalteneinstellungen
 Al Mostrar V. Charla En Columnas
@@ -4186,9 +3878,8 @@ Több oszlopos panel beállításai
 Multikolonne visningsinnstillinger
 Ustawienia wy¶wietlania wielokolumnowego
 Inställning för visning med flera kolumner
-;Multicolumn display settings
 ;
-MSG_MENU_MULTICOLUMNCHATDISPLAY_ITEM (317//)
+MSG_MENU_MULTICOLUMNCHATDISPLAY_ITEM
 Multi-column chat display
 Mehrspaltige Chatanzeige
 Ventana de charla en columnas
@@ -4199,9 +3890,8 @@ Több oszlopos csevegõ panel
 Multikolonne chat-visning
 Wy¶wietlaj rozmowy w wielu kolumnach
 Chat med flera kolumner
-;Multi-column chat display
 ;
-MSG_MENU_COLUMNMARKINGCLIPBOARD_ITEM (318//)
+MSG_MENU_COLUMNMARKINGCLIPBOARD_ITEM
 Column-marking Clipboard
 Spaltenmarkierung Zwischenspeicher
 Marcar/Copiar por columnas
@@ -4212,9 +3902,8 @@ Kijelölés vágólapra
 Kolonne-markerende utklippstavle
 Kopiuj do schowka zaznaczane kolumny
 Urklippshanterare med kolumnmarkering
-;Column-marking Clipboard
 ;
-MSG_GRAPHICAL_NICKLIST_HELP_BUBBLE (319//)
+MSG_GRAPHICAL_NICKLIST_HELP_BUBBLE
 Graphical Usermodes Key:\nGreen = Channel Operators or @\nBlue = HalfOps or \% \nYellow = Voiced Users or +
 Grafische Nutzermodi:\nGrün = KanalOperator oder @\nBlau = HalbOperator oder %\nGelb = Sprachberechtigte Nutzer oder +
 Colores según el tipo de usuario:\nVerde = operadores (@)\nAzul = medio-operadores (%)\nAmarillo = con voz (+)
@@ -4225,9 +3914,8 @@ Grafikus felhasználótípus kulcs:\nZöld = Csatorna Operátor vagy @\nKék = HalfOp 
 Grafisk brukermodus nøkkel:\nGrønn = kanal-oper eller @\nBlå = halvoper eller \% \nGul = voice-brukere eller +
 Graficzne tryby u¿ytkowników - podpowied¼:\nzielony = operator kana³u lub @\nniebieski = pó³operator kana³u lub \%\n¿ó³ty = u¿ytkownik z przyznanym g³osem lub +
 Färgnyckel för grafiska användarlägen:\nGrön = Operator eller @\nBlå = HalfOp eller \% \nGul = Användare med röst eller +
-;Graphical Usermodes Key:\nGreen = Channel Operators or @\nBlue = HalfOps or \% \nYellow = Voiced Users or +
 ;
-MSG_GRAPHICAL_SMILEYS_PREVIEW (320//)
+MSG_GRAPHICAL_SMILEYS_PREVIEW
 Graphical Smileys Preview
 Vorschau der grafischen Smileys
 Muestra emoticonos gráficos
@@ -4238,9 +3926,8 @@ Graphical Smileys Preview
 Forhåndsvisning grafiske smileys
 Podgl±d emotikonek
 Förhandsvisning Smileys
-;Graphical Smileys Preview (window title)
 ;
-MSG_PREFS_NICKLIST_HORIZONTAL_WEIGHT (321//)
+MSG_PREFS_NICKLIST_HORIZONTAL_WEIGHT
 Nicklist horizontal weight
 Breite der Spitznamensliste
 Anchura de la lista de aliases (pixels)
@@ -4251,9 +3938,8 @@ Nicklist horizontal weight
 Nicklistens horisontale vekt
 Szeroko¶æ listy pseudonimów
 Horisontell nicklista
-;Nicklist horizontal weight
 ;
-MSG_PREFS_SMILEYS_THEME (322//)
+MSG_PREFS_SMILEYS_THEME
 Smileys theme
 Smiliedarstellung
 Emoticonos
@@ -4264,9 +3950,8 @@ Smileys theme
 Smileys-tema
 Zestaw emotikonek
 Tema Smileys
-;Smileys Theme
 ;
-MSG_COLOUR_SETTINGS_LOAD (323//)
+MSG_COLOUR_SETTINGS_LOAD
 Load...
 Laden ...
 Cargar...
@@ -4277,9 +3962,8 @@ Load...
 Hente...
 Wczytaj...
 Ladda...
-;Load
 ;
-MSG_COLOUR_SETTINGS_APPLY (324//)
+MSG_COLOUR_SETTINGS_APPLY
 Apply
 Benutzen
 Aplicar
@@ -4290,9 +3974,8 @@ Apply
 Utføre
 Zastosuj
 Applicera
-;Apply
 ;
-MSG_COLOUR_SETTINGS_SAVE (325//)
+MSG_COLOUR_SETTINGS_SAVE
 Save
 Speichern
 Guardar
@@ -4303,9 +3986,8 @@ Save
 Lagre
 Zapisz
 Spara
-;Save
 ;
-MSG_COLOUR_SETTINGS_SAVE_AS (326//)
+MSG_COLOUR_SETTINGS_SAVE_AS
 Save as...
 Speichern als ...
 Guardar como...
@@ -4316,9 +3998,8 @@ Save as...
 Lagre som...
 Zapisz jako...
 Spara som...
-;Save as...
 ;
-MSG_SERVER_CHARSET (327//)
+MSG_SERVER_CHARSET
 Server charset
 Zeichensatz des Servers
  Juego caracteres
@@ -4329,9 +4010,8 @@ Server charset
 Server karaktersett
 Strona kodowa serwera
 Server teckenuppsättning
-;Server charset
 ;
-MSG_LOCAL_CHARSET (328//)
+MSG_LOCAL_CHARSET
 Local charset
 Lokaler Zeichensatz
 Juego caracteres local
@@ -4342,9 +4022,8 @@ Local charset
 Lokalt karaktersett
 Lokalna strona kodowa
 Lokal teckenuppsättning
-;Local charset
 ;
-MSG_COLUMN_TITLE_CHARSET (329//)
+MSG_COLUMN_TITLE_CHARSET
 Charset
 Zeichensatz
 J. Caracteres
@@ -4355,9 +4034,8 @@ Charset
 Karaktersett
 Strona kodowa
 Teckenuppsättning
-;Charset
 ;
-MSG_MENU_ITEM_RESCAN_AREXX_DIR (330//)
+MSG_MENU_ITEM_RESCAN_AREXX_DIR
 <Rescan scripts directory>
 <Skriptverzeichnis neu einlesen>
 <Releer dir. scripts>
@@ -4368,9 +4046,8 @@ MSG_MENU_ITEM_RESCAN_AREXX_DIR (330//)
 <Reskanne scripts-mappe>
 <Przeskanuj katalog skryptów>
 <Skanna om skriptkatalogen>
-;<Rescan scripts directory>
 ;
-MSG_MENU_TITLE_AREXX (331//)
+MSG_MENU_TITLE_AREXX
 ARexx
 ARexx
 ARexx
@@ -4381,9 +4058,8 @@ ARexx
 Arexx
 Skrypty Arexx'a
 ARexx
-;Arexx
 ;
-MSG_ABOUT_WINDOW_TEXT (332//)
+MSG_ABOUT_WINDOW_TEXT
 \033cProudly sponsored by Guru Meditation\nAmiga reseller and Linux consulting\nhttp://gurumeditation.se/
 \ecUnterstützt von Guru Meditation\nAmiga Händler und Berater für Linux\nhttp://gurumeditation.se/
 \033cEsponsorado con orgullo por Guru Meditation,\nvendedor de AMIGA y consultor Linux.\nhttp://gurumeditation.se/
@@ -4394,9 +4070,8 @@ MSG_ABOUT_WINDOW_TEXT (332//)
 \033cStolt sponsor: Guru Meditation\nForhandler av Amiga og Linux konsultatsjon\nhttp://gurumeditation.se/
 \033cDzielnie wspierane przez Guru Meditation\nSprzedawcê Amigi i doradcê Linuksowego\nhttp://gurumeditation.se/
 \033cStolt sponsrad av Guru Meditation\nAmiga återförsäljare och Linux konsultering\nhttp://gurumeditation.se/
-;\033cProudly sponsored by Guru Meditation\nAmiga reseller and Linux consulting\nhttp://gurumeditation.se/
 ;
-MSG_ABOUT_WINDOW_TEXT_2 (333//)
+MSG_ABOUT_WINDOW_TEXT_2
 AREXX port:
 ARexx Port:
 \n
@@ -4407,9 +4082,8 @@ AREXX port:
 ARexx-port:
 Port Arexx'a:
 AREXX port:
-;AREXX port: <portname>
 ;
-MSG_MENU_CLEARALLBUFFERS_ITEM (334//)
+MSG_MENU_CLEARALLBUFFERS_ITEM
 Clear all buffers
 Alle Fenster leeren
 Limpiar todos los bufers
@@ -4420,9 +4094,8 @@ Clear all buffers
 Rense alle buffere
 Wyczy¶æ wszystkie bufory
 Rensa alla buffertar
-;Clear all buffers
 ;
-MSG_COLOUR_SETTINGS_LABEL_BACKGROUND (335//)
+MSG_COLOUR_SETTINGS_LABEL_BACKGROUND
 Background
 Hintergrund
 Fondo
@@ -4433,9 +4106,8 @@ Background
 Bakgrunn
 T³o
 Bakgrund
-;Background
 ;
-MSG_COLOUR_SETTINGS_LABEL_NICKLIST_BACKGROUND (336//)
+MSG_COLOUR_SETTINGS_LABEL_NICKLIST_BACKGROUND
 Nicklist background
 Namenslisten-Hintergrund
 Lista aliases (fondo)
@@ -4446,9 +4118,8 @@ Nicklist background
 Bakgrunn for nickliste
 T³o listy pseudonimów
 Bakgrund nicklista
-;Nicklist background
 ;
-MSG_COLOUR_SETTINGS_LABEL_JOIN (337//)
+MSG_COLOUR_SETTINGS_LABEL_JOIN
 Join
 Verbunden
 Acceder
@@ -4459,9 +4130,8 @@ Join
 Entre
 Przy³±czenie
 Anslut
-;Join
 ;
-MSG_COLOUR_SETTINGS_LABEL_PART (338//)
+MSG_COLOUR_SETTINGS_LABEL_PART
 Part
 Part
 Abandonar
@@ -4472,9 +4142,8 @@ Part
 Forlater
 Od³±czenie
 Lämna
-;Part
 ;
-MSG_COLOUR_SETTINGS_LABEL_QUIT (339//)
+MSG_COLOUR_SETTINGS_LABEL_QUIT
 Quit
 Beenden
 Salir
@@ -4485,9 +4154,8 @@ Quit
 Avslutter
 Koniec
 Avsluta
-;Quit
 ;
-MSG_COLOUR_SETTINGS_LABEL_MODES (340//)
+MSG_COLOUR_SETTINGS_LABEL_MODES
 Modes
 Modi
 Modos
@@ -4498,9 +4166,8 @@ Modes
 Moduser
 Zmiana trybu
 Lägen
-;Modes
 ;
-MSG_COLOUR_SETTINGS_LABEL_CTCP (341//)
+MSG_COLOUR_SETTINGS_LABEL_CTCP
 CTCP
 CTCP
  CTCP
@@ -4511,9 +4178,8 @@ CTCP
 CTCP
 CTCP
 CTCP
-;CTCP
 ;
-MSG_COLOUR_SETTINGS_LABEL_ACTIONS (342//)
+MSG_COLOUR_SETTINGS_LABEL_ACTIONS
 Actions
 Aktionen
 Acciones
@@ -4524,9 +4190,8 @@ Actions
 Handlinger
 Dzia³anie
 Händelser
-;Actions
 ;
-MSG_COLOUR_SETTINGS_LABEL_NORMAL (343//)
+MSG_COLOUR_SETTINGS_LABEL_NORMAL
 Normal
 Normal
  Normal
@@ -4537,9 +4202,8 @@ Normal
 Normal
 Normalny
 Normal
-;Normal
 ;
-MSG_COLOUR_SETTINGS_LABEL_INFO (344//)
+MSG_COLOUR_SETTINGS_LABEL_INFO
 Info
 Informationen
 Información
@@ -4550,9 +4214,8 @@ Info
 Info
 Informacja
 Info
-;Info
 ;
-MSG_COLOUR_SETTINGS_LABEL_OWN_TEXT (345//)
+MSG_COLOUR_SETTINGS_LABEL_OWN_TEXT
 Own text
 Eigener Text
 Texto propio
@@ -4563,9 +4226,8 @@ Own text
 Egen tekst
 W³asny tekst
 Egen text
-;Own text
 ;
-MSG_COLOUR_SETTINGS_LABEL_HIGHLIGHT (346//)
+MSG_COLOUR_SETTINGS_LABEL_HIGHLIGHT
 Highlight
 Hervorheben
 Resaltar
@@ -4576,9 +4238,8 @@ Highlight
 Høylys
 Pod¶wietlenie
 Framhäv
-;Highlight
 ;
-MSG_COLOUR_SETTINGS_LABEL_INVITE (347//)
+MSG_COLOUR_SETTINGS_LABEL_INVITE
 Invite
 Einladungen
 Invitar
@@ -4589,9 +4250,8 @@ Invite
 Invitere
 Zaproszenie
 Bjud in
-;Invite
 ;
-MSG_COLOUR_SETTINGS_LABEL_KICK (348//)
+MSG_COLOUR_SETTINGS_LABEL_KICK
 Kick
 Rausschmiss
 Expulsar
@@ -4602,9 +4262,8 @@ Kick
 Kicke
 Wyrzucenie
 Kicka
-;Kick
 ;
-MSG_COLOUR_SETTINGS_LABEL_NICK_CHANGE (349//)
+MSG_COLOUR_SETTINGS_LABEL_NICK_CHANGE
 Nick change
 Namenswechsel
 Cambiar alias
@@ -4615,9 +4274,8 @@ Nick change
 Forandrer nick
 Zmiana pseudonimu
 Ändring nick
-;Nick change
 ;
-MSG_COLOUR_SETTINGS_LABEL_TOPIC (350//)
+MSG_COLOUR_SETTINGS_LABEL_TOPIC
 Topic
 Thema
 Temática
@@ -4628,9 +4286,8 @@ Topic
 Topic
 Temat
 Ämne
-;Topic
 ;
-MSG_COLOUR_SETTINGS_LABEL_WALLOPS (351//)
+MSG_COLOUR_SETTINGS_LABEL_WALLOPS
 Wall ops
 Wall ops
 OPs
@@ -4641,9 +4298,8 @@ Wall ops
 Wall ops
 Informacje od operatorów
 Wall ops
-;Wall ops
 ;
-MSG_COLOUR_SETTINGS_LABEL_NOTICES (352//)
+MSG_COLOUR_SETTINGS_LABEL_NOTICES
 Notices
 Servermeldungen
 Noticias
@@ -4654,9 +4310,8 @@ Notices
 Notices
 Powiadomienia
 Notiser
-;Notices
 ;
-MSG_COLOUR_SETTINGS_LABEL_ACTIVITY (353//)
+MSG_COLOUR_SETTINGS_LABEL_ACTIVITY
 Activity
 Tab-Aktivität
 Actividad
@@ -4667,9 +4322,8 @@ Activity
 Aktivitet
 Aktywno¶æ
 Aktivitet
-;Activity
 ;
-MSG_COLOUR_SETTINGS_LABEL_CHAT_ACTIVITY (354//)
+MSG_COLOUR_SETTINGS_LABEL_CHAT_ACTIVITY
 Chat activity
 Tab-Chatanzeige
 Actividad (charla)
@@ -4680,9 +4334,8 @@ Chat activity
 Chatteaktivitet
 Aktywno¶æ - rozmowa
 Chat aktivitet
-;Chat activity
 ;
-MSG_COLOUR_SETTINGS_LABEL_HIGHLIGHT_ACTIVITY (355//)
+MSG_COLOUR_SETTINGS_LABEL_HIGHLIGHT_ACTIVITY
 Highlight activity
 Tab-Hervorhebeanzeige
 Actividad (resaltar)
@@ -4693,9 +4346,8 @@ Highlight activity
 Høylys aktivitet
 Aktywno¶æ - pod¶wietlenie
 Framhäv aktivitet
-;Highlight activity
 ;
-MSG_COLOUR_SETTINGS_LABEL_NICKLIST_TEXT (356//)
+MSG_COLOUR_SETTINGS_LABEL_NICKLIST_TEXT
 Nicklist text
 Namenslisten-Text
 Lista aliases (texto)
@@ -4706,9 +4358,8 @@ Nicklist text
 Tekst nickliste
 Pisak listy pseudonimów
 Text nicklista
-;Nicklist text
 ;
-MSG_COLOUR_SETTINGS_LABEL_TABS_BACKGROUND (357//)
+MSG_COLOUR_SETTINGS_LABEL_TABS_BACKGROUND
 Tabs background
 Tab-Hintergrund
  Lista cans./servs. (fondo)
@@ -4719,9 +4370,8 @@ Tabs background
 Tabs bakgrunn
 T³o zak³adek
 Bakgrund flikar
-;Tabs background
 ;
-MSG_COLOUR_SETTINGS_LABEL_TAGS_PEN (358//)
+MSG_COLOUR_SETTINGS_LABEL_TAGS_PEN
 Tabs pen
 Schriftfarbe der Tabs
  Lista cans./servs. (texto)
@@ -4732,9 +4382,8 @@ Tabs pen
 Tabs penn
 Pisak zak³adek
 Penna flikar
-;Tabs pen
 ;
-MSG_SERVER (359//)
+MSG_SERVER
 Server
 Server
 Servidor
@@ -4745,9 +4394,8 @@ Server
 Server
 Serwer
 Server
-;Server - the prefix for displayed Server messages.
 ;
-MSG_WINDOW_TITLE_CHOOSE_A_COLOUR (360//)
+MSG_WINDOW_TITLE_CHOOSE_A_COLOUR
 Choose Colour
 Farbe wählen
 Elija color
@@ -4758,9 +4406,8 @@ Choose Colour
 Velg farge
 Wybierz kolor
 Välj färg
-;Choose Colour
 ;
-MSG_APPLY (361//)
+MSG_APPLY
 Apply
 Übernehmen
 Aplicar
@@ -4771,9 +4418,8 @@ Apply
 Utføre
 Zastosuj
 Applicera
-;Apply (apply settings without closing the Main Settings window)
 ;
-MSG_AUTO_JOIN_CHANNELS (362//)
+MSG_AUTO_JOIN_CHANNELS
 Automatically join these channels
 Diese Kanäle automatisch betreten
  Canales acceder auto.:
@@ -4784,9 +4430,8 @@ Automatically join these channels
 Automatisk joine disse kanalene
 Automatycznie przy³±czaj do tych kana³ów
 Anslut automatiskt till dessa kanaler
-;Automatically join these channels
 ;
-MSG_NICK_REGISTER_PASSWORD (363//)
+MSG_NICK_REGISTER_PASSWORD
 Nick registration password
 Paßwort für Spitznamen
  Contraseña registrar alias:
@@ -4797,9 +4442,8 @@ Nick registration password
 Passord for nickregistrering
 Has³o rejestracji pseudonimu
 Lösenord nickregistering
-;Nick registration password
 ;
-MSG_NICK_REGISTER_PASSWORD_SHORT_HELP (364//)
+MSG_NICK_REGISTER_PASSWORD_SHORT_HELP
 This option will only work with a registered nick on a network with a Nickserv service.
 Diese Option macht nur dann Sinn, wenn man einen registrierten Spitznamen bei einem Netzwerk mit diesem Service verwendet.
 Funciona sólo con alias registrados en una red con un servicio de servidor de alias (Nickserv).
@@ -4810,9 +4454,8 @@ This option will only work with a registered nick on a network with a Nickserv s
 Denne muligheten vil bare virke med et registrert nick på et nettverk med en Nickserv service.
 Opcja ta dzia³a tylko z zarejestrowanymi pseudonimami w sieciach z us³ug± Nickserv.
 Detta val fungerar bara med ett registrerat nick på ett nätverk med Nickserv service.
-;This option will only work with a registered nick on a network with a Nickserv service
 ;
-MSG_ACCEPT_CHANGES (365//)
+MSG_ACCEPT_CHANGES
 Accept Changes
 Änderungen annehmen
 Aceptar cambios
@@ -4823,9 +4466,8 @@ Accept Changes
 Utfør forandringer
 Akceptuj zmiany
 Acceptera ändringar
-;Accept Changes (THIS OPTION IS NOW UNUSED, DO NOT WORRY ABOUT TRANSLATING THIS)
 ;
-MSG_SOUND_SAMPLE_NEW_MSG (366//)
+MSG_SOUND_SAMPLE_NEW_MSG
 Sample to play when a new PRIVMSG arrives
 Klang der beim Eintreffen einer privaten Nachricht abgespielt werden soll
 Mensaje privado (PRIVMSG):
@@ -4836,9 +4478,8 @@ Sample to play when a new PRIVMSG arrives
 Sample å spille når en ny PRIVMSG ankommer
 D¼wiêk odtwarzany przy nowej wiadomo¶ci prywatnej
 Ljudklipp att spela när nytt PRIVMSG anländer
-;LABEL "Sample to play when a new PRIVMSG arrives"
 ;
-MSG_SOUND_SAMPLE_PLAY_OPTION (367//)
+MSG_SOUND_SAMPLE_PLAY_OPTION
 When private tab is not selected
 Wenn das private Fenster nicht angewählt ist
 Si la pestaña no está seleccionada
@@ -4849,9 +4490,8 @@ When private tab is not selected
 Når private tabs ikke er valgt
 Gdy zak³adka rozmowy prywatnej nie jest wybrana
 När privat flik inte är vald
-;sound alerts: When private tab is not selected
 ;
-MSG_UNABLE_TO_RECONNECT_TO_SERVER_2 (368//)
+MSG_UNABLE_TO_RECONNECT_TO_SERVER_2
 Unable to connect!
 Keine Verbindung möglich!
 No se ha podido conectar!
@@ -4862,9 +4502,8 @@ Unable to connect!
 Kan ikke koble til!
 Nie mo¿na uzyskaæ po³±czenia!
 Kan inte ansluta!
-;this message is displayed when you cannot connect to a server
 ;
-MSG_RENAME (369//)
+MSG_RENAME
 Rename
 Rename
 Rename
@@ -4875,9 +4514,8 @@ Rename
 Nytt navn
 Zmieñ nazwê
 Rename
-;Rename
 ;
-MSG_ICONIFY_TEXT_NEW_MESSAGES_WAITING (370//)
+MSG_ICONIFY_TEXT_NEW_MESSAGES_WAITING
 New Messages Waiting
 New Messages Waiting
 New Messages Waiting
@@ -4888,9 +4526,8 @@ New Messages Waiting
 Nye beskjeder venter
 Oczekuj± nowe wiadomo¶ci
 New Messages Waiting
-;New Messages Waiting
 ;
-MSG_UPLOAD_PATH (371//)
+MSG_UPLOAD_PATH
 Upload Path
 Upload Path
 Upload Path
@@ -4901,9 +4538,8 @@ Upload Path
 Upload sti
 ¦cie¿ka wysy³ania
 Upload Path
-;Upload Path
 ;
-MSG_MENU_MUTEALLSOUNDS (372//)
+MSG_MENU_MUTEALLSOUNDS
 Mute all sound
 Mute all sound
 Mute all sound
@@ -4914,9 +4550,8 @@ Mute all sound
 Fjern all lyd
 Wycisz wszystkie d¼wiêki
 Mute all sound
-;Mute all sound
 ;
-MSG_ONLY_WHEN_TAB_IS_INACTIVE (373//)
+MSG_ONLY_WHEN_TAB_IS_INACTIVE
 Only when Tab is inactive
 Only when Tab is inactive
 Only when Tab is inactive
@@ -4927,7 +4562,6 @@ Only when Tab is inactive
 Bare når tab er inaktiv
 Only when Tab is inactive
 Only when Tab is inactive
-;sound alerts: Only when Tab is inactive
 ;
 MSG_INVITE
 Invite

@@ -1,1498 +1,1131 @@
 ;
-MSG_ERROR (0//)
+MSG_ERROR (1//)
 Error
 ;
-MSG_BANMASK (1//)
+MSG_BANMASK (//)
 Ban mask
 ;
-MSG_BANSETBY (2//)
+MSG_BANSETBY (//)
 Set by
 ;
-MSG_BANDATEPLACED (3//)
+MSG_BANDATEPLACED (//)
 Date placed
 ;
-MSG_MODE_X (4//)
+MSG_MODE_X (//)
 Close the current tab.
 ;
-MSG_TOPIC (5//)
+MSG_TOPIC (//)
 This is the channels current topic.
-;MUI help bubble for the channels topic string gadget.
 ;
-MSG_MODE_T (6//)
+MSG_MODE_T (//)
 Topic protection. This setting prevents regular users from changing the channel topic.
-;MUI help bubble for the T gadget
 ;
-MSG_MODE_N (7//)
+MSG_MODE_N (//)
 No messaging. This setting forces users to be in the channel to be able to talk in it.
-;MUI help bubble for the N gadget
 ;
-MSG_MODE_S (8//)
+MSG_MODE_S (//)
 Secret mode. If this is set, the channel is invisible until you have joined.
-;MUI help bubble for the S gadget
 ;
-MSG_MODE_I (9//)
+MSG_MODE_I (//)
 Invite only. Only users who have been invited to the channel may join.
-;MUI help bubble for the I gadget
 ;
-MSG_MODE_P (10//)
+MSG_MODE_P (//)
 Private mode. If set, channel topic is not shown on global channel lists.
-;MUI help bubble for the P gadget
 ;
-MSG_MODE_M (11//)
+MSG_MODE_M (//)
 Moderated mode. Only users with operator, halfop or voice status (thats @ % or +) may talk in channel when set.
-;MUI help bubble for the M gadget
 ;
-MSG_MODE_B (12//)
+MSG_MODE_B (//)
 Click to view a list of all banmasks for this channel.
-;MUI help bubble for the B gadget
 ;
-MSG_MODE_K (13//)
+MSG_MODE_K (//)
 Keyword mode. When this is set, users need to supply a keyword (password) to enter.
-;MUI help bubble for the K gadget
 ;
-MSG_MODE_K_STRING (14//)
+MSG_MODE_K_STRING (//)
 Current channel keyword.
-;MUI help bubble for the keyword string gadget
 ;
-MSG_MODE_L (15//)
+MSG_MODE_L (//)
 Enforce a limit to how many users can currently join the channel.
-;MUI help bubble for the L gadget
 ;
-MSG_MODE_L_STRING (16//)
+MSG_MODE_L_STRING (//)
 Current user limit.
-;MUI help bubble for the Current user limit
 ;
-MSG_HOSTNAME_STR (17//)
+MSG_HOSTNAME_STR (//)
 This is the hostname of the user you are currently talking to.
-;MUI help bubble for the hostname string gadget in a private tab
 ;
-MSG_ERROR_NLIST (18//)
+MSG_ERROR_NLIST (//)
 Please download and install the NList MUI Class from aminet\n
-;Error message when NList.mcc fails to load
 ;
-MSG_GENERAL (19//)
+MSG_GENERAL (//)
 General
-;General "settings tab name"
 ;
-MSG_LOGGING (20//)
+MSG_LOGGING (//)
 Logging
-;Logging "settings tab name"
 ;
-MSG_SOUNDS (21//)
+MSG_SOUNDS (//)
 Sounds
-;Sounds "settings tab name"
 ;
-MSG_ALIASES (22//)
+MSG_ALIASES (//)
 Aliases
-;Aliases "settings tab name"
 ;
-MSG_REMOVE_URL (23//)
+MSG_REMOVE_URL (//)
 Remove URL(s)
-;URL Grabber window .. "remove" button to remove url from the list
 ;
-MSG_CLEAR_ALL_URL (24//)
+MSG_CLEAR_ALL_URL (//)
 Clear All
-;URL Grabber window .. "clear all button" to clear all urls from the list
 ;
-MSG_URL_GRABBER_WINDOW_TITLE (25//)
+MSG_URL_GRABBER_WINDOW_TITLE (//)
 URL Grabber - Double click URL to Open
-;URL Grabber window title
 ;
-MSG_ABOUT (26//)
+MSG_ABOUT (//)
 About...
-;about...
 ;
-MSG_YES (27//)
+MSG_YES (//)
 Yes
-;yes
 ;
-MSG_NO (28//)
+MSG_NO (//)
 No
-;no
 ;
-MSG_DCC_CHOOSE_FILENAME (29//)
+MSG_DCC_CHOOSE_FILENAME (//)
 File To Send
-;ASL Requester title for selecting a file to DCC SEND
 ;
-MSG_BUTTON_SEND_FILE (30//)
+MSG_BUTTON_SEND_FILE (//)
 Send File
-;button for sending a file with DCC SEND
 ;
-MSG_DCC_SEND_WINDOW (31//)
+MSG_DCC_SEND_WINDOW (//)
 DCC SEND File
-;title text for the initiate dcc send window
 ;
-MSG_REOFFER (32//)
+MSG_REOFFER (//)
 Reoffer File
-;reoffer a dcc send file
 ;
-MSG_CANCEL_SEND (33//)
+MSG_CANCEL_SEND (//)
 Cancel Send
-;cancel a dcc send transfer
 ;
-MSG_REMOVE (34//)
+MSG_REMOVE (//)
 Remove
-;remove a dcc send transfer from the list
 ;
-MSG_RESUME (35//)
+MSG_RESUME (//)
 Resume
-;resume
 ;
-MSG_OVERWRITE (36//)
+MSG_OVERWRITE (//)
 Overwrite
-;overwrite
 ;
-MSG_ABORT (37//)
+MSG_ABORT (//)
 Abort
-;abort
 ;
-MSG_ALREADY_EXISTS_WINDOW_TITLE (38//)
+MSG_ALREADY_EXISTS_WINDOW_TITLE (//)
 Incoming File already exists
-;incoming File already exists
 ;
-MSG_CHOOSE_DOWNLOAD_PATH (39//)
+MSG_CHOOSE_DOWNLOAD_PATH (//)
 Choose a path to save your downloads to.
-;choose a path to save your downloads to.
 ;
-MSG_ACCEPT (40//)
+MSG_ACCEPT (//)
 Accept
-;accept transfer
 ;
-MSG_CANCEL_TRANSFER (41//)
+MSG_CANCEL_TRANSFER (//)
 Cancel
-;cancel transfer
 ;
-MSG_PREFS_NICK_COMPLETION_STYLE (42//)
+MSG_PREFS_NICK_COMPLETION_STYLE (//)
 Nick Completion Style
-;nick Completion Style
 ;
-MSG_PREFS_NICK_COMPLETION_STYLE_HELP (43//)
+MSG_PREFS_NICK_COMPLETION_STYLE_HELP (//)
 AmIRC style puts a colon and a space after users nicks if used at the beginning of a line, or just a space afterwards anywhere else. mIRC style: No colon or spaces are used, only the nick is \
 displayed.
-;amIRC style puts a colon and a space after users nicks if used at the beginning of a line, or just a space afterwards anywhere else. mIRC style: No colon or spaces are used, only the nick is displayed
 ;
-MSG_ASK (44//)
+MSG_ASK (//)
 Ask
-;ask .. [ask what user wants to do]
 ;
-MSG_PREFS_AUTO_REJOIN (45//)
+MSG_PREFS_AUTO_REJOIN (//)
 Auto-rejoin channels when kicked.
-;auto-rejoin channels when kicked
 ;
-MSG_PREFS_AUTO_OPEN_TAB (46//)
+MSG_PREFS_AUTO_OPEN_TAB (//)
 Auto-open private query tabs when messaged.
-;auto-open private query tabs when messaged
 ;
-MSG_PREFS_MAX_LINES_BUFFER (47//)
+MSG_PREFS_MAX_LINES_BUFFER (//)
 Maximum number of lines to keep in buffer.
-;maximum number of lines to keep in buffer
 ;
-MSG_PREFS_LOG_CHANNELS (48//)
+MSG_PREFS_LOG_CHANNELS (//)
 Log channels
-;log channels
 ;
-MSG_PREFS_LOG_PRIVATE (49//)
+MSG_PREFS_LOG_PRIVATE (//)
 Log private chats
-;log private chats
 ;
-MSG_DEFAULT_KICK_MESSAGE (50//)
+MSG_DEFAULT_KICK_MESSAGE (//)
 Default kick message
-;default Kick Message
 ;
-MSG_DEFAULT_BAN_MESSAGE (51//)
+MSG_DEFAULT_BAN_MESSAGE (//)
 Default ban message
-;default Ban Message
 ;
-MSG_QUIT_MESSAGE (52//)
+MSG_QUIT_MESSAGE (//)
 Quit message
-;quit Message
 ;
-MSG_PART_MESSAGE (53//)
+MSG_PART_MESSAGE (//)
 Part message
-;part Message
 ;
-MSG_REQUEST_WHOIS (54//)
+MSG_REQUEST_WHOIS (//)
 Request whois information
-;"request whois information" when double clicking on a persons nick in the nicklist
 ;
-MSG_OPEN_TAB (55//)
+MSG_OPEN_TAB (//)
 Open private query tab
-;"Open private query tab" when double clicking on a persons nick in the nicklist
 ;
-MSG_DOUBLECLICK_GROUP_FRAME_TITLE (56//)
+MSG_DOUBLECLICK_GROUP_FRAME_TITLE (//)
 Nicklist doubleclick actions
-;nicklist doubleclick actions
 ;
-MSG_CUSTOM_TIMESTAMPS (57//300)
+MSG_CUSTOM_TIMESTAMPS (58//300)
 Customise your timestamps! use these codes: %h for the hour, %m for the minute, and %s for the second. This is useful to see what time an event happened (such as a user joining, or speaking).
-;MUI help bubble on how to configure timestamps
 ;
-MSG_TIMESTAMP_FORMAT (58//)
+MSG_TIMESTAMP_FORMAT (//)
 Timestamp Format
-;timestamp format
 ;
-MSG_HIGHLIGHT (59//)
+MSG_HIGHLIGHT (//)
 Words to Highlight
-;label name "Words to Highlight"
 ;
-MSG_QUIT_REQUESTER (60//)
+MSG_QUIT_REQUESTER (//)
 Quit Program?
-;quit program?
 ;
-MSG_FILE_TO_SEND (61//)
+MSG_FILE_TO_SEND (//)
 File to send
-;dcc send initiate window, "file to send" label
 ;
-MSG_WINDOW_TITLE_DCC_INCOMING (62//)
+MSG_WINDOW_TITLE_DCC_INCOMING (//)
 Incoming File Transfers...
-;the window titlebar text for incoming dcc transfers
 ;
-MSG_WINDOW_TITLE_DCC_OUTGOING (63//)
+MSG_WINDOW_TITLE_DCC_OUTGOING (//)
 Outgoing File Transfers...
-;the window titlebar text for outgoing dcc transfers
 ;
-MSG_HIGHLIGHT_TITLE (64//)
+MSG_HIGHLIGHT_TITLE (//)
 Highlight
-;the title of the "highlight prefs" group
 ;
-MSG_PREFS_USE_TIMESTAMPS (65//)
+MSG_PREFS_USE_TIMESTAMPS (//)
 Use timestamps
-;the label for the "use timestamps" checkmark
 ;
-MSG_TIMESTAMPS_TITLE (66//)
+MSG_TIMESTAMPS_TITLE (//)
 Timestamps
-;the title of the "timestamp prefs" group
 ;
-MSG_TEXT_EDITOR_HELP (67//)
+MSG_TEXT_EDITOR_HELP (//)
 This text editor is used when you edit your "Perform on Connect" scripts (from the Server Selection window).
-;mui help bubble explaining that this text editor is used for editing the "perform on connect" scripts in the server selection window
 ;
-MSG_TEXT_EDITOR (68//)
+MSG_TEXT_EDITOR (//)
 Text Editor
-;label for the "Text Editor" setting
 ;
-MSG_WEB_BROWSER_LABEL (69//)
+MSG_WEB_BROWSER_LABEL (//)
 Web Browser
-;label for the "Web Browser" setting
 ;
-MSG_WEB_BROWSER_HELP (70//)
+MSG_WEB_BROWSER_HELP (//)
 Choose a web browser to use with WookieChat's "URL Grabber" Window. Double clicking an address there will load in this chosen browser.
-;MUI short help explaining what this setting is for in wookiechat
 ;
-MSG_WEB_BROWSER_REQUESTER (71//)
+MSG_WEB_BROWSER_REQUESTER (//)
 Choose a browser
-;Text to appear in an ASL requester asking user to choose a browser
 ;
-MSG_SAVE (72//)
+MSG_SAVE (//)
 Save
-;save
 ;
-MSG_USE (73//)
+MSG_USE (//)
 Use
-;use
 ;
-MSG_CANCEL (74//)
+MSG_CANCEL (//)
 Cancel
-;cancel
 ;
-MSG_DCC_AUTO_ACCEPT (75//)
+MSG_DCC_AUTO_ACCEPT (//)
 Auto accept incoming DCC File Transfers
-;auto accept incoming DCC File Transfers
 ;
-MSG_DCC_ACTION (76//)
+MSG_DCC_ACTION (//)
 Action to take if file exists
-;action to take if file exists
 ;
-MSG_DCC_LOCAL_ADDRESS (77//)
+MSG_DCC_LOCAL_ADDRESS (//)
 Use local address for DCC connections
-;use local address for DCC connections
 ;
-MSG_PORT_RANGE_START (78//)
+MSG_PORT_RANGE_START (//)
 DCC Port range from
-;DCC port range from
 ;
-MSG_PORT_RANGE_END (79//)
+MSG_PORT_RANGE_END (//)
 to
-;To
 ;
-MSG_PORT_RANGE_START_HELP (80//)
+MSG_PORT_RANGE_START_HELP (//)
 This is the start of the port range for incoming DCC connections. This is configurable so you can choose which ports to use and open up on any firewall you might have.
-;this is the start of the port range for incoming DCC connections. This is configurable so you can choose which ports to use and open up on any firewall you might have
 ;
-MSG_PORT_RANGE_END_HELP (81//)
+MSG_PORT_RANGE_END_HELP (//)
 This is the end of the port range for incoming DCC connections. This is configurable so you can choose which ports to use and open up on any firewall you might have.
-;this is the end of the port range for incoming DCC connections. This is configurable so you can choose which ports to use and open up on any firewall you might have
 ;
-MSG_NEVER (82//)
+MSG_NEVER (//)
 Never
-;sound alerts: never
 ;
-MSG_ALWAYS (83//)
+MSG_ALWAYS (//)
 Always
-;sound alerts: always
 ;
-MSG_ONLY_WHEN_WINDOW_INACTIVE (84//)
+MSG_ONLY_WHEN_WINDOW_INACTIVE (//)
 Only when window is inactive
-;sound alerts: only when window is inactive
 ;
-MSG_SOUND_SAMPLE_TAB_OPEN (85//)
+MSG_SOUND_SAMPLE_TAB_OPEN (//)
 Sample to play when a tab opens
-;label "sample to play when a tab opens"
 ;
-MSG_PLAY_SAMPLE (86//)
+MSG_PLAY_SAMPLE (//)
 Play sample
-;play sample
 ;
-MSG_CHOOSE_FILENAME (87//)
+MSG_CHOOSE_FILENAME (//)
 Choose a filename
-;"choose a filename" from the ASL requester
 ;
-MSG_SOUND_SAMPLE_HIGHLIGHT (88//)
+MSG_SOUND_SAMPLE_HIGHLIGHT (//)
 Sample to play on highlight
-;label "sample to play on highlight"
 ;
-MSG_SAMPLES_PATH (89//)
+MSG_SAMPLES_PATH (//)
 Samples Path for CTCP SOUND
-;label "Samples Path for CTCP SOUND"
 ;
-MSG_SAMPLES_PATH_HELP (90//)
+MSG_SAMPLES_PATH_HELP (//)
 When you recieve a CTCP SOUND request, WookieChat will\nlook in this path for sound samples.
-;mui help bubble "When you recieve a CTCP SOUND request, WookieChat will\nlook in this path for sound samples"
 ;
-MSG_CHOOSE_DIR (91//)
+MSG_CHOOSE_DIR (//)
 Choose a directory
-;"choose a directory" from the ASL requester
 ;
-MSG_LOGFILE_RELOADING_LABEL (92//)
+MSG_LOGFILE_RELOADING_LABEL (//)
 Num of lines to display from the end of logfiles when opening a tab\n(Put 0 to disable this feature).
-;num of lines to display from the end of logfiles when opening a tab\n[Put 0 to disable this feature]
 ;
-MSG_CHANNEL (93//)
+MSG_CHANNEL (//)
 Channel
-;channel
 ;
-MSG_CHANNEL_LOG_RELOAD_HELP (94//)
+MSG_CHANNEL_LOG_RELOAD_HELP (//)
 How many lines to reload from the end of log files when you join a channel.
-;how many lines to reload from the end of log files when you join a channel.
 ;
-MSG_PRIVATE (95//)
+MSG_PRIVATE (//)
 Private tab
-;private tab
 ;
-MSG_PRIVATE_LOG_RELOAD_HELP (96//)
+MSG_PRIVATE_LOG_RELOAD_HELP (//)
 How many lines to reload from the end of log files when you open a private query tab to another user.
-;how many lines to reload from the end of log files when you open a private query tab to another user.
 ;
-MSG_LOG_RELOADING_TITLE (97//)
+MSG_LOG_RELOADING_TITLE (//)
 Log Reloading
-;log reloading
 ;
-MSG_ALIAS_HELP (98//)
+MSG_ALIAS_HELP (//)
 Enter an alias name, then the command you want it to use\nE.g. With this line added to the alias list..\n/j /join\n..then the "/j" command will be replaced with "/join".
-;MUI help bubble for the alias section
 ;
-MSG_BUTTON_ADD_ALIAS (99//)
+MSG_BUTTON_ADD_ALIAS (//)
 Add alias >>
-;add alias >>
 ;
-MSG_BUTTON_REMOVE_ALIAS (100//)
+MSG_BUTTON_REMOVE_ALIAS (//)
 Remove
-;remove
 ;
-MSG_SETTINGS_WINDOW_TITLE (101//)
+MSG_SETTINGS_WINDOW_TITLE (//)
 Settings
-;settings
 ;
-MSG_COLOUR_SETTINGS_WINDOW_TITLE (102//)
+MSG_COLOUR_SETTINGS_WINDOW_TITLE (//)
 Colour settings...
-;colour settings...
 ;
-MSG_MENU_SELECT_SERVER (103//)
+MSG_MENU_SELECT_SERVER (//)
 Select server...
-;select server...
 ;
-MSG_MENU_CLOSE_TAB (104//)
+MSG_MENU_CLOSE_TAB (//)
 Close current tab
-;close current tab
 ;
-MSG_MENU_NEW_SERVER_TAB (105//)
+MSG_MENU_NEW_SERVER_TAB (//)
 New server tab
-;new server tab
 ;
-MSG_MENU_OPEN_GLOBAL_TAB (106//)
+MSG_MENU_OPEN_GLOBAL_TAB (//)
 Open global query tab
-;open global query tab
 ;
-MSG_MENU_QUIT (107//)
+MSG_MENU_QUIT (//)
 Quit...
-;quit...
 ;
-MSG_MENU_CLEARBUFFER_ITEM (108//)
+MSG_MENU_CLEARBUFFER_ITEM (//)
 Clear buffer
-;clear buffer
 ;
-MSG_MENU_SAVE_BUFFER (109//)
+MSG_MENU_SAVE_BUFFER (//)
 Save buffer as...
-;save buffer as...
 ;
-MSG_MENU_MAIN_TITLE (110//)
+MSG_MENU_MAIN_TITLE (//)
 Main
-;main
 ;
-MSG_MENU_MAIN_SETTINGS (111//)
+MSG_MENU_MAIN_SETTINGS (//)
 Main settings...
-;main settings...
 ;
-MSG_MENU_MUISETTINGS_ITEM (112//)
+MSG_MENU_MUISETTINGS_ITEM (//)
 MUI settings...
-;mui settings...
 ;
-MSG_MENU_MULITCOLUMN_DISPLAY (113//)
+MSG_MENU_MULITCOLUMN_DISPLAY (//)
 Multi-column chat display
-;multi-column chat display
 ;
-MSG_URL_GRABBER (114//)
+MSG_URL_GRABBER (//)
 URL Grabber...
-;url Grabber...
 ;
-MSG_SERVER_NAME (115//)
+MSG_SERVER_NAME (//)
 Server Name
-;server name
 ;
-MSG_PORT_NUMBER (116//)
+MSG_PORT_NUMBER (//)
 Port Number
-;port number
 ;
-MSG_SERVER_PASSWORD (117//)
+MSG_SERVER_PASSWORD (//)
 Server Password
-;server password
 ;
-MSG_WINDOW_EDIT_SERVER (118//)
+MSG_WINDOW_EDIT_SERVER (//)
 Edit Server
-;edit server
 ;
-MSG_GROUP_NAME (119//)
+MSG_GROUP_NAME (//)
 Group Name
-;group name
 ;
-MSG_PERFORM_ON_CONNECT (120//)
+MSG_PERFORM_ON_CONNECT (//)
 Perform on connect...
-;perform on connect...
 ;
-MSG_EDIT_GROUP (121//)
+MSG_EDIT_GROUP (//)
 Edit Group...
-;edit group...
 ;
-MSG_REAL_NAME (122//)
+MSG_REAL_NAME (//)
 Real Name
-;real name
 ;
-MSG_USER_NAME (123//)
+MSG_USER_NAME (//)
 User Name
-;user name
 ;
-MSG_NEW_SERVER (124//)
+MSG_NEW_SERVER (//)
 New Server
-;new server
 ;
-MSG_NEW_GROUP (125//)
+MSG_NEW_GROUP (//)
 New Group
-;new group
 ;
-MSG_EDIT_ENTRY (126//)
+MSG_EDIT_ENTRY (//)
 Edit Entry...
-;edit entry...
 ;
-MSG_DELETE_ENTRY (127//)
+MSG_DELETE_ENTRY (//)
 Delete Entry
-;delete entry
 ;
-MSG_CONNECT_TO_SERVER (128//)
+MSG_CONNECT_TO_SERVER (//)
 Connect to server
-;connect to server
 ;
-MSG_CONNECT_TO_SERVER_IN_NEW_TAB (129//)
+MSG_CONNECT_TO_SERVER_IN_NEW_TAB (//)
 Connect in new tab
-;connect in new tab
 ;
-MSG_WINDOW_SELECT_SERVER (130//)
+MSG_WINDOW_SELECT_SERVER (//)
 Select server
-;select server
 ;
-MSG_UNBAN (131//)
+MSG_UNBAN (//)
 Unban
-;unban
 ;
-MSG_REFRESH_BAN_LIST (132//)
+MSG_REFRESH_BAN_LIST (//)
 Refresh banlist
-;refresh banlist
 ;
-MSG_UNABLE_TO_CREATE_APP (133//)
+MSG_UNABLE_TO_CREATE_APP (//)
 Unable to create app\n
-;unable to create app\n
 ;
-MSG_NOT_CONNECTED (134//)
+MSG_NOT_CONNECTED (//)
 Not connected to a server.
-;not connected to a server
 ;
-MSG_NOT_CONNECTED_TO_USER (135//)
+MSG_NOT_CONNECTED_TO_USER (//)
 Not connected to a user.
-;not connected to a user
 ;
-MSG_NO_BROWSER_SELECTED (136//)
+MSG_NO_BROWSER_SELECTED (//)
 Please go to the "Main Settings" window, and choose a browser for WookieChat to open web sites with.
-;please go to the "Main Settings" window, and choose a browser for WookieChat to open web sites with
 ;
-MSG_ERROR_MISSING_MCC_BETTERSTRING (137//)
+MSG_ERROR_MISSING_MCC_BETTERSTRING (//)
 Please download and install the BetterString.mcc MUI Class.
-;please download and install the BetterString.mcc MUI Class
 ;
-MSG_ERROR_MISSING_MCC_NLIST (138//)
+MSG_ERROR_MISSING_MCC_NLIST (//)
 Please download and install the NList.mcc MUI Class.
-;please download and install the NList.mcc MUI Class
 ;
-MSG_ERROR_MISSING_MCC_NLISTVIEW (139//)
+MSG_ERROR_MISSING_MCC_NLISTVIEW (//)
 Please download and install the NListview.mcc MUI Class.
-;please download and install the NListview.mcc MUI Class
 ;
-MSG_ERROR_MISSING (140//)
+MSG_ERROR_MISSING (//)
 These missing classes can be downloaded from http://www.aminet.net/ or http://os4depot.net. Check the WookieChat readme for direct links to these classes\n
-;these missing classes can be downloaded from http://www.aminet.net/ or http://os4depot.net. Check the WookieChat readme for direct links to these classes\n
 ;
-MSG_SAVING_BUFFER_TO (141//)
+MSG_SAVING_BUFFER_TO (//)
 Saving buffer to file:
-;saving buffer to file:
 ;
-MSG_CANCELLED (142//)
+MSG_CANCELLED (//)
 Cancelled
-;cancelled
 ;
-MSG_DCC_SEND_MESSAGE (143//)
+MSG_DCC_SEND_MESSAGE (//)
 Please select a file to send, and a nick to offer the file to.
-;please select a file to send, and a nick to offer the file to
 ;
-MSG_DCC_SEND_MESSAGE2 (144//)
+MSG_DCC_SEND_MESSAGE2 (//)
 Please select a file to send
-;please select a file to send
 ;
-MSG_DCC_SEND_MESSAGE3 (145//)
+MSG_DCC_SEND_MESSAGE3 (//)
 Please select a nick to offer the file to.
-;please select a nick to offer the file to.
 ;
-MSG_WINDOW_TITLE_BANMASKS (146//)
+MSG_WINDOW_TITLE_BANMASKS (//)
 List of banmasks for channel
-;List of banmasks for channel (channel name is supplied by WookieChat at the end of this string)
 ;
-MSG_REMOVING_BAN (147//)
+MSG_REMOVING_BAN (//)
 Removing banmask
-;Removing banmask [banmask string is supplied by wookie at the end of this string]
 ;
-MSG_TRANSFERRING (148//)
+MSG_TRANSFERRING (//)
 Transferring
-;transferring
 ;
-MSG_SYNTAX (149//)
+MSG_SYNTAX (//)
 Syntax
-;syntax
 ;
-MSG_STATUS (150//)
+MSG_STATUS (//)
 Status
-;status .. dcc transfers column title
 ;
-MSG_SENT (151//)
+MSG_SENT (//)
 Amount sent
-;amount sent.. dcc transfers column title
 ;
-MSG_FILE_SIZE (152//)
+MSG_FILE_SIZE (//)
 Size
-;size of file being send/recieved.. dcc transfers column title
 ;
-MSG_TIME_LEFT (153//)
+MSG_TIME_LEFT (//)
 Time Left
-;time left in dcc transfer, column title
 ;
-MSG_RECIEVED (154//)
+MSG_RECIEVED (//)
 Recieved
-;amount recieved.. dcc transfers column title
 ;
-MSG_REMOVING_BAN_FOR_CHANNEL (155//)
+MSG_REMOVING_BAN_FOR_CHANNEL (//)
 for channel\x20
-;for channel [channelname is supplied by wookie at the end of this string]
 ;
-MSG_LOGGING_STARTED_AT (156//)
+MSG_LOGGING_STARTED_AT (//)
 Logging started at\x20
-;logging started at
 ;
-MSG_HAS_BEEN_INVITED_TO_CHANNEL (157//)
+MSG_HAS_BEEN_INVITED_TO_CHANNEL (//)
 has been invited to channel\x20
-;[nick] has been invited to channel [#channelname]
 ;
-MSG_INVITED_BY_USER (158//)
+MSG_INVITED_BY_USER (//)
 by user
-;by user [nick]
 ;
-MSG_YOU_HAVE_INVITED (159//)
+MSG_YOU_HAVE_INVITED (//)
 you have invited\x20
-;you have invited [nick]
 ;
-MSG_TO_CHANNEL (160//)
+MSG_TO_CHANNEL (//)
 to channel\x20
-;[you have invited nick] to channel [channel]
 ;
-MSG_TOPIC_SET_BY (161//)
+MSG_TOPIC_SET_BY (//)
 set by\x20
-;set by [nick]
 ;
-MSG_TOPIC_DATE (162//)
+MSG_TOPIC_DATE (//)
 on\x20
-;on [date - e.g july 20th 2005]
 ;
-MSG_NICK_IN_USE_RETRYING_WITH (163//)
+MSG_NICK_IN_USE_RETRYING_WITH (//)
 in use, retrying with\x20
-;[nick] in use, retrying with [nick]
 ;
-MSG_JOIN (164//)
+MSG_JOIN (//)
 Join
-;join
 ;
-MSG_PART (165//)
+MSG_PART (//)
 Part
-;part
 ;
-MSG_QUIT (166//)
+MSG_QUIT (//)
 Quit
-;quit
 ;
-MSG_USER_WAS_KICKED_BY (167//)
+MSG_USER_WAS_KICKED_BY (//)
 was kicked by
-;[nick] was kicked by [nick]
 ;
-MSG_YOU_WERE_KICKED_BY (168//)
+MSG_YOU_WERE_KICKED_BY (//)
 You were kicked by
-;You were kicked by [nick]
 ;
-MSG_IS_NOW_KNOWN_AS (169//)
+MSG_IS_NOW_KNOWN_AS (//)
 is now known as\x20
-;[nick] is now known as [new nick]
 ;
-MSG_PLAYS (170//)
+MSG_PLAYS (//)
 plays
-;[nick] plays [sound.wav]
 ;
-MSG_ATTEMPTING_TO_RESUME (171//)
+MSG_ATTEMPTING_TO_RESUME (//)
 Attempting to resume
-;Attempting to resume [file from user]
 ;
-MSG_ATTEMPT_TO_ACCEPT (172//)
+MSG_ATTEMPT_TO_ACCEPT (//)
 Attempting to accept DCC CHAT request
-;attempting to accept DCC CHAT request
 ;
-MSG_OFFERED_FROM (173//)
+MSG_OFFERED_FROM (//)
 offered from
-;[file] offered from [nick]
 ;
-MSG_TOPIC_CHANGED (174//)
+MSG_TOPIC_CHANGED (//)
 changes the topic to
-;[nick] changes the topic to [new topic]
 ;
-MSG_FINISHED_SENDING (175//)
+MSG_FINISHED_SENDING (//)
 Finished sending\x20
-;finished sending [file]
 ;
-MSG_FINISHED_RECIEVING (176//)
+MSG_FINISHED_RECIEVING (//)
 Finished recieving
-;finished recieving [file]
 ;
-MSG_CONNECTED_TO (177//)
+MSG_CONNECTED_TO (//)
 connected to\x20
-;information for the window title.... [nick] connected to [servername]
 ;
-MSG_AT_AN_AVERAGE_SPEED_OF (178//)
+MSG_AT_AN_AVERAGE_SPEED_OF (//)
 Average speed:
-;[file sent in x minutes x seconds] Average speed: [x KB per/sec]
 ;
-MSG_DCC_COMPLETE (179//)
+MSG_DCC_COMPLETE (//)
 Complete
-;[dcc file transfer status] complete
 ;
-MSG_DCC_INCOMPLETE (180//)
+MSG_DCC_INCOMPLETE (//)
 Incomplete
-;[dcc file transfer status] incomplete
 ;
-MSG_DCC_CANCELLED (181//)
+MSG_DCC_CANCELLED (//)
 Cancelled
-;[dcc file transfer status] cancelled
 ;
-MSG_CONNECTED (182//)
+MSG_CONNECTED (//)
 Connected
-;connected
 ;
-MSG_DISCONNECTED (183//)
+MSG_DISCONNECTED (//)
 Disconnected
-;disconnected
 ;
-MSG_DCC_FAILED (184//)
+MSG_DCC_FAILED (//)
 Failed
-;[dcc file transfer status] failed
 ;
-MSG_CREATE_FILE_FAILED (185//)
+MSG_CREATE_FILE_FAILED (//)
 unable to create new file for incoming transfer
-;dcc file transfer error message: unable to create new file for incoming transfer
 ;
-MSG_OPEN_FILE_FOR_DCC_SEND_FAILED (186//)
+MSG_OPEN_FILE_FOR_DCC_SEND_FAILED (//)
 unable to open requested file
-;user tried to send a file but the file doesnt exist
 ;
-MSG_DCC_STARTED_FILE_TRANSFER (187//)
+MSG_DCC_STARTED_FILE_TRANSFER (//)
 Started file transfer:
-;started file transfer: [filename] to [nick]
 ;
-MSG_UNABLE_TO_CONNECT (188//)
+MSG_UNABLE_TO_CONNECT (//)
 Unable to establish DCC CHAT Connection
-;unable to establish DCC CHAT Connection
 ;
-MSG_CONNECTED_DCC_CHAT (189//)
+MSG_CONNECTED_DCC_CHAT (//)
 DCC CHAT Connection Established
-;DCC CHAT Connection established
 ;
-MSG_TRANSFER_TIME (190//)
+MSG_TRANSFER_TIME (//)
 Transfer time:
-;Transfer time: [2 minutes, 11 seconds, at an average speed of etc]
 ;
-MSG_FILE_DOESNT_EXIST (191//)
+MSG_FILE_DOESNT_EXIST (//)
 Error, file doesnt exist
-;[DCC SEND message] Error, file doesnt exist
 ;
-MSG_OFFERING_FILE (192//)
+MSG_OFFERING_FILE (//)
 Offering file
-;Offering file [to user on port 1024]
 ;
-MSG_OFFERED_ON (193//)
+MSG_OFFERED_ON (//)
 on
-;[file offered to user] on [port 1024]
 ;
-MSG_OFFERED_TO (194//)
+MSG_OFFERED_TO (//)
 to
-;[file offered] to [user on port 1024]
 ;
-MSG_DCC_CHAT_REQUEST (195//)
+MSG_DCC_CHAT_REQUEST (//)
 Sending DCC CHAT request
-;Sending DCC CHAT request [to user on port 1024]
 ;
-MSG_COLOUR_SETTINGS_LOAD_ERROR (196//)
+MSG_COLOUR_SETTINGS_LOAD_ERROR (//)
 Unable to load colour settings, using default settings. To avoid seeing this message again, create a drawer called 'Colours' inside WookieChat's drawer, then open and close the Colour Settings window \
 the next time you run WookieChat.
-;unable to load colour settings, using default settings. To avoid seeing this message again, create a drawer called 'Colours' inside WookieChat's drawer, then open and close the Colour Settings window the next time you run WookieChat.
 ;
-MSG_COLOUR_SETTINGS_SAVE_ERROR (197//)
+MSG_COLOUR_SETTINGS_SAVE_ERROR (//)
 Unable to save your colour settings. Make sure you have a drawer called 'Colours' inside WookieChat's drawer, for it to save your colour preferences to.
-;unable to save your colour settings. Make sure you have a drawer called 'Colours' inside WookieChat's drawer, for it to save your colour preferences to.
 ;
-MSG_UNABLE_TO_OPEN_TCPIP_STACK (198//)
+MSG_UNABLE_TO_OPEN_TCPIP_STACK (//)
 Please start a TCP/IP stack and try again.
-;please start a TCP/IP stack and try again.
 ;
-MSG_CONNECT_TO_A_NEW_SERVER (199//)
+MSG_CONNECT_TO_A_NEW_SERVER (//)
 Connecting to a new server
-;connecting to a new server
 ;
-MSG_ATTEMPTING_TO_CONNECT_TO_SERVER (200//)
+MSG_ATTEMPTING_TO_CONNECT_TO_SERVER (//)
 Attempting to connect to\x20
-;attempting to connect to [servername + portnumber]
 ;
-MSG_CONNECTING (201//)
+MSG_CONNECTING (//)
 Connecting
-;connecting (dcc file transfer status)
 ;
-MSG_FILE_ALREADY_EXISTS (202//)
+MSG_FILE_ALREADY_EXISTS (//)
 already exists!
-;[file] already exists!
 ;
-MSG_INCOMING_FILE_SIZE (203//)
+MSG_INCOMING_FILE_SIZE (//)
 Size of existing file
-;size of existing file [x bytes]
 ;
-MSG_FILE_SIZE_OFFERED (204//)
+MSG_FILE_SIZE_OFFERED (//)
 Size of file being offered
-;size of file being offered [x bytes]
 ;
-MSG_TO (205//)
+MSG_TO (//)
 to
-;[DCC SEND file] to [user has completed/failed]
 ;
-MSG_DCC_WAITING (206//)
+MSG_DCC_WAITING (//)
 Waiting
-;Waiting .. file transfer status
 ;
-MSG_UPDATING_NAMES_LIST (207//)
+MSG_UPDATING_NAMES_LIST (//)
 Updating Names list for channel
-;Updating Names list for channel [channelname]
 ;
-MSG_USERS_IN_CHANNEL (208//)
+MSG_USERS_IN_CHANNEL (//)
 Users in channel
-;Users in channel [channelname]
 ;
-MSG_AUTO_REJOINING (209//)
+MSG_AUTO_REJOINING (//)
 Auto-rejoining\x20
-;Auto-rejoining [channelname] ... after being kicked
 ;
-MSG_FROM (210//)
+MSG_FROM (//)
 from
-;from [user]
 ;
-MSG_SETS_MODE (211//)
+MSG_SETS_MODE (//)
 sets mode
-;[user] sets mode
 ;
-MSG_PLAYING (212//)
+MSG_PLAYING (//)
 playing
-;playing [sound to user]
 ;
-MSG_SENDING_CTCP (213//)
+MSG_SENDING_CTCP (//)
 Sending CTCP
-;Sending CTCP [COMMAND to user]
 ;
-MSG_WINDOWS_MENU (214//)
+MSG_WINDOWS_MENU (//)
 Windows
-;"Windows" menu title
 ;
-MSG_FILENAME (215//)
+MSG_FILENAME (//)
 Filename
-;Filename column title in DCC Transfer Listviews
 ;
-MSG_NICKNAMES (216//)
+MSG_NICKNAMES (//)
 Nick Names
-;Nick names label in the server selection window
 ;
-MSG_OPENING_BRACKET (217//)
+MSG_OPENING_BRACKET (//)
 [
-;a bracket to enclose messages around.. e.g. [Join]
 ;
-MSG_CLOSING_BRACKET (218//)
+MSG_CLOSING_BRACKET (//)
 ]
-;a bracket to enclose messages around.. e.g. [Join]
 ;
-MSG_NICKLIST_OPTIONS (219//)
+MSG_NICKLIST_OPTIONS (//)
 Nicklist Options
-;popup/context menu title
 ;
-MSG_WHOIS_MENU_ITEM (220//)
+MSG_WHOIS_MENU_ITEM (//)
 Whois
-;/whois a user
 ;
-MSG_QUERY_MENU_ITEM (221//)
+MSG_QUERY_MENU_ITEM (//)
 Open Query
-;/query .. open a private tab to a user
 ;
-MSG_GLOBAL_QUERY_MENU_ITEM (222//)
+MSG_GLOBAL_QUERY_MENU_ITEM (//)
 Open Global Query
-;open a private tab to display all private messages in
 ;
-MSG_CTCP_MENU_TITLE (223//)
+MSG_CTCP_MENU_TITLE (//)
 CTCP
-;CTCP Command popup/context menu title
 ;
-MSG_PING_MENU_ITEM (224//)
+MSG_PING_MENU_ITEM (//)
 Ping
-;/ping a user
 ;
-MSG_VERSION_MENU_ITEM (225//)
+MSG_VERSION_MENU_ITEM (//)
 Version
-;/version a user
 ;
-MSG_TIME_MENU_ITEM (226//)
+MSG_TIME_MENU_ITEM (//)
 Time
-;/time a user
 ;
-MSG_DIRECT_CONNECTION_MENU_TITLE (227//)
+MSG_DIRECT_CONNECTION_MENU_TITLE (//)
 Direct Connection
-;DCC popup/context menu title
 ;
-MSG_SEND_FILE_MENU_ITEM (228//)
+MSG_SEND_FILE_MENU_ITEM (//)
 Send file
-;send a file with dcc send
 ;
-MSG_CHAT_MENU_ITEM (229//)
+MSG_CHAT_MENU_ITEM (//)
 Chat
-;start a directly connected dcc chat session
 ;
-MSG_CONTROL_MENU_TITLE (230//)
+MSG_CONTROL_MENU_TITLE (//)
 Control
-;channel operator controls popup/context menu title
 ;
-MSG_OP_MENU_ITEM (231//)
+MSG_OP_MENU_ITEM (//)
 Op
-;give user operator status
 ;
-MSG_DEOP_MENU_ITEM (232//)
+MSG_DEOP_MENU_ITEM (//)
 DeOp
-;take away operator status
 ;
-MSG_HALFOP_MENU_ITEM (233//)
+MSG_HALFOP_MENU_ITEM (//)
 HalfOp
-;give a user half ops
 ;
-MSG_DEHALFOP_MENU_ITEM (234//)
+MSG_DEHALFOP_MENU_ITEM (//)
 DeHalfOp
-;take away halfops
 ;
-MSG_VOICE_MENU_ITEM (235//)
+MSG_VOICE_MENU_ITEM (//)
 Voice
-;give voice status
 ;
-MSG_DEVOICE_MENU_ITEM (236//)
+MSG_DEVOICE_MENU_ITEM (//)
 DeVoice
-;take away voice status
 ;
-MSG_KICK_MENU_ITEM (237//)
+MSG_KICK_MENU_ITEM (//)
 Kick
-;kick a user out of a channel
 ;
-MSG_BAN_MENU_ITEM (238//)
+MSG_BAN_MENU_ITEM (//)
 Ban
-;ban a user from a channel
 ;
-MSG_SENDER (239//)
+MSG_SENDER (//)
 Sender
-;sender column in file transfers window
 ;
-MSG_RECIEVER (240//)
+MSG_RECIEVER (//)
 Reciever
-;reciever column in file transfers window
 ;
-MSG_CHANNEL_NAME_HELP (241//)
+MSG_CHANNEL_NAME_HELP (//)
 <channelname>
-;used for help strings
 ;
-MSG_NICK_HELP (242//)
+MSG_NICK_HELP (//)
 <nick>
-;used for help strings
 ;
-MSG_COMMAND_NAME_HELP (243//)
+MSG_COMMAND_NAME_HELP (//)
 <command>
-;used for help strings
 ;
-MSG_SOUND_SAMPLE_NAME_HELP (244//)
+MSG_SOUND_SAMPLE_NAME_HELP (//)
 <sound_sample_name>
-;used for help strings
 ;
-MSG_SOUND_BAN_MASK_HELP (245//)
+MSG_SOUND_BAN_MASK_HELP (//)
 <ban_mask>
-;used for help strings
 ;
-MSG_MESSAGE_HELP (246//)
+MSG_MESSAGE_HELP (//)
 <message>
-;used for help strings
 ;
-MSG_NEW_NICK_HELP (247//)
+MSG_NEW_NICK_HELP (//)
 <new_nick>
-;used for help strings
 ;
-MSG_TOPIC_HELP (248//)
+MSG_TOPIC_HELP (//)
 <new_topic>
-;used for help strings
 ;
-MSG_SERVERNAME_HELP (249//)
+MSG_SERVERNAME_HELP (//)
 <servername>
-;used for help strings
 ;
-MSG_PORT_HELP (250//)
+MSG_PORT_HELP (//)
 <port>
-;used for help strings
 ;
-MSG_SWEAR_FILTER (251//)
+MSG_SWEAR_FILTER (//)
 SwearFilter
-;swear word filter message
 ;
-MSG_ENABLED (252//)
+MSG_ENABLED (//)
 Enabled
-;<option> enabled
 ;
-MSG_DISABLED (253//)
+MSG_DISABLED (//)
 Disabled
-;<option> disabled
 ;
-MSG_NICK_OR_CHANNEL_HELP (254//)
+MSG_NICK_OR_CHANNEL_HELP (//)
 <nick or channel>
-;used for help strings
 ;
-MSG_FILENAME_HELP (255//)
+MSG_FILENAME_HELP (//)
 <filename>
-;used for help strings
 ;
-MSG_ACTION_HELP (256//)
+MSG_ACTION_HELP (//)
 <action>
-; used for help strings
 ;
-MSG_USERS (257//)
+MSG_USERS (//)
 users
-;[amount of] users [in channel]
 ;
-MSG_HIGHLIGHT_STRINGGADGET_HELP_BUBBLE (258//)
+MSG_HIGHLIGHT_STRINGGADGET_HELP_BUBBLE (//)
 Enter words here for WookieChat to watch for. Lines of text will appear in the highlight colour if one of these words is found. Enter the words you want to highlight, separated by spaces.
-;help bubble text in prefs
 ;
-MSG_RESUME_FILE (259//)
+MSG_RESUME_FILE (//)
 RESUME file
-; RESUME file [filename] >> [reciever] @ [size of file] bytes
 ;
-MSG_SERVERS_GROUP (260//)
+MSG_SERVERS_GROUP (//)
 Servers
-; "Servers" preferences tab in the Main Settings window
 ;
-MSG_MAX_RECONNECT_RETRIES (261//)
+MSG_MAX_RECONNECT_RETRIES (//)
 Maximum attempts to reconnect after non-requested disconnection
-;"Maximum attempts to reconnect after non-requested disconnection" preferences option
 ;
-MSG_RECONNECT_DELAY (262//)
+MSG_RECONNECT_DELAY (//)
 Delay (in seconds) in between reconnection attempts
-;"Delay (in seconds) in between reconnection attempts" preferences option
 ;
-MSG_RETRY (263//)
+MSG_RETRY (//)
 Retry #
-;"Attempting to connect to [servername] Retry #[number]"
 ;
-MSG_IGNORE_MASK (264//)
+MSG_IGNORE_MASK (//)
 Ignore Mask
-;Ignore Window, Listview, Column 1.. the entry to ignore.
 ;
-MSG_IGNORE_TEXT (265//)
+MSG_IGNORE_TEXT (//)
 Text
-;Ignore Window, Listview, Column 2.. "ignore normal or privmsg text". This string is also a label for the "Text" checkbox in the Add/Edit ignore window
 ;
-MSG_SERVERS_WINDOW_SERVERS (266//)
+MSG_SERVERS_WINDOW_SERVERS (//)
 Servers
-;Server Selection window, Listview, Column 1, "Servers"
 ;
-MSG_SERVERS_WINDOW_PORT (267//)
+MSG_SERVERS_WINDOW_PORT (//)
 Port
-;Server Selection window, Listview, Column 2, "Port" (to connect on)
 ;
-MSG_SERVERS_WINDOW_AUTOCONNECT (268//)
+MSG_SERVERS_WINDOW_AUTOCONNECT (//)
 Auto-Connect
-;Server Selection window, Listview, Column 3, "Auto-Connect" (do you want to connect to this server automatically on startup)
 ;
-MSG_SERVERS_WINDOW_PASSWORD (269//)
+MSG_SERVERS_WINDOW_PASSWORD (//)
 Password
-;Server Selection window, Listview, Column 4, "Password"
 ;
-MSG_IGNORE_LONG_DETAILED_HELP (270//)
+MSG_IGNORE_LONG_DETAILED_HELP (//)
 Hostmarks look like this: nick!userid@hostname\ni.e.«Join» jahc (~jahc00@jahc.Amigaworld.Net)\njahc is the nick, jahc00 is the userid, and jahc.Amigaworld.Net is the hostname\nTo ignore this person, \
 you could insert an ignore entry of: jahc*!*@*\nThis will ignore all people with a nick starting with the letters jahc.\nThe use of wildcards makes this ignore command very powerful.\nThings like this \
 are possible: guru*editatio*!*userid@*.se\nor if you want to keep it simple, you could just use: jahc*
-;This help is displayed at the bottom of the "Add/Edit ignore entry" window
 ;
-MSG_IGNORE_ENTRY (271//)
+MSG_IGNORE_ENTRY (//)
 Ignore Entry:
-;this is the label for the ignore mask string gadget, in the add/edit ignore entry window
 ;
-MSG_IGNORE_EVENTS (272//)
+MSG_IGNORE_EVENTS (//)
 Which events to ignore:
-;which events do you want to ignore (three checkboxes follow), in the add/edit ignore entry window
 ;
-MSG_IGNORE_ADD (273//)
+MSG_IGNORE_ADD (//)
 Add
-;Add an ignore entry to your ignore list
 ;
-MSG_IGNORE_EDIT (274//)
+MSG_IGNORE_EDIT (//)
 Edit
-;Edit an ignore entry in your ignore list
 ;
-MSG_IGNORE_REMOVE (275//)
+MSG_IGNORE_REMOVE (//)
 Remove
-;Remove an ignore entry in your ignore list
 ;
-MSG_IGNORE_LIST_WINDOW_TITLE (276//)
+MSG_IGNORE_LIST_WINDOW_TITLE (//)
 Ignore List...
-;window title, and menu item
 ;
-MSG_AUTO_CONNECT_OPTION (277//)
+MSG_AUTO_CONNECT_OPTION (//)
 Automatically connect here when WookieChat is started
-;this option appears in the "Edit server" window
 ;
-MSG_DISPLAY_SERVER_SELECTION_WINDOW (278//)
+MSG_DISPLAY_SERVER_SELECTION_WINDOW (//)
 Display Server Window upon startup:
-;this option appears in the Server Selection window
 ;
-MSG_UNABLE_TO_RECONNECT_TO_SERVER (279//)
+MSG_UNABLE_TO_RECONNECT_TO_SERVER (//)
 Unable to connect, giving up!
-;this message is displayed after it has reached the maximum reconnection attempts
 ;
-MSG_COMMAND_ALIAS_WINDOW_COLUMN1_TITLE (280//)
+MSG_COMMAND_ALIAS_WINDOW_COLUMN1_TITLE (//)
 Alias
-;"Alias" .. the alias for a command.
 ;
-MSG_COMMAND_ALIAS_WINDOW_COLUMN2_TITLE (281//)
+MSG_COMMAND_ALIAS_WINDOW_COLUMN2_TITLE (//)
 Command
-;"Command" .. the command that the alias triggers.
 ;
-MSG_EDIT_ALIAS (282//)
+MSG_EDIT_ALIAS (//)
 Edit...
-;Edit - the text used in the button for "editing an alias" and the "edit alias" window title
 ;
-MSG_EDIT_ALIAS_CHANGE (283//)
+MSG_EDIT_ALIAS_CHANGE (//)
 Change
-;Change - update the alias with the new alias in the string gadget
 ;
-MSG_EDIT_ALIAS_CANCEL (284//)
+MSG_EDIT_ALIAS_CANCEL (//)
 Cancel
-;Cancel - do not change the alias that you are editing
 ;
-MSG_MENU_ITEM_CLONE_DETECTION (285//)
+MSG_MENU_ITEM_CLONE_DETECTION (//)
 Clone detection
 ;
-MSG_CLONES (286//)
+MSG_CLONES (//)
 Clones
 ;
-MSG_CLONE_DETECTED (287//)
+MSG_CLONE_DETECTED (//)
 Detected clones from
-;Detected clones from
 ;
-MSG_SAVE_SETTINGS (288//)
+MSG_SAVE_SETTINGS (//)
 Save settings
-;Save settings
 ;
-MSG_SPLIT_UP_LOGS_PREFS_LABEL (289//)
+MSG_SPLIT_UP_LOGS_PREFS_LABEL (//)
 Split up logfiles into smaller chunks
-;Split up logfiles into smaller chunks
 ;
-MSG_LOGSIZE_PREFS_LABEL (290//)
+MSG_LOGSIZE_PREFS_LABEL (//)
 If the above is enabled, choose a log file size (in kbytes)
-;If the above is enabled, choose a log file size (in kbytes)
 ;
-MSG_SPLIT_UP_LOGS_PREFS_HELP (291//)
+MSG_SPLIT_UP_LOGS_PREFS_HELP (//)
 When a tab is opened, the logfile will be examined. If it is over a certain size, then it will be renamed with the date appended to the end, and WookieChat will resume logging in a new empty logfile. \
 This is implemented for performance reasons. It can take a few seconds to reload large logfiles that are a few MB in size.
-;When a tab is opened, the logfile will be examined. If it is over a certain size, then it will be renamed with the date appended to the end, and WookieChat will resume logging in a new empty logfile. This is implemented for performance reasons. It can take a few seconds to reload large logfiles that are a few MB in size.
 ;
-MSG_NO_SERVER_TABS_PREFS (292//)
+MSG_NO_SERVER_TABS_PREFS (//)
 Disable server tabs
-;Disable server tabs
 ;
-MSG_HIDE_WINDOW (293//)
+MSG_HIDE_WINDOW (//)
 Hide
-;Hide (iconify wookiechat)
 ;
-MSG_PREFS_DCC_ADDRESS (294//)
+MSG_PREFS_DCC_ADDRESS (//)
 Specify DCC address?
-;Specify DCC address?
 ;
-MSG_PREFS_DCC_ADDRESS_HELP (295//)
+MSG_PREFS_DCC_ADDRESS_HELP (//)
 WookieChat attempts to obtain your address automatically for outgoing DCC connections. If this address is incorrect, you can specify it here.
-;WookieChat attempts to obtain your address automatically for outgoing DCC connections. If this address is incorrect, you can specify it here.
 ;
-MSG_PREFS_TOGGLE_BUTTON_TABS (296//)
+MSG_PREFS_TOGGLE_BUTTON_TABS (//)
 Use button-style tabs
-;Use buttons for tabs instead of a listview
 ;
-MSG_PREFS_TOGGLE_BUTTON_TABS_HELP (297//)
+MSG_PREFS_TOGGLE_BUTTON_TABS_HELP (//)
 Turn off this option to use Listview-style tabs (the listview is better having a large amount of tabs open, such as 20 or 30).
-;Turn off this option to use Listview-style tabs (the listview is better having a large amount of tabs open, such as 20 or 30).
 ;
-MSG_USER_HAS_QUIT_IRC (298//)
+MSG_USER_HAS_QUIT_IRC (//)
 has left IRC..
-;has left IRC...
 ;
-MSG_USER_HAS_RETURNED_TO_IRC (299//)
+MSG_USER_HAS_RETURNED_TO_IRC (//)
 has returned to IRC...
-;has returned to IRC..
 ;
-MSG_CHECKBOX_ENABLE_GRAPHICAL_SMILEYS (300//)
+MSG_CHECKBOX_ENABLE_GRAPHICAL_SMILEYS (//)
 Enable Graphical Smileys
-;Enable Graphical Smileys
 ;
-MSG_BACKGROUND_COLOUR_FOR_GRAPHICAL_SMILEYS (301//)
+MSG_BACKGROUND_COLOUR_FOR_GRAPHICAL_SMILEYS (//)
 Background Colour for Smileys
-;Background Colour for Smileys
 ;
-MSG_GRAPHICAL_SMILEY_SHORTHELP (302//)
+MSG_GRAPHICAL_SMILEY_SHORTHELP (//)
 This option will display common ASCII "smiley faces" such as :) and :D with graphical pictures.
-;This option will display common ASCII "smiley faces" such as :) and :D with graphical pictures.
 ;
-MSG_CHECKBOX_EXTERNAL_PLAYER_FOR_CTCP_SOUND (303//)
+MSG_CHECKBOX_EXTERNAL_PLAYER_FOR_CTCP_SOUND (//)
 Use External Replayer For CTCP SOUND
-;Use External Replayer For CTCP SOUND
 ;
-MSG_EXTERNAL_PLAYER_FOR_CTCP_SOUND (304//)
+MSG_EXTERNAL_PLAYER_FOR_CTCP_SOUND (//)
 Sound Player
-;Sound Player
 ;
-MSG_DOWNLOAD_PATH (305//)
+MSG_DOWNLOAD_PATH (//)
 Download Path:
-;Download Path
 ;
-MSG_LABEL_LISTVIEW_TABS_WEIGHT (306//)
+MSG_LABEL_LISTVIEW_TABS_WEIGHT (//)
 Listview tabs vertical weight
-;Listview-style tabs size/weight
 ;
-MSG_GROUP_FRAME_TITLE_TAB_PREFERENCES (307//)
+MSG_GROUP_FRAME_TITLE_TAB_PREFERENCES (//)
 Tab Preferences
-;Tab Preferences
 ;
-MSG_PREFS_HELP_BUBBLE_LISTVIEW_TABS_WEIGHT (308//)
+MSG_PREFS_HELP_BUBBLE_LISTVIEW_TABS_WEIGHT (//)
 If you have disabled button style tabs, you can configure the size of the "tabs listview".
-;If you have disabled button style tabs, you can configure the size of the "tabs listview".
 ;
-MSG_PREFS_HELP_BUBBLE_NO_SERVER_TABS (309//)
+MSG_PREFS_HELP_BUBBLE_NO_SERVER_TABS (//)
 You can turn off keeping a dedicated tab for server messages to conserve memory and valuable screen space.
-;You can turn off keeping a dedicated tab for server messages to conserve memory and valuable screen space.
 ;
-MSG_PREFS_GRAPHICAL_NICKLIST_CHECKBOX (310//)
+MSG_PREFS_GRAPHICAL_NICKLIST_CHECKBOX (//)
 Enable Graphical Nicklist
-;Enable Graphical Nicklist
 ;
-MSG_PREFS_GRAPHICAL_NICKLIST_HELP_BUBBLE (311//)
+MSG_PREFS_GRAPHICAL_NICKLIST_HELP_BUBBLE (//)
 This will display the three most common nicklist usermodes in a graphical way.\nOperators (or @) are Green, Halfops (or \% ) are Blue, Voiced users (or +) are Yellow\n(This feature is reliant on \
 picture datatypes).
-;This will display the three most common nicklist usermodes in a graphical way.\nOperators (or @) are Green, Halfops (or \%) are Blue, Voiced users (or +) are Yellow\n(This feature is reliant on picture datatypes)
 ;
-MSG_PREFS_COLUMN_WIDTH_TIMESTAMP (312//)
+MSG_PREFS_COLUMN_WIDTH_TIMESTAMP (//)
 Column width (in Pixels) for timestamps
-;Column width (in Pixels) for timestamps
 ;
-MSG_PREFS_COLUMN_WIDTH_MIDDLE_NICKS (313//)
+MSG_PREFS_COLUMN_WIDTH_MIDDLE_NICKS (//)
 Column width (in Pixels) for the middle/nicks column
-;Column width (in Pixels) for the middle/nicks column
 ;
-MSG_PREFS_DIVIDER_BAR_SPACE (314//)
+MSG_PREFS_DIVIDER_BAR_SPACE (//)
 Amount of space surrounding columns divider bar
-;Amount of space surrounding columns divider bar
 ;
-MSG_PREFS_MULTICOLUMN_NICK_DISPLAY (315//)
+MSG_PREFS_MULTICOLUMN_NICK_DISPLAY (//)
 Remove < and > from around nicks
-;Remove < and > from around nicks
 ;
-MSG_GROUP_FRAME_TITLE_MULTICOLUMN_DISPLAY_SETTINGS (316//)
+MSG_GROUP_FRAME_TITLE_MULTICOLUMN_DISPLAY_SETTINGS (//)
 Multicolumn display settings
-;Multicolumn display settings
 ;
-MSG_MENU_MULTICOLUMNCHATDISPLAY_ITEM (317//)
+MSG_MENU_MULTICOLUMNCHATDISPLAY_ITEM (//)
 Multi-column chat display
-;Multi-column chat display
 ;
-MSG_MENU_COLUMNMARKINGCLIPBOARD_ITEM (318//)
+MSG_MENU_COLUMNMARKINGCLIPBOARD_ITEM (//)
 Column-marking Clipboard
-;Column-marking Clipboard
 ;
-MSG_GRAPHICAL_NICKLIST_HELP_BUBBLE (319//)
+MSG_GRAPHICAL_NICKLIST_HELP_BUBBLE (//)
 Graphical Usermodes Key:\nGreen = Channel Operators or @\nBlue = HalfOps or \% \nYellow = Voiced Users or +
-;Graphical Usermodes Key:\nGreen = Channel Operators or @\nBlue = HalfOps or \% \nYellow = Voiced Users or +
 ;
-MSG_GRAPHICAL_SMILEYS_PREVIEW (320//)
+MSG_GRAPHICAL_SMILEYS_PREVIEW (//)
 Graphical Smileys Preview
-;Graphical Smileys Preview (window title)
 ;
-MSG_PREFS_NICKLIST_HORIZONTAL_WEIGHT (321//)
+MSG_PREFS_NICKLIST_HORIZONTAL_WEIGHT (//)
 Nicklist horizontal weight
-;Nicklist horizontal weight
 ;
-MSG_PREFS_SMILEYS_THEME (322//)
+MSG_PREFS_SMILEYS_THEME (//)
 Smileys theme
-;Smileys Theme
 ;
-MSG_COLOUR_SETTINGS_LOAD (323//)
+MSG_COLOUR_SETTINGS_LOAD (//)
 Load...
-;Load
 ;
-MSG_COLOUR_SETTINGS_APPLY (324//)
+MSG_COLOUR_SETTINGS_APPLY (//)
 Apply
-;Apply
 ;
-MSG_COLOUR_SETTINGS_SAVE (325//)
+MSG_COLOUR_SETTINGS_SAVE (//)
 Save
-;Save
 ;
-MSG_COLOUR_SETTINGS_SAVE_AS (326//)
+MSG_COLOUR_SETTINGS_SAVE_AS (//)
 Save as...
-;Save as...
 ;
-MSG_SERVER_CHARSET (327//)
+MSG_SERVER_CHARSET (//)
 Server charset
-;Server charset
 ;
-MSG_LOCAL_CHARSET (328//)
+MSG_LOCAL_CHARSET (//)
 Local charset
-;Local charset
 ;
-MSG_COLUMN_TITLE_CHARSET (329//)
+MSG_COLUMN_TITLE_CHARSET (//)
 Charset
-;Charset
 ;
-MSG_MENU_ITEM_RESCAN_AREXX_DIR (330//)
+MSG_MENU_ITEM_RESCAN_AREXX_DIR (//)
 <Rescan scripts directory>
-;<Rescan scripts directory>
 ;
-MSG_MENU_TITLE_AREXX (331//)
+MSG_MENU_TITLE_AREXX (//)
 ARexx
-;Arexx
 ;
-MSG_ABOUT_WINDOW_TEXT (332//)
+MSG_ABOUT_WINDOW_TEXT (//)
 \033cProudly sponsored by Guru Meditation\nAmiga reseller and Linux consulting\nhttp://gurumeditation.se/
-;\033cProudly sponsored by Guru Meditation\nAmiga reseller and Linux consulting\nhttp://gurumeditation.se/
 ;
-MSG_ABOUT_WINDOW_TEXT_2 (333//)
+MSG_ABOUT_WINDOW_TEXT_2 (//)
 AREXX port:
-;AREXX port: <portname>
 ;
-MSG_MENU_CLEARALLBUFFERS_ITEM (334//)
+MSG_MENU_CLEARALLBUFFERS_ITEM (//)
 Clear all buffers
-;Clear all buffers
 ;
-MSG_COLOUR_SETTINGS_LABEL_BACKGROUND (335//)
+MSG_COLOUR_SETTINGS_LABEL_BACKGROUND (//)
 Background
-;Background
 ;
-MSG_COLOUR_SETTINGS_LABEL_NICKLIST_BACKGROUND (336//)
+MSG_COLOUR_SETTINGS_LABEL_NICKLIST_BACKGROUND (//)
 Nicklist background
-;Nicklist background
 ;
-MSG_COLOUR_SETTINGS_LABEL_JOIN (337//)
+MSG_COLOUR_SETTINGS_LABEL_JOIN (//)
 Join
-;Join
 ;
-MSG_COLOUR_SETTINGS_LABEL_PART (338//)
+MSG_COLOUR_SETTINGS_LABEL_PART (//)
 Part
-;Part
 ;
-MSG_COLOUR_SETTINGS_LABEL_QUIT (339//)
+MSG_COLOUR_SETTINGS_LABEL_QUIT (//)
 Quit
-;Quit
 ;
-MSG_COLOUR_SETTINGS_LABEL_MODES (340//)
+MSG_COLOUR_SETTINGS_LABEL_MODES (//)
 Modes
-;Modes
 ;
-MSG_COLOUR_SETTINGS_LABEL_CTCP (341//)
+MSG_COLOUR_SETTINGS_LABEL_CTCP (//)
 CTCP
-;CTCP
 ;
-MSG_COLOUR_SETTINGS_LABEL_ACTIONS (342//)
+MSG_COLOUR_SETTINGS_LABEL_ACTIONS (//)
 Actions
-;Actions
 ;
-MSG_COLOUR_SETTINGS_LABEL_NORMAL (343//)
+MSG_COLOUR_SETTINGS_LABEL_NORMAL (//)
 Normal
-;Normal
 ;
-MSG_COLOUR_SETTINGS_LABEL_INFO (344//)
+MSG_COLOUR_SETTINGS_LABEL_INFO (//)
 Info
-;Info
 ;
-MSG_COLOUR_SETTINGS_LABEL_OWN_TEXT (345//)
+MSG_COLOUR_SETTINGS_LABEL_OWN_TEXT (//)
 Own text
-;Own text
 ;
-MSG_COLOUR_SETTINGS_LABEL_HIGHLIGHT (346//)
+MSG_COLOUR_SETTINGS_LABEL_HIGHLIGHT (//)
 Highlight
-;Highlight
 ;
-MSG_COLOUR_SETTINGS_LABEL_INVITE (347//)
+MSG_COLOUR_SETTINGS_LABEL_INVITE (//)
 Invite
-;Invite
 ;
-MSG_COLOUR_SETTINGS_LABEL_KICK (348//)
+MSG_COLOUR_SETTINGS_LABEL_KICK (//)
 Kick
-;Kick
 ;
-MSG_COLOUR_SETTINGS_LABEL_NICK_CHANGE (349//)
+MSG_COLOUR_SETTINGS_LABEL_NICK_CHANGE (//)
 Nick change
-;Nick change
 ;
-MSG_COLOUR_SETTINGS_LABEL_TOPIC (350//)
+MSG_COLOUR_SETTINGS_LABEL_TOPIC (//)
 Topic
-;Topic
 ;
-MSG_COLOUR_SETTINGS_LABEL_WALLOPS (351//)
+MSG_COLOUR_SETTINGS_LABEL_WALLOPS (//)
 Wall ops
-;Wall ops
 ;
-MSG_COLOUR_SETTINGS_LABEL_NOTICES (352//)
+MSG_COLOUR_SETTINGS_LABEL_NOTICES (//)
 Notices
-;Notices
 ;
-MSG_COLOUR_SETTINGS_LABEL_ACTIVITY (353//)
+MSG_COLOUR_SETTINGS_LABEL_ACTIVITY (//)
 Activity
-;Activity
 ;
-MSG_COLOUR_SETTINGS_LABEL_CHAT_ACTIVITY (354//)
+MSG_COLOUR_SETTINGS_LABEL_CHAT_ACTIVITY (//)
 Chat activity
-;Chat activity
 ;
-MSG_COLOUR_SETTINGS_LABEL_HIGHLIGHT_ACTIVITY (355//)
+MSG_COLOUR_SETTINGS_LABEL_HIGHLIGHT_ACTIVITY (//)
 Highlight activity
-;Highlight activity
 ;
-MSG_COLOUR_SETTINGS_LABEL_NICKLIST_TEXT (356//)
+MSG_COLOUR_SETTINGS_LABEL_NICKLIST_TEXT (//)
 Nicklist text
-;Nicklist text
 ;
-MSG_COLOUR_SETTINGS_LABEL_TABS_BACKGROUND (357//)
+MSG_COLOUR_SETTINGS_LABEL_TABS_BACKGROUND (//)
 Tabs background
-;Tabs background
 ;
-MSG_COLOUR_SETTINGS_LABEL_TAGS_PEN (358//)
+MSG_COLOUR_SETTINGS_LABEL_TAGS_PEN (//)
 Tabs pen
-;Tabs pen
 ;
-MSG_SERVER (359//)
+MSG_SERVER (//)
 Server
-;Server - the prefix for displayed Server messages.
 ;
-MSG_WINDOW_TITLE_CHOOSE_A_COLOUR (360//)
+MSG_WINDOW_TITLE_CHOOSE_A_COLOUR (//)
 Choose Colour
-;Choose Colour
 ;
-MSG_APPLY (361//)
+MSG_APPLY (//)
 Apply
-;Apply (apply settings without closing the Main Settings window)
 ;
-MSG_AUTO_JOIN_CHANNELS (362//)
+MSG_AUTO_JOIN_CHANNELS (//)
 Automatically join these channels
-;Automatically join these channels
 ;
-MSG_NICK_REGISTER_PASSWORD (363//)
+MSG_NICK_REGISTER_PASSWORD (//)
 Nick registration password
-;Nick registration password
 ;
-MSG_NICK_REGISTER_PASSWORD_SHORT_HELP (364//)
+MSG_NICK_REGISTER_PASSWORD_SHORT_HELP (//)
 This option will only work with a registered nick on a network with a Nickserv service.
-;This option will only work with a registered nick on a network with a Nickserv service
 ;
-MSG_ACCEPT_CHANGES (365//)
+MSG_ACCEPT_CHANGES (//)
 Accept Changes
-;Accept Changes (THIS OPTION IS NOW UNUSED, DO NOT WORRY ABOUT TRANSLATING THIS)
 ;
-MSG_SOUND_SAMPLE_NEW_MSG (366//)
+MSG_SOUND_SAMPLE_NEW_MSG (//)
 Sample to play when a new PRIVMSG arrives
-;LABEL "Sample to play when a new PRIVMSG arrives"
 ;
-MSG_SOUND_SAMPLE_PLAY_OPTION (367//)
+MSG_SOUND_SAMPLE_PLAY_OPTION (//)
 When private tab is not selected
-;sound alerts: When private tab is not selected
 ;
-MSG_UNABLE_TO_RECONNECT_TO_SERVER_2 (368//)
+MSG_UNABLE_TO_RECONNECT_TO_SERVER_2 (//)
 Unable to connect!
-;this message is displayed when you cannot connect to a server
 ;
-MSG_RENAME (369//)
+MSG_RENAME (//)
 Rename
-;Rename
 ;
-MSG_ICONIFY_TEXT_NEW_MESSAGES_WAITING (370//)
+MSG_ICONIFY_TEXT_NEW_MESSAGES_WAITING (//)
 New Messages Waiting
-;New Messages Waiting
 ;
-MSG_UPLOAD_PATH (371//)
+MSG_UPLOAD_PATH (//)
 Upload Path
-;Upload Path
 ;
-MSG_MENU_MUTEALLSOUNDS (372//)
+MSG_MENU_MUTEALLSOUNDS (//)
 Mute all sound
-;Mute all sound
 ;
-MSG_ONLY_WHEN_TAB_IS_INACTIVE (373//)
+MSG_ONLY_WHEN_TAB_IS_INACTIVE (//)
 Only when Tab is inactive
-;sound alerts: Only when Tab is inactive
 ;
 MSG_INVITE (//)
 Invite
