@@ -13,6 +13,7 @@
    =================================================================== */
 #include "includes.h"
 #include <workbench/icon.h>
+#include <workbench/workbench.h>
 #include <clib/alib_protos.h>
 #include <proto/muimaster.h>
 #include <proto/icon.h>
@@ -192,7 +193,7 @@ void LoadAllLibs(void)
     DataTypesBase = (struct Library*)OpenLibrary((_ub_cs)"datatypes.library",0);
     if(!DataTypesBase) cleanexit((char*)"cant open datatypes.library\n");
 
-    GfxBase = (struct GfxBase*)OpenLibrary("graphics.library",0);
+	GfxBase = (struct GfxBase*)OpenLibrary((_ub_cs)"graphics.library",0);
     if(!GfxBase) cleanexit((char*)"cant open graphics.library\n");
 
     IconBase = (struct Library*)OpenLibrary((_ub_cs)"icon.library",0);

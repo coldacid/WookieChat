@@ -47,11 +47,11 @@ typedef CONST_STRPTR    loc_in;
 typedef CONST_STRPTR    _ub_cs;
 typedef CONST_STRPTR    _s_cs;
 #elif __MORPHOS__
-typedef char *          c_in;
+typedef CONST_STRPTR    c_in;
 typedef UBYTE *         i_in;
 typedef CONST_STRPTR    l_in;
 typedef STRPTR          loc_in;
-typedef CONST_STRPTR    _ub_cs;
+typedef STRPTR          _ub_cs;
 typedef CONST_STRPTR    _s_cs;
 #elif __AROS__
 typedef char *          c_in;

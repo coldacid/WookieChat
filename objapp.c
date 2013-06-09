@@ -41,7 +41,6 @@ APTR STR_events_args;
 APTR CYCLE_events;
 
 /* Locals */
-static int AMIX=0;
 
 static APTR MNmenuBarLabel2,MN1_Main, MNmenuBarLabel0,MNmenuBarLabel1, MN_Settings, MN_windows, MN_Edit;
 

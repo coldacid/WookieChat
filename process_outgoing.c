@@ -26,10 +26,6 @@ static char buffer3[BUFFERSIZE*2];
 static char string_to_send[BUFFERSIZE];
 static char file_name[800];
 static char sendstuff[1500];
-#ifndef __AROS__
-static STRPTR charset_convert_1;
-static STRPTR charset_convert_2;
-#endif
 
 void censor_swear_words(char *string1)
 {
