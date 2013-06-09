@@ -1241,7 +1241,7 @@ Kana³
 Kanal
 ;channel
 ;
-MSG_CHANNEL_LOG_RELOAD (94//)
+MSG_CHANNEL_LOG_RELOAD_HELP (94//)
 How many lines to reload from the end of log files when you join a channel.
 Anzahl der Textreihen die vom Ende eines Logfiles übernommen werden, wenn ein neuer Kanal betreten wird.
 Número de líneas a recargar del final\ndel registro al acceder a un canal.
@@ -1490,7 +1490,7 @@ MUI-inställningar ...
 ;
 MSG_MENU_MULITCOLUMN_DISPLAY (113//)
 Multi-column chat display
- Extra Spalte für Anzeige
+Extra Spalte für Anzeige
 Múltiples columnas
 Affichage Multi-colonnes
 ÅìöÜíéóç ðïëëþí óôçëþí
@@ -5085,3 +5085,149 @@ Clipboard
 Clipboard
 Clipboard
 ;
+MSG_HIDEJOINANDPARTMESSAGES
+Hide Join and Part messages in Channels
+Hide Join and Part messages in Channels
+Hide Join and Part messages in Channels
+Hide Join and Part messages in Channels
+Hide Join and Part messages in Channels
+Hide Join and Part messages in Channels
+Hide Join and Part messages in Channels
+Hide Join and Part messages in Channels
+Hide Join and Part messages in Channels
+Hide Join and Part messages in Channels
+;
+MSG_HIDECHANELMODEBUTTONS
+Hide the channel mode buttons at the top of the display
+Hide the channel mode buttons at the top of the display
+Hide the channel mode buttons at the top of the display
+Hide the channel mode buttons at the top of the display
+Hide the channel mode buttons at the top of the display
+Hide the channel mode buttons at the top of the display
+Hide the channel mode buttons at the top of the display
+Hide the channel mode buttons at the top of the display
+Hide the channel mode buttons at the top of the display
+Hide the channel mode buttons at the top of the display
+;
+MSG_CY_LISTVIEW
+Listview
+Listview
+Listview
+Listview
+Listview
+Listview
+Listview
+Listview
+Listview
+Listview
+;
+MSG_CY_BUTTONS
+Buttons
+Buttons
+Buttons
+Buttons
+Buttons
+Buttons
+Buttons
+Buttons
+Buttons
+Buttons
+;
+MSG_METHODOFDISPLAYINGTABS
+Method of displaying Tabs for channels and private messages
+Method of displaying Tabs for channels and private messages
+Method of displaying Tabs for channels and private messages
+Method of displaying Tabs for channels and private messages
+Method of displaying Tabs for channels and private messages
+Method of displaying Tabs for channels and private messages
+Method of displaying Tabs for channels and private messages
+Method of displaying Tabs for channels and private messages
+Method of displaying Tabs for channels and private messages
+Method of displaying Tabs for channels and private messages
+;
+MSG_USERNAMEWHENTALK
+Display usermodes beside a persons nick when they talk
+Display usermodes beside a persons nick when they talk
+Display usermodes beside a persons nick when they talk
+Display usermodes beside a persons nick when they talk
+Display usermodes beside a persons nick when they talk
+Display usermodes beside a persons nick when they talk
+Display usermodes beside a persons nick when they talk
+Display usermodes beside a persons nick when they talk
+Display usermodes beside a persons nick when they talk
+Display usermodes beside a persons nick when they talk
+;
+MSG_USERLIST_ADD
+Add
+Add
+Add
+Add
+Add
+Add
+Add
+Add
+Add
+Add
+;
+MSG_USERLIST_REMOVE
+Remove
+Remove
+Remove
+Remove
+Remove
+Remove
+Remove
+Remove
+Remove
+Remove
+;
+MSG_USERLIST_MOVEUP
+Move up
+Move up
+Move up
+Move up
+Move up
+Move up
+Move up
+Move up
+Move up
+Move up
+;
+MSG_USERLIST_MOVEDOWN
+Move down
+Move down
+Move down
+Move down
+Move down
+Move down
+Move down
+Move down
+Move down
+Move down
+;
+MSG_USERLIST_HELP
+\033lCodes:\n%s = selected nick, %h = hostname of the selected nick,\n%c = current channel, %n = your own nick
+\033lCodes:\n%s = selected nick, %h = hostname of the selected nick,\n%c = current channel, %n = your own nick
+\033lCodes:\n%s = selected nick, %h = hostname of the selected nick,\n%c = current channel, %n = your own nick
+\033lCodes:\n%s = selected nick, %h = hostname of the selected nick,\n%c = current channel, %n = your own nick
+\033lCodes:\n%s = selected nick, %h = hostname of the selected nick,\n%c = current channel, %n = your own nick
+\033lCodes:\n%s = selected nick, %h = hostname of the selected nick,\n%c = current channel, %n = your own nick
+\033lCodes:\n%s = selected nick, %h = hostname of the selected nick,\n%c = current channel, %n = your own nick
+\033lCodes:\n%s = selected nick, %h = hostname of the selected nick,\n%c = current channel, %n = your own nick
+\033lCodes:\n%s = selected nick, %h = hostname of the selected nick,\n%c = current channel, %n = your own nick
+\033lCodes:\n%s = selected nick, %h = hostname of the selected nick,\n%c = current channel, %n = your own nick
+;
+MSG_USERLIST_HIDEALL
+Hide all from the display
+Hide all from the display
+Hide all from the display
+Hide all from the display
+Hide all from the display
+Hide all from the display
+Hide all from the display
+Hide all from the display
+Hide all from the display
+Hide all from the display
+;
+
+

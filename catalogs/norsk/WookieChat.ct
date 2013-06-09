@@ -468,7 +468,7 @@ Kanal
 ; Channel
 ;channel
 ;
-MSG_CHANNEL_LOG_RELOAD
+MSG_CHANNEL_LOG_RELOAD_HELP
 Antall linjer å laste på nytt fra slutten av loggfiler når du entrer en kanal.
 ; How many lines to reload from the end of log files when you join a channel.
 ;how many lines to reload from the end of log files when you join a channel.
@@ -1922,4 +1922,52 @@ Change
 MSG_CLIPBOARD
 Clipboard
 ; Clipboard
+;
+MSG_HIDEJOINANDPARTMESSAGES
+Hide Join and Part messages in Channels
+; Hide Join and Part messages in Channels
+;
+MSG_HIDECHANELMODEBUTTONS
+Hide the channel mode buttons at the top of the display
+; Hide the channel mode buttons at the top of the display
+;
+MSG_CY_LISTVIEW
+Listview
+; Listview
+;
+MSG_CY_BUTTONS
+Buttons
+; Buttons
+;
+MSG_METHODOFDISPLAYINGTABS
+Method of displaying Tabs for channels and private messages
+; Method of displaying Tabs for channels and private messages
+;
+MSG_USERNAMEWHENTALK
+Display usermodes beside a persons nick when they talk
+; Display usermodes beside a persons nick when they talk
+;
+MSG_USERLIST_ADD
+Add
+; Add
+;
+MSG_USERLIST_REMOVE
+Remove
+; Remove
+;
+MSG_USERLIST_MOVEUP
+Move up
+; Move up
+;
+MSG_USERLIST_MOVEDOWN
+Move down
+; Move down
+;
+MSG_USERLIST_HELP
+\033lCodes:\n%s = selected nick, %h = hostname of the selected nick,\n%c = current channel, %n = your own nick
+; \033lCodes:\n%s = selected nick, %h = hostname of the selected nick,\n%c = current channel, %n = your own nick
+;
+MSG_USERLIST_HIDEALL
+Hide all from the display
+; Hide all from the display
 ;
