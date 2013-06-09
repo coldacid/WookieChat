@@ -24,8 +24,9 @@
 */
 
 enum {
-MM_WindowAbout_dummy =  0xFED00000,
+MM_WINDOWABOUT_DUMMY =  0xFED00000,
 /* Attributes */
+MA_WINDOWABOUT_AREXXPORT,
 };
 
 /*************************************************************************/

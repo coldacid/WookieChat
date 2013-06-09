@@ -5490,4 +5490,16 @@ About
 About
 About
 ;
+MSG_MUICLASS_WINDOWABOUT_AREXXPORT_GAD
+AREXX port:\x20
+ARexx Port:\x20
+Port ARexx :\x20
+AREXX port:\x20
+Porta AREXX:\x20
+AREXX port:\x20
+ARexx-port:\x20
+Port Arexx'a:\x20
+AREXX port:\x20
+AREXX port:\x20
+;
 
