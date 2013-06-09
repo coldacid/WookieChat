@@ -5012,4 +5012,76 @@ Command
 Command
 Command
 Command
-
+;
+MSG_NICKLISTBUTTONS
+Nick List Buttons
+Nick List Buttons
+Nick List Buttons
+Nick List Buttons
+Nick List Buttons
+Nick List Buttons
+Nick List Buttons
+Nick List Buttons
+Nick List Buttons
+Nick List Buttons
+;
+MSG_CHANGENICK
+Change nick
+Change nick
+Change nick
+Change nick
+Change nick
+Change nick
+Change nick
+Change nick
+Change nick
+Change nick
+;
+MSG_ENTERNEWNICK
+Enter new nick
+Enter new nick
+Enter new nick
+Enter new nick
+Enter new nick
+Enter new nick
+Enter new nick
+Enter new nick
+Enter new nick
+Enter new nick
+;
+MSG_ENTERNICKCANCEL
+Cancel
+Cancel
+Cancel
+Cancel
+Cancel
+Cancel
+Cancel
+Cancel
+Cancel
+Cancel
+;
+MSG_ENTERNICKCHANGE
+Change
+Change
+Change
+Change
+Change
+Change
+Change
+Change
+Change
+Change
+;
+MSG_CLIPBOARD
+Clipboard
+Clipboard
+Clipboard
+Clipboard
+Clipboard
+Clipboard
+Clipboard
+Clipboard
+Clipboard
+Clipboard
+;

@@ -1514,3 +1514,22 @@ Name
 ;
 MSG_COMMAND (//)
 Command
+;
+MSG_NICKLISTBUTTONS (//)
+Nick List Buttons
+;
+MSG_CHANGENICK (//)
+Change nick
+;
+MSG_ENTERNEWNICK (//)
+Enter new nick
+;
+MSG_ENTERNICKCANCEL (//)
+Cancel
+;
+MSG_ENTERNICKCHANGE (//)
+Change
+;
+MSG_CLIPBOARD (//)
+Clipboard
+;

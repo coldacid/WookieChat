@@ -17,6 +17,7 @@
 #include "intern.h"
 #include "objapp.h"
 #include "audio.h"
+#include "locale.h"
 
 /* Locals */
 static char *pch2;
@@ -194,9 +195,11 @@ void process_outgoing(char *string123, int usestringgadget)
             SWhoIs(string1);
         else
         {
-            sprintf(buffer3, "%s%s%s%s /whois %s", timestamp, GCS(217, "["),
-                    GCS(149, "Syntax"), GCS(218, "]"),
-                    GCS(242, "<nick>"));
+			sprintf(buffer3, "%s%s%s%s /whois %s", timestamp,
+					LGS( MSG_OPENING_BRACKET ),
+					LGS( MSG_SYNTAX ),
+					LGS( MSG_CLOSING_BRACKET ),
+					LGS( MSG_NICK_HELP  ) );
 
             add_text_to_conductor_list(buffer3, 9, ACTIVITY);
         }
@@ -244,9 +247,12 @@ void process_outgoing(char *string123, int usestringgadget)
         }
         else
         {
-            sprintf(buffer3, "%s%s%s%s /invite %s %s", timestamp, GCS(217, "["),
-                    GCS(149, "Syntax"), GCS(218, "]"),
-                    GCS(242, "<nick>"), GCS(241, "<channel_name>"));
+			sprintf(buffer3, "%s%s%s%s /invite %s %s", timestamp,
+					LGS( MSG_OPENING_BRACKET ),
+					LGS( MSG_SYNTAX ),
+					LGS( MSG_CLOSING_BRACKET ),
+					LGS( MSG_NICK_HELP  ),
+					LGS( MSG_CHANNEL_NAME_HELP ) );
             add_text_to_conductor_list(buffer3, 9, ACTIVITY);
         }
 
@@ -289,14 +295,19 @@ void process_outgoing(char *string123, int usestringgadget)
         }
         else
         {
-            sprintf(buffer3, "%s%s%s%s /dcc send %s %s", timestamp, GCS(217, "["),
-                    GCS(149, "Syntax"), GCS(218, "]"),
-                    GCS(242, "<nick>"), GCS(255, "<filename>"));
+			sprintf(buffer3, "%s%s%s%s /dcc send %s %s", timestamp,
+					LGS( MSG_OPENING_BRACKET ),
+					LGS( MSG_SYNTAX ),
+					LGS( MSG_CLOSING_BRACKET ),
+					LGS( MSG_NICK_HELP  ),
+					LGS( MSG_FILENAME_HELP ) );
             add_text_to_conductor_list(buffer3, 9, ACTIVITY);
 
-            sprintf(buffer3, "%s%s%s%s /dcc chat %s", timestamp, GCS(217, "["),
-                    GCS(149, "Syntax"), GCS(218, "]"),
-                    GCS(242, "<nick>"));
+			sprintf(buffer3, "%s%s%s%s /dcc chat %s", timestamp,
+					LGS( MSG_OPENING_BRACKET ),
+					LGS( MSG_SYNTAX ),
+					LGS( MSG_CLOSING_BRACKET ),
+					LGS( MSG_NICK_HELP  ) );
             add_text_to_conductor_list(buffer3, 9, ACTIVITY);
 
         }
@@ -308,16 +319,20 @@ void process_outgoing(char *string123, int usestringgadget)
         if (my_settings.which_clipboard_style == NORMAL)
         {
             my_settings.which_clipboard_style = COLUMNS;
-            sprintf(buffer3, "%s%s%s%s Changing style to: Column marking", timestamp, GCS(217, "["),
-                    GCS(800, "Clipboard"), GCS(218, "]"));
+			sprintf(buffer3, "%s%s%s%s Changing style to: Column marking", timestamp,
+					LGS( MSG_OPENING_BRACKET ),
+					LGS( MSG_CLIPBOARD ),
+					LGS( MSG_CLOSING_BRACKET ) );
             add_text_to_current_list(buffer3, 9, ACTIVITY);
             setmacro((Object*) MN_Clipboard, MUIA_Menuitem_Checked, TRUE);
         }
         else
         {
             my_settings.which_clipboard_style = NORMAL;
-            sprintf(buffer3, "%s%s%s%s Changing style to: Normal", timestamp, GCS(217, "["),
-                    GCS(800, "Clipboard"), GCS(218, "]"));
+			sprintf(buffer3, "%s%s%s%s Changing style to: Normal", timestamp,
+					LGS( MSG_OPENING_BRACKET ),
+					LGS( MSG_CLIPBOARD ),
+					LGS( MSG_CLOSING_BRACKET ) );
             add_text_to_current_list(buffer3, 9, ACTIVITY);
             setmacro((Object*) MN_Clipboard, MUIA_Menuitem_Checked, FALSE);
 
@@ -344,11 +359,18 @@ void process_outgoing(char *string123, int usestringgadget)
             send_text((char*) "\001\r\n");
 
             if (string2)
-                sprintf(buffer3, "%s%sSound%s %s %s to %s", timestamp, GCS(217, "["),
-                        GCS(218, "]"), GCS(212, "playing"), string1, string2);
+				sprintf(buffer3, "%s%sSound%s %s %s to %s", timestamp,
+						LGS( MSG_OPENING_BRACKET ),
+						LGS( MSG_CLOSING_BRACKET ),
+						LGS( MSG_PLAYING ),
+						string1,
+						string2);
             else
-                sprintf(buffer3, "%s%sSound%s %s %s", timestamp, GCS(217, "["),
-                        GCS(218, "]"), GCS(212, "playing"), string1);
+				sprintf(buffer3, "%s%sSound%s %s %s", timestamp,
+						LGS( MSG_OPENING_BRACKET ),
+						LGS( MSG_CLOSING_BRACKET ),
+						LGS( MSG_PLAYING ),
+						string1);
 
             add_text_to_conductor_list(buffer3, 6, ACTIVITY);
 
@@ -357,9 +379,12 @@ void process_outgoing(char *string123, int usestringgadget)
         }
         else
         {
-            sprintf(buffer3, "%s%s%s%s /sound %s %s", timestamp, GCS(217, "["),
-                    GCS(149, "Syntax"), GCS(218, "]"),
-                    GCS(244, "<sound_sample_name>"), GCS(242, "<nick>"));
+			sprintf(buffer3, "%s%s%s%s /sound %s %s", timestamp,
+					LGS( MSG_OPENING_BRACKET ),
+					LGS( MSG_SYNTAX ),
+					LGS( MSG_CLOSING_BRACKET ),
+					LGS( MSG_SOUND_SAMPLE_NAME_HELP ),
+					LGS( MSG_NICK_HELP  ) );
 
             add_text_to_conductor_list(buffer3, 9, ACTIVITY);
         }
@@ -385,9 +410,13 @@ void process_outgoing(char *string123, int usestringgadget)
                 send_text(string2);
                 send_text((char*) "\001\r\n");
 
-                sprintf(buffer3, "%s%sCTCP%s %s %s %s %s", timestamp, GCS(217, "["),
-                        GCS(218, "]"), GCS(213, "Sending CTCP"), string2,
-                        GCS(205, "to"), string1);
+				sprintf(buffer3, "%s%sCTCP%s %s %s %s %s", timestamp,
+						LGS( MSG_OPENING_BRACKET ),
+						LGS( MSG_CLOSING_BRACKET ),
+						LGS( MSG_SENDING_CTCP ),
+						string2,
+						LGS( MSG_TO ),
+						string1);
                 add_text_to_conductor_list(buffer3, 6, ACTIVITY);
 
             }
@@ -395,9 +424,12 @@ void process_outgoing(char *string123, int usestringgadget)
         }
         else
         {
-            sprintf(buffer3, "%s%s%s%s /ctcp %s %s", timestamp, GCS(217, "["),
-                    GCS(149, "Syntax"), GCS(218, "]"),
-                    GCS(242, "<nick>"), GCS(243, "<command>"));
+			sprintf(buffer3, "%s%s%s%s /ctcp %s %s", timestamp,
+					LGS( MSG_OPENING_BRACKET ),
+					LGS( MSG_SYNTAX ),
+					LGS( MSG_CLOSING_BRACKET ),
+					LGS( MSG_NICK_HELP ),
+					LGS( MSG_COMMAND_NAME_HELP ) );
 
             add_text_to_conductor_list(buffer3, 9, ACTIVITY);
         }
@@ -446,9 +478,11 @@ void process_outgoing(char *string123, int usestringgadget)
         }
         else
         {
-            sprintf(buffer3, "%s%s%s%s /op %s", timestamp, GCS(217, "["),
-                    GCS(149, "Syntax"), GCS(218, "]"),
-                    GCS(242, "<nick>"));
+			sprintf(buffer3, "%s%s%s%s /op %s", timestamp,
+					LGS( MSG_OPENING_BRACKET ),
+					LGS( MSG_SYNTAX ),
+					LGS( MSG_CLOSING_BRACKET ),
+					LGS( MSG_NICK_HELP ) );
             add_text_to_conductor_list(buffer3, 9, ACTIVITY);
         }
     }
@@ -464,9 +498,11 @@ void process_outgoing(char *string123, int usestringgadget)
         }
         else
         {
-            sprintf(buffer3, "%s%s%s%s /deop %s", timestamp, GCS(217, "["),
-                    GCS(149, "Syntax"), GCS(218, "]"),
-                    GCS(242, "<nick>"));
+			sprintf(buffer3, "%s%s%s%s /deop %s", timestamp,
+					LGS( MSG_OPENING_BRACKET ),
+					LGS( MSG_SYNTAX ),
+					LGS( MSG_CLOSING_BRACKET ),
+					LGS( MSG_NICK_HELP ) );
             add_text_to_conductor_list(buffer3, 9, ACTIVITY);
         }
     }
@@ -483,9 +519,11 @@ void process_outgoing(char *string123, int usestringgadget)
         }
         else
         {
-            sprintf(buffer3, "%s%s%s%s /ban %s", timestamp, GCS(217, "["),
-                    GCS(149, "Syntax"), GCS(218, "]"),
-                    GCS(245, "<ban_mask>"));
+			sprintf(buffer3, "%s%s%s%s /ban %s", timestamp,
+					LGS( MSG_OPENING_BRACKET ),
+					LGS( MSG_SYNTAX ),
+					LGS( MSG_CLOSING_BRACKET ),
+					LGS( MSG_SOUND_BAN_MASK_HELP ) );
             add_text_to_conductor_list(buffer3, 9, ACTIVITY);
         }
     }
@@ -502,9 +540,11 @@ void process_outgoing(char *string123, int usestringgadget)
         }
         else
         {
-            sprintf(buffer3, "%s%s%s%s /unban %s", timestamp, GCS(217, "["),
-                    GCS(149, "Syntax"), GCS(218, "]"),
-                    GCS(245, "<ban_mask>"));
+			sprintf(buffer3, "%s%s%s%s /unban %s", timestamp,
+					LGS( MSG_OPENING_BRACKET ),
+					LGS( MSG_SYNTAX ),
+					LGS( MSG_CLOSING_BRACKET ),
+					LGS( MSG_SOUND_BAN_MASK_HELP ) );
 
             add_text_to_conductor_list(buffer3, 9, ACTIVITY);
         }
@@ -527,10 +567,13 @@ void process_outgoing(char *string123, int usestringgadget)
         }
         else
         {
-            sprintf(buffer3, "%s%s%s%s /kick %s %s", timestamp, GCS(217, "["),
-                    GCS(149, "Syntax"), GCS(218, "]"),
-                    GCS(242, "<nick>"), GCS(246, "<message>"));
-
+			sprintf(buffer3, "%s%s%s%s /kick %s %s", timestamp,
+					LGS( MSG_OPENING_BRACKET ),
+					LGS( MSG_SYNTAX ),
+					LGS( MSG_CLOSING_BRACKET ),
+					LGS( MSG_NICK_HELP ),
+					LGS( MSG_MESSAGE_HELP ) );
+			
             add_text_to_conductor_list(buffer3, 9, ACTIVITY);
         }
     }
@@ -571,13 +614,19 @@ void process_outgoing(char *string123, int usestringgadget)
 
         if (recv_thing > 0)
         {
-            sprintf(buffer3, "%s%s%s%s recv() text: \"%s\"", timestamp, GCS(217, "["),
-                    GCS(149, "Syntax"), GCS(218, "]"), status_conductor->str);
+			sprintf(buffer3, "%s%s%s%s recv() text: \"%s\"", timestamp,
+					LGS( MSG_OPENING_BRACKET ),
+					LGS( MSG_SYNTAX ),
+					LGS( MSG_CLOSING_BRACKET ),
+					status_conductor->str);
         }
         else
         {
-            sprintf(buffer3, "%s%s%s%s No text to recv(): \"%s\"", timestamp, GCS(217, "["),
-                    GCS(149, "Syntax"), GCS(218, "]"), status_conductor->str);
+			sprintf(buffer3, "%s%s%s%s No text to recv(): \"%s\"", timestamp,
+					LGS( MSG_OPENING_BRACKET ),
+					LGS( MSG_SYNTAX ),
+					LGS( MSG_CLOSING_BRACKET ),
+					status_conductor->str);
         }
 
         add_text_to_conductor_list(buffer3, 9, ACTIVITY);
@@ -619,9 +668,11 @@ void process_outgoing(char *string123, int usestringgadget)
             SPing(string1);
         else
         {
-            sprintf(buffer3, "%s%s%s%s /ping %s", timestamp, GCS(217, "["),
-                    GCS(149, "Syntax"), GCS(218, "]"),
-                    GCS(242, "<nick>"));
+			sprintf(buffer3, "%s%s%s%s /ping %s", timestamp,
+					LGS( MSG_OPENING_BRACKET ),
+					LGS( MSG_SYNTAX ),
+					LGS( MSG_CLOSING_BRACKET ),
+					LGS( MSG_NICK_HELP ) );
             add_text_to_conductor_list(buffer3, 9, ACTIVITY);
 
         }
@@ -645,9 +696,11 @@ void process_outgoing(char *string123, int usestringgadget)
         else
         {
 
-            sprintf(buffer3, "%s%s%s%s /version %s", timestamp, GCS(217, "["),
-                    GCS(149, "Syntax"), GCS(218, "]"),
-                    GCS(242, "<nick>"));
+			sprintf(buffer3, "%s%s%s%s /version %s", timestamp,
+					LGS( MSG_OPENING_BRACKET ),
+					LGS( MSG_SYNTAX ),
+					LGS( MSG_CLOSING_BRACKET ),
+					LGS( MSG_NICK_HELP ) );
             add_text_to_conductor_list(buffer3, 9, ACTIVITY);
         }
 
@@ -666,10 +719,11 @@ void process_outgoing(char *string123, int usestringgadget)
         }
         else
         {
-            sprintf(buffer3, "%s%s%s%s /time %s", timestamp, GCS(217, "["),
-                    GCS(149, "Syntax"), GCS(218, "]"),
-                    GCS(242, "<nick>"));
-
+			sprintf(buffer3, "%s%s%s%s /time %s", timestamp,
+					LGS( MSG_OPENING_BRACKET ),
+					LGS( MSG_SYNTAX ),
+					LGS( MSG_CLOSING_BRACKET ),
+					LGS( MSG_NICK_HELP ) );
             add_text_to_conductor_list(buffer3, 9, ACTIVITY);
 
         }
@@ -691,9 +745,11 @@ void process_outgoing(char *string123, int usestringgadget)
         }
         else
         {
-            sprintf(buffer3, "%s%s%s%s /query %s", timestamp, GCS(217, "["),
-                    GCS(149, "Syntax"), GCS(218, "]"),
-                    GCS(242, "<nick>"));
+			sprintf(buffer3, "%s%s%s%s /query %s", timestamp,
+					LGS( MSG_OPENING_BRACKET ),
+					LGS( MSG_SYNTAX ),
+					LGS( MSG_CLOSING_BRACKET ),
+					LGS( MSG_NICK_HELP ) );
             add_text_to_conductor_list(buffer3, 9, ACTIVITY);
 
         }
@@ -736,10 +792,11 @@ void process_outgoing(char *string123, int usestringgadget)
             ChangeMyNick(string1);
         else
         {
-            sprintf(buffer3, "%s%s%s%s /nick %s", timestamp, GCS(217, "["),
-                    GCS(149, "Syntax"), GCS(218, "]"),
-                    GCS(247, "<new nick>"));
-
+			sprintf(buffer3, "%s%s%s%s /nick %s", timestamp,
+					LGS( MSG_OPENING_BRACKET ),
+					LGS( MSG_SYNTAX ),
+					LGS( MSG_CLOSING_BRACKET ),
+					LGS( MSG_NEW_NICK_HELP ) );
             add_text_to_conductor_list(buffer3, 9, ACTIVITY);
         }
     }
@@ -763,10 +820,11 @@ void process_outgoing(char *string123, int usestringgadget)
         //if(string1) SJoin(string1);
         else
         {
-            sprintf(buffer3, "%s%s%s%s /join %s", timestamp, GCS(217, "["),
-                    GCS(149, "Syntax"), GCS(218, "]"),
-                    GCS(241, "<channel_name>"));
-
+			sprintf(buffer3, "%s%s%s%s /join %s", timestamp,
+					LGS( MSG_OPENING_BRACKET ),
+					LGS( MSG_SYNTAX ),
+					LGS( MSG_CLOSING_BRACKET ),
+					LGS( MSG_CHANNEL_NAME_HELP ) );
             add_text_to_conductor_list(buffer3, 9, ACTIVITY);
         }
     }
@@ -785,9 +843,12 @@ void process_outgoing(char *string123, int usestringgadget)
         }
         else
         {
-            sprintf(buffer3, "%s%s%s%s /msg %s %s", timestamp, GCS(217, "["),
-                    GCS(149, "Syntax"), GCS(218, "]"),
-                    GCS(242, "<nick>"), GCS(246, "<message>"));
+			sprintf(buffer3, "%s%s%s%s /msg %s %s", timestamp,
+					LGS( MSG_OPENING_BRACKET ),
+					LGS( MSG_SYNTAX ),
+					LGS( MSG_CLOSING_BRACKET ),
+					LGS( MSG_NICK_HELP ),
+					LGS( MSG_MESSAGE_HELP ) );
             add_text_to_conductor_list(buffer3, 9, ACTIVITY);
         }
     }
@@ -802,7 +863,7 @@ void process_outgoing(char *string123, int usestringgadget)
 
         /*{
 
-         sprintf(buffer3,"%s%s%s%s /names %s",timestamp,GCS(catalog,217,"["),GCS(catalog,149,"Syntax"),GCS(catalog,218,"]"),GCS(catalog,241,"<channel_name>"));
+		 sprintf(buffer3,"%s%s%s%s /names %s",timestamp,LGS(catalog,217,"["),LGS(catalog,149,"Syntax"),LGS(catalog,218,"]"),LGS(catalog,241,"<channel_name>"));
 
          add_text_to_conductor_list(buffer3,9, ACTIVITY);
          } */
@@ -823,9 +884,12 @@ void process_outgoing(char *string123, int usestringgadget)
         }
         else
         {
-            sprintf(buffer3, "%s%s%s%s /notice %s %s", timestamp, GCS(217, "["),
-                    GCS(149, "Syntax"), GCS(218, "]"),
-                    GCS(254, "<nick or channel>"), GCS(246, "<message>"));
+			sprintf(buffer3, "%s%s%s%s /notice %s %s", timestamp,
+					LGS( MSG_OPENING_BRACKET ),
+					LGS( MSG_SYNTAX ),
+					LGS( MSG_CLOSING_BRACKET ),
+					LGS( MSG_NICK_OR_CHANNEL_HELP ),
+					LGS( MSG_MESSAGE_HELP ) );
 
             add_text_to_conductor_list(buffer3, 9, ACTIVITY);
         }
@@ -878,10 +942,11 @@ void process_outgoing(char *string123, int usestringgadget)
             SAction(string1);
         else
         {
-            sprintf(buffer3, "%s%s%s%s /me %s", timestamp, GCS(217, "["),
-                    GCS(149, "Syntax"), GCS(218, "]"),
-                    GCS(256, "<action>"));
-
+			sprintf(buffer3, "%s%s%s%s /me %s", timestamp,
+					LGS( MSG_OPENING_BRACKET ),
+					LGS( MSG_SYNTAX ),
+					LGS( MSG_CLOSING_BRACKET ),
+					LGS( MSG_ACTION_HELP ) );
             add_text_to_conductor_list(buffer3, 9, ACTIVITY);
         }
     }
@@ -916,10 +981,12 @@ void process_outgoing(char *string123, int usestringgadget)
         }
         else
         {
-            sprintf(buffer3, "%s%s%s%s /server %s %s", timestamp, GCS(217, "["),
-                    GCS(149, "Syntax"), GCS(218, "]"),
-                    GCS(249, "<servername>"), GCS(250, "<port>"));
-
+			sprintf(buffer3, "%s%s%s%s /server %s %s", timestamp,
+					LGS( MSG_OPENING_BRACKET ),
+					LGS( MSG_SYNTAX ),
+					LGS( MSG_CLOSING_BRACKET ),
+					LGS( MSG_SERVERNAME_HELP ),
+					LGS( MSG_PORT_HELP ) );
             add_text_to_conductor_list(buffer3, 9, ACTIVITY);
         }
 
@@ -934,18 +1001,21 @@ void process_outgoing(char *string123, int usestringgadget)
         status_conductor->filter_swear_words = 1 - status_conductor->filter_swear_words;
         if (status_conductor->filter_swear_words == 1)
         {
-            sprintf(buffer3, "%s%s%s%s %s", timestamp, GCS(217, "["),
-                    GCS(251, "SwearFilter"), GCS(218, "]"),
-                    GCS(252, "Enabled"));
+			sprintf(buffer3, "%s%s%s%s %s", timestamp,
+					LGS( MSG_OPENING_BRACKET ),
+					LGS( MSG_SWEAR_FILTER ),
+					LGS( MSG_CLOSING_BRACKET ),
+					LGS( MSG_ENABLED ) );
 
             add_text_to_conductor_list(buffer3, 9, ACTIVITY);
         }
         else
         {
-            sprintf(buffer3, "%s%s%s%s %s", timestamp, GCS(217, "["),
-                    GCS(251, "SwearFilter"), GCS(218, "]"),
-                    GCS(253, "Disabled"));
-
+			sprintf(buffer3, "%s%s%s%s %s", timestamp,
+					LGS( MSG_OPENING_BRACKET ),
+					LGS( MSG_SWEAR_FILTER ),
+					LGS( MSG_CLOSING_BRACKET ),
+					LGS( MSG_DISABLED ) );
             add_text_to_conductor_list(buffer3, 9, ACTIVITY);
         }
 
