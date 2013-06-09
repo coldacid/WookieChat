@@ -235,6 +235,8 @@ void dcc_time_to_send(void)
 
     dcc_time();
 
+	/* geit FIXME: no clue what this does, but it is wrong */
+	secs = 0; /* added to remove warning */
     secs = secs - atoi(dcc_send_conductor->timestarted);
 
     mins = secs / 60;
@@ -292,6 +294,8 @@ void dcc_time_to_recv(void)
 
     dcc_time();
 
+	/* geit FIXME: no clue what this does, but it is wrong */
+	secs = 0; /* added to remove warning */
     secs = secs - atoi(dcc_conductor->timestarted);
 
     mins = secs / 60;

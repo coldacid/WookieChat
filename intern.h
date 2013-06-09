@@ -53,6 +53,7 @@ typedef CONST_STRPTR    l_in;
 typedef STRPTR          loc_in;
 typedef STRPTR          _ub_cs;
 typedef CONST_STRPTR    _s_cs;
+#define ClassID char *
 #elif __AROS__
 typedef char *          c_in;
 typedef unsigned int *  i_in;

@@ -11,6 +11,7 @@
 #include "includes.h"
 
 #include "intern.h"
+#include "pincoming.h"
 
 /* Locals */
 static int count_the_linefeeds=0;
@@ -174,7 +175,7 @@ struct TagItem my_incoming_charset33_taglist[] =
 			}
             if(text3)
             {
-                strcat(centry->entry,text3);
+				strcat(centry->entry,(const char *) text3);
                 CodesetsFreeA(text3, NULL);
             }
             else

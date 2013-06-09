@@ -417,16 +417,16 @@ void init_paste_pause_delay()
 {
     if (CheckIO((struct IORequest *) Timer5IO))
     {
-        struct timeval *systime;
-        get_sys_time(systime); // Get current system time
+		struct timeval systime;
+		get_sys_time(&systime); // Get current system time
         Timer5IO->tr_node.io_Command = TR_ADDREQUEST;
 
 #ifdef __amigaos4__
         Timer5IO->tr_time.tv_sec = systime.tv_sec+my_settings.paste_delay_seconds; //QUEUED_MESSAGES_DELAY_IN_SECONDS;
         Timer5IO->tr_time.tv_usec = systime.tv_usec+my_settings.paste_delay_microseconds;//QUEUED_MESSAGES_DELAY_IN_MICROSECONDS;
 #else
-        Timer5IO->tr_time.tv_secs = systime->tv_secs + my_settings.paste_delay_seconds; //QUEUED_MESSAGES_DELAY_IN_SECONDS;
-        Timer5IO->tr_time.tv_micro = systime->tv_micro + my_settings.paste_delay_microseconds; //QUEUED_MESSAGES_DELAY_IN_MICROSECONDS;
+		Timer5IO->tr_time.tv_secs = systime.tv_secs + my_settings.paste_delay_seconds; //QUEUED_MESSAGES_DELAY_IN_SECONDS;
+		Timer5IO->tr_time.tv_micro = systime.tv_micro + my_settings.paste_delay_microseconds; //QUEUED_MESSAGES_DELAY_IN_MICROSECONDS;
 #endif
 
         SendIO((struct IORequest *) Timer5IO); // signal us when its time to send another line of our paste

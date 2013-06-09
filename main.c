@@ -450,8 +450,8 @@ struct WBArg *wbarg;
 typedef CONST_STRPTR c1_in;
 typedef STRPTR *c2_in;
 #elif __MORPHOS__
-typedef CONST STRPTR *c1_in;
-typedef CONST STRPTR *c2_in;
+typedef STRPTR c1_in;
+typedef STRPTR *c2_in;
 #elif __AROS__
 typedef const STRPTR c1_in;
 typedef const STRPTR *c2_in;

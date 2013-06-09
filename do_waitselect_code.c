@@ -454,7 +454,7 @@ int do_waitselect_code(void)
 #endif
 
 #ifndef __AROS__
-                                SetComment(dcc_conductor->full_filename_with_path,buffer2);
+								SetComment( (STRPTR) dcc_conductor->full_filename_with_path, (STRPTR) buffer2);
 #endif
 
                                 dcc_conductor->dcc_file = Open((_s_cs)dcc_conductor->full_filename_with_path, MODE_READWRITE);

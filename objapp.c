@@ -2956,8 +2956,7 @@ DISPATCHERPROTO(BetterString_Dispatcher);
 DISPATCHERPROTO(NList_Dispatcher);
 DISPATCHERPROTO(Window_Dispatcher);
 DISPATCHERPROTO(Group_Dispatcher);
-
-    classes[CC_MUIC_BETTERSTRING] = MUI_CreateCustomClass(NULL, (ClassID)MUIC_BetterString,NULL,sizeof(struct InstanceData),ENTRY(BetterString_Dispatcher));
+	classes[CC_MUIC_BETTERSTRING] = MUI_CreateCustomClass(NULL, (ClassID)MUIC_BetterString,NULL,sizeof(struct InstanceData),ENTRY(BetterString_Dispatcher));
 	if(!classes[CC_MUIC_BETTERSTRING]) printf("%s\n", LGS( MSG_ERROR_MISSING_MCC_BETTERSTRING ));
 
     classes[CC_MUIC_NLIST] = MUI_CreateCustomClass(NULL, (ClassID)MUIC_NList,NULL,sizeof(struct MyData),ENTRY(NList_Dispatcher));
