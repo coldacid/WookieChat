@@ -5460,4 +5460,34 @@ I
 I
 I
 ;
+;
+; MUI Classes
+;
+MSG_ERROR_UNABLETOSETUPMUICLASS
+Unable to set-up MUI class!
+Konnte MUI Klasse nicht erzeuge!
+Unable to set-up MUI class!
+Unable to set-up MUI class!
+Unable to set-up MUI class!
+Unable to set-up MUI class!
+Unable to set-up MUI class!
+Unable to set-up MUI class!
+Unable to set-up MUI class!
+Unable to set-up MUI class!
+;
+;
+; MUICLASS_WINDOWABOUT
+;
+MSG_MUICLASS_WINDOWABOUT_TITLE
+About
+About
+About
+About
+About
+About
+About
+About
+About
+About
+;
 

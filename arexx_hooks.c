@@ -2193,7 +2193,9 @@ static int AREXX_Task(void)
     getmacro((Object*)AREXX_App,MUIA_Application_Base,&string1);
     strcpy((char *)basename,string1);
     sprintf(work_buffer,"\n\033cAREXX port: %s",string1);
-    setmacro((Object*)WookieChat->TX_about3, MUIA_Text_Contents,work_buffer);
+	//setmacro((Object*)WookieChat->TX_about3, MUIA_Text_Contents,work_buffer);
+						/* geit FIXME: This did not work before and needs to
+							be reimplemented once class handling is complete */
     strcat((char *)basename,"_msgport");
 
     BOOL running = TRUE;

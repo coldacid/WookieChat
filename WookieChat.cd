@@ -1358,3 +1358,15 @@ Ignore List...
 MSG_MENU_IGNORELIST_KEY (//)
 I
 ;
+;
+; MUI Classes
+;
+MSG_ERROR_UNABLETOSETUPMUICLASS (//)
+Unable to set-up MUI class!
+;
+;
+; MUICLASS_WINDOWABOUT
+;
+MSG_MUICLASS_WINDOWABOUT_TITLE (//)
+About
+;

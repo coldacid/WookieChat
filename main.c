@@ -1261,12 +1261,6 @@ int main(int argc, char *argv[])
     DoMethod((Object*) WookieChat->BT_ignore_remove, MUIM_Notify, MUIA_Selected, FALSE, (Object*) WookieChat->App, 2,
             MUIM_Application_ReturnID, 88);
 
-    //About menu
-    DoMethod((Object*) MN_about, MUIM_Notify, MUIA_Menuitem_Trigger, MUIV_EveryTime, (Object*) WookieChat->WI_about, 3,
-            MUIM_Set, MUIA_Window_Open, TRUE);
-    DoMethod((Object*) WookieChat->WI_about, MUIM_Notify, MUIA_Window_CloseRequest, TRUE,
-            (Object*) WookieChat->WI_about, 3, MUIM_Set, MUIA_Window_Open, FALSE);
-
     //url grabber
     DoMethod((Object*) MN_urlgrabber, MUIM_Notify, MUIA_Menuitem_Trigger, MUIV_EveryTime,
             (Object*) WookieChat->WI_urlgrabber, 3, MUIM_Set, MUIA_Window_Open, TRUE);

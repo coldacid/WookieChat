@@ -22,6 +22,8 @@
 #include "objapp.h"
 #include "version.h"
 #include "locale.h"
+#include "muiclass.h"
+#include "muiclass_windowabout.h"
 
 
 APTR MN1_Hide, MN1_SelectServer, MN1_NewTAB, MN1_NewGTAB,MN1_CloseTAB, MN_ClearAllHistory,MN_ClearHistory,  MN_SaveHistory, MN_MainSettings;
@@ -82,7 +84,7 @@ static APTR LA_CSW_listviewtabs_normaltext; //33
 static APTR DISPLAY_SERVER_WIN_GRP;
 static APTR IGNORE_ROOT, IGNORE_GRP1, GR_autoconnect;
 static APTR GROUP_ROOT_2_ALIASES, GR_alias1, GR_alias2;
-static APTR URLGRABBER_ROOT, URLGRABBER_GRP1, ABOUT_ROOT, GROUP_ROOT_2_SERVER, GROUP_ROOT_2, GROUP_ROOT_2_SECOND;
+static APTR URLGRABBER_ROOT, URLGRABBER_GRP1, GROUP_ROOT_2_SERVER, GROUP_ROOT_2, GROUP_ROOT_2_SECOND;
 static APTR GROUP_ROOT_2_DCC,GROUP_ROOT_2_ACTIONS, obj_auto_open_query_tabs_when_msged_label;
 static APTR GR_graphical_smileys;
 static APTR obj_autojoin_channels_when_kicked_label, grp_autojoin_channels_when_kicked, GR_grp_32, GR_grp_33;
@@ -101,8 +103,6 @@ static APTR GROUP_ROOT_8;
 static APTR GROUP_ROOT_10, GR_grp_19, LA_dcc_send_file, GR_grp_30, LA_dcc_send_nick;
 static APTR QUIT_ROOT, quit_label;
 static APTR ADDIGNORE_ROOT, ADDIGNORE_GRP1;
-static APTR about_group1, about_group2, about_group3, about_group4;
-static APTR PICTURE_LOGO;
 
 
 static char *CYA_GroupTitleColor[20];
@@ -185,128 +185,6 @@ struct ObjApp *CreateApp(void)
         MUIA_ObjectID, MAKE_ID('L', 'V', '0', '3'),
         MUIA_NListview_NList, MBObj->LV_tabs,
     End;
-
-    char about_text[2000];
-    strcpy(about_text,VERSION_ABOUT);
-
-    MBObj->TX_about = (Object*)TextObject,
-        MUIA_Text_Contents,about_text,
-        MUIA_Weight, 100,
-    End;
-
-
-    MBObj->TX_about2 = (Object*)TextObject,
-        MUIA_Text_Contents,"\033cNew sponsor coming soon..",
-        MUIA_Weight, 100,
-    End;
-
-    MBObj->TX_about_old = (Object*)TextObject,
-        MUIA_Text_Contents,"\n\033cThanks go out to Guru Meditation for past sponsorship!\n\033cAmiga reseller and Linux consulting\n\033chttp://gurumeditation.se/\n",
-        MUIA_Weight, 100,
-    End;
-
-    MBObj->TX_about3 = (Object*)TextObject,
-		MUIA_Text_Contents, LGS( MSG_ABOUT_WINDOW_TEXT_2 ),
-        MUIA_Weight, 100,
-    End;
-
-#if defined(__amigaos4__) || defined(__MORPHOS__) || defined(__AROS__)
-
-    about_group1 = GroupObject,
-        MUIA_FixHeight, 78,
-        //Child, PICTURE_LOGO = (Object*)MUI_NewObject((char*)MUIC_DTPIC, MUIA_Dtpic_Name, "wookiechat_logo.gif", End,
-        Child, PICTURE_LOGO = (Object*)MUI_NewObject((char*)MUIC_DTPIC, MUIA_Dtpic_Name, "progdir:wookiechat_logo.gif", End,
-        MUIA_Weight,100,
-
-    End;
-
-    about_group2 = GroupObject,
-        Child, MBObj->TX_about,
-        MUIA_Weight,100,                                                                                                                               \
-    End;
-
-    APTR about_group5 = GroupObject,
-        Child, MBObj->TX_about_old,
-        MUIA_Weight,100,
-    End;
-
-
-    about_group3 = GroupObject,
-        MUIA_FixHeight, 114,
-        Child, MUI_NewObject((char*)MUIC_DTPIC, MUIA_Dtpic_Name, "progdir:avatar2.jpg", End,
-        //Child, MUI_NewObject((char*)MUIC_DTPIC, MUIA_Dtpic_Name, "avatar2.jpg", End,
-        MUIA_Weight,100,
-    End;
-
-
-    about_group4 = GroupObject,
-        Child, MBObj->TX_about2,
-        MUIA_Weight,100,
-    End;
-
-    ABOUT_ROOT = GroupObject,
-        MUIA_Background, "2:ffffffff,ffffffff,ffffffff",
-        Child, about_group1,
-        Child, about_group2,//amix sponsorship text
-        Child, about_group3,//amix new logo
-        Child, about_group4,
-        Child, about_group5, //thanks go to Guru Meditation
-        Child, MBObj->TX_about3,
-    End;
-
-#else
-
-    about_group2 = (Object*)GroupObject,
-        Child, MBObj->TX_about,
-        MUIA_Weight,100,
-
-    End;
-
-    about_group4 = (Object*)GroupObject,
-        Child, MBObj->TX_about2,
-        MUIA_Weight,100,
-
-    End;
-    if(my_settings.os3_about_window_gfx)
-    {
-
-        about_group1 = GroupObject,
-            MUIA_FixHeight, 78,
-            Child, MUI_NewObject((char*)MUIC_DTPIC, MUIA_Dtpic_Name, "progdir:wookiechat_logo.gif", End,
-            MUIA_Weight,100,
-
-        End;
-
-        about_group3 = GroupObject,
-            MUIA_FixHeight, 114,
-            Child, MUI_NewObject((char*)MUIC_DTPIC, MUIA_Dtpic_Name, "progdir:avatar2.jpg", End,
-            MUIA_Weight,100,
-        End;
-
-        ABOUT_ROOT = (Object*)GroupObject,
-            MUIA_Background, "2:ffffffff,ffffffff,ffffffff",
-            Child, about_group1,
-            Child, about_group2,
-            Child, about_group3,
-            Child, about_group4,
-            Child, MBObj->TX_about3,
-        End;
-
-
-    }
-    else
-    {
-
-        ABOUT_ROOT = (Object*)GroupObject,
-            MUIA_Background, "2:ffffffff,ffffffff,ffffffff",
-            Child, about_group2,
-            Child, about_group4,
-            Child, MBObj->TX_about3,
-        End;
-
-    }
-
-#endif
 
     //load graphical smilies
 
@@ -497,14 +375,6 @@ struct ObjApp *CreateApp(void)
         WindowContents, IGNORE_ROOT,
     End;
     //end of ignore stuff
-
-    MBObj->WI_about = (Object*)WindowObject,
-		MUIA_Window_Title, LGS( MSG_ABOUT ),
-        MUIA_Window_CloseGadget, TRUE,
-        MUIA_Window_ID, MAKE_ID('7', 'W', 'I', 'N'),
-        MUIA_Background, MUII_SHINE,
-        WindowContents, ABOUT_ROOT,
-    End;
 
     // quit yes/no window
 
@@ -2290,6 +2160,8 @@ struct ObjApp *CreateApp(void)
 	End;
     //below are edit window stuff
 
+
+
 	LA_servername = (Object*)Label( LGS( MSG_SERVER_NAME ));
 
     MBObj->STR_servername = (Object*)StringObject,
@@ -2884,7 +2756,6 @@ struct ObjApp *CreateApp(void)
 #endif
 
     static STRPTR classlist[] = { (STRPTR)"NList.mcc", (STRPTR)"NListview.mcc", (STRPTR)"NListtree.mcc", (STRPTR)"BetterString.mcc", NULL };
-
     MBObj->App =(Object*) ApplicationObject,
         MUIA_Application_UsedClasses, classlist,
         MUIA_Application_Author, (char*)"James Carroll",
@@ -2903,7 +2774,7 @@ struct ObjApp *CreateApp(void)
         SubWindow, MBObj->WI_dcc2, //outgoing file transfers
         SubWindow, MBObj->WI_dcc_file_exists,
         SubWindow, MBObj->WI_dcc_send,
-        SubWindow, MBObj->WI_about,
+		SubWindow, MBObj->WI_about = WindowAboutObject, End,
         SubWindow, MBObj->WI_quit,
         SubWindow, MBObj->WI_urlgrabber,
         SubWindow, MBObj->WI_ban,
@@ -2915,6 +2786,8 @@ struct ObjApp *CreateApp(void)
         SubWindow, MBObj->WI_change_nick,
     End;
 
+	/* notifies in here */
+	DoMethod((Object*) MN_about, MUIM_Notify, MUIA_Menuitem_Trigger, MUIV_EveryTime, MBObj->WI_about, 3, MUIM_Set, MUIA_Window_Open, TRUE );
 
     MBObj->smiley_choose_icon=NULL;
     if (!MBObj->App)

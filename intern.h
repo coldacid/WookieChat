@@ -135,12 +135,6 @@ struct ObjApp
 
     //about window objects
     APTR    WI_about;
-    APTR    TX_about;
-    APTR    TX_about2;
-    APTR    TX_about3;
-    APTR    TX_about_old;
-    APTR    wookiechat_img_obj;
-    APTR    guru_meditation_img_obj;
     APTR    SETTINGS_ROOT;
     
     //This window pops up if you try to recieve a file that already exists

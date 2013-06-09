@@ -1809,3 +1809,17 @@ MSG_MENU_IGNORELIST_KEY
 I
 ; I
 ;
+;
+; MUI Classes
+;
+MSG_ERROR_UNABLETOSETUPMUICLASS
+Konnte MUI Klasse nicht erzeuge!
+; Unable to set-up MUI class!
+;
+;
+; MUICLASS_WINDOWABOUT
+;
+MSG_MUICLASS_WINDOWABOUT_TITLE
+About
+; About
+;

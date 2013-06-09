@@ -24,6 +24,7 @@
 #include "audio.h"
 #include "locale.h"
 #include "version.h"
+#include "muiclass.h"
 
 #ifdef __AROS__
 struct Library * AslBase = NULL;
@@ -300,6 +301,8 @@ void LoadAllLibs(void)
 #endif
 
 	Locale_Open( (STRPTR)(APPLICATIONNAME "avoid catalog for now"), VERSION, REVISION );
+
+	MUIClass_Open(); /* init our mui classes */
 
     //now that the catalog is open and locale library is open, lets give our context menu titles/items some labels
 
@@ -606,6 +609,7 @@ void cleanexit(char *str)
     samples_dispose();
 
     delete_custom_classes();
+	MUIClass_Close(); /* close our mui classes */
 
     if (str)
         printf("Error: %s\n", str);
