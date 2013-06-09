@@ -86,7 +86,7 @@ STRPTR Locale_GetString( long id )
 #if defined(__AROS__)
     if (LocaleBase != NULL && locale_catalog != NULL)
     {
-        return GetCatalogStr(locale_catalog, id, CatCompArray[id].cca_Str);
+        return (STRPTR)GetCatalogStr(locale_catalog, id, CatCompArray[id].cca_Str);
     }
     else
     {
