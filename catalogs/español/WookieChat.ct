@@ -1088,10 +1088,6 @@ MSG_IGNORE_REMOVE
 Eliminar
 ; Remove
 ;
-MSG_IGNORE_LIST_WINDOW_TITLE
-Lista ignorar...
-; Ignore List...
-;
 MSG_AUTO_CONNECT_OPTION
 Conectarse automáticamente al inicio
 ; Automatically connect here when WookieChat is started
@@ -1835,4 +1831,88 @@ Limpiar todo
 MSG_MUICLASS_WINDOWURLGRABBER_REMOVEALL_HELP
 /
 ; /
+;
+; MUICLASS_WINDOWIGNORELIST
+;
+MSG_MUICLASS_WINDOWIGNORELIST_TITLE
+Lista ignorar...
+; Ignore List...
+;
+MSG_MUICLASS_WINDOWIGNORELIST_ADD_GAD
+Añadir
+; Add
+;
+MSG_MUICLASS_WINDOWIGNORELIST_ADD_HELP
+/
+; /
+;
+MSG_MUICLASS_WINDOWIGNORELIST_REMOVE_GAD
+Eliminar
+; Remove
+;
+MSG_MUICLASS_WINDOWIGNORELIST_REMOVE_HELP
+/
+; /
+;
+MSG_MUICLASS_WINDOWIGNORELIST_IGNOREMASK_GAD
+Ignorar:
+; Ignore Entry:
+;
+MSG_MUICLASS_WINDOWIGNORELIST_IGNOREMASK_HELP
+/
+; /
+;
+MSG_MUICLASS_WINDOWIGNORELIST_PRIVMSG_GAD
+Texto
+; Text
+;
+MSG_MUICLASS_WINDOWIGNORELIST_PRIVMSG_HELP
+/
+; /
+;
+MSG_MUICLASS_WINDOWIGNORELIST_CTCP_GAD
+CTCP
+; CTCP
+;
+MSG_MUICLASS_WINDOWIGNORELIST_CTCP_HELP
+/
+; /
+;
+MSG_MUICLASS_WINDOWIGNORELIST_DCC_GAD
+DCC
+; DCC
+;
+MSG_MUICLASS_WINDOWIGNORELIST_DCC_HELP
+/
+; /
+;
+MSG_MUICLASS_WINDOWIGNORELIST_INFO
+\033cLas marcas de anfitrión suelen ser: alias!usuarioID@anfitrión\nEjemplo: .. [Acceder] jahc (~jahc00@Amigaworld.Net) ..\n\033bjahc\033n es el alias, \033bjahc00\033n el usuarioID y \
+\033bAmigaworld.Net\033n el anfitrión.\nPara ignorar a esta persona, puede insertar la cadena: \033bjahc#?!#?@#?\033n\nEl uso de comodines hace que este comando sea muy potente.\nPuede hacer cosas \
+como: \033bguru#?editatio?!#?userid@#?.se\033n\no si desea hacerlo más simple: \033broberto#?\033n
+; Hostmarks look like this: nick!userid@hostname\ni.e.«Join» jahc (~jahc00@jahc.Amigaworld.Net)\njahc is the nick, jahc00 is the userid, and jahc.Amigaworld.Net is the hostname\nTo ignore this person, you could insert an ignore entry of: jahc#?\nThis will ignore all people with a nick starting with the letters jahc.\nThe use of wildcards makes this ignore command very powerful.\nThings like this are possible: guru#?editatio?!#?userid@#?.se\nor if you want to keep it simple, you could just use: jahc#?
+;
+MSG_LV_PATTERN
+Pattern
+; Pattern
+;
+MSG_LV_TEXT
+Texto
+; Text
+;
+MSG_LV_CTCP
+CTCP
+; CTCP
+;
+MSG_LV_DCC
+DCC
+; DCC
+;
+MSG_LV_ALLOW
+Allow
+; Allow
+;
+MSG_LV_IGNORE
+Ignore
+; Ignore
 ;

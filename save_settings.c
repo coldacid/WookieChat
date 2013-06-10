@@ -24,7 +24,6 @@ char nick[30];
 
 /* Locals */
 static char output_string[800];
-static char string11[900];
 static char *string2;
 static char *string1;
 static char file_name[800];
@@ -73,110 +72,6 @@ void load_colours_choice()
 
 }
 
-void save_ignore_list()
-{
-    BPTR save_file;
-    ULONG entries;
-    char *work_buffer;
-
-    getmacro((Object*) WookieChat->LV_ignore, MUIA_NList_Entries, &entries);
-
-    strcpy(file_name, "progdir:ignorelist.txt");
-    save_file = Open((_s_cs)file_name, MODE_NEWFILE);
-
-    if (save_file)
-    {
-        my_settings.totalignores = 0;
-
-        for (unsigned int count = 0; count < entries && count < 100; count++)
-        {
-            DoMethod((Object*) WookieChat->LV_ignore, MUIM_NList_GetEntry, count, &work_buffer);
-            if (work_buffer)
-            {
-                sprintf(output_string, "%s\n", work_buffer);
-                FPuts(save_file, (l_in) output_string);
-
-            }
-            else
-                break;
-
-            //strcpy(my_settings.ignorelist[count].ignoremask,work_buffer);
-
-            strcpy(string11, work_buffer);
-
-            //string1=strtok(work_buffer," "); //move past the ignore mask, get to the options
-            string1 = strtok(string11, " "); //move past the ignore mask, get to the options
-            if (string1)
-            {
-
-                strcpy(my_settings.ignorelist[count].ignoremask, string1);
-
-            }
-
-            string1 = strtok(NULL, " ");
-            if (string1)
-            {
-                if (!stricmp(string1, "ignore"))
-                    my_settings.ignorelist[count].ignore_privmsg = TRUE;
-                else
-                    my_settings.ignorelist[count].ignore_privmsg = FALSE;
-
-            }
-
-            string1 = strtok(NULL, " ");
-            if (string1)
-            {
-                if (!stricmp(string1, "ignore"))
-                    my_settings.ignorelist[count].ignore_ctcp = TRUE;
-                else
-                    my_settings.ignorelist[count].ignore_ctcp = FALSE;
-            }
-
-            string1 = strtok(NULL, " ");
-            if (string1)
-            {
-                if (!stricmp(string1, "ignore"))
-                    my_settings.ignorelist[count].ignore_dcc = TRUE;
-                else
-                    my_settings.ignorelist[count].ignore_dcc = FALSE;
-            }
-
-            my_settings.totalignores++;
-
-            if (my_settings.totalignores == 100)
-                break;
-
-        }
-
-        Close(save_file);
-    }
-
-}
-
-void load_ignore_list()
-{
-    //load and display the ignore masks and options
-
-    DoMethod((Object*) WookieChat->LV_ignore, MUIM_NList_Clear);
-
-    strcpy(file_name, "progdir:ignorelist.txt");
-    BPTR ignore_file = Open((_s_cs)file_name, MODE_OLDFILE);
-    if (ignore_file)
-    {
-        while (FGets(ignore_file, (STRPTR) urlgrabber_str, 2000))
-        {
-            urlgrabber_str[strlen(urlgrabber_str) - 1] = '\0';
-            for (unsigned int count = 0; count < strlen(urlgrabber_str); count++)
-                urlgrabber_str[count] = ToLower(urlgrabber_str[count]);
-
-            DoMethod((Object*) WookieChat->LV_ignore, MUIM_NList_InsertSingle, urlgrabber_str,
-                    MUIV_NList_Insert_Bottom);
-        }
-
-        Close(ignore_file);
-    }
-
-}
 
 void save_nick_settings()
 {
@@ -859,12 +754,6 @@ void load_nick_settings()
 
     }
 
-    //these arent nick related, but this is a good place to setup the
-    //ignore list in the "ignore list" data structure for the first time
-
-    load_ignore_list();
-    save_ignore_list();
-
     char *work_buffer = malloc(sizeof(char) * 800);
     //STRPTR work_buffer;
     char *len2; //variable used for file access
@@ -1234,7 +1123,6 @@ void load_settings()
     BPTR newbptr_file = Open((_s_cs)"progdir:settings.txt", MODE_OLDFILE);
     //default values
     my_settings.sort_tabs_alphabetically = 1;
-    my_settings.totalignores = 0;
     my_settings.number_of_command_aliases = 0;
     my_settings.use_column_display = 0;
     my_settings.urlgrabber = 1;

@@ -816,9 +816,6 @@ Edit
 MSG_IGNORE_REMOVE (//)
 Remove
 ;
-MSG_IGNORE_LIST_WINDOW_TITLE (//)
-Ignore List...
-;
 MSG_AUTO_CONNECT_OPTION (//)
 Automatically connect here when WookieChat is started
 ;
@@ -1382,4 +1379,68 @@ Clear All
 ;
 MSG_MUICLASS_WINDOWURLGRABBER_REMOVEALL_HELP (//)
 /
+;
+; MUICLASS_WINDOWIGNORELIST
+;
+MSG_MUICLASS_WINDOWIGNORELIST_TITLE (//)
+Ignore List...
+;
+MSG_MUICLASS_WINDOWIGNORELIST_ADD_GAD (//)
+Add
+;
+MSG_MUICLASS_WINDOWIGNORELIST_ADD_HELP (//)
+/
+;
+MSG_MUICLASS_WINDOWIGNORELIST_REMOVE_GAD (//)
+Remove
+;
+MSG_MUICLASS_WINDOWIGNORELIST_REMOVE_HELP (//)
+/
+;
+MSG_MUICLASS_WINDOWIGNORELIST_IGNOREMASK_GAD (//)
+Ignore Entry:
+;
+MSG_MUICLASS_WINDOWIGNORELIST_IGNOREMASK_HELP (//)
+/
+;
+MSG_MUICLASS_WINDOWIGNORELIST_PRIVMSG_GAD (//)
+Text
+;
+MSG_MUICLASS_WINDOWIGNORELIST_PRIVMSG_HELP (//)
+/
+;
+MSG_MUICLASS_WINDOWIGNORELIST_CTCP_GAD (//)
+CTCP
+;
+MSG_MUICLASS_WINDOWIGNORELIST_CTCP_HELP (//)
+/
+;
+MSG_MUICLASS_WINDOWIGNORELIST_DCC_GAD (//)
+DCC
+;
+MSG_MUICLASS_WINDOWIGNORELIST_DCC_HELP (//)
+/
+;
+MSG_MUICLASS_WINDOWIGNORELIST_INFO (//)
+Hostmarks look like this: nick!userid@hostname\ni.e.«Join» jahc (~jahc00@jahc.Amigaworld.Net)\njahc is the nick, jahc00 is the userid, and jahc.Amigaworld.Net is the hostname\nTo ignore this person, \
+you could insert an ignore entry of: jahc#?\nThis will ignore all people with a nick starting with the letters jahc.\nThe use of wildcards makes this ignore command very powerful.\nThings like this \
+are possible: guru#?editatio?!#?userid@#?.se\nor if you want to keep it simple, you could just use: jahc#?
+;
+MSG_LV_PATTERN (//)
+Pattern
+;
+MSG_LV_TEXT (//)
+Text
+;
+MSG_LV_CTCP (//)
+CTCP
+;
+MSG_LV_DCC (//)
+DCC
+;
+MSG_LV_ALLOW (//)
+Allow
+;
+MSG_LV_IGNORE (//)
+Ignore
 ;

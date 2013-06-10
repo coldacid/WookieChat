@@ -3309,18 +3309,6 @@ Fjerne
 Usuρ
 Ta bort
 ;
-MSG_IGNORE_LIST_WINDOW_TITLE
-Ignore List...
-Ignorieren Liste ...
-Lista ignorar...
-Liste d'ignorιs...
-Λίστα αγνόησης...
-Lista dei contatti ignorati...
-Mellυzφtt lista...
-Ignore-liste...
-Lista ignorowania...
-Ignoreringslista ...
-;
 MSG_AUTO_CONNECT_OPTION
 Automatically connect here when WookieChat is started
 Diesen Server beim Start von WookieChat automatisch verbinden
@@ -5529,5 +5517,267 @@ MSG_MUICLASS_WINDOWURLGRABBER_REMOVEALL_HELP
 /
 /
 /
+;
+; MUICLASS_WINDOWIGNORELIST
+;
+MSG_MUICLASS_WINDOWIGNORELIST_TITLE
+Ignore List...
+Ignorieren Liste ...
+Lista ignorar...
+Liste d'ignorιs...
+Λίστα αγνόησης...
+Lista dei contatti ignorati...
+Mellυzφtt lista...
+Ignore-liste...
+Lista ignorowania...
+Ignoreringslista ...
+;
+MSG_MUICLASS_WINDOWIGNORELIST_ADD_GAD
+Add
+Hinzufόgen
+Aρadir
+Ajouter
+Πρόσθεση
+Aggiungi
+Hozzαad
+Legge til
+Dodaj
+Lδgg till
+;
+MSG_MUICLASS_WINDOWIGNORELIST_ADD_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
+MSG_MUICLASS_WINDOWIGNORELIST_REMOVE_GAD
+Remove
+Entfernen
+Eliminar
+Supprimer
+Αφαίρεση
+Rimuovi
+Eltαvolνt
+Fjerne
+Usuρ
+Ta bort
+;
+MSG_MUICLASS_WINDOWIGNORELIST_REMOVE_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
+MSG_MUICLASS_WINDOWIGNORELIST_IGNOREMASK_GAD
+Ignore Entry:
+Ignoriere Eintrag:
+Ignorar:
+Ignorer :
+Καταχώρηση αγνόησης:
+Elemento da ignorare
+Mellυzυ bejegyzιs
+Ignoremaske:
+Ignoruj:
+Ignorera enligt:
+;
+MSG_MUICLASS_WINDOWIGNORELIST_IGNOREMASK_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
+MSG_MUICLASS_WINDOWIGNORELIST_PRIVMSG_GAD
+Text
+Text
+Texto
+Texte
+Κείμενο
+Testo
+Szφveg
+Tekst
+Tekst
+Text
+;
+MSG_MUICLASS_WINDOWIGNORELIST_PRIVMSG_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
+MSG_MUICLASS_WINDOWIGNORELIST_CTCP_GAD
+CTCP
+CTCP
+CTCP
+CTCP
+CTCP
+CTCP
+CTCP
+CTCP
+CTCP
+CTCP
+;
+MSG_MUICLASS_WINDOWIGNORELIST_CTCP_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
+MSG_MUICLASS_WINDOWIGNORELIST_DCC_GAD
+DCC
+DCC
+DCC
+DCC
+DCC
+DCC
+DCC
+DCC
+DCC
+DCC
+;
+MSG_MUICLASS_WINDOWIGNORELIST_DCC_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
+MSG_MUICLASS_WINDOWIGNORELIST_INFO
+Hostmarks look like this: nick!userid@hostname\ni.e.«Join» jahc (~jahc00@jahc.Amigaworld.Net)\njahc is the nick, jahc00 is the userid, and jahc.Amigaworld.Net is the hostname\nTo ignore this person, \
+you could insert an ignore entry of: jahc#?\nThis will ignore all people with a nick starting with the letters jahc.\nThe use of wildcards makes this ignore command very powerful.\nThings like this \
+are possible: guru#?editatio?!#?userid@#?.se\nor if you want to keep it simple, you could just use: jahc#?
+Hostmarks look like this: nick!userid@hostname\ni.e.«Join» jahc (~jahc00@jahc.Amigaworld.Net)\njahc is the nick, jahc00 is the userid, and jahc.Amigaworld.Net is the hostname\nTo ignore this person, \
+you could insert an ignore entry of: jahc*!*@*\nThis will ignore all people with a nick starting with the letters jahc.\nThe use of wildcards makes this ignore command very powerful.\nThings like this \
+are possible: guru#?editatio?!#?userid@#?.se\nor if you want to keep it simple, you could just use: jahc#?
+\033cLas marcas de anfitriσn suelen ser: alias!usuarioID@anfitriσn\nEjemplo: .. [Acceder] jahc (~jahc00@Amigaworld.Net) ..\n\033bjahc\033n es el alias, \033bjahc00\033n el usuarioID y \
+\033bAmigaworld.Net\033n el anfitriσn.\nPara ignorar a esta persona, puede insertar la cadena: \033bjahc#?!#?@#?\033n\nEl uso de comodines hace que este comando sea muy potente.\nPuede hacer cosas como: \
+\033bguru#?editatio?!#?userid@#?.se\033n\no si desea hacerlo mαs simple: \033broberto#?\033n
+Les masques d'hτte ressemblent ΰ ceci : \npseudo!utilisateur@machine\ni.e. [Entrιe] jahc (~jahc00@jahc.Amigaworld.Net)\njahc est le pseudo, jahc00 l'utilisateur et\njahc.Amigaworld.Net le nom d'hτte.\n\
+Pour ignorer cette personne, vous pouvez insιrer\nle masque jahc#?!#?, cela ignorera toute personne\ndont le pseudo commence par 'jahc'.\nL'utilisation de jokers rend cette commande trθs\npuissante, des \
+choses telles que guru#?editatio?!#?userid@#?.se\nsont possibles ou pour faire plus simple vous pouvez\nutiliser roberto#?
+Το μαρκάρισμα γίνεται κάπως έτσι: nick!userid@hostname\nπ.χ. «Join» jahc (~jahc00@jahc.Amigaworld.Net)\nτο jahc είναι το ψευδώνυμο, το jahc00 είναι το όνομα χρήστη, ενώ το jahc.Amigaworld.Net είναι το \
+hostname\nΓια να αγνοήσετε αυτό το άτομο, θα μπορούσατε να εισάγετε μία καταχώρηση αγνόησης όπως: jahc#?!#?@#?\nΑυτό θα αγνοήσει όλους με ψευδώνυμο που αρχίζει με τα γράμματα jahc.\nΗ χρήση των μπαλαντέρ \
+κάνει αυτή τη λειτουργεία πολύ δυνατή. Μπορείτε να χρησιμοποιήσετε πράγματα όπως: guru#?editatio?!#?userid@#?.se\nή αν θέλετε να το κρατήσετε απλό, μπορείτε να γράψετε απλά: roberto#?
+Le Hostmarks sono composte come segue: nick!userid@hostname\ni.e.[Join] jahc (~jahc00@jahc.Amigaworld.Net)\njahc Γ¨ il nick, jahc00 Γ¨ la userid e jahc.Amigaworld.Net Γ¨ la persona\nda ignorare \
+dall'hostname, puoi inserire un ignore tipo: jahc#?!#?@#?\nQuesto ignorerΓ Β  tutte le persone con un nick che inizia con le lettere jahc.\nL'uso delle WildCards rende il comando ignore molto \
+potente.\nSono possibili anche se seguenti combinazioni: guru#?editatio?!#?userid@#?.se\nno se vuoi renderti la vita piΓΉ semplice potresti usare: roberto#?
+A hoszt jelzυk νgy nιznek ki: becenιv!azonosνtσ@hosztnιv\ni.e«Join» jahc (~jahc00@jahc.Amigaworld.Net)\njahc az becenιv, jahc00 az azonosνtσ ιs jahc.Amigaworld.Net a hoszt nιv\nBeszϊrva egy mellυzυ \
+tagok, ez a szemιly mellυzhetυ: jahc#?!#?@#?\nEz mindenkit mellυzni fog akinek az αlneve jahc, vagy azzal kezdυdik.\nA helyettesνtυ karakterek hasznαlata igen hatιkonnyα teszi ezt a parancsot.\nAkαr a \
+kφvetkezυket is megtehetjόk: guru#?editatio?!#?userid@#?.se\nvagy ha egyszerόsνteni akarjuk, akαr csak enyivel: jahc#?
+Hostmerkene ser slik ut: nick!userid@hostname\nfor eks. «Join» jahc (~jahc00@jahc.Amigaworld.Net)\njahc er nicket, jahc00 er brukerens id, og jahc.Amigaworld.Net er hostnavnet\nFor ε overse denne \
+personen, kan du sette en ignoremaske som dette: jahc#?!#?@#?\nDette vil overse alle som har et nick som starter med "jahc".\nBruken av wildcards gjψr denne ignoremasken veldig kraftfull.\nTing som dette \
+er mulig: guru#?editatio?!#?userid@#?.se\neller hvis du vil gjψre det enkelt, kan du bare bruke for eksempel: roberto#?
+Maska wygl±da tak: pseudonim!identyfikator@wκze³\nnp. [Join] jahc (~jahc00@jahc.Amigaworld.net)\njahc to pseudonim, jahc00 to identyfikator\na jahc.Amigaworld.net to nazwa wκz³a.\nAby ignorowaζ tκ \
+osobκ, moΏesz dodaζ do listy jahc#?!#?@#?\nWookieChatten sposσb bκd± ignorowane wszystkie osoby\nz pseudonimem zaczynaj±cym siκ od liter jahc.\nUΏywanie znakσw zastκpczych pozwala na tworzenie z³oΏonych \
+regu³.\nMoΏna np. utworzyζ tak± regu³κ: guru#?editatio?!#?userid@#?.se\nlub je¶li chcesz sobie upro¶ciζ Ώycie, moΏesz uΏyζ po prostu: jahc#?
+Vδrdinfo ser ut sε hδr: nick!userid@hostname\ndvs.Join jahc (~jahc00@jahc.Amigaworld.Net)\njahc δr nicket, jahc00 δr anvδdarid och jahc.Amigaworld.Net δr vδrdnamnet\nFφr att ignorera anvδndaren kan du \
+skriva in jahc#?!#?@#?\nDetta ignorerar alla nick som bφrjar med bokstδverna jahc.\nMed wildcards (#?) blir detta kommando mycket kraftfullt.\nMφjliga kombinationer: guru#?editatio?!#?userid@#?.se\neller fφr \
+att gφra det enkelt:  roberto#?
+;
+MSG_LV_PATTERN
+Pattern
+Pattern
+Pattern
+Pattern
+Pattern
+Pattern
+Pattern
+Pattern
+Pattern
+Pattern
+;
+MSG_LV_TEXT
+Text
+Text
+Texto
+Texte
+Κείμενο
+Testo
+Szφveg
+Tekst
+Tekst
+Text
+;
+MSG_LV_CTCP
+CTCP
+CTCP
+CTCP
+CTCP
+CTCP
+CTCP
+CTCP
+CTCP
+CTCP
+CTCP
+;
+MSG_LV_DCC
+DCC
+DCC
+DCC
+DCC
+DCC
+DCC
+DCC
+DCC
+DCC
+DCC
+;
+MSG_LV_ALLOW
+Allow
+Erlauben
+Allow
+Allow
+Allow
+Allow
+Allow
+Allow
+Allow
+Allow
+;
+MSG_LV_IGNORE
+Ignore
+Verhindern
+Ignore
+Ignore
+Ignore
+Ignore
+Ignore
+Ignore
+Ignore
+Ignore
 ;
 

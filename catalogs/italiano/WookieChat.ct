@@ -1092,10 +1092,6 @@ MSG_IGNORE_REMOVE
 Rimuovi
 ; Remove
 ;
-MSG_IGNORE_LIST_WINDOW_TITLE
-Lista dei contatti ignorati...
-; Ignore List...
-;
 MSG_AUTO_CONNECT_OPTION
 Connettiti automaticamente qui quando WookieChat viene lanciato
 ; Automatically connect here when WookieChat is started
@@ -1840,4 +1836,88 @@ Cancella tutto
 MSG_MUICLASS_WINDOWURLGRABBER_REMOVEALL_HELP
 /
 ; /
+;
+; MUICLASS_WINDOWIGNORELIST
+;
+MSG_MUICLASS_WINDOWIGNORELIST_TITLE
+Lista dei contatti ignorati...
+; Ignore List...
+;
+MSG_MUICLASS_WINDOWIGNORELIST_ADD_GAD
+Aggiungi
+; Add
+;
+MSG_MUICLASS_WINDOWIGNORELIST_ADD_HELP
+/
+; /
+;
+MSG_MUICLASS_WINDOWIGNORELIST_REMOVE_GAD
+Rimuovi
+; Remove
+;
+MSG_MUICLASS_WINDOWIGNORELIST_REMOVE_HELP
+/
+; /
+;
+MSG_MUICLASS_WINDOWIGNORELIST_IGNOREMASK_GAD
+Elemento da ignorare
+; Ignore Entry:
+;
+MSG_MUICLASS_WINDOWIGNORELIST_IGNOREMASK_HELP
+/
+; /
+;
+MSG_MUICLASS_WINDOWIGNORELIST_PRIVMSG_GAD
+Testo
+; Text
+;
+MSG_MUICLASS_WINDOWIGNORELIST_PRIVMSG_HELP
+/
+; /
+;
+MSG_MUICLASS_WINDOWIGNORELIST_CTCP_GAD
+CTCP
+; CTCP
+;
+MSG_MUICLASS_WINDOWIGNORELIST_CTCP_HELP
+/
+; /
+;
+MSG_MUICLASS_WINDOWIGNORELIST_DCC_GAD
+DCC
+; DCC
+;
+MSG_MUICLASS_WINDOWIGNORELIST_DCC_HELP
+/
+; /
+;
+MSG_MUICLASS_WINDOWIGNORELIST_INFO
+Le Hostmarks sono composte come segue: nick!userid@hostname\ni.e.[Join] jahc (~jahc00@jahc.Amigaworld.Net)\njahc è il nick, jahc00 è la userid e jahc.Amigaworld.Net è la persona\nda ignorare \
+dall'hostname, puoi inserire un ignore tipo: jahc#?!#?@#?\nQuesto ignorerà  tutte le persone con un nick che inizia con le lettere jahc.\nL'uso delle WildCards rende il comando ignore molto potente.\n\
+Sono possibili anche se seguenti combinazioni: guru#?editatio?!#?userid@#?.se\nno se vuoi renderti la vita più semplice potresti usare: roberto#?
+; Hostmarks look like this: nick!userid@hostname\ni.e.�Join� jahc (~jahc00@jahc.Amigaworld.Net)\njahc is the nick, jahc00 is the userid, and jahc.Amigaworld.Net is the hostname\nTo ignore this person, you could insert an ignore entry of: jahc#?\nThis will ignore all people with a nick starting with the letters jahc.\nThe use of wildcards makes this ignore command very powerful.\nThings like this are possible: guru#?editatio?!#?userid@#?.se\nor if you want to keep it simple, you could just use: jahc#?
+;
+MSG_LV_PATTERN
+Pattern
+; Pattern
+;
+MSG_LV_TEXT
+Testo
+; Text
+;
+MSG_LV_CTCP
+CTCP
+; CTCP
+;
+MSG_LV_DCC
+DCC
+; DCC
+;
+MSG_LV_ALLOW
+Allow
+; Allow
+;
+MSG_LV_IGNORE
+Ignore
+; Ignore
 ;

@@ -21,6 +21,7 @@
 #include "muiclass.h"
 #include "muiclass_windowabout.h"
 #include "muiclass_windowurlgrabber.h"
+#include "muiclass_windowignorelist.h"
 
 /*
 ** GUI Globals
@@ -42,6 +43,8 @@ ULONG result;
 
 	if( !(result = MCC_WindowAbout_InitClass() ) ) {
 		if( !(result = MCC_WindowURLGrabber_InitClass() ) ) {
+			if( !(result = MCC_WindowIgnoreList_InitClass() ) ) {
+			}
 		}
 	}
 	return( result );
@@ -57,7 +60,21 @@ void MUIClass_Close( void )
 {
 	MCC_WindowAbout_DisposeClass();
 	MCC_WindowURLGrabber_DisposeClass();
+	MCC_WindowIgnoreList_DisposeClass();
 }
 /* \\\ */
 
+/* /// MUIGetVar()
+**
+*/
+
+/*************************************************************************/
+
+ULONG MUIGetVar( Object *obj, ULONG attr )
+{
+ULONG var = 0;
+	GetAttr( attr, obj, (void*) &var );
+	return ( var );
+}
+/* \\\ */
 

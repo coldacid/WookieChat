@@ -22,6 +22,7 @@
 #include "audio.h"
 #include "locale.h"
 #include "muiclass_windowurlgrabber.h"
+#include "muiclass_windowignorelist.h"
 
 struct list_entry new_entry2;
 
@@ -91,10 +92,6 @@ char mode_work[1000];
 char orig_time_mins[3];
 char orig_time_secs[3];
 
-enum
-{
-    PRIVMSG = 1, CTCP, DCC
-};
 
 BOOL found_clones;
 BOOL play_tab_open_sample = FALSE;
@@ -181,114 +178,6 @@ void onjoin_clone_detection(char *nick, char *hostname)
             add_text_to_conductor_list((char*) buffer3, 9, ACTIVITY);
 
     }
-
-}
-
-int wildcmp(const char *wild, const char *string)
-{
-    const char *cp = NULL, *mp = NULL;
-
-    while ((*string) && (*wild != '*'))
-    {
-        if ((*wild != *string) && (*wild != '?'))
-        {
-            return 0;
-        }
-        wild++;
-        string++;
-    }
-
-    while (*string)
-    {
-        if (*wild == '*')
-        {
-            if (!*++wild)
-            {
-                return 1;
-            }
-            mp = wild;
-            cp = string + 1;
-        }
-        else if ((*wild == *string) || (*wild == '?'))
-        {
-            wild++;
-            string++;
-        }
-        else
-        {
-            wild = mp;
-            string = cp++;
-        }
-    }
-
-    while (*wild == '*')
-    {
-        wild++;
-    }
-    return !*wild;
-}
-
-BOOL ignore_privmsg;
-BOOL ignore_ctcp;
-BOOL ignore_dcc;
-
-BOOL user_being_ignored(char *nick, char *hostname, int type)
-{
-    //if(DEBUG) printf("searching for this ignore:%s\n",string10);
-    //printf("searching for this ignore:%s\n",string10);
-    //printf("searching for this ignore:%s!%s\n",nick,hostname);
-
-    if (type == PRIVMSG)
-        ignore_privmsg = FALSE;
-    else if (type == CTCP)
-        ignore_ctcp = FALSE;
-    else if (type == DCC)
-        ignore_dcc = FALSE;
-
-    char string7[800];
-
-    strcpy(string7, nick);
-    for (unsigned count3 = 0; count3 < strlen(string7); count3++)
-        string7[count3] = ToLower(string7[count3]);
-    //for(unsigned count3=0; count3<strlen(nick); count3++) nick[count3]=ToLower(nick[count3]);
-    for (unsigned count3 = 0; count3 < strlen(hostname); count3++)
-        hostname[count3] = ToLower(hostname[count3]);
-
-    sprintf(string11, "%s!%s", string7, hostname);
-    //if(DEBUG) printf("searching for this ignore:%s\n",string11);
-
-    for (int count = 0; count < my_settings.totalignores; count++)
-    {
-        //if(DEBUG) printf("ignoremask entry:%s\n",my_settings.ignorelist[count].ignoremask);
-        if (wildcmp(my_settings.ignorelist[count].ignoremask, string11))
-        {
-            //printf("found hit\n");
-
-            if (my_settings.ignorelist[count].ignore_privmsg == TRUE && type == PRIVMSG)
-            {
-                ignore_privmsg = TRUE;
-                //if(DEBUG) printf("ignoring privmsgs, ");
-                return TRUE;
-            }
-
-            if (my_settings.ignorelist[count].ignore_ctcp == TRUE && type == CTCP)
-            {
-                ignore_ctcp = TRUE;
-                //if(DEBUG) printf("ignoring ctcp, ");
-                return TRUE;
-            }
-            if (my_settings.ignorelist[count].ignore_dcc == TRUE && type == DCC)
-            {
-                ignore_dcc = TRUE;
-                //if(DEBUG) printf("ignoring dcc\n");
-                return TRUE;
-            }
-
-        }
-
-    }
-
-    return FALSE;
 
 }
 
@@ -980,6 +869,10 @@ BOOL FindUTF8Chars(char *buffer2)
 
 void process_incoming()
 {
+BOOL ignore_privmsg;
+BOOL ignore_ctcp;
+BOOL ignore_dcc;
+
     int colour = 1;
 
     /* insert /r's where there are none */
@@ -3482,9 +3375,10 @@ void process_incoming()
             string10[b] = '\0';
 
             //TEST TO SEE IF WE'RE IGNORING THIS PERSON IN ANY YWAY
-            user_being_ignored(string9, string8, PRIVMSG);
-
-            if (!ignore_privmsg)
+			
+			//user_being_ignored(string9, string8, PRIVMSG);
+			ignore_privmsg = DoMethod( WookieChat->WI_ignore, MM_WINDOWIGNORELIST_CHECKIGNORE, string9, string8, PRIVMSG);
+			if (!ignore_privmsg)
             {
 
                 sprintf(buffer3, "%s-%s- %s", timestamp, string7, string10);
@@ -4443,9 +4337,12 @@ void process_incoming()
             strcpy(target_nick, string7);
 
             //TEST TO SEE IF WE'RE IGNORING THIS PERSON IN ANY YWAY
-            user_being_ignored(string7, string8, PRIVMSG);
-            user_being_ignored(string7, string8, CTCP);
-            user_being_ignored(string7, string8, DCC);
+			ignore_privmsg = DoMethod( WookieChat->WI_ignore, MM_WINDOWIGNORELIST_CHECKIGNORE, string7, string8, PRIVMSG);
+			ignore_ctcp    = DoMethod( WookieChat->WI_ignore, MM_WINDOWIGNORELIST_CHECKIGNORE, string7, string8, CTCP);
+			ignore_dcc     = DoMethod( WookieChat->WI_ignore, MM_WINDOWIGNORELIST_CHECKIGNORE, string7, string8, DCC);
+			//user_being_ignored(string7, string8, PRIVMSG);
+			//user_being_ignored(string7, string8, CTCP);
+			//user_being_ignored(string7, string8, DCC);
 
             status_conductor->conductor = status_conductor->root;
             BOOL channel_message = FALSE;
@@ -4522,7 +4419,7 @@ void process_incoming()
             else if (!status_conductor->conductor && my_settings.open_query_on_privmsg == 1)
                 sprintf(buffer3, "%s<%s%s> %s", timestamp, modes, target_nick, string10);
 
-            if (!ignore_privmsg)
+			if (!ignore_privmsg)
             {
 
                 //if(!status_conductor->conductor && my_settings.open_query_on_privmsg==1 && strstr(string10,"\001")==NULL && string9[0] != '#')
@@ -4630,7 +4527,7 @@ void process_incoming()
 
             }
             // CTCP SUPPORT
-            if (!ignore_ctcp)
+			if (!ignore_ctcp)
             {
                 BOOL is_it_a_ctcp = FALSE;
 
@@ -5094,9 +4991,9 @@ void process_incoming()
                 }
             }
 
-            if (!(ignore_ctcp && (strstr(string10, "\001"))) && !(ignore_privmsg && (colour == 8 || colour == 7))
-                    && !(ignore_dcc && colour == 9))
 
+
+			if (!(ignore_ctcp && (strstr(string10, "\001"))) && !(ignore_privmsg && (colour == 8 || colour == 7)) && !(ignore_dcc && colour == 9))
             {
 
                 if (status_conductor->conductor)

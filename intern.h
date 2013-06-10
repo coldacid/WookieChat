@@ -417,28 +417,9 @@ struct ObjApp
     APTR    STR_dcc_send_nick;
     APTR    BT_dcc_send;
 
-    //url grabber window
-    APTR    WI_urlgrabber;
+	APTR    WI_urlgrabber; // url grabber window
 
-    //ignore list window
-    APTR    WI_ignore;
-    APTR    LV_ignore;
-    APTR    BT_ignore_remove;
-    APTR    BT_ignore_add;
-    APTR    BT_ignore_edit;
-    APTR    WI_addignore;
-    APTR    BT_addignore;
-    APTR    STR_addignore;
-    APTR    TX_addignore;
-    APTR    LA_addignore_privmsg;
-    APTR    LA_addignore_ctcp;
-    APTR    LA_addignore_dcc;
-    APTR    CH_addignore_privmsg;
-    APTR    CH_addignore_ctcp;
-    APTR    CH_addignore_dcc;
-    APTR    LA_ignore_hostmask;
-    APTR    LA_ignore_actions;
-
+	APTR    WI_ignore;  // ignore list window
     APTR    WI_ban;
     APTR    LV_ban;
     APTR    BT_unban;
@@ -647,15 +628,6 @@ struct AREXX_Menu
     LONG return_id;
 };
 
-struct ignore_list
-{
-    char ignoremask[100];
-    BOOL ignore_privmsg;
-    BOOL ignore_dcc;
-    BOOL ignore_ctcp;
-
-};
-
 struct event_settings
 {
     BOOL enabled;
@@ -746,9 +718,10 @@ struct Settings
     int Reconnect_Delay;
 
 
-
+#if 0
     struct ignore_list ignorelist[100];
     int totalignores;
+#endif
 
     int display_server_window_on_startup;
 
@@ -1276,8 +1249,6 @@ int load_events_settings();
 void save_settings();
 int save_events_settings();
 void get_events_settings();
-void load_ignore_list();
-void save_ignore_list();
 void save_nick_settings();
 void save_colours_choice();
 void load_colours_choice();
@@ -1317,4 +1288,8 @@ int do_waitselect_code();
 /* closeserverselectwin.c */
 void close_server_select_window();
 
+enum
+{
+    PRIVMSG = 1, CTCP, DCC
+};
 

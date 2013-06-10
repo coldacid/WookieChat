@@ -26,6 +26,7 @@ enum
 {
 CLASSID_WINDOWABOUT = 0,
 CLASSID_WINDOWURLGRABBER,
+CLASSID_WINDOWIGNORELIST,
 CLASSID_LAST
 };
 
@@ -37,6 +38,8 @@ extern struct MUI_CustomClass *appclasses[];
 
 ULONG MUIClass_Open ( void );
 void  MUIClass_Close( void );
+
+ULONG MUIGetVar( Object *obj, ULONG attr );
 
 /*************************************************************************/
 

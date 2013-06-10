@@ -1090,10 +1090,6 @@ MSG_IGNORE_REMOVE
 Eltávolít
 ; Remove
 ;
-MSG_IGNORE_LIST_WINDOW_TITLE
-Mellõzött lista...
-; Ignore List...
-;
 MSG_AUTO_CONNECT_OPTION
 Automatikusan csatlakozik ide a WookieChat indításakor
 ; Automatically connect here when WookieChat is started
@@ -1837,4 +1833,88 @@ Mindet törli
 MSG_MUICLASS_WINDOWURLGRABBER_REMOVEALL_HELP
 /
 ; /
+;
+; MUICLASS_WINDOWIGNORELIST
+;
+MSG_MUICLASS_WINDOWIGNORELIST_TITLE
+Mellõzött lista...
+; Ignore List...
+;
+MSG_MUICLASS_WINDOWIGNORELIST_ADD_GAD
+Hozzáad
+; Add
+;
+MSG_MUICLASS_WINDOWIGNORELIST_ADD_HELP
+/
+; /
+;
+MSG_MUICLASS_WINDOWIGNORELIST_REMOVE_GAD
+Eltávolít
+; Remove
+;
+MSG_MUICLASS_WINDOWIGNORELIST_REMOVE_HELP
+/
+; /
+;
+MSG_MUICLASS_WINDOWIGNORELIST_IGNOREMASK_GAD
+Mellõzõ bejegyzés
+; Ignore Entry:
+;
+MSG_MUICLASS_WINDOWIGNORELIST_IGNOREMASK_HELP
+/
+; /
+;
+MSG_MUICLASS_WINDOWIGNORELIST_PRIVMSG_GAD
+Szöveg
+; Text
+;
+MSG_MUICLASS_WINDOWIGNORELIST_PRIVMSG_HELP
+/
+; /
+;
+MSG_MUICLASS_WINDOWIGNORELIST_CTCP_GAD
+CTCP
+; CTCP
+;
+MSG_MUICLASS_WINDOWIGNORELIST_CTCP_HELP
+/
+; /
+;
+MSG_MUICLASS_WINDOWIGNORELIST_DCC_GAD
+DCC
+; DCC
+;
+MSG_MUICLASS_WINDOWIGNORELIST_DCC_HELP
+/
+; /
+;
+MSG_MUICLASS_WINDOWIGNORELIST_INFO
+A hoszt jelzõk így néznek ki: becenév!azonosító@hosztnév\ni.e«Join» jahc (~jahc00@jahc.Amigaworld.Net)\njahc az becenév, jahc00 az azonosító és jahc.Amigaworld.Net a hoszt név\nBeszúrva egy mellõzõ \
+tagok, ez a személy mellõzhetõ: jahc#?!#?@#?\nEz mindenkit mellõzni fog akinek az álneve jahc, vagy azzal kezdõdik.\nA helyettesítõ karakterek használata igen hatékonnyá teszi ezt a parancsot.\nAkár a \
+következõket is megtehetjük: guru#?editatio?!#?userid@#?.se\nvagy ha egyszerüsíteni akarjuk, akár csak enyivel: jahc#?
+; Hostmarks look like this: nick!userid@hostname\ni.e.«Join» jahc (~jahc00@jahc.Amigaworld.Net)\njahc is the nick, jahc00 is the userid, and jahc.Amigaworld.Net is the hostname\nTo ignore this person, you could insert an ignore entry of: jahc#?\nThis will ignore all people with a nick starting with the letters jahc.\nThe use of wildcards makes this ignore command very powerful.\nThings like this are possible: guru#?editatio?!#?userid@#?.se\nor if you want to keep it simple, you could just use: jahc#?
+;
+MSG_LV_PATTERN
+Pattern
+; Pattern
+;
+MSG_LV_TEXT
+Szöveg
+; Text
+;
+MSG_LV_CTCP
+CTCP
+; CTCP
+;
+MSG_LV_DCC
+DCC
+; DCC
+;
+MSG_LV_ALLOW
+Allow
+; Allow
+;
+MSG_LV_IGNORE
+Ignore
+; Ignore
 ;

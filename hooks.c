@@ -711,67 +711,6 @@ struct Hook DestructLI_TextHook = { { NULL,NULL },(IPTR(*)())DestructLI_TextFunc
 struct Hook DestructLI_TextHook = { { NULL,NULL },(ULONG(*)())DestructLI_TextFunc, NULL,NULL };
 #endif
 
-
-char ignore_work[500];
-char *ignore_token;
-
-  #ifdef __amigaos4__
-static void Display_ignore_TextFunc(REG(a0, struct Hook *hook), REG(a2, char **array),REG(a1, char *a_entry)) {
-#elif __MORPHOS__
-static void Display_ignore_TextFunc(REG(a0, struct Hook *hook), REG(a2, char **array),REG(a1, char *a_entry)) {
-#elif __AROS__
-static void Display_ignore_TextFunc(struct Hook *hook, char **array, char *a_entry) {
-  #elif __GNUC__
-static void Display_ignore_TextFunc(void)
-{
-
-  register char **a2 __asm("a2");                      char **array = a2;
-  register char *a1 __asm("a1");                char *a_entry = a1;
-  register struct Hook *a0 __asm("a0");                struct Hook *hook = a0;
-#endif
-
-
-    if(a_entry)
-    {
-        strcpy(ignore_work,a_entry);
-
-        ignore_token=strtok(ignore_work," ");
-        if(ignore_token) array[0]=ignore_token;
-
-        ignore_token=strtok(NULL," ");
-        if(ignore_token) array[1]=ignore_token;
-        else array[1]=(char*)"";
-
-        ignore_token=strtok(NULL," ");
-        if(ignore_token) array[2]=ignore_token;
-        else array[2]=(char*)"";
-
-        ignore_token=strtok(NULL," ");
-        if(ignore_token) array[3]=ignore_token;
-        else array[3]=(char*)"";
-
-    }
-    else
-    {
-
-		array[0]= (char*) LGS( MSG_IGNORE_MASK );
-		array[1]= (char*) LGS( MSG_IGNORE_TEXT );
-		array[2]= (char*) "CTCP";
-		array[3]= (char*) "DCC";
-
-    }
-
-}
-
-
-#ifdef __MORPHOS__
-struct Hook Display_ignore_TextHook = { { NULL, NULL }, (HOOKFUNC)HookEntry, (HOOKFUNC)Display_ignore_TextFunc, NULL };
-#elif __AROS__
-struct Hook Display_ignore_TextHook = { { NULL,NULL },(IPTR(*)())Display_ignore_TextFunc, NULL,NULL };
-#else
-struct Hook Display_ignore_TextHook = { { NULL,NULL },(ULONG(*)())Display_ignore_TextFunc, NULL,NULL };
-#endif
-
 // channel list display
 
 char channellist_work[1200];

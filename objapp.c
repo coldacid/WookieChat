@@ -25,6 +25,7 @@
 #include "muiclass.h"
 #include "muiclass_windowabout.h"
 #include "muiclass_windowurlgrabber.h"
+#include "muiclass_windowignorelist.h"
 
 
 APTR MN1_Hide, MN1_SelectServer, MN1_NewTAB, MN1_NewGTAB,MN1_CloseTAB, MN_ClearAllHistory,MN_ClearHistory,  MN_SaveHistory, MN_MainSettings;
@@ -83,7 +84,7 @@ static APTR LA_CSW_listviewtabs_background; //22
 static APTR LA_CSW_listviewtabs_normaltext; //33
 
 static APTR DISPLAY_SERVER_WIN_GRP;
-static APTR IGNORE_ROOT, IGNORE_GRP1, GR_autoconnect;
+static APTR GR_autoconnect;
 static APTR GROUP_ROOT_2_ALIASES, GR_alias1, GR_alias2;
 static APTR GROUP_ROOT_2_SERVER, GROUP_ROOT_2, GROUP_ROOT_2_SECOND;
 static APTR GROUP_ROOT_2_DCC,GROUP_ROOT_2_ACTIONS, obj_auto_open_query_tabs_when_msged_label;
@@ -103,7 +104,6 @@ static APTR GR_send_dcc, GR_dcc, GR_dcc_file_exists;
 static APTR GROUP_ROOT_8;
 static APTR GROUP_ROOT_10, GR_grp_19, LA_dcc_send_file, GR_grp_30, LA_dcc_send_nick;
 static APTR QUIT_ROOT, quit_label;
-static APTR ADDIGNORE_ROOT, ADDIGNORE_GRP1;
 
 
 static char *CYA_GroupTitleColor[20];
@@ -228,112 +228,6 @@ struct ObjApp *CreateApp(void)
        MUIA_Weight,0,
        MUIA_Cycle_Entries, local_charsets,
     End;
-
-    MBObj->STR_addignore = (Object*)StringObject,
-        MUIA_Weight, 80,
-        MUIA_Frame, MUIV_Frame_String,
-        MUIA_String_MaxLen, 600,
-        End;
-
-    MBObj->BT_addignore = (Object*)TextObject,
-        ButtonFrame,
-		MUIA_Text_Contents,"blah", //LGS( MSG_blah ),
-        MUIA_Text_PreParse, "\033c",
-        MUIA_InputMode, MUIV_InputMode_RelVerify,
-        //MUIA_InputMode, MUIV_InputMode_Toggle,
-    End;
-
-	MBObj->LA_addignore_privmsg = (Object*)Label2( LGS( MSG_IGNORE_TEXT));
-    MBObj->CH_addignore_privmsg = (Object*)CheckMark(FALSE);
-
-    MBObj->LA_addignore_ctcp = (Object*)Label2("CTCP");
-    MBObj->CH_addignore_ctcp = (Object*)CheckMark(FALSE);
-
-
-    MBObj->LA_addignore_dcc = (Object*)Label2("DCC");
-    MBObj->CH_addignore_dcc = (Object*)CheckMark(FALSE);
-
-    MBObj->TX_addignore =(Object*)TextObject,
-        MUIA_Weight, 100,
-        MUIA_Text_PreParse, NULL,
-		MUIA_Text_Contents, LGS( MSG_IGNORE_LONG_DETAILED_HELP ),
-        MUIA_InnerLeft, 0,
-        MUIA_InnerRight, 0,
-    End;
-	MBObj->LA_ignore_hostmask=(Object*) Label( LGS( MSG_IGNORE_ENTRY ));
-	MBObj->LA_ignore_actions=(Object*) Label( LGS( MSG_IGNORE_EVENTS ));
-
-
-    ADDIGNORE_GRP1 = (Object*)GroupObject,
-        MUIA_Group_Horiz, TRUE,
-        Child, MBObj->LA_ignore_hostmask,
-        Child, MBObj->STR_addignore,
-        Child, MBObj->LA_addignore_privmsg,
-        Child, MBObj->CH_addignore_privmsg,
-        Child, MBObj->LA_addignore_ctcp,
-        Child, MBObj->CH_addignore_ctcp,
-        Child, MBObj->LA_addignore_dcc,
-        Child, MBObj->CH_addignore_dcc,
-    End;
-
-    ADDIGNORE_ROOT = (Object*)GroupObject,
-        MUIA_Group_Horiz, FALSE,
-        Child, ADDIGNORE_GRP1,
-        Child, MBObj->BT_addignore,
-        Child, MBObj->TX_addignore,
-    End;
-
-	MBObj->WI_addignore = (Object*) WindowObject,
-        MUIA_Window_Title, "jahc was here", //this window serves two purposes, "add ignore", and "edit ignore",
-        MUIA_Window_CloseGadget, TRUE,
-        MUIA_Window_ID, MAKE_ID('7', '2', 'I', 'N'),
-        MUIA_Background, MUII_SHINE,
-        WindowContents, ADDIGNORE_ROOT,
-    End;
-        //MUIA_Background, MUII_BACKGROUND,
-
-	MBObj->BT_ignore_add=(Object*)SimpleButton( LGS( MSG_IGNORE_ADD));
-	MBObj->BT_ignore_edit=(Object*)SimpleButton( LGS( MSG_IGNORE_EDIT ));
-	MBObj->BT_ignore_remove=(Object*)SimpleButton( LGS( MSG_IGNORE_REMOVE ));
-
-    MBObj->LV_ignore = (Object*) NListObject,
-        MUIA_Frame, MUIV_Frame_InputList,
-        MUIA_NList_ConstructHook, MUIV_NList_ConstructHook_String,
-        MUIA_NList_DestructHook,  MUIV_NList_DestructHook_String,
-        MUIA_NList_DisplayHook, &Display_ignore_TextHook,
-        MUIA_NList_AutoCopyToClip, TRUE,
-        MUIA_NList_Input,TRUE,
-        MUIA_NList_Title, TRUE,
-        MUIA_NList_Format,"COL=0 WEIGHT=80 BAR, COL=1 WEIGHT=-1 BAR, COL=2 WEIGHT=-1 BAR, COL=3 WEIGHT=-1 BAR",
-        MUIA_NList_MultiSelect,MUIV_NList_MultiSelect_Shifted,
-        MUIA_NList_TypeSelect,MUIV_NList_TypeSelect_Line,
-    End;
-
-    MBObj->LV_ignore = (Object*)NListviewObject,
-        MUIA_Weight, 100,
-        MUIA_NListview_NList, MBObj->LV_ignore,
-    End;
-    IGNORE_GRP1 = (Object*)GroupObject,
-        MUIA_Group_Horiz, TRUE,
-        Child, MBObj->BT_ignore_add,
-        Child, MBObj->BT_ignore_edit,
-        Child, MBObj->BT_ignore_remove,
-    End;
-
-    IGNORE_ROOT = (Object*)GroupObject,
-        MUIA_Group_Horiz, FALSE,
-        Child, MBObj->LV_ignore,
-        Child, IGNORE_GRP1,
-    End;
-    MBObj->WI_ignore = (Object*)WindowObject,
-		MUIA_Window_Title, LGS( MSG_IGNORE_LIST_WINDOW_TITLE ),
-        MUIA_Window_CloseGadget, TRUE,
-        MUIA_Window_ID, MAKE_ID('7', '1', 'I', 'N'),
-        MUIA_Background, MUII_SHINE,
-        WindowContents, IGNORE_ROOT,
-    End;
-    //end of ignore stuff
-
     // quit yes/no window
 
 	quit_label = (Object*)Label( LGS( MSG_QUIT_REQUESTER ));
@@ -2736,8 +2630,7 @@ struct ObjApp *CreateApp(void)
         SubWindow, MBObj->WI_quit,
 		SubWindow, MBObj->WI_urlgrabber = WindowURLGrabberObject, End,
         SubWindow, MBObj->WI_ban,
-        SubWindow, MBObj->WI_ignore,
-        SubWindow, MBObj->WI_addignore,
+		SubWindow, MBObj->WI_ignore = WindowIgnoreListObject, End,
         //SubWindow, MBObj->WI_edit_alias,
         SubWindow, MBObj->WI_graphical_smileys_preview,
         SubWindow, MBObj->WI_graphical_smileys_choose,
@@ -2747,6 +2640,7 @@ struct ObjApp *CreateApp(void)
 	/* notifies in here */
 	DoMethod((Object*) MN_about     , MUIM_Notify, MUIA_Menuitem_Trigger, MUIV_EveryTime, (Object*) MBObj->WI_about     , 3, MUIM_Set, MUIA_Window_Open, TRUE );
 	DoMethod((Object*) MN_urlgrabber, MUIM_Notify, MUIA_Menuitem_Trigger, MUIV_EveryTime, (Object*) MBObj->WI_urlgrabber, 3, MUIM_Set, MUIA_Window_Open, TRUE );
+	DoMethod((Object*) MN_ignorelist, MUIM_Notify, MUIA_Menuitem_Trigger, MUIV_EveryTime, (Object*) MBObj->WI_ignore, 3, MUIM_Set, MUIA_Window_Open, TRUE );
 
     MBObj->smiley_choose_icon=NULL;
     if (!MBObj->App)
