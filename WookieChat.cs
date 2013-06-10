@@ -5780,4 +5780,211 @@ Ignore
 Ignore
 Ignore
 ;
+;
+; MUICLASS_WINDOWDCCINCOMING
+;
+MSG_MUICLASS_WINDOWDCCINCOMING_TITLE
+Incoming File Transfers...
+Ankommender Dateitransfer ...
+Recibir ficheros...
+Transferts des fichiers entrants...
+Μεταφορά εισερχόμενου αρχείου...
+Trasmissione dati in ricevimento...
+Beιrkezυ fαjl αtvitel...
+Innkommende filoverfψringer...
+Pliki przychodz±ce...
+Inkommande fil ...
+;
+MSG_MUICLASS_WINDOWDCCINCOMING_DOWNLOADPATH_GAD
+Download Path:
+Pfad zum Laden der Dateien:
+Descargas:
+Chemin de tιlιchargement :
+Download Path:
+Percorso per il download
+Letφltιs helye:
+Nedlastingssti
+¦cieΏka pobierania
+Sφkvδg fφr nedladdning
+;
+MSG_MUICLASS_WINDOWDCCINCOMING_DOWNLOADPATH_HELP
+Choose a path to save your downloads to.
+Wδhle einen Pfad um Deine Downloads zu speichern.
+Senda para las descargas.
+Choisissez un chemin pour enregistrer vos tιlιchargements.
+Επιλέξτε τον κατάλογο όπου θα αποθηκεύονται όσα κατεβάζετε.
+Scegli il percorso dove salvare i file ricevuti.
+Vαlaszd ki a letφltιsek helyιt.
+Velg stinavn for ε lagre dine filer til.
+Wybierz ¶cieΏkκ dostκpu zapisywania pobieranych plikσw.
+Vδlj sφkvδg att spara fil pε.
+;
+MSG_MUICLASS_WINDOWDCCINCOMING_ACCEPT_GAD
+Accept
+Akzeptieren
+Aceptar
+Accepter les modifications
+Αποδοχή
+Accetta
+Elfogad
+Godta
+Akceptuj
+Acceptera
+;
+MSG_MUICLASS_WINDOWDCCINCOMING_ACCEPT_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
+MSG_MUICLASS_WINDOWDCCINCOMING_REJECT_GAD
+Reject
+Ablehnen
+Cancelar
+Annuler
+Ακύρωση
+Annulla
+Mιgsem
+Avbryt
+Poniechaj
+Avbryt
+;
+MSG_MUICLASS_WINDOWDCCINCOMING_REJECT_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
+MSG_MUICLASS_WINDOWDCCINCOMING_REMOVE_GAD
+Remove
+Entfernen
+Eliminar
+Supprimer
+Αφαίρεση
+Rimuovi
+Eltαvolνtαs
+Fjern
+Usuρ
+Ta bort
+;
+MSG_MUICLASS_WINDOWDCCINCOMING_REMOVE_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
+MSG_LV_STATUS
+Status
+Status
+Estado
+Statut
+Κατάσταση
+Stato
+Αllapot
+Status
+Status
+Status
+;
+MSG_LV_SENDER
+Sender
+Sender
+Remitente
+Expιditeur
+Αποστολέας
+Mittente
+Kόldi
+Avsender
+Nadawca
+Avsδndare
+;
+MSG_LV_RECIEVER
+Reciever
+Empfδnger
+Destinatario
+Destinataire
+Αποδοχέας
+Destinatario
+Fogadja
+Mottaker
+Odbiorca
+Mottagare
+;
+MSG_LV_FILENAME
+Filename
+Dateiname
+Fichero
+Nom de fichier
+Όνομα αρχείου
+Nome file
+Fαjlnιv
+Filnavn
+Nazwa pliku
+Filnamn
+;
+MSG_LV_RECIEVED
+Recieved
+Empfangen
+Recibido
+Reηu
+Παρελήφθησαν
+Ricevuto
+Fogadott
+Mottatt
+Odebrano
+Mottaget
+;
+MSG_LV_SENT
+Amount sent
+Bereits όbertragen
+Enviado
+Envoyι
+Απεσταλμένο μέγεθος
+QuantitΓ Β trasmessa
+Elkόldφtt mennyisιg
+Sendt
+Wys³ano
+Skickat
+;
+MSG_LV_SIZE
+Size
+Grφίe
+Tamaρo
+Taille
+Μέγεθος
+Dimensione
+Mιret
+Filstψrrelse
+Wielko¶ζ
+Storlek
+;
+MSG_LV_TIMEREMAINING
+Time Left
+Vergangene Zeit
+Restan
+Temps restant
+Χρόνος που απομένει
+Tempo rimanente
+Hαtralιvυ idυ
+Gjenvζrende tid
+Pozosta³o czasu
+Tid kvar
+;
 

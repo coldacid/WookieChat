@@ -1921,3 +1921,74 @@ MSG_LV_IGNORE
 Ignore
 ; Ignore
 ;
+;
+; MUICLASS_WINDOWDCCINCOMING
+;
+MSG_MUICLASS_WINDOWDCCINCOMING_TITLE
+Μεταφορά εισερχόμενου αρχείου...
+; Incoming File Transfers...
+;
+MSG_MUICLASS_WINDOWDCCINCOMING_DOWNLOADPATH_GAD
+Download Path:
+; Download Path:
+;
+MSG_MUICLASS_WINDOWDCCINCOMING_DOWNLOADPATH_HELP
+Επιλέξτε τον κατάλογο όπου θα αποθηκεύονται όσα κατεβάζετε.
+; Choose a path to save your downloads to.
+;
+MSG_MUICLASS_WINDOWDCCINCOMING_ACCEPT_GAD
+Αποδοχή
+; Accept
+;
+MSG_MUICLASS_WINDOWDCCINCOMING_ACCEPT_HELP
+/
+; /
+;
+MSG_MUICLASS_WINDOWDCCINCOMING_REJECT_GAD
+Ακύρωση
+; Reject
+;
+MSG_MUICLASS_WINDOWDCCINCOMING_REJECT_HELP
+/
+; /
+;
+MSG_MUICLASS_WINDOWDCCINCOMING_REMOVE_GAD
+Αφαίρεση
+; Remove
+;
+MSG_MUICLASS_WINDOWDCCINCOMING_REMOVE_HELP
+/
+; /
+;
+MSG_LV_STATUS
+Κατάσταση
+; Status
+;
+MSG_LV_SENDER
+Αποστολέας
+; Sender
+;
+MSG_LV_RECIEVER
+Αποδοχέας
+; Reciever
+;
+MSG_LV_FILENAME
+Όνομα αρχείου
+; Filename
+;
+MSG_LV_RECIEVED
+Παρελήφθησαν
+; Recieved
+;
+MSG_LV_SENT
+Απεσταλμένο μέγεθος
+; Amount sent
+;
+MSG_LV_SIZE
+Μέγεθος
+; Size
+;
+MSG_LV_TIMEREMAINING
+Χρόνος που απομένει
+; Time Left
+;

@@ -1919,3 +1919,74 @@ MSG_LV_IGNORE
 Ignore
 ; Ignore
 ;
+;
+; MUICLASS_WINDOWDCCINCOMING
+;
+MSG_MUICLASS_WINDOWDCCINCOMING_TITLE
+Innkommende filoverføringer...
+; Incoming File Transfers...
+;
+MSG_MUICLASS_WINDOWDCCINCOMING_DOWNLOADPATH_GAD
+Nedlastingssti
+; Download Path:
+;
+MSG_MUICLASS_WINDOWDCCINCOMING_DOWNLOADPATH_HELP
+Velg stinavn for å lagre dine filer til.
+; Choose a path to save your downloads to.
+;
+MSG_MUICLASS_WINDOWDCCINCOMING_ACCEPT_GAD
+Godta
+; Accept
+;
+MSG_MUICLASS_WINDOWDCCINCOMING_ACCEPT_HELP
+/
+; /
+;
+MSG_MUICLASS_WINDOWDCCINCOMING_REJECT_GAD
+Avbryt
+; Reject
+;
+MSG_MUICLASS_WINDOWDCCINCOMING_REJECT_HELP
+/
+; /
+;
+MSG_MUICLASS_WINDOWDCCINCOMING_REMOVE_GAD
+Fjern
+; Remove
+;
+MSG_MUICLASS_WINDOWDCCINCOMING_REMOVE_HELP
+/
+; /
+;
+MSG_LV_STATUS
+Status
+; Status
+;
+MSG_LV_SENDER
+Avsender
+; Sender
+;
+MSG_LV_RECIEVER
+Mottaker
+; Reciever
+;
+MSG_LV_FILENAME
+Filnavn
+; Filename
+;
+MSG_LV_RECIEVED
+Mottatt
+; Recieved
+;
+MSG_LV_SENT
+Sendt
+; Amount sent
+;
+MSG_LV_SIZE
+Filstørrelse
+; Size
+;
+MSG_LV_TIMEREMAINING
+Gjenværende tid
+; Time Left
+;

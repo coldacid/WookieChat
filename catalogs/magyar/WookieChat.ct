@@ -1918,3 +1918,74 @@ MSG_LV_IGNORE
 Ignore
 ; Ignore
 ;
+;
+; MUICLASS_WINDOWDCCINCOMING
+;
+MSG_MUICLASS_WINDOWDCCINCOMING_TITLE
+Beérkezõ fájl átvitel...
+; Incoming File Transfers...
+;
+MSG_MUICLASS_WINDOWDCCINCOMING_DOWNLOADPATH_GAD
+Letöltés helye:
+; Download Path:
+;
+MSG_MUICLASS_WINDOWDCCINCOMING_DOWNLOADPATH_HELP
+Válaszd ki a letöltések helyét.
+; Choose a path to save your downloads to.
+;
+MSG_MUICLASS_WINDOWDCCINCOMING_ACCEPT_GAD
+Elfogad
+; Accept
+;
+MSG_MUICLASS_WINDOWDCCINCOMING_ACCEPT_HELP
+/
+; /
+;
+MSG_MUICLASS_WINDOWDCCINCOMING_REJECT_GAD
+Mégsem
+; Reject
+;
+MSG_MUICLASS_WINDOWDCCINCOMING_REJECT_HELP
+/
+; /
+;
+MSG_MUICLASS_WINDOWDCCINCOMING_REMOVE_GAD
+Eltávolítás
+; Remove
+;
+MSG_MUICLASS_WINDOWDCCINCOMING_REMOVE_HELP
+/
+; /
+;
+MSG_LV_STATUS
+Állapot
+; Status
+;
+MSG_LV_SENDER
+Küldi
+; Sender
+;
+MSG_LV_RECIEVER
+Fogadja
+; Reciever
+;
+MSG_LV_FILENAME
+Fájlnév
+; Filename
+;
+MSG_LV_RECIEVED
+Fogadott
+; Recieved
+;
+MSG_LV_SENT
+Elküldött mennyiség
+; Amount sent
+;
+MSG_LV_SIZE
+Méret
+; Size
+;
+MSG_LV_TIMEREMAINING
+Hátralévõ idõ
+; Time Left
+;

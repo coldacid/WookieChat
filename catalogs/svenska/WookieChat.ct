@@ -1918,3 +1918,74 @@ MSG_LV_IGNORE
 Ignore
 ; Ignore
 ;
+;
+; MUICLASS_WINDOWDCCINCOMING
+;
+MSG_MUICLASS_WINDOWDCCINCOMING_TITLE
+Inkommande fil ...
+; Incoming File Transfers...
+;
+MSG_MUICLASS_WINDOWDCCINCOMING_DOWNLOADPATH_GAD
+Sökväg för nedladdning
+; Download Path:
+;
+MSG_MUICLASS_WINDOWDCCINCOMING_DOWNLOADPATH_HELP
+Välj sökväg att spara fil på.
+; Choose a path to save your downloads to.
+;
+MSG_MUICLASS_WINDOWDCCINCOMING_ACCEPT_GAD
+Acceptera
+; Accept
+;
+MSG_MUICLASS_WINDOWDCCINCOMING_ACCEPT_HELP
+/
+; /
+;
+MSG_MUICLASS_WINDOWDCCINCOMING_REJECT_GAD
+Avbryt
+; Reject
+;
+MSG_MUICLASS_WINDOWDCCINCOMING_REJECT_HELP
+/
+; /
+;
+MSG_MUICLASS_WINDOWDCCINCOMING_REMOVE_GAD
+Ta bort
+; Remove
+;
+MSG_MUICLASS_WINDOWDCCINCOMING_REMOVE_HELP
+/
+; /
+;
+MSG_LV_STATUS
+Status
+; Status
+;
+MSG_LV_SENDER
+Avsändare
+; Sender
+;
+MSG_LV_RECIEVER
+Mottagare
+; Reciever
+;
+MSG_LV_FILENAME
+Filnamn
+; Filename
+;
+MSG_LV_RECIEVED
+Mottaget
+; Recieved
+;
+MSG_LV_SENT
+Skickat
+; Amount sent
+;
+MSG_LV_SIZE
+Storlek
+; Size
+;
+MSG_LV_TIMEREMAINING
+Tid kvar
+; Time Left
+;

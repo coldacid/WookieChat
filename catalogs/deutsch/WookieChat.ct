@@ -1919,3 +1919,74 @@ MSG_LV_IGNORE
 Verhindern
 ; Ignore
 ;
+;
+; MUICLASS_WINDOWDCCINCOMING
+;
+MSG_MUICLASS_WINDOWDCCINCOMING_TITLE
+Ankommender Dateitransfer ...
+; Incoming File Transfers...
+;
+MSG_MUICLASS_WINDOWDCCINCOMING_DOWNLOADPATH_GAD
+Pfad zum Laden der Dateien:
+; Download Path:
+;
+MSG_MUICLASS_WINDOWDCCINCOMING_DOWNLOADPATH_HELP
+Wähle einen Pfad um Deine Downloads zu speichern.
+; Choose a path to save your downloads to.
+;
+MSG_MUICLASS_WINDOWDCCINCOMING_ACCEPT_GAD
+Akzeptieren
+; Accept
+;
+MSG_MUICLASS_WINDOWDCCINCOMING_ACCEPT_HELP
+/
+; /
+;
+MSG_MUICLASS_WINDOWDCCINCOMING_REJECT_GAD
+Ablehnen
+; Reject
+;
+MSG_MUICLASS_WINDOWDCCINCOMING_REJECT_HELP
+/
+; /
+;
+MSG_MUICLASS_WINDOWDCCINCOMING_REMOVE_GAD
+Entfernen
+; Remove
+;
+MSG_MUICLASS_WINDOWDCCINCOMING_REMOVE_HELP
+/
+; /
+;
+MSG_LV_STATUS
+Status
+; Status
+;
+MSG_LV_SENDER
+Sender
+; Sender
+;
+MSG_LV_RECIEVER
+Empfänger
+; Reciever
+;
+MSG_LV_FILENAME
+Dateiname
+; Filename
+;
+MSG_LV_RECIEVED
+Empfangen
+; Recieved
+;
+MSG_LV_SENT
+Bereits übertragen
+; Amount sent
+;
+MSG_LV_SIZE
+Größe
+; Size
+;
+MSG_LV_TIMEREMAINING
+Vergangene Zeit
+; Time Left
+;
