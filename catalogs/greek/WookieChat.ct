@@ -94,18 +94,6 @@ MSG_ALIASES
 Συνώνυμα
 ; Aliases
 ;
-MSG_REMOVE_URL
-Αφαίρεση URL(s)
-; Remove URL(s)
-;
-MSG_CLEAR_ALL_URL
-Εκκαθάριση όλων
-; Clear All
-;
-MSG_URL_GRABBER_WINDOW_TITLE
-URL Grabber - Με διπλό κλικ στο URL για άνοιγμα
-; URL Grabber - Double click URL to Open
-;
 MSG_ABOUT
 Πέρι του...
 ; About...
@@ -1826,6 +1814,30 @@ About
 ; About
 ;
 MSG_MUICLASS_WINDOWABOUT_AREXXPORT_GAD
-Porta AREXX:
-; AREXX port:
+Porta AREXX:\x20
+; AREXX port:\x20
+;
+;
+;
+; MUICLASS_WINDOWURLGRABBER
+;
+MSG_MUICLASS_WINDOWURLGRABBER_TITLE
+URL Grabber - Με διπλό κλικ στο URL για άνοιγμα
+; URL Grabber - Double click URL to Open
+;
+MSG_MUICLASS_WINDOWURLGRABBER_REMOVE_GAD
+Αφαίρεση URL(s)
+; Remove URL(s)
+;
+MSG_MUICLASS_WINDOWURLGRABBER_REMOVE_HELP
+/
+; /
+;
+MSG_MUICLASS_WINDOWURLGRABBER_REMOVEALL_GAD
+Εκκαθάριση όλων
+; Clear All
+;
+MSG_MUICLASS_WINDOWURLGRABBER_REMOVEALL_HELP
+/
+; /
 ;

@@ -21,6 +21,7 @@
 #include "objapp.h"
 #include "audio.h"
 #include "locale.h"
+#include "muiclass_windowurlgrabber.h"
 
 struct list_entry new_entry2;
 
@@ -411,81 +412,9 @@ char * doubleclick_url_action(char *buffer1, int clicked_char_number, int column
 
 void search_for_url_then_add(char *buffer1)
 {
-
-    if (!my_settings.urlgrabber)
-        return; //is the url grabber switched off?
-
-    unsigned int aa = 0, bb = 0, aaa = 0;
-
-    while (bb < strlen(buffer1))
-    {
-        ULONG entries;
-        for (aa = 0; bb < strlen(buffer1); aa++, bb++)
-        {
-            urlgrabber_str[aa] = buffer1[bb];
-
-            if (urlgrabber_str[aa] == ' ' || urlgrabber_str[aa] == ')' || urlgrabber_str[aa] == '\'')
-            {
-                urlgrabber_str[aa] = '\0';
-                bb++;
-                break;
-            }
-        }
-
-        urlgrabber_str[aa] = '\0';
-
-        getmacro((Object*) WookieChat->LV_urlgrabber, MUIA_NList_Entries, &entries);
-
-        if (strncmp(urlgrabber_str, "http://", 6) == 0 || strncmp(urlgrabber_str, "https://", 6) == 0
-                || strncmp(urlgrabber_str, "www", 2) == 0) // || strchr(urlgrabber_str,'@'))
-        {
-
-            for (aaa = 0; aaa < entries; aaa++)
-            {
-                DoMethod((Object*) WookieChat->LV_urlgrabber, MUIM_NList_GetEntry, aaa, &string1);
-
-                if (string1)
-                {
-                    if (!strcmp(string1, urlgrabber_str))
-                        break;
-                }
-
-            }
-
-            if (aaa == entries)
-            {
-                DoMethod((Object*) WookieChat->LV_urlgrabber, MUIM_NList_InsertSingle, urlgrabber_str,
-                        MUIV_NList_Insert_Top);
-
-                //now save all url's to a text file
-                sprintf(file_name, "progdir:urls.txt");
-                urlgrabber_file = Open((_s_cs)file_name, MODE_NEWFILE);
-                if (urlgrabber_file)
-                {
-                    getmacro((Object*) WookieChat->LV_urlgrabber, MUIA_NList_Entries, &entries);
-
-                    for (aaa = 0; aaa < entries; aaa++)
-                    {
-                        DoMethod((Object*) WookieChat->LV_urlgrabber, MUIM_NList_GetEntry, aaa, &string1);
-
-                        if (string1)
-                        {
-                            FPuts(urlgrabber_file, (l_in) string1);
-                            FPutC(urlgrabber_file, '\n');
-
-                            if (!strcmp(string1, urlgrabber_str))
-                                break;
-                        }
-                    }
-                    Close(urlgrabber_file);
-                }
-
-            }
-
-        }
-
-    }
-
+	if( my_settings.urlgrabber ) {
+		DoMethod( WookieChat->WI_urlgrabber, MM_WINDOWURLGRABBER_EXTRACTURL, buffer1 );
+	}
 }
 
 int add_text_to_current_list(char *buffer1, LONG colour, int activitylevel)

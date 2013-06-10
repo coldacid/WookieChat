@@ -419,9 +419,6 @@ struct ObjApp
 
     //url grabber window
     APTR    WI_urlgrabber;
-    APTR    LV_urlgrabber;
-    APTR    BT_urlgrabber_clear;
-    APTR    BT_urlgrabber_clearall;
 
     //ignore list window
     APTR    WI_ignore;
@@ -1003,8 +1000,8 @@ extern fd_set read_fds;
 extern fd_set write_fds;
 extern int queued_messages_total;
 extern struct codeset *cs;
-extern BPTR urlgrabber_file;
-extern char urlgrabber_str[2000];
+extern BPTR urlgrabber_file;        /* this one is used all over the place, but no longer for url grabber */
+extern char urlgrabber_str[2000];   /* this one is used all over the place, but no longer for url grabber */
 extern struct codeset *charsets[45];
 extern char listview_format[100];
 extern struct MsgPort *send_text_replyport;

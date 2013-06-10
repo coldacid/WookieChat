@@ -68,15 +68,6 @@ Sounds
 MSG_ALIASES (//)
 Aliases
 ;
-MSG_REMOVE_URL (//)
-Remove URL(s)
-;
-MSG_CLEAR_ALL_URL (//)
-Clear All
-;
-MSG_URL_GRABBER_WINDOW_TITLE (//)
-URL Grabber - Double click URL to Open
-;
 MSG_ABOUT (//)
 About...
 ;
@@ -171,7 +162,7 @@ Open private query tab
 MSG_DOUBLECLICK_GROUP_FRAME_TITLE (//)
 Nicklist doubleclick actions
 ;
-MSG_CUSTOM_TIMESTAMPS (58//300)
+MSG_CUSTOM_TIMESTAMPS (55//300)
 Customise your timestamps! use these codes: %h for the hour, %m for the minute, and %s for the second. This is useful to see what time an event happened (such as a user joining, or speaking).
 ;
 MSG_TIMESTAMP_FORMAT (//)
@@ -1371,5 +1362,24 @@ MSG_MUICLASS_WINDOWABOUT_TITLE (//)
 About
 ;
 MSG_MUICLASS_WINDOWABOUT_AREXXPORT_GAD (//)
-AREXX port:
+AREXX port:\x20
+;
+;
+;
+; MUICLASS_WINDOWURLGRABBER
+;
+MSG_MUICLASS_WINDOWURLGRABBER_TITLE (//)
+URL Grabber - Double click URL to Open
+;
+MSG_MUICLASS_WINDOWURLGRABBER_REMOVE_GAD (//)
+Remove URL(s)
+;
+MSG_MUICLASS_WINDOWURLGRABBER_REMOVE_HELP (//)
+/
+;
+MSG_MUICLASS_WINDOWURLGRABBER_REMOVEALL_GAD (//)
+Clear All
+;
+MSG_MUICLASS_WINDOWURLGRABBER_REMOVEALL_HELP (//)
+/
 ;

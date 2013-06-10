@@ -857,26 +857,6 @@ int main(int argc, char *argv[])
 
     //setmacro((Object*)WookieChat->TX_nickname,MUIA_Text_Contents,status_conductor->nick);
 
-//
-
-// Reload all the old URL's in the URL Grabber window
-    //Reload all the old URL's into the URL Grabber
-
-    sprintf(file_name, "progdir:urls.txt");
-    urlgrabber_file = Open((_s_cs)file_name, MODE_OLDFILE);
-    if (urlgrabber_file)
-    {
-        while (FGets(urlgrabber_file, (STRPTR) urlgrabber_str, 2000))
-        {
-            urlgrabber_str[strlen(urlgrabber_str) - 1] = '\0';
-            DoMethod((Object*) WookieChat->LV_urlgrabber, MUIM_NList_InsertSingle, urlgrabber_str,
-                    MUIV_NList_Insert_Bottom);
-        }
-
-        Close(urlgrabber_file);
-    }
-//
-
 #ifdef __amigaos4__
     struct MUI_EventHandlerNode ehnode;
     ehnode.ehn_Object = (Object*)WookieChat->WI_main;
@@ -948,9 +928,6 @@ int main(int argc, char *argv[])
             2, MUIM_Application_ReturnID, 49);
     DoMethod((Object *) WookieChat->NLT_Servers, MUIM_Notify, MUIA_NListtree_Active, MUIV_EveryTime,
             (Object*) WookieChat->App, 2, MUIM_Application_ReturnID, 53);
-
-    DoMethod((Object*) WookieChat->LV_urlgrabber, MUIM_Notify, MUIA_NList_DoubleClick, TRUE, (Object*) WookieChat->App,
-            2, MUIM_Application_ReturnID, 98);
 
     DoMethod((Object*) WookieChat->BT_quit_yes, MUIM_Notify, MUIA_Pressed, FALSE, (Object*) WookieChat->App, 2,
             MUIM_Application_ReturnID, 90);
@@ -1260,24 +1237,6 @@ int main(int argc, char *argv[])
             MUIM_Application_ReturnID, 87);
     DoMethod((Object*) WookieChat->BT_ignore_remove, MUIM_Notify, MUIA_Selected, FALSE, (Object*) WookieChat->App, 2,
             MUIM_Application_ReturnID, 88);
-
-    //url grabber
-    DoMethod((Object*) MN_urlgrabber, MUIM_Notify, MUIA_Menuitem_Trigger, MUIV_EveryTime,
-            (Object*) WookieChat->WI_urlgrabber, 3, MUIM_Set, MUIA_Window_Open, TRUE);
-    DoMethod((Object*) WookieChat->WI_urlgrabber, MUIM_Notify, MUIA_Window_CloseRequest, TRUE,
-            (Object*) WookieChat->WI_urlgrabber, 3, MUIM_Set, MUIA_Window_Open, FALSE);
-    DoMethod((Object*) WookieChat->BT_urlgrabber_clear, MUIM_Notify, MUIA_Pressed, FALSE,
-            (Object*) WookieChat->LV_urlgrabber, 2, MUIM_NList_Remove, MUIV_NList_Remove_Selected);
-    DoMethod((Object*) WookieChat->BT_urlgrabber_clearall, MUIM_Notify, MUIA_Pressed, FALSE,
-            (Object*) WookieChat->LV_urlgrabber, 1, MUIM_NList_Clear);
-
-#ifdef __AROS__
-    DoMethod((Object*) MN_urlgrabber, MUIM_Notify, MUIA_Menuitem_Trigger, MUIV_EveryTime,
-            (Object*) WookieChat->WI_urlgrabber, 3, MUIM_Set, MUIA_Window_DefaultObject, WookieChat->LV_urlgrabber);
-    DoMethod((Object*) MN_urlgrabber, MUIM_Notify, MUIA_Menuitem_Trigger, MUIV_EveryTime,
-            (Object*) WookieChat->WI_urlgrabber, 3, MUIM_Set, MUIA_Window_ActiveObject, WookieChat->LV_urlgrabber);
-#endif
-
 //
 
 // Setup DCC CHAT SEND AND RECV linked lists and structures
@@ -3669,47 +3628,6 @@ int main(int argc, char *argv[])
                     setmacro((Object*)status_current->current_query->LV_channel, MUIA_NList_Format, listview_format);
                     my_settings.use_column_display = 1;
                     setmacro((Object*)MN_MultiColumnDisplay, MUIA_Menuitem_Checked, TRUE);
-                }
-//
-            }
-            else if (result == 98) //double click in URL Grabber window
-            {
-// double click in URL Grabber window
-                DoMethod((Object*) WookieChat->LV_urlgrabber, MUIM_NList_GetEntry, MUIV_NList_GetEntry_Active,
-                        &string1);
-
-                if (string1)
-                {
-
-                    if (DEBUG)
-                        printf("URL clicked:%s\n", string1);
-
-                    if (!strcmp(my_settings.browser, ""))
-                    {
-
-                        sprintf(
-                                buffer3,
-                                "%s%s%s%s %s",
-                                timestamp,
-								LGS( MSG_OPENING_BRACKET ),
-								LGS( MSG_ERROR ),
-								LGS( MSG_CLOSING_BRACKET ),
-								LGS( MSG_NO_BROWSER_SELECTED ) );
-
-                        add_text_to_current_list(buffer3, 9, ACTIVITY_CHAT);
-
-                    }
-                    else
-                    {
-
-                        sprintf(file_name, "run >nil: %s \"%s\"", my_settings.browser, string1);
-
-#ifdef __amigaos4__
-                        SystemTags((_s_cs)file_name,TAG_DONE);
-#else
-                        Execute((_s_cs)file_name, 0, 0);
-#endif
-                    }
                 }
 //
             }

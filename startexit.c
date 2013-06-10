@@ -25,6 +25,7 @@
 #include "locale.h"
 #include "version.h"
 #include "muiclass.h"
+#include "muiclass_windowurlgrabber.h"
 
 #ifdef __AROS__
 struct Library * AslBase = NULL;
@@ -110,8 +111,6 @@ struct NewMenu MenuData1[] =
 struct DiskObject *dobj; //for the iconified icon
 
 /* Locals */
-static char *string1;
-static char file_name[800];
 
 void cleanexit(char*);
 
@@ -374,31 +373,7 @@ void cleanexit(char *str)
     if (WookieChat)
     {
 
-        //Now Save all URL's to a text file
-        sprintf(file_name, "progdir:urls.txt");
-        urlgrabber_file = Open((_s_cs)file_name, MODE_NEWFILE);
-        if (urlgrabber_file)
-        {
-            ULONG entries;
-            getmacro((Object*) WookieChat->LV_urlgrabber, MUIA_NList_Entries, &entries);
-            //printf("3\n");
-
-            for (unsigned int aaa = 0; aaa < entries; aaa++)
-            {
-                DoMethod((Object*) WookieChat->LV_urlgrabber, MUIM_NList_GetEntry, aaa, &string1);
-
-                if (string1)
-                {
-                    FPuts(urlgrabber_file, (l_in) string1);
-                    FPutC(urlgrabber_file, '\n');
-
-                    if (!strcmp(string1, urlgrabber_str))
-                        break;
-                }
-            }
-            Close(urlgrabber_file);
-
-        }
+		DoMethod( WookieChat->WI_urlgrabber, MM_WINDOWURLGRABBER_SAVEURLS );
 
         status_conductor = status_root;
         while (status_conductor)

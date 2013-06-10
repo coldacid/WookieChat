@@ -94,18 +94,6 @@ MSG_ALIASES
 Helyettesítõk
 ; Aliases
 ;
-MSG_REMOVE_URL
-URL eltávolítása
-; Remove URL(s)
-;
-MSG_CLEAR_ALL_URL
-Mindet törli
-; Clear All
-;
-MSG_URL_GRABBER_WINDOW_TITLE
-URL Gyûjtõ - Dupla kattintás az URL megnyitásához
-; URL Grabber - Double click URL to Open
-;
 MSG_ABOUT
 Névjegy...
 ; About...
@@ -1823,6 +1811,30 @@ About
 ; About
 ;
 MSG_MUICLASS_WINDOWABOUT_AREXXPORT_GAD
-ARexx-port:
-; AREXX port:
+ARexx-port:\x20
+; AREXX port:\x20
+;
+;
+;
+; MUICLASS_WINDOWURLGRABBER
+;
+MSG_MUICLASS_WINDOWURLGRABBER_TITLE
+URL Gyûjtõ - Dupla kattintás az URL megnyitásához
+; URL Grabber - Double click URL to Open
+;
+MSG_MUICLASS_WINDOWURLGRABBER_REMOVE_GAD
+URL eltávolítása
+; Remove URL(s)
+;
+MSG_MUICLASS_WINDOWURLGRABBER_REMOVE_HELP
+/
+; /
+;
+MSG_MUICLASS_WINDOWURLGRABBER_REMOVEALL_GAD
+Mindet törli
+; Clear All
+;
+MSG_MUICLASS_WINDOWURLGRABBER_REMOVEALL_HELP
+/
+; /
 ;

@@ -24,10 +24,11 @@
 #include "locale.h"
 #include "muiclass.h"
 #include "muiclass_windowabout.h"
+#include "muiclass_windowurlgrabber.h"
 
 
 APTR MN1_Hide, MN1_SelectServer, MN1_NewTAB, MN1_NewGTAB,MN1_CloseTAB, MN_ClearAllHistory,MN_ClearHistory,  MN_SaveHistory, MN_MainSettings;
-APTR MN_SaveSettings, MN_MUISettings, MN_ColourSettings, MN_windows_dcc2,  MN_windows_dcc, MN_urlgrabber, MN_ignorelist, MN_about, MN_quit, MN_MultiColumnDisplay, MN_Clipboard;
+APTR MN_SaveSettings, MN_MUISettings, MN_ColourSettings, MN_windows_dcc2,  MN_windows_dcc, MN_ignorelist, MN_urlgrabber, MN_about, MN_quit, MN_MultiColumnDisplay, MN_Clipboard;
 APTR MN_MuteSound;
 APTR MN_cut, MN_copy, MN_paste;
 
@@ -84,7 +85,7 @@ static APTR LA_CSW_listviewtabs_normaltext; //33
 static APTR DISPLAY_SERVER_WIN_GRP;
 static APTR IGNORE_ROOT, IGNORE_GRP1, GR_autoconnect;
 static APTR GROUP_ROOT_2_ALIASES, GR_alias1, GR_alias2;
-static APTR URLGRABBER_ROOT, URLGRABBER_GRP1, GROUP_ROOT_2_SERVER, GROUP_ROOT_2, GROUP_ROOT_2_SECOND;
+static APTR GROUP_ROOT_2_SERVER, GROUP_ROOT_2, GROUP_ROOT_2_SECOND;
 static APTR GROUP_ROOT_2_DCC,GROUP_ROOT_2_ACTIONS, obj_auto_open_query_tabs_when_msged_label;
 static APTR GR_graphical_smileys;
 static APTR obj_autojoin_channels_when_kicked_label, grp_autojoin_channels_when_kicked, GR_grp_32, GR_grp_33;
@@ -227,49 +228,6 @@ struct ObjApp *CreateApp(void)
        MUIA_Weight,0,
        MUIA_Cycle_Entries, local_charsets,
     End;
-
-    MBObj->LV_urlgrabber = (Object*) NListObject,
-        MUIA_Frame, MUIV_Frame_InputList,
-        MUIA_NList_ConstructHook, MUIV_NList_ConstructHook_String,
-        MUIA_NList_DestructHook, MUIV_NList_DestructHook_String,
-        MUIA_NList_AutoCopyToClip, TRUE,
-        MUIA_NList_Input, TRUE,
-        MUIA_NList_MultiSelect,MUIV_NList_MultiSelect_Shifted,
-        MUIA_NList_TypeSelect,MUIV_NList_TypeSelect_Line,
-        #ifndef __AROS__
-        //#ifndef __MORPHOS__
-        MUIA_NList_ActiveObjectOnClick,TRUE,
-        //#endif
-        #endif
-    End;
-
-    MBObj->LV_urlgrabber = (Object*)NListviewObject,
-        MUIA_Weight, 100,
-        MUIA_NListview_NList, MBObj->LV_urlgrabber,
-    End;
-	MBObj->BT_urlgrabber_clear=(Object*)SimpleButton( LGS( MSG_REMOVE_URL ));
-	MBObj->BT_urlgrabber_clearall=(Object*)SimpleButton( LGS( MSG_CLEAR_ALL_URL ));
-    URLGRABBER_GRP1 =(Object*)GroupObject,
-        MUIA_Group_Horiz, TRUE,
-        Child, MBObj->BT_urlgrabber_clear,
-        Child, MBObj->BT_urlgrabber_clearall,
-    End;
-
-    URLGRABBER_ROOT = (Object*)GroupObject,
-        MUIA_Group_Horiz, FALSE,
-        Child, MBObj->LV_urlgrabber,
-        Child, URLGRABBER_GRP1,
-    End;
-    MBObj->WI_urlgrabber = (Object*)WindowObject,
-		MUIA_Window_Title, LGS( MSG_URL_GRABBER_WINDOW_TITLE ),
-        MUIA_Window_CloseGadget, TRUE,
-        MUIA_Window_ID, MAKE_ID('7', '1', '1', 'N'),
-        MUIA_Background, MUII_SHINE,
-        WindowContents, URLGRABBER_ROOT,
-        //MUIA_Window_ActiveObject, MBObj->LV_urlgrabber,
-        //MUIA_Window_DefaultObject, WookieChat->LV_urlgrabber,
-    End;
-
 
     MBObj->STR_addignore = (Object*)StringObject,
         MUIA_Weight, 80,
@@ -2776,7 +2734,7 @@ struct ObjApp *CreateApp(void)
         SubWindow, MBObj->WI_dcc_send,
 		SubWindow, MBObj->WI_about = WindowAboutObject, End,
         SubWindow, MBObj->WI_quit,
-        SubWindow, MBObj->WI_urlgrabber,
+		SubWindow, MBObj->WI_urlgrabber = WindowURLGrabberObject, End,
         SubWindow, MBObj->WI_ban,
         SubWindow, MBObj->WI_ignore,
         SubWindow, MBObj->WI_addignore,
@@ -2787,7 +2745,8 @@ struct ObjApp *CreateApp(void)
     End;
 
 	/* notifies in here */
-	DoMethod((Object*) MN_about, MUIM_Notify, MUIA_Menuitem_Trigger, MUIV_EveryTime, MBObj->WI_about, 3, MUIM_Set, MUIA_Window_Open, TRUE );
+	DoMethod((Object*) MN_about     , MUIM_Notify, MUIA_Menuitem_Trigger, MUIV_EveryTime, (Object*) MBObj->WI_about     , 3, MUIM_Set, MUIA_Window_Open, TRUE );
+	DoMethod((Object*) MN_urlgrabber, MUIM_Notify, MUIA_Menuitem_Trigger, MUIV_EveryTime, (Object*) MBObj->WI_urlgrabber, 3, MUIM_Set, MUIA_Window_Open, TRUE );
 
     MBObj->smiley_choose_icon=NULL;
     if (!MBObj->App)

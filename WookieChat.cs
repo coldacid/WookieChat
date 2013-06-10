@@ -289,42 +289,6 @@ Aliaser
 Aliasy
 Alias
 ;
-MSG_REMOVE_URL
-Remove URL(s)
-Entferne URL(s)
-Eliminar URLs
-Supprimer URL(s)
-Αφαίρεση URL(s)
-Rimuovi URL(s)
-URL eltαvolνtαsa
-Fjerne URL(er)
-Usuρ adres(y)
-Ta bort URL
-;
-MSG_CLEAR_ALL_URL
-Clear All
-Lφsche alles
-Limpiar todo
-Supprimer tout
-Εκκαθάριση όλων
-Cancella tutto
-Mindet tφrli
-Fjerne alle
-Wyczy¶ζ wszystko
-Rensa allt
-;
-MSG_URL_GRABBER_WINDOW_TITLE
-URL Grabber - Double click URL to Open
-URL Greifer - Doppelklick um URL zu φffnen
-Gestor URLs - Doble pulsaciσn para abrirla
-Rιcupιrateur d'URL - Double-clic pour ouvrir une URL
-URL Grabber - Με διπλό κλικ στο URL για άνοιγμα
-Ottieni URL - Doppio click sull'URL per attivarlo
-URL Gyϋjtυ - Dupla kattintαs az URL megnyitαsαhoz
-URL Fanger - Dobbelklikk URL for ε εpne
-Kolekcjoner adresσw URL - aby otowrzyζ dwukliknij na adresie
-URL Grabber - Dubbelklicka URL fφr att φppna
-;
 MSG_ABOUT
 About...
 άber ...
@@ -5501,5 +5465,69 @@ ARexx-port:\x20
 Port Arexx'a:\x20
 AREXX port:\x20
 AREXX port:\x20
+;
+;
+;
+; MUICLASS_WINDOWURLGRABBER
+;
+MSG_MUICLASS_WINDOWURLGRABBER_TITLE
+URL Grabber - Double click URL to Open
+URL Greifer - Doppelklick um URL zu φffnen
+Gestor URLs - Doble pulsaciσn para abrirla
+Rιcupιrateur d'URL - Double-clic pour ouvrir une URL
+URL Grabber - Με διπλό κλικ στο URL για άνοιγμα
+Ottieni URL - Doppio click sull'URL per attivarlo
+URL Gyϋjtυ - Dupla kattintαs az URL megnyitαsαhoz
+URL Fanger - Dobbelklikk URL for ε εpne
+Kolekcjoner adresσw URL - aby otowrzyζ dwukliknij na adresie
+URL Grabber - Dubbelklicka URL fφr att φppna
+;
+MSG_MUICLASS_WINDOWURLGRABBER_REMOVE_GAD
+Remove URL(s)
+Entferne URL(s)
+Eliminar URLs
+Supprimer URL(s)
+Αφαίρεση URL(s)
+Rimuovi URL(s)
+URL eltαvolνtαsa
+Fjerne URL(er)
+Usuρ adres(y)
+Ta bort URL
+;
+MSG_MUICLASS_WINDOWURLGRABBER_REMOVE_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
+MSG_MUICLASS_WINDOWURLGRABBER_REMOVEALL_GAD
+Clear All
+Lφsche alles
+Limpiar todo
+Supprimer tout
+Εκκαθάριση όλων
+Cancella tutto
+Mindet tφrli
+Fjerne alle
+Wyczy¶ζ wszystko
+Rensa allt
+;
+MSG_MUICLASS_WINDOWURLGRABBER_REMOVEALL_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
 ;
 

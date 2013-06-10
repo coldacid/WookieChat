@@ -94,18 +94,6 @@ MSG_ALIASES
 Aliaser
 ; Aliases
 ;
-MSG_REMOVE_URL
-Fjerne URL(er)
-; Remove URL(s)
-;
-MSG_CLEAR_ALL_URL
-Fjerne alle
-; Clear All
-;
-MSG_URL_GRABBER_WINDOW_TITLE
-URL Fanger - Dobbelklikk URL for å åpne
-; URL Grabber - Double click URL to Open
-;
 MSG_ABOUT
 Om...
 ; About...
@@ -1824,6 +1812,30 @@ About
 ; About
 ;
 MSG_MUICLASS_WINDOWABOUT_AREXXPORT_GAD
-Port Arexx'a:
-; AREXX port:
+Port Arexx'a:\x20
+; AREXX port:\x20
+;
+;
+;
+; MUICLASS_WINDOWURLGRABBER
+;
+MSG_MUICLASS_WINDOWURLGRABBER_TITLE
+URL Fanger - Dobbelklikk URL for å åpne
+; URL Grabber - Double click URL to Open
+;
+MSG_MUICLASS_WINDOWURLGRABBER_REMOVE_GAD
+Fjerne URL(er)
+; Remove URL(s)
+;
+MSG_MUICLASS_WINDOWURLGRABBER_REMOVE_HELP
+/
+; /
+;
+MSG_MUICLASS_WINDOWURLGRABBER_REMOVEALL_GAD
+Fjerne alle
+; Clear All
+;
+MSG_MUICLASS_WINDOWURLGRABBER_REMOVEALL_HELP
+/
+; /
 ;

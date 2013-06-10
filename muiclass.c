@@ -20,6 +20,7 @@
 #include "locale.h"
 #include "muiclass.h"
 #include "muiclass_windowabout.h"
+#include "muiclass_windowurlgrabber.h"
 
 /*
 ** GUI Globals
@@ -40,8 +41,8 @@ ULONG MUIClass_Open( void )
 ULONG result;
 
 	if( !(result = MCC_WindowAbout_InitClass() ) ) {
-		//if( !(result = MCC_About_InitClass() ) ) {
-		//}
+		if( !(result = MCC_WindowURLGrabber_InitClass() ) ) {
+		}
 	}
 	return( result );
 }
@@ -55,7 +56,7 @@ ULONG result;
 void MUIClass_Close( void )
 {
 	MCC_WindowAbout_DisposeClass();
-	//MCC_About_DisposeClass();
+	MCC_WindowURLGrabber_DisposeClass();
 }
 /* \\\ */
 
