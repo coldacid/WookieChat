@@ -1,6 +1,6 @@
 CC          = i386-aros-gcc
 LIBS        = -lamiga -lmui
-INCS        =
+INCS        = -I.
 DEFINES     =
 CFLAGS      = $(INCS) $(DEFINES) -std=gnu99 -Wall -Wno-format -g -O0
 APPLICATION = WookieChat

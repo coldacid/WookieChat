@@ -4,7 +4,7 @@
 /* Includeheader
 
         Name:           SDI_interrupt.h
-        Versionstring:  $VER: SDI_interrupt.h 1.0 (17.05.2005)
+        Versionstring:  $VER: SDI_interrupt.h 1.1 (25.04.2006)
         Author:         Guido Mersmann
         Distribution:   PD
         Project page:   http://www.sf.net/projects/sditools/
@@ -14,6 +14,8 @@
  1.0   17.05.05 : inspired by the SDI_#?.h files made by Jens Langner
                   and Dirk Stöcker I created files to handle interrupt
                   and handler functions in an API compatible way.
+ 1.1   25.04.06 : fixed MakeInterrupt() and MakeHandler() macro. (geit)
+
 */
 
 /*
@@ -23,7 +25,7 @@
 **
 ** To keep confusion level low: When changing this file, please note it in
 ** above history list and indicate that the change was not made by myself
-** (e.g. add your name or nick name).
+** (e.g. add your name or nick name).
 **
 ** Find the latest version of this file at:
 ** http://cvs.sourceforge.net/viewcvs.py/sditools/sditools/headers/
@@ -41,7 +43,7 @@
 **
 ** The usage is simular to the DISPATCHERPROTO macro provided by SDI_hook.h.
 **
-** It gets the functionname as argument. To supply this function for use by
+** It gets the function name as argument. To supply this function for use by
 ** an interrupt structure or handler argument, use the ENTRY macro, which also
 ** gets the function name as argument. There is also a MakeInterrupt and a
 ** MakeHandler macro for easy structure setup.
@@ -124,7 +126,7 @@
 /* some structure creating macros for easy and more specific usage */
 
 #define MakeInterrupt( name, func, title, isdata ) \
-  static struct Interrupt name = {{ NULL, NULL, NT_INTERRUPT, 0 (STRPTR) title}, (APTR) isdata, (void (*)()) ENTRY(func) }
+  static struct Interrupt name = {{ NULL, NULL, NT_INTERRUPT, 0, (STRPTR) title}, (APTR) isdata, (void (*)()) ENTRY(func) }
 
 #define MakeInterruptPri( name, func, title, isdata, pri ) \
   static struct Interrupt name = {{ NULL, NULL, NT_INTERRUPT, pri, (STRPTR) title}, (APTR) isdata, (void (*)()) ENTRY(func) }
@@ -136,7 +138,7 @@
   static struct Interrupt name = {{ NULL, NULL, type, pri, (STRPTR) title}, (APTR) isdata, (void (*)()) ENTRY(func) }
 
 #define MakeHandler( name, func, title, isdata ) \
-  static struct Interrupt name = {{ NULL, NULL, NT_INTERRUPT, 0 (STRPTR) title}, (APTR) isdata, (void (*)()) ENTRY(func) }
+  static struct Interrupt name = {{ NULL, NULL, NT_INTERRUPT, 0, (STRPTR) title}, (APTR) isdata, (void (*)()) ENTRY(func) }
 
 #define MakeHandlerPri( name, func, title, isdata, pri ) \
   static struct Interrupt name = {{ NULL, NULL, NT_INTERRUPT, pri, (STRPTR) title}, (APTR) isdata, (void (*)()) ENTRY(func) }
