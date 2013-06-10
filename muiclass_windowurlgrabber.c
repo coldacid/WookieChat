@@ -35,7 +35,7 @@
 /*************************************************************************/
 
 #define URLBUFFER_SIZEOF 0x2000
-#define DEFAULT_URLGRABBER_NAME (_ub_cs) "T:urls.txt" /*"progdir:urls.txt" */
+#define DEFAULT_URLGRABBER_NAME (_ub_cs) "progdir:urls.txt"
 
 /*
 ** gadgets used by this class
