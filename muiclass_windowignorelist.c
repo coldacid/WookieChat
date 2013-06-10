@@ -61,7 +61,6 @@ GID_LAST
 struct mccdata
 {
 	Object                *mcc_ClassObjects[ GID_LAST ];
-	struct List            mcc_IgnoreList;
 };
 
 /*************************************************************************/
