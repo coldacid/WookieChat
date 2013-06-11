@@ -180,6 +180,7 @@ struct mccdata *mccdata = INST_DATA( cl, obj );
 		}
 	}
 
+
 #if ENABLE_NEWWOOKIECODE
 	SetAttrs( mccdata->mcc_ClassObjects[ WID_MAIN ], MUIA_Window_Open, TRUE, TAG_DONE );
 #endif

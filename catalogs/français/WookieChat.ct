@@ -1582,6 +1582,98 @@ MSG_MUICLASS_WINDOWMAIN_TITLE
 WookieChat V%ld.%ld
 ; WookieChat V%ld.%ld
 ;
+MSG_MUICLASS_WINDOWMAIN_CLOSETAB_GAD
+X
+; X
+;
+MSG_MUICLASS_WINDOWMAIN_CLOSETAB_HELP
+Fermer l'onglet courant.
+; Close the current tab.
+;
+MSG_MUICLASS_WINDOWMAIN_TOPIC_HELP
+Sujet courant du canal.
+; This is the channels current topic.
+;
+MSG_MUICLASS_WINDOWMAIN_MODET_GAD
+T
+; T
+;
+MSG_MUICLASS_WINDOWMAIN_MODET_HELP
+Mode « Protection du sujet ». Dans ce mode les utilisateurs normaux ne sont pas autorisés à changer le sujet du canal.
+; Topic protection. This setting prevents regular users from changing the channel topic.
+;
+MSG_MUICLASS_WINDOWMAIN_MODEN_GAD
+N
+; N
+;
+MSG_MUICLASS_WINDOWMAIN_MODEN_HELP
+Mode « Pas de message ». Dans ce mode les utilisateurs extérieurs ne peuvent pas envoyer de messages sur le canal.
+; No messaging. This setting forces users to be in the channel to be able to talk in it.
+;
+MSG_MUICLASS_WINDOWMAIN_MODES_GAD
+S
+; S
+;
+MSG_MUICLASS_WINDOWMAIN_MODES_HELP
+Mode « Secret ». Dans ce mode, le canal est invisible jusqu'à ce que vous l'ayez rejoint.
+; Secret mode. If this is set, the channel is invisible until you have joined.
+;
+MSG_MUICLASS_WINDOWMAIN_MODEI_GAD
+I
+; I
+;
+MSG_MUICLASS_WINDOWMAIN_MODEI_HELP
+Mode « Invitations seules ». Dans ce mode, seuls les utilisateurs y ayant été invités peuvent rejoindre le canal.
+; Invite only. Only users who have been invited to the channel may join.
+;
+MSG_MUICLASS_WINDOWMAIN_MODEP_GAD
+P
+; P
+;
+MSG_MUICLASS_WINDOWMAIN_MODEP_HELP
+Mode « Privé ». Dans ce mode, le sujet du canal n'apparaît pas dans les listes de canaux globales.
+; Private mode. If set, channel topic is not shown on global channel lists.
+;
+MSG_MUICLASS_WINDOWMAIN_MODEM_GAD
+M
+; M
+;
+MSG_MUICLASS_WINDOWMAIN_MODEM_HELP
+Mode « Modéré ». Dans ce mode, seuls les utilisateurs avec le statut d'opérateur, demi-opérateur ou voice (i.e. @ % ou +) peuvent parler.
+; Moderated mode. Only users with operator, halfop or voice status (thats @ % or +) may talk in channel when set.
+;
+MSG_MUICLASS_WINDOWMAIN_MODEB_GAD
+B
+; B
+;
+MSG_MUICLASS_WINDOWMAIN_MODEB_HELP
+Cliquez pour voir une liste de tous les masques de ban de ce canal.
+; Click to view a list of all banmasks for this channel.
+;
+MSG_MUICLASS_WINDOWMAIN_MODEK_GAD
+K
+; K
+;
+MSG_MUICLASS_WINDOWMAIN_MODEK_HELP
+Mode « Clef ». Dans ce mode, les utilisateurs doivent fournir une clef (mot de passe) pour entrer.
+; Keyword mode. When this is set, users need to supply a keyword (password) to enter.
+;
+MSG_MUICLASS_WINDOWMAIN_MODEKEYWORD_HELP
+Clef actuelle.
+; Current channel keyword.
+;
+MSG_MUICLASS_WINDOWMAIN_MODEL_GAD
+L
+; L
+;
+MSG_MUICLASS_WINDOWMAIN_MODEL_HELP
+Mode « Limite ». Dans ce mode, une limite au nombre d'utilisateurs pouvant actuellement rejoindre le canal est positionnée.
+; Enforce a limit to how many users can currently join the channel.
+;
+MSG_MUICLASS_WINDOWMAIN_MODELIMIT_HELP
+Limite d'utilisateurs actuelle.
+; Current user limit.
+;
 MSG_PREFS_GENERAL_GROUPTITLE
 Général
 ; General
@@ -1665,15 +1757,15 @@ MSG_MENU_HIDE_KEY
 H
 ; H
 ;
-MSG_MENU_CLEARBUFFER_ITEM
+MSG_MENU_HISTORYCLEAR_ITEM
 Vider le tampon
 ; Clear buffer
 ;
-MSG_MENU_CLEARALLBUFFERS_ITEM
+MSG_MENU_HISTORYCLEARALL_ITEM
 Effacer tous les tampons
 ; Clear all buffers
 ;
-MSG_MENU_SAVEBUFFERAS_ITEM
+MSG_MENU_HISTORYSAVE_ITEM
 Enregistrer le tampon sous...
 ; Save buffer as...
 ;
@@ -1725,15 +1817,15 @@ MSG_MENU_SETTINGS_TITLE
 Réglages
 ; Settings
 ;
-MSG_MENU_MAINSETTINGS_ITEM
+MSG_MENU_SETTINGSMAIN_ITEM
 Réglages principaux...
 ; Main settings...
 ;
-MSG_MENU_COLORSETTINGS_ITEM
+MSG_MENU_SETTINGSCOLOR_ITEM
 Réglages des couleurs...
 ; Color settings...
 ;
-MSG_MENU_MUISETTINGS_ITEM
+MSG_MENU_SETTINGSMUI_ITEM
 Réglages MUI...
 ; MUI settings...
 ;
@@ -1749,7 +1841,7 @@ MSG_MENU_MUTEALLSOUNDS_ITEM
 Mute all sounds
 ; Mute all sounds
 ;
-MSG_MENU_SAVESETTINGS_ITEM
+MSG_MENU_SETTINGSSAVE_ITEM
 Enregistrer les réglages
 ; Save settings
 ;

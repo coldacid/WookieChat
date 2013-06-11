@@ -31,6 +31,7 @@
 #include "muiclass_windowcolorsettings.h"
 #include "muiclass_windowignorelist.h"
 #include "muiclass_windowurlgrabber.h"
+#include "muiclass_nicklist.h"
 
 #ifndef MUIA_Text_HiIndex
  #define MUIA_Text_HiIndex 0x804214f5
@@ -62,8 +63,12 @@ ULONG result;
 					if( !(result = MCC_WindowIgnoreList_InitClass() ) ) {
 						if( !(result = MCC_WindowColorSettings_InitClass() ) ) {
 							if( !(result = MCC_WindowQuit_InitClass() ) ) {
-								if( ( application = NewObject( appclasses[ CLASSID_APPLICATION ]->mcc_Class, NULL, TAG_DONE ) ) ) {
-									DoMethod( application, MM_APPLICATION_STARTUP );
+								if( !(result = MCC_NickList_InitClass() ) ) {
+									if( ( application = NewObject( appclasses[ CLASSID_APPLICATION ]->mcc_Class, NULL, TAG_DONE ) ) ) {
+										DoMethod( application, MM_APPLICATION_STARTUP );
+									} else {
+										result = MSG_ERROR_UNABLETOSETUPMUICLASS;
+									}
 								}
 							}
 						}
@@ -88,6 +93,7 @@ void MUIClass_Close( void )
 		application = NULL;
     }
 
+	MCC_NickList_DisposeClass();
 	MCC_WindowAbout_DisposeClass();
 	MCC_WindowURLGrabber_DisposeClass();
 	MCC_WindowIgnoreList_DisposeClass();
@@ -177,6 +183,32 @@ APTR MUICreateButton( ULONG text )
 										TAG_DONE ) );
 }
 /* \\\ */
+/* /// MUICreateSmallButton()
+**
+** NOTE: Label must be followed by bubble help!
+*/
+
+/*************************************************************************/
+
+APTR MUICreateSmallButton( ULONG text )
+{
+	return( MUI_NewObject(MUIC_Text,
+										MUIA_Frame                              , MUIV_Frame_Button,
+										MUIA_Font                               , MUIV_Font_Button,
+										MUIA_Background                         , MUII_ButtonBack,
+										MUIA_ControlChar                        , MUIGetUnderScore( text ),
+										MUIA_CycleChain                         , 1,
+										MUIA_ShortHelp                          , LGS( text+1),
+										MUIA_Text_Contents                      , LGS(text),
+										MUIA_Text_PreParse                      , "\33c", /* center gadget text */
+										MUIA_Text_HiChar                        , MUIGetUnderScore( text ),
+										MUIA_Text_HiIndex						, '_',
+										MUIA_InputMode                          , MUIV_InputMode_RelVerify,
+										MUIA_HorizWeight, 0,
+										MUIA_VertWeight, 0,
+										TAG_DONE ) );
+}
+/* \\\ */
 /* /// MUICreateLabel()
 **
 ** Just like MUI label(), but with locale id as label
@@ -224,3 +256,23 @@ APTR MUICreateCheckbox( ULONG text, ULONG defstate )
 
 }
 /* \\\ */
+/* /// MUICreateString()
+**
+** NOTE: Label must be followed by bubble help!
+*/
+
+APTR MUICreateString( ULONG text, ULONG maxchars )
+{
+
+	return( MUI_NewObject( MUIC_String,
+							MUIA_Frame             , MUIV_Frame_String,
+							MUIA_ControlChar       , MUIGetUnderScore( text ),
+							MUIA_CycleChain        , 1,
+							MUIA_ShortHelp         , LGS( text+1), /* HELP is always behind label in catalog */
+							MUIA_String_MaxLen     , maxchars,
+							TAG_DONE )
+	);
+}
+/* \\\ */
+
+

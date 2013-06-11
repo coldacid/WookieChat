@@ -4767,6 +4767,282 @@ WookieChat V%ld.%ld
 WookieChat V%ld.%ld
 WookieChat V%ld.%ld
 ;
+MSG_MUICLASS_WINDOWMAIN_CLOSETAB_GAD
+X
+X
+X
+X
+X
+X
+X
+X
+X
+X
+;
+MSG_MUICLASS_WINDOWMAIN_CLOSETAB_HELP
+Close the current tab.
+Diesen Tabulator Schliessen.
+Cerrar la pestaña actual.
+Fermer l'onglet courant.
+Êëåßóéìï ôçò ôùñéíŞò êáñôİëáò.
+Chiudi questo Tab.
+Jelenlegi panelt bezár.
+Steng denne taben.
+Zamyka aktualn± zak³adkê.
+Stäng flik.
+;
+MSG_MUICLASS_WINDOWMAIN_TOPIC_HELP
+This is the channels current topic.
+Das ist das Grundthema.
+La temática actual del canal.
+Sujet courant du canal.
+Ôï èİìá ôïõ êáíáëéïı.
+Questo Ã¨ l'oggetto del canale.
+A csatornák jelenlegi témája.
+Dette er kanalens overskrift.
+To jest temat aktualnego kana³u.
+Detta är kanalens nuvarande ämne (topic).
+;
+MSG_MUICLASS_WINDOWMAIN_MODET_GAD
+T
+T
+T
+T
+T
+T
+T
+T
+T
+T
+;
+MSG_MUICLASS_WINDOWMAIN_MODET_HELP
+Topic protection. This setting prevents regular users from changing the channel topic.
+Themenschutz.\nSie müssen Operator sein, um das Thema ändern zu können.
+Proteger temática. Evita a usuarios regulares\nque cambien la temática del canal.
+Mode « Protection du sujet ». Dans ce mode les utilisateurs normaux ne sont pas autorisés à changer le sujet du canal.
+Ğñïöıëáîç èİìáôïò. ÁõôŞ ç åğéëïãŞ áğáãïñåıåé óôïõò áğëïıò ÷ñŞóôåò íá ôï áëëÜîïõí.
+Protezione del titolo, Questa impostazione impedisce agli utenti normali di cambiare il titolo del canale.
+Téma rögzítése. Ez a beállítás az általános felhasználók számára megakadályozza a témaváltoztatást.
+Overskriftsbeskyttelse. Denne forhindrer ordinære brukere fra å forandre kanaloverskriften.
+Zabezpieczenie tematu. To ustawienie zapobiega zmianom tematu przez normalnych u¿ytkowników.
+Topic protection. Hindrar vanliga användare från att ändra kanalens ämne.
+;
+MSG_MUICLASS_WINDOWMAIN_MODEN_GAD
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+;
+MSG_MUICLASS_WINDOWMAIN_MODEN_HELP
+No messaging. This setting forces users to be in the channel to be able to talk in it.
+Keine Nachrichten.\nNachrichten von Clients ausserhalb des Kanals verbieten.
+No mensajes. Obliga a los usuarios del\ncanal a permitir hablar en el mismo.
+Mode « Pas de message ». Dans ce mode les utilisateurs extérieurs ne peuvent pas envoyer de messages sur le canal.
+×ùñßò ìçíıìáôá. ÁõôŞ ç åğéëïãŞ áíáãêÜæåé ôïõò ÷ñŞóôåò íá ğáñåõñßóêïíôáé óôï êáíÜëé ãéá íá ìéëïıí óå áõôü.
+Niente messaggi. Questa impostazione permette agli utenti nel canale di chattare.
+Nincs üzenõ. Csak a csatornában lévõ felhasználók szólhatnak bele.
+Ingen beskjeder. Dette tvinger brukerne til å være i kanalen for å kunne snakke i den.
+Przesy³anie wiadomo¶ci zabronione. To ustawienie wymusza na u¿ytkownikach obecno¶æ na kanale aby móc na nim rozmawiaæ.
+No messaging. Kräver att användaren finns i kanalen för att kunna skriva till den.
+;
+MSG_MUICLASS_WINDOWMAIN_MODES_GAD
+S
+S
+S
+S
+S
+S
+S
+S
+S
+S
+;
+MSG_MUICLASS_WINDOWMAIN_MODES_HELP
+Secret mode. If this is set, the channel is invisible until you have joined.
+Geheim-Modus.\nWenn gesetzt, ist der Kanal bis zum Eintreten unsichtbar.
+Modo secreto. Hace al canal "invisible"\nhasta que accede a él.
+Mode « Secret ». Dans ce mode, le canal est invisible jusqu'à ce que vous l'ayez rejoint.
+Êñõöü. Áí ïñéóôåß áõôŞ ç åğéëïãŞ, ôï êáíÜëé åßíáé êñõöü ìİ÷ñé íá ìğåé êÜğïéïò ìİóá.
+ModalitÃ  segreta. Se abilitata, il canale rimarrÃ  invisibile fino a che non vi si entri.
+Titkosított. Beállításával a csatorna láthatatlan amíg nem csatlakozol.
+Hemmelig modus. Hvis denne er satt er kanalen usynlig inntil du har entret den.
+Tajny. Je¶li ta opcja jest w³±czona, kana³ jest niewidoczny, dopóki u¿ytkownik siê do niego nie do³±czy.
+Secret mode. Om satt, är kanalen osynlig tills du gått in i den.
+;
+MSG_MUICLASS_WINDOWMAIN_MODEI_GAD
+I
+I
+I
+I
+I
+I
+I
+I
+I
+I
+;
+MSG_MUICLASS_WINDOWMAIN_MODEI_HELP
+Invite only. Only users who have been invited to the channel may join.
+Nur für eingeladene Benutzer.
+Sólo invitados. Permite acceder unicamente\na usuarios que han sido invitados.
+Mode « Invitations seules ». Dans ce mode, seuls les utilisateurs y ayant été invités peuvent rejoindre le canal.
+Ìİóù ğñüóêëçóçò. Ìğïñïıí íá ìğïõí ìüíï ïé ğñïóêåêëçìİíïé ÷ñŞóôåò.
+Solo invito. Disponibile ai soli utenti invitati nel canale.
+Csak meghívóval. Csatlakozni csak a meghívottak részére lehetséges.
+Kun invitasjon. Kun brukere som er invitert til kanalen kan entre den.
+Dostêpny tylko za zaproszeniem. Tylko u¿ytkownicy, którzy zostan± zaproszeni bêd± mogli siê do³±czyæ.
+Invite only. Bara inbjudna användare får komma in.
+;
+MSG_MUICLASS_WINDOWMAIN_MODEP_GAD
+P
+P
+P
+P
+P
+P
+P
+P
+P
+P
+;
+MSG_MUICLASS_WINDOWMAIN_MODEP_HELP
+Private mode. If set, channel topic is not shown on global channel lists.
+Privat-Modus.\nWenn gesetzt, wird das Thema dieses Kanals nicht in der allgemeinen Kanalliste angezeigt.
+Modo privado. La temática del canal no se\nmuestra en la lista global de canales.
+Mode « Privé ». Dans ce mode, le sujet du canal n'apparaît pas dans les listes de canaux globales.
+Ğñïóùğéêü. ÅÜí İ÷åé ïñéóèåß, ôï èİìá ôïõ êáíáëéïı äåí åìöáíßæåôáé óôéò ãåíéêİò ëßóôåò ôùí êáíáëéşí.
+ModalitÃ Â privata. Se abilitata, il titolo del canale Ã¨ invisibile nell' elenco globale dei canali.
+Privát. Beállításával a csatorna témája nem jeleneik meg a globális csatorna listában.
+Privat modus. Hvis denne er satt vises ikke kanalen i globale kanallister.
+Prywatny. Je¶li ta opcja jest w³±czona, temat kana³u nie zostanie wy¶wietlony na globalnej li¶cie kana³ów.
+Private mode. Om satt, kommer kanalens ämne inte att visas i globala listningar.
+;
+MSG_MUICLASS_WINDOWMAIN_MODEM_GAD
+M
+M
+M
+M
+M
+M
+M
+M
+M
+M
+;
+MSG_MUICLASS_WINDOWMAIN_MODEM_HELP
+Moderated mode. Only users with operator, halfop or voice status (thats @ % or +) may talk in channel when set.
+Moderierter Kanal.\nNur Nutzer mit Operator, Halfop oder Voice Status (das sind @ % oder +) dürfen in diesem Kanal sprechen, wenn gesetzt.
+Modo moderado. Pueden hablar solamente\noperadores, medio-operadores o con voz\n(op[@], halfop[%%], voice[+]).
+Mode « Modéré ». Dans ce mode, seuls les utilisateurs avec le statut d'opérateur, demi-opérateur ou voice (i.e. @ % ou +) peuvent parler.
+ÓõíôçñçôéêŞ êáôÜóôáóç. Ìüíï ïé äéá÷åéñéóôİò, çìéäéá÷åéñéóôİò êáé ïé ÷ñŞóôåò ğïõ İ÷ïõí ïìéëßá (ïé @ % Ş +) ìğïñïıí íá ìéëŞóïõí óå áõôü ôï êáíÜëé.
+ModalitÃ Â operatore. Solo utenti con stato di operatore, semioperatore o voce (cioÃ¨ @ % o +) potranno parlare.
+Moderált. Csak az operator, halfop vagy voice (vagyis @ % vagy +) státuszban lehet beszélni a csatornában ennek bekapcsolásával.
+Moderert modus. Bare brukere som er operatør, halvoperatør eller som har voice-status (de med @ % eller +) kan prate i kanalen.
+Tryb moderowany. Po w³±czeniu tej opcji, tylko u¿ytkownicy ze statusem operatora, pó³operatora lub g³osem (@ % lub +) mog± rozmawiaæ na kanale.
+Moderated mode. Bara användare med operator, halfop eller voice (dvs. @ % or +) får tala i kanalen.
+;
+MSG_MUICLASS_WINDOWMAIN_MODEB_GAD
+B
+B
+B
+B
+B
+B
+B
+B
+B
+B
+;
+MSG_MUICLASS_WINDOWMAIN_MODEB_HELP
+Click to view a list of all banmasks for this channel.
+Klicke um eine komplette Liste aller Bannmasken für diesen Kanal zu sehen.
+Pulse para ver la lista de todas\nlas prohibiciones en este canal.
+Cliquez pour voir une liste de tous les masques de ban de ce canal.
+ĞáôŞóôå åäş ãéá íá äåßôå üëåò ôéò ban ìÜóêåò ãéá ôï êáíÜëé.
+Clicca per vedere la lista completa delle maschere di Ban per questo canale.
+Kattints ide a csatornához tartozó teljes banmaszk listáért.
+Klikk for å vise en liste over alle banmasker for denne kanalen.
+Naci¶nij, aby zobaczyæ listê wszystkich masek blokad dla tego kana³u.
+Klicka för att visa en lista över kanalens ban villkor.
+;
+MSG_MUICLASS_WINDOWMAIN_MODEK_GAD
+K
+K
+K
+K
+K
+K
+K
+K
+K
+K
+;
+MSG_MUICLASS_WINDOWMAIN_MODEK_HELP
+Keyword mode. When this is set, users need to supply a keyword (password) to enter.
+Passwort-Modus, wurde er gesetzt, benötigen Nutzer ein Passwort um einzutreten.
+Modo palabra clave. El usuario\ndebe indicar una palabra clave\n(contraseña) para entrar.
+Mode « Clef ». Dans ce mode, les utilisateurs doivent fournir une clef (mot de passe) pour entrer.
+Ìå êùäéêü. ÅÜí İ÷åé ïñéóèåß, ïé ÷ñŞóôåò ğñİğåé íá åéóÜãïõí ìéá ëİîç êëåéäß (êùäéêü) ãéá íá åéóİëèïõí.
+ModalitÃ  parola chiave. Se impostata, gli utenti potranno accedere solo tramite password.
+Kulcsszóval. Beállításával a felhasználól egy kulcsszó (jelszó) megadására kötelezettek.
+Passordmodus. Når denne er satt, må brukere gi et passord for å entre kanalen.
+Tryb z has³em. Je¶li ta opcja jest w³±czona, u¿ytkownicy bêd± musieli podaæ has³o, aby móc siê do³±czyæ.
+Keyword mode. Om satt, behöver användare ge ett lösenord för att komma in.
+;
+MSG_MUICLASS_WINDOWMAIN_MODEKEYWORD_HELP
+Current channel keyword.
+gegenwärtiges Kanal Kennwort.
+Contraseña actual del canal.
+Clef actuelle.
+Ëİîç êëåéäß ôïõ êáíáëéïı.
+Attuale parola chiave del canale.
+Jelenlegi csatorna kulcsszava.
+Aktiv kanals passord..
+Aktualne has³o kana³u.
+Gällande lösenord.
+;
+MSG_MUICLASS_WINDOWMAIN_MODEL_GAD
+L
+L
+L
+L
+L
+L
+L
+L
+L
+L
+;
+MSG_MUICLASS_WINDOWMAIN_MODEL_HELP
+Enforce a limit to how many users can currently join the channel.
+Limitiert die Anzahl der Nutzer für diesen Kanal.
+Forzar el límite de usuarios\nposibles a acceder al canal.
+Mode « Limite ». Dans ce mode, une limite au nombre d'utilisateurs pouvant actuellement rejoindre le canal est positionnée.
+ÁëëáãŞ ôïõ ïñßïõ ôùí ÷ñçóôşí ğïõ ìğïñïıí íá åéóİëèïõí óôï êáíÜëé.
+Limita il numero di utenti abilitati ad accedere al canale.
+Korlátozás bevezetése a csatornához jelenleg csatlakoztatható létszámban.
+Setter en grense på hvor mange brukere som kan entre kanalen.
+Ustala limit maksymalnie po³±czonych u¿ytkowników.
+Sätt en gräns för hur många användare som kan komma in i kanalen.
+;
+MSG_MUICLASS_WINDOWMAIN_MODELIMIT_HELP
+Current user limit.
+Gegenwärtiges Benutzerlimit.
+Límite actual de usuarios.
+Limite d'utilisateurs actuelle.
+¼ñéï ÷ñçóôşí.
+Limite utenti.
+Létszámkorlát.
+Aktuell grense på brukere.
+Obecny limit u¿ytkowników.
+Nuvarande max användarantal.
+;
 MSG_PREFS_GENERAL_GROUPTITLE
 General
 Allgemein
@@ -5010,7 +5286,7 @@ H
 H
 H
 ;
-MSG_MENU_CLEARBUFFER_ITEM
+MSG_MENU_HISTORYCLEAR_ITEM
 Clear buffer
 Fensterinhalt leeren
 Limpiar búfer
@@ -5022,7 +5298,7 @@ Rense buffer
 Wyczy¶æ bufor
 Töm bufferten
 ;
-MSG_MENU_CLEARALLBUFFERS_ITEM
+MSG_MENU_HISTORYCLEARALL_ITEM
 Clear all buffers
 Alle Fenster leeren
 Limpiar todos los bufers
@@ -5034,7 +5310,7 @@ Rense alle buffere
 Wyczy¶æ wszystkie bufory
 Rensa alla buffertar
 ;
-MSG_MENU_SAVEBUFFERAS_ITEM
+MSG_MENU_HISTORYSAVE_ITEM
 Save buffer as...
 Fensterinhalt speichern als ...
 Guardar búfer como...
@@ -5190,7 +5466,7 @@ Innstillinger
 Ustawienia
 Inställningar
 ;
-MSG_MENU_MAINSETTINGS_ITEM
+MSG_MENU_SETTINGSMAIN_ITEM
 Main settings...
 Haupteinstellungen ...
 Globales...
@@ -5202,7 +5478,7 @@ Innstillinger...
 Ustawienia programu...
 Huvudinställningar ...
 ;
-MSG_MENU_COLORSETTINGS_ITEM
+MSG_MENU_SETTINGSCOLOR_ITEM
 Color settings...
 Farbeinstellungen ...
 Colores...
@@ -5214,7 +5490,7 @@ Fargeinnstillinger...
 Ustawienia kolorów...
 Färginställningar ...
 ;
-MSG_MENU_MUISETTINGS_ITEM
+MSG_MENU_SETTINGSMUI_ITEM
 MUI settings...
 MUI Einstellungen ...
 Ajustes MUI...
@@ -5262,7 +5538,7 @@ Mute all sounds
 Mute all sounds
 Mute all sounds
 ;
-MSG_MENU_SAVESETTINGS_ITEM
+MSG_MENU_SETTINGSSAVE_ITEM
 Save settings
 Einstellungen speichern
 Guardar ajustes

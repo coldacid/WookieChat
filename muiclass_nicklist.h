@@ -8,8 +8,8 @@
     for the specific language governing rights and limitations under the License.
 */
 
-#ifndef MUICLASS_WINDOWMAIN_H
-#define MUICLASS_WINDOWMAIN_H 1
+#ifndef MUICLASS_NICKLIST_H
+#define MUICLASS_NICKLIST_H 1
 
 /*************************************************************************/
 
@@ -17,19 +17,16 @@
 #include "muiclass.h"
 
 
-#define WindowMainObject NewObject( appclasses[ CLASSID_WINDOWMAIN ]->mcc_Class, NULL
+#define NickListObject NewObject( appclasses[ CLASSID_NICKLIST ]->mcc_Class, NULL
 
 /*
 ** Methods and attributes
 */
 
 enum {
-MM_WINDOWMAIN_DUMMY =  0xFED00040,
-MM_WINDOWMAIN_MENUSELECT,
+MM_NICKLIST_DUMMY =  0xFED00180,
 /* Attributes */
 };
-
-struct MP_WINDOWMAIN_MENUSELECT { ULONG MethodID; ULONG MenuID; };
 
 /*************************************************************************/
 
@@ -37,10 +34,10 @@ struct MP_WINDOWMAIN_MENUSELECT { ULONG MethodID; ULONG MenuID; };
 ** Prototypes
 */
 
-ULONG   MCC_WindowMain_InitClass( void );
-void    MCC_WindowMain_DisposeClass( void );
+ULONG   MCC_NickList_InitClass( void );
+void    MCC_NickList_DisposeClass( void );
 
 /*************************************************************************/
 
-#endif /* MUICLASS_WINDOWMAIN_H */
+#endif /* MUICLASS_NICKLIST_H */
 

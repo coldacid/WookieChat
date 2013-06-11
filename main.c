@@ -1247,9 +1247,9 @@ int main(int argc, char *argv[])
     dcc_send_conductor->dcc_listen_socket = -1;
     dcc_send_root = dcc_send_conductor;
 //
-
+#if !ENABLE_NEWWOOKIECODE
     setmacro((Object*)WookieChat->WI_main, MUIA_Window_Open, TRUE);
-
+#endif
 // Open our servers.txt file and update the Server Selection window
     read_list_of_servers();
 

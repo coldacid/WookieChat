@@ -1580,6 +1580,98 @@ MSG_MUICLASS_WINDOWMAIN_TITLE
 WookieChat V%ld.%ld
 ; WookieChat V%ld.%ld
 ;
+MSG_MUICLASS_WINDOWMAIN_CLOSETAB_GAD
+X
+; X
+;
+MSG_MUICLASS_WINDOWMAIN_CLOSETAB_HELP
+Close the current tab.
+; Close the current tab.
+;
+MSG_MUICLASS_WINDOWMAIN_TOPIC_HELP
+This is the channels current topic.
+; This is the channels current topic.
+;
+MSG_MUICLASS_WINDOWMAIN_MODET_GAD
+T
+; T
+;
+MSG_MUICLASS_WINDOWMAIN_MODET_HELP
+Topic protection. This setting prevents regular users from changing the channel topic.
+; Topic protection. This setting prevents regular users from changing the channel topic.
+;
+MSG_MUICLASS_WINDOWMAIN_MODEN_GAD
+N
+; N
+;
+MSG_MUICLASS_WINDOWMAIN_MODEN_HELP
+No messaging. This setting forces users to be in the channel to be able to talk in it.
+; No messaging. This setting forces users to be in the channel to be able to talk in it.
+;
+MSG_MUICLASS_WINDOWMAIN_MODES_GAD
+S
+; S
+;
+MSG_MUICLASS_WINDOWMAIN_MODES_HELP
+Secret mode. If this is set, the channel is invisible until you have joined.
+; Secret mode. If this is set, the channel is invisible until you have joined.
+;
+MSG_MUICLASS_WINDOWMAIN_MODEI_GAD
+I
+; I
+;
+MSG_MUICLASS_WINDOWMAIN_MODEI_HELP
+Invite only. Only users who have been invited to the channel may join.
+; Invite only. Only users who have been invited to the channel may join.
+;
+MSG_MUICLASS_WINDOWMAIN_MODEP_GAD
+P
+; P
+;
+MSG_MUICLASS_WINDOWMAIN_MODEP_HELP
+Private mode. If set, channel topic is not shown on global channel lists.
+; Private mode. If set, channel topic is not shown on global channel lists.
+;
+MSG_MUICLASS_WINDOWMAIN_MODEM_GAD
+M
+; M
+;
+MSG_MUICLASS_WINDOWMAIN_MODEM_HELP
+Moderated mode. Only users with operator, halfop or voice status (thats @ % or +) may talk in channel when set.
+; Moderated mode. Only users with operator, halfop or voice status (thats @ % or +) may talk in channel when set.
+;
+MSG_MUICLASS_WINDOWMAIN_MODEB_GAD
+B
+; B
+;
+MSG_MUICLASS_WINDOWMAIN_MODEB_HELP
+Click to view a list of all banmasks for this channel.
+; Click to view a list of all banmasks for this channel.
+;
+MSG_MUICLASS_WINDOWMAIN_MODEK_GAD
+K
+; K
+;
+MSG_MUICLASS_WINDOWMAIN_MODEK_HELP
+Keyword mode. When this is set, users need to supply a keyword (password) to enter.
+; Keyword mode. When this is set, users need to supply a keyword (password) to enter.
+;
+MSG_MUICLASS_WINDOWMAIN_MODEKEYWORD_HELP
+Current channel keyword.
+; Current channel keyword.
+;
+MSG_MUICLASS_WINDOWMAIN_MODEL_GAD
+L
+; L
+;
+MSG_MUICLASS_WINDOWMAIN_MODEL_HELP
+Enforce a limit to how many users can currently join the channel.
+; Enforce a limit to how many users can currently join the channel.
+;
+MSG_MUICLASS_WINDOWMAIN_MODELIMIT_HELP
+Current user limit.
+; Current user limit.
+;
 MSG_PREFS_GENERAL_GROUPTITLE
 General
 ; General
@@ -1663,15 +1755,15 @@ MSG_MENU_HIDE_KEY
 H
 ; H
 ;
-MSG_MENU_CLEARBUFFER_ITEM
+MSG_MENU_HISTORYCLEAR_ITEM
 Clear buffer
 ; Clear buffer
 ;
-MSG_MENU_CLEARALLBUFFERS_ITEM
+MSG_MENU_HISTORYCLEARALL_ITEM
 Clear all buffers
 ; Clear all buffers
 ;
-MSG_MENU_SAVEBUFFERAS_ITEM
+MSG_MENU_HISTORYSAVE_ITEM
 Save buffer as...
 ; Save buffer as...
 ;
@@ -1723,15 +1815,15 @@ MSG_MENU_SETTINGS_TITLE
 Settings
 ; Settings
 ;
-MSG_MENU_MAINSETTINGS_ITEM
+MSG_MENU_SETTINGSMAIN_ITEM
 Main settings...
 ; Main settings...
 ;
-MSG_MENU_COLORSETTINGS_ITEM
+MSG_MENU_SETTINGSCOLOR_ITEM
 Color settings...
 ; Color settings...
 ;
-MSG_MENU_MUISETTINGS_ITEM
+MSG_MENU_SETTINGSMUI_ITEM
 MUI settings...
 ; MUI settings...
 ;
@@ -1747,7 +1839,7 @@ MSG_MENU_MUTEALLSOUNDS_ITEM
 Mute all sounds
 ; Mute all sounds
 ;
-MSG_MENU_SAVESETTINGS_ITEM
+MSG_MENU_SETTINGSSAVE_ITEM
 Save settings
 ; Save settings
 ;
