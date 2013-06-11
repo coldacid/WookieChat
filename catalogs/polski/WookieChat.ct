@@ -1567,6 +1567,20 @@ Choose when you want to execute this ARexx script
 ; on top of this line are obsolete
 ;
 ;
+;
+; MUICLASS_APPLICATION
+;
+MSG_MUICLASS_APPLICATION_DESCRIPTION
+IRC Client
+; IRC Client
+;
+;
+; MUICLASS_WINDOWMAIN
+;
+MSG_MUICLASS_WINDOWMAIN_TITLE
+WookieChat V%ld.%ld
+; WookieChat V%ld.%ld
+;
 MSG_PREFS_GENERAL_GROUPTITLE
 G³ówne
 ; General
@@ -2015,8 +2029,8 @@ MSG_MUICLASS_WINDOWCOLORSETTINGS_BACKGROUND_HELP
 ; /
 ;
 MSG_MUICLASS_WINDOWCOLORSETTINGS_NICKLISTBG_GAD
-Nicklist background
-; Nicklist background
+Nicklist background:
+; Nicklist background:
 ;
 MSG_MUICLASS_WINDOWCOLORSETTINGS_NICKLISTBG_HELP
 /
@@ -2195,6 +2209,34 @@ Aktywno¶æ - pod¶wietlenie:
 ; Highlight activity:
 ;
 MSG_MUICLASS_WINDOWCOLORSETTINGS_HIGHLIGHTACTIVITY_HELP
+/
+; /
+;
+;
+; MUICLASS_WINDOWQUIT
+;
+MSG_MUICLASS_WINDOWQUIT_TITLE
+WookieChar Request
+; WookieChar Request
+;
+MSG_MUICLASS_WINDOWQUIT_QUIT_TEXT
+Do you really want to quit WookieChat?
+; Do you really want to quit WookieChat?
+;
+MSG_MUICLASS_WINDOWQUIT_OK_GAD
+_Ok
+; _Ok
+;
+MSG_MUICLASS_WINDOWQUIT_OK_HELP
+/
+; /
+;
+;
+MSG_MUICLASS_WINDOWQUIT_CANCEL_GAD
+_Cancel
+; _Cancel
+;
+MSG_MUICLASS_WINDOWQUIT_CANCEL_HELP
 /
 ; /
 ;

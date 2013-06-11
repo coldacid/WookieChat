@@ -57,6 +57,8 @@
 
 #define VERSION_ABOUT "\033c" APPLICATIONNAME " " I2S(VERSION) "." I2S(REVISION) " (" I2S(DAY) "." I2S(MONTH) "." I2S(YEAR) ") - http://sourceforge.net/projects/wookiechat/\n" VERSION_SYSTEM
 
+#define VERSION_COPYRIGHT "© " I2S(YEAR) " " AUTHORNAME
+
 extern UBYTE *version;
 
 /***************************************************************************/

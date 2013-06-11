@@ -8,32 +8,37 @@
     for the specific language governing rights and limitations under the License.
 */
 
-#ifndef MUICLASS_WINDOWCOLORSETTINGS_H
-#define MUICLASS_WINDOWCOLORSETTINGS_H 1
+#ifndef MUICLASS_APPLICATION_H
+#define MUICLASS_APPLICATION_H 1
 
 /*************************************************************************/
 
 #include <exec/types.h>
 #include "muiclass.h"
 
-
-#define WindowColorSettingsObject NewObject( appclasses[ CLASSID_WINDOWCOLORSETTINGS ]->mcc_Class, NULL
-
 /*
 ** Methods and attributes
 */
 
 enum {
-MM_WINDOWCOLORSETTINGS_LOADCOLORS =  0xFED000c0,
-MM_WINDOWCOLORSETTINGS_SAVECOLORS,
-MM_WINDOWCOLORSETTINGS_CREATEDIR,
-
-MM_WINDOWCOLORSETTINGS_UPDATECOLORS,
+MM_APPLICATION_DUMMY =  0xFED00000,
+MM_APPLICATION_STARTUP,
 /* Attributes */
+MA_APPLICATION_WINDOWMAIN,
+MA_APPLICATION_WINDOWQUIT,
+MA_APPLICATION_WINDOWABOUT,
+MA_APPLICATION_WINDOWCOLORSETTINGS,
+MA_APPLICATION_WINDOWIGNORELIST,
+MA_APPLICATION_WINDOWURLGRABBER,
 };
 
-struct MP_WINDOWCOLORSETTINGS_LOADCOLORS { ULONG MethodID; STRPTR Name; };
-struct MP_WINDOWCOLORSETTINGS_SAVECOLORS { ULONG MethodID; STRPTR Name; };
+/*
+** some defines
+*/
+
+#ifndef MUIA_Application_UsedClasses
+#define MUIA_Application_UsedClasses 0x8042e9a7
+#endif
 
 /*************************************************************************/
 
@@ -41,10 +46,10 @@ struct MP_WINDOWCOLORSETTINGS_SAVECOLORS { ULONG MethodID; STRPTR Name; };
 ** Prototypes
 */
 
-ULONG   MCC_WindowColorSettings_InitClass( void );
-void    MCC_WindowColorSettings_DisposeClass( void );
+ULONG   MCC_Application_InitClass( void );
+void    MCC_Application_DisposeClass( void );
 
 /*************************************************************************/
 
-#endif /* MUICLASS_WINDOWCOLORSETTINGS_H */
+#endif /* MUICLASS_APPLICATION_H */
 

@@ -20,6 +20,7 @@
 #include <proto/codesets.h>
 
 #include "intern.h"
+#include "functions.h"
 #include "objapp.h"
 #include "audio.h"
 #include "locale.h"
@@ -585,6 +586,7 @@ void cleanexit(char *str)
 
     delete_custom_classes();
 	MUIClass_Close(); /* close our mui classes */
+	WBMessage_Reply(); /* release wbnessage */
 
     if (str)
         printf("Error: %s\n", str);

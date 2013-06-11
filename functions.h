@@ -8,49 +8,46 @@
     for the specific language governing rights and limitations under the License.
 */
 
-#ifndef MUICLASS_H
-#define MUICLASS_H 1
+#ifndef FUNCTIONS_H
+#define FUNCTIONS_H 1
 
 /*************************************************************************/
 
 #include <exec/types.h>
-#include <intuition/intuition.h>
+#include <workbench/icon.h>
+#include <workbench/startup.h>
+
+#include <string.h>
+
+#include <proto/utility.h>
+#include <proto/exec.h>
+#include <proto/dos.h>
 
 /*************************************************************************/
 
 /*
-** Class ID Enumeration
+** DOS Functions
 */
 
-enum
-{
-CLASSID_APPLICATION = 0,
-CLASSID_WINDOWMAIN,
-CLASSID_WINDOWABOUT,
-CLASSID_WINDOWQUIT,
-CLASSID_WINDOWURLGRABBER,
-CLASSID_WINDOWIGNORELIST,
-CLASSID_WINDOWCOLORSETTINGS,
-CLASSID_LAST
-};
-
-extern struct MUI_CustomClass *appclasses[];
-extern Object *application;
+void Dos_ShowFailure( void );
 
 /*
-** Prototypes
+** Icon
 */
 
-ULONG MUIClass_Open ( void );
-void  MUIClass_Close( void );
+struct DiskObject *Icon_GetPutDiskObject( struct DiskObject *diskobj );
+BOOL               Icon_ToolTypeGetBool( struct DiskObject *o, STRPTR tooltype, BOOL defvalue );
+long               Icon_ToolTypeGetInteger( struct DiskObject *o, STRPTR tooltype, long defvalue );
+STRPTR             Icon_ToolTypeGetString( struct DiskObject *o, STRPTR tooltype, STRPTR deftooltype );
 
-ULONG MUIGetVar( Object *obj, ULONG attr );
+/*
+** WBMessage
+*/
 
-TEXT MUIGetUnderScore( ULONG text);
-APTR MUICreatePoppen( ULONG text, ULONG poptitle );
-APTR MUICreateButton( ULONG text );
-APTR MUICreateLabel( ULONG text );
-APTR MUICreateCheckbox( ULONG text, ULONG defstate );
+extern struct WBStartup *wbmessage;
+
+void WBMessage_Get  ( void );
+void WBMessage_Reply( void );
 
 /*************************************************************************/
 

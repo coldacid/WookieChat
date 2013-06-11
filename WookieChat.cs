@@ -4737,6 +4737,36 @@ Choose when you want to execute this ARexx script
 ; on top of this line are obsolete
 ;
 ;
+;
+; MUICLASS_APPLICATION
+;
+MSG_MUICLASS_APPLICATION_DESCRIPTION
+IRC Client
+IRC Klient
+IRC Client
+IRC Client
+IRC Client
+IRC Client
+IRC Client
+IRC Client
+IRC Client
+IRC Client
+;
+;
+; MUICLASS_WINDOWMAIN
+;
+MSG_MUICLASS_WINDOWMAIN_TITLE
+WookieChat V%ld.%ld
+WookieChat V%ld.%ld
+WookieChat V%ld.%ld
+WookieChat V%ld.%ld
+WookieChat V%ld.%ld
+WookieChat V%ld.%ld
+WookieChat V%ld.%ld
+WookieChat V%ld.%ld
+WookieChat V%ld.%ld
+WookieChat V%ld.%ld
+;
 MSG_PREFS_GENERAL_GROUPTITLE
 General
 Allgemein
@@ -6591,6 +6621,82 @@ Aktywno¶æ - pod¶wietlenie:
 Framhäv aktivitet:
 ;
 MSG_MUICLASS_WINDOWCOLORSETTINGS_HIGHLIGHTACTIVITY_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
+;
+; MUICLASS_WINDOWQUIT
+;
+MSG_MUICLASS_WINDOWQUIT_TITLE
+WookieChar Request
+WookieChar Requester
+WookieChar Request
+WookieChar Request
+WookieChar Request
+WookieChar Request
+WookieChar Request
+WookieChar Request
+WookieChar Request
+WookieChar Request
+;
+MSG_MUICLASS_WINDOWQUIT_QUIT_TEXT
+Do you really want to quit WookieChat?
+Wollen sie wirklick WookieChat beenden?
+Do you really want to quit WookieChat?
+Do you really want to quit WookieChat?
+Do you really want to quit WookieChat?
+Do you really want to quit WookieChat?
+Do you really want to quit WookieChat?
+Do you really want to quit WookieChat?
+Do you really want to quit WookieChat?
+Do you really want to quit WookieChat?
+;
+MSG_MUICLASS_WINDOWQUIT_OK_GAD
+_Ok
+_Ok
+_Ok
+_Ok
+_Ok
+_Ok
+_Ok
+_Ok
+_Ok
+_Ok
+;
+MSG_MUICLASS_WINDOWQUIT_OK_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
+;
+MSG_MUICLASS_WINDOWQUIT_CANCEL_GAD
+_Cancel
+_Abbrechen
+_Cancel
+_Cancel
+_Cancel
+_Cancel
+_Cancel
+_Cancel
+_Cancel
+_Cancel
+;
+MSG_MUICLASS_WINDOWQUIT_CANCEL_HELP
 /
 /
 /

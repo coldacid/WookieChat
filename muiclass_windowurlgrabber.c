@@ -87,6 +87,8 @@ Object *objs[ GID_LAST ];
 														MUIA_NList_Input         , TRUE,
 														MUIA_NList_MultiSelect   , MUIV_NList_MultiSelect_Shifted,
 														MUIA_NList_TypeSelect    , MUIV_NList_TypeSelect_Line,
+														MUIA_CycleChain          , 1,
+
 												        #ifndef __AROS__
 												        //#ifndef __MORPHOS__
 												        MUIA_NList_ActiveObjectOnClick,TRUE,
@@ -95,8 +97,8 @@ Object *objs[ GID_LAST ];
 														End,
 				End,
 				Child, HGroup,
-					Child, objs[ GID_REMOVE    ] = SimpleButton( LGS( MSG_MUICLASS_WINDOWURLGRABBER_REMOVE_GAD    )),
-					Child, objs[ GID_REMOVEALL ] = SimpleButton( LGS( MSG_MUICLASS_WINDOWURLGRABBER_REMOVEALL_GAD )),
+					Child, objs[ GID_REMOVE    ] = MUICreateButton( MSG_MUICLASS_WINDOWURLGRABBER_REMOVE_GAD    ),
+					Child, objs[ GID_REMOVEALL ] = MUICreateButton( MSG_MUICLASS_WINDOWURLGRABBER_REMOVEALL_GAD ),
 				End,
 			End,
 		TAG_DONE ) ) ) {

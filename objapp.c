@@ -24,6 +24,7 @@
 #include "locale.h"
 #include "muiclass.h"
 #include "muiclass_windowabout.h"
+#include "muiclass_windowquit.h"
 #include "muiclass_windowurlgrabber.h"
 #include "muiclass_windowignorelist.h"
 #include "muiclass_windowcolorsettings.h"
@@ -105,7 +106,6 @@ static APTR GROUP_ROOT_7, GROUP_ROOT_9;
 static APTR GR_send_dcc, GR_dcc, GR_dcc_file_exists;
 static APTR GROUP_ROOT_8;
 static APTR GROUP_ROOT_10, GR_grp_19, LA_dcc_send_file, GR_grp_30, LA_dcc_send_nick;
-static APTR QUIT_ROOT, quit_label;
 
 
 static char *CYA_GroupTitleColor[20];
@@ -230,27 +230,6 @@ struct ObjApp *CreateApp(void)
        MUIA_Weight,0,
        MUIA_Cycle_Entries, local_charsets,
     End;
-    // quit yes/no window
-
-	quit_label = (Object*)Label( LGS( MSG_QUIT_REQUESTER ));
-
-	MBObj->BT_quit_yes = (Object*)SimpleButton( LGS( MSG_YES ));
-	MBObj->BT_quit_no = (Object*)SimpleButton( LGS( MSG_NO ));
-
-    QUIT_ROOT = (Object*)GroupObject,
-        MUIA_Group_Columns, 3,
-        Child, quit_label,
-        Child, MBObj->BT_quit_yes,
-        Child, MBObj->BT_quit_no,
-    End;
-    MBObj->WI_quit = (Object*)WindowObject,
-		MUIA_Window_Title, LGS( MSG_QUIT_REQUESTER ),
-        MUIA_Window_CloseGadget, FALSE,
-        MUIA_Window_ID, MAKE_ID('9', 'W', 'I', 'N'),
-        MUIA_Background, MUII_SHINE,
-        WindowContents, QUIT_ROOT,
-    End;
-
 
     MBObj->WI_change_nick = (Object*)WindowObject,
 		MUIA_Window_Title, LGS( MSG_CHANGENICK ),
@@ -2638,7 +2617,7 @@ struct ObjApp *CreateApp(void)
         SubWindow, MBObj->WI_dcc_file_exists,
         SubWindow, MBObj->WI_dcc_send,
 		SubWindow, MBObj->WI_about = WindowAboutObject, End,
-        SubWindow, MBObj->WI_quit,
+		SubWindow, MBObj->WI_quit = WindowQuitObject, End,
 		SubWindow, MBObj->WI_urlgrabber = WindowURLGrabberObject, End,
         SubWindow, MBObj->WI_ban,
 		SubWindow, MBObj->WI_ignore = WindowIgnoreListObject, End,
@@ -2653,6 +2632,7 @@ struct ObjApp *CreateApp(void)
 	DoMethod((Object*) MN_urlgrabber, MUIM_Notify, MUIA_Menuitem_Trigger, MUIV_EveryTime, (Object*) MBObj->WI_urlgrabber, 3, MUIM_Set, MUIA_Window_Open, TRUE );
 	DoMethod((Object*) MN_ignorelist, MUIM_Notify, MUIA_Menuitem_Trigger, MUIV_EveryTime, (Object*) MBObj->WI_ignore, 3, MUIM_Set, MUIA_Window_Open, TRUE );
 	DoMethod((Object*) MN_ColourSettings, MUIM_Notify, MUIA_Menuitem_Trigger, MUIV_EveryTime, (Object*) MBObj->WI_colour_settings, 3, MUIM_Set, MUIA_Window_Open, TRUE );
+	DoMethod((Object*) MN_quit          , MUIM_Notify, MUIA_Menuitem_Trigger, MUIV_EveryTime, (Object*) MBObj->WI_quit, 3, MUIM_Set, MUIA_Window_Open, TRUE );
 
     MBObj->smiley_choose_icon=NULL;
     if (!MBObj->App)

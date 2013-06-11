@@ -29,6 +29,8 @@
 #include <mui/NListtree_mcc.h>
 #include <mui/BetterString_mcc.h>
 
+#include "functions.h"
+#include "muiclass.h"
 #include "intern.h"
 #include "objapp.h"
 #include "audio.h"
@@ -442,7 +444,6 @@ void send_current(char *text2)
         printf("no connection\n");
 }
 
-struct WBStartup *WBenchMsg;
 struct WBArg *wbarg;
 
 #ifdef __amigaos4__
@@ -701,12 +702,15 @@ int main(int argc, char *argv[])
 
     LoadAllLibs();
 
+#if ENABLE_NEWWOOKIECODE
+	WBMessage_Get();
+#else
     if (argc == 0)
     {
-        WBenchMsg = (struct WBStartup *) argv;
+        wbmessage = (struct WBStartup *) argv;
         int i = 0;
 
-        for (i = 0, wbarg = WBenchMsg->sm_ArgList; i < WBenchMsg->sm_NumArgs; i++, wbarg++)
+        for (i = 0, wbarg = wbmessage->sm_ArgList; i < wbmessage->sm_NumArgs; i++, wbarg++)
         {
             if (!wbarg)
                 break;
@@ -715,6 +719,7 @@ int main(int argc, char *argv[])
 
         }
     }
+#endif
 
     if (argc >= 2)
     {
@@ -912,9 +917,6 @@ int main(int argc, char *argv[])
             WookieChat->BT_addserver, WookieChat->BT_addgroup, WookieChat->BT_delete_server,
             //WookieChat->BT_edit,
             WookieChat->BT_connect, WookieChat->BT_connect_tab, WookieChat->BT_perform, WookieChat->NLT_Servers, NULL);
-
-    DoMethod((Object *) WookieChat->WI_quit, MUIM_Window_SetCycleChain, WookieChat->BT_quit_yes, WookieChat->BT_quit_no,
-            NULL);
 //
 
 // Setup notifications for all our GUI objects
@@ -927,18 +929,10 @@ int main(int argc, char *argv[])
             2, MUIM_Application_ReturnID, 49);
     DoMethod((Object *) WookieChat->NLT_Servers, MUIM_Notify, MUIA_NListtree_Active, MUIV_EveryTime,
             (Object*) WookieChat->App, 2, MUIM_Application_ReturnID, 53);
-
-    DoMethod((Object*) WookieChat->BT_quit_yes, MUIM_Notify, MUIA_Pressed, FALSE, (Object*) WookieChat->App, 2,
-            MUIM_Application_ReturnID, 90);
-    DoMethod((Object*) WookieChat->BT_quit_no, MUIM_Notify, MUIA_Pressed, FALSE, (Object*) WookieChat->WI_quit, 3,
-            MUIM_Set, MUIA_Window_Open, FALSE);
-
     DoMethod((Object*) WookieChat->WI_mainsettings, MUIM_Notify, MUIA_Window_CloseRequest, TRUE,
             (Object*) WookieChat->App, 2, MUIM_Application_ReturnID, 7);
-    DoMethod((Object*) WookieChat->WI_main, MUIM_Notify, MUIA_Window_CloseRequest, TRUE, (Object*) WookieChat->App, 2,
-            MUIM_Application_ReturnID, MUIV_Application_ReturnID_Quit);
-    DoMethod((Object *) MN_quit, MUIM_Notify, MUIA_Menuitem_Trigger, MUIV_EveryTime, (Object*) WookieChat->App, 2,
-            MUIM_Application_ReturnID, MUIV_Application_ReturnID_Quit);
+	DoMethod((Object*) WookieChat->WI_main, MUIM_Notify, MUIA_Window_CloseRequest, TRUE, (Object*) WookieChat->WI_quit,
+			3, MUIM_Set, MUIA_Window_Open, TRUE );
 
     DoMethod((Object *) MN_MultiColumnDisplay, MUIM_Notify, MUIA_Menuitem_Trigger, MUIV_EveryTime,
             (Object*) WookieChat->App, 2, MUIM_Application_ReturnID, 97);
@@ -1398,17 +1392,14 @@ int main(int argc, char *argv[])
 
     while (running)
     {
+#if ENABLE_NEWWOOKIECODE
+		result = DoMethod( application, MUIM_Application_Input, &signal);
+#else
         result = DoMethod((Object*) WookieChat->App, MUIM_Application_Input, &signal);
-
+#endif
         if (result)
         {
-
-            if (result == MUIV_Application_ReturnID_Quit)
-            {
-                setmacro((Object*)WookieChat->WI_quit, MUIA_Window_Open, TRUE);
-
-            }
-            else if (result == 1)
+			if (result == 1)
             {
                 char * string123 = NULL;
 // user has typed some text and press enter
@@ -3224,7 +3215,7 @@ int main(int argc, char *argv[])
                 }
 //
             }
-            else if (result == 90) //user selected "yes" to quit
+			else if (result == MUIV_Application_ReturnID_Quit) //user selected "yes" to quit
             {
 // user selected yes to quit
                 running = FALSE;

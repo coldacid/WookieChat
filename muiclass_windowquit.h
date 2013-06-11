@@ -8,8 +8,8 @@
     for the specific language governing rights and limitations under the License.
 */
 
-#ifndef MUICLASS_WINDOWCOLORSETTINGS_H
-#define MUICLASS_WINDOWCOLORSETTINGS_H 1
+#ifndef MUICLASS_WINDOWQUIT_H
+#define MUICLASS_WINDOWQUIT_H 1
 
 /*************************************************************************/
 
@@ -17,23 +17,16 @@
 #include "muiclass.h"
 
 
-#define WindowColorSettingsObject NewObject( appclasses[ CLASSID_WINDOWCOLORSETTINGS ]->mcc_Class, NULL
+#define WindowQuitObject NewObject( appclasses[ CLASSID_WINDOWQUIT ]->mcc_Class, NULL
 
 /*
 ** Methods and attributes
 */
 
 enum {
-MM_WINDOWCOLORSETTINGS_LOADCOLORS =  0xFED000c0,
-MM_WINDOWCOLORSETTINGS_SAVECOLORS,
-MM_WINDOWCOLORSETTINGS_CREATEDIR,
-
-MM_WINDOWCOLORSETTINGS_UPDATECOLORS,
+MM_WINDOWQUIT_DUMMY =  0xFED00010,
 /* Attributes */
 };
-
-struct MP_WINDOWCOLORSETTINGS_LOADCOLORS { ULONG MethodID; STRPTR Name; };
-struct MP_WINDOWCOLORSETTINGS_SAVECOLORS { ULONG MethodID; STRPTR Name; };
 
 /*************************************************************************/
 
@@ -41,10 +34,10 @@ struct MP_WINDOWCOLORSETTINGS_SAVECOLORS { ULONG MethodID; STRPTR Name; };
 ** Prototypes
 */
 
-ULONG   MCC_WindowColorSettings_InitClass( void );
-void    MCC_WindowColorSettings_DisposeClass( void );
+ULONG   MCC_WindowQuit_InitClass( void );
+void    MCC_WindowQuit_DisposeClass( void );
 
 /*************************************************************************/
 
-#endif /* MUICLASS_WINDOWCOLORSETTINGS_H */
+#endif /* MUICLASS_WINDOWQUIT_H */
 

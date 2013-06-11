@@ -24,10 +24,13 @@
 #include "locale.h"
 #include "intern.h"
 #include "muiclass.h"
+#include "muiclass_application.h"
+#include "muiclass_windowmain.h"
+#include "muiclass_windowquit.h"
 #include "muiclass_windowabout.h"
-#include "muiclass_windowurlgrabber.h"
-#include "muiclass_windowignorelist.h"
 #include "muiclass_windowcolorsettings.h"
+#include "muiclass_windowignorelist.h"
+#include "muiclass_windowurlgrabber.h"
 
 #ifndef MUIA_Text_HiIndex
  #define MUIA_Text_HiIndex 0x804214f5
@@ -38,6 +41,7 @@
 */
 
 struct MUI_CustomClass *appclasses[ CLASSID_LAST ];
+Object *application;
 
 /*************************************************************************/
 
@@ -51,10 +55,19 @@ ULONG MUIClass_Open( void )
 {
 ULONG result;
 
-	if( !(result = MCC_WindowAbout_InitClass() ) ) {
-		if( !(result = MCC_WindowURLGrabber_InitClass() ) ) {
-			if( !(result = MCC_WindowIgnoreList_InitClass() ) ) {
-				if( !(result = MCC_WindowColorSettings_InitClass() ) ) {
+	if( !(result = MCC_Application_InitClass() ) ) {
+		if( !(result = MCC_WindowMain_InitClass() ) ) {
+			if( !(result = MCC_WindowAbout_InitClass() ) ) {
+				if( !(result = MCC_WindowURLGrabber_InitClass() ) ) {
+					if( !(result = MCC_WindowIgnoreList_InitClass() ) ) {
+						if( !(result = MCC_WindowColorSettings_InitClass() ) ) {
+							if( !(result = MCC_WindowQuit_InitClass() ) ) {
+								if( ( application = NewObject( appclasses[ CLASSID_APPLICATION ]->mcc_Class, NULL, TAG_DONE ) ) ) {
+									DoMethod( application, MM_APPLICATION_STARTUP );
+								}
+							}
+						}
+					}
 				}
 			}
 		}
@@ -70,10 +83,18 @@ ULONG result;
 
 void MUIClass_Close( void )
 {
+	if( application ) {
+		MUI_DisposeObject( application );
+		application = NULL;
+    }
+
 	MCC_WindowAbout_DisposeClass();
 	MCC_WindowURLGrabber_DisposeClass();
 	MCC_WindowIgnoreList_DisposeClass();
 	MCC_WindowColorSettings_DisposeClass();
+	MCC_WindowQuit_DisposeClass();
+	MCC_WindowMain_DisposeClass();
+	MCC_Application_DisposeClass();
 }
 /* \\\ */
 
@@ -120,18 +141,16 @@ APTR MUICreatePoppen( ULONG text, ULONG poptitle )
 {
 APTR poppen;
 
-	poppen = MUI_NewObject(MUIC_Poppen,
-	                                    ((text) ? MUIA_ControlChar : TAG_IGNORE)    , MUIGetUnderScore( text ),
-	                                    MUIA_CycleChain                             , 1,
-										((text) ? MUIA_ShortHelp : TAG_IGNORE)      , LGS( text + 1 ), /* HELP is always behind label in catalog */
+	return( poppen = MUI_NewObject(MUIC_Poppen,
+										MUIA_ControlChar    , MUIGetUnderScore( text ),
+										MUIA_CycleChain     , 1,
+										MUIA_ShortHelp      , LGS( text + 1 ), /* HELP is always behind label in catalog */
 	                                    InnerSpacing(0, 0),
-										((poptitle) ? MUIA_Window_Title : TAG_IGNORE), LGS( poptitle ),
-										MUIA_FixWidth, 14,
-										MUIA_FixHeight, 14,
+										MUIA_Window_Title   , LGS( poptitle ),
+										MUIA_FixWidth       , 14,
+										MUIA_FixHeight      , 14,
 										MUIA_Pendisplay_Spec, "r00000000,00000000,00000000",
-	                                    TAG_DONE);
-
-	return( poppen );
+										TAG_DONE ) );
 }
 /* \\\ */
 /* /// MUICreateButton()
@@ -182,5 +201,26 @@ APTR MUICreateLabel( ULONG text )
 			End );
 }
 /* \\\ */
+/* /// MUICreateCheckbox()
+**
+** NOTE: Label must be followed by bubble help!
+*/
 
+/*************************************************************************/
 
+APTR MUICreateCheckbox( ULONG text, ULONG defstate )
+{
+	return( MUI_NewObject( MUIC_Image,   MUIA_Frame               , MUIV_Frame_ImageButton,
+											MUIA_Background       , MUII_ButtonBack,
+											MUIA_ControlChar      , MUIGetUnderScore( text ),
+											MUIA_CycleChain       , 1,
+											MUIA_ShortHelp        , LGS( text + 1 ), /* HELP is always behind label in catalog */
+											MUIA_Image_FreeVert   , TRUE,
+											MUIA_InputMode        , MUIV_InputMode_Toggle,
+											MUIA_Image_Spec       , MUII_CheckMark,
+											MUIA_Selected         , defstate,
+											MUIA_ShowSelState     , FALSE,
+											TAG_DONE) );
+
+}
+/* \\\ */
