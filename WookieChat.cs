@@ -1213,8 +1213,8 @@ Innstillinger
 Ustawienia
 Inställningar
 ;
-MSG_COLOUR_SETTINGS_WINDOW_TITLE
-Colour settings...
+MSG_COLOR_SETTINGS_WINDOW_TITLE
+Color settings...
 Farbeinsteller ...
 Colores...
 Réglages des couleurs...
@@ -3867,54 +3867,6 @@ Smileys-tema
 Zestaw emotikonek
 Tema Smileys
 ;
-MSG_COLOUR_SETTINGS_LOAD
-Load...
-Laden ...
-Cargar...
-Charger...
-Load...
-Carica...
-Load...
-Hente...
-Wczytaj...
-Ladda...
-;
-MSG_COLOUR_SETTINGS_APPLY
-Apply
-Benutzen
-Aplicar
-Appliquer
-Apply
-Applica
-Apply
-Utføre
-Zastosuj
-Applicera
-;
-MSG_COLOUR_SETTINGS_SAVE
-Save
-Speichern
-Guardar
-Enregistrer
-Save
-Salva
-Save
-Lagre
-Zapisz
-Spara
-;
-MSG_COLOUR_SETTINGS_SAVE_AS
-Save as...
-Speichern als ...
-Guardar como...
-Enregistrer sous...
-Save as...
-Salva come...
-Save as...
-Lagre som...
-Zapisz jako...
-Spara som...
-;
 MSG_SERVER_CHARSET
 Server charset
 Zeichensatz des Servers
@@ -4298,18 +4250,6 @@ Server
 Server
 Serwer
 Server
-;
-MSG_WINDOW_TITLE_CHOOSE_A_COLOUR
-Choose Colour
-Farbe wählen
-Elija color
-Sélectionnez la couleur
-Choose Colour
-Scegli colore
-Choose Colour
-Velg farge
-Wybierz kolor
-Välj färg
 ;
 MSG_APPLY
 Apply
@@ -5232,9 +5172,9 @@ Innstillinger...
 Ustawienia programu...
 Huvudinställningar ...
 ;
-MSG_MENU_COLOURSETTINGS_ITEM
-Colour settings...
-Farbeinsteller ...
+MSG_MENU_COLORSETTINGS_ITEM
+Color settings...
+Farbeinstellungen ...
 Colores...
 Réglages des couleurs...
 ×ñùìáôéêÝò ñõèìßóåéò...
@@ -5986,5 +5926,680 @@ Hátralévõ idõ
 Gjenværende tid
 Pozosta³o czasu
 Tid kvar
+;
+;
+; MUICLASS_WINDOWCOLORSETTINGS
+;
+MSG_MUICLASS_WINDOWCOLORSETTINGS_TITLE
+Color settings...
+Farbeinstellungen ...
+Colores...
+Réglages des couleurs...
+×ñùìáôéêÝò ñõèìßóåéò...
+Impostazione colori...
+Szín beállítások...
+Fargeinnstillinger...
+Ustawienia kolorów...
+Färginställningar ...
+;
+MSG_MUICLASS_WINDOWCOLORSETTINGS_LOAD_GAD
+Load...
+Laden ...
+Cargar...
+Charger...
+Load...
+Carica...
+Load...
+Hente...
+Wczytaj...
+Ladda...
+;
+MSG_MUICLASS_WINDOWCOLORSETTINGS_LOAD_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
+MSG_MUICLASS_WINDOWCOLORSETTINGS_SAVE_GAD
+Save
+Speichern
+Guardar
+Enregistrer
+Save
+Salva
+Save
+Lagre
+Zapisz
+Spara
+;
+MSG_MUICLASS_WINDOWCOLORSETTINGS_SAVE_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
+MSG_MUICLASS_WINDOWCOLORSETTINGS_SAVEAS_GAD
+Save as...
+Speichern als ...
+Guardar como...
+Enregistrer sous...
+Save as...
+Salva come...
+Save as...
+Lagre som...
+Zapisz jako...
+Spara som...
+;
+MSG_MUICLASS_WINDOWCOLORSETTINGS_SAVEAS_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
+MSG_MUICLASS_WINDOWCOLORSETTINGS_CHOOSECOLOR_TITLE
+Choose Color
+Farbe wählen
+Elija color
+Sélectionnez la couleur
+Choose Color
+Scegli colore
+Choose Color
+Velg farge
+Wybierz kolor
+Välj färg
+;
+MSG_MUICLASS_WINDOWCOLORSETTINGS_BACKGROUND_GAD
+Background:
+Hintergrund:
+Fondo:
+Arrière-plan:
+Background:
+Sfondo:
+Background:
+Bakgrunn:
+Background:
+Bakgrund:
+;
+MSG_MUICLASS_WINDOWCOLORSETTINGS_BACKGROUND_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
+MSG_MUICLASS_WINDOWCOLORSETTINGS_NICKLISTBG_GAD
+Nicklist background:
+Namenslisten-Hintergrund:
+Lista aliases (fondo):
+Arrière-plan liste pseudos:
+Nicklist background:
+Sfondo Nicklist:
+Nicklist background:
+Bakgrunn for nickliste:
+Nicklist background:
+Bakgrund nicklista:
+;
+MSG_MUICLASS_WINDOWCOLORSETTINGS_NICKLISTBG_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
+MSG_MUICLASS_WINDOWCOLORSETTINGS_TABLISTBG_GAD
+Tabs background:
+Tab-Hintergrund:
+ Lista cans./servs. (fondo):
+Arrière plan des onglets:
+Tabs background:
+Sfondo Tab:
+Tabs background:
+Tabs bakgrunn:
+T³o zak³adek:
+Bakgrund flikar:
+;
+MSG_MUICLASS_WINDOWCOLORSETTINGS_TABLISTBG_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
+MSG_MUICLASS_WINDOWCOLORSETTINGS_NORMAL_GAD
+Normal:
+Normal:
+ Normal:
+Normal:
+Normal:
+Normale:
+Normal:
+Normal:
+Normalny:
+Normal:
+;
+MSG_MUICLASS_WINDOWCOLORSETTINGS_NORMAL_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
+MSG_MUICLASS_WINDOWCOLORSETTINGS_NICKLISTTX_GAD
+Nicklist text:
+Namenslisten-Text:
+Lista aliases (texto):
+Texte de la liste de pseudos:
+Nicklist text:
+Testo Nicklist:
+Nicklist text:
+Tekst nickliste:
+Pisak listy pseudonimów:
+Text nicklista:
+;
+MSG_MUICLASS_WINDOWCOLORSETTINGS_NICKLISTTX_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
+MSG_MUICLASS_WINDOWCOLORSETTINGS_TABSPEN_GAD
+Tabs pen:
+Schriftfarbe der Tabs:
+ Lista cans./servs. (texto):
+Texte des onglets:
+Tabs pen:
+Penna Tab:
+Tabs pen:
+Tabs penn:
+Pisak zak³adek:
+Penna flikar:
+;
+MSG_MUICLASS_WINDOWCOLORSETTINGS_TABSPEN_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
+MSG_MUICLASS_WINDOWCOLORSETTINGS_JOIN_GAD
+Join:
+Verbunden:
+Acceder:
+Join:
+Join:
+Entra:
+Join:
+Entre:
+Przy³±czenie:
+Anslut:
+;
+MSG_MUICLASS_WINDOWCOLORSETTINGS_JOIN_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
+MSG_MUICLASS_WINDOWCOLORSETTINGS_PART_GAD
+Part:
+Part:
+Abandonar:
+Part:
+Part:
+Part:
+Part:
+Forlater:
+Od³±czenie:
+Lämna:
+;
+MSG_MUICLASS_WINDOWCOLORSETTINGS_PART_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
+MSG_MUICLASS_WINDOWCOLORSETTINGS_QUIT_GAD
+Quit:
+Beenden:
+Salir:
+Quitter:
+Quit:
+Esci:
+Quit:
+Avslutter:
+Koniec:
+Avsluta:
+;
+MSG_MUICLASS_WINDOWCOLORSETTINGS_QUIT_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
+MSG_MUICLASS_WINDOWCOLORSETTINGS_MODES_GAD
+Modes:
+Modi:
+Modos:
+Modes:
+Modes:
+ModalitÃ :
+Modes:
+Moduser:
+Zmiana trybu:
+Lägen:
+;
+MSG_MUICLASS_WINDOWCOLORSETTINGS_MODES_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
+MSG_MUICLASS_WINDOWCOLORSETTINGS_CTCP_GAD
+CTCP:
+CTCP:
+ CTCP:
+CTCP:
+CTCP:
+CTCP:
+CTCP:
+CTCP:
+CTCP:
+CTCP:
+;
+MSG_MUICLASS_WINDOWCOLORSETTINGS_CTCP_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
+MSG_MUICLASS_WINDOWCOLORSETTINGS_ACTIONS_GAD
+Actions:
+Aktionen:
+Acciones:
+Actions:
+Actions:
+Azioni:
+Actions:
+Handlinger:
+Dzia³anie:
+Händelser:
+;
+MSG_MUICLASS_WINDOWCOLORSETTINGS_ACTIONS_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
+MSG_MUICLASS_WINDOWCOLORSETTINGS_INFO_GAD
+Info:
+Informationen:
+Información:
+Info:
+Info:
+Info:
+Info:
+Info:
+Informacja:
+Info:
+;
+MSG_MUICLASS_WINDOWCOLORSETTINGS_INFO_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
+MSG_MUICLASS_WINDOWCOLORSETTINGS_OWNTEXT_GAD
+Own text:
+Eigener Text:
+Texto propio:
+Texte personnel:
+Own text:
+Testo personale:
+Own text:
+Egen tekst:
+W³asny tekst:
+Egen text:
+;
+MSG_MUICLASS_WINDOWCOLORSETTINGS_OWNTEXT_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
+MSG_MUICLASS_WINDOWCOLORSETTINGS_HIGHLIGHT_GAD
+Highlight:
+Hervorheben:
+Resaltar:
+Mise en évidence:
+Highlight:
+Evidenzia:
+Highlight:
+Høylys:
+Pod¶wietlenie:
+Framhäv:
+;
+MSG_MUICLASS_WINDOWCOLORSETTINGS_HIGHLIGHT_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
+MSG_MUICLASS_WINDOWCOLORSETTINGS_NOTICES_GAD
+Notices:
+Servermeldungen:
+Noticias:
+Notices:
+Notices:
+Avvisi:
+Notices:
+Notices:
+Powiadomienia:
+Notiser:
+;
+MSG_MUICLASS_WINDOWCOLORSETTINGS_NOTICES_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
+MSG_MUICLASS_WINDOWCOLORSETTINGS_INVITE_GAD
+Invite:
+Einladungen:
+Invitar:
+Invitation:
+Invite:
+Invita:
+Invite:
+Invitere:
+Zaproszenie:
+Bjud in:
+;
+MSG_MUICLASS_WINDOWCOLORSETTINGS_INVITE_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
+MSG_MUICLASS_WINDOWCOLORSETTINGS_KICK_GAD
+Kick:
+Rausschmiss:
+Expulsar:
+Kick:
+Kick:
+Kick:
+Kick:
+Kicke:
+Wyrzucenie:
+Kicka:
+;
+MSG_MUICLASS_WINDOWCOLORSETTINGS_KICK_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
+MSG_MUICLASS_WINDOWCOLORSETTINGS_NICKCHANGE_GAD
+Nick change:
+Namenswechsel:
+Cambiar alias:
+Changement de pseudo:
+Nick change:
+Cambia Nick:
+Nick change:
+Forandrer nick:
+Zmiana pseudonimu:
+Ändring nick:
+;
+MSG_MUICLASS_WINDOWCOLORSETTINGS_NICKCHANGE_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
+MSG_MUICLASS_WINDOWCOLORSETTINGS_TOPIC_GAD
+Topic:
+Thema:
+Temática:
+Sujet:
+Topic:
+Argomento:
+Topic:
+Topic:
+Temat:
+Ämne:
+;
+MSG_MUICLASS_WINDOWCOLORSETTINGS_TOPIC_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
+MSG_MUICLASS_WINDOWCOLORSETTINGS_WALLOPS_GAD
+Wall ops:
+Wall ops:
+OPs:
+Wall ops:
+Wall ops:
+Wall ops:
+Wall ops:
+Wall ops:
+Informacje od operatorów:
+Wall ops:
+;
+MSG_MUICLASS_WINDOWCOLORSETTINGS_WALLOPS_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
+MSG_MUICLASS_WINDOWCOLORSETTINGS_ACTIVITY_GAD
+Activity:
+Tab-Aktivität:
+Actividad:
+Activité:
+Activity:
+AttivitÃ :
+Activity:
+Aktivitet:
+Aktywno¶æ:
+Aktivitet:
+;
+MSG_MUICLASS_WINDOWCOLORSETTINGS_ACTIVITY_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
+MSG_MUICLASS_WINDOWCOLORSETTINGS_CHATACTIVITY_GAD
+Chat activity:
+Tab-Chatanzeige:
+Actividad (charla):
+Discussion:
+Chat activity:
+AttivitÃ  Chat:
+Chat activity:
+Chatteaktivitet:
+Aktywno¶æ - rozmowa:
+Chat aktivitet:
+;
+MSG_MUICLASS_WINDOWCOLORSETTINGS_CHATACTIVITY_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
+MSG_MUICLASS_WINDOWCOLORSETTINGS_HIGHLIGHTACTIVITY_GAD
+Highlight activity:
+Tab-Hervorhebeanzeige:
+Actividad (resaltar):
+Mise en évidence:
+Highlight activity:
+Evidenzia attivitÃ :
+Highlight activity:
+Høylys aktivitet:
+Aktywno¶æ - pod¶wietlenie:
+Framhäv aktivitet:
+;
+MSG_MUICLASS_WINDOWCOLORSETTINGS_HIGHLIGHTACTIVITY_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
 ;
 

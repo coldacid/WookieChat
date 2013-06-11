@@ -27,6 +27,7 @@ enum
 CLASSID_WINDOWABOUT = 0,
 CLASSID_WINDOWURLGRABBER,
 CLASSID_WINDOWIGNORELIST,
+CLASSID_WINDOWCOLORSETTINGS,
 CLASSID_LAST
 };
 
@@ -40,6 +41,11 @@ ULONG MUIClass_Open ( void );
 void  MUIClass_Close( void );
 
 ULONG MUIGetVar( Object *obj, ULONG attr );
+
+TEXT MUIGetUnderScore( ULONG text);
+APTR MUICreatePoppen( ULONG text, ULONG poptitle );
+APTR MUICreateButton( ULONG text );
+APTR MUICreateLabel( ULONG text );
 
 /*************************************************************************/
 

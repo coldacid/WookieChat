@@ -15,13 +15,23 @@
 #include <clib/alib_protos.h>
 #include <proto/exec.h>
 #include <proto/intuition.h>
+#include <proto/utility.h>
+#include <proto/muimaster.h>
 #include <libraries/mui.h>
 
+#include <string.h>
+
 #include "locale.h"
+#include "intern.h"
 #include "muiclass.h"
 #include "muiclass_windowabout.h"
 #include "muiclass_windowurlgrabber.h"
 #include "muiclass_windowignorelist.h"
+#include "muiclass_windowcolorsettings.h"
+
+#ifndef MUIA_Text_HiIndex
+ #define MUIA_Text_HiIndex 0x804214f5
+#endif
 
 /*
 ** GUI Globals
@@ -44,6 +54,8 @@ ULONG result;
 	if( !(result = MCC_WindowAbout_InitClass() ) ) {
 		if( !(result = MCC_WindowURLGrabber_InitClass() ) ) {
 			if( !(result = MCC_WindowIgnoreList_InitClass() ) ) {
+				if( !(result = MCC_WindowColorSettings_InitClass() ) ) {
+				}
 			}
 		}
 	}
@@ -61,6 +73,7 @@ void MUIClass_Close( void )
 	MCC_WindowAbout_DisposeClass();
 	MCC_WindowURLGrabber_DisposeClass();
 	MCC_WindowIgnoreList_DisposeClass();
+	MCC_WindowColorSettings_DisposeClass();
 }
 /* \\\ */
 
@@ -77,4 +90,97 @@ ULONG var = 0;
 	return ( var );
 }
 /* \\\ */
+
+/* /// MUIGetUnderScore()
+*/
+
+/*************************************************************************/
+
+TEXT MUIGetUnderScore( ULONG text)
+{
+	if (text)
+	{
+		char *c;
+		if( (c = strchr( (const char *) LGS( text ),'_')) )
+		{
+			return(ToLower(*(c+1)));
+		}
+	}
+	return(0);
+}
+/* \\\ */
+/* /// MUICreatePoppen()
+**
+** NOTE: Label must be followed by bubble help!
+*/
+
+/*************************************************************************/
+
+APTR MUICreatePoppen( ULONG text, ULONG poptitle )
+{
+APTR poppen;
+
+	poppen = MUI_NewObject(MUIC_Poppen,
+	                                    ((text) ? MUIA_ControlChar : TAG_IGNORE)    , MUIGetUnderScore( text ),
+	                                    MUIA_CycleChain                             , 1,
+										((text) ? MUIA_ShortHelp : TAG_IGNORE)      , LGS( text + 1 ), /* HELP is always behind label in catalog */
+	                                    InnerSpacing(0, 0),
+										((poptitle) ? MUIA_Window_Title : TAG_IGNORE), LGS( poptitle ),
+										MUIA_FixWidth, 14,
+										MUIA_FixHeight, 14,
+										MUIA_Pendisplay_Spec, "r00000000,00000000,00000000",
+	                                    TAG_DONE);
+
+	return( poppen );
+}
+/* \\\ */
+/* /// MUICreateButton()
+**
+** NOTE: Label must be followed by bubble help!
+*/
+
+/*************************************************************************/
+
+APTR MUICreateButton( ULONG text )
+{
+	return( MUI_NewObject(MUIC_Text,
+										MUIA_Frame                              , MUIV_Frame_Button,
+										MUIA_Font                               , MUIV_Font_Button,
+										MUIA_Background                         , MUII_ButtonBack,
+										MUIA_ControlChar                        , MUIGetUnderScore( text ),
+										MUIA_CycleChain                         , 1,
+										MUIA_ShortHelp                          , LGS( text+1),
+										MUIA_Text_Contents                      , LGS(text),
+										MUIA_Text_PreParse                      , "\33c", /* center gadget text */
+										MUIA_Text_HiChar                        , MUIGetUnderScore( text ),
+										MUIA_Text_HiIndex						, '_',
+										MUIA_InputMode                          , MUIV_InputMode_RelVerify,
+										TAG_DONE ) );
+}
+/* \\\ */
+/* /// MUICreateLabel()
+**
+** Just like MUI label(), but with locale id as label
+** text, MUIA_DoubleBuffer set and bubble help support.
+**
+** NOTE: Label must be followed by bubble help!
+*/
+
+/*************************************************************************/
+
+APTR MUICreateLabel( ULONG text )
+{
+	return( TextObject,
+			MUIA_Text_Contents    , LGS( text ),
+			MUIA_Weight           , 0,
+			MUIA_InnerLeft        , 0,
+			MUIA_InnerRight       , 0,
+			MUIA_FramePhantomHoriz, TRUE,
+			MUIA_ShortHelp        , LGS( text+1), /* HELP is always behind label in catalog */
+			MUIA_Text_HiIndex , '_',
+            MUIA_Text_PreParse, "\33r",
+			End );
+}
+/* \\\ */
+
 

@@ -26,6 +26,7 @@
 #include "muiclass_windowabout.h"
 #include "muiclass_windowurlgrabber.h"
 #include "muiclass_windowignorelist.h"
+#include "muiclass_windowcolorsettings.h"
 
 
 APTR MN1_Hide, MN1_SelectServer, MN1_NewTAB, MN1_NewGTAB,MN1_CloseTAB, MN_ClearAllHistory,MN_ClearHistory,  MN_SaveHistory, MN_MainSettings;
@@ -57,6 +58,7 @@ static APTR LA_username, GR_grp_3, REC_label_0, GR_grp_8, GR_grp_7, REC_label_0C
 static APTR GR_grp_9, GR_grp_6;
 
 // BELOW are colour setting window variables
+#if 1
 static APTR GROUP_ROOT_6;
 static APTR LA_CSW_background;
 static APTR LA_CSW_nicklistbackground;
@@ -82,7 +84,7 @@ static APTR LA_CSW_highlightactivity;
 static APTR LA_CSW_nicklisttext;
 static APTR LA_CSW_listviewtabs_background; //22
 static APTR LA_CSW_listviewtabs_normaltext; //33
-
+#endif
 static APTR DISPLAY_SERVER_WIN_GRP;
 static APTR GR_autoconnect;
 static APTR GROUP_ROOT_2_ALIASES, GR_alias1, GR_alias2;
@@ -1823,6 +1825,14 @@ struct ObjApp *CreateApp(void)
 
 
     //below is the colour settings window objects
+#if 1
+	#define MSG_WINDOW_TITLE_CHOOSE_A_COLOUR MSG_MUICLASS_WINDOWCOLORSETTINGS_CHOOSECOLOR_TITLE
+	#define MSG_COLOUR_SETTINGS_LOAD MSG_MUICLASS_WINDOWCOLORSETTINGS_LOAD_GAD
+
+	#define MSG_COLOUR_SETTINGS_SAVE MSG_MUICLASS_WINDOWCOLORSETTINGS_SAVE_GAD
+	#define MSG_COLOUR_SETTINGS_SAVE_AS MSG_MUICLASS_WINDOWCOLORSETTINGS_SAVEAS_GAD
+	#define MSG_COLOUR_SETTINGS_WINDOW_TITLE MSG_MUICLASS_WINDOWCOLORSETTINGS_TITLE
+
 	LA_CSW_background = (Object*)Label( LGS( MSG_COLOUR_SETTINGS_LABEL_BACKGROUND ));
 	MBObj->PP_CSW_background = (Object*)MUI_NewObject((char*)MUIC_Popimage,MUIA_Window_Title, LGS( MSG_WINDOW_TITLE_CHOOSE_A_COLOUR ),End;
 
@@ -1896,7 +1906,7 @@ struct ObjApp *CreateApp(void)
 	MBObj->PP_CSW_listviewtabs_normaltext = (Object*)MUI_NewObject((char*)MUIC_Poppen,MUIA_Window_Title, LGS( MSG_WINDOW_TITLE_CHOOSE_A_COLOUR ),End;
 
 	MBObj->BT_colour_settings_load = (Object*)SimpleButton( LGS( MSG_COLOUR_SETTINGS_LOAD ));
-	MBObj->BT_colour_settings_apply = (Object*)SimpleButton( LGS( MSG_COLOUR_SETTINGS_APPLY ));
+	MBObj->BT_colour_settings_apply = (Object*)SimpleButton( "Apply");
 	MBObj->BT_colour_settings_save = (Object*)SimpleButton( LGS( MSG_COLOUR_SETTINGS_SAVE ));
 	MBObj->BT_colour_settings_save_as = (Object*)SimpleButton( LGS( MSG_COLOUR_SETTINGS_SAVE_AS ));
 
@@ -1971,6 +1981,7 @@ struct ObjApp *CreateApp(void)
         MUIA_Window_ID, MAKE_ID('3', 'W', 'I', 'N'),
         WindowContents, GROUP_ROOT_6,
     End;
+#endif
     //below are menu items
 
 	MBObj->MN_ = MenustripObject,
@@ -1996,7 +2007,7 @@ struct ObjApp *CreateApp(void)
 		End,
 		Child, MN_Settings = MenuObject, MUIA_Menu_Title, LGS( MSG_MENU_SETTINGS_TITLE ),
 			Child, MN_MainSettings        = MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MENU_MAINSETTINGS_ITEM ), End,
-			Child, MN_ColourSettings      = MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MENU_COLOURSETTINGS_ITEM ), End,
+			Child, MN_ColourSettings      = MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MENU_COLORSETTINGS_ITEM ), End,
 			Child, MN_MUISettings         = MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MENU_MUISETTINGS_ITEM ), End,
 			Child, MN_MultiColumnDisplay  = MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MENU_MULTICOLUMNCHATDISPLAY_ITEM ), MUIA_Menuitem_Checkit, TRUE, MUIA_Menuitem_Toggle, TRUE, End,
 			Child, MN_Clipboard           = MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MENU_COLUMNMARKINGCLIPBOARD_ITEM ), MUIA_Menuitem_Checkit, TRUE, MUIA_Menuitem_Toggle, TRUE, End,
@@ -2620,7 +2631,7 @@ struct ObjApp *CreateApp(void)
         SubWindow, MBObj->WI_main,
         SubWindow, MBObj->WI_label_2,
         SubWindow, MBObj->WI_edit_group,
-        SubWindow, MBObj->WI_colour_settings,
+		SubWindow, MBObj->WI_colour_settings,// = WindowColorSettingsObject, End,
         SubWindow, MBObj->WI_mainsettings,
         SubWindow, MBObj->WI_dcc,  //incoming file transfers
         SubWindow, MBObj->WI_dcc2, //outgoing file transfers
@@ -2641,6 +2652,7 @@ struct ObjApp *CreateApp(void)
 	DoMethod((Object*) MN_about     , MUIM_Notify, MUIA_Menuitem_Trigger, MUIV_EveryTime, (Object*) MBObj->WI_about     , 3, MUIM_Set, MUIA_Window_Open, TRUE );
 	DoMethod((Object*) MN_urlgrabber, MUIM_Notify, MUIA_Menuitem_Trigger, MUIV_EveryTime, (Object*) MBObj->WI_urlgrabber, 3, MUIM_Set, MUIA_Window_Open, TRUE );
 	DoMethod((Object*) MN_ignorelist, MUIM_Notify, MUIA_Menuitem_Trigger, MUIV_EveryTime, (Object*) MBObj->WI_ignore, 3, MUIM_Set, MUIA_Window_Open, TRUE );
+	DoMethod((Object*) MN_ColourSettings, MUIM_Notify, MUIA_Menuitem_Trigger, MUIV_EveryTime, (Object*) MBObj->WI_colour_settings, 3, MUIM_Set, MUIA_Window_Open, TRUE );
 
     MBObj->smiley_choose_icon=NULL;
     if (!MBObj->App)

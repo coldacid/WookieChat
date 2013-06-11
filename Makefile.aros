@@ -14,7 +14,8 @@ SOURCES   = arexx_hooks.c auto_reconnect_server.c closeserverselectwin.c colours
             irc.c main.c nicklist.c pincoming.c process_outgoing.c save_settings.c \
             sortnicks.c startexit.c subclasses.c tabs_change.c tabs_create_close.c \
 			timers.c objapp.c audio.c locale.c version.c \
-			muiclass.c muiclass_windowabout.c muiclass_windowurlgrabber.c muiclass_windowignorelist.c
+			muiclass.c muiclass_windowabout.c muiclass_windowurlgrabber.c muiclass_windowignorelist.c \
+            muiclass_windowcolorsettings.c
 
 OBJECTS   = $(SOURCES:.c=.o)
 
