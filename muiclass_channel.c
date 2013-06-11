@@ -9,7 +9,7 @@
 */
 
 /*
-** muiclass_nicklist.c
+** muiclass_channel.c
 */
 
 #include <libraries/mui.h>
@@ -26,10 +26,11 @@
 
 #include "locale.h"
 #include "muiclass.h"
-#include "muiclass_nicklist.h"
+#include "muiclass_channel.h"
 #include "version.h"
 
 /*************************************************************************/
+
 
 /*
 ** gadgets used by this class
@@ -114,13 +115,13 @@ struct TagItem *tstate;
 ** Dispatcher, init and dispose
 */
 
-/* /// MCC_NickList_Dispatcher()
+/* /// MCC_Channel_Dispatcher()
 **
 */
 
 /*************************************************************************/
 
-DISPATCHER(MCC_NickList_Dispatcher)
+DISPATCHER(MCC_Channel_Dispatcher)
 {
     switch (msg->MethodID)
     {
@@ -136,29 +137,29 @@ DISPATCHER(MCC_NickList_Dispatcher)
 
 }
 /* \\\ */
-/* /// MCC_NickList_InitClass()
+/* /// MCC_Channel_InitClass()
 **
 */
 
 /*************************************************************************/
 
-ULONG MCC_NickList_InitClass( void )
+ULONG MCC_Channel_InitClass( void )
 {
-	appclasses[ CLASSID_NICKLIST ] = MUI_CreateCustomClass( NULL, MUIC_NList, NULL, sizeof( struct mccdata ) ,  (APTR) ENTRY(MCC_NickList_Dispatcher) );
-	return( appclasses[ CLASSID_NICKLIST ] ? MSG_ERROR_NOERROR : MSG_ERROR_UNABLETOSETUPMUICLASS );
+	appclasses[ CLASSID_CHANNEL ] = MUI_CreateCustomClass( NULL, MUIC_NList, NULL, sizeof( struct mccdata ) ,  (APTR) ENTRY(MCC_Channel_Dispatcher) );
+	return( appclasses[ CLASSID_CHANNEL ] ? MSG_ERROR_NOERROR : MSG_ERROR_UNABLETOSETUPMUICLASS );
 }
 /* \\\ */
-/* /// MCC_NickList_DisposeClass()
+/* /// MCC_Channel_DisposeClass()
 **
 */
 
 /*************************************************************************/
 
-void MCC_NickList_DisposeClass( void )
+void MCC_Channel_DisposeClass( void )
 {
-	if( appclasses[ CLASSID_NICKLIST ] ) {
-		MUI_DeleteCustomClass( appclasses[ CLASSID_NICKLIST ] );
-		appclasses[ CLASSID_NICKLIST ] = NULL;
+	if( appclasses[ CLASSID_CHANNEL ] ) {
+		MUI_DeleteCustomClass( appclasses[ CLASSID_CHANNEL ] );
+		appclasses[ CLASSID_CHANNEL ] = NULL;
     }
 }
 /* \\\ */

@@ -9,7 +9,7 @@
 */
 
 /*
-** muiclass_nicklist.c
+** muiclass_channellist.c
 */
 
 #include <libraries/mui.h>
@@ -26,7 +26,7 @@
 
 #include "locale.h"
 #include "muiclass.h"
-#include "muiclass_nicklist.h"
+#include "muiclass_channellist.h"
 #include "version.h"
 
 /*************************************************************************/
@@ -114,13 +114,13 @@ struct TagItem *tstate;
 ** Dispatcher, init and dispose
 */
 
-/* /// MCC_NickList_Dispatcher()
+/* /// MCC_ChannelList_Dispatcher()
 **
 */
 
 /*************************************************************************/
 
-DISPATCHER(MCC_NickList_Dispatcher)
+DISPATCHER(MCC_ChannelList_Dispatcher)
 {
     switch (msg->MethodID)
     {
@@ -136,29 +136,29 @@ DISPATCHER(MCC_NickList_Dispatcher)
 
 }
 /* \\\ */
-/* /// MCC_NickList_InitClass()
+/* /// MCC_ChannelList_InitClass()
 **
 */
 
 /*************************************************************************/
 
-ULONG MCC_NickList_InitClass( void )
+ULONG MCC_ChannelList_InitClass( void )
 {
-	appclasses[ CLASSID_NICKLIST ] = MUI_CreateCustomClass( NULL, MUIC_NList, NULL, sizeof( struct mccdata ) ,  (APTR) ENTRY(MCC_NickList_Dispatcher) );
-	return( appclasses[ CLASSID_NICKLIST ] ? MSG_ERROR_NOERROR : MSG_ERROR_UNABLETOSETUPMUICLASS );
+	appclasses[ CLASSID_CHANNELLIST ] = MUI_CreateCustomClass( NULL, MUIC_NList, NULL, sizeof( struct mccdata ) ,  (APTR) ENTRY(MCC_ChannelList_Dispatcher) );
+	return( appclasses[ CLASSID_CHANNELLIST ] ? MSG_ERROR_NOERROR : MSG_ERROR_UNABLETOSETUPMUICLASS );
 }
 /* \\\ */
-/* /// MCC_NickList_DisposeClass()
+/* /// MCC_ChannelList_DisposeClass()
 **
 */
 
 /*************************************************************************/
 
-void MCC_NickList_DisposeClass( void )
+void MCC_ChannelList_DisposeClass( void )
 {
-	if( appclasses[ CLASSID_NICKLIST ] ) {
-		MUI_DeleteCustomClass( appclasses[ CLASSID_NICKLIST ] );
-		appclasses[ CLASSID_NICKLIST ] = NULL;
+	if( appclasses[ CLASSID_CHANNELLIST ] ) {
+		MUI_DeleteCustomClass( appclasses[ CLASSID_CHANNELLIST ] );
+		appclasses[ CLASSID_CHANNELLIST ] = NULL;
     }
 }
 /* \\\ */

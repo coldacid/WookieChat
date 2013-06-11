@@ -5043,113 +5043,29 @@ Aktuell grense på brukere.
 Obecny limit u¿ytkowników.
 Nuvarande max användarantal.
 ;
+MSG_MUICLASS_WINDOWMAIN_NICKLIST_HELP
+Graphical Usermodes Key:\nGreen = Channel Operators or @\nBlue = HalfOps or \% \nYellow = Voiced Users or +
+Grafische Nutzermodi:\nGrün = KanalOperator oder @\nBlau = HalbOperator oder %\nGelb = Sprachberechtigte Nutzer oder +
+Colores según el tipo de usuario:\nVerde = operadores (@)\nAzul = medio-operadores (%)\nAmarillo = con voz (+)
+Codes des modes utilisateurs graphiques :\nVert = Opérateur du canal ou @\nBleu = Demi-Opérateur ou \% \nJaune = Voice ou +
+Graphical Usermodes Key:\nGreen = Channel Operators or @\nBlue = HalfOps or \% \nYellow = Voiced Users or +
+Pulsante modalitÃ  di utilizzo grafico utente:\nVerde = Operatori canale o @\nBlu = MezziOperatori o \% \nGiallo = Voiced Users o +
+Grafikus felhasználótípus kulcs:\nZöld = Csatorna Operátor vagy @\nKék = HalfOp vagy \% \nSárga = Voice felhasználó vagy +
+Grafisk brukermodus nøkkel:\nGrønn = kanal-oper eller @\nBlå = halvoper eller \% \nGul = voice-brukere eller +
+Graficzne tryby u¿ytkowników - podpowied¼:\nzielony = operator kana³u lub @\nniebieski = pó³operator kana³u lub \%\n¿ó³ty = u¿ytkownik z przyznanym g³osem lub +
+Färgnyckel för grafiska användarlägen:\nGrön = Operator eller @\nBlå = HalfOp eller \% \nGul = Användare med röst eller +
+;
+MSG_MUICLASS_WINDOWMAIN_MESSAGE_HELP
+Type your message here!
+Geben sie ihre Nachricht oder ihr Kommando hier ein!
+Type your message here!
+Type your message here!
+Type your message here!
+Type your message here!
+
 MSG_PREFS_GENERAL_GROUPTITLE
-General
-Allgemein
-General
-Général
-ÃåíéêÜ
-Generale
-Általános
-Generell
-G³ówne
-Generellt
-;
-MSG_PREFS_GUI_GROUPTITLE
-GUI
-GUI
-GUI
-GUI
-GUI
-GUI
-GUI
-GUI
-GUI
-GUI
-;
-MSG_PREFS_SERVERS_GROUPTITLE
-Servers
-Server
-Servidores
-Serveurs
-ÄéáêïìéóôÝò
-Server
-Kiszolgálók
-Servere
-Serwery
-Servrar
-;
-MSG_PREFS_LOGGING_GROUPTITLE
-Logging
-Mitschnitt
-Registrar
-Logging
-ÊáôáãñáöÞ
-Protocollo
-Naplózás
-Logging
-Raportowanie
-Logga
-;
-MSG_PREFS_DCC_GROUPTITLE
-DCC
-DCC
-DCC
-DCC
-DCC
-DCC
-DCC
-DCC
-DCC
-DCC
-;
-MSG_PREFS_SOUNDS_GROUPTITLE
-Sounds
-Klänge
-Sonidos
-Sons
-¹÷ïé
-Suoni
-Hangok
-Lyder
-D¼wiêki
-Ljud
-;
-MSG_PREFS_ALIAS_GROUPTITLE
-Aliases
-Aliases
-Aliases
-Alias
-Óõíþíõìá
-Alias (sinonimi)
-Helyettesítõk
-Aliaser
-Aliasy
-Alias
-;
-MSG_PREFS_NICKLISTBUTTONS_GROUPTITLE
-Nick List Buttons
-Nick List Buttons
-Nick List Buttons
-Nick List Buttons
-Nick List Buttons
-Nick List Buttons
-Nick List Buttons
-Nick List Buttons
-Nick List Buttons
-Nick List Buttons
-;
-MSG_PREFS_EVENT_GROUPTITLE
-Event
-Ereignis
-Event
-Event
-Event
-Event
-Event
-Event
-Event
-Event
+Type your message here!
+Type your message here!
 ;
 ;---------------------------------------------------------
 ; MAIN WINDOW MENU
@@ -6983,5 +6899,116 @@ MSG_MUICLASS_WINDOWQUIT_CANCEL_HELP
 /
 /
 /
+;
+;
+; MUICLASS_WINDOWPREFS
+;
+MSG_PREFS_GENERAL_GROUPTITLE
+General
+Allgemein
+General
+Général
+ÃåíéêÜ
+Generale
+Általános
+Generell
+G³ówne
+Generellt
+;
+MSG_PREFS_GUI_GROUPTITLE
+GUI
+GUI
+GUI
+GUI
+GUI
+GUI
+GUI
+GUI
+GUI
+GUI
+;
+MSG_PREFS_SERVERS_GROUPTITLE
+Servers
+Server
+Servidores
+Serveurs
+ÄéáêïìéóôÝò
+Server
+Kiszolgálók
+Servere
+Serwery
+Servrar
+;
+MSG_PREFS_LOGGING_GROUPTITLE
+Logging
+Mitschnitt
+Registrar
+Logging
+ÊáôáãñáöÞ
+Protocollo
+Naplózás
+Logging
+Raportowanie
+Logga
+;
+MSG_PREFS_DCC_GROUPTITLE
+DCC
+DCC
+DCC
+DCC
+DCC
+DCC
+DCC
+DCC
+DCC
+DCC
+;
+MSG_PREFS_SOUNDS_GROUPTITLE
+Sounds
+Klänge
+Sonidos
+Sons
+¹÷ïé
+Suoni
+Hangok
+Lyder
+D¼wiêki
+Ljud
+;
+MSG_PREFS_ALIAS_GROUPTITLE
+Aliases
+Aliases
+Aliases
+Alias
+Óõíþíõìá
+Alias (sinonimi)
+Helyettesítõk
+Aliaser
+Aliasy
+Alias
+;
+MSG_PREFS_NICKLISTBUTTONS_GROUPTITLE
+Nick List Buttons
+Nick List Buttons
+Nick List Buttons
+Nick List Buttons
+Nick List Buttons
+Nick List Buttons
+Nick List Buttons
+Nick List Buttons
+Nick List Buttons
+Nick List Buttons
+;
+MSG_PREFS_EVENT_GROUPTITLE
+Event
+Ereignis
+Event
+Event
+Event
+Event
+Event
+Event
+Event
+Event
 ;
 

@@ -30,6 +30,8 @@
 #include "muiclass_windowmain.h"
 #include "muiclass_windowquit.h"
 #include "muiclass_nicklist.h"
+#include "muiclass_channellist.h"
+#include "muiclass_channel.h"
 #include "version.h"
 #include "intern.h"
 
@@ -80,6 +82,9 @@ GID_MODEKEYWORD,
 GID_MODEL,
 GID_MODELIMIT,
 GID_NICKLIST,
+GID_CHANNELLIST,
+GID_CHANNEL,
+GID_MESSAGE,
 GID_LAST
 };
 
@@ -87,6 +92,7 @@ GID_LAST
 #define TOPIC_SIZEOF 0x400
 #define KEYWORDLIMIT_SIZEOF 40
 #define USERLIMIT_SIZEOF    40
+#define MESSAGE_SIZEOF      40
 
 #define FIRSTMENU_ITEM MID_SELECTSERVER	
 #define LASTMENU_ITEM MID_IGNORELIST
@@ -156,7 +162,7 @@ Object *objs[ GID_LAST ];
 			WindowContents, VGroup,
 						Child, HGroup,
 							Child, objs[ GID_CLOSETAB    ] = MUICreateSmallButton( MSG_MUICLASS_WINDOWMAIN_CLOSETAB_GAD ),
-							Child, objs[ GID_TOPIC ] = MUICreateString( MSG_MUICLASS_WINDOWMAIN_TOPIC_HELP-1, TOPIC_SIZEOF ),
+							Child, objs[ GID_TOPIC       ] = MUICreateString( MSG_MUICLASS_WINDOWMAIN_TOPIC_HELP-1, TOPIC_SIZEOF ),
 							Child, BalanceObject, End,
 							Child, objs[ GID_MODET       ] = MUICreateSmallButton( MSG_MUICLASS_WINDOWMAIN_MODET_GAD ),
 							Child, objs[ GID_MODEN       ] = MUICreateSmallButton( MSG_MUICLASS_WINDOWMAIN_MODEN_GAD ),
@@ -170,7 +176,15 @@ Object *objs[ GID_LAST ];
 							Child, objs[ GID_MODEL       ] = MUICreateSmallButton( MSG_MUICLASS_WINDOWMAIN_MODEL_GAD ),
 							Child, objs[ GID_MODELIMIT   ] = MUICreateString( MSG_MUICLASS_WINDOWMAIN_MODELIMIT_HELP-1, USERLIMIT_SIZEOF ),
 						End,
-						Child, NListviewObject, MUIA_NListview_NList, objs[ GID_NICKLIST ] = NickListObject, End, End,
+						Child, HGroup,
+							Child, NListviewObject, MUIA_NListview_NList, objs[ GID_CHANNEL ] = ChannelObject, End, End,
+							Child, VGroup,
+								Child, NListviewObject, MUIA_NListview_NList, objs[ GID_NICKLIST    ] = NickListObject, End, MUIA_ShortHelp, LGS( MSG_MUICLASS_WINDOWMAIN_NICKLIST_HELP ), End,
+								Child, NListviewObject, MUIA_NListview_NList, objs[ GID_CHANNELLIST ] = ChannelListObject, End, End,
+							End,
+						 End,
+						Child, objs[ GID_MESSAGE         ] = MUICreateString( MSG_MUICLASS_WINDOWMAIN_MESSAGE_HELP-1, MESSAGE_SIZEOF ),
+
 					 End,
 		TAG_DONE ) ) ) {
 		ULONG i;
@@ -230,7 +244,7 @@ Object *quitwin;
 
 static ULONG MM_MenuSelect( struct IClass *cl, Object *obj, struct MP_WINDOWMAIN_MENUSELECT *msg )
 {
-struct mccdata *mccdata = INST_DATA( cl, obj );
+//struct mccdata *mccdata = INST_DATA( cl, obj );
 Object *tmpobj;
 
 	switch( msg->MenuID ) {

@@ -1674,41 +1674,13 @@ MSG_MUICLASS_WINDOWMAIN_MODELIMIT_HELP
 Limite d'utilisateurs actuelle.
 ; Current user limit.
 ;
-MSG_PREFS_GENERAL_GROUPTITLE
-Général
-; General
+MSG_MUICLASS_WINDOWMAIN_NICKLIST_HELP
+Codes des modes utilisateurs graphiques :\nVert = Opérateur du canal ou @\nBleu = Demi-Opérateur ou \% \nJaune = Voice ou +
+; Graphical Usermodes Key:\nGreen = Channel Operators or @\nBlue = HalfOps or \% \nYellow = Voiced Users or +
 ;
-MSG_PREFS_GUI_GROUPTITLE
-GUI
-; GUI
-;
-MSG_PREFS_SERVERS_GROUPTITLE
-Serveurs
-; Servers
-;
-MSG_PREFS_LOGGING_GROUPTITLE
-Logging
-; Logging
-;
-MSG_PREFS_DCC_GROUPTITLE
-DCC
-; DCC
-;
-MSG_PREFS_SOUNDS_GROUPTITLE
-Sons
-; Sounds
-;
-MSG_PREFS_ALIAS_GROUPTITLE
-Alias
-; Aliases
-;
-MSG_PREFS_NICKLISTBUTTONS_GROUPTITLE
-Nick List Buttons
-; Nick List Buttons
-;
-MSG_PREFS_EVENT_GROUPTITLE
-Event
-; Event
+MSG_MUICLASS_WINDOWMAIN_MESSAGE_HELP
+Type your message here!
+; Type your message here!
 ;
 ;---------------------------------------------------------
 ; MAIN WINDOW MENU
@@ -2332,4 +2304,43 @@ _Cancel
 MSG_MUICLASS_WINDOWQUIT_CANCEL_HELP
 /
 ; /
+;
+;
+; MUICLASS_WINDOWPREFS
+;
+MSG_PREFS_GENERAL_GROUPTITLE
+Général
+; General
+;
+MSG_PREFS_GUI_GROUPTITLE
+GUI
+; GUI
+;
+MSG_PREFS_SERVERS_GROUPTITLE
+Serveurs
+; Servers
+;
+MSG_PREFS_LOGGING_GROUPTITLE
+Logging
+; Logging
+;
+MSG_PREFS_DCC_GROUPTITLE
+DCC
+; DCC
+;
+MSG_PREFS_SOUNDS_GROUPTITLE
+Sons
+; Sounds
+;
+MSG_PREFS_ALIAS_GROUPTITLE
+Alias
+; Aliases
+;
+MSG_PREFS_NICKLISTBUTTONS_GROUPTITLE
+Nick List Buttons
+; Nick List Buttons
+;
+MSG_PREFS_EVENT_GROUPTITLE
+Event
+; Event
 ;

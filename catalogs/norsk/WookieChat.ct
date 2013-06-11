@@ -1672,41 +1672,13 @@ MSG_MUICLASS_WINDOWMAIN_MODELIMIT_HELP
 Aktuell grense på brukere.
 ; Current user limit.
 ;
+MSG_MUICLASS_WINDOWMAIN_NICKLIST_HELP
+Grafisk brukermodus nøkkel:\nGrønn = kanal-oper eller @\nBlå = halvoper eller \% \nGul = voice-brukere eller +
+; Graphical Usermodes Key:\nGreen = Channel Operators or @\nBlue = HalfOps or \% \nYellow = Voiced Users or +
+;
+MSG_MUICLASS_WINDOWMAIN_MESSAGE_HELP
 MSG_PREFS_GENERAL_GROUPTITLE
-Generell
-; General
-;
-MSG_PREFS_GUI_GROUPTITLE
-GUI
-; GUI
-;
-MSG_PREFS_SERVERS_GROUPTITLE
-Servere
-; Servers
-;
-MSG_PREFS_LOGGING_GROUPTITLE
-Logging
-; Logging
-;
-MSG_PREFS_DCC_GROUPTITLE
-DCC
-; DCC
-;
-MSG_PREFS_SOUNDS_GROUPTITLE
-Lyder
-; Sounds
-;
-MSG_PREFS_ALIAS_GROUPTITLE
-Aliaser
-; Aliases
-;
-MSG_PREFS_NICKLISTBUTTONS_GROUPTITLE
-Nick List Buttons
-; Nick List Buttons
-;
-MSG_PREFS_EVENT_GROUPTITLE
-Event
-; Event
+; Type your message here!
 ;
 ;---------------------------------------------------------
 ; MAIN WINDOW MENU
@@ -2330,4 +2302,43 @@ _Cancel
 MSG_MUICLASS_WINDOWQUIT_CANCEL_HELP
 /
 ; /
+;
+;
+; MUICLASS_WINDOWPREFS
+;
+MSG_PREFS_GENERAL_GROUPTITLE
+Generell
+; General
+;
+MSG_PREFS_GUI_GROUPTITLE
+GUI
+; GUI
+;
+MSG_PREFS_SERVERS_GROUPTITLE
+Servere
+; Servers
+;
+MSG_PREFS_LOGGING_GROUPTITLE
+Logging
+; Logging
+;
+MSG_PREFS_DCC_GROUPTITLE
+DCC
+; DCC
+;
+MSG_PREFS_SOUNDS_GROUPTITLE
+Lyder
+; Sounds
+;
+MSG_PREFS_ALIAS_GROUPTITLE
+Aliaser
+; Aliases
+;
+MSG_PREFS_NICKLISTBUTTONS_GROUPTITLE
+Nick List Buttons
+; Nick List Buttons
+;
+MSG_PREFS_EVENT_GROUPTITLE
+Event
+; Event
 ;

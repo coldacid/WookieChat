@@ -32,6 +32,8 @@
 #include "muiclass_windowignorelist.h"
 #include "muiclass_windowurlgrabber.h"
 #include "muiclass_nicklist.h"
+#include "muiclass_channellist.h"
+#include "muiclass_channel.h"
 
 #ifndef MUIA_Text_HiIndex
  #define MUIA_Text_HiIndex 0x804214f5
@@ -64,10 +66,14 @@ ULONG result;
 						if( !(result = MCC_WindowColorSettings_InitClass() ) ) {
 							if( !(result = MCC_WindowQuit_InitClass() ) ) {
 								if( !(result = MCC_NickList_InitClass() ) ) {
-									if( ( application = NewObject( appclasses[ CLASSID_APPLICATION ]->mcc_Class, NULL, TAG_DONE ) ) ) {
-										DoMethod( application, MM_APPLICATION_STARTUP );
-									} else {
-										result = MSG_ERROR_UNABLETOSETUPMUICLASS;
+									if( !(result = MCC_ChannelList_InitClass() ) ) {
+										if( !(result = MCC_Channel_InitClass() ) ) {
+											if( ( application = NewObject( appclasses[ CLASSID_APPLICATION ]->mcc_Class, NULL, TAG_DONE ) ) ) {
+												DoMethod( application, MM_APPLICATION_STARTUP );
+											} else {
+												result = MSG_ERROR_UNABLETOSETUPMUICLASS;
+											}
+										}
 									}
 								}
 							}
@@ -93,6 +99,8 @@ void MUIClass_Close( void )
 		application = NULL;
     }
 
+	MCC_Channel_DisposeClass();
+	MCC_ChannelList_DisposeClass();
 	MCC_NickList_DisposeClass();
 	MCC_WindowAbout_DisposeClass();
 	MCC_WindowURLGrabber_DisposeClass();

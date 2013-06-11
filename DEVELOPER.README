@@ -1,0 +1,47 @@
+
+WookieChat Developer Information
+---------------------------------
+
+Since the original WookieChat code is completly twisted and uses tons of
+globals, I decided at some point, that it is not possible to convert all windows
+to window sub classes one by one.
+
+Breaking the code apart is no option, too, so I choosed a more radical way. I
+recreated all windows as separate sub classes as planned, but I did not replace
+them all. Instead I created a separate application, which is used and running in
+the old environment. To avoid crashes due no created objects, all old windows
+and even the original application gets created as before.
+
+Use the switch ENABLE_NEWWOOKIECODE in file intern.h to switch between old and
+new wookiechat.
+
+What are the steps to go now?
+
+Well, first of all I plan to create all missing windows as proper subclasses. If
+possible I will remove them from original code. This is not always possible, as
+due the twisted code global references are used all over the place. Basically
+currently only the server and the main preferences window are missing.
+
+The main goal is to convert WookieChat into a real mui application without any
+global variables beside the library bases.
+
+NOTE: If you feel the need to add a global var, then you are doing something
+wrong. Please contact the developers before messing anything up.
+
+I know class based mui coding is not very handy, compared to some crappy
+returnid check, but once you get behind it, it will benefit the work with
+providing a clean and readable code.
+
+Since the old code is using old preferences, I plan not to keep the file formats
+in all cases. Currently the URL-grabber and the ignore list are 100% compatible,
+but e.g. starting with color, keeping it compatible would result in additional
+code. Same for the main settings. Many fields already got obsolete, so using a
+new format - basically we keep the text format, but change the values and names
+a little to respect the new gained clean code. New names will be used in such
+cases, so there wont be any mixup.
+
+Since the original WookieChat dumped all config files into PROGDIR:. The goal
+for V3.0 should be using a Prefs drawer within PROGDIR: and keep all files
+and presets inside.
+
+
