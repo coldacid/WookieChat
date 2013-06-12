@@ -110,6 +110,7 @@ Object *objs[ GID_LAST ];
 
 		/* load settings */
 
+		DoMethod( obj, MUIM_Application_Load, MUIV_Application_Load_ENVARC );
 		DoMethod( obj, MUIM_Application_Load, MUIV_Application_Load_ENV );
 		
 		return( (ULONG) obj );

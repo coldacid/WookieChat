@@ -70,21 +70,21 @@ struct ConfigItem {
 };
 
 static struct ConfigItem TAB_CONFIGITEMS[] = {
-	{ GID_EDITOR           , OID_EDITOR           , MUIA_String_Contents, (LONG) "Ed" },
+	{ GID_EDITOR           , OID_GEN_EDITOR           , MUIA_String_Contents, (LONG) "Ed" },
 #ifdef __MORPHOS__
-	{ GID_BROWSER          , OID_BROWSER          , MUIA_String_Contents, (LONG) "Open" },
+	{ GID_BROWSER          , OID_GEN_BROWSER          , MUIA_String_Contents, (LONG) "Open" },
 #else
-	{ GID_BROWSER          , OID_BROWSER          , MUIA_String_Contents, (LONG) "" },
+	{ GID_BROWSER          , OID_GEN_BROWSER          , MUIA_String_Contents, (LONG) "" },
 #endif
-	{ GID_MSGKICK          , OID_MSGKICK          , MUIA_String_Contents, (LONG) "Pfffffffffffffffffft" },
-	{ GID_MSGQUIT          , OID_MSGQUIT          , MUIA_String_Contents, (LONG) "Heroes never die...They just reload!" },
-	{ GID_MSGPART          , OID_MSGPART          , MUIA_String_Contents, (LONG) "Heroes never die...They just reload!" },
-	{ GID_OPENPRIVATEQUERY , OID_OPENPRIVATEQUERY , MUIA_Selected       , -1 },
-	{ GID_REQUESTWHOIS     , OID_REQUESTWHOIS     , MUIA_Selected       ,  0 },
-	{ GID_REJOIN           , OID_REJOIN           , MUIA_Selected       ,  0 },
-	{ GID_OPENQUERY        , OID_OPENQUERY        , MUIA_Selected       , -1 },
-	{ GID_HIGHLIGHTPATTERN , OID_HIGHLIGHTPATTERN , MUIA_String_Contents, (LONG) "" },
-	{ GID_NICKCOMPLETITION , OID_NICKCOMPLETITION , MUIA_Cycle_Active   , 0 },
+	{ GID_MSGKICK          , OID_GEN_MSGKICK          , MUIA_String_Contents, (LONG) "Pfffffffffffffffffft" },
+	{ GID_MSGQUIT          , OID_GEN_MSGQUIT          , MUIA_String_Contents, (LONG) "Heroes never die...They just reload!" },
+	{ GID_MSGPART          , OID_GEN_MSGPART          , MUIA_String_Contents, (LONG) "Heroes never die...They just reload!" },
+	{ GID_OPENPRIVATEQUERY , OID_GEN_OPENPRIVATEQUERY , MUIA_Selected       , -1 },
+	{ GID_REQUESTWHOIS     , OID_GEN_REQUESTWHOIS     , MUIA_Selected       ,  0 },
+	{ GID_REJOIN           , OID_GEN_REJOIN           , MUIA_Selected       ,  0 },
+	{ GID_OPENQUERY        , OID_GEN_OPENQUERY        , MUIA_Selected       , -1 },
+	{ GID_HIGHLIGHTPATTERN , OID_GEN_HIGHLIGHTPATTERN , MUIA_String_Contents, (LONG) "" },
+	{ GID_NICKCOMPLETITION , OID_GEN_NICKCOMPLETITION , MUIA_Cycle_Active   , 0 },
 	{ -1,0,0,0 },
 };
 

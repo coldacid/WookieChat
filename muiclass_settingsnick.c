@@ -64,27 +64,27 @@ struct ConfigItem {
 
 static struct ConfigItem TAB_CONFIGITEMS[] = {
 #ifdef __MORPHOS__
-	{ GID_NICK             , OID_NICK    , MUIA_String_Contents, (LONG) "MorphOSUser" },
-	{ GID_NICK1            , OID_NICK1   , MUIA_String_Contents, (LONG) "MorphOSUser_" },
-	{ GID_NICK2            , OID_NICK2   , MUIA_String_Contents, (LONG) "MorphOSUser__" },
-	{ GID_USERNAME         , OID_USERNAME, MUIA_String_Contents, (LONG) "MorphOSUser__" },
+	{ GID_NICK             , OID_NIK_NICK    , MUIA_String_Contents, (LONG) "MorphOSUser" },
+	{ GID_NICK1            , OID_NIK_NICK1   , MUIA_String_Contents, (LONG) "MorphOSUser_" },
+	{ GID_NICK2            , OID_NIK_NICK2   , MUIA_String_Contents, (LONG) "MorphOSUser__" },
+	{ GID_USERNAME         , OID_NIK_USERNAME, MUIA_String_Contents, (LONG) "MorphOSUser__" },
 #elif __AROS__
-	{ GID_NICK             , OID_NICK    , MUIA_String_Contents, (LONG) "AROSUser" },
-	{ GID_NICK1            , OID_NICK1   , MUIA_String_Contents, (LONG) "AROSUser_" },
-	{ GID_NICK2            , OID_NICK2   , MUIA_String_Contents, (LONG) "AROSUser__"  },
-	{ GID_USERNAME         , OID_USERNAME, MUIA_String_Contents, (LONG) "AROSUser" },
+	{ GID_NICK             , OID_NIK_NICK    , MUIA_String_Contents, (LONG) "AROSUser" },
+	{ GID_NICK1            , OID_NIK_NICK1   , MUIA_String_Contents, (LONG) "AROSUser_" },
+	{ GID_NICK2            , OID_NIK_NICK2   , MUIA_String_Contents, (LONG) "AROSUser__"  },
+	{ GID_USERNAME         , OID_NIK_USERNAME, MUIA_String_Contents, (LONG) "AROSUser" },
 #elif __amigaos4__
-	{ GID_NICK             , OID_NICK    , MUIA_String_Contents, (LONG) "AmigaOS4User"  },
-	{ GID_NICK1            , OID_NICK1   , MUIA_String_Contents, (LONG) "AmigaOS4User_"  },
-	{ GID_NICK2            , OID_NICK2   , MUIA_String_Contents, (LONG) "AmigaOS4User__"  },
-	{ GID_USERNAME         , OID_USERNAME, MUIA_String_Contents, (LONG) "AmigaOS4User"  },
+	{ GID_NICK             , OID_NIK_NICK    , MUIA_String_Contents, (LONG) "AmigaOS4User"  },
+	{ GID_NICK1            , OID_NIK_NICK1   , MUIA_String_Contents, (LONG) "AmigaOS4User_"  },
+	{ GID_NICK2            , OID_NIK_NICK2   , MUIA_String_Contents, (LONG) "AmigaOS4User__"  },
+	{ GID_USERNAME         , OID_NIK_USERNAME, MUIA_String_Contents, (LONG) "AmigaOS4User"  },
 #else
-	{ GID_NICK             , OID_NICK    , MUIA_String_Contents, (LONG) "AmigaUser"   },
-	{ GID_NICK1            , OID_NICK1   , MUIA_String_Contents, (LONG) "AmigaUser_"  },
-	{ GID_NICK2            , OID_NICK2   , MUIA_String_Contents, (LONG) "AmigaUser__" },
-	{ GID_USERNAME         , OID_USERNAME, MUIA_String_Contents, (LONG) "AmigaUser"   },
+	{ GID_NICK             , OID_NIK_NICK    , MUIA_String_Contents, (LONG) "AmigaUser"   },
+	{ GID_NICK1            , OID_NIK_NICK1   , MUIA_String_Contents, (LONG) "AmigaUser_"  },
+	{ GID_NICK2            , OID_NIK_NICK2   , MUIA_String_Contents, (LONG) "AmigaUser__" },
+	{ GID_USERNAME         , OID_NIK_USERNAME, MUIA_String_Contents, (LONG) "AmigaUser"   },
 #endif
-	{ GID_REALNAME         , OID_REALNAME, MUIA_String_Contents, (LONG) "John Wookie" },
+	{ GID_REALNAME         , OID_NIK_REALNAME, MUIA_String_Contents, (LONG) "John Wookie" },
 	{ -1,0,0,0 },
 };
 

@@ -31,6 +31,7 @@
 #include "muiclass_settingsnick.h"
 #include "muiclass_settingsgeneral.h"
 #include "muiclass_settingscolor.h"
+#include "muiclass_settingssound.h"
 #include "version.h"
 #include "intern.h"
 
@@ -53,6 +54,7 @@ GID_PAGEGROUP,
 GID_NICK,
 GID_GENERAL,
 GID_COLOR,
+GID_SOUND,
 GID_SAVE,
 GID_USE,
 GID_CANCEL,
@@ -105,7 +107,7 @@ ULONG i;
 			MUIA_Window_NoMenus	       	 , TRUE,
 
 			WindowContents, VGroup,
-				Child, HGroup,
+				Child, HGroup, 
 					Child, objs[ GID_PAGELIST ] = NListviewObject, MUIA_NListview_NList, NListObject,
 															MUIA_Frame               , MUIV_Frame_InputList,
 															MUIA_NList_ConstructHook , MUIV_NList_ConstructHook_String,
@@ -116,7 +118,7 @@ ULONG i;
 															MUIA_NListview_Horiz_ScrollBar, MUIV_NListview_HSB_Auto,
 															MUIA_FixWidthTxt, "WWWWWWWWWWWWW",
 														End,
-					Child, HGroup,
+					Child, HGroup, MUIA_Weight, 10,
 						Child, HVSpace,
 						Child, VGroup,
 							Child, HVSpace,
@@ -128,7 +130,7 @@ ULONG i;
 								Child, HVSpace,
 								Child, HVSpace,
 								Child, HVSpace,
-								Child, HVSpace,
+								Child, objs[ GID_SOUND   ] = SettingsSoundObject, End,
 								Child, HVSpace,
 								Child, HVSpace,
 								Child, HVSpace,
@@ -185,11 +187,11 @@ struct mccdata *mccdata = INST_DATA( cl, obj );
 	DoMethod( obj                                      , MUIM_Notify, MUIA_Window_CloseRequest, TRUE          , obj                  , 2, MUIM_Application_Load, MUIV_Application_Load_ENV    );
 	DoMethod( mccdata->mcc_ClassObjects[ GID_PAGELIST ], MUIM_Notify, MUIA_NList_Active       , MUIV_EveryTime, mccdata->mcc_ClassObjects[ GID_PAGEGROUP ], 3, MUIM_Set, MUIA_Group_ActivePage, MUIV_TriggerValue );
 
-	DoMethod( mccdata->mcc_ClassObjects[ GID_SAVE     ], MUIM_Notify, MUIA_Pressed            , FALSE         , _app(obj)            , 3, MUIM_Set, MUIA_Window_Open     , FALSE );
+	DoMethod( mccdata->mcc_ClassObjects[ GID_SAVE     ], MUIM_Notify, MUIA_Pressed            , FALSE         , obj                  , 3, MUIM_Set, MUIA_Window_Open     , FALSE );
 	DoMethod( mccdata->mcc_ClassObjects[ GID_SAVE     ], MUIM_Notify, MUIA_Pressed            , FALSE         , _app(obj)            , 2, MUIM_Application_Save, MUIV_Application_Save_ENVARC );
-	DoMethod( mccdata->mcc_ClassObjects[ GID_USE      ], MUIM_Notify, MUIA_Pressed            , FALSE         , _app(obj)            , 3, MUIM_Set, MUIA_Window_Open     , FALSE );
+	DoMethod( mccdata->mcc_ClassObjects[ GID_USE      ], MUIM_Notify, MUIA_Pressed            , FALSE         , obj                  , 3, MUIM_Set, MUIA_Window_Open     , FALSE );
 	DoMethod( mccdata->mcc_ClassObjects[ GID_USE      ], MUIM_Notify, MUIA_Pressed            , FALSE         , _app(obj)            , 2, MUIM_Application_Save, MUIV_Application_Save_ENV    );
-	DoMethod( mccdata->mcc_ClassObjects[ GID_CANCEL   ], MUIM_Notify, MUIA_Pressed            , FALSE         , _app(obj)            , 3, MUIM_Set, MUIA_Window_Open     , FALSE );
+	DoMethod( mccdata->mcc_ClassObjects[ GID_CANCEL   ], MUIM_Notify, MUIA_Pressed            , FALSE         , obj                  , 3, MUIM_Set, MUIA_Window_Open     , FALSE );
 	DoMethod( mccdata->mcc_ClassObjects[ GID_CANCEL   ], MUIM_Notify, MUIA_Pressed            , FALSE         , _app(obj)            , 2, MUIM_Application_Load, MUIV_Application_Load_ENV    );
 
 	return( DoSuperMethodA( cl, obj, msg ) );

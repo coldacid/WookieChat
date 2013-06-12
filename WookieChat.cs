@@ -7682,4 +7682,211 @@ MSG_MUICLASS_SETTINGSGENERAL_HIGHLIGHT_HELP
 /
 /
 ;
+;
+; MUICLASS_SETTINGSSOUND
+;
+MSG_MUICLASS_SETTINGSSOUND_PLAYSAMPLE_INFO
+Play sample...
+Ton abspielen ...
+Play sample...
+Play sample...
+Play sample...
+Play sample...
+Play sample...
+Play sample...
+Play sample...
+Play sample...
+;
+MSG_MUICLASS_SETTINGSSOUND_TABOPENING_GAD
+on tab opening:
+on tab opening:
+on tab opening:
+on tab opening:
+on tab opening:
+on tab opening:
+on tab opening:
+on tab opening:
+on tab opening:
+on tab opening:
+;
+MSG_MUICLASS_SETTINGSSOUND_TABOPENING_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
+MSG_MUICLASS_SETTINGSSOUND_TABOPENINGSAMPLE_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
+MSG_MUICLASS_SETTINGSSOUND_ONHIGHLIGHT_GAD
+on highlight:
+on highlight:
+on highlight:
+on highlight:
+on highlight:
+on highlight:
+on highlight:
+on highlight:
+on highlight:
+on highlight:
+;
+MSG_MUICLASS_SETTINGSSOUND_ONHIGHLIGHT_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
+MSG_MUICLASS_SETTINGSSOUND_ONHIGHLIGHTSAMPLE_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
+MSG_MUICLASS_SETTINGSSOUND_ONPRIVMSG_GAD
+when private message arrives:
+when private message arrives:
+when private message arrives:
+when private message arrives:
+when private message arrives:
+when private message arrives:
+when private message arrives:
+when private message arrives:
+when private message arrives:
+when private message arrives:
+;
+MSG_MUICLASS_SETTINGSSOUND_ONPRIVMSG_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
+MSG_MUICLASS_SETTINGSSOUND_CTCPSAMPLES_GAD
+CTCP Samples:
+CTCP Samples:
+CTCP Samples:
+CTCP Samples:
+CTCP Samples:
+CTCP Samples:
+CTCP Samples:
+CTCP Samples:
+CTCP Samples:
+CTCP Samples:
+;
+MSG_MUICLASS_SETTINGSSOUND_CTCPSAMPLES_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
+MSG_MUICLASS_SETTINGSSOUND_USESAMPLEPLAYER_GAD
+Use external sample player:
+Externes Programm zum Abspielen nutzen:
+Use external sample player:
+Use external sample player:
+Use external sample player:
+Use external sample player:
+Use external sample player:
+Use external sample player:
+Use external sample player:
+Use external sample player:
+;
+MSG_MUICLASS_SETTINGSSOUND_USESAMPLEPLAYER_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
+MSG_CY_NEVER
+Never
+Never
+Never
+Never
+Never
+Never
+Never
+Never
+Never
+Never
+;
+MSG_CY_ALWAYS
+Always
+Always
+Always
+Always
+Always
+Always
+Always
+Always
+Always
+Always
+;
+MSG_CY_WINDOWISINACTIVE
+Window is inactive
+Window is inactive
+Window is inactive
+Window is inactive
+Window is inactive
+Window is inactive
+Window is inactive
+Window is inactive
+Window is inactive
+Window is inactive
+;
+MSG_CY_TABISINACTIVE
+Tab is inactive
+Tab is inactive
+Tab is inactive
+Tab is inactive
+Tab is inactive
+Tab is inactive
+Tab is inactive
+Tab is inactive
+Tab is inactive
+Tab is inactive
+;
 
