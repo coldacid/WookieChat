@@ -6150,9 +6150,9 @@ Pozosta³o czasu
 Tid kvar
 ;
 ;
-; MUICLASS_WINDOWCOLORSETTINGS
+; MUICLASS_SETTINGSCOLOR
 ;
-MSG_MUICLASS_WINDOWCOLORSETTINGS_TITLE
+MSG_MUICLASS_SETTINGSCOLOR_TITLE
 Color settings...
 Farbeinstellungen ...
 Colores...
@@ -6164,7 +6164,7 @@ Fargeinnstillinger...
 Ustawienia kolorów...
 Färginställningar ...
 ;
-MSG_MUICLASS_WINDOWCOLORSETTINGS_LOAD_GAD
+MSG_MUICLASS_SETTINGSCOLOR_LOAD_GAD
 Load...
 Laden ...
 Cargar...
@@ -6176,7 +6176,7 @@ Hente...
 Wczytaj...
 Ladda...
 ;
-MSG_MUICLASS_WINDOWCOLORSETTINGS_LOAD_HELP
+MSG_MUICLASS_SETTINGSCOLOR_LOAD_HELP
 /
 /
 /
@@ -6188,7 +6188,7 @@ MSG_MUICLASS_WINDOWCOLORSETTINGS_LOAD_HELP
 /
 /
 ;
-MSG_MUICLASS_WINDOWCOLORSETTINGS_SAVE_GAD
+MSG_MUICLASS_SETTINGSCOLOR_SAVE_GAD
 Save
 Speichern
 Guardar
@@ -6200,7 +6200,7 @@ Lagre
 Zapisz
 Spara
 ;
-MSG_MUICLASS_WINDOWCOLORSETTINGS_SAVE_HELP
+MSG_MUICLASS_SETTINGSCOLOR_SAVE_HELP
 /
 /
 /
@@ -6212,7 +6212,7 @@ MSG_MUICLASS_WINDOWCOLORSETTINGS_SAVE_HELP
 /
 /
 ;
-MSG_MUICLASS_WINDOWCOLORSETTINGS_SAVEAS_GAD
+MSG_MUICLASS_SETTINGSCOLOR_SAVEAS_GAD
 Save as...
 Speichern als ...
 Guardar como...
@@ -6224,7 +6224,7 @@ Lagre som...
 Zapisz jako...
 Spara som...
 ;
-MSG_MUICLASS_WINDOWCOLORSETTINGS_SAVEAS_HELP
+MSG_MUICLASS_SETTINGSCOLOR_SAVEAS_HELP
 /
 /
 /
@@ -6236,7 +6236,7 @@ MSG_MUICLASS_WINDOWCOLORSETTINGS_SAVEAS_HELP
 /
 /
 ;
-MSG_MUICLASS_WINDOWCOLORSETTINGS_CHOOSECOLOR_TITLE
+MSG_MUICLASS_SETTINGSCOLOR_CHOOSECOLOR_TITLE
 Choose Color
 Farbe wählen
 Elija color
@@ -6248,7 +6248,7 @@ Velg farge
 Wybierz kolor
 Välj färg
 ;
-MSG_MUICLASS_WINDOWCOLORSETTINGS_BACKGROUND_GAD
+MSG_MUICLASS_SETTINGSCOLOR_BACKGROUND_GAD
 Background:
 Hintergrund:
 Fondo:
@@ -6260,7 +6260,7 @@ Bakgrunn:
 Background:
 Bakgrund:
 ;
-MSG_MUICLASS_WINDOWCOLORSETTINGS_BACKGROUND_HELP
+MSG_MUICLASS_SETTINGSCOLOR_BACKGROUND_HELP
 /
 /
 /
@@ -6272,7 +6272,7 @@ MSG_MUICLASS_WINDOWCOLORSETTINGS_BACKGROUND_HELP
 /
 /
 ;
-MSG_MUICLASS_WINDOWCOLORSETTINGS_NICKLISTBG_GAD
+MSG_MUICLASS_SETTINGSCOLOR_NICKLISTBG_GAD
 Nicklist background:
 Namenslisten-Hintergrund:
 Lista aliases (fondo):
@@ -6284,7 +6284,7 @@ Bakgrunn for nickliste:
 Nicklist background:
 Bakgrund nicklista:
 ;
-MSG_MUICLASS_WINDOWCOLORSETTINGS_NICKLISTBG_HELP
+MSG_MUICLASS_SETTINGSCOLOR_NICKLISTBG_HELP
 /
 /
 /
@@ -6296,7 +6296,7 @@ MSG_MUICLASS_WINDOWCOLORSETTINGS_NICKLISTBG_HELP
 /
 /
 ;
-MSG_MUICLASS_WINDOWCOLORSETTINGS_TABLISTBG_GAD
+MSG_MUICLASS_SETTINGSCOLOR_TABLISTBG_GAD
 Tabs background:
 Tab-Hintergrund:
  Lista cans./servs. (fondo):
@@ -6308,7 +6308,7 @@ Tabs bakgrunn:
 T³o zak³adek:
 Bakgrund flikar:
 ;
-MSG_MUICLASS_WINDOWCOLORSETTINGS_TABLISTBG_HELP
+MSG_MUICLASS_SETTINGSCOLOR_TABLISTBG_HELP
 /
 /
 /
@@ -6320,7 +6320,7 @@ MSG_MUICLASS_WINDOWCOLORSETTINGS_TABLISTBG_HELP
 /
 /
 ;
-MSG_MUICLASS_WINDOWCOLORSETTINGS_NORMAL_GAD
+MSG_MUICLASS_SETTINGSCOLOR_NORMAL_GAD
 Normal:
 Normal:
  Normal:
@@ -6332,7 +6332,7 @@ Normal:
 Normalny:
 Normal:
 ;
-MSG_MUICLASS_WINDOWCOLORSETTINGS_NORMAL_HELP
+MSG_MUICLASS_SETTINGSCOLOR_NORMAL_HELP
 /
 /
 /
@@ -6344,7 +6344,7 @@ MSG_MUICLASS_WINDOWCOLORSETTINGS_NORMAL_HELP
 /
 /
 ;
-MSG_MUICLASS_WINDOWCOLORSETTINGS_NICKLISTTX_GAD
+MSG_MUICLASS_SETTINGSCOLOR_NICKLISTTX_GAD
 Nicklist text:
 Namenslisten-Text:
 Lista aliases (texto):
@@ -6356,7 +6356,7 @@ Tekst nickliste:
 Pisak listy pseudonimów:
 Text nicklista:
 ;
-MSG_MUICLASS_WINDOWCOLORSETTINGS_NICKLISTTX_HELP
+MSG_MUICLASS_SETTINGSCOLOR_NICKLISTTX_HELP
 /
 /
 /
@@ -6368,7 +6368,7 @@ MSG_MUICLASS_WINDOWCOLORSETTINGS_NICKLISTTX_HELP
 /
 /
 ;
-MSG_MUICLASS_WINDOWCOLORSETTINGS_TABSPEN_GAD
+MSG_MUICLASS_SETTINGSCOLOR_TABSPEN_GAD
 Tabs pen:
 Schriftfarbe der Tabs:
  Lista cans./servs. (texto):
@@ -6380,7 +6380,7 @@ Tabs penn:
 Pisak zak³adek:
 Penna flikar:
 ;
-MSG_MUICLASS_WINDOWCOLORSETTINGS_TABSPEN_HELP
+MSG_MUICLASS_SETTINGSCOLOR_TABSPEN_HELP
 /
 /
 /
@@ -6392,7 +6392,7 @@ MSG_MUICLASS_WINDOWCOLORSETTINGS_TABSPEN_HELP
 /
 /
 ;
-MSG_MUICLASS_WINDOWCOLORSETTINGS_JOIN_GAD
+MSG_MUICLASS_SETTINGSCOLOR_JOIN_GAD
 Join:
 Verbunden:
 Acceder:
@@ -6404,7 +6404,7 @@ Entre:
 Przy³±czenie:
 Anslut:
 ;
-MSG_MUICLASS_WINDOWCOLORSETTINGS_JOIN_HELP
+MSG_MUICLASS_SETTINGSCOLOR_JOIN_HELP
 /
 /
 /
@@ -6416,7 +6416,7 @@ MSG_MUICLASS_WINDOWCOLORSETTINGS_JOIN_HELP
 /
 /
 ;
-MSG_MUICLASS_WINDOWCOLORSETTINGS_PART_GAD
+MSG_MUICLASS_SETTINGSCOLOR_PART_GAD
 Part:
 Part:
 Abandonar:
@@ -6428,7 +6428,7 @@ Forlater:
 Od³±czenie:
 Lämna:
 ;
-MSG_MUICLASS_WINDOWCOLORSETTINGS_PART_HELP
+MSG_MUICLASS_SETTINGSCOLOR_PART_HELP
 /
 /
 /
@@ -6440,7 +6440,7 @@ MSG_MUICLASS_WINDOWCOLORSETTINGS_PART_HELP
 /
 /
 ;
-MSG_MUICLASS_WINDOWCOLORSETTINGS_QUIT_GAD
+MSG_MUICLASS_SETTINGSCOLOR_QUIT_GAD
 Quit:
 Beenden:
 Salir:
@@ -6452,7 +6452,7 @@ Avslutter:
 Koniec:
 Avsluta:
 ;
-MSG_MUICLASS_WINDOWCOLORSETTINGS_QUIT_HELP
+MSG_MUICLASS_SETTINGSCOLOR_QUIT_HELP
 /
 /
 /
@@ -6464,7 +6464,7 @@ MSG_MUICLASS_WINDOWCOLORSETTINGS_QUIT_HELP
 /
 /
 ;
-MSG_MUICLASS_WINDOWCOLORSETTINGS_MODES_GAD
+MSG_MUICLASS_SETTINGSCOLOR_MODES_GAD
 Modes:
 Modi:
 Modos:
@@ -6476,7 +6476,7 @@ Moduser:
 Zmiana trybu:
 Lägen:
 ;
-MSG_MUICLASS_WINDOWCOLORSETTINGS_MODES_HELP
+MSG_MUICLASS_SETTINGSCOLOR_MODES_HELP
 /
 /
 /
@@ -6488,7 +6488,7 @@ MSG_MUICLASS_WINDOWCOLORSETTINGS_MODES_HELP
 /
 /
 ;
-MSG_MUICLASS_WINDOWCOLORSETTINGS_CTCP_GAD
+MSG_MUICLASS_SETTINGSCOLOR_CTCP_GAD
 CTCP:
 CTCP:
  CTCP:
@@ -6500,7 +6500,7 @@ CTCP:
 CTCP:
 CTCP:
 ;
-MSG_MUICLASS_WINDOWCOLORSETTINGS_CTCP_HELP
+MSG_MUICLASS_SETTINGSCOLOR_CTCP_HELP
 /
 /
 /
@@ -6512,7 +6512,7 @@ MSG_MUICLASS_WINDOWCOLORSETTINGS_CTCP_HELP
 /
 /
 ;
-MSG_MUICLASS_WINDOWCOLORSETTINGS_ACTIONS_GAD
+MSG_MUICLASS_SETTINGSCOLOR_ACTIONS_GAD
 Actions:
 Aktionen:
 Acciones:
@@ -6524,7 +6524,7 @@ Handlinger:
 Dzia³anie:
 Händelser:
 ;
-MSG_MUICLASS_WINDOWCOLORSETTINGS_ACTIONS_HELP
+MSG_MUICLASS_SETTINGSCOLOR_ACTIONS_HELP
 /
 /
 /
@@ -6536,7 +6536,7 @@ MSG_MUICLASS_WINDOWCOLORSETTINGS_ACTIONS_HELP
 /
 /
 ;
-MSG_MUICLASS_WINDOWCOLORSETTINGS_INFO_GAD
+MSG_MUICLASS_SETTINGSCOLOR_INFO_GAD
 Info:
 Informationen:
 Información:
@@ -6548,7 +6548,7 @@ Info:
 Informacja:
 Info:
 ;
-MSG_MUICLASS_WINDOWCOLORSETTINGS_INFO_HELP
+MSG_MUICLASS_SETTINGSCOLOR_INFO_HELP
 /
 /
 /
@@ -6560,7 +6560,7 @@ MSG_MUICLASS_WINDOWCOLORSETTINGS_INFO_HELP
 /
 /
 ;
-MSG_MUICLASS_WINDOWCOLORSETTINGS_OWNTEXT_GAD
+MSG_MUICLASS_SETTINGSCOLOR_OWNTEXT_GAD
 Own text:
 Eigener Text:
 Texto propio:
@@ -6572,7 +6572,7 @@ Egen tekst:
 W³asny tekst:
 Egen text:
 ;
-MSG_MUICLASS_WINDOWCOLORSETTINGS_OWNTEXT_HELP
+MSG_MUICLASS_SETTINGSCOLOR_OWNTEXT_HELP
 /
 /
 /
@@ -6584,7 +6584,7 @@ MSG_MUICLASS_WINDOWCOLORSETTINGS_OWNTEXT_HELP
 /
 /
 ;
-MSG_MUICLASS_WINDOWCOLORSETTINGS_HIGHLIGHT_GAD
+MSG_MUICLASS_SETTINGSCOLOR_HIGHLIGHT_GAD
 Highlight:
 Hervorheben:
 Resaltar:
@@ -6596,7 +6596,7 @@ Høylys:
 Pod¶wietlenie:
 Framhäv:
 ;
-MSG_MUICLASS_WINDOWCOLORSETTINGS_HIGHLIGHT_HELP
+MSG_MUICLASS_SETTINGSCOLOR_HIGHLIGHT_HELP
 /
 /
 /
@@ -6608,7 +6608,7 @@ MSG_MUICLASS_WINDOWCOLORSETTINGS_HIGHLIGHT_HELP
 /
 /
 ;
-MSG_MUICLASS_WINDOWCOLORSETTINGS_NOTICES_GAD
+MSG_MUICLASS_SETTINGSCOLOR_NOTICES_GAD
 Notices:
 Servermeldungen:
 Noticias:
@@ -6620,7 +6620,7 @@ Notices:
 Powiadomienia:
 Notiser:
 ;
-MSG_MUICLASS_WINDOWCOLORSETTINGS_NOTICES_HELP
+MSG_MUICLASS_SETTINGSCOLOR_NOTICES_HELP
 /
 /
 /
@@ -6632,7 +6632,7 @@ MSG_MUICLASS_WINDOWCOLORSETTINGS_NOTICES_HELP
 /
 /
 ;
-MSG_MUICLASS_WINDOWCOLORSETTINGS_INVITE_GAD
+MSG_MUICLASS_SETTINGSCOLOR_INVITE_GAD
 Invite:
 Einladungen:
 Invitar:
@@ -6644,7 +6644,7 @@ Invitere:
 Zaproszenie:
 Bjud in:
 ;
-MSG_MUICLASS_WINDOWCOLORSETTINGS_INVITE_HELP
+MSG_MUICLASS_SETTINGSCOLOR_INVITE_HELP
 /
 /
 /
@@ -6656,7 +6656,7 @@ MSG_MUICLASS_WINDOWCOLORSETTINGS_INVITE_HELP
 /
 /
 ;
-MSG_MUICLASS_WINDOWCOLORSETTINGS_KICK_GAD
+MSG_MUICLASS_SETTINGSCOLOR_KICK_GAD
 Kick:
 Rausschmiss:
 Expulsar:
@@ -6668,7 +6668,7 @@ Kicke:
 Wyrzucenie:
 Kicka:
 ;
-MSG_MUICLASS_WINDOWCOLORSETTINGS_KICK_HELP
+MSG_MUICLASS_SETTINGSCOLOR_KICK_HELP
 /
 /
 /
@@ -6680,7 +6680,7 @@ MSG_MUICLASS_WINDOWCOLORSETTINGS_KICK_HELP
 /
 /
 ;
-MSG_MUICLASS_WINDOWCOLORSETTINGS_NICKCHANGE_GAD
+MSG_MUICLASS_SETTINGSCOLOR_NICKCHANGE_GAD
 Nick change:
 Namenswechsel:
 Cambiar alias:
@@ -6692,7 +6692,7 @@ Forandrer nick:
 Zmiana pseudonimu:
 Ändring nick:
 ;
-MSG_MUICLASS_WINDOWCOLORSETTINGS_NICKCHANGE_HELP
+MSG_MUICLASS_SETTINGSCOLOR_NICKCHANGE_HELP
 /
 /
 /
@@ -6704,7 +6704,7 @@ MSG_MUICLASS_WINDOWCOLORSETTINGS_NICKCHANGE_HELP
 /
 /
 ;
-MSG_MUICLASS_WINDOWCOLORSETTINGS_TOPIC_GAD
+MSG_MUICLASS_SETTINGSCOLOR_TOPIC_GAD
 Topic:
 Thema:
 Temática:
@@ -6716,7 +6716,7 @@ Topic:
 Temat:
 Ämne:
 ;
-MSG_MUICLASS_WINDOWCOLORSETTINGS_TOPIC_HELP
+MSG_MUICLASS_SETTINGSCOLOR_TOPIC_HELP
 /
 /
 /
@@ -6728,7 +6728,7 @@ MSG_MUICLASS_WINDOWCOLORSETTINGS_TOPIC_HELP
 /
 /
 ;
-MSG_MUICLASS_WINDOWCOLORSETTINGS_WALLOPS_GAD
+MSG_MUICLASS_SETTINGSCOLOR_WALLOPS_GAD
 Wall ops:
 Wall ops:
 OPs:
@@ -6740,7 +6740,7 @@ Wall ops:
 Informacje od operatorów:
 Wall ops:
 ;
-MSG_MUICLASS_WINDOWCOLORSETTINGS_WALLOPS_HELP
+MSG_MUICLASS_SETTINGSCOLOR_WALLOPS_HELP
 /
 /
 /
@@ -6752,7 +6752,7 @@ MSG_MUICLASS_WINDOWCOLORSETTINGS_WALLOPS_HELP
 /
 /
 ;
-MSG_MUICLASS_WINDOWCOLORSETTINGS_ACTIVITY_GAD
+MSG_MUICLASS_SETTINGSCOLOR_ACTIVITY_GAD
 Activity:
 Tab-Aktivität:
 Actividad:
@@ -6764,7 +6764,7 @@ Aktivitet:
 Aktywno¶æ:
 Aktivitet:
 ;
-MSG_MUICLASS_WINDOWCOLORSETTINGS_ACTIVITY_HELP
+MSG_MUICLASS_SETTINGSCOLOR_ACTIVITY_HELP
 /
 /
 /
@@ -6776,7 +6776,7 @@ MSG_MUICLASS_WINDOWCOLORSETTINGS_ACTIVITY_HELP
 /
 /
 ;
-MSG_MUICLASS_WINDOWCOLORSETTINGS_CHATACTIVITY_GAD
+MSG_MUICLASS_SETTINGSCOLOR_CHATACTIVITY_GAD
 Chat activity:
 Tab-Chatanzeige:
 Actividad (charla):
@@ -6788,7 +6788,7 @@ Chatteaktivitet:
 Aktywno¶æ - rozmowa:
 Chat aktivitet:
 ;
-MSG_MUICLASS_WINDOWCOLORSETTINGS_CHATACTIVITY_HELP
+MSG_MUICLASS_SETTINGSCOLOR_CHATACTIVITY_HELP
 /
 /
 /
@@ -6800,7 +6800,7 @@ MSG_MUICLASS_WINDOWCOLORSETTINGS_CHATACTIVITY_HELP
 /
 /
 ;
-MSG_MUICLASS_WINDOWCOLORSETTINGS_HIGHLIGHTACTIVITY_GAD
+MSG_MUICLASS_SETTINGSCOLOR_HIGHLIGHTACTIVITY_GAD
 Highlight activity:
 Tab-Hervorhebeanzeige:
 Actividad (resaltar):
@@ -6812,7 +6812,7 @@ Høylys aktivitet:
 Aktywno¶æ - pod¶wietlenie:
 Framhäv aktivitet:
 ;
-MSG_MUICLASS_WINDOWCOLORSETTINGS_HIGHLIGHTACTIVITY_HELP
+MSG_MUICLASS_SETTINGSCOLOR_HIGHLIGHTACTIVITY_HELP
 /
 /
 /
@@ -7010,5 +7010,288 @@ Event
 Event
 Event
 Event
+;
+;
+; MUICLASS_WINDOWSETTINGS
+;
+MSG_MUICLASS_WINDOWSETTINGS_TITLE
+Settings...
+Einstellungen ...
+Settings...
+Settings...
+Settings...
+Settings...
+Settings...
+Settings...
+Settings...
+Settings...
+;
+MSG_PG_NICK
+Nick
+Nick
+Nick
+Nick
+Nick
+Nick
+Nick
+Nick
+Nick
+Nick
+;
+MSG_PG_SERVER
+Server
+Server
+Server
+Server
+Server
+Server
+Server
+Server
+Server
+Server
+;
+MSG_PG_GENERIC
+Generic
+Generic
+Generic
+Generic
+Generic
+Generic
+Generic
+Generic
+Generic
+Generic
+;
+MSG_PG_COLOR
+Color
+Farben
+Color
+Color
+Color
+Color
+Color
+Color
+Color
+Color
+;
+MSG_PG_GUI
+GUI
+Oberfläche
+GUI
+GUI
+GUI
+GUI
+GUI
+GUI
+GUI
+GUI
+;
+MSG_PG_LOGGING
+Logging
+Mitschnitte
+Logging
+Logging
+Logging
+Logging
+Logging
+Logging
+Logging
+Logging
+;
+MSG_PG_DCC
+DCC
+DCC
+DCC
+DCC
+DCC
+DCC
+DCC
+DCC
+DCC
+DCC
+;
+MSG_PG_SOUNDS
+Sounds
+Geräusche
+Sounds
+Sounds
+Sounds
+Sounds
+Sounds
+Sounds
+Sounds
+Sounds
+;
+MSG_PG_ALIASES
+Aliases
+Aliase
+Aliases
+Aliases
+Aliases
+Aliases
+Aliases
+Aliases
+Aliases
+Aliases
+;
+MSG_PG_BUTTONS
+Buttons
+Tasten
+Buttons
+Buttons
+Buttons
+Buttons
+Buttons
+Buttons
+Buttons
+Buttons
+;
+MSG_PG_EVENTS
+Events
+Ereignisse
+Events
+Events
+Events
+Events
+Events
+Events
+Events
+Events
+;
+MSG_MUICLASS_SETTINGS_SAVE_GAD
+_Save
+_Save
+_Save
+_Save
+_Save
+_Save
+_Save
+_Save
+_Save
+_Save
+;
+MSG_MUICLASS_SETTINGS_SAVE_HELP
+Store settings on disk.
+Store settings on disk.
+Store settings on disk.
+Store settings on disk.
+Store settings on disk.
+Store settings on disk.
+Store settings on disk.
+Store settings on disk.
+Store settings on disk.
+Store settings on disk.
+;
+MSG_MUICLASS_SETTINGS_USE_GAD
+_Use
+_Use
+_Use
+_Use
+_Use
+_Use
+_Use
+_Use
+_Use
+_Use
+;
+MSG_MUICLASS_SETTINGS_USE_HELP
+Use current settings.
+Use current settings.
+Use current settings.
+Use current settings.
+Use current settings.
+Use current settings.
+Use current settings.
+Use current settings.
+Use current settings.
+Use current settings.
+;
+MSG_MUICLASS_SETTINGS_CANCEL_GAD
+_Cancel
+_Cancel
+_Cancel
+_Cancel
+_Cancel
+_Cancel
+_Cancel
+_Cancel
+_Cancel
+_Cancel
+;
+;
+MSG_MUICLASS_SETTINGS_CANCEL_HELP
+Restore settings to last used state.
+Restore settings to last used state.
+Restore settings to last used state.
+Restore settings to last used state.
+Restore settings to last used state.
+Restore settings to last used state.
+Restore settings to last used state.
+Restore settings to last used state.
+Restore settings to last used state.
+Restore settings to last used state.
+;
+;
+; MUICLASS_SETTINGSNICK
+;
+MSG_MUICLASS_SETTINGSNICK_NICK_GAD
+_Nick
+Spitz_name
+_Aliase:
+_Pseudonyme
+_Nick
+_Nick
+_Nick
+_Nick
+_Nick
+_Nick
+;
+MSG_MUICLASS_SETTINGSNICK_NICKALT1_GAD
+Fallback nick #_1:
+Ausweichname #_1:
+Fallback nick #_1:
+Fallback nick #_1:
+Fallback nick #_1:
+Fallback nick #_1:
+Fallback nick #_1:
+Fallback nick #_1:
+Fallback nick #_1:
+Fallback nick #_1:
+;
+MSG_MUICLASS_SETTINGSNICK_NICKALT2_GAD
+Fallback nick #_2:
+Ausweichname #_2:
+Fallback nick #_2:
+Fallback nick #_2:
+Fallback nick #_2:
+Fallback nick #_2:
+Fallback nick #_2:
+Fallback nick #_2:
+Fallback nick #_2:
+Fallback nick #_2:
+;
+MSG_MUICLASS_SETTINGSNICK_REALNAME_GAD
+_Real Name
+_Realname
+ Nombre _real:
+Nom _réel
+Ïíïìáôåðþíõìï
+Nome _reale
+Valódi név
+Virkelig navn
+Prawdziwe imiê
+Verkligt namn
+;
+MSG_MUICLASS_SETTINGSNICK_USERNAME_GAD
+User _Name
+Nutzer _Name
+Usuario:
+Nom d'utilisateur
+¼íïìá ÷ñÞóôç
+Nome utente
+Felhasználónév
+Brukernavn
+Nazwa u¿ytkownika
+Användarnamn
 ;
 

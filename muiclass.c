@@ -28,12 +28,14 @@
 #include "muiclass_windowmain.h"
 #include "muiclass_windowquit.h"
 #include "muiclass_windowabout.h"
-#include "muiclass_windowcolorsettings.h"
+#include "muiclass_windowsettings.h"
 #include "muiclass_windowignorelist.h"
 #include "muiclass_windowurlgrabber.h"
 #include "muiclass_nicklist.h"
 #include "muiclass_channellist.h"
 #include "muiclass_channel.h"
+#include "muiclass_settingsnick.h"
+#include "muiclass_settingscolor.h"
 
 #ifndef MUIA_Text_HiIndex
  #define MUIA_Text_HiIndex 0x804214f5
@@ -63,15 +65,19 @@ ULONG result;
 			if( !(result = MCC_WindowAbout_InitClass() ) ) {
 				if( !(result = MCC_WindowURLGrabber_InitClass() ) ) {
 					if( !(result = MCC_WindowIgnoreList_InitClass() ) ) {
-						if( !(result = MCC_WindowColorSettings_InitClass() ) ) {
+						if( !(result = MCC_WindowSettings_InitClass() ) ) {
 							if( !(result = MCC_WindowQuit_InitClass() ) ) {
-								if( !(result = MCC_NickList_InitClass() ) ) {
-									if( !(result = MCC_ChannelList_InitClass() ) ) {
-										if( !(result = MCC_Channel_InitClass() ) ) {
-											if( ( application = NewObject( appclasses[ CLASSID_APPLICATION ]->mcc_Class, NULL, TAG_DONE ) ) ) {
-												DoMethod( application, MM_APPLICATION_STARTUP );
-											} else {
-												result = MSG_ERROR_UNABLETOSETUPMUICLASS;
+								if( !(result = MCC_SettingsNick_InitClass() ) ) {
+									if( !(result = MCC_SettingsColor_InitClass() ) ) {
+										if( !(result = MCC_NickList_InitClass() ) ) {
+											if( !(result = MCC_ChannelList_InitClass() ) ) {
+												if( !(result = MCC_Channel_InitClass() ) ) {
+													if( ( application = NewObject( appclasses[ CLASSID_APPLICATION ]->mcc_Class, NULL, TAG_DONE ) ) ) {
+														DoMethod( application, MM_APPLICATION_STARTUP );
+													} else {
+														result = MSG_ERROR_UNABLETOSETUPMUICLASS;
+													}
+												}
 											}
 										}
 									}
@@ -105,7 +111,9 @@ void MUIClass_Close( void )
 	MCC_WindowAbout_DisposeClass();
 	MCC_WindowURLGrabber_DisposeClass();
 	MCC_WindowIgnoreList_DisposeClass();
-	MCC_WindowColorSettings_DisposeClass();
+	MCC_SettingsNick_DisposeClass();
+	MCC_SettingsColor_DisposeClass();
+	MCC_WindowSettings_DisposeClass();
 	MCC_WindowQuit_DisposeClass();
 	MCC_WindowMain_DisposeClass();
 	MCC_Application_DisposeClass();
@@ -123,6 +131,22 @@ ULONG MUIGetVar( Object *obj, ULONG attr )
 ULONG var = 0;
 	GetAttr( attr, obj, (void*) &var );
 	return ( var );
+}
+/* \\\ */
+/* /// MUIInitStringArray()
+**
+*/
+
+/*************************************************************************/
+
+void MUIInitStringArray( STRPTR array[], ULONG first, ULONG last )
+{
+ULONG i;
+
+	for( i = first ; i < last + 1 ; i++ ) {
+		array[ i - first ] = LGS( i );
+    }
+	array[ last - first + 1 ] = NULL;
 }
 /* \\\ */
 
@@ -282,5 +306,64 @@ APTR MUICreateString( ULONG text, ULONG maxchars )
 	);
 }
 /* \\\ */
+/* /// MUICreateStringFixed()
+**
+** NOTE: Label must be followed by bubble help!
+*/
 
+static char TAB_FIXWIDTH[] = "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW";
+
+APTR MUICreateStringFixed( ULONG text, ULONG maxchars )
+{
+ULONG size, length;
+
+	length = strlen( TAB_FIXWIDTH );
+	size = length - maxchars;
+	if( size > length ) {
+		size = 0;
+	}
+
+	return( MUI_NewObject( MUIC_String,
+							MUIA_Frame             , MUIV_Frame_String,
+							MUIA_ControlChar       , MUIGetUnderScore( text ),
+							MUIA_CycleChain        , 1,
+							MUIA_ShortHelp         , LGS( text+1), /* HELP is always behind label in catalog */
+							MUIA_String_MaxLen     , maxchars,
+							MUIA_FixWidthTxt       , &TAB_FIXWIDTH[ size ],
+							TAG_DONE )
+	);
+}
+/* \\\ */
+
+/* /// MUIDataspaceImportPoppen()
+**
+*/
+
+/*************************************************************************/
+
+struct MUI_PenSpec *MUIDataspaceImportPoppen( Object *poppen, Object *dataspace, ULONG objectid )
+{
+struct MUI_PenSpec *penspec;
+
+	if( ( penspec = (struct MUI_PenSpec *) DoMethod( dataspace, MUIM_Dataspace_Find, objectid ) ) ) {
+		SetAttrs( poppen, MUIA_Pendisplay_Spec, penspec, TAG_DONE );
+	}
+	return( penspec );
+}
+/* \\\ */
+/* /// MUIDataspaceExportPoppen()
+**
+*/
+
+/*************************************************************************/
+
+void MUIDataspaceExportPoppen( Object *poppen, Object *dataspace, ULONG objectid )
+{
+struct MUI_PenSpec *penspec;
+
+	if( ( penspec = (struct MUI_PenSpec *) MUIGetVar( poppen, MUIA_Pendisplay_Spec ) ) ) {
+		DoMethod( dataspace, MUIM_Dataspace_Add, penspec, sizeof( struct MUI_PenSpec ), objectid );
+	}
+}
+/* \\\ */
 

@@ -30,10 +30,13 @@ CLASSID_WINDOWABOUT,
 CLASSID_WINDOWQUIT,
 CLASSID_WINDOWURLGRABBER,
 CLASSID_WINDOWIGNORELIST,
+CLASSID_WINDOWSETTINGS,
 CLASSID_WINDOWCOLORSETTINGS,
 CLASSID_NICKLIST,
 CLASSID_CHANNELLIST,
 CLASSID_CHANNEL,
+CLASSID_SETTINGSNICK,
+CLASSID_SETTINGSCOLOR,
 CLASSID_LAST
 };
 
@@ -48,14 +51,19 @@ ULONG MUIClass_Open ( void );
 void  MUIClass_Close( void );
 
 ULONG MUIGetVar( Object *obj, ULONG attr );
+void  MUIInitStringArray( STRPTR array[], ULONG first, ULONG last );
 
-TEXT MUIGetUnderScore( ULONG text);
-APTR MUICreatePoppen( ULONG text, ULONG poptitle );
-APTR MUICreateButton( ULONG text );
-APTR MUICreateSmallButton( ULONG text );
-APTR MUICreateLabel( ULONG text );
-APTR MUICreateCheckbox( ULONG text, ULONG defstate );
-APTR MUICreateString( ULONG text, ULONG maxchars );
+TEXT  MUIGetUnderScore( ULONG text);
+APTR  MUICreatePoppen( ULONG text, ULONG poptitle );
+APTR  MUICreateButton( ULONG text );
+APTR  MUICreateSmallButton( ULONG text );
+APTR  MUICreateLabel( ULONG text );
+APTR  MUICreateCheckbox( ULONG text, ULONG defstate );
+APTR  MUICreateString( ULONG text, ULONG maxchars );
+APTR  MUICreateStringFixed( ULONG text, ULONG maxchars );
+
+struct MUI_PenSpec *MUIDataspaceImportPoppen( Object *poppen, Object *dataspace, ULONG objectid );
+void                MUIDataspaceExportPoppen( Object *poppen, Object *dataspace, ULONG objectid );
 
 /*************************************************************************/
 

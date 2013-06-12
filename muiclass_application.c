@@ -31,7 +31,7 @@
 #include "muiclass_windowmain.h"
 #include "muiclass_windowquit.h"
 #include "muiclass_windowabout.h"
-#include "muiclass_windowcolorsettings.h"
+#include "muiclass_windowsettings.h"
 #include "muiclass_windowignorelist.h"
 #include "muiclass_windowurlgrabber.h"
 #include "version.h"
@@ -54,7 +54,7 @@ enum
 WID_MAIN = 0,
 WID_QUIT,
 WID_ABOUT,
-WID_COLORSETTINGS,
+WID_SETTINGS,
 WID_IGNORELIST,
 WID_URLGRABBER,
 GID_LAST
@@ -98,7 +98,7 @@ Object *objs[ GID_LAST ];
 					MUIA_Application_Window     , objs[ WID_MAIN          ] = WindowMainObject, End,
 					MUIA_Application_Window     , objs[ WID_QUIT          ] = WindowQuitObject, End,
 					MUIA_Application_Window     , objs[ WID_ABOUT         ] = WindowAboutObject, End,
-					MUIA_Application_Window     , objs[ WID_COLORSETTINGS ] = WindowColorSettingsObject, End,
+					MUIA_Application_Window     , objs[ WID_SETTINGS      ] = WindowSettingsObject, End,
 					MUIA_Application_Window     , objs[ WID_IGNORELIST    ] = WindowIgnoreListObject, End,
 					MUIA_Application_Window     , objs[ WID_URLGRABBER    ] = WindowURLGrabberObject, End,
 
@@ -145,7 +145,7 @@ struct mccdata *mccdata = INST_DATA( cl, obj );
 		case MA_APPLICATION_WINDOWMAIN          : *msg->opg_Storage = (ULONG) mccdata->mcc_ClassObjects[ WID_MAIN          ] ; return( TRUE );
 		case MA_APPLICATION_WINDOWQUIT          : *msg->opg_Storage = (ULONG) mccdata->mcc_ClassObjects[ WID_QUIT          ] ; return( TRUE );
 		case MA_APPLICATION_WINDOWABOUT         : *msg->opg_Storage = (ULONG) mccdata->mcc_ClassObjects[ WID_ABOUT         ] ; return( TRUE );
-		case MA_APPLICATION_WINDOWCOLORSETTINGS : *msg->opg_Storage = (ULONG) mccdata->mcc_ClassObjects[ WID_COLORSETTINGS ] ; return( TRUE );
+		case MA_APPLICATION_WINDOWSETTINGS      : *msg->opg_Storage = (ULONG) mccdata->mcc_ClassObjects[ WID_SETTINGS      ] ; return( TRUE );
 		case MA_APPLICATION_WINDOWIGNORELIST    : *msg->opg_Storage = (ULONG) mccdata->mcc_ClassObjects[ WID_IGNORELIST    ] ; return( TRUE );
 		case MA_APPLICATION_WINDOWURLGRABBER    : *msg->opg_Storage = (ULONG) mccdata->mcc_ClassObjects[ WID_URLGRABBER    ] ; return( TRUE );
 		default: return( DoSuperMethodA( cl, obj, (Msg) msg ) );

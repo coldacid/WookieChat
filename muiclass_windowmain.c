@@ -29,6 +29,7 @@
 #include "muiclass_application.h"
 #include "muiclass_windowmain.h"
 #include "muiclass_windowquit.h"
+#include "muiclass_windowsettings.h"
 #include "muiclass_nicklist.h"
 #include "muiclass_channellist.h"
 #include "muiclass_channel.h"
@@ -57,8 +58,7 @@ MID_QUIT,
 MID_CUT,
 MID_COPY,
 MID_PASTE,
-MID_SETTINGSMAIN,
-MID_SETTINGSCOLOR,
+MID_SETTINGS,
 MID_SETTINGSMUI,
 MID_MULTICOLUMNDISPLAY,
 MID_CLIPBOARD,
@@ -144,8 +144,7 @@ Object *objs[ GID_LAST ];
 								Child, objs[ MID_PASTE              ] = MenuitemObject, MUIA_Menuitem_Title , LGS( MSG_MENU_PASTE_ITEM ), MUIA_Menuitem_Shortcut, LGS( MSG_MENU_PASTE_KEY ), End,
 							End,
 							Child, MenuObject, MUIA_Menu_Title, LGS( MSG_MENU_SETTINGS_TITLE ),
-								Child, objs[ MID_SETTINGSMAIN       ] = MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MENU_SETTINGSMAIN_ITEM ), End,
-								Child, objs[ MID_SETTINGSCOLOR      ] = MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MENU_SETTINGSCOLOR_ITEM ), End,
+								Child, objs[ MID_SETTINGS           ] = MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MENU_SETTINGSMAIN_ITEM ), End,
 								Child, objs[ MID_SETTINGSMUI        ] = MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MENU_SETTINGSMUI_ITEM ), End,
 								Child, objs[ MID_MULTICOLUMNDISPLAY ] = MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MENU_MULTICOLUMNCHATDISPLAY_ITEM ), MUIA_Menuitem_Checkit, TRUE, MUIA_Menuitem_Toggle, TRUE, End,
 								Child, objs[ MID_CLIPBOARD          ] = MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MENU_COLUMNMARKINGCLIPBOARD_ITEM ), MUIA_Menuitem_Checkit, TRUE, MUIA_Menuitem_Toggle, TRUE, End,
@@ -261,12 +260,12 @@ Object *tmpobj;
 /* edit menu */
 
 /* settings menu */
-
-/* window menu */
-		case MID_SETTINGSCOLOR:
-			tmpobj = (Object *) MUIGetVar( _app(obj), MA_APPLICATION_WINDOWCOLORSETTINGS );
+		case MID_SETTINGS:
+			tmpobj = (Object *) MUIGetVar( _app(obj), MA_APPLICATION_WINDOWSETTINGS );
 			SetAttrs( tmpobj, MUIA_Window_Open, TRUE, TAG_DONE );
 			break;
+
+/* window menu */
 		case MID_SETTINGSMUI:
 			break;
 		case MID_IGNORELIST:
