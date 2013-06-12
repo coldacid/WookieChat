@@ -51,38 +51,41 @@ GID_REALNAME,
 GID_LAST
 };
 
-#define GID_LASTNICK   GID_REALNAME
-#define GID_FIRSTNICK  GID_NICK
-#define NICK_NUMBEROF ( GID_LASTNICK - GID_FIRSTNICK + 1 )
-
 /*
-** default settings
+** configitem structure
 */
 
-static LONG TAB_DEFAULTS[] = {
+struct ConfigItem {
+	ULONG GadgetID;
+	ULONG ObjectID;
+	ULONG Attr;
+	LONG  Default;
+};
+
+static struct ConfigItem TAB_CONFIGITEMS[] = {
 #ifdef __MORPHOS__
-	 GID_NICK             , MUIA_String_Contents, (LONG) "MorphOSUser",
-	 GID_NICK1            , MUIA_String_Contents, (LONG) "MorphOSUser_",
-	 GID_NICK2            , MUIA_String_Contents, (LONG) "MorphOSUser__",
-	 GID_USERNAME         , MUIA_String_Contents, (LONG) "MorphOSUser__",
+	{ GID_NICK             , OID_NICK    , MUIA_String_Contents, (LONG) "MorphOSUser" },
+	{ GID_NICK1            , OID_NICK1   , MUIA_String_Contents, (LONG) "MorphOSUser_" },
+	{ GID_NICK2            , OID_NICK2   , MUIA_String_Contents, (LONG) "MorphOSUser__" },
+	{ GID_USERNAME         , OID_USERNAME, MUIA_String_Contents, (LONG) "MorphOSUser__" },
 #elif __AROS__
-	 GID_NICK             , MUIA_String_Contents, (LONG) "AROSUser",
-	 GID_NICK1            , MUIA_String_Contents, (LONG) "AROSUser_",
-	 GID_NICK2            , MUIA_String_Contents, (LONG) "AROSUser__",
-	 GID_USERNAME         , MUIA_String_Contents, (LONG) "AROSUser",
+	{ GID_NICK             , OID_NICK    , MUIA_String_Contents, (LONG) "AROSUser" },
+	{ GID_NICK1            , OID_NICK1   , MUIA_String_Contents, (LONG) "AROSUser_" },
+	{ GID_NICK2            , OID_NICK2   , MUIA_String_Contents, (LONG) "AROSUser__"  },
+	{ GID_USERNAME         , OID_USERNAME, MUIA_String_Contents, (LONG) "AROSUser" },
 #elif __amigaos4__
-	 GID_NICK             , MUIA_String_Contents, (LONG) "AmigaOS4User",
-	 GID_NICK1            , MUIA_String_Contents, (LONG) "AmigaOS4User_",
-	 GID_NICK2            , MUIA_String_Contents, (LONG) "AmigaOS4User__",
-	 GID_USERNAME         , MUIA_String_Contents, (LONG) "AmigaOS4User",
+	{ GID_NICK             , OID_NICK    , MUIA_String_Contents, (LONG) "AmigaOS4User"  },
+	{ GID_NICK1            , OID_NICK1   , MUIA_String_Contents, (LONG) "AmigaOS4User_"  },
+	{ GID_NICK2            , OID_NICK2   , MUIA_String_Contents, (LONG) "AmigaOS4User__"  },
+	{ GID_USERNAME         , OID_USERNAME, MUIA_String_Contents, (LONG) "AmigaOS4User"  },
 #else
-	 GID_NICK             , MUIA_String_Contents, (LONG) "AmigaUser",
-	 GID_NICK1            , MUIA_String_Contents, (LONG) "AmigaUser_",
-	 GID_NICK2            , MUIA_String_Contents, (LONG) "AmigaUser__",
-	 GID_USERNAME         , MUIA_String_Contents, (LONG) "AmigaUser",
+	{ GID_NICK             , OID_NICK    , MUIA_String_Contents, (LONG) "AmigaUser"   },
+	{ GID_NICK1            , OID_NICK1   , MUIA_String_Contents, (LONG) "AmigaUser_"  },
+	{ GID_NICK2            , OID_NICK2   , MUIA_String_Contents, (LONG) "AmigaUser__" },
+	{ GID_USERNAME         , OID_USERNAME, MUIA_String_Contents, (LONG) "AmigaUser"   },
 #endif
-	 GID_REALNAME         , MUIA_String_Contents, (LONG) "John Wookie",
-	 0, 0,
+	{ GID_REALNAME         , OID_REALNAME, MUIA_String_Contents, (LONG) "John Wookie" },
+	{ -1,0,0,0 },
 };
 
 /*
@@ -105,7 +108,6 @@ struct mccdata
 static ULONG OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
 {
 Object *objs[ GID_LAST ];
-ULONG i;
 
 	if( (obj = (Object *) DoSuperNew( cl, obj, MUIA_Group_Horiz, TRUE,
 				Child, ColGroup(2),
@@ -145,10 +147,6 @@ ULONG i;
 
 		DoMethod( obj, MM_SETTINGSNICK_RESETTODEFAULTS );
 
-		for( i = 0 ; i < NICK_NUMBEROF ; i++ ) {
-			SetAttrs( objs[ GID_FIRSTNICK + i ], MUIA_ObjectID, OID_SETTINGSNICK + 1 + i, TAG_DONE );
-		}
-
 		return( (ULONG) obj );
     }
 	return( (ULONG) NULL );
@@ -165,8 +163,27 @@ static ULONG MM_ResetToDefaults( struct IClass *cl, Object *obj, Msg *msg )
 struct mccdata *mccdata = INST_DATA( cl, obj );
 ULONG i;
 
-	for( i = 0 ; TAB_DEFAULTS[ i + 1 ] ; i+=3 ) {
-		SetAttrs( mccdata->mcc_ClassObjects[ TAB_DEFAULTS[ i ] ], TAB_DEFAULTS[ i + 1 ], TAB_DEFAULTS[ i + 2 ], TAG_DONE );
+	for( i = 0 ; TAB_CONFIGITEMS[ i ].GadgetID != -1 ; i++ ) {
+		SetAttrs( mccdata->mcc_ClassObjects[ TAB_CONFIGITEMS[ i ].GadgetID ], TAB_CONFIGITEMS[ i ].Attr, TAB_CONFIGITEMS[ i ].Default, MUIA_ObjectID, TAB_CONFIGITEMS[ i ].ObjectID, TAG_DONE );
+	}
+	return( 0 );
+}
+/* \\\ */
+/* /// MM_ReadConfig()
+**
+*/
+
+/*************************************************************************/
+
+static ULONG MM_ReadConfig( struct IClass *cl, Object *obj, struct MP_SETTINGSNICK_READCONFIG *msg )
+{
+struct mccdata *mccdata = INST_DATA( cl, obj );
+ULONG i;
+
+	for( i = 0 ; TAB_CONFIGITEMS[ i ].GadgetID != -1 ; i++ ) {
+		if( TAB_CONFIGITEMS[ i ].ObjectID == msg->ObjectID ) {
+			return( (ULONG) MUIGetVar( mccdata->mcc_ClassObjects[ TAB_CONFIGITEMS[ i ].GadgetID ], TAB_CONFIGITEMS[ i ].Attr ) );
+		}
 	}
 	return( 0 );
 }
@@ -188,6 +205,7 @@ DISPATCHER(MCC_SettingsNick_Dispatcher)
     {
 		case OM_NEW                              : return( OM_New                     ( cl, obj, (APTR) msg ) );
 		case MM_SETTINGSNICK_RESETTODEFAULTS     : return( MM_ResetToDefaults         ( cl, obj, (APTR) msg ) );
+		case MM_SETTINGSNICK_READCONFIG          : return( MM_ReadConfig              ( cl, obj, (APTR) msg ) );
 	}
 	return( DoSuperMethodA( cl, obj, msg ) );
 

@@ -69,40 +69,43 @@ GID_HIGHLIGHTACTIVITY,
 GID_LAST
 };
 
-#define GID_LASTCOLOR  GID_HIGHLIGHTACTIVITY
-#define GID_FIRSTCOLOR GID_BACKGROUND
-#define COLORS_NUMBEROF ( GID_LASTCOLOR - GID_FIRSTCOLOR + 1 )
-
 /*
-** default settings
+** configitem structure
 */
 
-static APTR TAB_DEFAULTS[] = {
-	(APTR) GID_BACKGROUND       , "2:00000000,00000000,00000000",
-	(APTR) GID_NICKLISTBG       , "2:1D451D45,2B5D2B5D,8D798D79",
-	(APTR) GID_TABLISTBG        , "r52215221,FFFFFFFF,2D9B2D9B",
-	(APTR) GID_NORMAL           , "r209C209C,A1AFA1AF,1A271A27",
-	(APTR) GID_NICKLISTTX       , "rE7D8E7D8,25A425A4,FFFFFFFF",
-	(APTR) GID_TABSPEN          , "rFFFFFFFF,8FC08FC0,12D012D0",
-	(APTR) GID_JOIN             , "rFFFFFFFF,0D620D62,00000000",
-	(APTR) GID_PART             , "rFFFF0000,FFFF0000,FFFF0000",
-	(APTR) GID_QUIT             , "rFFFDFFFD,FFFBFFFB,FFFFFFFF",
-	(APTR) GID_MODES            , "rFFFFFFFF,AEACAEAC,D159D159",
-	(APTR) GID_CTCP             , "r7C3B7C3B,FFFFFFFF,F8CEF8CE",
-	(APTR) GID_ACTIONS          , "rFFFFFFFF,FBCCFBCC,25A225A2",
-	(APTR) GID_INFO             , "rFFFFFFFF,1A591A59,25292529",
-	(APTR) GID_OWNTEXT          , "rFFFFFFFF,12D012D0,168E168E",
-	(APTR) GID_HIGHLIGHT        , "rFFFFFFFF,24CE24CE,12D212D2",
-	(APTR) GID_NOTICES          , "rFFFFFFFF,8F098F09,1E1D1E1D",
-	(APTR) GID_INVITE           , "rFFFFFFFF,96409640,34B234B2",
-	(APTR) GID_KICK             , "r61E061E0,FFFFFFFF,8CDC8CDC",
-	(APTR) GID_NICKCHANGE       , "r43BE43BE,509F509F,FFFFFFFF",
-	(APTR) GID_TOPIC            , "rFFFFFFFF,07830783,0B570B57",
-	(APTR) GID_WALLOPS          , "r527F527F,FFFFFFFF,2D292D29",
-	(APTR) GID_ACTIVITY         , "rFFFDFFFD,FFFCFFFC,FFFFFFFF",
-	(APTR) GID_CHATACTIVITY     , "2:DE50DE50,DE4ADE4A,DE47DE47",
-	(APTR) GID_HIGHLIGHTACTIVITY, "2:00000000,00000000,00000000",
-	NULL, NULL,
+struct ConfigItem {
+	ULONG GadgetID;
+	ULONG ObjectID;
+	ULONG Attr;
+	LONG  Default;
+};
+
+static struct ConfigItem TAB_CONFIGITEMS[] = {
+	{ GID_BACKGROUND       , OID_BACKGROUND       , MUIA_Pendisplay_Spec, (LONG) "2:00000000,00000000,00000000" },
+	{ GID_NICKLISTBG       , OID_NICKLISTBG       , MUIA_Pendisplay_Spec, (LONG) "2:1D451D45,2B5D2B5D,8D798D79" },
+	{ GID_TABLISTBG        , OID_TABLISTBG        , MUIA_Pendisplay_Spec, (LONG) "r52215221,FFFFFFFF,2D9B2D9B" },
+	{ GID_NORMAL           , OID_NORMAL           , MUIA_Pendisplay_Spec, (LONG) "r209C209C,A1AFA1AF,1A271A27" },
+	{ GID_NICKLISTTX       , OID_NICKLISTTX       , MUIA_Pendisplay_Spec, (LONG) "rE7D8E7D8,25A425A4,FFFFFFFF" },
+	{ GID_TABSPEN          , OID_TABSPEN          , MUIA_Pendisplay_Spec, (LONG) "rFFFFFFFF,8FC08FC0,12D012D0" },
+	{ GID_JOIN             , OID_JOIN             , MUIA_Pendisplay_Spec, (LONG) "rFFFFFFFF,0D620D62,00000000" },
+	{ GID_PART             , OID_PART             , MUIA_Pendisplay_Spec, (LONG) "rFFFF0000,FFFF0000,FFFF0000" },
+	{ GID_QUIT             , OID_QUIT             , MUIA_Pendisplay_Spec, (LONG) "rFFFDFFFD,FFFBFFFB,FFFFFFFF" },
+	{ GID_MODES            , OID_MODES            , MUIA_Pendisplay_Spec, (LONG) "rFFFFFFFF,AEACAEAC,D159D159" },
+	{ GID_CTCP             , OID_CTCP             , MUIA_Pendisplay_Spec, (LONG) "r7C3B7C3B,FFFFFFFF,F8CEF8CE" },
+	{ GID_ACTIONS          , OID_ACTIONS          , MUIA_Pendisplay_Spec, (LONG) "rFFFFFFFF,FBCCFBCC,25A225A2" },
+	{ GID_INFO             , OID_INFO             , MUIA_Pendisplay_Spec, (LONG) "rFFFFFFFF,1A591A59,25292529" },
+	{ GID_OWNTEXT          , OID_OWNTEXT          , MUIA_Pendisplay_Spec, (LONG) "rFFFFFFFF,12D012D0,168E168E" },
+	{ GID_HIGHLIGHT        , OID_HIGHLIGHT        , MUIA_Pendisplay_Spec, (LONG) "rFFFFFFFF,24CE24CE,12D212D2" },
+	{ GID_NOTICES          , OID_NOTICES          , MUIA_Pendisplay_Spec, (LONG) "rFFFFFFFF,8F098F09,1E1D1E1D" },
+	{ GID_INVITE           , OID_INVITE           , MUIA_Pendisplay_Spec, (LONG) "rFFFFFFFF,96409640,34B234B2" },
+	{ GID_KICK             , OID_KICK             , MUIA_Pendisplay_Spec, (LONG) "r61E061E0,FFFFFFFF,8CDC8CDC" },
+	{ GID_NICKCHANGE       , OID_NICKCHANGE       , MUIA_Pendisplay_Spec, (LONG) "r43BE43BE,509F509F,FFFFFFFF" },
+	{ GID_TOPIC            , OID_TOPIC            , MUIA_Pendisplay_Spec, (LONG) "rFFFFFFFF,07830783,0B570B57" },
+	{ GID_WALLOPS          , OID_WALLOPS          , MUIA_Pendisplay_Spec, (LONG) "r527F527F,FFFFFFFF,2D292D29" },
+	{ GID_ACTIVITY         , OID_ACTIVITY         , MUIA_Pendisplay_Spec, (LONG) "rFFFDFFFD,FFFCFFFC,FFFFFFFF" },
+	{ GID_CHATACTIVITY     , OID_CHATACTIVITY     , MUIA_Pendisplay_Spec, (LONG) "2:DE50DE50,DE4ADE4A,DE47DE47" },
+	{ GID_HIGHLIGHTACTIVITY, OID_HIGHLIGHTACTIVITY, MUIA_Pendisplay_Spec, (LONG) "2:00000000,00000000,00000000" },
+	{ -1,0,0,0 },
 };
 
 /*
@@ -125,7 +128,6 @@ struct mccdata
 static ULONG OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
 {
 Object *objs[ GID_LAST ];
-ULONG i;
 
 	if( (obj = (Object *) DoSuperNew( cl, obj, MUIA_Group_Horiz, TRUE,
 				Child, ColGroup(6),
@@ -195,10 +197,6 @@ ULONG i;
 
 		DoMethod( obj, MM_SETTINGSCOLOR_RESETTODEFAULTS );
 
-		for( i = 0 ; i < COLORS_NUMBEROF ; i++ ) {
-			SetAttrs( objs[ GID_FIRSTCOLOR + i ], MUIA_ObjectID, OID_SETTINGSCOLOR + 1 + i, TAG_DONE );
-		}
-
 		return( (ULONG) obj );
     }
 	return( (ULONG) NULL );
@@ -231,10 +229,11 @@ static ULONG OM_Import( struct IClass *cl, Object *obj, struct MUIP_Import *msg 
 struct mccdata *mccdata = INST_DATA( cl, obj );
 ULONG i;
 
-	for( i = 0 ; i < COLORS_NUMBEROF ; i++ ) {
-		MUIDataspaceExportPoppen( mccdata->mcc_ClassObjects[ GID_FIRSTCOLOR + i ], msg->dataspace, OID_SETTINGSCOLOR + 1 + i );
+	for( i = 0 ; TAB_CONFIGITEMS[ i ].GadgetID != -1 ; i++ ) {
+		if( TAB_CONFIGITEMS[ i ].Attr == MUIA_Pendisplay_Spec ) {
+			MUIDataspaceExportPoppen( mccdata->mcc_ClassObjects[ TAB_CONFIGITEMS[ i ].GadgetID ], msg->dataspace, TAB_CONFIGITEMS[ i ].ObjectID );
+		}
 	}
-
 	return( DoSuperMethodA( cl, obj, msg ) );
 }
 /* \\\ */
@@ -249,8 +248,10 @@ static ULONG OM_Export( struct IClass *cl, Object *obj, struct MUIP_Import *msg 
 struct mccdata *mccdata = INST_DATA( cl, obj );
 ULONG i;
 
-	for( i = 0 ; i < COLORS_NUMBEROF ; i++ ) {
-		MUIDataspaceExportPoppen( mccdata->mcc_ClassObjects[ GID_FIRSTCOLOR + i ], msg->dataspace, OID_SETTINGSCOLOR + 1 + i );
+	for( i = 0 ; TAB_CONFIGITEMS[ i ].GadgetID != -1 ; i++ ) {
+		if( TAB_CONFIGITEMS[ i ].Attr == MUIA_Pendisplay_Spec ) {
+			MUIDataspaceExportPoppen( mccdata->mcc_ClassObjects[ TAB_CONFIGITEMS[ i ].GadgetID ], msg->dataspace, TAB_CONFIGITEMS[ i ].ObjectID );
+		}
 	}
 
 	return( DoSuperMethodA( cl, obj, msg ) );
@@ -268,8 +269,27 @@ static ULONG MM_ResetToDefaults( struct IClass *cl, Object *obj, Msg *msg )
 struct mccdata *mccdata = INST_DATA( cl, obj );
 ULONG i;
 
-	for( i = 0 ; TAB_DEFAULTS[ i + 1 ] ; i+=2 ) {
-		SetAttrs( mccdata->mcc_ClassObjects[ (ULONG) TAB_DEFAULTS[ i ] ], MUIA_Pendisplay_Spec, (ULONG) TAB_DEFAULTS[ i + 1 ], TAG_DONE );
+	for( i = 0 ; TAB_CONFIGITEMS[ i ].GadgetID != -1 ; i++ ) {
+		SetAttrs( mccdata->mcc_ClassObjects[ TAB_CONFIGITEMS[ i ].GadgetID ], TAB_CONFIGITEMS[ i ].Attr, TAB_CONFIGITEMS[ i ].Default, MUIA_ObjectID, TAB_CONFIGITEMS[ i ].ObjectID, TAG_DONE );
+	}
+	return( 0 );
+}
+/* \\\ */
+/* /// MM_ReadConfig()
+**
+*/
+
+/*************************************************************************/
+
+static ULONG MM_ReadConfig( struct IClass *cl, Object *obj, struct MP_SETTINGSCOLOR_READCONFIG *msg )
+{
+struct mccdata *mccdata = INST_DATA( cl, obj );
+ULONG i;
+
+	for( i = 0 ; TAB_CONFIGITEMS[ i ].GadgetID != -1 ; i++ ) {
+		if( TAB_CONFIGITEMS[ i ].ObjectID == msg->ObjectID ) {
+			return( (ULONG) MUIGetVar( mccdata->mcc_ClassObjects[ TAB_CONFIGITEMS[ i ].GadgetID ], TAB_CONFIGITEMS[ i ].Attr ) );
+		}
 	}
 	return( 0 );
 }
@@ -295,6 +315,7 @@ DISPATCHER(MCC_SettingsColor_Dispatcher)
 		case MUIM_Export                       : return( OM_Export                        ( cl, obj, (APTR) msg ) );
 
 		case MM_SETTINGSCOLOR_RESETTODEFAULTS  : return( MM_ResetToDefaults               ( cl, obj, (APTR) msg ) );
+		case MM_SETTINGSCOLOR_READCONFIG       : return( MM_ReadConfig                    ( cl, obj, (APTR) msg ) );
 	}
 	return( DoSuperMethodA( cl, obj, msg ) );
 

@@ -18,6 +18,7 @@
 
 #define WindowSettingsObject NewObject( appclasses[ CLASSID_WINDOWSETTINGS ]->mcc_Class, NULL
 
+
 enum{
 SETTINGS_NICK = 0,
 SETTINGS_SERVER,
@@ -32,6 +33,16 @@ SETTINGS_BUTTONS,
 SETTINGS_EVENTS,
 SETTINGS_LAST,
 };
+
+
+/*
+** This is the macro to obtain any
+** configuration at runtime.
+**
+** As argument use the OIDs below
+*/
+
+#define GRC(a) GlobalReadConfig(a)
 
 /*
 ** object ids
@@ -107,9 +118,11 @@ OID_HIGHLIGHTACTIVITY,
 */
 
 enum {
-MM_WINDOWSETTINGS_DUMMY =  0xFED000c0,
+MM_WINDOWSETTINGS_READCONFIG =  0xFED000c0,
 /* Attributes */
 };
+
+struct MP_WINDOWSETTINGS_READCONFIG { ULONG MethodID; ULONG ObjectID; };
 
 /*************************************************************************/
 
@@ -119,6 +132,7 @@ MM_WINDOWSETTINGS_DUMMY =  0xFED000c0,
 
 ULONG   MCC_WindowSettings_InitClass( void );
 void    MCC_WindowSettings_DisposeClass( void );
+ULONG   GlobalReadConfig( ULONG objectid );
 
 /*************************************************************************/
 

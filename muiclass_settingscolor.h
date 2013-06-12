@@ -26,8 +26,11 @@
 enum {
 MM_SETTINGSCOLOR_DUMMY =  0xFED000c0,
 MM_SETTINGSCOLOR_RESETTODEFAULTS,
+MM_SETTINGSCOLOR_READCONFIG,
 /* Attributes */
 };
+
+struct MP_SETTINGSCOLOR_READCONFIG { ULONG MethodID; ULONG ObjectID; };
 
 /*************************************************************************/
 

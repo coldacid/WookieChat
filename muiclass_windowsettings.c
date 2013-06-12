@@ -26,6 +26,7 @@
 
 #include "locale.h"
 #include "muiclass.h"
+#include "muiclass_application.h"
 #include "muiclass_windowsettings.h"
 #include "muiclass_settingsnick.h"
 #include "muiclass_settingsgeneral.h"
@@ -66,6 +67,24 @@ struct mccdata
 {
 	Object                *mcc_ClassObjects[ GID_LAST ];
 };
+
+/* /// GlobalReadConfig()
+**
+*/
+
+/*************************************************************************/
+
+ULONG GlobalReadConfig( ULONG objectid )
+{
+Object *settobj;
+ULONG result = 0;
+
+	if( ( settobj = (Object *) MUIGetVar( application, MA_APPLICATION_WINDOWSETTINGS ) ) ) {
+		result = DoMethod( settobj, MM_WINDOWSETTINGS_READCONFIG, objectid );
+	}
+	return( (ULONG) result );
+}
+/* \\\ */
 
 /*************************************************************************/
 
@@ -163,17 +182,37 @@ static ULONG OM_Setup( struct IClass *cl, Object *obj, Msg msg )
 struct mccdata *mccdata = INST_DATA( cl, obj );
 
 	DoMethod( obj                                      , MUIM_Notify, MUIA_Window_CloseRequest, TRUE          , obj                  , 3, MUIM_Set, MUIA_Window_Open     , FALSE );
+	DoMethod( obj                                      , MUIM_Notify, MUIA_Window_CloseRequest, TRUE          , obj                  , 2, MUIM_Application_Load, MUIV_Application_Load_ENV    );
 	DoMethod( mccdata->mcc_ClassObjects[ GID_PAGELIST ], MUIM_Notify, MUIA_NList_Active       , MUIV_EveryTime, mccdata->mcc_ClassObjects[ GID_PAGEGROUP ], 3, MUIM_Set, MUIA_Group_ActivePage, MUIV_TriggerValue );
 
+	DoMethod( mccdata->mcc_ClassObjects[ GID_SAVE     ], MUIM_Notify, MUIA_Pressed            , FALSE         , _app(obj)            , 3, MUIM_Set, MUIA_Window_Open     , FALSE );
 	DoMethod( mccdata->mcc_ClassObjects[ GID_SAVE     ], MUIM_Notify, MUIA_Pressed            , FALSE         , _app(obj)            , 2, MUIM_Application_Save, MUIV_Application_Save_ENVARC );
+	DoMethod( mccdata->mcc_ClassObjects[ GID_USE      ], MUIM_Notify, MUIA_Pressed            , FALSE         , _app(obj)            , 3, MUIM_Set, MUIA_Window_Open     , FALSE );
 	DoMethod( mccdata->mcc_ClassObjects[ GID_USE      ], MUIM_Notify, MUIA_Pressed            , FALSE         , _app(obj)            , 2, MUIM_Application_Save, MUIV_Application_Save_ENV    );
+	DoMethod( mccdata->mcc_ClassObjects[ GID_CANCEL   ], MUIM_Notify, MUIA_Pressed            , FALSE         , _app(obj)            , 3, MUIM_Set, MUIA_Window_Open     , FALSE );
 	DoMethod( mccdata->mcc_ClassObjects[ GID_CANCEL   ], MUIM_Notify, MUIA_Pressed            , FALSE         , _app(obj)            , 2, MUIM_Application_Load, MUIV_Application_Load_ENV    );
 
-	/* load settings */
-
-	DoMethod( _app(obj), MUIM_Application_Load, MUIV_Application_Load_ENV );
-
 	return( DoSuperMethodA( cl, obj, msg ) );
+}
+/* \\\ */
+/* /// MM_ReadConfig()
+**
+*/
+
+/*************************************************************************/
+
+static ULONG MM_ReadConfig( struct IClass *cl, Object *obj, struct MP_WINDOWSETTINGS_READCONFIG *msg )
+{
+struct mccdata *mccdata = INST_DATA( cl, obj );
+ULONG result;
+
+	if( !( result = DoMethod( mccdata->mcc_ClassObjects[ GID_NICK ], MM_SETTINGSNICK_READCONFIG, msg->ObjectID ) ) ) {
+		if( !( result = DoMethod( mccdata->mcc_ClassObjects[ GID_GENERAL ], MM_SETTINGSGENERAL_READCONFIG, msg->ObjectID ) ) ) {
+			if( !( result = DoMethod( mccdata->mcc_ClassObjects[ GID_COLOR ], MM_SETTINGSCOLOR_READCONFIG, msg->ObjectID ) ) ) {
+			}
+		}
+	}
+	return( (ULONG) result );
 }
 /* \\\ */
 
@@ -193,7 +232,7 @@ DISPATCHER(MCC_WindowSettings_Dispatcher)
     {
 		case OM_NEW                             : return( OM_New         ( cl, obj, (APTR) msg ) );
 		case MUIM_Window_Setup                  : return( OM_Setup       ( cl, obj, (APTR) msg ) );
-
+		case MM_WINDOWSETTINGS_READCONFIG       : return( MM_ReadConfig  ( cl, obj, (APTR) msg ) );
 	}
 	return( DoSuperMethodA( cl, obj, msg ) );
 

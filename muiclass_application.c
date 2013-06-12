@@ -107,6 +107,11 @@ Object *objs[ GID_LAST ];
 		struct mccdata *mccdata = INST_DATA( cl, obj );
 
 		CopyMem( &objs[0], &mccdata->mcc_ClassObjects[0], sizeof( mccdata->mcc_ClassObjects));
+
+		/* load settings */
+
+		DoMethod( obj, MUIM_Application_Load, MUIV_Application_Load_ENV );
+		
 		return( (ULONG) obj );
     }
 	return( (ULONG) NULL );

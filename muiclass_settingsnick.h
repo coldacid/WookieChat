@@ -25,9 +25,11 @@
 
 enum {
 MM_SETTINGSNICK_RESETTODEFAULTS =  0xFED000c0,
+MM_SETTINGSNICK_READCONFIG,
 /* Attributes */
 };
 
+struct MP_SETTINGSNICK_READCONFIG { ULONG MethodID; ULONG ObjectID; };
 
 /*************************************************************************/
 

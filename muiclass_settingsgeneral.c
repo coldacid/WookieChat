@@ -58,32 +58,34 @@ GID_NICKCOMPLETITION,
 GID_LAST
 };
 
-
-#define GID_LASTGENERAL  GID_NICKCOMPLETITION
-#define GID_FIRSTGENERAL GID_EDITOR
-#define GENERAL_NUMBEROF ( GID_LASTGENERAL - GID_FIRSTGENERAL + 1 )
-
 /*
-** default settings
+** configitem structure
 */
 
-static LONG TAB_DEFAULTS[] = {
-	 GID_EDITOR           , MUIA_String_Contents, (LONG) "Ed",
+struct ConfigItem {
+	ULONG GadgetID;
+	ULONG ObjectID;
+	ULONG Attr;
+	LONG  Default;
+};
+
+static struct ConfigItem TAB_CONFIGITEMS[] = {
+	{ GID_EDITOR           , OID_EDITOR           , MUIA_String_Contents, (LONG) "Ed" },
 #ifdef __MORPHOS__
-	 GID_BROWSER          , MUIA_String_Contents, (LONG) "Open",
+	{ GID_BROWSER          , OID_BROWSER          , MUIA_String_Contents, (LONG) "Open" },
 #else
-	 GID_BROWSER          , MUIA_String_Contents, (LONG) "",
+	{ GID_BROWSER          , OID_BROWSER          , MUIA_String_Contents, (LONG) "" },
 #endif
-	 GID_MSGKICK          , MUIA_String_Contents, (LONG) "Pfffffffffffffffffft",
-	 GID_MSGQUIT          , MUIA_String_Contents, (LONG) "Heroes never die...They just reload!",
-	 GID_MSGPART          , MUIA_String_Contents, (LONG) "Heroes never die...They just reload!",
-	 GID_OPENPRIVATEQUERY , MUIA_Selected       , -1,
-	 GID_REQUESTWHOIS     , MUIA_Selected       ,  0,
-	 GID_REJOIN           , MUIA_Selected       ,  0,
-	 GID_OPENQUERY        , MUIA_Selected       , -1,
-	 GID_HIGHLIGHTPATTERN , MUIA_String_Contents, (LONG) "",
-	 GID_NICKCOMPLETITION , MUIA_Cycle_Active   , 0,
-	 0, 0,
+	{ GID_MSGKICK          , OID_MSGKICK          , MUIA_String_Contents, (LONG) "Pfffffffffffffffffft" },
+	{ GID_MSGQUIT          , OID_MSGQUIT          , MUIA_String_Contents, (LONG) "Heroes never die...They just reload!" },
+	{ GID_MSGPART          , OID_MSGPART          , MUIA_String_Contents, (LONG) "Heroes never die...They just reload!" },
+	{ GID_OPENPRIVATEQUERY , OID_OPENPRIVATEQUERY , MUIA_Selected       , -1 },
+	{ GID_REQUESTWHOIS     , OID_REQUESTWHOIS     , MUIA_Selected       ,  0 },
+	{ GID_REJOIN           , OID_REJOIN           , MUIA_Selected       ,  0 },
+	{ GID_OPENQUERY        , OID_OPENQUERY        , MUIA_Selected       , -1 },
+	{ GID_HIGHLIGHTPATTERN , OID_HIGHLIGHTPATTERN , MUIA_String_Contents, (LONG) "" },
+	{ GID_NICKCOMPLETITION , OID_NICKCOMPLETITION , MUIA_Cycle_Active   , 0 },
+	{ -1,0,0,0 },
 };
 
 /*
@@ -106,7 +108,6 @@ struct mccdata
 static ULONG OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
 {
 Object *objs[ GID_LAST ];
-ULONG i;
 static STRPTR TAB_CYCLE_NICKCOMPLETITION[ MSG_CY_AMIRC - MSG_CY_MIRC + 2 ];
 
 	if( (obj = (Object *) DoSuperNew( cl, obj, MUIA_Group_Horiz, FALSE,
@@ -168,10 +169,6 @@ static STRPTR TAB_CYCLE_NICKCOMPLETITION[ MSG_CY_AMIRC - MSG_CY_MIRC + 2 ];
 
 		DoMethod( obj, MM_SETTINGSGENERAL_RESETTODEFAULTS );
 
-		for( i = 0 ; i < GENERAL_NUMBEROF ; i++ ) {
-			SetAttrs( objs[ GID_FIRSTGENERAL + i ], MUIA_ObjectID, OID_SETTINGSGENERAL + 1 + i, TAG_DONE );
-		}
-
 		return( (ULONG) obj );
     }
 	return( (ULONG) NULL );
@@ -189,8 +186,27 @@ static ULONG MM_ResetToDefaults( struct IClass *cl, Object *obj, Msg *msg )
 struct mccdata *mccdata = INST_DATA( cl, obj );
 ULONG i;
 
-	for( i = 0 ; TAB_DEFAULTS[ i + 1 ] ; i+=3 ) {
-		SetAttrs( mccdata->mcc_ClassObjects[ TAB_DEFAULTS[ i ] ], TAB_DEFAULTS[ i + 1 ], TAB_DEFAULTS[ i + 2 ], TAG_DONE );
+	for( i = 0 ; TAB_CONFIGITEMS[ i ].GadgetID != -1 ; i++ ) {
+		SetAttrs( mccdata->mcc_ClassObjects[ TAB_CONFIGITEMS[ i ].GadgetID ], TAB_CONFIGITEMS[ i ].Attr, TAB_CONFIGITEMS[ i ].Default, MUIA_ObjectID, TAB_CONFIGITEMS[ i ].ObjectID, TAG_DONE );
+	}
+	return( 0 );
+}
+/* \\\ */
+/* /// MM_ReadConfig()
+**
+*/
+
+/*************************************************************************/
+
+static ULONG MM_ReadConfig( struct IClass *cl, Object *obj, struct MP_SETTINGSGENERAL_READCONFIG *msg )
+{
+struct mccdata *mccdata = INST_DATA( cl, obj );
+ULONG i;
+
+	for( i = 0 ; TAB_CONFIGITEMS[ i ].GadgetID != -1 ; i++ ) {
+		if( TAB_CONFIGITEMS[ i ].ObjectID == msg->ObjectID ) {
+			return( (ULONG) MUIGetVar( mccdata->mcc_ClassObjects[ TAB_CONFIGITEMS[ i ].GadgetID ], TAB_CONFIGITEMS[ i ].Attr ) );
+		}
 	}
 	return( 0 );
 }
@@ -212,6 +228,7 @@ DISPATCHER(MCC_SettingsGeneral_Dispatcher)
     {
 		case OM_NEW                              : return( OM_New                     ( cl, obj, (APTR) msg ) );
 		case MM_SETTINGSGENERAL_RESETTODEFAULTS  : return( MM_ResetToDefaults         ( cl, obj, (APTR) msg ) );
+		case MM_SETTINGSGENERAL_READCONFIG       : return( MM_ReadConfig              ( cl, obj, (APTR) msg ) );
 	}
 	return( DoSuperMethodA( cl, obj, msg ) );
 
