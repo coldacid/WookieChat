@@ -9,7 +9,7 @@
 */
 
 /*
-** muiclass_windowcolorsettings.c
+** muiclass_settingscolor.c
 */
 
 #include <libraries/mui.h>
@@ -74,10 +74,10 @@ GID_LAST
 #define COLORS_NUMBEROF ( GID_LASTCOLOR - GID_FIRSTCOLOR + 1 )
 
 /*
-** color defaults
+** default settings
 */
 
-static APTR TAB_COLOR_DEFAULTS[] = {
+static APTR TAB_DEFAULTS[] = {
 	(APTR) GID_BACKGROUND       , "2:00000000,00000000,00000000",
 	(APTR) GID_NICKLISTBG       , "2:1D451D45,2B5D2B5D,8D798D79",
 	(APTR) GID_TABLISTBG        , "r52215221,FFFFFFFF,2D9B2D9B",
@@ -112,7 +112,6 @@ static APTR TAB_COLOR_DEFAULTS[] = {
 struct mccdata
 {
 	Object                *mcc_ClassObjects[ GID_LAST ];
-	struct MUI_PenSpec    *mcc_PenDisplaySpecs[ COLORS_NUMBEROF ];
 };
 
 /*************************************************************************/
@@ -269,8 +268,8 @@ static ULONG MM_ResetToDefaults( struct IClass *cl, Object *obj, Msg *msg )
 struct mccdata *mccdata = INST_DATA( cl, obj );
 ULONG i;
 
-	for( i = 0 ; TAB_COLOR_DEFAULTS[ i + 1 ] ; i+=2 ) {
-		SetAttrs( mccdata->mcc_ClassObjects[ (ULONG) TAB_COLOR_DEFAULTS[ i ] ], MUIA_Pendisplay_Spec, (ULONG) TAB_COLOR_DEFAULTS[ i + 1 ], TAG_DONE );
+	for( i = 0 ; TAB_DEFAULTS[ i + 1 ] ; i+=2 ) {
+		SetAttrs( mccdata->mcc_ClassObjects[ (ULONG) TAB_DEFAULTS[ i ] ], MUIA_Pendisplay_Spec, (ULONG) TAB_DEFAULTS[ i + 1 ], TAG_DONE );
 	}
 	return( 0 );
 }

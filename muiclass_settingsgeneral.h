@@ -8,8 +8,8 @@
     for the specific language governing rights and limitations under the License.
 */
 
-#ifndef MUICLASS_SETTINGSNICK_H
-#define MUICLASS_SETTINGSNICK_H 1
+#ifndef MUICLASS_SETTINGSGENERAL_H
+#define MUICLASS_SETTINGSGENERAL_H 1
 
 /*************************************************************************/
 
@@ -17,14 +17,14 @@
 #include "muiclass.h"
 
 
-#define SettingsNickObject NewObject( appclasses[ CLASSID_SETTINGSNICK ]->mcc_Class, NULL
+#define SettingsGeneralObject NewObject( appclasses[ CLASSID_SETTINGSGENERAL ]->mcc_Class, NULL
 
 /*
 ** Methods and attributes
 */
 
 enum {
-MM_SETTINGSNICK_RESETTODEFAULTS =  0xFED000c0,
+MM_SETTINGSGENERAL_RESETTODEFAULTS =  0xFED000d0,
 /* Attributes */
 };
 
@@ -35,10 +35,10 @@ MM_SETTINGSNICK_RESETTODEFAULTS =  0xFED000c0,
 ** Prototypes
 */
 
-ULONG   MCC_SettingsNick_InitClass( void );
-void    MCC_SettingsNick_DisposeClass( void );
+ULONG   MCC_SettingsGeneral_InitClass( void );
+void    MCC_SettingsGeneral_DisposeClass( void );
 
 /*************************************************************************/
 
-#endif /* MUICLASS_SETTINGSNICK_H */
+#endif /* MUICLASS_SETTINGSGENERAL_H */
 

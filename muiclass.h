@@ -15,6 +15,8 @@
 
 #include <exec/types.h>
 #include <intuition/intuition.h>
+#include <utility/utility.h>
+#include <stdarg.h>
 
 /*************************************************************************/
 
@@ -36,6 +38,7 @@ CLASSID_NICKLIST,
 CLASSID_CHANNELLIST,
 CLASSID_CHANNEL,
 CLASSID_SETTINGSNICK,
+CLASSID_SETTINGSGENERAL,
 CLASSID_SETTINGSCOLOR,
 CLASSID_LAST
 };
@@ -52,15 +55,20 @@ void  MUIClass_Close( void );
 
 ULONG MUIGetVar( Object *obj, ULONG attr );
 void  MUIInitStringArray( STRPTR array[], ULONG first, ULONG last );
+char  MUIGetKeyLocale( ULONG text );
+char  MUIGetKeyLocaleUpper( ULONG text );
 
 TEXT  MUIGetUnderScore( ULONG text);
 APTR  MUICreatePoppen( ULONG text, ULONG poptitle );
 APTR  MUICreateButton( ULONG text );
 APTR  MUICreateSmallButton( ULONG text );
 APTR  MUICreateLabel( ULONG text );
+APTR  MUICreateLabelLeft( ULONG text );
 APTR  MUICreateCheckbox( ULONG text, ULONG defstate );
+APTR  MUICreateCycle( ULONG text, APTR labels, ULONG first, ULONG last );
 APTR  MUICreateString( ULONG text, ULONG maxchars );
 APTR  MUICreateStringFixed( ULONG text, ULONG maxchars );
+APTR  MUICreatePopASL( ULONG text, ULONG maxchars, ULONG poptype, struct TagItem *taglist );
 
 struct MUI_PenSpec *MUIDataspaceImportPoppen( Object *poppen, Object *dataspace, ULONG objectid );
 void                MUIDataspaceExportPoppen( Object *poppen, Object *dataspace, ULONG objectid );

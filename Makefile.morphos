@@ -8,16 +8,16 @@ SYSTEM      = MorphOS
 CATALOGS    = english deutsch español français greek italiano magyar norsk polski svenska
 FLEXCAT     = flexcat
 
-SOURCES   = arexx_hooks.c auto_reconnect_server.c closeserverselectwin.c coloursettings.c \
+SOURCES   = functions.c muiclass.c muiclass_application.c muiclass_windowmain.c \
+			muiclass_windowabout.c muiclass_windowquit.c muiclass_windowurlgrabber.c muiclass_windowignorelist.c \
+			muiclass_nicklist.c muiclass_channellist.c muiclass_channel.c \
+			muiclass_windowsettings.c muiclass_settingsnick.c muiclass_settingscolor.c muiclass_settingsgeneral.c \
+			arexx_hooks.c auto_reconnect_server.c closeserverselectwin.c coloursettings.c \
             connect2server.c dcc.c display_logfile_lines.c do_waitselect_code.c \
             events_arexx.c globals.c graphical_smilies.c highlight_search.c hooks.c \
             irc.c main.c nicklist.c pincoming.c process_outgoing.c save_settings.c \
             sortnicks.c startexit.c subclasses.c tabs_change.c tabs_create_close.c \
 			timers.c objapp.c audio.c locale.c version.c \
-			functions.c muiclass.c muiclass_application.c muiclass_windowmain.c \
-			muiclass_windowabout.c muiclass_windowquit.c muiclass_windowurlgrabber.c muiclass_windowignorelist.c \
-			muiclass_nicklist.c muiclass_channellist.c muiclass_channel.c \
-			muiclass_windowsettings.c muiclass_settingsnick.c muiclass_settingscolor.c \
 
 OBJECTS   = $(SOURCES:.c=.o)
 

@@ -18,7 +18,9 @@
 #include <proto/utility.h>
 #include <proto/muimaster.h>
 #include <libraries/mui.h>
-
+#include <intuition/intuition.h>
+#include <utility/utility.h>
+#include <stdarg.h>
 #include <string.h>
 
 #include "locale.h"
@@ -34,6 +36,7 @@
 #include "muiclass_nicklist.h"
 #include "muiclass_channellist.h"
 #include "muiclass_channel.h"
+#include "muiclass_settingsgeneral.h"
 #include "muiclass_settingsnick.h"
 #include "muiclass_settingscolor.h"
 
@@ -68,14 +71,16 @@ ULONG result;
 						if( !(result = MCC_WindowSettings_InitClass() ) ) {
 							if( !(result = MCC_WindowQuit_InitClass() ) ) {
 								if( !(result = MCC_SettingsNick_InitClass() ) ) {
-									if( !(result = MCC_SettingsColor_InitClass() ) ) {
-										if( !(result = MCC_NickList_InitClass() ) ) {
-											if( !(result = MCC_ChannelList_InitClass() ) ) {
-												if( !(result = MCC_Channel_InitClass() ) ) {
-													if( ( application = NewObject( appclasses[ CLASSID_APPLICATION ]->mcc_Class, NULL, TAG_DONE ) ) ) {
-														DoMethod( application, MM_APPLICATION_STARTUP );
-													} else {
-														result = MSG_ERROR_UNABLETOSETUPMUICLASS;
+									if( !(result = MCC_SettingsGeneral_InitClass() ) ) {
+										if( !(result = MCC_SettingsColor_InitClass() ) ) {
+											if( !(result = MCC_NickList_InitClass() ) ) {
+												if( !(result = MCC_ChannelList_InitClass() ) ) {
+													if( !(result = MCC_Channel_InitClass() ) ) {
+														if( ( application = NewObject( appclasses[ CLASSID_APPLICATION ]->mcc_Class, NULL, TAG_DONE ) ) ) {
+															DoMethod( application, MM_APPLICATION_STARTUP );
+														} else {
+															result = MSG_ERROR_UNABLETOSETUPMUICLASS;
+														}
 													}
 												}
 											}
@@ -112,6 +117,7 @@ void MUIClass_Close( void )
 	MCC_WindowURLGrabber_DisposeClass();
 	MCC_WindowIgnoreList_DisposeClass();
 	MCC_SettingsNick_DisposeClass();
+	MCC_SettingsGeneral_DisposeClass();
 	MCC_SettingsColor_DisposeClass();
 	MCC_WindowSettings_DisposeClass();
 	MCC_WindowQuit_DisposeClass();
@@ -166,6 +172,46 @@ TEXT MUIGetUnderScore( ULONG text)
 		}
 	}
 	return(0);
+}
+/* \\\ */
+/* /// MUIGetKeyLocale()
+**
+*/
+
+/*************************************************************************/
+
+char MUIGetKeyLocale( ULONG text )
+{
+long i = 0;
+STRPTR name = LGS( text );
+
+	while( name[ i ] ) {
+		if( name[ i++ ] == '_') {
+			return( ToLower( name[ i ] ) );
+        }
+    }
+	return( 0x00 );
+}
+
+/* \\\ */
+
+/* /// GUI_GetKeyLocaleUpper()
+**
+*/
+
+/*************************************************************************/
+
+char MUIGetKeyLocaleUpper( ULONG text )
+{
+long i = 0;
+STRPTR name = LGS( text );
+
+	while( name[ i ] ) {
+		if( name[ i++ ] == '_') {
+			return( ToUpper( name[ i ] ) );
+        }
+    }
+	return( 0x00 );
 }
 /* \\\ */
 /* /// MUICreatePoppen()
@@ -265,6 +311,30 @@ APTR MUICreateLabel( ULONG text )
 			End );
 }
 /* \\\ */
+/* /// MUICreateLabelLeft()
+**
+** Just like MUI label(), but with locale id as label
+** text, MUIA_DoubleBuffer set and bubble help support.
+**
+** NOTE: Label must be followed by bubble help!
+*/
+
+/*************************************************************************/
+
+APTR MUICreateLabelLeft( ULONG text )
+{
+	return( TextObject,
+			MUIA_Text_Contents    , LGS( text ),
+			MUIA_Weight           , 0,
+			MUIA_InnerLeft        , 0,
+			MUIA_InnerRight       , 0,
+			MUIA_FramePhantomHoriz, TRUE,
+			MUIA_ShortHelp        , LGS( text+1), /* HELP is always behind label in catalog */
+			MUIA_Text_HiIndex , '_',
+			MUIA_Text_PreParse, "\33l",
+			End );
+}
+/* \\\ */
 /* /// MUICreateCheckbox()
 **
 ** NOTE: Label must be followed by bubble help!
@@ -288,6 +358,29 @@ APTR MUICreateCheckbox( ULONG text, ULONG defstate )
 
 }
 /* \\\ */
+/* /// /// MUICreateCycle()
+**
+*/
+
+/*************************************************************************/
+
+APTR MUICreateCycle( ULONG text, APTR labels, ULONG first, ULONG last )
+{
+
+    if( first || last ) {
+		MUIInitStringArray( labels, first, last );
+    }
+
+	return( MUI_NewObject( MUIC_Cycle, MUIA_Frame         , MUIV_Frame_Button,
+                                        MUIA_Font          , MUIV_Font_Button,
+										MUIA_ControlChar   , MUIGetKeyLocale( text ),
+                                        MUIA_CycleChain    , 1,
+										MUIA_ShortHelp     , (ULONG) LGS( text + 1 ),
+										MUIA_Cycle_Entries , (ULONG) labels,
+										TAG_DONE ) );
+}
+/* \\\ */
+
 /* /// MUICreateString()
 **
 ** NOTE: Label must be followed by bubble help!
@@ -332,6 +425,34 @@ ULONG size, length;
 							MUIA_FixWidthTxt       , &TAB_FIXWIDTH[ size ],
 							TAG_DONE )
 	);
+}
+/* \\\ */
+/* /// MUICreatePopASL()
+**
+*/
+
+/*************************************************************************/
+
+APTR MUICreatePopASL ( ULONG text, ULONG maxchars, ULONG poptype, struct TagItem *taglist )
+{
+Object *obj, *dummy;
+
+/* now create the gadget */
+
+	if( ( obj = MUI_NewObject( MUIC_Popasl,
+                                         MUIA_CycleChain       , 1,
+										 MUIA_ShortHelp , (ULONG) Locale_GetString( text + 1 ),
+										 MUIA_Popstring_String , (ULONG) MUI_NewObject( MUIC_String, MUIA_Frame, MUIV_Frame_String,
+																 MUIA_ControlChar, MUIGetKeyLocale( text ),
+                                                                 MUIA_String_MaxLen, maxchars,
+																 TAG_DONE ),
+										 MUIA_Popstring_Button , (ULONG) ( dummy = PopButton(poptype) ),
+
+										 taglist ? TAG_MORE : TAG_DONE, (ULONG) taglist ) ) ) {
+
+		SetAttrs( dummy, MUIA_ControlChar, MUIGetKeyLocaleUpper( text ), MUIA_CycleChain, 1, TAG_DONE );
+    }
+	return( obj );
 }
 /* \\\ */
 

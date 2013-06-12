@@ -28,6 +28,7 @@
 #include "muiclass.h"
 #include "muiclass_windowsettings.h"
 #include "muiclass_settingsnick.h"
+#include "muiclass_settingsgeneral.h"
 #include "muiclass_settingscolor.h"
 #include "version.h"
 #include "intern.h"
@@ -49,6 +50,7 @@ enum
 GID_PAGELIST = 0,
 GID_PAGEGROUP,
 GID_NICK,
+GID_GENERAL,
 GID_COLOR,
 GID_SAVE,
 GID_USE,
@@ -99,11 +101,11 @@ ULONG i;
 						Child, HVSpace,
 						Child, VGroup,
 							Child, HVSpace,
-							Child, objs[ GID_PAGEGROUP ] = HGroup, MUIA_Group_PageMode, TRUE,
-								Child, objs[ GID_NICK  ] = SettingsNickObject, End,
+							Child, objs[ GID_PAGEGROUP   ] = HGroup, MUIA_Group_PageMode, TRUE,
+								Child, objs[ GID_NICK    ] = SettingsNickObject, End,
 								Child, HVSpace,
-								Child, HVSpace,
-								Child, objs[ GID_COLOR ] = SettingsColorObject, End,
+								Child, objs[ GID_GENERAL ] = SettingsGeneralObject, End,
+								Child, objs[ GID_COLOR   ] = SettingsColorObject, End,
 								Child, HVSpace,
 								Child, HVSpace,
 								Child, HVSpace,

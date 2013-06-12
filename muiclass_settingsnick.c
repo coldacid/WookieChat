@@ -9,7 +9,7 @@
 */
 
 /*
-** muiclass_windowcolorsettings.c
+** muiclass_settingsnick.c
 */
 
 #include <libraries/mui.h>
@@ -33,8 +33,6 @@
 
 /*************************************************************************/
 
-#define LINEBUFFER_SIZEOF 0x2000
-
 #define NICK_SIZEOF     0x10
 #define USERNAME_SIZEOF 0x20
 #define REALNAME_SIZEOF 0x20
@@ -56,6 +54,36 @@ GID_LAST
 #define GID_LASTNICK   GID_REALNAME
 #define GID_FIRSTNICK  GID_NICK
 #define NICK_NUMBEROF ( GID_LASTNICK - GID_FIRSTNICK + 1 )
+
+/*
+** default settings
+*/
+
+static LONG TAB_DEFAULTS[] = {
+#ifdef __MORPHOS__
+	 GID_NICK             , MUIA_String_Contents, (LONG) "MorphOSUser",
+	 GID_NICK1            , MUIA_String_Contents, (LONG) "MorphOSUser_",
+	 GID_NICK2            , MUIA_String_Contents, (LONG) "MorphOSUser__",
+	 GID_USERNAME         , MUIA_String_Contents, (LONG) "MorphOSUser__",
+#elif __AROS__
+	 GID_NICK             , MUIA_String_Contents, (LONG) "AROSUser",
+	 GID_NICK1            , MUIA_String_Contents, (LONG) "AROSUser_",
+	 GID_NICK2            , MUIA_String_Contents, (LONG) "AROSUser__",
+	 GID_USERNAME         , MUIA_String_Contents, (LONG) "AROSUser",
+#elif __amigaos4__
+	 GID_NICK             , MUIA_String_Contents, (LONG) "AmigaOS4User",
+	 GID_NICK1            , MUIA_String_Contents, (LONG) "AmigaOS4User_",
+	 GID_NICK2            , MUIA_String_Contents, (LONG) "AmigaOS4User__",
+	 GID_USERNAME         , MUIA_String_Contents, (LONG) "AmigaOS4User",
+#else
+	 GID_NICK             , MUIA_String_Contents, (LONG) "AmigaUser",
+	 GID_NICK1            , MUIA_String_Contents, (LONG) "AmigaUser_",
+	 GID_NICK2            , MUIA_String_Contents, (LONG) "AmigaUser__",
+	 GID_USERNAME         , MUIA_String_Contents, (LONG) "AmigaUser",
+#endif
+	 GID_REALNAME         , MUIA_String_Contents, (LONG) "John Wookie",
+	 0, 0,
+};
 
 /*
 ** data used by this class
@@ -115,6 +143,8 @@ ULONG i;
 
 		DoMethod( obj, MUIM_Notify, MUIA_Window_CloseRequest, TRUE, obj, 3, MUIM_Set, MUIA_Window_Open, FALSE );
 
+		DoMethod( obj, MM_SETTINGSNICK_RESETTODEFAULTS );
+
 		for( i = 0 ; i < NICK_NUMBEROF ; i++ ) {
 			SetAttrs( objs[ GID_FIRSTNICK + i ], MUIA_ObjectID, OID_SETTINGSNICK + 1 + i, TAG_DONE );
 		}
@@ -124,17 +154,21 @@ ULONG i;
 	return( (ULONG) NULL );
 }
 /* \\\ */
-/* /// OM_Dispose()
+/* /// MM_ResetToDefaults()
 **
 */
 
 /*************************************************************************/
 
-static ULONG OM_Dispose( struct IClass *cl, Object *obj, Msg msg )
+static ULONG MM_ResetToDefaults( struct IClass *cl, Object *obj, Msg *msg )
 {
-//struct mccdata *mccdata = INST_DATA( cl, obj );
+struct mccdata *mccdata = INST_DATA( cl, obj );
+ULONG i;
 
-	return( DoSuperMethodA( cl, obj, msg ) );
+	for( i = 0 ; TAB_DEFAULTS[ i + 1 ] ; i+=3 ) {
+		SetAttrs( mccdata->mcc_ClassObjects[ TAB_DEFAULTS[ i ] ], TAB_DEFAULTS[ i + 1 ], TAB_DEFAULTS[ i + 2 ], TAG_DONE );
+	}
+	return( 0 );
 }
 /* \\\ */
 
@@ -152,8 +186,8 @@ DISPATCHER(MCC_SettingsNick_Dispatcher)
 {
     switch (msg->MethodID)
     {
-		case OM_NEW                      : return( OM_New                     ( cl, obj, (APTR) msg ) );
-		case OM_DISPOSE                  : return( OM_Dispose                 ( cl, obj, (APTR) msg ) );
+		case OM_NEW                              : return( OM_New                     ( cl, obj, (APTR) msg ) );
+		case MM_SETTINGSNICK_RESETTODEFAULTS     : return( MM_ResetToDefaults         ( cl, obj, (APTR) msg ) );
 	}
 	return( DoSuperMethodA( cl, obj, msg ) );
 

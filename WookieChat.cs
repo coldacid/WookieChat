@@ -7246,6 +7246,18 @@ _Nick
 _Nick
 _Nick
 ;
+MSG_MUICLASS_SETTINGSNICK_NICK_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
 MSG_MUICLASS_SETTINGSNICK_NICKALT1_GAD
 Fallback nick #_1:
 Ausweichname #_1:
@@ -7257,6 +7269,18 @@ Fallback nick #_1:
 Fallback nick #_1:
 Fallback nick #_1:
 Fallback nick #_1:
+;
+MSG_MUICLASS_SETTINGSNICK_NICKALT1_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
 ;
 MSG_MUICLASS_SETTINGSNICK_NICKALT2_GAD
 Fallback nick #_2:
@@ -7270,6 +7294,18 @@ Fallback nick #_2:
 Fallback nick #_2:
 Fallback nick #_2:
 ;
+MSG_MUICLASS_SETTINGSNICK_NICKALT2_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
 MSG_MUICLASS_SETTINGSNICK_REALNAME_GAD
 _Real Name
 _Realname
@@ -7282,6 +7318,18 @@ Virkelig navn
 Prawdziwe imiê
 Verkligt namn
 ;
+MSG_MUICLASS_SETTINGSNICK_REALNAME_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
 MSG_MUICLASS_SETTINGSNICK_USERNAME_GAD
 User _Name
 Nutzer _Name
@@ -7293,5 +7341,345 @@ Felhasználónév
 Brukernavn
 Nazwa u¿ytkownika
 Användarnamn
+;
+MSG_MUICLASS_SETTINGSNICK_USERNAME_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
+;
+; MUICLASS_SETTINGSGENERAL
+;
+MSG_MUICLASS_SETTINGSGENERAL_MESSAGEWHEN_INFO
+Message at...
+Nachricht bei ...
+Message at...
+Message at...
+Message at...
+Message at...
+Message at...
+Message at...
+Message at...
+Message at...
+;
+MSG_MUICLASS_SETTINGSGENERAL_MESSAGEKICK_GAD
+Kick:
+Kick:
+Kick:
+Kick:
+Kick:
+Kick:
+Kick:
+Kick:
+Kick:
+Kick:
+;
+MSG_MUICLASS_SETTINGSGENERAL_MESSAGEKICK_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
+MSG_MUICLASS_SETTINGSGENERAL_MESSAGEQUIT_GAD
+Quit:
+Beenden
+Quit:
+Quit:
+Quit:
+Quit:
+Quit:
+Quit:
+Quit:
+Quit:
+;
+MSG_MUICLASS_SETTINGSGENERAL_MESSAGEQUIT_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
+MSG_MUICLASS_SETTINGSGENERAL_MESSAGEPART_GAD
+Part:
+Part:
+Part:
+Part:
+Part:
+Part:
+Part:
+Part:
+Part:
+Part:
+;
+MSG_MUICLASS_SETTINGSGENERAL_MESSAGEPART_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
+MSG_MUICLASS_SETTINGSGENERAL_DOUBLECLICKONNICKLIST_INFO
+Double click on nick list causes...
+Doppelklick auf Nickliste erzeugt ...
+Double click on nick list causes...
+Double click on nick list causes...
+Double click on nick list causes...
+Double click on nick list causes...
+Double click on nick list causes...
+Double click on nick list causes...
+Double click on nick list causes...
+Double click on nick list causes...
+;
+MSG_MUICLASS_SETTINGSGENERAL_OPENPRIVATEQUERY_GAD
+Private query.
+Private query.
+Private query.
+Private query.
+Private query.
+Private query.
+Private query.
+Private query.
+Private query.
+Private query.
+;
+MSG_MUICLASS_SETTINGSGENERAL_OPENPRIVATEQUERY_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
+MSG_MUICLASS_SETTINGSGENERAL_REQUESTWHOIS_GAD
+requests whois information.
+fordert Whois Informationen an.
+requests whois information.
+requests whois information.
+requests whois information.
+requests whois information.
+requests whois information.
+requests whois information.
+requests whois information.
+requests whois information.
+;
+MSG_MUICLASS_SETTINGSGENERAL_REQUESTWHOIS_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
+MSG_MUICLASS_SETTINGSGENERAL_EDITOR_GAD
+Editor:
+Editor:
+Editor:
+Editor:
+Editor:
+Editor:
+Editor:
+Editor:
+Editor:
+Editor:
+;
+MSG_MUICLASS_SETTINGSGENERAL_EDITOR_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
+MSG_MUICLASS_SETTINGSGENERAL_BROWSER_GAD
+Browser:
+Browser:
+Browser:
+Browser:
+Browser:
+Browser:
+Browser:
+Browser:
+Browser:
+Browser:
+;
+MSG_MUICLASS_SETTINGSGENERAL_BROWSER_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
+MSG_MUICLASS_SETTINGSGENERAL_NICKCOMPLETITION_GAD
+Nick completition style:
+Nick completition style:
+Nick completition style:
+Nick completition style:
+Nick completition style:
+Nick completition style:
+Nick completition style:
+Nick completition style:
+Nick completition style:
+Nick completition style:
+;
+MSG_MUICLASS_SETTINGSGENERAL_NICKCOMPLETITION_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
+MSG_CY_MIRC
+mIRC
+mIRC
+mIRC
+mIRC
+mIRC
+mIRC
+mIRC
+mIRC
+mIRC
+mIRC
+;
+MSG_CY_AMIRC
+AmIRC
+AmIRC
+AmIRC
+AmIRC
+AmIRC
+AmIRC
+AmIRC
+AmIRC
+AmIRC
+AmIRC
+;
+MSG_MUICLASS_SETTINGSGENERAL_AUTOMATIC_INFO
+Automatic...
+Automatisch ...
+Automatic...
+Automatic...
+Automatic...
+Automatic...
+Automatic...
+Automatic...
+Automatic...
+Automatic...
+;
+MSG_MUICLASS_SETTINGSGENERAL_REJOIN_GAD
+rejoin when kicked.
+rejoin when kicked.
+rejoin when kicked.
+rejoin when kicked.
+rejoin when kicked.
+rejoin when kicked.
+rejoin when kicked.
+rejoin when kicked.
+rejoin when kicked.
+rejoin when kicked.
+;
+;
+MSG_MUICLASS_SETTINGSGENERAL_REJOIN_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
+MSG_MUICLASS_SETTINGSGENERAL_OPENQUERY_GAD
+open query when being messaged.
+open query when being messaged.
+open query when being messaged.
+open query when being messaged.
+open query when being messaged.
+open query when being messaged.
+open query when being messaged.
+open query when being messaged.
+open query when being messaged.
+open query when being messaged.
+;
+MSG_MUICLASS_SETTINGSGENERAL_OPENQUERY_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
+MSG_MUICLASS_SETTINGSGENERAL_HIGHLIGHTPATTERN_GAD
+Highlight Pattern:
+Highlight Pattern:
+Highlight Pattern:
+Highlight Pattern:
+Highlight Pattern:
+Highlight Pattern:
+Highlight Pattern:
+Highlight Pattern:
+Highlight Pattern:
+Highlight Pattern:
+;
+MSG_MUICLASS_SETTINGSGENERAL_HIGHLIGHT_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
 ;
 
