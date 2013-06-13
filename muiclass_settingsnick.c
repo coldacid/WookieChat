@@ -110,6 +110,7 @@ static ULONG OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
 Object *objs[ GID_LAST ];
 
 	if( (obj = (Object *) DoSuperNew( cl, obj, MUIA_Group_Horiz, TRUE,
+				Child, HVSpace,
 				Child, ColGroup(2),
 					Child, MUICreateLabel( MSG_MUICLASS_SETTINGSNICK_NICK_GAD ),
 					Child, HGroup,
@@ -137,6 +138,7 @@ Object *objs[ GID_LAST ];
 						Child, HVSpace,
 					End,
 				End,
+				Child, HVSpace,
 		TAG_DONE ) ) ) {
 
 		struct mccdata *mccdata = INST_DATA( cl, obj );

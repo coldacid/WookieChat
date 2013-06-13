@@ -31,6 +31,7 @@
 #include "muiclass_settingsnick.h"
 #include "muiclass_settingsgui.h"
 #include "muiclass_settingsdcc.h"
+#include "muiclass_settingslog.h"
 #include "muiclass_settingsgeneral.h"
 #include "muiclass_settingscolor.h"
 #include "muiclass_settingssound.h"
@@ -55,6 +56,7 @@ GID_PAGELIST = 0,
 GID_PAGEGROUP,
 GID_NICK,
 GID_GUI,
+GID_LOG,
 GID_DCC,
 GID_GENERAL,
 GID_COLOR,
@@ -123,7 +125,7 @@ ULONG i;
 															MUIA_NListview_Horiz_ScrollBar, MUIV_NListview_HSB_Auto,
 															MUIA_FixWidthTxt, "WWWWWWWWWWWWW",
 														End,
-					Child, HGroup, MUIA_Weight, 10,
+					Child, HGroup,
 						Child, HVSpace,
 						Child, VGroup,
 							Child, HVSpace,
@@ -133,7 +135,7 @@ ULONG i;
 								Child, objs[ GID_GENERAL ] = SettingsGeneralObject, End,
 								Child, objs[ GID_COLOR   ] = SettingsColorObject, End,
 								Child, objs[ GID_GUI     ] = SettingsGUIObject, End,
-								Child, HVSpace,
+								Child, objs[ GID_LOG     ] = SettingsLogObject, End,
 								Child, objs[ GID_DCC     ] = SettingsDCCObject, End,
 								Child, objs[ GID_SOUND   ] = SettingsSoundObject, End,
 								Child, HVSpace,

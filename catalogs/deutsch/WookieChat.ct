@@ -2497,8 +2497,8 @@ Doppelklick auf Nickliste erzeugt ...
 ; Double click on nick list causes...
 ;
 MSG_MUICLASS_SETTINGSGENERAL_OPENPRIVATEQUERY_GAD
-Private query.
-; Private query.
+private query.
+; private query.
 ;
 MSG_MUICLASS_SETTINGSGENERAL_OPENPRIVATEQUERY_HELP
 /
@@ -2883,6 +2883,65 @@ Upload path:
 ; Upload path:
 ;
 MSG_MUICLASS_SETTINGSDCC_DCCOUTPATH_HELP
+/
+; /
+;
+;
+; MUICLASS_SETTINGSLOG
+;
+MSG_MUICLASS_SETTINGSLOG_LOGACTIVEFOR_INFO
+Mitgeschneiden aktiv für...
+; Logging is active for...
+;
+MSG_MUICLASS_SETTINGSLOG_PUBLIC_GAD
+öffentliche Kanäle.
+; public channels.
+;
+MSG_MUICLASS_SETTINGSLOG_PUBLIC_HELP
+/
+; /
+;
+MSG_MUICLASS_SETTINGSLOG_PRIVATE_GAD
+private Kanäle.
+; private	channels.
+;
+MSG_MUICLASS_SETTINGSLOG_PRIVATE_HELP
+/
+; /
+;
+MSG_MUICLASS_SETTINGSLOG_LINESTORECOVERFROMLOG_INFO
+Zeilen die aus dem Mittschnitt wiederhergestellt werden...
+; Lines to be recovered from log...
+;
+MSG_MUICLASS_SETTINGSLOG_LINESTORECOVERPUBLIC_GAD
+in öffentliche Kanäle:
+; in public channels:
+;
+MSG_MUICLASS_SETTINGSLOG_LINESTORECOVERPUBLIC_HELP
+/
+; /
+;
+MSG_MUICLASS_SETTINGSLOG_LINESTORECOVERPRIVATE_GAD
+in private Kanäle:
+; in private channels:
+;
+MSG_MUICLASS_SETTINGSLOG_LINESTORECOVERPRIVATE_HELP
+/
+; /
+;
+MSG_MUICLASS_SETTINGSLOG_LOGSPLIT_GAD
+Mitschnitte werden in Abschnitte von
+; Logs get split into parts of
+;
+MSG_MUICLASS_SETTINGSLOG_LOGSPLIT_HELP
+/
+; /
+;
+MSG_MUICLASS_SETTINGSLOG_LOGSPLITLIMIT_GAD
+KB Abschnitte geteilt.
+; KB.
+;
+MSG_MUICLASS_SETTINGSLOG_LOGSPLITLIMIT_HELP
 /
 ; /
 ;

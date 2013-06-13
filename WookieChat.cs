@@ -7454,16 +7454,16 @@ Double click on nick list causes...
 Double click on nick list causes...
 ;
 MSG_MUICLASS_SETTINGSGENERAL_OPENPRIVATEQUERY_GAD
-Private query.
-Private query.
-Private query.
-Private query.
-Private query.
-Private query.
-Private query.
-Private query.
-Private query.
-Private query.
+private query.
+private query.
+private query.
+private query.
+private query.
+private query.
+private query.
+private query.
+private query.
+private query.
 ;
 MSG_MUICLASS_SETTINGSGENERAL_OPENPRIVATEQUERY_HELP
 /
@@ -8596,6 +8596,177 @@ Upload path:
 Upload path:
 ;
 MSG_MUICLASS_SETTINGSDCC_DCCOUTPATH_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
+;
+; MUICLASS_SETTINGSLOG
+;
+MSG_MUICLASS_SETTINGSLOG_LOGACTIVEFOR_INFO
+Logging is active for...
+Mitgeschneiden aktiv für...
+Logging is active for...
+Logging is active for...
+Logging is active for...
+Logging is active for...
+Logging is active for...
+Logging is active for...
+Logging is active for...
+Logging is active for...
+;
+MSG_MUICLASS_SETTINGSLOG_PUBLIC_GAD
+public channels.
+öffentliche Kanäle.
+public channels.
+public channels.
+public channels.
+public channels.
+public channels.
+public channels.
+public channels.
+public channels.
+;
+MSG_MUICLASS_SETTINGSLOG_PUBLIC_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
+MSG_MUICLASS_SETTINGSLOG_PRIVATE_GAD
+private	channels.
+private Kanäle.
+private	channels.
+private	channels.
+private	channels.
+private	channels.
+private	channels.
+private	channels.
+private	channels.
+private	channels.
+;
+MSG_MUICLASS_SETTINGSLOG_PRIVATE_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
+MSG_MUICLASS_SETTINGSLOG_LINESTORECOVERFROMLOG_INFO
+Lines to be recovered from log...
+Zeilen die aus dem Mittschnitt wiederhergestellt werden...
+Lines to be recovered from log...
+Lines to be recovered from log...
+Lines to be recovered from log...
+Lines to be recovered from log...
+Lines to be recovered from log...
+Lines to be recovered from log...
+Lines to be recovered from log...
+Lines to be recovered from log...
+;
+MSG_MUICLASS_SETTINGSLOG_LINESTORECOVERPUBLIC_GAD
+in public channels:
+in öffentliche Kanäle:
+in public channels:
+in public channels:
+in public channels:
+in public channels:
+in public channels:
+in public channels:
+in public channels:
+in public channels:
+;
+MSG_MUICLASS_SETTINGSLOG_LINESTORECOVERPUBLIC_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
+MSG_MUICLASS_SETTINGSLOG_LINESTORECOVERPRIVATE_GAD
+in private channels:
+in private Kanäle:
+in private channels:
+in private channels:
+in private channels:
+in private channels:
+in private channels:
+in private channels:
+in private channels:
+in private channels:
+;
+MSG_MUICLASS_SETTINGSLOG_LINESTORECOVERPRIVATE_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
+MSG_MUICLASS_SETTINGSLOG_LOGSPLIT_GAD
+Logs get split into parts of
+Mitschnitte werden in Abschnitte von
+Logs get split into parts of
+Logs get split into parts of
+Logs get split into parts of
+Logs get split into parts of
+Logs get split into parts of
+Logs get split into parts of
+Logs get split into parts of
+Logs get split into parts of
+;
+MSG_MUICLASS_SETTINGSLOG_LOGSPLIT_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
+MSG_MUICLASS_SETTINGSLOG_LOGSPLITLIMIT_GAD
+KB.
+KB Abschnitte geteilt.
+KB.
+KB.
+KB.
+KB.
+KB.
+KB.
+KB.
+KB.
+;
+MSG_MUICLASS_SETTINGSLOG_LOGSPLITLIMIT_HELP
 /
 /
 /
