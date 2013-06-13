@@ -112,6 +112,7 @@ Object *objs[ GID_LAST ];
 
 		DoMethod( obj, MUIM_Application_Load, MUIV_Application_Load_ENVARC );
 		DoMethod( obj, MUIM_Application_Load, MUIV_Application_Load_ENV );
+
 		
 		return( (ULONG) obj );
     }
@@ -189,9 +190,27 @@ struct mccdata *mccdata = INST_DATA( cl, obj );
 
 #if ENABLE_NEWWOOKIECODE
 	SetAttrs( mccdata->mcc_ClassObjects[ WID_MAIN ], MUIA_Window_Open, TRUE, TAG_DONE );
+	DoMethod( mccdata->mcc_ClassObjects[ WID_MAIN ], MM_WINDOWMAIN_COLORCHANGE );
+
 #endif
 
 	return( 0 );
+}
+/* \\\ */
+/* /// MM_Application_Load()
+**
+*/
+
+/*************************************************************************/
+
+static ULONG MM_Application_Load( struct IClass *cl, Object *obj, Msg msg )
+{
+ULONG rc = DoSuperMethodA( cl, obj, (Msg) msg );
+struct mccdata *mccdata = INST_DATA( cl, obj );
+
+	DoMethod( mccdata->mcc_ClassObjects[ WID_MAIN ], MM_WINDOWMAIN_COLORCHANGE );
+
+	return( rc );
 }
 /* \\\ */
 
@@ -216,6 +235,8 @@ DISPATCHER(MCC_Application_Dispatcher)
 		case OM_GET                          : return( OM_Get                           ( cl, obj, (APTR) msg ) );
 
 		case MM_APPLICATION_STARTUP          : return( MM_Startup                       ( cl, obj, (APTR) msg ) );
+		case MUIM_Application_Load           : return( MM_Application_Load              ( cl, obj, (APTR) msg ) );
+		case MUIM_Application_Save           : return( MM_Application_Load              ( cl, obj, (APTR) msg ) );
     }
 	return( DoSuperMethodA( cl, obj, msg ) );
 

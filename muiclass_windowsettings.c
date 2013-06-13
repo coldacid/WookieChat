@@ -29,6 +29,7 @@
 #include "muiclass_application.h"
 #include "muiclass_windowsettings.h"
 #include "muiclass_settingsnick.h"
+#include "muiclass_settingsgui.h"
 #include "muiclass_settingsgeneral.h"
 #include "muiclass_settingscolor.h"
 #include "muiclass_settingssound.h"
@@ -52,6 +53,7 @@ enum
 GID_PAGELIST = 0,
 GID_PAGEGROUP,
 GID_NICK,
+GID_GUI,
 GID_GENERAL,
 GID_COLOR,
 GID_SOUND,
@@ -68,6 +70,7 @@ GID_LAST
 struct mccdata
 {
 	Object                *mcc_ClassObjects[ GID_LAST ];
+	ULONG                  mcc_VisualChange;
 };
 
 /* /// GlobalReadConfig()
@@ -127,7 +130,7 @@ ULONG i;
 								Child, HVSpace,
 								Child, objs[ GID_GENERAL ] = SettingsGeneralObject, End,
 								Child, objs[ GID_COLOR   ] = SettingsColorObject, End,
-								Child, HVSpace,
+								Child, objs[ GID_GUI     ] = SettingsGUIObject, End,
 								Child, HVSpace,
 								Child, HVSpace,
 								Child, objs[ GID_SOUND   ] = SettingsSoundObject, End,
@@ -197,6 +200,48 @@ struct mccdata *mccdata = INST_DATA( cl, obj );
 	return( DoSuperMethodA( cl, obj, msg ) );
 }
 /* \\\ */
+/* /// OM_Set()
+**
+*/
+
+/*************************************************************************/
+
+static ULONG OM_Set( struct IClass *cl, Object *obj, struct opSet *msg )
+{
+struct mccdata *mccdata = INST_DATA( cl, obj );
+struct TagItem *tag;
+struct TagItem *tstate;
+
+	for( tstate = msg->ops_AttrList ; ( tag = NextTagItem( &tstate ) ) ; ) {
+		ULONG tidata = tag->ti_Data;
+        switch( tag->ti_Tag ) {
+			case MA_WINDOWSETTINGS_VISUALCHANGE:
+				mccdata->mcc_VisualChange = tidata;
+				break;
+		}
+    }
+	return( DoSuperMethodA( cl, obj,(Msg) msg ) );
+}
+/* \\\ */
+/* /// OM_Get()
+**
+*/
+
+/*************************************************************************/
+
+static ULONG OM_Get( struct IClass *cl, Object *obj, struct opGet *msg )
+{
+struct mccdata *mccdata = INST_DATA(cl,obj);
+
+//	  debug( SOURCENAME ": MCC_OM_Get( IClass: 0x%08lx, Object: 0x%08lx, MSG: 0x%08lx)\n", cl, obj, msg );
+
+	switch( msg->opg_AttrID ) {
+		case MA_WINDOWSETTINGS_VISUALCHANGE: *msg->opg_Storage = mccdata->mcc_VisualChange   ; return( TRUE );
+		default: return( DoSuperMethodA( cl, obj, (Msg) msg ) );
+    }
+}
+/* \\\ */
+
 /* /// MM_ReadConfig()
 **
 */
@@ -209,8 +254,12 @@ struct mccdata *mccdata = INST_DATA( cl, obj );
 ULONG result;
 
 	if( !( result = DoMethod( mccdata->mcc_ClassObjects[ GID_NICK ], MM_SETTINGSNICK_READCONFIG, msg->ObjectID ) ) ) {
-		if( !( result = DoMethod( mccdata->mcc_ClassObjects[ GID_GENERAL ], MM_SETTINGSGENERAL_READCONFIG, msg->ObjectID ) ) ) {
-			if( !( result = DoMethod( mccdata->mcc_ClassObjects[ GID_COLOR ], MM_SETTINGSCOLOR_READCONFIG, msg->ObjectID ) ) ) {
+		if( !( result = DoMethod( mccdata->mcc_ClassObjects[ GID_GUI ], MM_SETTINGSCOLOR_READCONFIG, msg->ObjectID ) ) ) {
+			if( !( result = DoMethod( mccdata->mcc_ClassObjects[ GID_GENERAL ], MM_SETTINGSGENERAL_READCONFIG, msg->ObjectID ) ) ) {
+				if( !( result = DoMethod( mccdata->mcc_ClassObjects[ GID_COLOR ], MM_SETTINGSCOLOR_READCONFIG, msg->ObjectID ) ) ) {
+					if( !( result = DoMethod( mccdata->mcc_ClassObjects[ GID_SOUND ], MM_SETTINGSCOLOR_READCONFIG, msg->ObjectID ) ) ) {
+					}
+				}
 			}
 		}
 	}
@@ -234,6 +283,9 @@ DISPATCHER(MCC_WindowSettings_Dispatcher)
     {
 		case OM_NEW                             : return( OM_New         ( cl, obj, (APTR) msg ) );
 		case MUIM_Window_Setup                  : return( OM_Setup       ( cl, obj, (APTR) msg ) );
+		case OM_SET                             : return( OM_Set         ( cl, obj, (APTR) msg ) );
+		case OM_GET                             : return( OM_Get         ( cl, obj, (APTR) msg ) );
+
 		case MM_WINDOWSETTINGS_READCONFIG       : return( MM_ReadConfig  ( cl, obj, (APTR) msg ) );
 	}
 	return( DoSuperMethodA( cl, obj, msg ) );

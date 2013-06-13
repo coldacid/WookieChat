@@ -8,8 +8,8 @@
     for the specific language governing rights and limitations under the License.
 */
 
-#ifndef MUICLASS_WINDOWMAIN_H
-#define MUICLASS_WINDOWMAIN_H 1
+#ifndef MUICLASS_SETTINGSGUI_H
+#define MUICLASS_SETTINGSGUI_H 1
 
 /*************************************************************************/
 
@@ -17,20 +17,19 @@
 #include "muiclass.h"
 
 
-#define WindowMainObject NewObject( appclasses[ CLASSID_WINDOWMAIN ]->mcc_Class, NULL
+#define SettingsGUIObject NewObject( appclasses[ CLASSID_SETTINGSGUI ]->mcc_Class, NULL
 
 /*
 ** Methods and attributes
 */
 
 enum {
-MM_WINDOWMAIN_DUMMY =  0xFED00040,
-MM_WINDOWMAIN_MENUSELECT,
-MM_WINDOWMAIN_COLORCHANGE,
+MM_SETTINGSGUI_RESETTODEFAULTS =  0xFED000c0,
+MM_SETTINGSGUI_READCONFIG,
 /* Attributes */
 };
 
-struct MP_WINDOWMAIN_MENUSELECT { ULONG MethodID; ULONG MenuID; };
+struct MP_SETTINGSGUI_READCONFIG { ULONG MethodID; ULONG ObjectID; };
 
 /*************************************************************************/
 
@@ -38,10 +37,10 @@ struct MP_WINDOWMAIN_MENUSELECT { ULONG MethodID; ULONG MenuID; };
 ** Prototypes
 */
 
-ULONG   MCC_WindowMain_InitClass( void );
-void    MCC_WindowMain_DisposeClass( void );
+ULONG   MCC_SettingsGUI_InitClass( void );
+void    MCC_SettingsGUI_DisposeClass( void );
 
 /*************************************************************************/
 
-#endif /* MUICLASS_WINDOWMAIN_H */
+#endif /* MUICLASS_SETTINGSGUI_H */
 

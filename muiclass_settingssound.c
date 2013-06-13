@@ -21,8 +21,6 @@
 #include <proto/dos.h>
 #include <SDI_hook.h>
 #include <string.h>
-#include <mui/NList_mcc.h>
-#include <mui/NListview_mcc.h>
 
 #include "locale.h"
 #include "muiclass.h"
@@ -123,7 +121,7 @@ static STRPTR TAB_CYCLE_HIGHLIGHTMODES[ MSG_CY_TABISINACTIVE - MSG_CY_NEVER + 2 
 					Child, objs[ GID_CTCPSAMPLES          ] = MUICreatePopASL( MSG_MUICLASS_SETTINGSSOUND_CTCPSAMPLES_GAD, SAMPLENAME_SIZEOF, MUII_PopDrawer, TAG_DONE ),
 					Child, VSpace(5),
 					Child, HGroup,
-						Child, objs[ GID_USEEXTERNALPLAYER    ] = MUICreateCheckbox( MSG_MUICLASS_SETTINGSSOUND_USESAMPLEPLAYER_GAD, FALSE ),
+						Child, objs[ GID_USEEXTERNALPLAYER    ] = MUICreateCheckbox( MSG_MUICLASS_SETTINGSSOUND_USESAMPLEPLAYER_GAD, TRUE ),
 						Child, MUICreateLabelLeft( MSG_MUICLASS_SETTINGSSOUND_USESAMPLEPLAYER_GAD ),
 						Child, objs[ GID_EXTERNALPLAYER       ] = MUICreatePopASL( MSG_MUICLASS_SETTINGSSOUND_USESAMPLEPLAYER_GAD, SAMPLENAME_SIZEOF, MUII_PopFile, TAG_DONE ),
 					End,
@@ -148,6 +146,8 @@ static STRPTR TAB_CYCLE_HIGHLIGHTMODES[ MSG_CY_TABISINACTIVE - MSG_CY_NEVER + 2 
 		DoMethod( objs[ GID_MODEONPRIVMSG ], MUIM_Notify, MUIA_Cycle_Active, 1, objs[ GID_SPLONPRIVMSG  ], 3, MUIM_Set, MUIA_Disabled, FALSE );
 		DoMethod( objs[ GID_MODEONPRIVMSG ], MUIM_Notify, MUIA_Cycle_Active, 2, objs[ GID_SPLONPRIVMSG  ], 3, MUIM_Set, MUIA_Disabled, FALSE );
 		DoMethod( objs[ GID_MODEONPRIVMSG ], MUIM_Notify, MUIA_Cycle_Active, 3, objs[ GID_SPLONPRIVMSG  ], 3, MUIM_Set, MUIA_Disabled, FALSE );
+
+		DoMethod( objs[ GID_USEEXTERNALPLAYER ], MUIM_Notify, MUIA_Selected, MUIV_EveryTime, objs[ GID_EXTERNALPLAYER  ], 3, MUIM_Set, MUIA_Disabled, MUIV_NotTriggerValue );
 
 		
 		DoMethod( obj, MM_SETTINGSSOUND_RESETTODEFAULTS );

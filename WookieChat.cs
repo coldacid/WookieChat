@@ -6248,9 +6248,9 @@ Velg farge
 Wybierz kolor
 Välj färg
 ;
-MSG_MUICLASS_SETTINGSCOLOR_BACKGROUND_GAD
-Background:
-Hintergrund:
+MSG_MUICLASS_SETTINGSCOLOR_CHANNELBG_GAD
+Channel background:
+Kanalhintergrund:
 Fondo:
 Arrière-plan:
 Background:
@@ -6260,7 +6260,7 @@ Bakgrunn:
 Background:
 Bakgrund:
 ;
-MSG_MUICLASS_SETTINGSCOLOR_BACKGROUND_HELP
+MSG_MUICLASS_SETTINGSCOLOR_CHANNELBG_HELP
 /
 /
 /
@@ -7888,5 +7888,420 @@ Tab is inactive
 Tab is inactive
 Tab is inactive
 Tab is inactive
+;
+;
+; MUICLASS_SETTINGSGUI
+;
+MSG_MUICLASS_SETTINGSGUI_TABS_INFO
+Show tabs...
+Zeige Tabs ...
+Show tabs...
+Show tabs...
+Show tabs...
+Show tabs...
+Show tabs...
+Show tabs...
+Show tabs...
+Show tabs...
+;
+MSG_MUICLASS_SETTINGSGUI_TABBUTTON_GAD
+in button-style.
+im Knopfstil.
+in button-style.
+in button-style.
+in button-style.
+in button-style.
+in button-style.
+in button-style.
+in button-style.
+in button-style.
+;
+MSG_MUICLASS_SETTINGSGUI_TABBUTTON_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
+MSG_MUICLASS_SETTINGSGUI_TABSERVER_GAD
+for servers.
+für Server.
+for servers.
+for servers.
+for servers.
+for servers.
+for servers.
+for servers.
+for servers.
+for servers.
+;
+MSG_MUICLASS_SETTINGSGUI_TABSERVER_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
+MSG_MUICLASS_SETTINGSGUI_NICKLIST_INFO
+Nick list...
+Nick list...
+Nick list...
+Nick list...
+Nick list...
+Nick list...
+Nick list...
+Nick list...
+Nick list...
+Nick list...
+;
+MSG_MUICLASS_SETTINGSGUI_NICKLISTWIDTH_GAD
+Width:
+Breite:
+Width:
+Width:
+Width:
+Width:
+Width:
+Width:
+Width:
+Width:
+;
+MSG_MUICLASS_SETTINGSGUI_NICKLISTWIDTH_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
+MSG_MUICLASS_SETTINGSGUI_NICKLISTHEIGHT_GAD
+Height:
+Höhe:
+Width:
+Width:
+Width:
+Width:
+Width:
+Width:
+Width:
+Width:
+;
+MSG_MUICLASS_SETTINGSGUI_NICKLISTHEIGHT_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
+MSG_MUICLASS_SETTINGSGUI_NICKLISTGFXINFO_GAD
+with graphical info.
+mit grafischen Zusatz.
+with graphical info.
+with graphical info.
+with graphical info.
+with graphical info.
+with graphical info.
+with graphical info.
+with graphical info.
+with graphical info.
+;
+MSG_MUICLASS_SETTINGSGUI_NICKLISTGFXINFO_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
+MSG_MUICLASS_SETTINGSGUI_NICKLISTREMOVECHARS_GAD
+without '>' and '<' in nick.
+ohne '>' und '<' im Nick.
+without '>' and '<' in nick.
+without '>' and '<' in nick.
+without '>' and '<' in nick.
+without '>' and '<' in nick.
+without '>' and '<' in nick.
+without '>' and '<' in nick.
+without '>' and '<' in nick.
+without '>' and '<' in nick.
+;
+MSG_MUICLASS_SETTINGSGUI_NICKLISTREMOVECHARS_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
+MSG_MUICLASS_SETTINGSGUI_SMILIES_GAD
+Use graphical smilies with a
+Grafische Smilies mit einem
+Use graphical smilies with a
+Use graphical smilies with a
+Use graphical smilies with a
+Use graphical smilies with a
+Use graphical smilies with a
+Use graphical smilies with a
+Use graphical smilies with a
+Use graphical smilies with a
+;
+MSG_MUICLASS_SETTINGSGUI_SMILIES_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
+MSG_MUICLASS_SETTINGSGUI_SMILIESTHEMEBACKGROUND_INFO
+background.
+Hintergrund benutzen.
+background.
+background.
+background.
+background.
+background.
+background.
+background.
+background.
+;
+MSG_MUICLASS_SETTINGSGUI_SMILIESTHEME_GAD
+_t
+_t
+_t
+_t
+_t
+_t
+_t
+_t
+_t
+_t
+;
+MSG_MUICLASS_SETTINGSGUI_SMILIESTHEME_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
+MSG_CY_TRANSPARENT
+transparent
+transparenten
+transparent
+transparent
+transparent
+transparent
+transparent
+transparent
+transparent
+transparent
+;
+MSG_CY_WHITE
+white
+Weißen
+white
+white
+white
+white
+white
+white
+white
+white
+;
+MSG_CY_BLACK
+black
+schwarzen
+black
+black
+black
+black
+black
+black
+black
+black
+;
+MSG_SL_PIXEL
+%ld Pixel
+%ld Pixel
+%ld Pixel
+%ld Pixel
+%ld Pixel
+%ld Pixel
+%ld Pixel
+%ld Pixel
+%ld Pixel
+%ld Pixel
+;
+MSG_MUICLASS_SETTINGSGUI_CHANNELVIEW_INFO
+Channel view...
+Kanelansicht ...
+Channel view...
+Channel view...
+Channel view...
+Channel view...
+Channel view...
+Channel view...
+Channel view...
+Channel view...
+;
+MSG_MUICLASS_SETTINGSGUI_TIMESHOW_GAD
+Show time in format
+Zeige Uhrzeit im Format
+Show time in format
+Show time in format
+Show time in format
+Show time in format
+Show time in format
+Show time in format
+Show time in format
+Show time in format
+;
+MSG_MUICLASS_SETTINGSGUI_TIMESHOW_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
+MSG_MUICLASS_SETTINGSGUI_TIMEFORMAT_GAD
+_f
+_f
+_f
+_f
+_f
+_f
+_f
+_f
+_f
+_f
+;
+MSG_MUICLASS_SETTINGSGUI_TIMEFORMAT_HELP
+Display format of timestamps! use these codes: %h for the hour, %m for the minute, and %s for the second. This is useful to see what time an event happened (such as a user joining, or speaking).
+Anzeigeformat der Uhrzeit. %h für Stunden, %m für Minuten und %s für Sekunden. Das ist nützlich, um zu sehen, wann ein Ereignis stattfand.(wie Login/logout, oder sprechen).
+Configurar el formato de la hora.\nÚtil para saber cuando pasó un evento\n(acceder a un canal, hablar,...).\n\033b%h\033n - hora; \033b%m\033n - minutos; \033b%s\033n - segundos.
+Personnalisez l'horodatage. Utilisez ces codes %h pour l'heure, %m pour les minutes et %s pour les secondes. C'est utile pour retrouver à quelle heure un évènement est survenu (comme l'arrivée d'un \
+utilisateur ou une annonce).
+ÁëëÜîôå ôçí åìöÜíéóç ôùí åíäåßîåùí ÷ñüíïõ! ×ñçóéìïğïéŞóôå ôï %h ãéá ôçí şñá, ôï %m ãéá ôá ëåğôÜ êáé ôï %s ãéá ôá äåõôåñüëåğôá. ×ñŞóéìï, ãéá íá ğáñáêïëïõèåßôå ğüôå İãéíå İíá óõìâÜí, üğùò ğüôå ìğŞêå \
+óôï êáíÜëé êÜğïéïò ÷ñŞóôçò Ş ğüôå åßğå êÜôé.
+Customizza il formato della data e dell'ora! Utilizza %h per l'ora, %m per i minuti e %%s per i secondi. Ãˆ utile per vedere quando Ã¨ avvenuto un evento (p.es. l'accesso od un messaggio di un \
+utente).
+Idõlenyomat alakja! Használd órához a %h, perchez a %m és másodperchez a %s jelzõt. Hasznos, ha látható az események idõpontja (egy felhasználó mikor csatlakozott, beszélt).
+Lag ditt eget tidsstempel! Bruk %h for timer, %m for minutter og %s for sekunder. Dette anvendes for å se tidspunktet for en spesiell hendelse (som f.eks. en bruker som entret eller snakket).
+Spersonalizuj swoje oznaczenia czasowe! U¿yj %h dla godzin, %m - minut i %s - sekund. Jest to u¿yteczne, je¶li chcesz wiedzieæ kiedy co¶ siê wydarzy³o (np. u¿ytkownik siê do³±czy³ lub co¶ \
+powiedzia³).
+Modifiera tidstämplingen. Använd %h för timmar, %m för minuter, och %s för sekunder. Användbart för att se när något hände (såsom när en användare kom in, eller talade).
+;
+MSG_MUICLASS_SETTINGSGUI_CHANNELVIEWTIMEWIDTH_GAD
+and a width of
+und der Breite von
+and a width of
+and a width of
+and a width of
+and a width of
+and a width of
+and a width of
+and a width of
+and a width of
+;
+MSG_MUICLASS_SETTINGSGUI_CHANNELVIEWTIMEWIDTH_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
+MSG_MUICLASS_SETTINGSGUI_CHANNELVIEWNICKWIDTH_GAD
+Nick width:
+Nickbreite:
+Nick width:
+Nick width:
+Nick width:
+Nick width:
+Nick width:
+Nick width:
+Nick width:
+Nick width:
+;
+MSG_MUICLASS_SETTINGSGUI_CHANNELVIEWNICKWIDTH_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
+MSG_MUICLASS_SETTINGSGUI_CHANNELVIEWSPACING_GAD
+Tab spacing:
+Spaltenabstand:
+Tab spacing:
+Tab spacing:
+Tab spacing:
+Tab spacing:
+Tab spacing:
+Tab spacing:
+Tab spacing:
+Tab spacing:
+;
+MSG_MUICLASS_SETTINGSGUI_CHANNELVIEWSPACING_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
 ;
 

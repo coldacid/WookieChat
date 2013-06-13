@@ -38,6 +38,7 @@ CLASSID_NICKLIST,
 CLASSID_CHANNELLIST,
 CLASSID_CHANNEL,
 CLASSID_SETTINGSNICK,
+CLASSID_SETTINGSGUI,
 CLASSID_SETTINGSGENERAL,
 CLASSID_SETTINGSCOLOR,
 CLASSID_SETTINGSSOUND,
@@ -67,6 +68,7 @@ APTR  MUICreateLabel( ULONG text );
 APTR  MUICreateLabelLeft( ULONG text );
 APTR  MUICreateCheckbox( ULONG text, ULONG defstate );
 APTR  MUICreateCycle( ULONG text, APTR labels, ULONG first, ULONG last );
+APTR  MUICreateSlider( ULONG text, ULONG def, ULONG min, ULONG max, ULONG format, ULONG fix );
 APTR  MUICreateString( ULONG text, ULONG maxchars );
 APTR  MUICreateStringFixed( ULONG text, ULONG maxchars );
 APTR  MUICreatePopASL( ULONG text, ULONG maxchars, ULONG poptype, struct TagItem *taglist );

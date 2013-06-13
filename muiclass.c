@@ -38,6 +38,7 @@
 #include "muiclass_channel.h"
 #include "muiclass_settingsgeneral.h"
 #include "muiclass_settingsnick.h"
+#include "muiclass_settingsgui.h"
 #include "muiclass_settingscolor.h"
 #include "muiclass_settingssound.h"
 
@@ -53,6 +54,8 @@ struct MUI_CustomClass *appclasses[ CLASSID_LAST ];
 Object *application;
 
 /*************************************************************************/
+
+static char TAB_FIXWIDTH[] = "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW";
 
 /* /// MUIClass_Open()
 **
@@ -72,16 +75,18 @@ ULONG result;
 						if( !(result = MCC_WindowSettings_InitClass() ) ) {
 							if( !(result = MCC_WindowQuit_InitClass() ) ) {
 								if( !(result = MCC_SettingsNick_InitClass() ) ) {
-									if( !(result = MCC_SettingsGeneral_InitClass() ) ) {
-										if( !(result = MCC_SettingsColor_InitClass() ) ) {
-											if( !(result = MCC_SettingsSound_InitClass() ) ) {
-												if( !(result = MCC_NickList_InitClass() ) ) {
-													if( !(result = MCC_ChannelList_InitClass() ) ) {
-														if( !(result = MCC_Channel_InitClass() ) ) {
-															if( ( application = NewObject( appclasses[ CLASSID_APPLICATION ]->mcc_Class, NULL, TAG_DONE ) ) ) {
-																DoMethod( application, MM_APPLICATION_STARTUP );
-															} else {
-																result = MSG_ERROR_UNABLETOSETUPMUICLASS;
+									if( !(result = MCC_SettingsGUI_InitClass() ) ) {
+										if( !(result = MCC_SettingsGeneral_InitClass() ) ) {
+											if( !(result = MCC_SettingsColor_InitClass() ) ) {
+												if( !(result = MCC_SettingsSound_InitClass() ) ) {
+													if( !(result = MCC_NickList_InitClass() ) ) {
+														if( !(result = MCC_ChannelList_InitClass() ) ) {
+															if( !(result = MCC_Channel_InitClass() ) ) {
+																if( ( application = NewObject( appclasses[ CLASSID_APPLICATION ]->mcc_Class, NULL, TAG_DONE ) ) ) {
+																	DoMethod( application, MM_APPLICATION_STARTUP );
+																} else {
+																	result = MSG_ERROR_UNABLETOSETUPMUICLASS;
+																}
 															}
 														}
 													}
@@ -120,6 +125,7 @@ void MUIClass_Close( void )
 	MCC_WindowURLGrabber_DisposeClass();
 	MCC_WindowIgnoreList_DisposeClass();
 	MCC_SettingsNick_DisposeClass();
+	MCC_SettingsGUI_DisposeClass();
 	MCC_SettingsGeneral_DisposeClass();
 	MCC_SettingsColor_DisposeClass();
 	MCC_SettingsSound_DisposeClass();
@@ -384,6 +390,33 @@ APTR MUICreateCycle( ULONG text, APTR labels, ULONG first, ULONG last )
 										TAG_DONE ) );
 }
 /* \\\ */
+/* /// MUICreateSlider()
+**
+*/
+
+/***************************************************************************/
+
+APTR MUICreateSlider( ULONG text, ULONG def, ULONG min, ULONG max, ULONG format, ULONG fix )
+{
+ULONG length = strlen( TAB_FIXWIDTH );
+
+	fix = length - fix;
+	if( fix > length ) {
+		fix = 0;
+	}
+
+	return( SliderObject,
+					MUIA_ControlChar                            , LGS( text ),
+					MUIA_Slider_Level                           , def,
+					MUIA_Slider_Max                             , max,
+					MUIA_Slider_Min                             , min,
+					(format ? MUIA_Numeric_Format : TAG_IGNORE ), ( format ? (ULONG) LGS( format ) : (ULONG) 0 ),
+					MUIA_ShortHelp                              , (ULONG) LGS( text + 1 ),
+					(fix    ? MUIA_FixWidthTxt    : TAG_IGNORE ), &TAB_FIXWIDTH[ fix ],
+					MUIA_CycleChain                             , 1,
+					End );
+}
+/* \\\ */
 
 /* /// MUICreateString()
 **
@@ -408,7 +441,6 @@ APTR MUICreateString( ULONG text, ULONG maxchars )
 ** NOTE: Label must be followed by bubble help!
 */
 
-static char TAB_FIXWIDTH[] = "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW";
 
 APTR MUICreateStringFixed( ULONG text, ULONG maxchars )
 {

@@ -42,7 +42,7 @@
 
 enum
 {
-GID_BACKGROUND = 0,
+GID_CHANNELBG = 0,
 GID_NICKLISTBG,
 GID_TABLISTBG,
 GID_NORMAL,
@@ -81,9 +81,9 @@ struct ConfigItem {
 };
 
 static struct ConfigItem TAB_CONFIGITEMS[] = {
-	{ GID_BACKGROUND       , OID_COL_BACKGROUND       , MUIA_Pendisplay_Spec, (LONG) "2:00000000,00000000,00000000" },
+	{ GID_CHANNELBG        , OID_COL_CHANNELBG        , MUIA_Pendisplay_Spec, (LONG) "2:1D451D45,2B5D2B5D,8D798D79" },
 	{ GID_NICKLISTBG       , OID_COL_NICKLISTBG       , MUIA_Pendisplay_Spec, (LONG) "2:1D451D45,2B5D2B5D,8D798D79" },
-	{ GID_TABLISTBG        , OID_COL_TABLISTBG        , MUIA_Pendisplay_Spec, (LONG) "r52215221,FFFFFFFF,2D9B2D9B" },
+	{ GID_TABLISTBG        , OID_COL_TABLISTBG        , MUIA_Pendisplay_Spec, (LONG) "2:1D451D45,2B5D2B5D,8D798D79" },
 	{ GID_NORMAL           , OID_COL_NORMAL           , MUIA_Pendisplay_Spec, (LONG) "r209C209C,A1AFA1AF,1A271A27" },
 	{ GID_NICKLISTTX       , OID_COL_NICKLISTTX       , MUIA_Pendisplay_Spec, (LONG) "rE7D8E7D8,25A425A4,FFFFFFFF" },
 	{ GID_TABSPEN          , OID_COL_TABSPEN          , MUIA_Pendisplay_Spec, (LONG) "rFFFFFFFF,8FC08FC0,12D012D0" },
@@ -131,8 +131,8 @@ Object *objs[ GID_LAST ];
 
 	if( (obj = (Object *) DoSuperNew( cl, obj, MUIA_Group_Horiz, TRUE,
 				Child, ColGroup(6),
-					Child, MUICreateLabel( MSG_MUICLASS_SETTINGSCOLOR_BACKGROUND_GAD ),
-					Child, objs[ GID_BACKGROUND        ] = MUICreatePoppen( MSG_MUICLASS_SETTINGSCOLOR_BACKGROUND_GAD       , MSG_MUICLASS_SETTINGSCOLOR_CHOOSECOLOR_TITLE ),
+					Child, MUICreateLabel( MSG_MUICLASS_SETTINGSCOLOR_CHANNELBG_GAD ),
+					Child, objs[ GID_CHANNELBG        ] = MUICreatePoppen( MSG_MUICLASS_SETTINGSCOLOR_CHANNELBG_GAD         , MSG_MUICLASS_SETTINGSCOLOR_CHOOSECOLOR_TITLE ),
 					Child, MUICreateLabel( MSG_MUICLASS_SETTINGSCOLOR_NICKLISTBG_GAD ),
 					Child, objs[ GID_NICKLISTBG        ] = MUICreatePoppen( MSG_MUICLASS_SETTINGSCOLOR_NICKLISTBG_GAD       , MSG_MUICLASS_SETTINGSCOLOR_CHOOSECOLOR_TITLE ),
 					Child, MUICreateLabel( MSG_MUICLASS_SETTINGSCOLOR_TABLISTBG_GAD ),
@@ -253,7 +253,6 @@ ULONG i;
 			MUIDataspaceExportPoppen( mccdata->mcc_ClassObjects[ TAB_CONFIGITEMS[ i ].GadgetID ], msg->dataspace, TAB_CONFIGITEMS[ i ].ObjectID );
 		}
 	}
-
 	return( DoSuperMethodA( cl, obj, msg ) );
 }
 /* \\\ */

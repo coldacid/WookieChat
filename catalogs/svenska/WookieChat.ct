@@ -2082,11 +2082,11 @@ MSG_MUICLASS_SETTINGSCOLOR_CHOOSECOLOR_TITLE
 Välj färg
 ; Choose Color
 ;
-MSG_MUICLASS_SETTINGSCOLOR_BACKGROUND_GAD
+MSG_MUICLASS_SETTINGSCOLOR_CHANNELBG_GAD
 Bakgrund:
-; Background:
+; Channel background:
 ;
-MSG_MUICLASS_SETTINGSCOLOR_BACKGROUND_HELP
+MSG_MUICLASS_SETTINGSCOLOR_CHANNELBG_HELP
 /
 ; /
 ;
@@ -2642,4 +2642,143 @@ Window is inactive
 MSG_CY_TABISINACTIVE
 Tab is inactive
 ; Tab is inactive
+;
+;
+; MUICLASS_SETTINGSGUI
+;
+MSG_MUICLASS_SETTINGSGUI_TABS_INFO
+Show tabs...
+; Show tabs...
+;
+MSG_MUICLASS_SETTINGSGUI_TABBUTTON_GAD
+in button-style.
+; in button-style.
+;
+MSG_MUICLASS_SETTINGSGUI_TABBUTTON_HELP
+/
+; /
+;
+MSG_MUICLASS_SETTINGSGUI_TABSERVER_GAD
+for servers.
+; for servers.
+;
+MSG_MUICLASS_SETTINGSGUI_TABSERVER_HELP
+/
+; /
+;
+MSG_MUICLASS_SETTINGSGUI_NICKLIST_INFO
+Nick list...
+; Nick list...
+;
+MSG_MUICLASS_SETTINGSGUI_NICKLISTWIDTH_GAD
+Width:
+; Width:
+;
+MSG_MUICLASS_SETTINGSGUI_NICKLISTWIDTH_HELP
+/
+; /
+;
+MSG_MUICLASS_SETTINGSGUI_NICKLISTHEIGHT_GAD
+Width:
+; Height:
+;
+MSG_MUICLASS_SETTINGSGUI_NICKLISTHEIGHT_HELP
+/
+; /
+;
+MSG_MUICLASS_SETTINGSGUI_NICKLISTGFXINFO_GAD
+with graphical info.
+; with graphical info.
+;
+MSG_MUICLASS_SETTINGSGUI_NICKLISTGFXINFO_HELP
+/
+; /
+;
+MSG_MUICLASS_SETTINGSGUI_NICKLISTREMOVECHARS_GAD
+without '>' and '<' in nick.
+; without '>' and '<' in nick.
+;
+MSG_MUICLASS_SETTINGSGUI_NICKLISTREMOVECHARS_HELP
+/
+; /
+;
+MSG_MUICLASS_SETTINGSGUI_SMILIES_GAD
+Use graphical smilies with a
+; Use graphical smilies with a
+;
+MSG_MUICLASS_SETTINGSGUI_SMILIES_HELP
+/
+; /
+;
+MSG_MUICLASS_SETTINGSGUI_SMILIESTHEMEBACKGROUND_INFO
+background.
+; background.
+;
+MSG_MUICLASS_SETTINGSGUI_SMILIESTHEME_GAD
+_t
+; _t
+;
+MSG_MUICLASS_SETTINGSGUI_SMILIESTHEME_HELP
+/
+; /
+;
+MSG_CY_TRANSPARENT
+transparent
+; transparent
+;
+MSG_CY_WHITE
+white
+; white
+;
+MSG_CY_BLACK
+black
+; black
+;
+MSG_SL_PIXEL
+%ld Pixel
+; %ld Pixel
+;
+MSG_MUICLASS_SETTINGSGUI_CHANNELVIEW_INFO
+Channel view...
+; Channel view...
+;
+MSG_MUICLASS_SETTINGSGUI_TIMESHOW_GAD
+Show time in format
+; Show time in format
+;
+MSG_MUICLASS_SETTINGSGUI_TIMESHOW_HELP
+/
+; /
+;
+MSG_MUICLASS_SETTINGSGUI_TIMEFORMAT_GAD
+_f
+; _f
+;
+MSG_MUICLASS_SETTINGSGUI_TIMEFORMAT_HELP
+Modifiera tidstämplingen. Använd %h för timmar, %m för minuter, och %s för sekunder. Användbart för att se när något hände (såsom när en användare kom in, eller talade).
+; Display format of timestamps! use these codes: %h for the hour, %m for the minute, and %s for the second. This is useful to see what time an event happened (such as a user joining, or speaking).
+;
+MSG_MUICLASS_SETTINGSGUI_CHANNELVIEWTIMEWIDTH_GAD
+and a width of
+; and a width of
+;
+MSG_MUICLASS_SETTINGSGUI_CHANNELVIEWTIMEWIDTH_HELP
+/
+; /
+;
+MSG_MUICLASS_SETTINGSGUI_CHANNELVIEWNICKWIDTH_GAD
+Nick width:
+; Nick width:
+;
+MSG_MUICLASS_SETTINGSGUI_CHANNELVIEWNICKWIDTH_HELP
+/
+; /
+;
+MSG_MUICLASS_SETTINGSGUI_CHANNELVIEWSPACING_GAD
+Tab spacing:
+; Tab spacing:
+;
+MSG_MUICLASS_SETTINGSGUI_CHANNELVIEWSPACING_HELP
+/
+; /
 ;

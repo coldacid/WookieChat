@@ -226,10 +226,13 @@ static ULONG OM_Dispose( struct IClass *cl, Object *obj, Msg msg )
 
 static ULONG OM_Setup( struct IClass *cl, Object *obj, Msg *msg )
 {
-Object *quitwin;
-	
-	quitwin = (Object *) MUIGetVar( application, MA_APPLICATION_WINDOWQUIT );
-	DoMethod( obj, MUIM_Notify, MUIA_Window_CloseRequest, TRUE, quitwin, 3, MUIM_Set, MUIA_Window_Open, TRUE );
+Object *winobj;
+
+	winobj = (Object *) MUIGetVar( _app(obj), MA_APPLICATION_WINDOWQUIT );
+	DoMethod( obj, MUIM_Notify, MUIA_Window_CloseRequest, TRUE, winobj, 3, MUIM_Set, MUIA_Window_Open, TRUE );
+
+	winobj = (Object *) MUIGetVar( _app(obj), MA_APPLICATION_WINDOWSETTINGS );
+
 
 	return( DoSuperMethodA( cl, obj,(Msg) msg ) );
 }
@@ -280,6 +283,25 @@ Object *tmpobj;
 	return( 0 );
 }
 /* \\\ */
+/* /// MM_ColorChange()
+**
+*/
+
+/*************************************************************************/
+
+static ULONG MM_ColorChange( struct IClass *cl, Object *obj, Msg *msg )
+{
+struct mccdata *mccdata = INST_DATA( cl, obj );
+Object *settingsobj;
+
+	if( ( settingsobj = (Object *) MUIGetVar( _app(obj), MA_APPLICATION_WINDOWSETTINGS ) ) ) {
+		SetAttrs( mccdata->mcc_ClassObjects[ GID_CHANNEL     ], MUIA_Background, DoMethod( settingsobj, MM_WINDOWSETTINGS_READCONFIG, OID_COL_CHANNELBG ), TAG_DONE );
+		SetAttrs( mccdata->mcc_ClassObjects[ GID_NICKLIST    ], MUIA_Background, DoMethod( settingsobj, MM_WINDOWSETTINGS_READCONFIG, OID_COL_NICKLISTBG ), TAG_DONE );
+		SetAttrs( mccdata->mcc_ClassObjects[ GID_CHANNELLIST ], MUIA_Background, DoMethod( settingsobj, MM_WINDOWSETTINGS_READCONFIG, OID_COL_TABLISTBG ), TAG_DONE );
+	}
+	return( 0 );
+}
+/* \\\ */
 
 /*
 ** Dispatcher, init and dispose
@@ -301,7 +323,7 @@ DISPATCHER(MCC_WindowMain_Dispatcher)
 		case MUIM_Window_Setup               : return( OM_Setup                         ( cl, obj, (APTR) msg ) );
 
 		case MM_WINDOWMAIN_MENUSELECT        : return( MM_MenuSelect                    ( cl, obj, (APTR) msg ) );
-
+		case MM_WINDOWMAIN_COLORCHANGE       : return( MM_ColorChange                   ( cl, obj, (APTR) msg ) );
     }
 	return( DoSuperMethodA( cl, obj, msg ) );
 
