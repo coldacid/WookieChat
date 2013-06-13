@@ -24,7 +24,7 @@
 */
 
 enum {
-MM_NICKLIST_DUMMY =  0xFED00180,
+MM_NICKLIST_DUMMY =  0xFED00500,
 /* Attributes */
 };
 

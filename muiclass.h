@@ -42,6 +42,7 @@ CLASSID_SETTINGSGUI,
 CLASSID_SETTINGSGENERAL,
 CLASSID_SETTINGSCOLOR,
 CLASSID_SETTINGSSOUND,
+CLASSID_SETTINGSDCC,
 CLASSID_LAST
 };
 
@@ -69,9 +70,10 @@ APTR  MUICreateLabelLeft( ULONG text );
 APTR  MUICreateCheckbox( ULONG text, ULONG defstate );
 APTR  MUICreateCycle( ULONG text, APTR labels, ULONG first, ULONG last );
 APTR  MUICreateSlider( ULONG text, ULONG def, ULONG min, ULONG max, ULONG format, ULONG fix );
+APTR  MUICreateInteger( ULONG text, ULONG maxchars );
 APTR  MUICreateString( ULONG text, ULONG maxchars );
 APTR  MUICreateStringFixed( ULONG text, ULONG maxchars );
-APTR  MUICreatePopASL( ULONG text, ULONG maxchars, ULONG poptype, struct TagItem *taglist );
+APTR  MUICreatePopASL ( ULONG text, ULONG maxchars, ULONG poptype, Object **strobj, struct TagItem *taglist );
 
 struct MUI_PenSpec *MUIDataspaceImportPoppen( Object *poppen, Object *dataspace, ULONG objectid );
 void                MUIDataspaceExportPoppen( Object *poppen, Object *dataspace, ULONG objectid );

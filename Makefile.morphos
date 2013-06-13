@@ -12,7 +12,7 @@ SOURCES   = functions.c muiclass.c muiclass_application.c muiclass_windowmain.c 
 			muiclass_windowabout.c muiclass_windowquit.c muiclass_windowurlgrabber.c muiclass_windowignorelist.c \
 			muiclass_nicklist.c muiclass_channellist.c muiclass_channel.c \
 			muiclass_windowsettings.c muiclass_settingsnick.c muiclass_settingscolor.c muiclass_settingsgeneral.c \
-			muiclass_settingsgui.c muiclass_settingssound.c \
+			muiclass_settingsgui.c muiclass_settingssound.c muiclass_settingsdcc.c \
 			arexx_hooks.c auto_reconnect_server.c closeserverselectwin.c coloursettings.c \
             connect2server.c dcc.c display_logfile_lines.c do_waitselect_code.c \
             events_arexx.c globals.c graphical_smilies.c highlight_search.c hooks.c \

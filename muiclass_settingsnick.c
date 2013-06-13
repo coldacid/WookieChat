@@ -164,7 +164,10 @@ struct mccdata *mccdata = INST_DATA( cl, obj );
 ULONG i;
 
 	for( i = 0 ; TAB_CONFIGITEMS[ i ].GadgetID != -1 ; i++ ) {
-		SetAttrs( mccdata->mcc_ClassObjects[ TAB_CONFIGITEMS[ i ].GadgetID ], TAB_CONFIGITEMS[ i ].Attr, TAB_CONFIGITEMS[ i ].Default, MUIA_ObjectID, TAB_CONFIGITEMS[ i ].ObjectID, TAG_DONE );
+		SetAttrs( mccdata->mcc_ClassObjects[ TAB_CONFIGITEMS[ i ].GadgetID ],
+								TAB_CONFIGITEMS[ i ].Attr, TAB_CONFIGITEMS[ i ].Default,
+								MUIA_ObjectID            , TAB_CONFIGITEMS[ i ].ObjectID,
+								TAG_DONE );
 	}
 	return( 0 );
 }

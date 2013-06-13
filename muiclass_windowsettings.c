@@ -30,6 +30,7 @@
 #include "muiclass_windowsettings.h"
 #include "muiclass_settingsnick.h"
 #include "muiclass_settingsgui.h"
+#include "muiclass_settingsdcc.h"
 #include "muiclass_settingsgeneral.h"
 #include "muiclass_settingscolor.h"
 #include "muiclass_settingssound.h"
@@ -54,6 +55,7 @@ GID_PAGELIST = 0,
 GID_PAGEGROUP,
 GID_NICK,
 GID_GUI,
+GID_DCC,
 GID_GENERAL,
 GID_COLOR,
 GID_SOUND,
@@ -132,7 +134,7 @@ ULONG i;
 								Child, objs[ GID_COLOR   ] = SettingsColorObject, End,
 								Child, objs[ GID_GUI     ] = SettingsGUIObject, End,
 								Child, HVSpace,
-								Child, HVSpace,
+								Child, objs[ GID_DCC     ] = SettingsDCCObject, End,
 								Child, objs[ GID_SOUND   ] = SettingsSoundObject, End,
 								Child, HVSpace,
 								Child, HVSpace,
@@ -192,6 +194,7 @@ struct mccdata *mccdata = INST_DATA( cl, obj );
 
 	DoMethod( mccdata->mcc_ClassObjects[ GID_SAVE     ], MUIM_Notify, MUIA_Pressed            , FALSE         , obj                  , 3, MUIM_Set, MUIA_Window_Open     , FALSE );
 	DoMethod( mccdata->mcc_ClassObjects[ GID_SAVE     ], MUIM_Notify, MUIA_Pressed            , FALSE         , _app(obj)            , 2, MUIM_Application_Save, MUIV_Application_Save_ENVARC );
+	DoMethod( mccdata->mcc_ClassObjects[ GID_SAVE     ], MUIM_Notify, MUIA_Pressed            , FALSE         , _app(obj)            , 2, MUIM_Application_Save, MUIV_Application_Save_ENV    );
 	DoMethod( mccdata->mcc_ClassObjects[ GID_USE      ], MUIM_Notify, MUIA_Pressed            , FALSE         , obj                  , 3, MUIM_Set, MUIA_Window_Open     , FALSE );
 	DoMethod( mccdata->mcc_ClassObjects[ GID_USE      ], MUIM_Notify, MUIA_Pressed            , FALSE         , _app(obj)            , 2, MUIM_Application_Save, MUIV_Application_Save_ENV    );
 	DoMethod( mccdata->mcc_ClassObjects[ GID_CANCEL   ], MUIM_Notify, MUIA_Pressed            , FALSE         , obj                  , 3, MUIM_Set, MUIA_Window_Open     , FALSE );
@@ -258,6 +261,8 @@ ULONG result;
 			if( !( result = DoMethod( mccdata->mcc_ClassObjects[ GID_GENERAL ], MM_SETTINGSGENERAL_READCONFIG, msg->ObjectID ) ) ) {
 				if( !( result = DoMethod( mccdata->mcc_ClassObjects[ GID_COLOR ], MM_SETTINGSCOLOR_READCONFIG, msg->ObjectID ) ) ) {
 					if( !( result = DoMethod( mccdata->mcc_ClassObjects[ GID_SOUND ], MM_SETTINGSCOLOR_READCONFIG, msg->ObjectID ) ) ) {
+						if( !( result = DoMethod( mccdata->mcc_ClassObjects[ GID_DCC ], MM_SETTINGSCOLOR_READCONFIG, msg->ObjectID ) ) ) {
+						}
 					}
 				}
 			}

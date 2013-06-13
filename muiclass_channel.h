@@ -24,7 +24,7 @@
 */
 
 enum {
-MM_CHANNEL_DUMMY =  0xFED00180,
+MM_CHANNEL_DUMMY =  0xFED00300,
 /* Attributes */
 };
 

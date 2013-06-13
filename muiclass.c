@@ -41,6 +41,7 @@
 #include "muiclass_settingsgui.h"
 #include "muiclass_settingscolor.h"
 #include "muiclass_settingssound.h"
+#include "muiclass_settingsdcc.h"
 
 #ifndef MUIA_Text_HiIndex
  #define MUIA_Text_HiIndex 0x804214f5
@@ -79,13 +80,15 @@ ULONG result;
 										if( !(result = MCC_SettingsGeneral_InitClass() ) ) {
 											if( !(result = MCC_SettingsColor_InitClass() ) ) {
 												if( !(result = MCC_SettingsSound_InitClass() ) ) {
-													if( !(result = MCC_NickList_InitClass() ) ) {
-														if( !(result = MCC_ChannelList_InitClass() ) ) {
-															if( !(result = MCC_Channel_InitClass() ) ) {
-																if( ( application = NewObject( appclasses[ CLASSID_APPLICATION ]->mcc_Class, NULL, TAG_DONE ) ) ) {
-																	DoMethod( application, MM_APPLICATION_STARTUP );
-																} else {
-																	result = MSG_ERROR_UNABLETOSETUPMUICLASS;
+													if( !(result = MCC_SettingsDCC_InitClass() ) ) {
+														if( !(result = MCC_NickList_InitClass() ) ) {
+															if( !(result = MCC_ChannelList_InitClass() ) ) {
+																if( !(result = MCC_Channel_InitClass() ) ) {
+																	if( ( application = NewObject( appclasses[ CLASSID_APPLICATION ]->mcc_Class, NULL, TAG_DONE ) ) ) {
+																		DoMethod( application, MM_APPLICATION_STARTUP );
+																	} else {
+																		result = MSG_ERROR_UNABLETOSETUPMUICLASS;
+																	}
 																}
 															}
 														}
@@ -128,6 +131,7 @@ void MUIClass_Close( void )
 	MCC_SettingsGUI_DisposeClass();
 	MCC_SettingsGeneral_DisposeClass();
 	MCC_SettingsColor_DisposeClass();
+	MCC_SettingsDCC_DisposeClass();
 	MCC_SettingsSound_DisposeClass();
 	MCC_WindowSettings_DisposeClass();
 	MCC_WindowQuit_DisposeClass();
@@ -417,6 +421,26 @@ ULONG length = strlen( TAB_FIXWIDTH );
 					End );
 }
 /* \\\ */
+/* /// MUICreateInteger()
+**
+*/
+
+/*************************************************************************/
+
+char *WIDTHTXTARRAY = "000000000";
+
+APTR MUICreateInteger( ULONG text, ULONG maxchars )
+{
+	return( MUI_NewObject( MUIC_String, MUIA_Frame           , MUIV_Frame_String,
+										MUIA_ControlChar     , MUIGetKeyLocale( text),
+                                        MUIA_CycleChain      , 1,
+										MUIA_ShortHelp       , LGS( text + 1 ),
+                                        MUIA_String_MaxLen   , maxchars,
+                                        MUIA_String_Accept   , "0123456789",
+										MUIA_FixWidthTxt     , &WIDTHTXTARRAY[ strlen( (char *) WIDTHTXTARRAY ) - maxchars ],
+										TAG_DONE ) );
+}
+/* \\\ */
 
 /* /// MUICreateString()
 **
@@ -469,7 +493,7 @@ ULONG size, length;
 
 /*************************************************************************/
 
-APTR MUICreatePopASL ( ULONG text, ULONG maxchars, ULONG poptype, struct TagItem *taglist )
+APTR MUICreatePopASL ( ULONG text, ULONG maxchars, ULONG poptype, Object **strobj, struct TagItem *taglist )
 {
 Object *obj, *dummy;
 
@@ -478,10 +502,10 @@ Object *obj, *dummy;
 	if( ( obj = MUI_NewObject( MUIC_Popasl,
                                          MUIA_CycleChain       , 1,
 										 MUIA_ShortHelp , (ULONG) Locale_GetString( text + 1 ),
-										 MUIA_Popstring_String , (ULONG) MUI_NewObject( MUIC_String, MUIA_Frame, MUIV_Frame_String,
+										 MUIA_Popstring_String , (ULONG) (*strobj = MUI_NewObject( MUIC_String, MUIA_Frame, MUIV_Frame_String,
 																 MUIA_ControlChar, MUIGetKeyLocale( text ),
                                                                  MUIA_String_MaxLen, maxchars,
-																 TAG_DONE ),
+																 TAG_DONE ) ),
 										 MUIA_Popstring_Button , (ULONG) ( dummy = PopButton(poptype) ),
 
 										 taglist ? TAG_MORE : TAG_DONE, (ULONG) taglist ) ) ) {

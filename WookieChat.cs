@@ -8304,4 +8304,307 @@ MSG_MUICLASS_SETTINGSGUI_CHANNELVIEWSPACING_HELP
 /
 /
 ;
+;
+; MUICLASS_SETTINGSDCC
+;
+MSG_MUICLASS_SETTINGSDCC_GENERAL_INFO
+General DCC
+General DCC
+General DCC
+General DCC
+General DCC
+General DCC
+General DCC
+General DCC
+General DCC
+General DCC
+;
+MSG_MUICLASS_SETTINGSDCC_DCCLOCALADDRESS_GAD
+Use local address
+Lokale Adresse
+Use local address
+Use local address
+Use local address
+Use local address
+Use local address
+Use local address
+Use local address
+Usar dirección local
+;
+MSG_MUICLASS_SETTINGSDCC_DCCLOCALADDRESS_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
+MSG_MUICLASS_SETTINGSDCC_DCCENTERADDRESS_GAD
+Specify address
+Adresse eingeben
+Dirección específica
+Spécifier l'adresse
+Specify address
+Specifica indirizzo
+Cím meghatározása
+Spesifisere adresse
+Okre¶l adres dla po³±czeñ
+Specificera adress
+;
+MSG_MUICLASS_SETTINGSDCC_DCCENTERADDRESS_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
+MSG_MUICLASS_SETTINGSDCC_DCCADDRESS_GAD
+_a
+_d
+_a
+_a
+_a
+_a
+_a
+_a
+_a
+_a
+;
+MSG_MUICLASS_SETTINGSDCC_DCCADDRESS_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
+MSG_MUICLASS_SETTINGSDCC_DCCPORTRANGEFROM_GAD
+Port range from
+Port Bereich von
+Port range from
+Port range from
+Port range from
+Port range from
+Port range from
+Port range from
+Port range from
+Port range from
+;
+MSG_MUICLASS_SETTINGSDCC_DCCPORTRANGEFROM_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
+MSG_MUICLASS_SETTINGSDCC_DCCPORTRANGETO_GAD
+to
+bis
+ a:
+ à
+Ýùò
+fino a
+vége
+til
+ do
+DCC port-område slutar
+;
+MSG_MUICLASS_SETTINGSDCC_DCCPORTRANGETO_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
+MSG_MUICLASS_SETTINGSDCC_INCOMING_INFO
+Incoming DCC
+Incoming DCC
+Incoming DCC
+Incoming DCC
+Incoming DCC
+Incoming DCC
+Incoming DCC
+Incoming DCC
+Incoming DCC
+Incoming DCC
+;
+MSG_MUICLASS_SETTINGSDCC_DCCINACCEPT_GAD
+Accept all
+Alle akzeptieren
+Accept all
+Accept all
+Accept all
+Accept all
+Accept all
+Accept all
+Accept all
+Accept all
+;
+MSG_MUICLASS_SETTINGSDCC_DCCINACCEPT_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
+MSG_MUICLASS_SETTINGSDCC_DCCINPATH_GAD
+Download path:
+Download path:
+Download path:
+Download path:
+Download path:
+Download path:
+Download path:
+Download path:
+Download path:
+Download path:
+;
+MSG_MUICLASS_SETTINGSDCC_DCCINPATH_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
+MSG_MUICLASS_SETTINGSDCC_DCCINWRITEMODE_GAD
+If file exists
+Wenn die Datein existiert
+If file exists
+If file exists
+If file exists
+If file exists
+If file exists
+If file exists
+If file exists
+Download path:
+;
+MSG_MUICLASS_SETTINGSDCC_DCCINWRITEMODE_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
+MSG_CY_OVERWRITE
+overwrite
+überschreiben
+overwrite
+overwrite
+overwrite
+overwrite
+overwrite
+overwrite
+overwrite
+overwrite
+;
+MSG_CY_RENAME
+rename
+rename
+rename
+rename
+rename
+rename
+rename
+rename
+rename
+rename
+;
+MSG_CY_ASK
+ask
+ask
+ask
+ask
+ask
+ask
+ask
+ask
+ask
+ask
+;
+MSG_CY_CANCEL
+cancel
+abbrechen
+cancel
+cancel
+cancel
+cancel
+cancel
+cancel
+cancel
+cancel
+;
+MSG_MUICLASS_SETTINGSDCC_OUTGOING_INFO
+Outgoing DCC
+Outgoing DCC
+Outgoing DCC
+Outgoing DCC
+Outgoing DCC
+Outgoing DCC
+Outgoing DCC
+Outgoing DCC
+Outgoing DCC
+Outgoing DCC
+;
+MSG_MUICLASS_SETTINGSDCC_DCCOUTPATH_GAD
+Upload path:
+Upload path:
+Upload path:
+Upload path:
+Upload path:
+Upload path:
+Upload path:
+Upload path:
+Upload path:
+Upload path:
+;
+MSG_MUICLASS_SETTINGSDCC_DCCOUTPATH_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
 
