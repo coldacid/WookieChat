@@ -88,5 +88,8 @@ IPTR DoSuperNew(struct IClass *cl, Object *obj, ULONG tag1, ...);
 #else
 #define NEWOBJECT   NewObject
 #endif
+
+/*************************************************************************/
+
 #endif /* MUICLASS_H */
 
