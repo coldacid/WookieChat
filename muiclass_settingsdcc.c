@@ -227,7 +227,7 @@ DISPATCHER(MCC_SettingsDCC_Dispatcher)
 
 ULONG MCC_SettingsDCC_InitClass( void )
 {
-	appclasses[ CLASSID_SETTINGSDCC ] = MUI_CreateCustomClass( NULL, MUIC_Group, NULL, sizeof( struct mccdata ) ,  (APTR) ENTRY(MCC_SettingsDCC_Dispatcher) );
+	appclasses[ CLASSID_SETTINGSDCC ] = MUI_CreateCustomClass( NULL, (ClassID)MUIC_Group, NULL, sizeof( struct mccdata ) ,  (APTR) ENTRY(MCC_SettingsDCC_Dispatcher) );
 	return( appclasses[ CLASSID_SETTINGSDCC ] ? MSG_ERROR_NOERROR : MSG_ERROR_UNABLETOSETUPMUICLASS );
 }
 /* \\\ */

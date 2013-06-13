@@ -17,7 +17,7 @@
 #include "muiclass.h"
 
 
-#define SettingsDCCObject NewObject( appclasses[ CLASSID_SETTINGSDCC ]->mcc_Class, NULL
+#define SettingsDCCObject NEWOBJECT( appclasses[ CLASSID_SETTINGSDCC ]->mcc_Class, NULL
 
 /*
 ** Methods and attributes

@@ -17,7 +17,7 @@
 #include "muiclass.h"
 
 
-#define SettingsLogObject NewObject( appclasses[ CLASSID_SETTINGSLOG ]->mcc_Class, NULL
+#define SettingsLogObject NEWOBJECT( appclasses[ CLASSID_SETTINGSLOG ]->mcc_Class, NULL
 
 /*
 ** Methods and attributes

@@ -68,7 +68,7 @@ struct mccdata
 {
 	Object                *mcc_ClassObjects[ GID_LAST ];
 	struct DiskObject     *mcc_DiskObject;
-	LONG                   mcc_ReadargsArray[ READARGS_LAST ];
+	IPTR                   mcc_ReadargsArray[ READARGS_LAST ];
 
 };
 
@@ -250,7 +250,7 @@ DISPATCHER(MCC_Application_Dispatcher)
 
 ULONG MCC_Application_InitClass( void )
 {
-	appclasses[ CLASSID_APPLICATION ] = MUI_CreateCustomClass( NULL, MUIC_Application, NULL, sizeof( struct mccdata ) ,  (APTR) ENTRY(MCC_Application_Dispatcher) );
+	appclasses[ CLASSID_APPLICATION ] = MUI_CreateCustomClass( NULL, (ClassID)MUIC_Application, NULL, sizeof( struct mccdata ) ,  (APTR) ENTRY(MCC_Application_Dispatcher) );
 	return( appclasses[ CLASSID_APPLICATION ] ? MSG_ERROR_NOERROR : MSG_ERROR_UNABLETOSETUPMUICLASS );
 }
 /* \\\ */

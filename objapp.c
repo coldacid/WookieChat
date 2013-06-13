@@ -115,15 +115,6 @@ static char background4[64];
 #define string_default  0
 
 #ifdef __AROS__
-static IPTR NewObjectAROS( struct IClass *classPtr, UBYTE *classID, ULONG tag1, ... )
-{
-    AROS_SLOWSTACKTAGS_PRE(tag1)
-    retval = (IPTR) NewObject(classPtr, classID, AROS_SLOWSTACKTAGS_ARG(tag1));
-    AROS_SLOWSTACKTAGS_POST
-}
-#endif
-
-#ifdef __AROS__
 #define BS_Object NewObjectAROS(get_custom_class(CC_MUIC_BETTERSTRING)->mcc_Class,NULL
 #else
 #define BS_Object NewObject(get_custom_class(CC_MUIC_BETTERSTRING)->mcc_Class,NULL

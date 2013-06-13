@@ -12,6 +12,7 @@
 ** muiclass_windowignorelist.c
 */
 
+#define MUI_OBSOLETE
 #include <libraries/mui.h>
 #include <prefs/prefhdr.h>
 #include <proto/muimaster.h>
@@ -264,7 +265,7 @@ struct mccdata *mccdata = INST_DATA( cl, obj );
 LONG pos;
 BOOL disabled = TRUE;
 
-	GetAttr( MUIA_NList_Active, mccdata->mcc_ClassObjects[ GID_LIST ], (ULONG*) &pos );
+	GetAttr( MUIA_NList_Active, mccdata->mcc_ClassObjects[ GID_LIST ], (IPTR*) &pos );
 	if( pos >= 0 ) {
 		disabled = FALSE;
 	}
@@ -468,7 +469,7 @@ ULONG i, length, result = FALSE;
 			ignore = NULL;
 			DoMethod( mccdata->mcc_ClassObjects[ GID_LIST ], MUIM_NList_GetEntry, i, &ignore );
 			if( ignore ) {
-				ParsePatternNoCase( (_ub_cs) ignore->Ignore_Pattern, (_ub_cs)  pattern, IGNORE_PATTERN_SIZEOF * 3 );
+				ParsePatternNoCase( (_ub_cs) ignore->Ignore_Pattern, (STRPTR)  pattern, IGNORE_PATTERN_SIZEOF * 3 );
 				if( MatchPatternNoCase( (_ub_cs) pattern, (_ub_cs) nick ) ) {
 					/* match */
 					switch( msg->Type ) {
@@ -536,7 +537,7 @@ DISPATCHER(MCC_WindowIgnoreList_Dispatcher)
 
 ULONG MCC_WindowIgnoreList_InitClass( void )
 {
-	appclasses[ CLASSID_WINDOWIGNORELIST ] = MUI_CreateCustomClass( NULL, MUIC_Window, NULL, sizeof( struct mccdata ) ,  (APTR) ENTRY(MCC_WindowIgnoreList_Dispatcher) );
+	appclasses[ CLASSID_WINDOWIGNORELIST ] = MUI_CreateCustomClass( NULL, (ClassID)MUIC_Window, NULL, sizeof( struct mccdata ) ,  (APTR) ENTRY(MCC_WindowIgnoreList_Dispatcher) );
 	return( appclasses[ CLASSID_WINDOWIGNORELIST ] ? MSG_ERROR_NOERROR : MSG_ERROR_UNABLETOSETUPMUICLASS );
 }
 /* \\\ */

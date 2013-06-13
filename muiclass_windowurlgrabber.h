@@ -17,7 +17,7 @@
 #include "muiclass.h"
 
 
-#define WindowURLGrabberObject NewObject( appclasses[ CLASSID_WINDOWURLGRABBER ]->mcc_Class, NULL
+#define WindowURLGrabberObject NEWOBJECT( appclasses[ CLASSID_WINDOWURLGRABBER ]->mcc_Class, NULL
 
 /*
 ** Methods and attributes

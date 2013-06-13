@@ -17,7 +17,7 @@
 #include "muiclass.h"
 
 
-#define WindowIgnoreListObject NewObject( appclasses[ CLASSID_WINDOWIGNORELIST ]->mcc_Class, NULL
+#define WindowIgnoreListObject NEWOBJECT( appclasses[ CLASSID_WINDOWIGNORELIST ]->mcc_Class, NULL
 
 /*
 ** ignore struct

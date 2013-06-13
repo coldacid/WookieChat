@@ -20,12 +20,7 @@
 #define FW  13
 
 #ifdef __AROS__
-static IPTR NewObjectAROS( struct IClass *classPtr, UBYTE *classID, ULONG tag1, ... )
-{
-    AROS_SLOWSTACKTAGS_PRE(tag1)
-    retval = (IPTR) NewObject(classPtr, classID, AROS_SLOWSTACKTAGS_ARG(tag1));
-    AROS_SLOWSTACKTAGS_POST
-}
+IPTR NewObjectAROS( struct IClass *classPtr, UBYTE *classID, ULONG tag1, ... );
 #endif
 
 void give_each_tab_a_page_group_number();

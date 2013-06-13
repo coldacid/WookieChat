@@ -49,6 +49,8 @@ typedef CONST_STRPTR    l_in;
 typedef CONST_STRPTR    loc_in;
 typedef CONST_STRPTR    _ub_cs;
 typedef CONST_STRPTR    _s_cs;
+#define NTIP
+typedef ULONG           IPTR;
 #elif __MORPHOS__
 typedef CONST_STRPTR    c_in;
 typedef UBYTE *         i_in;
@@ -57,6 +59,8 @@ typedef STRPTR          loc_in;
 typedef STRPTR          _ub_cs;
 typedef CONST_STRPTR    _s_cs;
 #define ClassID char *
+#define NTIP
+typedef ULONG           IPTR;
 #elif __AROS__
 typedef char *          c_in;
 typedef unsigned int *  i_in;
@@ -64,6 +68,7 @@ typedef CONST_STRPTR    l_in;
 typedef CONST_STRPTR    loc_in;
 typedef CONST_STRPTR    _ub_cs;
 typedef CONST_STRPTR    _s_cs;
+#define NTIP const
 #else
 typedef UBYTE *         c_in;
 typedef unsigned char * i_in;
@@ -71,6 +76,8 @@ typedef STRPTR          l_in;
 typedef STRPTR          loc_in;
 typedef UBYTE *         _ub_cs;
 typedef STRPTR          _s_cs;
+#define NTIP
+typedef ULONG           IPTR;
 #endif
 
 struct XYMessage

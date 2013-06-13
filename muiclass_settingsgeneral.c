@@ -240,7 +240,7 @@ DISPATCHER(MCC_SettingsGeneral_Dispatcher)
 
 ULONG MCC_SettingsGeneral_InitClass( void )
 {
-	appclasses[ CLASSID_SETTINGSGENERAL ] = MUI_CreateCustomClass( NULL, MUIC_Group, NULL, sizeof( struct mccdata ) ,  (APTR) ENTRY(MCC_SettingsGeneral_Dispatcher) );
+	appclasses[ CLASSID_SETTINGSGENERAL ] = MUI_CreateCustomClass( NULL, (ClassID)MUIC_Group, NULL, sizeof( struct mccdata ) ,  (APTR) ENTRY(MCC_SettingsGeneral_Dispatcher) );
 	return( appclasses[ CLASSID_SETTINGSGENERAL ] ? MSG_ERROR_NOERROR : MSG_ERROR_UNABLETOSETUPMUICLASS );
 }
 /* \\\ */

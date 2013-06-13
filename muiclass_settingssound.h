@@ -17,7 +17,7 @@
 #include "muiclass.h"
 
 
-#define SettingsSoundObject NewObject( appclasses[ CLASSID_SETTINGSSOUND ]->mcc_Class, NULL
+#define SettingsSoundObject NEWOBJECT( appclasses[ CLASSID_SETTINGSSOUND ]->mcc_Class, NULL
 
 /*
 ** Methods and attributes

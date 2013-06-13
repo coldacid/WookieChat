@@ -337,7 +337,7 @@ DISPATCHER(MCC_WindowMain_Dispatcher)
 
 ULONG MCC_WindowMain_InitClass( void )
 {
-	appclasses[ CLASSID_WINDOWMAIN ] = MUI_CreateCustomClass( NULL, MUIC_Window, NULL, sizeof( struct mccdata ) ,  (APTR) ENTRY(MCC_WindowMain_Dispatcher) );
+	appclasses[ CLASSID_WINDOWMAIN ] = MUI_CreateCustomClass( NULL, (ClassID)MUIC_Window, NULL, sizeof( struct mccdata ) ,  (APTR) ENTRY(MCC_WindowMain_Dispatcher) );
 	return( appclasses[ CLASSID_WINDOWMAIN ] ? MSG_ERROR_NOERROR : MSG_ERROR_UNABLETOSETUPMUICLASS );
 }
 /* \\\ */

@@ -12,6 +12,7 @@
 ** muiclass_settingsgui.c
 */
 
+#define MUI_OBSOLETE
 #include <libraries/mui.h>
 #include <prefs/prefhdr.h>
 #include <proto/muimaster.h>
@@ -267,7 +268,7 @@ DISPATCHER(MCC_SettingsGUI_Dispatcher)
 
 ULONG MCC_SettingsGUI_InitClass( void )
 {
-	appclasses[ CLASSID_SETTINGSGUI ] = MUI_CreateCustomClass( NULL, MUIC_Group, NULL, sizeof( struct mccdata ) ,  (APTR) ENTRY(MCC_SettingsGUI_Dispatcher) );
+	appclasses[ CLASSID_SETTINGSGUI ] = MUI_CreateCustomClass( NULL, (ClassID)MUIC_Group, NULL, sizeof( struct mccdata ) ,  (APTR) ENTRY(MCC_SettingsGUI_Dispatcher) );
 	return( appclasses[ CLASSID_SETTINGSGUI ] ? MSG_ERROR_NOERROR : MSG_ERROR_UNABLETOSETUPMUICLASS );
 }
 /* \\\ */

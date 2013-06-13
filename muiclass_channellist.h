@@ -17,7 +17,7 @@
 #include "muiclass.h"
 
 
-#define ChannelListObject NewObject( appclasses[ CLASSID_CHANNELLIST ]->mcc_Class, NULL
+#define ChannelListObject NEWOBJECT( appclasses[ CLASSID_CHANNELLIST ]->mcc_Class, NULL
 
 /*
 ** Methods and attributes

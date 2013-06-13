@@ -21,6 +21,7 @@
 #include <SDI_hook.h>
 #include <string.h>
 
+#include "intern.h"
 #include "locale.h"
 #include "muiclass.h"
 #include "muiclass_windowabout.h"
@@ -115,7 +116,7 @@ static ULONG OM_Set( struct IClass *cl, Object *obj, struct opSet *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 struct TagItem *tag;
-struct TagItem *tstate;
+NTIP struct TagItem *tstate;
 
 	for( tstate = msg->ops_AttrList ; ( tag = NextTagItem( &tstate ) ) ; ) {
 		ULONG tidata = tag->ti_Data;
@@ -165,7 +166,7 @@ DISPATCHER(MCC_WindowAbout_Dispatcher)
 
 ULONG MCC_WindowAbout_InitClass( void )
 {
-	appclasses[ CLASSID_WINDOWABOUT ] = MUI_CreateCustomClass( NULL, MUIC_Window, NULL, sizeof( struct mccdata ) ,  (APTR) ENTRY(MCC_WindowAbout_Dispatcher) );
+	appclasses[ CLASSID_WINDOWABOUT ] = MUI_CreateCustomClass( NULL, (ClassID)MUIC_Window, NULL, sizeof( struct mccdata ) ,  (APTR) ENTRY(MCC_WindowAbout_Dispatcher) );
 	return( appclasses[ CLASSID_WINDOWABOUT ] ? MSG_ERROR_NOERROR : MSG_ERROR_UNABLETOSETUPMUICLASS );
 }
 /* \\\ */

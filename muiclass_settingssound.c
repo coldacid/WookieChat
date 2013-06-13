@@ -224,7 +224,7 @@ DISPATCHER(MCC_SettingsSound_Dispatcher)
 
 ULONG MCC_SettingsSound_InitClass( void )
 {
-	appclasses[ CLASSID_SETTINGSSOUND ] = MUI_CreateCustomClass( NULL, MUIC_Group, NULL, sizeof( struct mccdata ) ,  (APTR) ENTRY(MCC_SettingsSound_Dispatcher) );
+	appclasses[ CLASSID_SETTINGSSOUND ] = MUI_CreateCustomClass( NULL, (ClassID)MUIC_Group, NULL, sizeof( struct mccdata ) ,  (APTR) ENTRY(MCC_SettingsSound_Dispatcher) );
 	return( appclasses[ CLASSID_SETTINGSSOUND ] ? MSG_ERROR_NOERROR : MSG_ERROR_UNABLETOSETUPMUICLASS );
 }
 /* \\\ */

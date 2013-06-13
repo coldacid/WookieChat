@@ -224,7 +224,7 @@ DISPATCHER(MCC_SettingsNick_Dispatcher)
 
 ULONG MCC_SettingsNick_InitClass( void )
 {
-	appclasses[ CLASSID_SETTINGSNICK ] = MUI_CreateCustomClass( NULL, MUIC_Group, NULL, sizeof( struct mccdata ) ,  (APTR) ENTRY(MCC_SettingsNick_Dispatcher) );
+	appclasses[ CLASSID_SETTINGSNICK ] = MUI_CreateCustomClass( NULL, (ClassID)MUIC_Group, NULL, sizeof( struct mccdata ) ,  (APTR) ENTRY(MCC_SettingsNick_Dispatcher) );
 	return( appclasses[ CLASSID_SETTINGSNICK ] ? MSG_ERROR_NOERROR : MSG_ERROR_UNABLETOSETUPMUICLASS );
 }
 /* \\\ */

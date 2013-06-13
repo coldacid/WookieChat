@@ -17,7 +17,7 @@
 #include "muiclass.h"
 
 
-#define SettingsColorObject NewObject( appclasses[ CLASSID_SETTINGSCOLOR ]->mcc_Class, NULL
+#define SettingsColorObject NEWOBJECT( appclasses[ CLASSID_SETTINGSCOLOR ]->mcc_Class, NULL
 
 /*
 ** Methods and attributes

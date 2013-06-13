@@ -150,7 +150,7 @@ DISPATCHER(MCC_WindowQuit_Dispatcher)
 
 ULONG MCC_WindowQuit_InitClass( void )
 {
-	appclasses[ CLASSID_WINDOWQUIT ] = MUI_CreateCustomClass( NULL, MUIC_Window, NULL, sizeof( struct mccdata ) ,  (APTR) ENTRY(MCC_WindowQuit_Dispatcher) );
+	appclasses[ CLASSID_WINDOWQUIT ] = MUI_CreateCustomClass( NULL, (ClassID) MUIC_Window, NULL, sizeof( struct mccdata ) ,  (APTR) ENTRY(MCC_WindowQuit_Dispatcher) );
 	return( appclasses[ CLASSID_WINDOWQUIT ] ? MSG_ERROR_NOERROR : MSG_ERROR_UNABLETOSETUPMUICLASS );
 }
 /* \\\ */

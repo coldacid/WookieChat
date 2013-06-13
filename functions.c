@@ -136,7 +136,7 @@ long Icon_ToolTypeGetInteger( struct DiskObject *o, STRPTR tooltype, long defval
 {
 
 STRPTR toolstring;
-long value;
+LONG value;
 
 	if( o ) {
 #if defined(__MORPHOS__)

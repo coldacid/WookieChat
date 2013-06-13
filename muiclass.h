@@ -81,5 +81,12 @@ void                MUIDataspaceExportPoppen( Object *poppen, Object *dataspace,
 
 /*************************************************************************/
 
+#ifdef __AROS__
+IPTR NewObjectAROS( struct IClass *classPtr, UBYTE *classID, ULONG tag1, ... );
+IPTR DoSuperNew(struct IClass *cl, Object *obj, ULONG tag1, ...);
+#define NEWOBJECT   (Object *)NewObjectAROS
+#else
+#define NEWOBJECT   NewObject
+#endif
 #endif /* MUICLASS_H */
 

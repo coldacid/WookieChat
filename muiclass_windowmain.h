@@ -17,7 +17,7 @@
 #include "muiclass.h"
 
 
-#define WindowMainObject NewObject( appclasses[ CLASSID_WINDOWMAIN ]->mcc_Class, NULL
+#define WindowMainObject NEWOBJECT( appclasses[ CLASSID_WINDOWMAIN ]->mcc_Class, NULL
 
 /*
 ** Methods and attributes

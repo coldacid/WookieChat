@@ -215,7 +215,7 @@ static ULONG OM_Set( struct IClass *cl, Object *obj, struct opSet *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 struct TagItem *tag;
-struct TagItem *tstate;
+NTIP struct TagItem *tstate;
 
 	for( tstate = msg->ops_AttrList ; ( tag = NextTagItem( &tstate ) ) ; ) {
 		ULONG tidata = tag->ti_Data;
@@ -307,7 +307,7 @@ DISPATCHER(MCC_WindowSettings_Dispatcher)
 
 ULONG MCC_WindowSettings_InitClass( void )
 {
-	appclasses[ CLASSID_WINDOWSETTINGS ] = MUI_CreateCustomClass( NULL, MUIC_Window, NULL, sizeof( struct mccdata ) ,  (APTR) ENTRY(MCC_WindowSettings_Dispatcher) );
+	appclasses[ CLASSID_WINDOWSETTINGS ] = MUI_CreateCustomClass( NULL, (ClassID)MUIC_Window, NULL, sizeof( struct mccdata ) ,  (APTR) ENTRY(MCC_WindowSettings_Dispatcher) );
 	return( appclasses[ CLASSID_WINDOWSETTINGS ] ? MSG_ERROR_NOERROR : MSG_ERROR_UNABLETOSETUPMUICLASS );
 }
 /* \\\ */

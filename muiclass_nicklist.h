@@ -17,7 +17,7 @@
 #include "muiclass.h"
 
 
-#define NickListObject NewObject( appclasses[ CLASSID_NICKLIST ]->mcc_Class, NULL
+#define NickListObject NEWOBJECT( appclasses[ CLASSID_NICKLIST ]->mcc_Class, NULL
 
 /*
 ** Methods and attributes

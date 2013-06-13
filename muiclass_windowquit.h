@@ -17,7 +17,7 @@
 #include "muiclass.h"
 
 
-#define WindowQuitObject NewObject( appclasses[ CLASSID_WINDOWQUIT ]->mcc_Class, NULL
+#define WindowQuitObject NEWOBJECT( appclasses[ CLASSID_WINDOWQUIT ]->mcc_Class, NULL
 
 /*
 ** Methods and attributes

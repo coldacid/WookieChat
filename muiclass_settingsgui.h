@@ -17,7 +17,7 @@
 #include "muiclass.h"
 
 
-#define SettingsGUIObject NewObject( appclasses[ CLASSID_SETTINGSGUI ]->mcc_Class, NULL
+#define SettingsGUIObject NEWOBJECT( appclasses[ CLASSID_SETTINGSGUI ]->mcc_Class, NULL
 
 /*
 ** Methods and attributes

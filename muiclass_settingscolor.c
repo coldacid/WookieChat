@@ -234,7 +234,7 @@ ULONG i;
 			MUIDataspaceExportPoppen( mccdata->mcc_ClassObjects[ TAB_CONFIGITEMS[ i ].GadgetID ], msg->dataspace, TAB_CONFIGITEMS[ i ].ObjectID );
 		}
 	}
-	return( DoSuperMethodA( cl, obj, msg ) );
+	return( DoSuperMethodA( cl, obj, (Msg)msg ) );
 }
 /* \\\ */
 /* /// OM_Export()
@@ -253,7 +253,7 @@ ULONG i;
 			MUIDataspaceExportPoppen( mccdata->mcc_ClassObjects[ TAB_CONFIGITEMS[ i ].GadgetID ], msg->dataspace, TAB_CONFIGITEMS[ i ].ObjectID );
 		}
 	}
-	return( DoSuperMethodA( cl, obj, msg ) );
+	return( DoSuperMethodA( cl, obj, (Msg)msg ) );
 }
 /* \\\ */
 
@@ -328,7 +328,7 @@ DISPATCHER(MCC_SettingsColor_Dispatcher)
 
 ULONG MCC_SettingsColor_InitClass( void )
 {
-	appclasses[ CLASSID_SETTINGSCOLOR ] = MUI_CreateCustomClass( NULL, MUIC_Group, NULL, sizeof( struct mccdata ) ,  (APTR) ENTRY(MCC_SettingsColor_Dispatcher) );
+	appclasses[ CLASSID_SETTINGSCOLOR ] = MUI_CreateCustomClass( NULL, (ClassID)MUIC_Group, NULL, sizeof( struct mccdata ) ,  (APTR) ENTRY(MCC_SettingsColor_Dispatcher) );
 	return( appclasses[ CLASSID_SETTINGSCOLOR ] ? MSG_ERROR_NOERROR : MSG_ERROR_UNABLETOSETUPMUICLASS );
 }
 /* \\\ */

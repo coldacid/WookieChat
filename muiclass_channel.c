@@ -145,7 +145,7 @@ DISPATCHER(MCC_Channel_Dispatcher)
 
 ULONG MCC_Channel_InitClass( void )
 {
-	appclasses[ CLASSID_CHANNEL ] = MUI_CreateCustomClass( NULL, MUIC_NList, NULL, sizeof( struct mccdata ) ,  (APTR) ENTRY(MCC_Channel_Dispatcher) );
+	appclasses[ CLASSID_CHANNEL ] = MUI_CreateCustomClass( NULL, (ClassID) MUIC_NList, NULL, sizeof( struct mccdata ) ,  (APTR) ENTRY(MCC_Channel_Dispatcher) );
 	return( appclasses[ CLASSID_CHANNEL ] ? MSG_ERROR_NOERROR : MSG_ERROR_UNABLETOSETUPMUICLASS );
 }
 /* \\\ */

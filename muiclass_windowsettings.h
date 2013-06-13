@@ -16,7 +16,7 @@
 #include <exec/types.h>
 #include "muiclass.h"
 
-#define WindowSettingsObject NewObject( appclasses[ CLASSID_WINDOWSETTINGS ]->mcc_Class, NULL
+#define WindowSettingsObject NEWOBJECT( appclasses[ CLASSID_WINDOWSETTINGS ]->mcc_Class, NULL
 
 
 enum{

@@ -185,7 +185,7 @@ char buffer[ URLBUFFER_SIZEOF ];
 
 	if( ( handle = Open( DEFAULT_URLGRABBER_NAME, MODE_OLDFILE ) ) ) {
 		buffer[ URLBUFFER_SIZEOF - 1 ] =  '\0';;
-		while( FGets( handle, (_ub_cs) buffer, URLBUFFER_SIZEOF - 1 ) ) {
+		while( FGets( handle, (STRPTR) buffer, URLBUFFER_SIZEOF - 1 ) ) {
 			buffer[ strlen( (const char *) buffer ) - 1 ] = '\0';
 			DoMethod( obj, MM_WINDOWURLGRABBER_ADDURL, buffer );
 		}
@@ -208,7 +208,7 @@ LONG i, entries;
 STRPTR url;
 
 	if( ( handle = Open( DEFAULT_URLGRABBER_NAME, MODE_NEWFILE ) ) ) {
-		GetAttr( MUIA_NList_Entries, mccdata->mcc_ClassObjects[ GID_LIST ], (ULONG*) &entries );
+		GetAttr( MUIA_NList_Entries, mccdata->mcc_ClassObjects[ GID_LIST ], (IPTR*) &entries );
 
 		for( i = 0 ; i < entries ; i++ ) {
 			DoMethod( mccdata->mcc_ClassObjects[ GID_LIST ], MUIM_NList_GetEntry, i, &url );
@@ -238,7 +238,7 @@ STRPTR url;
 		!Strnicmp( msg->URL, (_ub_cs) "https://", 6 ) ||
 		!Strnicmp( msg->URL, (_ub_cs) "www", 3 ) ) {
 
-		GetAttr( MUIA_NList_Entries, mccdata->mcc_ClassObjects[ GID_LIST ], (ULONG*) &entries );
+		GetAttr( MUIA_NList_Entries, mccdata->mcc_ClassObjects[ GID_LIST ], (IPTR*) &entries );
 
 		/* make sure entry is not in list */
 		for( i = 0 ; i < entries ; i++ ) {
@@ -337,7 +337,7 @@ DISPATCHER(MCC_WindowURLGrabber_Dispatcher)
 
 ULONG MCC_WindowURLGrabber_InitClass( void )
 {
-	appclasses[ CLASSID_WINDOWURLGRABBER ] = MUI_CreateCustomClass( NULL, MUIC_Window, NULL, sizeof( struct mccdata ) ,  (APTR) ENTRY(MCC_WindowURLGrabber_Dispatcher) );
+	appclasses[ CLASSID_WINDOWURLGRABBER ] = MUI_CreateCustomClass( NULL, (ClassID) MUIC_Window, NULL, sizeof( struct mccdata ) ,  (APTR) ENTRY(MCC_WindowURLGrabber_Dispatcher) );
 	return( appclasses[ CLASSID_WINDOWURLGRABBER ] ? MSG_ERROR_NOERROR : MSG_ERROR_UNABLETOSETUPMUICLASS );
 }
 /* \\\ */

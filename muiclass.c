@@ -12,6 +12,7 @@
 ** muiclass.c
 */
 
+#define MUI_OBSOLETE
 #include <clib/alib_protos.h>
 #include <proto/exec.h>
 #include <proto/intuition.h>
@@ -552,3 +553,18 @@ struct MUI_PenSpec *penspec;
 }
 /* \\\ */
 
+
+#ifdef __AROS__
+IPTR NewObjectAROS( struct IClass *classPtr, UBYTE *classID, ULONG tag1, ... )
+{
+    AROS_SLOWSTACKTAGS_PRE(tag1)
+    retval = (IPTR) NewObject(classPtr, classID, AROS_SLOWSTACKTAGS_ARG(tag1));
+    AROS_SLOWSTACKTAGS_POST
+}
+IPTR DoSuperNew(struct IClass *cl, Object *obj, ULONG tag1, ...)
+{
+    AROS_SLOWSTACKTAGS_PRE(tag1)
+    retval = (IPTR)DoSuperMethod(cl, obj, OM_NEW, AROS_SLOWSTACKTAGS_ARG(tag1));
+    AROS_SLOWSTACKTAGS_POST
+}
+#endif

@@ -144,7 +144,7 @@ DISPATCHER(MCC_NickList_Dispatcher)
 
 ULONG MCC_NickList_InitClass( void )
 {
-	appclasses[ CLASSID_NICKLIST ] = MUI_CreateCustomClass( NULL, MUIC_NList, NULL, sizeof( struct mccdata ) ,  (APTR) ENTRY(MCC_NickList_Dispatcher) );
+	appclasses[ CLASSID_NICKLIST ] = MUI_CreateCustomClass( NULL, (ClassID) MUIC_NList, NULL, sizeof( struct mccdata ) ,  (APTR) ENTRY(MCC_NickList_Dispatcher) );
 	return( appclasses[ CLASSID_NICKLIST ] ? MSG_ERROR_NOERROR : MSG_ERROR_UNABLETOSETUPMUICLASS );
 }
 /* \\\ */
