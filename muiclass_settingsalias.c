@@ -76,9 +76,9 @@ Object *objs[ GID_LAST ];
 					Child, objs[ GID_ADD       ] = MUICreateSmallButton( MSG_MUICLASS_SETTINGSALIAS_ADD_GAD ),
 					Child, objs[ GID_REMOVE    ] = MUICreateSmallButton( MSG_MUICLASS_SETTINGSALIAS_REMOVE_GAD ),
 					Child, MUICreateLabel( MSG_MUICLASS_SETTINGSALIAS_ALIAS_GAD ),
-					Child, objs[ GID_ALIAS     ] = MUICreateStringFixed( MSG_MUICLASS_SETTINGSALIAS_ALIAS_GAD, ALIAS_ALIAS_SIZEOF ),
+					Child, objs[ GID_ALIAS     ] = MUICreateStringFixed( MSG_MUICLASS_SETTINGSALIAS_ALIAS_GAD, ALIASENTRY_ALIAS_SIZEOF ),
 					Child, MUICreateLabel( MSG_MUICLASS_SETTINGSALIAS_TEXT_GAD ),
-					Child, objs[ GID_TEXT      ] = MUICreateString( MSG_MUICLASS_SETTINGSALIAS_TEXT_GAD, ALIAS_TEXT_SIZEOF ),
+					Child, objs[ GID_TEXT      ] = MUICreateString( MSG_MUICLASS_SETTINGSALIAS_TEXT_GAD, ALIASENTRY_TEXT_SIZEOF ),
 				End,
 
 		TAG_DONE ) ) ) {
@@ -135,17 +135,17 @@ BOOL disabled = TRUE;
 static ULONG MM_GadgetsToList( struct IClass *cl, Object *obj, Msg *msg UNUSED )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
-struct Alias *alias = NULL;
+struct AliasEntry *ae = NULL;
 
-	DoMethod( mccdata->mcc_ClassObjects[ GID_ALIASLIST ], MUIM_NList_GetEntry, MUIV_NList_GetEntry_Active, &alias );
+	DoMethod( mccdata->mcc_ClassObjects[ GID_ALIASLIST ], MUIM_NList_GetEntry, MUIV_NList_GetEntry_Active, &ae );
 
-	if( alias ) {
+	if( ae ) {
 		STRPTR str;
 		if( ( str = (STRPTR) MUIGetVar( mccdata->mcc_ClassObjects[ GID_ALIAS ], MUIA_String_Contents ) ) ) {
-			strcpy( (char *) alias->alias_Alias, (char *) str );
+			strcpy( (char *) ae->ae_Alias, (char *) str );
 		}
 		if( ( str = (STRPTR) MUIGetVar( mccdata->mcc_ClassObjects[ GID_TEXT ], MUIA_String_Contents ) ) ) {
-			strcpy( (char *) alias->alias_Text, (char *) str );
+			strcpy( (char *) ae->ae_Text, (char *) str );
 		}
 		DoMethod( mccdata->mcc_ClassObjects[ GID_ALIASLIST ], MUIM_NList_Redraw, MUIV_NList_Redraw_Active );
 	}
@@ -161,13 +161,13 @@ struct Alias *alias = NULL;
 static ULONG MM_ListToGadgets( struct IClass *cl, Object *obj, Msg *msg UNUSED )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
-struct Alias *alias = NULL;
+struct AliasEntry *ae = NULL;
 
-	DoMethod( mccdata->mcc_ClassObjects[ GID_ALIASLIST ], MUIM_NList_GetEntry, MUIV_NList_GetEntry_Active, &alias );
+	DoMethod( mccdata->mcc_ClassObjects[ GID_ALIASLIST ], MUIM_NList_GetEntry, MUIV_NList_GetEntry_Active, &ae );
 
-	if( alias ) {
-		SetAttrs( mccdata->mcc_ClassObjects[ GID_ALIAS ], MUIA_NoNotify, TRUE, MUIA_String_Contents, alias->alias_Alias, TAG_DONE );
-		SetAttrs( mccdata->mcc_ClassObjects[ GID_TEXT  ], MUIA_NoNotify, TRUE, MUIA_String_Contents, alias->alias_Text , TAG_DONE );
+	if( ae ) {
+		SetAttrs( mccdata->mcc_ClassObjects[ GID_ALIAS ], MUIA_NoNotify, TRUE, MUIA_String_Contents, ae->ae_Alias, TAG_DONE );
+		SetAttrs( mccdata->mcc_ClassObjects[ GID_TEXT  ], MUIA_NoNotify, TRUE, MUIA_String_Contents, ae->ae_Text , TAG_DONE );
 	}
 
 	DoMethod( obj, MM_SETTINGSALIAS_DISENABLE );

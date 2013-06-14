@@ -30,15 +30,15 @@ MM_ALIASLIST_ADD =  0xFED00500,
 struct MP_ALIASLIST_ADD { ULONG MethodID; STRPTR Alias; STRPTR Text; };
 
 /*
-** alias structure
+** alias entry structure
 */
 
-#define ALIAS_ALIAS_SIZEOF 16
-#define ALIAS_TEXT_SIZEOF  256
+#define ALIASENTRY_ALIAS_SIZEOF 16
+#define ALIASENTRY_TEXT_SIZEOF  256
 
-struct Alias {
-	unsigned char alias_Alias[ ALIAS_ALIAS_SIZEOF + 2 ];
-	unsigned char alias_Text[ ALIAS_TEXT_SIZEOF + 2 ];
+struct AliasEntry {
+	unsigned char ae_Alias[ ALIASENTRY_ALIAS_SIZEOF + 2 ];
+	unsigned char ae_Text[ ALIASENTRY_TEXT_SIZEOF + 2 ];
 };
 
 /*************************************************************************/

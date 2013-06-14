@@ -56,11 +56,11 @@ static ULONG OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
 static ULONG OM_Display( struct IClass *cl, Object *obj, struct MUIP_NList_Display *msg )
 {
 STRPTR *array = msg->strings;
-struct Alias *alias;
+struct AliasEntry *ae;
 
-	if( ( alias = msg->entry ) ) {
-		*array++ = alias->alias_Alias;
-		*array++ = alias->alias_Text;
+	if( ( ae = msg->entry ) ) {
+		*array++ = ae->ae_Alias;
+		*array++ = ae->ae_Text;
 	} else {
 		*array++ = (STRPTR) LGS( MSG_LV_ALIAS );
 		*array++ = (STRPTR) LGS( MSG_LV_TEXT );
@@ -77,7 +77,7 @@ struct Alias *alias;
 static ULONG OM_Destruct( struct IClass *cl, Object *obj, struct MUIP_NList_Destruct *msg )
 {
 	if( msg->entry ) {
-		FreeMem( msg->entry, sizeof( struct Alias ) );
+		FreeMem( msg->entry, sizeof( struct AliasEntry ) );
     }
 	return( 0 );
 }
@@ -91,13 +91,13 @@ static ULONG OM_Destruct( struct IClass *cl, Object *obj, struct MUIP_NList_Dest
 static ULONG OM_Import( struct IClass *cl, Object *obj, struct MUIP_Import *msg )
 {
 ULONG i;
-char alias[ ALIAS_ALIAS_SIZEOF + ALIAS_TEXT_SIZEOF + 4 ];
+char alias[ ALIASENTRY_ALIAS_SIZEOF + ALIASENTRY_TEXT_SIZEOF + 4 ];
 char *text;
 
 	DoMethod( obj, MUIM_NList_Clear );
 	for( i = 0 ;  ; i++ ) {
 		if( ( text = (char *) DoMethod( msg->dataspace, MUIM_Dataspace_Find, OID_ALI_LIST + i ) ) ) {
-			strncpy( alias, text, ALIAS_ALIAS_SIZEOF + ALIAS_TEXT_SIZEOF + 1 );
+			strncpy( alias, text, ALIASENTRY_ALIAS_SIZEOF + ALIASENTRY_TEXT_SIZEOF + 1 );
 			if( ( text = strchr( alias, (char) 0x20 ) ) ) {
 				*text++ = 0x00;
 				DoMethod( obj, MM_ALIASLIST_ADD, alias, text );
@@ -119,23 +119,17 @@ char *text;
 
 static ULONG OM_Export( struct IClass *cl, Object *obj, struct MUIP_Import *msg )
 {
-struct Alias *alias;
-char buffer[ ALIAS_ALIAS_SIZEOF + ALIAS_TEXT_SIZEOF + 4 ];
+struct AliasEntry *ae;
+char buffer[ ALIASENTRY_ALIAS_SIZEOF + ALIASENTRY_TEXT_SIZEOF + 4 ];
 ULONG i;
 
 	for( i = 0 ;  ; i++ ) {
-		alias = NULL;
-		DoMethod( obj, MUIM_NList_GetEntry, i, &alias );
-		if( alias ) {
-			ULONG args[4];
-			args[0]	= alias->alias_Alias;
-			args[1]	= alias->alias_Text;
-			args[2]	= buffer;
-
-			strncpy( buffer, (char *) alias->alias_Alias, ALIAS_ALIAS_SIZEOF );
+		ae = NULL;
+		DoMethod( obj, MUIM_NList_GetEntry, i, &ae );
+		if( ae ) {
+			strncpy( buffer, (char *) ae->ae_Alias, ALIASENTRY_ALIAS_SIZEOF );
 			strcat(  buffer, (char *) " " );
-			strncat( buffer, (char *) alias->alias_Text, ALIAS_TEXT_SIZEOF );
-			VPrintf("'%s' '%s' -> '%s'\n", &args );
+			strncat( buffer, (char *) ae->ae_Text, ALIASENTRY_TEXT_SIZEOF );
 			DoMethod( msg->dataspace, MUIM_Dataspace_Add, buffer, strlen( buffer ) + 1, OID_ALI_LIST + i );
 		} else {
 			break;
@@ -152,15 +146,15 @@ ULONG i;
 
 static ULONG MM_Add( struct IClass *cl, Object *obj, struct MP_ALIASLIST_ADD *msg )
 {
-struct Alias *alias;
+struct AliasEntry *ae;
 
-	if( ( alias = AllocMem( sizeof( struct Alias ), MEMF_ANY|MEMF_CLEAR ) ) ) {
-		strncpy( (char *) alias->alias_Alias, (char *) msg->Alias, ALIAS_ALIAS_SIZEOF );
-		strncpy( (char *) alias->alias_Text , (char *) msg->Text , ALIAS_TEXT_SIZEOF );
-		DoMethod( obj, MUIM_NList_InsertSingle, alias, MUIV_NList_Insert_Bottom );
+	if( ( ae = AllocMem( sizeof( struct AliasEntry ), MEMF_ANY|MEMF_CLEAR ) ) ) {
+		strncpy( (char *) ae->ae_Alias, (char *) msg->Alias, ALIASENTRY_ALIAS_SIZEOF );
+		strncpy( (char *) ae->ae_Text , (char *) msg->Text , ALIASENTRY_TEXT_SIZEOF );
+		DoMethod( obj, MUIM_NList_InsertSingle, ae, MUIV_NList_Insert_Bottom );
 		SetAttrs( obj, MUIA_NList_Active, MUIV_NList_Active_Bottom, TAG_DONE );
 	}
-	return( (ULONG) alias );
+	return( (ULONG) ae );
 }
 /* \\\ */
 
