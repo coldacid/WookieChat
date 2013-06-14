@@ -8,28 +8,38 @@
     for the specific language governing rights and limitations under the License.
 */
 
-#ifndef MUICLASS_SETTINGSLOG_H
-#define MUICLASS_SETTINGSLOG_H 1
+#ifndef MUICLASS_ALIASLIST_H
+#define MUICLASS_ALIASLIST_H 1
 
 /*************************************************************************/
 
 #include <exec/types.h>
 #include "muiclass.h"
 
-
-#define SettingsLogObject NEWOBJECT( appclasses[ CLASSID_SETTINGSLOG ]->mcc_Class, NULL
+#define AliasListObject NEWOBJECT( appclasses[ CLASSID_ALIASLIST ]->mcc_Class, NULL
 
 /*
 ** Methods and attributes
 */
 
 enum {
-MM_SETTINGSLOG_RESETTODEFAULTS =  0xFED00260,
-MM_SETTINGSLOG_READCONFIG,
+MM_ALIASLIST_ADD =  0xFED00500,
 /* Attributes */
 };
 
-struct MP_SETTINGSLOG_READCONFIG { ULONG MethodID; ULONG ObjectID; };
+struct MP_ALIASLIST_ADD { ULONG MethodID; STRPTR Alias; STRPTR Text; };
+
+/*
+** alias structure
+*/
+
+#define ALIAS_ALIAS_SIZEOF 16
+#define ALIAS_TEXT_SIZEOF  256
+
+struct Alias {
+	unsigned char alias_Alias[ ALIAS_ALIAS_SIZEOF + 2 ];
+	unsigned char alias_Text[ ALIAS_TEXT_SIZEOF + 2 ];
+};
 
 /*************************************************************************/
 
@@ -37,10 +47,10 @@ struct MP_SETTINGSLOG_READCONFIG { ULONG MethodID; ULONG ObjectID; };
 ** Prototypes
 */
 
-ULONG   MCC_SettingsLog_InitClass( void );
-void    MCC_SettingsLog_DisposeClass( void );
+ULONG   MCC_AliasList_InitClass( void );
+void    MCC_AliasList_DisposeClass( void );
 
 /*************************************************************************/
 
-#endif /* MUICLASS_SETTINGSLOG_H */
+#endif /* MUICLASS_ALIASLIST_H */
 

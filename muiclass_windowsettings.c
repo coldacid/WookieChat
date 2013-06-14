@@ -32,6 +32,7 @@
 #include "muiclass_settingsgui.h"
 #include "muiclass_settingsdcc.h"
 #include "muiclass_settingslog.h"
+#include "muiclass_settingsalias.h"
 #include "muiclass_settingsgeneral.h"
 #include "muiclass_settingscolor.h"
 #include "muiclass_settingssound.h"
@@ -61,6 +62,7 @@ GID_DCC,
 GID_GENERAL,
 GID_COLOR,
 GID_SOUND,
+GID_ALIAS,
 GID_SAVE,
 GID_USE,
 GID_CANCEL,
@@ -125,10 +127,6 @@ ULONG i;
 															MUIA_NListview_Horiz_ScrollBar, MUIV_NListview_HSB_Auto,
 															MUIA_FixWidthTxt, "WWWWWWWWWWWWW",
 														End,
-					Child, HGroup,
-						Child, HVSpace,
-						Child, VGroup,
-							Child, HVSpace,
 							Child, objs[ GID_PAGEGROUP   ] = HGroup, MUIA_Group_PageMode, TRUE,
 								Child, objs[ GID_NICK    ] = SettingsNickObject, End,
 								Child, HVSpace,
@@ -138,14 +136,10 @@ ULONG i;
 								Child, objs[ GID_LOG     ] = SettingsLogObject, End,
 								Child, objs[ GID_DCC     ] = SettingsDCCObject, End,
 								Child, objs[ GID_SOUND   ] = SettingsSoundObject, End,
-								Child, HVSpace,
+								Child, objs[ GID_ALIAS   ] = SettingsAliasObject, End,
 								Child, HVSpace,
 								Child, HVSpace,
 							End,
-							Child, HVSpace,
-						End,
-						Child, HVSpace,
-					End,
 				End,
 				Child, HGroup,
 					Child, objs[ GID_SAVE   ] = MUICreateButton( MSG_MUICLASS_SETTINGS_SAVE_GAD ),

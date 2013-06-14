@@ -94,6 +94,7 @@ Object *objs[ GID_LAST ];
 	if( (obj = (Object *) DoSuperNew( cl, obj, MUIA_Group_Horiz, TRUE,
 			Child, HVSpace,
 			Child, VGroup,
+				Child, HVSpace,
 				Child, MUICreateLabelLeft( MSG_MUICLASS_SETTINGSLOG_LOGACTIVEFOR_INFO ),
 				Child, HGroup,
 					Child, objs[ GID_ACTIVEPUBLIC   ] = MUICreateCheckbox( MSG_MUICLASS_SETTINGSLOG_PUBLIC_GAD, FALSE ),
@@ -126,6 +127,7 @@ Object *objs[ GID_LAST ];
 					Child, MUICreateLabelLeft( MSG_MUICLASS_SETTINGSLOG_LOGSPLITLIMIT_GAD ),
 					Child, HVSpace,
 				End,
+				Child, HVSpace,
 			End,
 			Child, HVSpace,
 		TAG_DONE ) ) ) {

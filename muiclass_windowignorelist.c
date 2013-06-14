@@ -240,7 +240,6 @@ Object *objs[ GID_LAST ];
 		DoMethod( objs[ GID_CTCP       ], MUIM_Notify, MUIA_Selected       , MUIV_EveryTime, obj, 1, MM_WINDOWIGNORELIST_GADGETSTOLIST );
 		DoMethod( objs[ GID_DCC        ], MUIM_Notify, MUIA_Selected       , MUIV_EveryTime, obj, 1, MM_WINDOWIGNORELIST_GADGETSTOLIST );
 
-
 		DoMethod( objs[ GID_ADD       ], MUIM_Notify, MUIA_Pressed            , FALSE, obj, 1, MM_WINDOWIGNORELIST_ADD );
 		DoMethod( objs[ GID_REMOVE    ], MUIM_Notify, MUIA_Pressed            , FALSE, objs[ GID_LIST ], 2, MUIM_NList_Remove, MUIV_NList_Remove_Selected );
 

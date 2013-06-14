@@ -8,8 +8,8 @@
     for the specific language governing rights and limitations under the License.
 */
 
-#ifndef MUICLASS_SETTINGSLOG_H
-#define MUICLASS_SETTINGSLOG_H 1
+#ifndef MUICLASS_SETTINGSALIAS_H
+#define MUICLASS_SETTINGSALIAS_H 1
 
 /*************************************************************************/
 
@@ -17,19 +17,24 @@
 #include "muiclass.h"
 
 
-#define SettingsLogObject NEWOBJECT( appclasses[ CLASSID_SETTINGSLOG ]->mcc_Class, NULL
+#define SettingsAliasObject NEWOBJECT( appclasses[ CLASSID_SETTINGSALIAS ]->mcc_Class, NULL
 
 /*
 ** Methods and attributes
 */
 
 enum {
-MM_SETTINGSLOG_RESETTODEFAULTS =  0xFED00260,
-MM_SETTINGSLOG_READCONFIG,
+MM_SETTINGSALIAS_RESETTODEFAULTS =  0xFED00270,
+MM_SETTINGSALIAS_READCONFIG,
+MM_SETTINGSALIAS_ADD,
+MM_SETTINGSALIAS_DISENABLE,
+MM_SETTINGSALIAS_GADGETSTOLIST,
+MM_SETTINGSALIAS_LISTTOGADGETS,
 /* Attributes */
 };
 
-struct MP_SETTINGSLOG_READCONFIG { ULONG MethodID; ULONG ObjectID; };
+struct MP_SETTINGSALIAS_READCONFIG { ULONG MethodID; ULONG ObjectID; };
+struct MP_SETTINGSALIAS_ADD        { ULONG MethodID; STRPTR Alias; };
 
 /*************************************************************************/
 
@@ -37,10 +42,10 @@ struct MP_SETTINGSLOG_READCONFIG { ULONG MethodID; ULONG ObjectID; };
 ** Prototypes
 */
 
-ULONG   MCC_SettingsLog_InitClass( void );
-void    MCC_SettingsLog_DisposeClass( void );
+ULONG   MCC_SettingsAlias_InitClass( void );
+void    MCC_SettingsAlias_DisposeClass( void );
 
 /*************************************************************************/
 
-#endif /* MUICLASS_SETTINGSLOG_H */
+#endif /* MUICLASS_SETTINGSALIAS_H */
 
