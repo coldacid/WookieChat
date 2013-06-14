@@ -46,7 +46,7 @@ static ULONG OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
 							MUIA_NList_Title         , TRUE,
 							MUIA_CycleChain          , 1,
 							MUIA_NList_Format        , "BAR,BAR,BAR,BAR",
-							MUIA_ObjectID            , OID_BUT_LIST,
+							MUIA_ObjectID            , OID_EVT_LIST,
 							TAG_DONE ) ) ) {
 
 		ULONG i;
@@ -107,7 +107,7 @@ static ULONG OM_Import( struct IClass *cl, Object *obj, struct MUIP_Import *msg 
 struct EventEntry *ee;
 ULONG i;
 char *text, *buffer;
-#if 1
+
 	for( i = 0 ;  ; i++ ) {
 		ee = NULL;
 		DoMethod( obj, MUIM_NList_GetEntry, i, &ee );
@@ -119,6 +119,7 @@ char *text, *buffer;
 					rda->RDA_Source.CS_Length = strlen( text ) + 2;
 					rda->RDA_Source.CS_CurChr = 0;
 					if( ( buffer = AllocVec( rda->RDA_Source.CS_Length + 2, MEMF_ANY|MEMF_CLEAR ) ) ) {
+						strcpy( buffer, text );
 						rda->RDA_Source.CS_Buffer = (STRPTR) buffer;
 						buffer[ rda->RDA_Source.CS_Length - 1 ] = 0x0a;
 						buffer[ rda->RDA_Source.CS_Length     ] = 0x00;
@@ -135,7 +136,6 @@ char *text, *buffer;
 			break;
 		}
 	}
-#endif
 	return( DoSuperMethodA( cl, obj, (Msg) msg ) );
 }
 /* \\\ */
@@ -197,10 +197,9 @@ ULONG i, newitem = 0;
 		ee->ee_Type = msg->Type;
 		ee->ee_Mode = msg->Mode;
 		strncpy( (char *) ee->ee_Script  , (char *) ( msg->Script ? msg->Script : (STRPTR) "" ), EVENTENTRY_SCRIPT_SIZEOF );
-		strncpy( (char *) ee->ee_Text    , (char *) ( msg->Text   ? msg->Text   : (STRPTR) "" ), EVENTENTRY_TEXT_SIZEOF );
+		strncpy( (char *) ee->ee_Text    , (char *) ( msg->Text   ? msg->Text   : (STRPTR) "" ), EVENTENTRY_TEXT_SIZEOF   );
 		if( newitem ) { /* only add if entry is new */
 			DoMethod( obj, MUIM_NList_InsertSingle, ee, MUIV_NList_Insert_Bottom );
-			SetAttrs( obj, MUIA_NList_Active, MUIV_NList_Active_Bottom, TAG_DONE );
 		}
 	}
 	return( (ULONG) ee );

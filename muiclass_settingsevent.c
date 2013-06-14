@@ -43,6 +43,7 @@ enum
 {
 GID_EVENTLIST = 0,
 GID_MODE,
+GID_POPSCRIPT,
 GID_SCRIPT,
 GID_TEXT,
 GID_LAST
@@ -82,7 +83,7 @@ static STRPTR TAB_CYCLE_EVENTMODES[ MSG_MUICLASS_EVENTLIST_WINDOWISINACTIVE - MS
 					Child, MUICreateLabel( MSG_MUICLASS_SETTINGSEVENT_MODE_GAD ),
 					Child, objs[ GID_MODE      ] = MUICreateCycle( MSG_MUICLASS_SETTINGSEVENT_MODE_GAD, TAB_CYCLE_EVENTMODES, MSG_MUICLASS_EVENTLIST_MODENEVER, MSG_MUICLASS_EVENTLIST_WINDOWISINACTIVE ),
 					Child, MUICreateLabel( MSG_MUICLASS_SETTINGSEVENT_SCRIPT_GAD ),
-					Child,                         MUICreatePopASL( MSG_MUICLASS_SETTINGSEVENT_SCRIPT_GAD, EVENTENTRY_SCRIPT_SIZEOF, MUII_PopFile, &objs[ GID_SCRIPT ], TAG_DONE ),
+					Child, objs[ GID_POPSCRIPT ] = MUICreatePopASL( MSG_MUICLASS_SETTINGSEVENT_SCRIPT_GAD, EVENTENTRY_SCRIPT_SIZEOF, MUII_PopFile, &objs[ GID_SCRIPT ], TAG_DONE ),
 					Child, MUICreateLabel( MSG_MUICLASS_SETTINGSEVENT_ARGUMENT_GAD ),
 					Child, objs[ GID_TEXT      ] = MUICreateString( MSG_MUICLASS_SETTINGSEVENT_ARGUMENT_GAD, EVENTENTRY_TEXT_SIZEOF ),
 				End,
@@ -100,6 +101,7 @@ static STRPTR TAB_CYCLE_EVENTMODES[ MSG_MUICLASS_EVENTLIST_WINDOWISINACTIVE - MS
 		DoMethod( objs[ GID_TEXT        ], MUIM_Notify, MUIA_String_Contents, MUIV_EveryTime, obj, 1, MM_SETTINGSEVENT_GADGETSTOLIST );
 
 		DoMethod( obj, MM_SETTINGSEVENT_LISTTOGADGETS );
+
 
 		return( (ULONG) obj );
     }
@@ -124,7 +126,7 @@ BOOL events = TRUE;
 	}
 
 	SetAttrs( mccdata->mcc_ClassObjects[ GID_MODE       ], MUIA_Disabled, events, TAG_DONE );
-	SetAttrs( mccdata->mcc_ClassObjects[ GID_SCRIPT     ], MUIA_Disabled, events, TAG_DONE );
+	SetAttrs( mccdata->mcc_ClassObjects[ GID_POPSCRIPT  ], MUIA_Disabled, events, TAG_DONE );
 	SetAttrs( mccdata->mcc_ClassObjects[ GID_TEXT       ], MUIA_Disabled, events, TAG_DONE );
 
 	return( 0 );

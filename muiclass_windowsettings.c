@@ -142,7 +142,7 @@ ULONG i;
 								Child, objs[ GID_SOUND   ] = SettingsSoundObject, End,
 								Child, objs[ GID_ALIAS   ] = SettingsAliasObject, End,
 								Child, objs[ GID_BUTTON  ] = SettingsButtonObject, End,
-								Child, objs[ GID_EVENT   ] = HVSpace, //SettingsEventObject, End,
+								Child, objs[ GID_EVENT   ] = SettingsEventObject, End,
 							End,
 				End,
 				Child, HGroup,
