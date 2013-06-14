@@ -24,20 +24,21 @@
 #include <mui/NList_mcc.h>
 #include <mui/NListview_mcc.h>
 
+#include "intern.h"
 #include "locale.h"
 #include "muiclass.h"
 #include "muiclass_application.h"
-#include "muiclass_windowsettings.h"
-#include "muiclass_settingsnick.h"
-#include "muiclass_settingsgui.h"
-#include "muiclass_settingsdcc.h"
-#include "muiclass_settingslog.h"
 #include "muiclass_settingsalias.h"
-#include "muiclass_settingsgeneral.h"
+#include "muiclass_settingsbutton.h"
 #include "muiclass_settingscolor.h"
+#include "muiclass_settingsdcc.h"
+#include "muiclass_settingsgeneral.h"
+#include "muiclass_settingsgui.h"
+#include "muiclass_settingslog.h"
+#include "muiclass_settingsnick.h"
 #include "muiclass_settingssound.h"
+#include "muiclass_windowsettings.h"
 #include "version.h"
-#include "intern.h"
 
 /*************************************************************************/
 
@@ -63,6 +64,7 @@ GID_GENERAL,
 GID_COLOR,
 GID_SOUND,
 GID_ALIAS,
+GID_BUTTON,
 GID_SAVE,
 GID_USE,
 GID_CANCEL,
@@ -137,7 +139,7 @@ ULONG i;
 								Child, objs[ GID_DCC     ] = SettingsDCCObject, End,
 								Child, objs[ GID_SOUND   ] = SettingsSoundObject, End,
 								Child, objs[ GID_ALIAS   ] = SettingsAliasObject, End,
-								Child, HVSpace,
+								Child, objs[ GID_BUTTON  ] = SettingsButtonObject, End,
 								Child, HVSpace,
 							End,
 				End,
@@ -253,11 +255,17 @@ struct mccdata *mccdata = INST_DATA( cl, obj );
 ULONG result;
 
 	if( !( result = DoMethod( mccdata->mcc_ClassObjects[ GID_NICK ], MM_SETTINGSNICK_READCONFIG, msg->ObjectID ) ) ) {
-		if( !( result = DoMethod( mccdata->mcc_ClassObjects[ GID_GUI ], MM_SETTINGSCOLOR_READCONFIG, msg->ObjectID ) ) ) {
+		if( !( result = DoMethod( mccdata->mcc_ClassObjects[ GID_GUI ], MM_SETTINGSGUI_READCONFIG, msg->ObjectID ) ) ) {
 			if( !( result = DoMethod( mccdata->mcc_ClassObjects[ GID_GENERAL ], MM_SETTINGSGENERAL_READCONFIG, msg->ObjectID ) ) ) {
 				if( !( result = DoMethod( mccdata->mcc_ClassObjects[ GID_COLOR ], MM_SETTINGSCOLOR_READCONFIG, msg->ObjectID ) ) ) {
-					if( !( result = DoMethod( mccdata->mcc_ClassObjects[ GID_SOUND ], MM_SETTINGSCOLOR_READCONFIG, msg->ObjectID ) ) ) {
-						if( !( result = DoMethod( mccdata->mcc_ClassObjects[ GID_DCC ], MM_SETTINGSCOLOR_READCONFIG, msg->ObjectID ) ) ) {
+					if( !( result = DoMethod( mccdata->mcc_ClassObjects[ GID_SOUND ], MM_SETTINGSSOUND_READCONFIG, msg->ObjectID ) ) ) {
+						if( !( result = DoMethod( mccdata->mcc_ClassObjects[ GID_DCC ], MM_SETTINGSDCC_READCONFIG, msg->ObjectID ) ) ) {
+							if( !( result = DoMethod( mccdata->mcc_ClassObjects[ GID_LOG ], MM_SETTINGSLOG_READCONFIG, msg->ObjectID ) ) ) {
+								if( !( result = DoMethod( mccdata->mcc_ClassObjects[ GID_BUTTON ], MM_SETTINGSBUTTON_READCONFIG, msg->ObjectID ) ) ) {
+									if( !( result = DoMethod( mccdata->mcc_ClassObjects[ GID_ALIAS ], MM_SETTINGSALIAS_READCONFIG, msg->ObjectID ) ) ) {
+									}
+								}
+							}
 						}
 					}
 				}

@@ -8,26 +8,26 @@
     for the specific language governing rights and limitations under the License.
 */
 
-#ifndef MUICLASS_ALIASLIST_H
-#define MUICLASS_ALIASLIST_H 1
+#ifndef MUICLASS_BUTTONLIST_H
+#define MUICLASS_BUTTONLIST_H 1
 
 /*************************************************************************/
 
 #include <exec/types.h>
 #include "muiclass.h"
 
-#define AliasListObject NEWOBJECT( appclasses[ CLASSID_ALIASLIST ]->mcc_Class, NULL
+#define ButtonListObject NEWOBJECT( appclasses[ CLASSID_BUTTONLIST ]->mcc_Class, NULL
 
 /*
 ** Methods and attributes
 */
 
 enum {
-MM_ALIASLIST_ADD =  0xFED00500,
+MM_BUTTONLIST_ADD =  0xFED00500,
 /* Attributes */
 };
 
-struct MP_ALIASLIST_ADD { ULONG MethodID; STRPTR Alias; STRPTR Text; };
+struct MP_BUTTONLIST_ADD { ULONG MethodID; STRPTR Name; STRPTR Command; };
 
 /*************************************************************************/
 
@@ -35,25 +35,25 @@ struct MP_ALIASLIST_ADD { ULONG MethodID; STRPTR Alias; STRPTR Text; };
 ** Prototypes
 */
 
-ULONG   MCC_AliasList_InitClass( void );
-void    MCC_AliasList_DisposeClass( void );
+ULONG   MCC_ButtonList_InitClass( void );
+void    MCC_ButtonList_DisposeClass( void );
 
 
 /*************************************************************************/
 
 /*
-** alias entry structure
+** button entry structure
 */
 
-#define ALIASENTRY_ALIAS_SIZEOF 16
-#define ALIASENTRY_TEXT_SIZEOF  256
+#define BUTTONENTRY_NAME_SIZEOF     16
+#define BUTTONENTRY_COMMAND_SIZEOF  256
 
-struct AliasEntry {
-	unsigned char ae_Alias[ ALIASENTRY_ALIAS_SIZEOF + 2 ];
-	unsigned char ae_Text[ ALIASENTRY_TEXT_SIZEOF + 2 ];
+struct ButtonEntry {
+	unsigned char be_Name[ BUTTONENTRY_NAME_SIZEOF + 2 ];
+	unsigned char be_Command[ BUTTONENTRY_COMMAND_SIZEOF + 2 ];
 };
 
 /*************************************************************************/
 
-#endif /* MUICLASS_ALIASLIST_H */
+#endif /* MUICLASS_BUTTONLIST_H */
 

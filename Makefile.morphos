@@ -8,17 +8,35 @@ SYSTEM      = MorphOS
 CATALOGS    = english deutsch español français greek italiano magyar norsk polski svenska
 FLEXCAT     = flexcat
 
-SOURCES   = functions.c muiclass.c muiclass_application.c muiclass_windowmain.c \
-			muiclass_windowabout.c muiclass_windowquit.c muiclass_windowurlgrabber.c muiclass_windowignorelist.c \
-			muiclass_nicklist.c muiclass_channellist.c muiclass_aliaslist.c muiclass_channel.c \
-			muiclass_windowsettings.c muiclass_settingsnick.c muiclass_settingscolor.c muiclass_settingsgeneral.c \
-			muiclass_settingsgui.c muiclass_settingssound.c muiclass_settingsdcc.c muiclass_settingslog.c muiclass_settingsalias.c \
+SOURCES   = functions.c                 \
+			muiclass.c                  \
+			muiclass_aliaslist.c        \
+			muiclass_application.c      \
+			muiclass_buttonlist.c       \
+			muiclass_channel.c          \
+			muiclass_channellist.c      \
+			muiclass_nicklist.c         \
+			muiclass_settingsalias.c    \
+			muiclass_settingsbutton.c   \
+			muiclass_settingscolor.c    \
+			muiclass_settingsdcc.c      \
+			muiclass_settingsgeneral.c  \
+			muiclass_settingsgui.c      \
+			muiclass_settingslog.c      \
+			muiclass_settingsnick.c     \
+			muiclass_settingssound.c    \
+			muiclass_windowabout.c      \
+			muiclass_windowignorelist.c \
+			muiclass_windowmain.c       \
+			muiclass_windowquit.c       \
+			muiclass_windowsettings.c   \
+			muiclass_windowurlgrabber.c \
 			arexx_hooks.c auto_reconnect_server.c closeserverselectwin.c coloursettings.c \
             connect2server.c dcc.c display_logfile_lines.c do_waitselect_code.c \
             events_arexx.c globals.c graphical_smilies.c highlight_search.c hooks.c \
             irc.c main.c nicklist.c pincoming.c process_outgoing.c save_settings.c \
             sortnicks.c startexit.c subclasses.c tabs_change.c tabs_create_close.c \
-			timers.c objapp.c audio.c locale.c version.c \
+			timers.c objapp.c audio.c locale.c version.c
 
 OBJECTS   = $(SOURCES:.c=.o)
 

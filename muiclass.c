@@ -27,25 +27,27 @@
 #include "locale.h"
 #include "intern.h"
 #include "muiclass.h"
+#include "muiclass_aliaslist.h"
 #include "muiclass_application.h"
+#include "muiclass_buttonlist.h"
+#include "muiclass_channel.h"
+#include "muiclass_channellist.h"
+#include "muiclass_nicklist.h"
+#include "muiclass_settingsalias.h"
+#include "muiclass_settingsbutton.h"
+#include "muiclass_settingscolor.h"
+#include "muiclass_settingsdcc.h"
+#include "muiclass_settingsgeneral.h"
+#include "muiclass_settingsgui.h"
+#include "muiclass_settingslog.h"
+#include "muiclass_settingsnick.h"
+#include "muiclass_settingssound.h"
+#include "muiclass_windowabout.h"
+#include "muiclass_windowignorelist.h"
 #include "muiclass_windowmain.h"
 #include "muiclass_windowquit.h"
-#include "muiclass_windowabout.h"
 #include "muiclass_windowsettings.h"
-#include "muiclass_windowignorelist.h"
 #include "muiclass_windowurlgrabber.h"
-#include "muiclass_nicklist.h"
-#include "muiclass_channellist.h"
-#include "muiclass_channel.h"
-#include "muiclass_settingsgeneral.h"
-#include "muiclass_settingsnick.h"
-#include "muiclass_settingsgui.h"
-#include "muiclass_settingscolor.h"
-#include "muiclass_settingssound.h"
-#include "muiclass_settingsdcc.h"
-#include "muiclass_settingslog.h"
-#include "muiclass_settingsalias.h"
-#include "muiclass_aliaslist.h"
 
 #ifndef MUIA_Text_HiIndex
  #define MUIA_Text_HiIndex 0x804214f5
@@ -88,13 +90,17 @@ ULONG result;
 														if( !(result = MCC_SettingsLog_InitClass() ) ) {
 															if( !(result = MCC_SettingsAlias_InitClass() ) ) {
 																if( !(result = MCC_AliasList_InitClass() ) ) {
-																	if( !(result = MCC_NickList_InitClass() ) ) {
-																		if( !(result = MCC_ChannelList_InitClass() ) ) {
-																			if( !(result = MCC_Channel_InitClass() ) ) {
-																				if( ( application = NewObject( appclasses[ CLASSID_APPLICATION ]->mcc_Class, NULL, TAG_DONE ) ) ) {
-																					DoMethod( application, MM_APPLICATION_STARTUP );
-																				} else {
-																					result = MSG_ERROR_UNABLETOSETUPMUICLASS;
+																	if( !(result = MCC_SettingsButton_InitClass() ) ) {
+																		if( !(result = MCC_ButtonList_InitClass() ) ) {
+																			if( !(result = MCC_NickList_InitClass() ) ) {
+																				if( !(result = MCC_ChannelList_InitClass() ) ) {
+																					if( !(result = MCC_Channel_InitClass() ) ) {
+																						if( ( application = NewObject( appclasses[ CLASSID_APPLICATION ]->mcc_Class, NULL, TAG_DONE ) ) ) {
+																							DoMethod( application, MM_APPLICATION_STARTUP );
+																						} else {
+																							result = MSG_ERROR_UNABLETOSETUPMUICLASS;
+																						}
+																					}
 																				}
 																			}
 																		}
@@ -131,25 +137,27 @@ void MUIClass_Close( void )
 		application = NULL;
     }
 
-	MCC_Channel_DisposeClass();
-	MCC_ChannelList_DisposeClass();
-	MCC_NickList_DisposeClass();
 	MCC_AliasList_DisposeClass();
-	MCC_WindowAbout_DisposeClass();
-	MCC_WindowURLGrabber_DisposeClass();
-	MCC_WindowIgnoreList_DisposeClass();
-	MCC_SettingsNick_DisposeClass();
-	MCC_SettingsGUI_DisposeClass();
-	MCC_SettingsGeneral_DisposeClass();
+	MCC_Application_DisposeClass();
+	MCC_ButtonList_DisposeClass();
+	MCC_ChannelList_DisposeClass();
+	MCC_Channel_DisposeClass();
+	MCC_NickList_DisposeClass();
+	MCC_SettingsAlias_DisposeClass();
+	MCC_SettingsButton_DisposeClass();
 	MCC_SettingsColor_DisposeClass();
 	MCC_SettingsDCC_DisposeClass();
+	MCC_SettingsGeneral_DisposeClass();
+	MCC_SettingsGUI_DisposeClass();
 	MCC_SettingsLog_DisposeClass();
-	MCC_SettingsAlias_DisposeClass();
+	MCC_SettingsNick_DisposeClass();
 	MCC_SettingsSound_DisposeClass();
-	MCC_WindowSettings_DisposeClass();
-	MCC_WindowQuit_DisposeClass();
+	MCC_WindowAbout_DisposeClass();
+	MCC_WindowIgnoreList_DisposeClass();
 	MCC_WindowMain_DisposeClass();
-	MCC_Application_DisposeClass();
+	MCC_WindowQuit_DisposeClass();
+	MCC_WindowSettings_DisposeClass();
+	MCC_WindowURLGrabber_DisposeClass();
 }
 /* \\\ */
 

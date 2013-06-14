@@ -9,7 +9,7 @@
 */
 
 /*
-** muiclass_aliaslist.c
+** muiclass_buttonlist.c
 */
 
 #include <libraries/mui.h>
@@ -27,7 +27,7 @@
 #include "locale.h"
 #include "muiclass.h"
 #include "muiclass_windowsettings.h"
-#include "muiclass_aliaslist.h"
+#include "muiclass_buttonlist.h"
 #include "version.h"
 
 /*************************************************************************/
@@ -44,7 +44,7 @@ static ULONG OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
 							MUIA_NList_Title         , TRUE,
 							MUIA_CycleChain          , 1,
 							MUIA_NList_Format        , "BAR,",
-							MUIA_ObjectID            , OID_ALI_LIST,
+							MUIA_ObjectID            , OID_BUT_LIST,
 							TAG_DONE ) );
 }
 /* \\\ */
@@ -57,14 +57,14 @@ static ULONG OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
 static ULONG OM_Display( struct IClass *cl, Object *obj, struct MUIP_NList_Display *msg )
 {
 STRPTR *array = msg->strings;
-struct AliasEntry *ae;
+struct ButtonEntry *be;
 
-	if( ( ae = msg->entry ) ) {
-		*array++ = ae->ae_Alias;
-		*array++ = ae->ae_Text;
+	if( ( be = msg->entry ) ) {
+		*array++ = be->be_Name;
+		*array++ = be->be_Command;
 	} else {
-		*array++ = (STRPTR) LGS( MSG_LV_ALIAS );
-		*array++ = (STRPTR) LGS( MSG_LV_TEXT );
+		*array++ = (STRPTR) LGS( MSG_LV_NAME );
+		*array++ = (STRPTR) LGS( MSG_LV_COMMAND );
     }
 	return( 0 );
 }
@@ -78,7 +78,7 @@ struct AliasEntry *ae;
 static ULONG OM_Destruct( struct IClass *cl, Object *obj, struct MUIP_NList_Destruct *msg )
 {
 	if( msg->entry ) {
-		FreeMem( msg->entry, sizeof( struct AliasEntry ) );
+		FreeMem( msg->entry, sizeof( struct ButtonEntry ) );
     }
 	return( 0 );
 }
@@ -92,18 +92,18 @@ static ULONG OM_Destruct( struct IClass *cl, Object *obj, struct MUIP_NList_Dest
 static ULONG OM_Import( struct IClass *cl, Object *obj, struct MUIP_Import *msg )
 {
 ULONG i;
-char alias[ ALIASENTRY_ALIAS_SIZEOF + ALIASENTRY_TEXT_SIZEOF + 4 ];
+char button[ BUTTONENTRY_NAME_SIZEOF + BUTTONENTRY_COMMAND_SIZEOF + 4 ];
 char *text;
 
 	DoMethod( obj, MUIM_NList_Clear );
 	for( i = 0 ;  ; i++ ) {
-		if( ( text = (char *) DoMethod( msg->dataspace, MUIM_Dataspace_Find, OID_ALI_LIST + 1 + i ) ) ) {
-			strncpy( alias, text, ALIASENTRY_ALIAS_SIZEOF + ALIASENTRY_TEXT_SIZEOF + 1 );
-			if( ( text = strchr( alias, (char) 0x20 ) ) ) {
+		if( ( text = (char *) DoMethod( msg->dataspace, MUIM_Dataspace_Find, OID_BUT_LIST + i + 1 ) ) ) {
+			strncpy( button, text, BUTTONENTRY_NAME_SIZEOF + BUTTONENTRY_COMMAND_SIZEOF + 1 );
+			if( ( text = strchr( button, (char) 0x20 ) ) ) {
 				*text++ = 0x00;
-				DoMethod( obj, MM_ALIASLIST_ADD, alias, text );
+				DoMethod( obj, MM_BUTTONLIST_ADD, button, text );
 			} else {
-				DoMethod( obj, MM_ALIASLIST_ADD, alias, (char *) LGS( MSG_MUICLASS_ALIASLIST_DEFAULTTEXT ) );
+				DoMethod( obj, MM_BUTTONLIST_ADD, button, (char *) LGS( MSG_MUICLASS_BUTTONLIST_DEFAULTCOMMAND ) );
 			}
 		} else {
 			break;
@@ -120,18 +120,18 @@ char *text;
 
 static ULONG OM_Export( struct IClass *cl, Object *obj, struct MUIP_Import *msg )
 {
-struct AliasEntry *ae;
-char buffer[ ALIASENTRY_ALIAS_SIZEOF + ALIASENTRY_TEXT_SIZEOF + 4 ];
+struct ButtonEntry *be;
+char buffer[ BUTTONENTRY_NAME_SIZEOF + BUTTONENTRY_COMMAND_SIZEOF + 4 ];
 ULONG i;
 
 	for( i = 0 ;  ; i++ ) {
-		ae = NULL;
-		DoMethod( obj, MUIM_NList_GetEntry, i, &ae );
-		if( ae ) {
-			strncpy( buffer, (char *) ae->ae_Alias, ALIASENTRY_ALIAS_SIZEOF );
+		be = NULL;
+		DoMethod( obj, MUIM_NList_GetEntry, i, &be );
+		if( be ) {
+			strncpy( buffer, (char *) be->be_Name, BUTTONENTRY_NAME_SIZEOF );
 			strcat(  buffer, (char *) " " );
-			strncat( buffer, (char *) ae->ae_Text, ALIASENTRY_TEXT_SIZEOF );
-			DoMethod( msg->dataspace, MUIM_Dataspace_Add, buffer, strlen( buffer ) + 1, OID_ALI_LIST + i + 1 );
+			strncat( buffer, (char *) be->be_Command, BUTTONENTRY_COMMAND_SIZEOF );
+			DoMethod( msg->dataspace, MUIM_Dataspace_Add, buffer, strlen( buffer ) + 1, OID_BUT_LIST + i + 1 );
 		} else {
 			break;
 		}
@@ -145,17 +145,17 @@ ULONG i;
 
 /*************************************************************************/
 
-static ULONG MM_Add( struct IClass *cl, Object *obj, struct MP_ALIASLIST_ADD *msg )
+static ULONG MM_Add( struct IClass *cl, Object *obj, struct MP_BUTTONLIST_ADD *msg )
 {
-struct AliasEntry *ae;
+struct ButtonEntry *be;
 
-	if( ( ae = AllocMem( sizeof( struct AliasEntry ), MEMF_ANY|MEMF_CLEAR ) ) ) {
-		strncpy( (char *) ae->ae_Alias, (char *) ( msg->Alias ? msg->Alias : LGS( MSG_MUICLASS_ALIASLIST_DEFAULTALIAS ) ), ALIASENTRY_ALIAS_SIZEOF );
-		strncpy( (char *) ae->ae_Text , (char *) ( msg->Text  ? msg->Alias : LGS( MSG_MUICLASS_ALIASLIST_DEFAULTTEXT  ) ), ALIASENTRY_TEXT_SIZEOF  );
-		DoMethod( obj, MUIM_NList_InsertSingle, ae, MUIV_NList_Insert_Bottom );
+	if( ( be = AllocMem( sizeof( struct ButtonEntry ), MEMF_ANY|MEMF_CLEAR ) ) ) {
+		strncpy( (char *) be->be_Name    , (char *) ( msg->Name     ? msg->Name    : LGS( MSG_MUICLASS_BUTTONLIST_DEFAULTNAME    ) ), BUTTONENTRY_NAME_SIZEOF );
+		strncpy( (char *) be->be_Command , (char *) ( msg->Command  ? msg->Command : LGS( MSG_MUICLASS_BUTTONLIST_DEFAULTCOMMAND ) ), BUTTONENTRY_COMMAND_SIZEOF );
+		DoMethod( obj, MUIM_NList_InsertSingle, be, MUIV_NList_Insert_Bottom );
 		SetAttrs( obj, MUIA_NList_Active, MUIV_NList_Active_Bottom, TAG_DONE );
 	}
-	return( (ULONG) ae );
+	return( (ULONG) be );
 }
 /* \\\ */
 
@@ -164,13 +164,13 @@ struct AliasEntry *ae;
 ** Dispatcher, init and dispose
 */
 
-/* /// MCC_AliasList_Dispatcher()
+/* /// MCC_ButtonList_Dispatcher()
 **
 */
 
 /*************************************************************************/
 
-DISPATCHER(MCC_AliasList_Dispatcher)
+DISPATCHER(MCC_ButtonList_Dispatcher)
 {
     switch (msg->MethodID)
     {
@@ -179,35 +179,35 @@ DISPATCHER(MCC_AliasList_Dispatcher)
 		case MUIM_NList_Destruct             : return( OM_Destruct                      ( cl, obj, (APTR) msg ) );
 		case MUIM_Import                     : return( OM_Import                        ( cl, obj, (APTR) msg ) );
 		case MUIM_Export                     : return( OM_Export                        ( cl, obj, (APTR) msg ) );
-		case MM_ALIASLIST_ADD                : return( MM_Add                           ( cl, obj, (APTR) msg ) );
+		case MM_BUTTONLIST_ADD               : return( MM_Add                           ( cl, obj, (APTR) msg ) );
     }
 	return( DoSuperMethodA( cl, obj, msg ) );
 
 }
 /* \\\ */
-/* /// MCC_AliasList_InitClass()
+/* /// MCC_ButtonList_InitClass()
 **
 */
 
 /*************************************************************************/
 
-ULONG MCC_AliasList_InitClass( void )
+ULONG MCC_ButtonList_InitClass( void )
 {
-	appclasses[ CLASSID_ALIASLIST ] = MUI_CreateCustomClass( NULL, (ClassID) MUIC_NList, NULL, 0,  (APTR) ENTRY(MCC_AliasList_Dispatcher) );
-	return( appclasses[ CLASSID_ALIASLIST ] ? MSG_ERROR_NOERROR : MSG_ERROR_UNABLETOSETUPMUICLASS );
+	appclasses[ CLASSID_BUTTONLIST ] = MUI_CreateCustomClass( NULL, (ClassID) MUIC_NList, NULL, 0,  (APTR) ENTRY(MCC_ButtonList_Dispatcher) );
+	return( appclasses[ CLASSID_BUTTONLIST ] ? MSG_ERROR_NOERROR : MSG_ERROR_UNABLETOSETUPMUICLASS );
 }
 /* \\\ */
-/* /// MCC_AliasList_DisposeClass()
+/* /// MCC_ButtonList_DisposeClass()
 **
 */
 
 /*************************************************************************/
 
-void MCC_AliasList_DisposeClass( void )
+void MCC_ButtonList_DisposeClass( void )
 {
-	if( appclasses[ CLASSID_ALIASLIST ] ) {
-		MUI_DeleteCustomClass( appclasses[ CLASSID_ALIASLIST ] );
-		appclasses[ CLASSID_ALIASLIST ] = NULL;
+	if( appclasses[ CLASSID_BUTTONLIST ] ) {
+		MUI_DeleteCustomClass( appclasses[ CLASSID_BUTTONLIST ] );
+		appclasses[ CLASSID_BUTTONLIST ] = NULL;
     }
 }
 /* \\\ */

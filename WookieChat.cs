@@ -7866,28 +7866,28 @@ Always
 Always
 ;
 MSG_CY_WINDOWISINACTIVE
-Window is inactive
-Window is inactive
-Window is inactive
-Window is inactive
-Window is inactive
-Window is inactive
-Window is inactive
-Window is inactive
-Window is inactive
-Window is inactive
+when window is inactive
+when window is inactive
+when window is inactive
+when window is inactive
+when window is inactive
+when window is inactive
+when window is inactive
+when window is inactive
+when window is inactive
+when window is inactive
 ;
 MSG_CY_TABISINACTIVE
-Tab is inactive
-Tab is inactive
-Tab is inactive
-Tab is inactive
-Tab is inactive
-Tab is inactive
-Tab is inactive
-Tab is inactive
-Tab is inactive
-Tab is inactive
+when tab is inactive
+when tab is inactive
+when tab is inactive
+when tab is inactive
+when tab is inactive
+when tab is inactive
+when tab is inactive
+when tab is inactive
+when tab is inactive
+when tab is inactive
 ;
 ;
 ; MUICLASS_SETTINGSGUI
@@ -8781,30 +8781,6 @@ MSG_MUICLASS_SETTINGSLOG_LOGSPLITLIMIT_HELP
 ;
 ; MUICLASS_SETTINGSALIAS
 ;
-MSG_MUICLASS_SETTINGSALIAS_DEFAULTALIAS
-/short
-/kurz
-/short
-/short
-/short
-/short
-/short
-/short
-/short
-/short
-;
-MSG_MUICLASS_SETTINGSALIAS_DEFAULTTEXT
-<this could be your text>
-<Dies Könnte ihr Text sein>
-<this could be your text>
-<this could be your text>
-<this could be your text>
-<this could be your text>
-<this could be your text>
-<this could be your text>
-<this could be your text>
-<this could be your text>
-;
 MSG_MUICLASS_SETTINGSALIAS_ADD_GAD
 _Add
 _Hinzufügen
@@ -8901,6 +8877,33 @@ MSG_MUICLASS_SETTINGSALIAS_TEXT_HELP
 /
 /
 ;
+;
+; MUICLASS_ALIASLIST
+;
+MSG_MUICLASS_ALIASLIST_DEFAULTALIAS
+/short
+/kurz
+/short
+/short
+/short
+/short
+/short
+/short
+/short
+/short
+;
+MSG_MUICLASS_ALIASLIST_DEFAULTTEXT
+<this could be your text>
+<Dies Könnte ihr Text sein>
+<this could be your text>
+<this could be your text>
+<this could be your text>
+<this could be your text>
+<this could be your text>
+<this could be your text>
+<this could be your text>
+<this could be your text>
+;
 MSG_LV_ALIAS
 Alias
 Alias
@@ -8912,6 +8915,181 @@ Alias
 Alias
 Alias
 Alias
+;
+;
+; MUICLASS_SETTINGSBUTTON
+;
+MSG_MUICLASS_SETTINGSBUTTON_INFO
+\033lCodes:\n%s = selected nick, %h = hostname of the selected nick,\n%c = current channel, %n = your own nick
+\033lCodes:\n%s = selected nick, %h = hostname of the selected nick,\n%c = current channel, %n = your own nick
+\033lCodes:\n%s = selected nick, %h = hostname of the selected nick,\n%c = current channel, %n = your own nick
+\033lCodes:\n%s = selected nick, %h = hostname of the selected nick,\n%c = current channel, %n = your own nick
+\033lCodes:\n%s = selected nick, %h = hostname of the selected nick,\n%c = current channel, %n = your own nick
+\033lCodes:\n%s = selected nick, %h = hostname of the selected nick,\n%c = current channel, %n = your own nick
+\033lCodes:\n%s = selected nick, %h = hostname of the selected nick,\n%c = current channel, %n = your own nick
+\033lCodes:\n%s = selected nick, %h = hostname of the selected nick,\n%c = current channel, %n = your own nick
+\033lCodes:\n%s = selected nick, %h = hostname of the selected nick,\n%c = current channel, %n = your own nick
+\033lCodes:\n%s = selected nick, %h = hostname of the selected nick,\n%c = current channel, %n = your own nick
+;
+MSG_MUICLASS_SETTINGSBUTTON_SHOWBUTTONS_GAD
+Show _buttons in main window.
+Zeige Tasten im Hauptfenster.
+Show _buttons in main window.
+Show _buttons in main window.
+Show _buttons in main window.
+Show _buttons in main window.
+Show _buttons in main window.
+Show _buttons in main window.
+Show _buttons in main window.
+Show _buttons in main window.
+;
+MSG_MUICLASS_SETTINGSBUTTON_SHOWBUTTONS_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
+MSG_MUICLASS_SETTINGSBUTTON_ADD_GAD
+_Add
+_Hinzufügen
+_Add
+_Add
+_Add
+_Add
+_Add
+_Add
+_Add
+_Add
+;
+MSG_MUICLASS_SETTINGSBUTTON_ADD_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
+MSG_MUICLASS_SETTINGSBUTTON_REMOVE_GAD
+_Remove
+_Entfernen
+_Remove
+_Remove
+_Remove
+_Remove
+_Remove
+_Remove
+_Remove
+_Remove
+;
+MSG_MUICLASS_SETTINGSBUTTON_REMOVE_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
+MSG_MUICLASS_SETTINGSBUTTON_NAME_GAD
+_Name
+_Name
+_Name
+_Name
+_Name
+_Name
+_Name
+_Name
+_Name
+_Name
+;
+MSG_MUICLASS_SETTINGSBUTTON_NAME_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
+MSG_MUICLASS_SETTINGSBUTTON_COMMAND_GAD
+_Command
+_Kommando
+_Command
+_Command
+_Command
+_Command
+_Command
+_Command
+_Command
+_Command
+;
+MSG_MUICLASS_SETTINGSBUTTON_COMMAND_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
+;
+;
+; MUICLASS_BUTTONLIST
+;
+MSG_MUICLASS_BUTTONLIST_DEFAULTNAME
+New
+Neu
+New
+New
+New
+New
+New
+New
+New
+New
+;
+MSG_MUICLASS_BUTTONLIST_DEFAULTCOMMAND
+<insert command>
+<Kommando einfügen>
+<insert command>
+<insert command>
+<insert command>
+<insert command>
+<insert command>
+<insert command>
+<insert command>
+<insert command>
+;
+MSG_LV_NAME
+Name
+Name
+Name
+Name
+Name
+Name
+Name
+Name
+Name
+Name
 ;
 MSG_LV_COMMAND
 Command

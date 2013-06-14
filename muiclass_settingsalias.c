@@ -41,7 +41,7 @@
 
 enum
 {
-GID_ALIASLIST,
+GID_ALIASLIST = 0,
 GID_ALIAS,
 GID_TEXT,
 GID_ADD,
@@ -89,12 +89,14 @@ Object *objs[ GID_LAST ];
 		
 		DoMethod( obj, MUIM_Notify, MUIA_Window_CloseRequest, TRUE, obj, 3, MUIM_Set, MUIA_Window_Open, FALSE );
 
-		DoMethod( objs[ GID_ADD       ], MUIM_Notify, MUIA_Pressed, FALSE, objs[ GID_ALIASLIST ], 3, MM_ALIASLIST_ADD, LGS(MSG_MUICLASS_SETTINGSALIAS_DEFAULTALIAS), LGS(MSG_MUICLASS_SETTINGSALIAS_DEFAULTTEXT) );
+		DoMethod( objs[ GID_ADD       ], MUIM_Notify, MUIA_Pressed, FALSE, objs[ GID_ALIASLIST ], 3, MM_ALIASLIST_ADD, 0, 0 );
 		DoMethod( objs[ GID_REMOVE    ], MUIM_Notify, MUIA_Pressed, FALSE, objs[ GID_ALIASLIST ], 2, MUIM_NList_Remove, MUIV_NList_Remove_Selected );
 
 		DoMethod( objs[ GID_ALIASLIST ], MUIM_Notify, MUIA_NList_Active   , MUIV_EveryTime, obj, 1, MM_SETTINGSALIAS_LISTTOGADGETS );
 		DoMethod( objs[ GID_ALIAS     ], MUIM_Notify, MUIA_String_Contents, MUIV_EveryTime, obj, 1, MM_SETTINGSALIAS_GADGETSTOLIST );
 		DoMethod( objs[ GID_TEXT      ], MUIM_Notify, MUIA_String_Contents, MUIV_EveryTime, obj, 1, MM_SETTINGSALIAS_GADGETSTOLIST );
+
+		DoMethod( obj, MM_SETTINGSALIAS_LISTTOGADGETS );
 
 		return( (ULONG) obj );
     }
@@ -114,7 +116,7 @@ struct mccdata *mccdata = INST_DATA( cl, obj );
 LONG pos;
 BOOL disabled = TRUE;
 
-	GetAttr( MUIA_NList_Active, mccdata->mcc_ClassObjects[ GID_ALIASLIST ], (IPTR*) &pos );
+	pos = MUIGetVar( mccdata->mcc_ClassObjects[ GID_ALIASLIST ], MUIA_NList_Active );
 	if( pos >= 0 ) {
 		disabled = FALSE;
 	}
@@ -175,6 +177,24 @@ struct AliasEntry *ae = NULL;
 	return( 0 );
 }
 /* \\\ */
+/* /// MM_ReadConfig()
+**
+*/
+
+/*************************************************************************/
+
+static ULONG MM_ReadConfig( struct IClass *cl, Object *obj, struct MP_SETTINGSALIAS_READCONFIG *msg )
+{
+struct mccdata *mccdata = INST_DATA( cl, obj );
+
+	switch( msg->ObjectID ) {
+		case OID_ALI_LIST:
+			return( (ULONG) mccdata->mcc_ClassObjects[ GID_ALIASLIST ] );
+		default:
+			return( 0 );
+	}
+}
+/* \\\ */
 
 /*
 ** Dispatcher, init and dispose
@@ -194,6 +214,7 @@ DISPATCHER(MCC_SettingsAlias_Dispatcher)
 		case MM_SETTINGSALIAS_DISENABLE         : return( MM_DisEnable                     ( cl, obj, (APTR) msg ) );
 		case MM_SETTINGSALIAS_GADGETSTOLIST     : return( MM_GadgetsToList                 ( cl, obj, (APTR) msg ) );
 		case MM_SETTINGSALIAS_LISTTOGADGETS     : return( MM_ListToGadgets                 ( cl, obj, (APTR) msg ) );
+		case MM_SETTINGSALIAS_READCONFIG        : return( MM_ReadConfig  ( cl, obj, (APTR) msg ) );
 
 	}
 	return( DoSuperMethodA( cl, obj, msg ) );

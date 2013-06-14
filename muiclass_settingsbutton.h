@@ -8,26 +8,33 @@
     for the specific language governing rights and limitations under the License.
 */
 
-#ifndef MUICLASS_ALIASLIST_H
-#define MUICLASS_ALIASLIST_H 1
+#ifndef MUICLASS_SETTINGSBUTTON_H
+#define MUICLASS_SETTINGSBUTTON_H 1
 
 /*************************************************************************/
 
 #include <exec/types.h>
 #include "muiclass.h"
 
-#define AliasListObject NEWOBJECT( appclasses[ CLASSID_ALIASLIST ]->mcc_Class, NULL
+
+#define SettingsButtonObject NEWOBJECT( appclasses[ CLASSID_SETTINGSBUTTON ]->mcc_Class, NULL
 
 /*
 ** Methods and attributes
 */
 
 enum {
-MM_ALIASLIST_ADD =  0xFED00500,
+MM_SETTINGSBUTTON_RESETTODEFAULTS =  0xFED00270,
+MM_SETTINGSBUTTON_READCONFIG,
+MM_SETTINGSBUTTON_ADD,
+MM_SETTINGSBUTTON_DISENABLE,
+MM_SETTINGSBUTTON_GADGETSTOLIST,
+MM_SETTINGSBUTTON_LISTTOGADGETS,
 /* Attributes */
 };
 
-struct MP_ALIASLIST_ADD { ULONG MethodID; STRPTR Alias; STRPTR Text; };
+struct MP_SETTINGSBUTTON_READCONFIG { ULONG MethodID; ULONG ObjectID; };
+struct MP_SETTINGSBUTTON_ADD        { ULONG MethodID; STRPTR Button; };
 
 /*************************************************************************/
 
@@ -35,25 +42,10 @@ struct MP_ALIASLIST_ADD { ULONG MethodID; STRPTR Alias; STRPTR Text; };
 ** Prototypes
 */
 
-ULONG   MCC_AliasList_InitClass( void );
-void    MCC_AliasList_DisposeClass( void );
-
-
-/*************************************************************************/
-
-/*
-** alias entry structure
-*/
-
-#define ALIASENTRY_ALIAS_SIZEOF 16
-#define ALIASENTRY_TEXT_SIZEOF  256
-
-struct AliasEntry {
-	unsigned char ae_Alias[ ALIASENTRY_ALIAS_SIZEOF + 2 ];
-	unsigned char ae_Text[ ALIASENTRY_TEXT_SIZEOF + 2 ];
-};
+ULONG   MCC_SettingsButton_InitClass( void );
+void    MCC_SettingsButton_DisposeClass( void );
 
 /*************************************************************************/
 
-#endif /* MUICLASS_ALIASLIST_H */
+#endif /* MUICLASS_SETTINGSBUTTON_H */
 
