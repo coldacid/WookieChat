@@ -32,6 +32,7 @@
 #include "muiclass_settingsbutton.h"
 #include "muiclass_settingscolor.h"
 #include "muiclass_settingsdcc.h"
+#include "muiclass_settingsevent.h"
 #include "muiclass_settingsgeneral.h"
 #include "muiclass_settingsgui.h"
 #include "muiclass_settingslog.h"
@@ -60,6 +61,7 @@ GID_NICK,
 GID_GUI,
 GID_LOG,
 GID_DCC,
+GID_EVENT,
 GID_GENERAL,
 GID_COLOR,
 GID_SOUND,
@@ -140,7 +142,7 @@ ULONG i;
 								Child, objs[ GID_SOUND   ] = SettingsSoundObject, End,
 								Child, objs[ GID_ALIAS   ] = SettingsAliasObject, End,
 								Child, objs[ GID_BUTTON  ] = SettingsButtonObject, End,
-								Child, HVSpace,
+								Child, objs[ GID_EVENT   ] = HVSpace, //SettingsEventObject, End,
 							End,
 				End,
 				Child, HGroup,
@@ -263,6 +265,8 @@ ULONG result;
 							if( !( result = DoMethod( mccdata->mcc_ClassObjects[ GID_LOG ], MM_SETTINGSLOG_READCONFIG, msg->ObjectID ) ) ) {
 								if( !( result = DoMethod( mccdata->mcc_ClassObjects[ GID_BUTTON ], MM_SETTINGSBUTTON_READCONFIG, msg->ObjectID ) ) ) {
 									if( !( result = DoMethod( mccdata->mcc_ClassObjects[ GID_ALIAS ], MM_SETTINGSALIAS_READCONFIG, msg->ObjectID ) ) ) {
+										if( !( result = DoMethod( mccdata->mcc_ClassObjects[ GID_EVENT ], MM_SETTINGSEVENT_READCONFIG, msg->ObjectID ) ) ) {
+										}
 									}
 								}
 							}

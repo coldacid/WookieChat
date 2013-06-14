@@ -30,6 +30,7 @@
 #include "muiclass_aliaslist.h"
 #include "muiclass_application.h"
 #include "muiclass_buttonlist.h"
+#include "muiclass_eventlist.h"
 #include "muiclass_channel.h"
 #include "muiclass_channellist.h"
 #include "muiclass_nicklist.h"
@@ -37,6 +38,7 @@
 #include "muiclass_settingsbutton.h"
 #include "muiclass_settingscolor.h"
 #include "muiclass_settingsdcc.h"
+#include "muiclass_settingsevent.h"
 #include "muiclass_settingsgeneral.h"
 #include "muiclass_settingsgui.h"
 #include "muiclass_settingslog.h"
@@ -74,54 +76,36 @@ ULONG MUIClass_Open( void )
 {
 ULONG result;
 
-	if( !(result = MCC_Application_InitClass() ) ) {
-		if( !(result = MCC_WindowMain_InitClass() ) ) {
-			if( !(result = MCC_WindowAbout_InitClass() ) ) {
-				if( !(result = MCC_WindowURLGrabber_InitClass() ) ) {
-					if( !(result = MCC_WindowIgnoreList_InitClass() ) ) {
-						if( !(result = MCC_WindowSettings_InitClass() ) ) {
-							if( !(result = MCC_WindowQuit_InitClass() ) ) {
-								if( !(result = MCC_SettingsNick_InitClass() ) ) {
-									if( !(result = MCC_SettingsGUI_InitClass() ) ) {
-										if( !(result = MCC_SettingsGeneral_InitClass() ) ) {
-											if( !(result = MCC_SettingsColor_InitClass() ) ) {
-												if( !(result = MCC_SettingsSound_InitClass() ) ) {
-													if( !(result = MCC_SettingsDCC_InitClass() ) ) {
-														if( !(result = MCC_SettingsLog_InitClass() ) ) {
-															if( !(result = MCC_SettingsAlias_InitClass() ) ) {
-																if( !(result = MCC_AliasList_InitClass() ) ) {
-																	if( !(result = MCC_SettingsButton_InitClass() ) ) {
-																		if( !(result = MCC_ButtonList_InitClass() ) ) {
-																			if( !(result = MCC_NickList_InitClass() ) ) {
-																				if( !(result = MCC_ChannelList_InitClass() ) ) {
-																					if( !(result = MCC_Channel_InitClass() ) ) {
-																						if( ( application = NewObject( appclasses[ CLASSID_APPLICATION ]->mcc_Class, NULL, TAG_DONE ) ) ) {
-																							DoMethod( application, MM_APPLICATION_STARTUP );
-																						} else {
-																							result = MSG_ERROR_UNABLETOSETUPMUICLASS;
-																						}
-																					}
-																				}
-																			}
-																		}
-																	}
-																}
-															}
-														}
-													}
-												}
-											}
-										}
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-	}
-	return( result );
+if( !(result = MCC_AliasList_InitClass() ) ) {
+if( !(result = MCC_Application_InitClass() ) ) {
+if( !(result = MCC_ButtonList_InitClass() ) ) {
+if( !(result = MCC_ChannelList_InitClass() ) ) {
+if( !(result = MCC_Channel_InitClass() ) ) {
+if( !(result = MCC_EventList_InitClass() ) ) {
+if( !(result = MCC_NickList_InitClass() ) ) {
+if( !(result = MCC_SettingsAlias_InitClass() ) ) {
+if( !(result = MCC_SettingsButton_InitClass() ) ) {
+if( !(result = MCC_SettingsColor_InitClass() ) ) {
+if( !(result = MCC_SettingsDCC_InitClass() ) ) {
+if( !(result = MCC_SettingsEvent_InitClass() ) ) {
+if( !(result = MCC_SettingsGeneral_InitClass() ) ) {
+if( !(result = MCC_SettingsGUI_InitClass() ) ) {
+if( !(result = MCC_SettingsLog_InitClass() ) ) {
+if( !(result = MCC_SettingsNick_InitClass() ) ) {
+if( !(result = MCC_SettingsSound_InitClass() ) ) {
+if( !(result = MCC_WindowAbout_InitClass() ) ) {
+if( !(result = MCC_WindowIgnoreList_InitClass() ) ) {
+if( !(result = MCC_WindowMain_InitClass() ) ) {
+if( !(result = MCC_WindowQuit_InitClass() ) ) {
+if( !(result = MCC_WindowSettings_InitClass() ) ) {
+if( !(result = MCC_WindowURLGrabber_InitClass() ) ) {
+if( ( application = NewObject( appclasses[ CLASSID_APPLICATION ]->mcc_Class, NULL, TAG_DONE ) ) ) {
+	DoMethod( application, MM_APPLICATION_STARTUP );
+} else {
+	result = MSG_ERROR_UNABLETOSETUPMUICLASS;
+}
+}}}}}}}}}}}}}}}}}}}}}}}
+   return( result );
 }
 /* \\\ */
 /* /// MUIClass_Close()
@@ -142,11 +126,13 @@ void MUIClass_Close( void )
 	MCC_ButtonList_DisposeClass();
 	MCC_ChannelList_DisposeClass();
 	MCC_Channel_DisposeClass();
+	MCC_EventList_DisposeClass();
 	MCC_NickList_DisposeClass();
 	MCC_SettingsAlias_DisposeClass();
 	MCC_SettingsButton_DisposeClass();
 	MCC_SettingsColor_DisposeClass();
 	MCC_SettingsDCC_DisposeClass();
+	MCC_SettingsEvent_DisposeClass();
 	MCC_SettingsGeneral_DisposeClass();
 	MCC_SettingsGUI_DisposeClass();
 	MCC_SettingsLog_DisposeClass();

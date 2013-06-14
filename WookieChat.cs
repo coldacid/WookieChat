@@ -6901,117 +6901,6 @@ MSG_MUICLASS_WINDOWQUIT_CANCEL_HELP
 /
 ;
 ;
-; MUICLASS_WINDOWPREFS
-;
-MSG_PREFS_GENERAL_GROUPTITLE
-General
-Allgemein
-General
-GÈnÈral
-√ÂÌÈÍ‹
-Generale
-¡ltal·nos
-Generell
-G≥Ûwne
-Generellt
-;
-MSG_PREFS_GUI_GROUPTITLE
-GUI
-GUI
-GUI
-GUI
-GUI
-GUI
-GUI
-GUI
-GUI
-GUI
-;
-MSG_PREFS_SERVERS_GROUPTITLE
-Servers
-Server
-Servidores
-Serveurs
-ƒÈ·ÍÔÏÈÛÙ›Ú
-Server
-Kiszolg·lÛk
-Servere
-Serwery
-Servrar
-;
-MSG_PREFS_LOGGING_GROUPTITLE
-Logging
-Mitschnitt
-Registrar
-Logging
- ·Ù·„Ò·ˆﬁ
-Protocollo
-NaplÛz·s
-Logging
-Raportowanie
-Logga
-;
-MSG_PREFS_DCC_GROUPTITLE
-DCC
-DCC
-DCC
-DCC
-DCC
-DCC
-DCC
-DCC
-DCC
-DCC
-;
-MSG_PREFS_SOUNDS_GROUPTITLE
-Sounds
-Kl‰nge
-Sonidos
-Sons
-π˜ÔÈ
-Suoni
-Hangok
-Lyder
-DºwiÍki
-Ljud
-;
-MSG_PREFS_ALIAS_GROUPTITLE
-Aliases
-Aliases
-Aliases
-Alias
-”ıÌ˛ÌıÏ·
-Alias (sinonimi)
-HelyettesÌtık
-Aliaser
-Aliasy
-Alias
-;
-MSG_PREFS_NICKLISTBUTTONS_GROUPTITLE
-Nick List Buttons
-Nick List Buttons
-Nick List Buttons
-Nick List Buttons
-Nick List Buttons
-Nick List Buttons
-Nick List Buttons
-Nick List Buttons
-Nick List Buttons
-Nick List Buttons
-;
-MSG_PREFS_EVENT_GROUPTITLE
-Event
-Ereignis
-Event
-Event
-Event
-Event
-Event
-Event
-Event
-Event
-;
-;
 ; MUICLASS_WINDOWSETTINGS
 ;
 MSG_MUICLASS_WINDOWSETTINGS_TITLE
@@ -7041,26 +6930,26 @@ Nick
 MSG_PG_SERVER
 Server
 Server
+Servidores
+Serveurs
+ƒÈ·ÍÔÏÈÛÙ›Ú
 Server
-Server
-Server
-Server
-Server
-Server
-Server
-Server
+Kiszolg·lÛk
+Servere
+Serwery
+Servrar
 ;
-MSG_PG_GENERIC
+MSG_PG_GENERAL
 General
 Allgemein
 General
-General
-General
-General
-General
-General
-General
-General
+GÈnÈral
+√ÂÌÈÍ‹
+Generale
+¡ltal·nos
+Generell
+G≥Ûwne
+Generellt
 ;
 MSG_PG_COLOR
 Color
@@ -7089,14 +6978,14 @@ GUI
 MSG_PG_LOGGING
 Logging
 Mitschnitte
+Registrar
 Logging
+ ·Ù·„Ò·ˆﬁ
+Protocollo
+NaplÛz·s
 Logging
-Logging
-Logging
-Logging
-Logging
-Logging
-Logging
+Raportowanie
+Logga
 ;
 MSG_PG_DCC
 DCC
@@ -7112,27 +7001,27 @@ DCC
 ;
 MSG_PG_SOUNDS
 Sounds
-Ger‰usche
-Sounds
-Sounds
-Sounds
-Sounds
-Sounds
-Sounds
-Sounds
-Sounds
+Kl‰nge
+Sonidos
+Sons
+π˜ÔÈ
+Suoni
+Hangok
+Lyder
+DºwiÍki
+Ljud
 ;
 MSG_PG_ALIASES
 Aliases
-Aliase
 Aliases
 Aliases
-Aliases
-Aliases
-Aliases
-Aliases
-Aliases
-Aliases
+Alias
+”ıÌ˛ÌıÏ·
+Alias (sinonimi)
+HelyettesÌtık
+Aliaser
+Aliasy
+Alias
 ;
 MSG_PG_BUTTONS
 Buttons
@@ -9102,5 +8991,360 @@ Command
 Command
 Command
 Command
+;
+;
+;
+; MUICLASS_SETTINGSEVENT
+;
+MSG_MUICLASS_SETTINGSEVENT_INFO
+\033lCodes:\n%b = text being displayed in the window, %t = timestamp,\n%g = network name, %s = servername, %c = channel, %n = own nick, %m = nick
+\033lCodes:\n%b = text being displayed in the window, %t = timestamp,\n%g = network name, %s = servername, %c = channel, %n = own nick, %m = nick
+\033lCodes:\n%b = text being displayed in the window, %t = timestamp,\n%g = network name, %s = servername, %c = channel, %n = own nick, %m = nick
+\033lCodes:\n%b = text being displayed in the window, %t = timestamp,\n%g = network name, %s = servername, %c = channel, %n = own nick, %m = nick
+\033lCodes:\n%b = text being displayed in the window, %t = timestamp,\n%g = network name, %s = servername, %c = channel, %n = own nick, %m = nick
+\033lCodes:\n%b = text being displayed in the window, %t = timestamp,\n%g = network name, %s = servername, %c = channel, %n = own nick, %m = nick
+\033lCodes:\n%b = text being displayed in the window, %t = timestamp,\n%g = network name, %s = servername, %c = channel, %n = own nick, %m = nick
+\033lCodes:\n%b = text being displayed in the window, %t = timestamp,\n%g = network name, %s = servername, %c = channel, %n = own nick, %m = nick
+\033lCodes:\n%b = text being displayed in the window, %t = timestamp,\n%g = network name, %s = servername, %c = channel, %n = own nick, %m = nick
+\033lCodes:\n%b = text being displayed in the window, %t = timestamp,\n%g = network name, %s = servername, %c = channel, %n = own nick, %m = nick
+;
+MSG_MUICLASS_SETTINGSEVENT_MODE_GAD
+Mode:
+_Modus:
+Mode:
+Mode:
+Mode:
+Mode:
+Mode:
+Mode:
+Mode:
+Mode:
+;
+MSG_MUICLASS_SETTINGSEVENT_MODE_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
+MSG_MUICLASS_SETTINGSEVENT_SCRIPT_GAD
+Script:
+Script:
+Script:
+Script:
+Script:
+Script:
+Script:
+Script:
+Script:
+Script:
+;
+MSG_MUICLASS_SETTINGSEVENT_SCRIPT_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
+MSG_MUICLASS_SETTINGSEVENT_ARGUMENT_GAD
+Argument:
+Argument:
+Argument:
+Argument:
+Argument:
+Argument:
+Argument:
+Argument:
+Argument:
+Argument:
+;
+MSG_MUICLASS_SETTINGSEVENT_ARGUMENT_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
+;
+; MUICLASS_EVENTLIST
+;
+MSG_MUICLASS_EVENTLIST_TYPECONNECT
+Connect
+Connect
+Connect
+Connect
+Connect
+Connect
+Connect
+Connect
+Connect
+Connect
+;
+MSG_MUICLASS_EVENTLIST_TYPEDISCONNECT
+Disconnect
+Disconnect
+Disconnect
+Disconnect
+Disconnect
+Disconnect
+Disconnect
+Disconnect
+Disconnect
+Disconnect
+;
+MSG_MUICLASS_EVENTLIST_TYPEJOIN
+Join
+Join
+Join
+Join
+Join
+Join
+Join
+Join
+Join
+Join
+;
+MSG_MUICLASS_EVENTLIST_TYPEPART
+Part
+Part
+Part
+Part
+Part
+Part
+Part
+Part
+Part
+Part
+;
+MSG_MUICLASS_EVENTLIST_TYPEQUIT
+Quit
+Quit
+Quit
+Quit
+Quit
+Quit
+Quit
+Quit
+Quit
+Quit
+;
+MSG_MUICLASS_EVENTLIST_TYPEDCCRECEIVEOFFERED
+DCC RECV Offered
+DCC RECV Offered
+DCC RECV Offered
+DCC RECV Offered
+DCC RECV Offered
+DCC RECV Offered
+DCC RECV Offered
+DCC RECV Offered
+DCC RECV Offered
+DCC RECV Offered
+;
+MSG_MUICLASS_EVENTLIST_TYPEDCCRECEIVEDONE
+DCC RECV Finished
+DCC RECV Finished
+DCC RECV Finished
+DCC RECV Finished
+DCC RECV Finished
+DCC RECV Finished
+DCC RECV Finished
+DCC RECV Finished
+DCC RECV Finished
+DCC RECV Finished
+;
+MSG_MUICLASS_EVENTLIST_TYPEDCCSENDEDONE
+DCC SEND Finished
+DCC SEND Finished
+DCC SEND Finished
+DCC SEND Finished
+DCC SEND Finished
+DCC SEND Finished
+DCC SEND Finished
+DCC SEND Finished
+DCC SEND Finished
+DCC SEND Finished
+;
+MSG_MUICLASS_EVENTLIST_TYPECHANNELMESSAGE
+Channel Message
+Channel Message
+Channel Message
+Channel Message
+Channel Message
+Channel Message
+Channel Message
+Channel Message
+Channel Message
+Channel Message
+;
+MSG_MUICLASS_EVENTLIST_TYPEPRIVATEMESSAGE
+Private Message
+Private Message
+Private Message
+Private Message
+Private Message
+Private Message
+Private Message
+Private Message
+Private Message
+Private Message
+;
+MSG_MUICLASS_EVENTLIST_TYPENOTICE
+Notice
+Notice
+Notice
+Notice
+Notice
+Notice
+Notice
+Notice
+Notice
+Notice
+;
+MSG_MUICLASS_EVENTLIST_TYPECTCPREQUEST
+CTCP Request
+CTCP Request
+CTCP Request
+CTCP Request
+CTCP Request
+CTCP Request
+CTCP Request
+CTCP Request
+CTCP Request
+CTCP Request
+;
+MSG_MUICLASS_EVENTLIST_TYPEKICK
+Kick
+Kick
+Kick
+Kick
+Kick
+Kick
+Kick
+Kick
+Kick
+Kick
+;
+MSG_MUICLASS_EVENTLIST_TYPEMODECHANGE
+Mode Change
+Mode Change
+Mode Change
+Mode Change
+Mode Change
+Mode Change
+Mode Change
+Mode Change
+Mode Change
+Mode Change
+;
+MSG_MUICLASS_EVENTLIST_TYPEINVITE
+Invite
+Invite
+Invite
+Invite
+Invite
+Invite
+Invite
+Invite
+Invite
+Invite
+;
+MSG_MUICLASS_EVENTLIST_MODENEVER
+Never
+Never
+Never
+Never
+Never
+Never
+Never
+Never
+Never
+Never
+;
+MSG_MUICLASS_EVENTLIST_MODEALWAYS
+Always
+Always
+Always
+Always
+Always
+Always
+Always
+Always
+Always
+Always
+;
+MSG_MUICLASS_EVENTLIST_WINDOWISACTIVE
+Window is active
+Window is active
+Window is active
+Window is active
+Window is active
+Window is active
+Window is active
+Window is active
+Window is active
+Window is active
+;
+MSG_MUICLASS_EVENTLIST_WINDOWISINACTIVE
+Window is inactive
+Window is inactive
+Window is inactive
+Window is inactive
+Window is inactive
+Window is inactive
+Window is inactive
+Window is inactive
+Window is inactive
+Window is inactive
+;
+MSG_LV_EVENT
+Event
+Event
+Event
+Event
+Event
+Event
+Event
+Event
+Event
+Event
+;
+MSG_LV_MODE
+Mode
+Mode
+Mode
+Mode
+Mode
+Mode
+Mode
+Mode
+Mode
+Mode
+;
+MSG_LV_SCRIPT
+Script
+Skript
+Script
+Script
+Script
+Script
+Script
+Script
+Script
+Script
 ;
 

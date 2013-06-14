@@ -8,8 +8,8 @@
     for the specific language governing rights and limitations under the License.
 */
 
-#ifndef MUICLASS_CHANNEL_H
-#define MUICLASS_CHANNEL_H 1
+#ifndef MUICLASS_SETTINGSEVENT_H
+#define MUICLASS_SETTINGSEVENT_H 1
 
 /*************************************************************************/
 
@@ -17,16 +17,24 @@
 #include "muiclass.h"
 
 
-#define ChannelObject NEWOBJECT( appclasses[ CLASSID_CHANNEL ]->mcc_Class, NULL
+#define SettingsEventObject NEWOBJECT( appclasses[ CLASSID_SETTINGSEVENT ]->mcc_Class, NULL
 
 /*
 ** Methods and attributes
 */
 
 enum {
-MM_CHANNEL_DUMMY =  0xFED00320,
+MM_SETTINGSEVENT_RESETTODEFAULTS =  0xFED00290,
+MM_SETTINGSEVENT_READCONFIG,
+MM_SETTINGSEVENT_ADD,
+MM_SETTINGSEVENT_DISENABLE,
+MM_SETTINGSEVENT_GADGETSTOLIST,
+MM_SETTINGSEVENT_LISTTOGADGETS,
 /* Attributes */
 };
+
+struct MP_SETTINGSEVENT_READCONFIG { ULONG MethodID; ULONG ObjectID; };
+struct MP_SETTINGSEVENT_ADD        { ULONG MethodID; STRPTR Event; };
 
 /*************************************************************************/
 
@@ -34,10 +42,10 @@ MM_CHANNEL_DUMMY =  0xFED00320,
 ** Prototypes
 */
 
-ULONG   MCC_Channel_InitClass( void );
-void    MCC_Channel_DisposeClass( void );
+ULONG   MCC_SettingsEvent_InitClass( void );
+void    MCC_SettingsEvent_DisposeClass( void );
 
 /*************************************************************************/
 
-#endif /* MUICLASS_CHANNEL_H */
+#endif /* MUICLASS_SETTINGSEVENT_H */
 

@@ -15,11 +15,13 @@ SOURCES   = functions.c                 \
 			muiclass_buttonlist.c       \
 			muiclass_channel.c          \
 			muiclass_channellist.c      \
+			muiclass_eventlist.c        \
 			muiclass_nicklist.c         \
 			muiclass_settingsalias.c    \
 			muiclass_settingsbutton.c   \
 			muiclass_settingscolor.c    \
 			muiclass_settingsdcc.c      \
+			muiclass_settingsevent.c    \
 			muiclass_settingsgeneral.c  \
 			muiclass_settingsgui.c      \
 			muiclass_settingslog.c      \

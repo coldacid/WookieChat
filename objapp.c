@@ -140,17 +140,17 @@ struct ObjApp *CreateApp(void)
     if (!(MBObj = (struct ObjApp *) AllocVec(sizeof(struct ObjApp), MEMF_PUBLIC|MEMF_CLEAR)))
         return(NULL);
 
-	static CONST_STRPTR titles2[ MSG_PREFS_EVENT_GROUPTITLE - MSG_PREFS_GENERAL_GROUPTITLE + 2 ];
+	static CONST_STRPTR titles2[ 20 ];
 
-	titles2[0] = LGS( MSG_PREFS_GENERAL_GROUPTITLE );
-	titles2[1] = LGS( MSG_PREFS_GUI_GROUPTITLE );
-	titles2[2] = LGS( MSG_PREFS_SERVERS_GROUPTITLE );
-	titles2[3] = LGS( MSG_PREFS_LOGGING_GROUPTITLE );
-	titles2[4] = LGS( MSG_PREFS_DCC_GROUPTITLE );
-	titles2[5] = LGS( MSG_PREFS_SOUNDS_GROUPTITLE );
-	titles2[6] = LGS( MSG_PREFS_ALIAS_GROUPTITLE );
-	titles2[7] = LGS( MSG_PREFS_NICKLISTBUTTONS_GROUPTITLE );
-	titles2[8] = LGS( MSG_PREFS_EVENT_GROUPTITLE );
+	titles2[0] = LGS( MSG_PG_SERVER );
+	titles2[1] = LGS( MSG_PG_GENERAL );
+	titles2[2] = LGS( MSG_PG_GUI );
+	titles2[3] = LGS( MSG_PG_LOGGING );
+	titles2[4] = LGS( MSG_PG_DCC );
+	titles2[5] = LGS( MSG_PG_SOUNDS );
+	titles2[6] = LGS( MSG_PG_ALIASES );
+	titles2[7] = LGS( MSG_PG_BUTTONS );
+	titles2[8] = LGS( MSG_PG_EVENTS );
 	titles2[9] = NULL;
 
 
@@ -1767,8 +1767,8 @@ struct ObjApp *CreateApp(void)
 
     MBObj->SETTINGS_Register_Grp = (Object*)RegisterGroup(titles2),
         Child, GROUP_ROOT_2,
-        Child, GROUP_ROOT_2_GUI,
         Child, GROUP_ROOT_2_SERVER,
+        Child, GROUP_ROOT_2_GUI,
         Child, GROUP_ROOT_2_SECOND,
         Child, GROUP_ROOT_2_DCC,
         Child, GROUP_ROOT_2_ACTIONS,

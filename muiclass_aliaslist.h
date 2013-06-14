@@ -23,7 +23,7 @@
 */
 
 enum {
-MM_ALIASLIST_ADD =  0xFED00500,
+MM_ALIASLIST_ADD =  0xFED00340,
 /* Attributes */
 };
 

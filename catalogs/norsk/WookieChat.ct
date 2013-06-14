@@ -2304,45 +2304,6 @@ MSG_MUICLASS_WINDOWQUIT_CANCEL_HELP
 ; /
 ;
 ;
-; MUICLASS_WINDOWPREFS
-;
-MSG_PREFS_GENERAL_GROUPTITLE
-Generell
-; General
-;
-MSG_PREFS_GUI_GROUPTITLE
-GUI
-; GUI
-;
-MSG_PREFS_SERVERS_GROUPTITLE
-Servere
-; Servers
-;
-MSG_PREFS_LOGGING_GROUPTITLE
-Logging
-; Logging
-;
-MSG_PREFS_DCC_GROUPTITLE
-DCC
-; DCC
-;
-MSG_PREFS_SOUNDS_GROUPTITLE
-Lyder
-; Sounds
-;
-MSG_PREFS_ALIAS_GROUPTITLE
-Aliaser
-; Aliases
-;
-MSG_PREFS_NICKLISTBUTTONS_GROUPTITLE
-Nick List Buttons
-; Nick List Buttons
-;
-MSG_PREFS_EVENT_GROUPTITLE
-Event
-; Event
-;
-;
 ; MUICLASS_WINDOWSETTINGS
 ;
 MSG_MUICLASS_WINDOWSETTINGS_TITLE
@@ -2354,11 +2315,11 @@ Nick
 ; Nick
 ;
 MSG_PG_SERVER
-Server
+Servere
 ; Server
 ;
-MSG_PG_GENERIC
-General
+MSG_PG_GENERAL
+Generell
 ; General
 ;
 MSG_PG_COLOR
@@ -2378,11 +2339,11 @@ DCC
 ; DCC
 ;
 MSG_PG_SOUNDS
-Sounds
+Lyder
 ; Sounds
 ;
 MSG_PG_ALIASES
-Aliases
+Aliaser
 ; Aliases
 ;
 MSG_PG_BUTTONS
@@ -3061,4 +3022,127 @@ Name
 MSG_LV_COMMAND
 Command
 ; Command
+;
+;
+;
+; MUICLASS_SETTINGSEVENT
+;
+MSG_MUICLASS_SETTINGSEVENT_INFO
+\033lCodes:\n%b = text being displayed in the window, %t = timestamp,\n%g = network name, %s = servername, %c = channel, %n = own nick, %m = nick
+; \033lCodes:\n%b = text being displayed in the window, %t = timestamp,\n%g = network name, %s = servername, %c = channel, %n = own nick, %m = nick
+;
+MSG_MUICLASS_SETTINGSEVENT_MODE_GAD
+Mode:
+; Mode:
+;
+MSG_MUICLASS_SETTINGSEVENT_MODE_HELP
+/
+; /
+;
+MSG_MUICLASS_SETTINGSEVENT_SCRIPT_GAD
+Script:
+; Script:
+;
+MSG_MUICLASS_SETTINGSEVENT_SCRIPT_HELP
+/
+; /
+;
+MSG_MUICLASS_SETTINGSEVENT_ARGUMENT_GAD
+Argument:
+; Argument:
+;
+MSG_MUICLASS_SETTINGSEVENT_ARGUMENT_HELP
+/
+; /
+;
+;
+; MUICLASS_EVENTLIST
+;
+MSG_MUICLASS_EVENTLIST_TYPECONNECT
+Connect
+; Connect
+;
+MSG_MUICLASS_EVENTLIST_TYPEDISCONNECT
+Disconnect
+; Disconnect
+;
+MSG_MUICLASS_EVENTLIST_TYPEJOIN
+Join
+; Join
+;
+MSG_MUICLASS_EVENTLIST_TYPEPART
+Part
+; Part
+;
+MSG_MUICLASS_EVENTLIST_TYPEQUIT
+Quit
+; Quit
+;
+MSG_MUICLASS_EVENTLIST_TYPEDCCRECEIVEOFFERED
+DCC RECV Offered
+; DCC RECV Offered
+;
+MSG_MUICLASS_EVENTLIST_TYPEDCCRECEIVEDONE
+DCC RECV Finished
+; DCC RECV Finished
+;
+MSG_MUICLASS_EVENTLIST_TYPEDCCSENDEDONE
+DCC SEND Finished
+; DCC SEND Finished
+;
+MSG_MUICLASS_EVENTLIST_TYPECHANNELMESSAGE
+Channel Message
+; Channel Message
+;
+MSG_MUICLASS_EVENTLIST_TYPEPRIVATEMESSAGE
+Private Message
+; Private Message
+;
+MSG_MUICLASS_EVENTLIST_TYPENOTICE
+Notice
+; Notice
+;
+MSG_MUICLASS_EVENTLIST_TYPECTCPREQUEST
+CTCP Request
+; CTCP Request
+;
+MSG_MUICLASS_EVENTLIST_TYPEKICK
+Kick
+; Kick
+;
+MSG_MUICLASS_EVENTLIST_TYPEMODECHANGE
+Mode Change
+; Mode Change
+;
+MSG_MUICLASS_EVENTLIST_TYPEINVITE
+Invite
+; Invite
+;
+MSG_MUICLASS_EVENTLIST_MODENEVER
+Never
+; Never
+;
+MSG_MUICLASS_EVENTLIST_MODEALWAYS
+Always
+; Always
+;
+MSG_MUICLASS_EVENTLIST_WINDOWISACTIVE
+Window is active
+; Window is active
+;
+MSG_MUICLASS_EVENTLIST_WINDOWISINACTIVE
+Window is inactive
+; Window is inactive
+;
+MSG_LV_EVENT
+Event
+; Event
+;
+MSG_LV_MODE
+Mode
+; Mode
+;
+MSG_LV_SCRIPT
+Script
+; Script
 ;
