@@ -27,6 +27,7 @@
 #include <stdio.h>
 
 #include "locale.h"
+#include "functions.h"
 #include "muiclass.h"
 #include "muiclass_windowsettings.h"
 #include "muiclass_eventlist.h"
@@ -96,6 +97,7 @@ static ULONG OM_Destruct( struct IClass *cl, Object *obj, struct MUIP_NList_Dest
 	return( 0 );
 }
 /* \\\ */
+
 /* /// OM_Import()
 **
 */
@@ -106,30 +108,17 @@ static ULONG OM_Import( struct IClass *cl, Object *obj, struct MUIP_Import *msg 
 {
 struct EventEntry *ee;
 ULONG i;
-char *text, *buffer;
+char *text;
 
 	for( i = 0 ;  ; i++ ) {
 		ee = NULL;
 		DoMethod( obj, MUIM_NList_GetEntry, i, &ee );
 		if( ee ) {
 			if( ( text = (char *) DoMethod( msg->dataspace, MUIM_Dataspace_Find, OID_EVT_LIST + ee->ee_Type + 1 ) ) ) {
-				struct RDArgs *rda, *rd;
-				if( ( rda = (struct RDArgs *) AllocDosObject( DOS_RDARGS, NULL ) ) ) {
-					IPTR argarray[4];
-					rda->RDA_Source.CS_Length = strlen( text ) + 2;
-					rda->RDA_Source.CS_CurChr = 0;
-					if( ( buffer = AllocVec( rda->RDA_Source.CS_Length + 2, MEMF_ANY|MEMF_CLEAR ) ) ) {
-						strcpy( buffer, text );
-						rda->RDA_Source.CS_Buffer = (STRPTR) buffer;
-						buffer[ rda->RDA_Source.CS_Length - 1 ] = 0x0a;
-						buffer[ rda->RDA_Source.CS_Length     ] = 0x00;
-						if( ( rd = ReadArgs( (CONST_STRPTR) "MODE/N/A,SCRIPT/A,TEXT/A", (LONG*) &argarray, rda ) ) ) {
-							DoMethod( obj, MM_EVENTLIST_ADD, ee->ee_Type, *((ULONG*) argarray[0]), argarray[1], argarray[2] );
-							FreeArgs( rd );
-						}
-						FreeVec( buffer );
-					}
-					FreeDosObject( DOS_RDARGS, rda );
+				struct SimpleReadArgsData *srad;
+				if( ( srad = SimpleReadArgsParse( "MODE/N/A,SCRIPT/A,TEXT/A", text ) ) ) {
+					DoMethod( obj, MM_EVENTLIST_ADD, ee->ee_Type, *((ULONG*) srad->srad_ArgArray[0]), srad->srad_ArgArray[1], srad->srad_ArgArray[2] );
+					SimpleReadArgsFree( srad );
 				}
 			}
 		} else {
@@ -258,7 +247,4 @@ void MCC_EventList_DisposeClass( void )
     }
 }
 /* \\\ */
-
-
-
 

@@ -230,3 +230,59 @@ void WBMessage_Reply( void )
 }
 /* \\\ */
 
+/*
+** SimpleArgumentParsing
+*/
+
+/* /// SimpleReadArgsParse()
+**
+*/
+
+/*************************************************************************/
+
+
+struct SimpleReadArgsData *SimpleReadArgsParse( char *templatestring, char *parsestring )
+{
+struct SimpleReadArgsData *srad;
+ULONG length;
+
+	if( ( length = strlen( parsestring ) ) ) {
+		if( ( srad = AllocVec( sizeof( struct SimpleReadArgsData ) + length + 4, MEMF_ANY|MEMF_CLEAR ) ) ) {
+			if( ( srad->srad_rda = (struct RDArgs *) AllocDosObject( DOS_RDARGS, NULL ) ) ) {
+				strcpy( &srad->srad_Buffer[ 0 ], parsestring );
+				srad->srad_Buffer[ length++ ] = 0x0a;
+				srad->srad_Buffer[ length++ ] = 0x00;
+				srad->srad_rda->RDA_Source.CS_Length = length;
+				srad->srad_rda->RDA_Source.CS_CurChr = 0;
+				srad->srad_rda->RDA_Source.CS_Buffer = (STRPTR) &srad->srad_Buffer[ 0 ];
+
+				if( ( srad->srad_rd = ReadArgs( (CONST_STRPTR) templatestring, (LONG*) &srad->srad_ArgArray[ 0 ], srad->srad_rda ) ) ) {
+					return( srad );
+				}
+			}
+			SimpleReadArgsFree( srad );
+		}
+	}
+	return( NULL );
+}
+/* \\\ */
+/* /// SimpleReadArgsFree()
+**
+*/
+
+/*************************************************************************/
+
+void SimpleReadArgsFree( struct SimpleReadArgsData *srad )
+{
+	if( srad ) {
+		if( srad->srad_rd ) {
+			FreeArgs( srad->srad_rd );
+		}
+		if( srad->srad_rda ) {
+			FreeDosObject( DOS_RDARGS, srad->srad_rda );
+		}
+		FreeVec( srad );
+	}
+}
+/* \\\ */
+

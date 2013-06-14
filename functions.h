@@ -49,6 +49,22 @@ extern struct WBStartup *wbmessage;
 void WBMessage_Get  ( void );
 void WBMessage_Reply( void );
 
+/*
+** SimpleArgumentParsing
+*/
+
+#define SIMPLEREADARGS_ARGNUM 32
+
+struct SimpleReadArgsData {
+	struct RDArgs *srad_rda;
+	struct RDArgs *srad_rd;
+	IPTR           srad_ArgArray[ SIMPLEREADARGS_ARGNUM ];
+	char           srad_Buffer[1];
+};
+
+struct SimpleReadArgsData *SimpleReadArgsParse( char *templatestring, char *parsestring );
+void                       SimpleReadArgsFree( struct SimpleReadArgsData *srad );
+
 /*************************************************************************/
 
 #endif /* MUICLASS_H */
