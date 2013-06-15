@@ -81,7 +81,8 @@ static ULONG OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
 {
 Object *objs[ GID_LAST ];
 
-	if( (obj = (Object *) DoSuperNew( cl, obj, MUIA_Group_Horiz, FALSE,
+	if( (obj = (Object *) DoSuperNew( cl, obj, MUIA_Group_Horiz, FALSE, MUIA_Group_PageMode, TRUE,
+
 				Child, HGroup,
 					Child, NListviewObject, MUIA_NListview_NList, objs[ GID_SERVERLIST ] = ServerListObject, End, End,
 					Child, VGroup,
@@ -126,7 +127,8 @@ Object *objs[ GID_LAST ];
 
 		CopyMem( &objs[0], &mccdata->mcc_ClassObjects[0], sizeof( mccdata->mcc_ClassObjects));
 		
-		SetAttrs( objs[ GID_ADDRESS ], MUIA_String_Reject, " /\?", TAG_DONE );
+		SetAttrs( objs[ GID_ADDRESS  ], MUIA_String_Reject, " /\?", TAG_DONE );
+		SetAttrs( objs[ GID_SERVERLIST ] , MA_SERVERLIST_NICKLISTOBJ, objs[ GID_NICKLIST ], MA_SERVERLIST_CHANNELLISTOBJ, objs[ GID_CHANNELLIST ], TAG_DONE );
 
 		DoMethod( obj, MUIM_Notify, MUIA_Window_CloseRequest, TRUE, obj, 3, MUIM_Set, MUIA_Window_Open, FALSE );
 

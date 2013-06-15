@@ -7152,129 +7152,6 @@ Restore settings to last used state.
 Restore settings to last used state.
 ;
 ;
-; MUICLASS_SETTINGSNICK
-;
-MSG_MUICLASS_SETTINGSNICK_NICK_GAD
-_Nick
-Spitz_name
-_Aliase:
-_Pseudonyme
-_Nick
-_Nick
-_Nick
-_Nick
-_Nick
-_Nick
-;
-MSG_MUICLASS_SETTINGSNICK_NICK_HELP
-/
-/
-/
-/
-/
-/
-/
-/
-/
-/
-;
-MSG_MUICLASS_SETTINGSNICK_NICKALT1_GAD
-Fallback nick #_1:
-Ausweichname #_1:
-Fallback nick #_1:
-Fallback nick #_1:
-Fallback nick #_1:
-Fallback nick #_1:
-Fallback nick #_1:
-Fallback nick #_1:
-Fallback nick #_1:
-Fallback nick #_1:
-;
-MSG_MUICLASS_SETTINGSNICK_NICKALT1_HELP
-/
-/
-/
-/
-/
-/
-/
-/
-/
-/
-;
-MSG_MUICLASS_SETTINGSNICK_NICKALT2_GAD
-Fallback nick #_2:
-Ausweichname #_2:
-Fallback nick #_2:
-Fallback nick #_2:
-Fallback nick #_2:
-Fallback nick #_2:
-Fallback nick #_2:
-Fallback nick #_2:
-Fallback nick #_2:
-Fallback nick #_2:
-;
-MSG_MUICLASS_SETTINGSNICK_NICKALT2_HELP
-/
-/
-/
-/
-/
-/
-/
-/
-/
-/
-;
-MSG_MUICLASS_SETTINGSNICK_REALNAME_GAD
-_Real Name
-_Realname
- Nombre _real:
-Nom _réel
-Ïíïìáôåðþíõìï
-Nome _reale
-Valódi név
-Virkelig navn
-Prawdziwe imiê
-Verkligt namn
-;
-MSG_MUICLASS_SETTINGSNICK_REALNAME_HELP
-/
-/
-/
-/
-/
-/
-/
-/
-/
-/
-;
-MSG_MUICLASS_SETTINGSNICK_USERNAME_GAD
-User _Name
-Nutzer _Name
-Usuario:
-Nom d'utilisateur
-¼íïìá ÷ñÞóôç
-Nome utente
-Felhasználónév
-Brukernavn
-Nazwa u¿ytkownika
-Användarnamn
-;
-MSG_MUICLASS_SETTINGSNICK_USERNAME_HELP
-/
-/
-/
-/
-/
-/
-/
-/
-/
-/
-;
-;
 ; MUICLASS_SETTINGSGENERAL
 ;
 MSG_MUICLASS_SETTINGSGENERAL_MESSAGEWHEN_INFO
@@ -9381,6 +9258,151 @@ Script
 ;
 ;
 ; MUICLASS_SETTINGSSERVER
+;
+MSG_PG_CONNECTIONS
+Connections
+Verbindungen
+Connections
+Connections
+Connections
+Connections
+Connections
+Connections
+Connections
+Connections
+;
+MSG_PG_ADDITIONAL
+Additional
+Additional
+Additional
+Additional
+Additional
+Additional
+Additional
+Additional
+Additional
+Additional
+;
+MSG_MUICLASS_SETTINGSSERVER_REALNAME_GAD
+_Real Name
+_Realname
+ Nombre _real:
+Nom _réel
+Ïíïìáôåðþíõìï
+Nome _reale
+Valódi név
+Virkelig navn
+Prawdziwe imiê
+Verkligt namn
+;
+MSG_MUICLASS_SETTINGSSERVER_REALNAME_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
+MSG_MUICLASS_SETTINGSSERVER_USERNAME_GAD
+User _Name
+Nutzer _Name
+Usuario:
+Nom d'utilisateur
+¼íïìá ÷ñÞóôç
+Nome utente
+Felhasználónév
+Brukernavn
+Nazwa u¿ytkownika
+Användarnamn
+;
+MSG_MUICLASS_SETTINGSSERVER_USERNAME_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
+MSG_MUICLASS_SETTINGSSERVER_RECONNECT_GAD
+Reconnects:
+Neuverbindungen:
+Reconnects:
+Reconnects:
+Reconnects:
+Reconnects:
+Reconnects:
+Reconnects:
+Reconnects:
+Reconnects:
+;
+;
+MSG_MUICLASS_SETTINGSSERVER_RECONNECT_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
+MSG_MUICLASS_SETTINGSSERVER_RECONNECTDELAY_GAD
+Reconnect Interval:
+Neuverbindungsinterval:
+Reconnect Interval:
+Reconnect Interval:
+Reconnect Interval:
+Reconnect Interval:
+Reconnect Interval:
+Reconnect Interval:
+Reconnect Interval:
+Reconnect Interval:
+;
+MSG_MUICLASS_SETTINGSSERVER_RECONNECTDELAY_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
+MSG_MUICLASS_SETTINGSSERVER_DUPEDETECTION_GAD
+Dupe detection
+Doppelte Erkennen
+Dupe detection
+Dupe detection
+Dupe detection
+Dupe detection
+Dupe detection
+Dupe detection
+Dupe detection
+Dupe detection
+;
+MSG_MUICLASS_SETTINGSSERVER_DUPEDETECTION_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
 ;
 MSG_MUICLASS_SETTINGSSERVER_ADD_GAD
 Add

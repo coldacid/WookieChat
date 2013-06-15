@@ -32,6 +32,7 @@
 #include "muiclass_buttonlist.h"
 #include "muiclass_channel.h"
 #include "muiclass_channellist.h"
+#include "muiclass_connectedlist.h"
 #include "muiclass_eventlist.h"
 #include "muiclass_ignorelist.h"
 #include "muiclass_nicklist.h"
@@ -44,7 +45,6 @@
 #include "muiclass_settingsgeneral.h"
 #include "muiclass_settingsgui.h"
 #include "muiclass_settingslog.h"
-#include "muiclass_settingsnick.h"
 #include "muiclass_settingsserver.h"
 #include "muiclass_settingssound.h"
 #include "muiclass_urllist.h"
@@ -86,6 +86,7 @@ if( !(result = MCC_Application_InitClass() ) ) {
 if( !(result = MCC_ButtonList_InitClass() ) ) {
 if( !(result = MCC_ChannelList_InitClass() ) ) {
 if( !(result = MCC_Channel_InitClass() ) ) {
+if( !(result = MCC_ConnectedList_InitClass() ) ) {
 if( !(result = MCC_EventList_InitClass() ) ) {
 if( !(result = MCC_IgnoreList_InitClass() ) ) {
 if( !(result = MCC_NickList_InitClass() ) ) {
@@ -98,7 +99,6 @@ if( !(result = MCC_SettingsEvent_InitClass() ) ) {
 if( !(result = MCC_SettingsGeneral_InitClass() ) ) {
 if( !(result = MCC_SettingsGUI_InitClass() ) ) {
 if( !(result = MCC_SettingsLog_InitClass() ) ) {
-if( !(result = MCC_SettingsNick_InitClass() ) ) {
 if( !(result = MCC_SettingsSound_InitClass() ) ) {
 if( !(result = MCC_SettingsServer_InitClass() ) ) {
 if( !(result = MCC_URLList_InitClass() ) ) {
@@ -136,6 +136,7 @@ void MUIClass_Close( void )
 	MCC_ButtonList_DisposeClass();
 	MCC_ChannelList_DisposeClass();
 	MCC_Channel_DisposeClass();
+	MCC_ConnectedList_DisposeClass();
 	MCC_EventList_DisposeClass();
 	MCC_IgnoreList_DisposeClass();
 	MCC_NickList_DisposeClass();
@@ -148,7 +149,6 @@ void MUIClass_Close( void )
 	MCC_SettingsGeneral_DisposeClass();
 	MCC_SettingsGUI_DisposeClass();
 	MCC_SettingsLog_DisposeClass();
-	MCC_SettingsNick_DisposeClass();
 	MCC_SettingsSound_DisposeClass();
 	MCC_SettingsServer_DisposeClass();
 	MCC_URLList_DisposeClass();

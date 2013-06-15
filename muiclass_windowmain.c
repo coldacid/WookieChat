@@ -31,7 +31,7 @@
 #include "muiclass_windowquit.h"
 #include "muiclass_windowsettings.h"
 #include "muiclass_userlist.h"
-#include "muiclass_channellist.h"
+#include "muiclass_connectedlist.h"
 #include "muiclass_channel.h"
 #include "version.h"
 #include "intern.h"
@@ -82,7 +82,7 @@ GID_MODEKEYWORD,
 GID_MODEL,
 GID_MODELIMIT,
 GID_USERLIST,
-GID_CHANNELLIST,
+GID_CONNECTEDLIST,
 GID_CHANNEL,
 GID_MESSAGE,
 GID_LAST
@@ -178,8 +178,8 @@ Object *objs[ GID_LAST ];
 						Child, HGroup,
 							Child, NListviewObject, MUIA_NListview_NList, objs[ GID_CHANNEL ] = ChannelObject, End, End,
 							Child, VGroup,
-								Child, NListviewObject, MUIA_NListview_NList, objs[ GID_USERLIST    ] = UserListObject, End, MUIA_ShortHelp, LGS( MSG_MUICLASS_WINDOWMAIN_NICKLIST_HELP ), End,
-								Child, NListviewObject, MUIA_NListview_NList, objs[ GID_CHANNELLIST ] = ChannelListObject, End, End,
+								Child, NListviewObject, MUIA_NListview_NList, objs[ GID_USERLIST      ] = UserListObject, End, MUIA_ShortHelp, LGS( MSG_MUICLASS_WINDOWMAIN_NICKLIST_HELP ), End,
+								Child, NListviewObject, MUIA_NListview_NList, objs[ GID_CONNECTEDLIST ] = ConnectedListObject, End, End,
 							End,
 						 End,
 						Child, objs[ GID_MESSAGE         ] = MUICreateString( MSG_MUICLASS_WINDOWMAIN_MESSAGE_HELP-1, MESSAGE_SIZEOF ),
@@ -295,9 +295,9 @@ struct mccdata *mccdata = INST_DATA( cl, obj );
 Object *settingsobj;
 
 	if( ( settingsobj = (Object *) MUIGetVar( _app(obj), MA_APPLICATION_WINDOWSETTINGS ) ) ) {
-		SetAttrs( mccdata->mcc_ClassObjects[ GID_CHANNEL     ], MUIA_Background, DoMethod( settingsobj, MM_WINDOWSETTINGS_READCONFIG, OID_COL_CHANNELBG ), TAG_DONE );
-		SetAttrs( mccdata->mcc_ClassObjects[ GID_USERLIST    ], MUIA_Background, DoMethod( settingsobj, MM_WINDOWSETTINGS_READCONFIG, OID_COL_NICKLISTBG ), TAG_DONE );
-		SetAttrs( mccdata->mcc_ClassObjects[ GID_CHANNELLIST ], MUIA_Background, DoMethod( settingsobj, MM_WINDOWSETTINGS_READCONFIG, OID_COL_TABLISTBG ), TAG_DONE );
+		SetAttrs( mccdata->mcc_ClassObjects[ GID_CHANNEL       ], MUIA_Background, DoMethod( settingsobj, MM_WINDOWSETTINGS_READCONFIG, OID_COL_CHANNELBG ), TAG_DONE );
+		SetAttrs( mccdata->mcc_ClassObjects[ GID_USERLIST      ], MUIA_Background, DoMethod( settingsobj, MM_WINDOWSETTINGS_READCONFIG, OID_COL_NICKLISTBG ), TAG_DONE );
+		SetAttrs( mccdata->mcc_ClassObjects[ GID_CONNECTEDLIST ], MUIA_Background, DoMethod( settingsobj, MM_WINDOWSETTINGS_READCONFIG, OID_COL_TABLISTBG ), TAG_DONE );
 	}
 	return( 0 );
 }

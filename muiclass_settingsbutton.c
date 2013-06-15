@@ -250,7 +250,7 @@ DISPATCHER(MCC_SettingsButton_Dispatcher)
 
 ULONG MCC_SettingsButton_InitClass( void )
 {
-	appclasses[ CLASSID_SETTINGSBUTTON ] = MUI_CreateCustomClass( NULL, (ClassID)MUIC_Group, NULL, sizeof( struct mccdata ) ,  (APTR) ENTRY(MCC_SettingsButton_Dispatcher) );
+	appclasses[ CLASSID_SETTINGSBUTTON ] = MUI_CreateCustomClass( NULL, (ClassID)MUIC_Group, NULL, sizeof( struct mccdata ),  (APTR) ENTRY(MCC_SettingsButton_Dispatcher) );
 	return( appclasses[ CLASSID_SETTINGSBUTTON ] ? MSG_ERROR_NOERROR : MSG_ERROR_UNABLETOSETUPMUICLASS );
 }
 /* \\\ */

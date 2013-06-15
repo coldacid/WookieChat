@@ -24,9 +24,14 @@
 */
 
 enum {
-MM_NICKLIST_DUMMY =  0xFED00300,
+MM_NICKLIST_ADD =  0xFED00300,
+MM_NICKLIST_REMOVE,
 /* Attributes */
 };
+
+struct MP_NICKLIST_ADD    { ULONG MethodID; APTR ServerEntry; STRPTR Nick; STRPTR Password; };
+struct MP_NICKLIST_REMOVE { ULONG MethodID; APTR NickEntry; };
+
 
 /*************************************************************************/
 

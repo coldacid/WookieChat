@@ -27,6 +27,7 @@
 #include "locale.h"
 #include "muiclass.h"
 #include "muiclass_nicklist.h"
+#include "muiclass_serverlist.h"
 #include "version.h"
 
 /*************************************************************************/
@@ -69,6 +70,46 @@ struct NickEntry *ne;
 }
 /* \\\ */
 
+/* /// MM_Add()
+**
+*/
+
+/*************************************************************************/
+
+static ULONG MM_Add( struct IClass *cl, Object *obj, struct MP_NICKLIST_ADD *msg )
+{
+struct NickEntry *ne;
+
+	if( ( ne = AllocVec( sizeof( struct NickEntry ), MEMF_ANY|MEMF_CLEAR ) ) ) {
+		strncpy( (char *) ne->ne_Nick    , (char *)   msg->Nick,                                     NICKENTRY_NICK_SIZEOF      );
+		strncpy( (char *) ne->ne_Password, (char *) ( msg->Password ? msg->Password : (STRPTR) "" ), NICKENTRY_PASSWORD_SIZEOF  );
+		if( msg->ServerEntry ) {
+			AddTail( &((struct ServerEntry *) msg->ServerEntry)->se_NickList, (struct Node *) ne );
+		}
+	}
+	return( (ULONG) ne );
+}
+/* \\\ */
+/* /// MM_Remove()
+**
+*/
+
+/*************************************************************************/
+
+static ULONG MM_Remove( struct IClass *cl, Object *obj, struct MP_NICKLIST_REMOVE *msg )
+{
+struct NickEntry *ne;
+
+	if( ( ne = msg->NickEntry ) ) {
+		if( ne->ne_Succ && ne->ne_Pred ) {
+			Remove( (struct Node *) ne );
+		}
+		FreeVec( ne );
+	}
+	return( 0 );
+}
+/* \\\ */
+
 /*
 ** Dispatcher, init and dispose
 */
@@ -81,13 +122,13 @@ struct NickEntry *ne;
 
 DISPATCHER(MCC_NickList_Dispatcher)
 {
-    switch (msg->MethodID)
+	switch( msg->MethodID )
     {
 		case OM_NEW                          : return( OM_New                           ( cl, obj, (APTR) msg ) );
 		case MUIM_NList_Display              : return( OM_Display                       ( cl, obj, (APTR) msg ) );
 
-/* application specific methods */
-
+		case MM_NICKLIST_ADD                 : return( MM_Add                           ( cl, obj, (APTR) msg ) );
+		case MM_NICKLIST_REMOVE              : return( MM_Remove                        ( cl, obj, (APTR) msg ) );
     }
 	return( DoSuperMethodA( cl, obj, msg ) );
 

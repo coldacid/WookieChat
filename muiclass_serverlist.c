@@ -30,9 +30,31 @@
 #include "muiclass.h"
 #include "muiclass_windowsettings.h"
 #include "muiclass_serverlist.h"
+#include "muiclass_channellist.h"
+#include "muiclass_nicklist.h"
 #include "version.h"
 
 /*************************************************************************/
+
+/*
+** gadgets used by this class
+*/
+
+enum
+{
+GID_NICKLIST = 0,
+GID_CHANNELLIST,
+GID_LAST
+};
+
+/*
+** data used by this class
+*/
+
+struct mccdata
+{
+	Object                *mcc_ClassObjects[ GID_LAST ];
+};
 
 /* /// OM_New()
 **
@@ -50,6 +72,33 @@ static ULONG OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
 
 }
 /* \\\ */
+/* /// OM_Set()
+**
+*/
+
+/*************************************************************************/
+
+static ULONG OM_Set( struct IClass *cl, Object *obj, struct opSet *msg )
+{
+struct mccdata *mccdata = INST_DATA( cl, obj );
+struct TagItem *tag;
+struct TagItem *tstate;
+
+	for( tstate = msg->ops_AttrList ; ( tag = NextTagItem( &tstate ) ) ; ) {
+		ULONG tidata = tag->ti_Data;
+        switch( tag->ti_Tag ) {
+			case MA_SERVERLIST_CHANNELLISTOBJ:
+				mccdata->mcc_ClassObjects[ GID_CHANNELLIST ] = (Object *) tidata;
+				break;
+			case MA_SERVERLIST_NICKLISTOBJ:
+				mccdata->mcc_ClassObjects[ GID_NICKLIST    ] = (Object *) tidata;
+				break;
+		}
+    }
+	return( DoSuperMethodA( cl, obj,(Msg) msg ) );
+}
+/* \\\ */
+
 /* /// OM_Display()
 **
 */
@@ -83,8 +132,38 @@ struct ServerEntry *ee;
 
 static ULONG OM_Destruct( struct IClass *cl, Object *obj, struct MUIP_NList_Destruct *msg )
 {
-	if( msg->entry ) {
-		FreeMem( msg->entry, sizeof( struct ServerEntry ) );
+struct mccdata *mccdata = INST_DATA( cl, obj );
+struct ServerEntry *se;
+struct ChannelEntry *ce, *tce;
+struct NickEntry *ne, *tne;
+ULONG i;
+
+	if( ( se = msg->entry ) ) {
+		while( ( ce = (APTR) se->se_ChannelList.lh_Head )->ce_Succ ) {
+			for( i = 0 ; ; i++ ) {
+				tce = NULL;
+				DoMethod( mccdata->mcc_ClassObjects[ GID_CHANNELLIST ], MUIM_NList_GetEntry, i, &tce );
+				if( tce && ( tce == ce ) ) {
+					/* if channel is in list, remove or we will display trashed data */
+					DoMethod( mccdata->mcc_ClassObjects[ GID_CHANNELLIST ], MUIM_NList_Remove, i );
+					break;
+				}
+			}
+			DoMethod( mccdata->mcc_ClassObjects[ GID_CHANNELLIST ], MM_CHANNELLIST_REMOVE, ce );
+		}
+		while( ( ne = (APTR) se->se_NickList.lh_Head )->ne_Succ ) {
+			for( i = 0 ; ; i++ ) {
+				tne = NULL;
+				DoMethod( mccdata->mcc_ClassObjects[ GID_NICKLIST ], MUIM_NList_GetEntry, i, &tne );
+				if( tne && ( tne == ne ) ) {
+					/* if channel is in list, remove or we will display trashed data */
+					DoMethod( mccdata->mcc_ClassObjects[ GID_CHANNELLIST ], MUIM_NList_Remove, i );
+					break;
+				}
+			}
+			DoMethod( mccdata->mcc_ClassObjects[ GID_CHANNELLIST ], MM_CHANNELLIST_REMOVE, ne );
+		}
+		FreeMem( se, sizeof( struct ServerEntry ) );
     }
 	return( 0 );
 }
@@ -182,6 +261,32 @@ ULONG i, newitem = 0;
 }
 /* \\\ */
 #endif
+
+/* /// MM_Add()
+**
+*/
+
+/*************************************************************************/
+
+static ULONG MM_Add( struct IClass *cl, Object *obj, struct MP_SERVERLIST_ADD *msg )
+{
+struct ServerEntry *se;
+
+	if( ( se = AllocVec( sizeof( struct ServerEntry ), MEMF_ANY|MEMF_CLEAR ) ) ) {
+		NEWLIST( &se->se_ChannelList );
+		NEWLIST( &se->se_NickList );
+		strncpy( (char *) se->se_Name    , (char *)   msg->Name   ,                                       SERVERENTRY_NAME_SIZEOF     );
+		strncpy( (char *) se->se_Address , (char *)   msg->Address,                                       SERVERENTRY_ADDRESS_SIZEOF  );
+		strncpy( (char *) se->se_Password, (char *) ( msg->Password ? msg->Password : (STRPTR) ""      ), SERVERENTRY_PASSWORD_SIZEOF );
+		strncpy( (char *) se->se_Charset , (char *) ( msg->Charset  ? msg->Charset  : (STRPTR) "UTF-8" ), SERVERENTRY_CHARSET_SIZEOF  );
+		se->se_Port  = msg->Port;
+		se->se_Flags = msg->Flags;
+	}
+	return( (ULONG) se );
+}
+/* \\\ */
+
+
 /*
 ** Dispatcher, init and dispose
 */
@@ -197,13 +302,14 @@ DISPATCHER(MCC_ServerList_Dispatcher)
     switch (msg->MethodID)
     {
 		case OM_NEW                          : return( OM_New                           ( cl, obj, (APTR) msg ) );
+		case OM_SET                          : return( OM_Set                           ( cl, obj, (APTR) msg ) );
 		case MUIM_NList_Display              : return( OM_Display                       ( cl, obj, (APTR) msg ) );
 		case MUIM_NList_Destruct             : return( OM_Destruct                      ( cl, obj, (APTR) msg ) );
 #if 0
 		case MUIM_Import                     : return( OM_Import                        ( cl, obj, (APTR) msg ) );
 		case MUIM_Export                     : return( OM_Export                        ( cl, obj, (APTR) msg ) );
-		case MM_SERVERLIST_ADD               : return( MM_Add                           ( cl, obj, (APTR) msg ) );
 #endif
+		case MM_SERVERLIST_ADD               : return( MM_Add                           ( cl, obj, (APTR) msg ) );
     }
 	return( DoSuperMethodA( cl, obj, msg ) );
 
@@ -217,7 +323,7 @@ DISPATCHER(MCC_ServerList_Dispatcher)
 
 ULONG MCC_ServerList_InitClass( void )
 {
-	appclasses[ CLASSID_SERVERLIST ] = MUI_CreateCustomClass( NULL, (ClassID) MUIC_NList, NULL, 0,  (APTR) ENTRY(MCC_ServerList_Dispatcher) );
+	appclasses[ CLASSID_SERVERLIST ] = MUI_CreateCustomClass( NULL, (ClassID) MUIC_NList, NULL, sizeof( struct mccdata ), (APTR) ENTRY(MCC_ServerList_Dispatcher) );
 	return( appclasses[ CLASSID_SERVERLIST ] ? MSG_ERROR_NOERROR : MSG_ERROR_UNABLETOSETUPMUICLASS );
 }
 /* \\\ */

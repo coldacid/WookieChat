@@ -24,9 +24,13 @@
 */
 
 enum {
-MM_CHANNELLIST_DUMMY =  0xFED00310,
+MM_CHANNELLIST_ADD =  0xFED00310,
+MM_CHANNELLIST_REMOVE,
 /* Attributes */
 };
+
+struct MP_CHANNELLIST_ADD    { ULONG MethodID; APTR ServerEntry; STRPTR Channel; STRPTR Password; };
+struct MP_CHANNELLIST_REMOVE { ULONG MethodID; APTR ChannelEntry; };
 
 /*************************************************************************/
 
@@ -41,7 +45,7 @@ void    MCC_ChannelList_DisposeClass( void );
 ** channel entry structure
 */
 
-#define CHANNELENTRY_CHANNEL_SIZEOF     30
+#define CHANNELENTRY_CHANNEL_SIZEOF  30
 #define CHANNELENTRY_PASSWORD_SIZEOF 30
 
 struct ChannelEntry {

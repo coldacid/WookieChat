@@ -27,6 +27,7 @@
 #include "locale.h"
 #include "muiclass.h"
 #include "muiclass_channellist.h"
+#include "muiclass_serverlist.h"
 #include "version.h"
 
 /*************************************************************************/
@@ -69,6 +70,46 @@ struct ChannelEntry *ce;
 }
 /* \\\ */
 
+/* /// MM_Add()
+**
+*/
+
+/*************************************************************************/
+
+static ULONG MM_Add( struct IClass *cl, Object *obj, struct MP_CHANNELLIST_ADD *msg )
+{
+struct ChannelEntry *ce;
+
+	if( ( ce = AllocVec( sizeof( struct ChannelEntry ), MEMF_ANY|MEMF_CLEAR ) ) ) {
+		strncpy( (char *) ce->ce_Channel , (char *)   msg->Channel,                                  CHANNELENTRY_CHANNEL_SIZEOF      );
+		strncpy( (char *) ce->ce_Password, (char *) ( msg->Password ? msg->Password : (STRPTR) "" ), CHANNELENTRY_PASSWORD_SIZEOF  );
+		if( msg->ServerEntry ) {
+			AddTail( &((struct ServerEntry *) msg->ServerEntry)->se_ChannelList, (struct Node *) ce );
+		}
+	}
+	return( (ULONG) ce );
+}
+/* \\\ */
+/* /// MM_Remove()
+**
+*/
+
+/*************************************************************************/
+
+static ULONG MM_Remove( struct IClass *cl, Object *obj, struct MP_CHANNELLIST_REMOVE *msg )
+{
+struct ChannelEntry *ce;
+
+	if( ( ce = msg->ChannelEntry ) ) {
+		if( ce->ce_Succ && ce->ce_Pred ) {
+			Remove( (struct Node *) ce );
+		}
+		FreeVec( ce );
+	}
+	return( 0 );
+}
+/* \\\ */
+
 /*
 ** Dispatcher, init and dispose
 */
@@ -86,8 +127,8 @@ DISPATCHER(MCC_ChannelList_Dispatcher)
 		case OM_NEW                          : return( OM_New                           ( cl, obj, (APTR) msg ) );
 		case MUIM_NList_Display              : return( OM_Display                       ( cl, obj, (APTR) msg ) );
 
-/* application specific methods */
-
+		case MM_CHANNELLIST_ADD              : return( MM_Add                           ( cl, obj, (APTR) msg ) );
+		case MM_CHANNELLIST_REMOVE           : return( MM_Remove                        ( cl, obj, (APTR) msg ) );
     }
 	return( DoSuperMethodA( cl, obj, msg ) );
 

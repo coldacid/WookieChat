@@ -36,7 +36,6 @@
 #include "muiclass_settingsgeneral.h"
 #include "muiclass_settingsgui.h"
 #include "muiclass_settingslog.h"
-#include "muiclass_settingsnick.h"
 #include "muiclass_settingsserver.h"
 #include "muiclass_settingssound.h"
 #include "muiclass_windowsettings.h"
@@ -52,7 +51,6 @@ enum
 {
 GID_PAGELIST = 0,
 GID_PAGEGROUP,
-GID_NICK,
 GID_SERVER,
 GID_GUI,
 GID_LOG,
@@ -128,7 +126,6 @@ ULONG i;
 															MUIA_FixWidthTxt, "WWWWWWWWWWWWW",
 														End,
 							Child, objs[ GID_PAGEGROUP   ] = HGroup, MUIA_Group_PageMode, TRUE,
-								Child, objs[ GID_NICK    ] = SettingsNickObject, End,
 								Child, objs[ GID_SERVER  ] = SettingsServerObject, End,
 								Child, objs[ GID_GENERAL ] = SettingsGeneralObject, End,
 								Child, objs[ GID_COLOR   ] = SettingsColorObject, End,
@@ -167,7 +164,7 @@ ULONG i;
 			UnLock( lock );
 		}}
 
-		SetAttrs( objs[ GID_PAGELIST ], MUIA_NList_Active, SETTINGS_NICK, TAG_DONE );
+		SetAttrs( objs[ GID_PAGELIST ], MUIA_NList_Active, SETTINGS_SERVER, TAG_DONE );
 
 		return( (ULONG) obj );
     }
@@ -209,7 +206,7 @@ static ULONG OM_Set( struct IClass *cl, Object *obj, struct opSet *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 struct TagItem *tag;
-NTIP struct TagItem *tstate;
+struct TagItem *tstate;
 
 	for( tstate = msg->ops_AttrList ; ( tag = NextTagItem( &tstate ) ) ; ) {
 		ULONG tidata = tag->ti_Data;
@@ -252,7 +249,7 @@ static ULONG MM_ReadConfig( struct IClass *cl, Object *obj, struct MP_WINDOWSETT
 struct mccdata *mccdata = INST_DATA( cl, obj );
 ULONG result;
 
-	if( !( result = DoMethod( mccdata->mcc_ClassObjects[ GID_NICK ], MM_SETTINGSNICK_READCONFIG, msg->ObjectID ) ) ) {
+	if( !( result = DoMethod( mccdata->mcc_ClassObjects[ GID_SERVER ], MM_SETTINGSSERVER_READCONFIG, msg->ObjectID ) ) ) {
 		if( !( result = DoMethod( mccdata->mcc_ClassObjects[ GID_GUI ], MM_SETTINGSGUI_READCONFIG, msg->ObjectID ) ) ) {
 			if( !( result = DoMethod( mccdata->mcc_ClassObjects[ GID_GENERAL ], MM_SETTINGSGENERAL_READCONFIG, msg->ObjectID ) ) ) {
 				if( !( result = DoMethod( mccdata->mcc_ClassObjects[ GID_COLOR ], MM_SETTINGSCOLOR_READCONFIG, msg->ObjectID ) ) ) {

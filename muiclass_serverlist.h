@@ -25,9 +25,11 @@
 enum {
 MM_SERVERLIST_ADD =  0xFED00370,
 /* Attributes */
+MA_SERVERLIST_CHANNELLISTOBJ,
+MA_SERVERLIST_NICKLISTOBJ,
 };
 
-struct MP_SERVERLIST_ADD { ULONG MethodID; ULONG Type; ULONG Mode; STRPTR Script; STRPTR Text; };
+struct MP_SERVERLIST_ADD    { ULONG MethodID; STRPTR Name; STRPTR Address; ULONG Port; STRPTR Password; ULONG Flags; STRPTR Charset; };
 
 /*************************************************************************/
 
@@ -45,23 +47,20 @@ void    MCC_ServerList_DisposeClass( void );
 ** server entry structure
 */
 
-#define SERVERENTRY_ADDRESS_SIZEOF         254
-#define SERVERENTRY_CHARSET_SIZEOF          30
-#define SERVERENTRY_PASSWORDSERVER_SIZEOF   30
-#define SERVERENTRY_PASSWORDNICK_SIZEOF     30
-#define SERVERENTRY_AUTOJOIN_SIZEOF         30
+#define SERVERENTRY_NAME_SIZEOF       30
+#define SERVERENTRY_ADDRESS_SIZEOF   254
+#define SERVERENTRY_CHARSET_SIZEOF    30
+#define SERVERENTRY_PASSWORD_SIZEOF   30
 
 struct ServerEntry {
 	ULONG         se_Port;
-	ULONG         se_Mode;
+	ULONG         se_Flags;
 	struct List   se_NickList;
 	struct List   se_ChannelList;
+	char          se_Name[ SERVERENTRY_NAME_SIZEOF + 2 ];
 	char          se_Address[ SERVERENTRY_ADDRESS_SIZEOF + 2 ];
 	char          se_Charset[ SERVERENTRY_CHARSET_SIZEOF + 2 ];
-	char          se_PasswordServer[ SERVERENTRY_PASSWORDSERVER_SIZEOF + 2 ];
-	char          se_PasswordNick[ SERVERENTRY_PASSWORDNICK_SIZEOF + 2 ];
-	char          ee_AutoJoin[ SERVERENTRY_AUTOJOIN_SIZEOF + 2 ];
-
+	char          se_Password[ SERVERENTRY_PASSWORD_SIZEOF + 2 ];
 };
 
 
