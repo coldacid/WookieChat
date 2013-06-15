@@ -8,8 +8,8 @@
     for the specific language governing rights and limitations under the License.
 */
 
-#ifndef MUICLASS_NICKLIST_H
-#define MUICLASS_NICKLIST_H 1
+#ifndef MUICLASS_SETTINGSSERVER_H
+#define MUICLASS_SETTINGSSERVER_H 1
 
 /*************************************************************************/
 
@@ -17,16 +17,24 @@
 #include "muiclass.h"
 
 
-#define NickListObject NEWOBJECT( appclasses[ CLASSID_NICKLIST ]->mcc_Class, NULL
+#define SettingsServerObject NEWOBJECT( appclasses[ CLASSID_SETTINGSSERVER ]->mcc_Class, NULL
 
 /*
 ** Methods and attributes
 */
 
 enum {
-MM_NICKLIST_DUMMY =  0xFED00300,
+MM_SETTINGSSERVER_RESETTODEFAULTS =  0xFED00270,
+MM_SETTINGSSERVER_READCONFIG,
+MM_SETTINGSSERVER_ADD,
+MM_SETTINGSSERVER_DISENABLE,
+MM_SETTINGSSERVER_GADGETSTOLIST,
+MM_SETTINGSSERVER_LISTTOGADGETS,
 /* Attributes */
 };
+
+struct MP_SETTINGSSERVER_READCONFIG { ULONG MethodID; ULONG ObjectID; };
+struct MP_SETTINGSSERVER_ADD        { ULONG MethodID; STRPTR Server; };
 
 /*************************************************************************/
 
@@ -34,25 +42,10 @@ MM_NICKLIST_DUMMY =  0xFED00300,
 ** Prototypes
 */
 
-ULONG   MCC_NickList_InitClass( void );
-void    MCC_NickList_DisposeClass( void );
-
-/*
-** nick entry structure
-*/
-
-#define NICKENTRY_NICK_SIZEOF     30
-#define NICKENTRY_PASSWORD_SIZEOF 30
-
-struct NickEntry {
-	struct NickEntry    *ne_Succ;
-	struct NickEntry    *ne_Pred;
-	char                 ne_Nick[ NICKENTRY_NICK_SIZEOF + 2 ];
-	char                 ne_Password[ NICKENTRY_PASSWORD_SIZEOF + 2 ];
-};
+ULONG   MCC_SettingsServer_InitClass( void );
+void    MCC_SettingsServer_DisposeClass( void );
 
 /*************************************************************************/
 
-#endif /* MUICLASS_NICKLIST_H */
-
+#endif /* MUICLASS_SETTINGSSERVER_H */
 

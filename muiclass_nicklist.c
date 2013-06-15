@@ -31,27 +31,6 @@
 
 /*************************************************************************/
 
-/*
-** gadgets used by this class
-*/
-
-enum
-{
-GID_AREXXPORT = 0,
-GID_LAST
-};
-
-/*
-** data used by this class
-*/
-
-struct mccdata
-{
-	Object                *mcc_ClassObjects[ GID_LAST ];
-};
-
-/*************************************************************************/
-
 /* /// OM_New()
 **
 */
@@ -60,53 +39,33 @@ struct mccdata
 
 static ULONG OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
 {
-Object *objs[ GID_LAST ];
 
-	if( (obj = (Object *)DoSuperNew( cl, obj,
-		TAG_DONE ) ) ) {
-
-		struct mccdata *mccdata = INST_DATA( cl, obj );
-
-		CopyMem( &objs[0], &mccdata->mcc_ClassObjects[0], sizeof( mccdata->mcc_ClassObjects));
-
-		return( (ULONG) obj );
-    }
-	return( (ULONG) NULL );
+	return( (ULONG) (obj = (Object *) DoSuperNew( cl, obj,
+													MUIA_NList_Title         , TRUE,
+													MUIA_CycleChain          , 1,
+													MUIA_NList_Format        , "BAR,",
+													TAG_DONE ) ) );
 }
 /* \\\ */
-/* /// OM_Dispose()
+/* /// OM_Display()
 **
 */
 
 /*************************************************************************/
 
-static ULONG OM_Dispose( struct IClass *cl, Object *obj, Msg msg )
+static ULONG OM_Display( struct IClass *cl, Object *obj, struct MUIP_NList_Display *msg )
 {
-//struct mccdata *mccdata = INST_DATA( cl, obj );
+STRPTR *array = msg->strings;
+struct NickEntry *ne;
 
-	return( DoSuperMethodA( cl, obj, msg ) );
-}
-/* \\\ */
-/* /// OM_Set()
-**
-*/
-
-/*************************************************************************/
-
-static ULONG OM_Set( struct IClass *cl, Object *obj, struct opSet *msg )
-{
-#if 0
-struct mccdata *mccdata = INST_DATA( cl, obj );
-struct TagItem *tag;
-struct TagItem *tstate;
-
-	for( tstate = msg->ops_AttrList ; ( tag = NextTagItem( &tstate ) ) ; ) {
-		ULONG tidata = tag->ti_Data;
-        switch( tag->ti_Tag ) {
-		}
+	if( ( ne = msg->entry ) ) {
+		*array++ = (STRPTR) ne->ne_Nick;
+		*array++ = (STRPTR) ne->ne_Password;
+	} else {
+		*array++ = (STRPTR) LGS( MSG_LV_NICK     );
+		*array++ = (STRPTR) LGS( MSG_LV_PASSWORD );
     }
-#endif
-	return( DoSuperMethodA( cl, obj,(Msg) msg ) );
+	return( 0 );
 }
 /* \\\ */
 
@@ -125,9 +84,7 @@ DISPATCHER(MCC_NickList_Dispatcher)
     switch (msg->MethodID)
     {
 		case OM_NEW                          : return( OM_New                           ( cl, obj, (APTR) msg ) );
-		case OM_DISPOSE                      : return( OM_Dispose                       ( cl, obj, (APTR) msg ) );
-
-		case OM_SET                          : return( OM_Set                           ( cl, obj, (APTR) msg ) );
+		case MUIM_NList_Display              : return( OM_Display                       ( cl, obj, (APTR) msg ) );
 
 /* application specific methods */
 
@@ -144,7 +101,7 @@ DISPATCHER(MCC_NickList_Dispatcher)
 
 ULONG MCC_NickList_InitClass( void )
 {
-	appclasses[ CLASSID_NICKLIST ] = MUI_CreateCustomClass( NULL, (ClassID) MUIC_NList, NULL, sizeof( struct mccdata ) ,  (APTR) ENTRY(MCC_NickList_Dispatcher) );
+	appclasses[ CLASSID_NICKLIST ] = MUI_CreateCustomClass( NULL, (ClassID) MUIC_NList, NULL, 0 ,  (APTR) ENTRY(MCC_NickList_Dispatcher) );
 	return( appclasses[ CLASSID_NICKLIST ] ? MSG_ERROR_NOERROR : MSG_ERROR_UNABLETOSETUPMUICLASS );
 }
 /* \\\ */

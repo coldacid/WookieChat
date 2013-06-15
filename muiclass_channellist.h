@@ -37,6 +37,20 @@ MM_CHANNELLIST_DUMMY =  0xFED00310,
 ULONG   MCC_ChannelList_InitClass( void );
 void    MCC_ChannelList_DisposeClass( void );
 
+/*
+** channel entry structure
+*/
+
+#define CHANNELENTRY_CHANNEL_SIZEOF     30
+#define CHANNELENTRY_PASSWORD_SIZEOF 30
+
+struct ChannelEntry {
+	struct ChannelEntry    *ce_Succ;
+	struct ChannelEntry    *ce_Pred;
+	char                    ce_Channel[ CHANNELENTRY_CHANNEL_SIZEOF + 2 ];
+	char                    ce_Password[ CHANNELENTRY_PASSWORD_SIZEOF + 2 ];
+};
+
 /*************************************************************************/
 
 #endif /* MUICLASS_CHANNELLIST_H */

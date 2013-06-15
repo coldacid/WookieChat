@@ -139,10 +139,7 @@ struct URLEntry *ue = NULL;
 	if( ue ) {
 		char *browser = (char *) GRC( OID_GEN_BROWSER );
 		if( browser[0] ) {
-			char *tt = buffer;
 			sprintf( buffer, "Run >NIL: %s \"%s\"", browser, ue->ue_URL );
-
-			VPrintf( "'%s'\n", &tt );
 			/* geit FIXME: What about using OpenURL? */
 #ifdef __amigaos4__
 			SystemTags((_s_cs) buffer, TAG_DONE );

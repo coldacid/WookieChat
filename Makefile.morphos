@@ -18,6 +18,8 @@ SOURCES   = functions.c                 \
 			muiclass_eventlist.c        \
 			muiclass_ignorelist.c       \
 			muiclass_nicklist.c         \
+			muiclass_userlist.c         \
+			muiclass_serverlist.c       \
 			muiclass_urllist.c          \
 			muiclass_settingsalias.c    \
 			muiclass_settingsbutton.c   \
@@ -29,6 +31,7 @@ SOURCES   = functions.c                 \
 			muiclass_settingslog.c      \
 			muiclass_settingsnick.c     \
 			muiclass_settingssound.c    \
+			muiclass_settingsserver.c   \
 			muiclass_windowabout.c      \
 			muiclass_windowignorelist.c \
 			muiclass_windowmain.c       \

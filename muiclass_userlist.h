@@ -8,8 +8,8 @@
     for the specific language governing rights and limitations under the License.
 */
 
-#ifndef MUICLASS_NICKLIST_H
-#define MUICLASS_NICKLIST_H 1
+#ifndef MUICLASS_USERLIST_H
+#define MUICLASS_USERLIST_H 1
 
 /*************************************************************************/
 
@@ -17,14 +17,14 @@
 #include "muiclass.h"
 
 
-#define NickListObject NEWOBJECT( appclasses[ CLASSID_NICKLIST ]->mcc_Class, NULL
+#define UserListObject NEWOBJECT( appclasses[ CLASSID_USERLIST ]->mcc_Class, NULL
 
 /*
 ** Methods and attributes
 */
 
 enum {
-MM_NICKLIST_DUMMY =  0xFED00300,
+MM_USERLIST_DUMMY =  0xFED00700,
 /* Attributes */
 };
 
@@ -34,25 +34,10 @@ MM_NICKLIST_DUMMY =  0xFED00300,
 ** Prototypes
 */
 
-ULONG   MCC_NickList_InitClass( void );
-void    MCC_NickList_DisposeClass( void );
-
-/*
-** nick entry structure
-*/
-
-#define NICKENTRY_NICK_SIZEOF     30
-#define NICKENTRY_PASSWORD_SIZEOF 30
-
-struct NickEntry {
-	struct NickEntry    *ne_Succ;
-	struct NickEntry    *ne_Pred;
-	char                 ne_Nick[ NICKENTRY_NICK_SIZEOF + 2 ];
-	char                 ne_Password[ NICKENTRY_PASSWORD_SIZEOF + 2 ];
-};
+ULONG   MCC_UserList_InitClass( void );
+void    MCC_UserList_DisposeClass( void );
 
 /*************************************************************************/
 
-#endif /* MUICLASS_NICKLIST_H */
-
+#endif /* MUICLASS_USERLIST_H */
 

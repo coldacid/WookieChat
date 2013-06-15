@@ -24,18 +24,18 @@
 #include <stdarg.h>
 #include <string.h>
 
-#include "locale.h"
 #include "intern.h"
+#include "locale.h"
 #include "muiclass.h"
 #include "muiclass_aliaslist.h"
 #include "muiclass_application.h"
 #include "muiclass_buttonlist.h"
-#include "muiclass_eventlist.h"
 #include "muiclass_channel.h"
 #include "muiclass_channellist.h"
-#include "muiclass_nicklist.h"
+#include "muiclass_eventlist.h"
 #include "muiclass_ignorelist.h"
-#include "muiclass_urllist.h"
+#include "muiclass_nicklist.h"
+#include "muiclass_serverlist.h"
 #include "muiclass_settingsalias.h"
 #include "muiclass_settingsbutton.h"
 #include "muiclass_settingscolor.h"
@@ -45,7 +45,10 @@
 #include "muiclass_settingsgui.h"
 #include "muiclass_settingslog.h"
 #include "muiclass_settingsnick.h"
+#include "muiclass_settingsserver.h"
 #include "muiclass_settingssound.h"
+#include "muiclass_urllist.h"
+#include "muiclass_userlist.h"
 #include "muiclass_windowabout.h"
 #include "muiclass_windowignorelist.h"
 #include "muiclass_windowmain.h"
@@ -84,9 +87,9 @@ if( !(result = MCC_ButtonList_InitClass() ) ) {
 if( !(result = MCC_ChannelList_InitClass() ) ) {
 if( !(result = MCC_Channel_InitClass() ) ) {
 if( !(result = MCC_EventList_InitClass() ) ) {
-if( !(result = MCC_NickList_InitClass() ) ) {
 if( !(result = MCC_IgnoreList_InitClass() ) ) {
-if( !(result = MCC_URLList_InitClass() ) ) {
+if( !(result = MCC_NickList_InitClass() ) ) {
+if( !(result = MCC_ServerList_InitClass() ) ) {
 if( !(result = MCC_SettingsAlias_InitClass() ) ) {
 if( !(result = MCC_SettingsButton_InitClass() ) ) {
 if( !(result = MCC_SettingsColor_InitClass() ) ) {
@@ -97,6 +100,9 @@ if( !(result = MCC_SettingsGUI_InitClass() ) ) {
 if( !(result = MCC_SettingsLog_InitClass() ) ) {
 if( !(result = MCC_SettingsNick_InitClass() ) ) {
 if( !(result = MCC_SettingsSound_InitClass() ) ) {
+if( !(result = MCC_SettingsServer_InitClass() ) ) {
+if( !(result = MCC_URLList_InitClass() ) ) {
+if( !(result = MCC_UserList_InitClass() ) ) {
 if( !(result = MCC_WindowAbout_InitClass() ) ) {
 if( !(result = MCC_WindowIgnoreList_InitClass() ) ) {
 if( !(result = MCC_WindowMain_InitClass() ) ) {
@@ -108,7 +114,7 @@ if( ( application = NewObject( appclasses[ CLASSID_APPLICATION ]->mcc_Class, NUL
 } else {
 	result = MSG_ERROR_UNABLETOSETUPMUICLASS;
 }
-}}}}}}}}}}}}}}}}}}}}}}}}}
+}}}}}}}}}}}}}}}}}}}}}}}}}}}}
    return( result );
 }
 /* \\\ */
@@ -131,9 +137,9 @@ void MUIClass_Close( void )
 	MCC_ChannelList_DisposeClass();
 	MCC_Channel_DisposeClass();
 	MCC_EventList_DisposeClass();
-	MCC_NickList_DisposeClass();
 	MCC_IgnoreList_DisposeClass();
-	MCC_URLList_DisposeClass();
+	MCC_NickList_DisposeClass();
+	MCC_ServerList_DisposeClass();
 	MCC_SettingsAlias_DisposeClass();
 	MCC_SettingsButton_DisposeClass();
 	MCC_SettingsColor_DisposeClass();
@@ -144,6 +150,9 @@ void MUIClass_Close( void )
 	MCC_SettingsLog_DisposeClass();
 	MCC_SettingsNick_DisposeClass();
 	MCC_SettingsSound_DisposeClass();
+	MCC_SettingsServer_DisposeClass();
+	MCC_URLList_DisposeClass();
+	MCC_UserList_DisposeClass();
 	MCC_WindowAbout_DisposeClass();
 	MCC_WindowIgnoreList_DisposeClass();
 	MCC_WindowMain_DisposeClass();

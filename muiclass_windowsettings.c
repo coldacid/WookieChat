@@ -37,6 +37,7 @@
 #include "muiclass_settingsgui.h"
 #include "muiclass_settingslog.h"
 #include "muiclass_settingsnick.h"
+#include "muiclass_settingsserver.h"
 #include "muiclass_settingssound.h"
 #include "muiclass_windowsettings.h"
 #include "version.h"
@@ -52,6 +53,7 @@ enum
 GID_PAGELIST = 0,
 GID_PAGEGROUP,
 GID_NICK,
+GID_SERVER,
 GID_GUI,
 GID_LOG,
 GID_DCC,
@@ -127,7 +129,7 @@ ULONG i;
 														End,
 							Child, objs[ GID_PAGEGROUP   ] = HGroup, MUIA_Group_PageMode, TRUE,
 								Child, objs[ GID_NICK    ] = SettingsNickObject, End,
-								Child, HVSpace,
+								Child, objs[ GID_SERVER  ] = SettingsServerObject, End,
 								Child, objs[ GID_GENERAL ] = SettingsGeneralObject, End,
 								Child, objs[ GID_COLOR   ] = SettingsColorObject, End,
 								Child, objs[ GID_GUI     ] = SettingsGUIObject, End,
