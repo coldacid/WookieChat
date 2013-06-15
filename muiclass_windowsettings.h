@@ -16,8 +16,42 @@
 #include <exec/types.h>
 #include "muiclass.h"
 
+/*************************************************************************/
+
 #define WindowSettingsObject NEWOBJECT( appclasses[ CLASSID_WINDOWSETTINGS ]->mcc_Class, NULL
 
+/*************************************************************************/
+
+/*
+** Methods and attributes
+*/
+
+enum {
+MM_WINDOWSETTINGS_READCONFIG =  0xFED00080,
+/* Attributes */
+MA_WINDOWSETTINGS_VISUALCHANGE,
+};
+
+struct MP_WINDOWSETTINGS_READCONFIG { ULONG MethodID; ULONG ObjectID; };
+
+/*************************************************************************/
+
+/*
+** path data
+*/
+
+#define DEFAULT_SETTINGSPATH            "PROGDIR:Prefs"
+#define DEFAULT_SETTINGSPRESETSPATH     DEFAULT_SETTINGSPATH "/Presets"
+
+#define DEFAULT_SETTINGSNICK_NAME       DEFAULT_SETTINGSPATH "/nick.prefs"
+#define DEFAULT_SETTINGSCOLOR_NAME      DEFAULT_SETTINGSPATH "/color.prefs"
+#define DEFAULT_SETTINGSIGNORE_NAME     DEFAULT_SETTINGSPATH "/ignore.prefs"
+
+/*************************************************************************/
+
+/*
+** settings tab numbering
+*/
 
 enum{
 SETTINGS_NICK = 0,
@@ -35,6 +69,8 @@ SETTINGS_LAST,
 };
 
 
+/*************************************************************************/
+
 /*
 ** This is the macro to obtain any
 ** configuration at runtime.
@@ -43,6 +79,8 @@ SETTINGS_LAST,
 */
 
 #define GRC(a) GlobalReadConfig(a)
+
+/*************************************************************************/
 
 /*
 ** object ids
@@ -155,18 +193,6 @@ OID_BUT_LIST = 0x2000,
 OID_EVT_LIST = 0x3000,
 OID_IGN_LIST = 0x4000,
 };
-
-/*
-** Methods and attributes
-*/
-
-enum {
-MM_WINDOWSETTINGS_READCONFIG =  0xFED00080,
-/* Attributes */
-MA_WINDOWSETTINGS_VISUALCHANGE,
-};
-
-struct MP_WINDOWSETTINGS_READCONFIG { ULONG MethodID; ULONG ObjectID; };
 
 /*************************************************************************/
 

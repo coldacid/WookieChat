@@ -194,7 +194,6 @@ ULONG i, newitem = 0;
 }
 /* \\\ */
 
-
 /*
 ** Dispatcher, init and dispose
 */

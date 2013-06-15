@@ -43,12 +43,6 @@
 
 /*************************************************************************/
 
-#define DEFAULT_SETTINGSPATH            "PROGDIR:Prefs"
-#define DEFAULT_SETTINGSPRESETSPATH     DEFAULT_SETTINGSPATH "/Presets"
-
-#define DEFAULT_SETTINGSNICK_NAME       DEFAULT_SETTINGSPATH "/nick.prefs"
-#define DEFAULT_SETTINGSCOLOR_NAME      DEFAULT_SETTINGSPATH "/color.prefs"
-
 /*
 ** gadgets used by this class
 */

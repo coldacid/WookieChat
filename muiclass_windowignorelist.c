@@ -30,13 +30,12 @@
 #include "locale.h"
 #include "muiclass.h"
 #include "muiclass_ignorelist.h"
+#include "muiclass_windowsettings.h"
 #include "muiclass_windowignorelist.h"
 #include "version.h"
 #include "intern.h"
 
 /*************************************************************************/
-
-#define DEFAULT_IGNORELIST_NAME "PROGDIR:ignorelist.txt"
 
 /*
 ** gadgets used by this class
@@ -79,8 +78,8 @@ Object *objs[ GID_LAST ];
 			MUIA_Window_Title            , LGS( MSG_MUICLASS_WINDOWIGNORELIST_TITLE ),
 			MUIA_Window_ID               , MAKE_ID('I','G','N','O'),
 			MUIA_Window_NoMenus	       	 , TRUE,
-
 			WindowContents, VGroup,
+					Child, MUICreateLabelLeft( MSG_IGNORE_LONG_DETAILED_HELP ),
 					Child, NListviewObject, MUIA_NListview_NList, objs[ GID_LIST ] = IgnoreListObject, End, End,
 					Child, HGroup,
 						Child, objs[ GID_ADD    ] = MUICreateSmallButton( MSG_MUICLASS_WINDOWIGNORELIST_ADD_GAD   ),
@@ -94,7 +93,6 @@ Object *objs[ GID_LAST ];
 						Child, objs[ GID_DCC     ] = MUICreateCheckbox( MSG_MUICLASS_WINDOWIGNORELIST_DCC_GAD, TRUE ),
 						Child, MUICreateLabelLeft( MSG_MUICLASS_WINDOWIGNORELIST_DCC_GAD ),
 					End,
-					Child, MUICreateLabelLeft( MSG_IGNORE_LONG_DETAILED_HELP ),
 				End,
 		TAG_DONE ) ) ) {
 
@@ -103,7 +101,7 @@ Object *objs[ GID_LAST ];
 		CopyMem( &objs[0], &mccdata->mcc_ClassObjects[0], sizeof( mccdata->mcc_ClassObjects));
 
 		DoMethod( obj, MUIM_Notify, MUIA_Window_CloseRequest, TRUE, obj             , 3, MUIM_Set, MUIA_Window_Open, FALSE );
-		DoMethod( obj, MUIM_Notify, MUIA_Window_CloseRequest, TRUE, objs[ GID_LIST ], 2, MM_IGNORELIST_EXPORTLISTASTEXT, DEFAULT_IGNORELIST_NAME );
+		DoMethod( obj, MUIM_Notify, MUIA_Window_CloseRequest, TRUE, objs[ GID_LIST ], 2, MM_IGNORELIST_EXPORTLISTASTEXT, DEFAULT_SETTINGSIGNORE_NAME );
 
 		DoMethod( objs[ GID_LIST       ], MUIM_Notify, MUIA_NList_Active   , MUIV_EveryTime, obj             , 1, MM_WINDOWIGNORELIST_LISTTOGADGETS );
 		DoMethod( objs[ GID_PATTERN    ], MUIM_Notify, MUIA_String_Contents, MUIV_EveryTime, obj             , 1, MM_WINDOWIGNORELIST_GADGETSTOLIST );
@@ -115,7 +113,7 @@ Object *objs[ GID_LAST ];
 		DoMethod( objs[ GID_REMOVE     ], MUIM_Notify, MUIA_Pressed        , FALSE         , objs[ GID_LIST ], 2, MUIM_NList_Remove, MUIV_NList_Remove_Selected );
 
 
-		DoMethod( objs[ GID_LIST       ], MM_IGNORELIST_IMPORTLISTASTEXT, DEFAULT_IGNORELIST_NAME );
+		DoMethod( objs[ GID_LIST       ], MM_IGNORELIST_IMPORTLISTASTEXT, DEFAULT_SETTINGSIGNORE_NAME );
 
 		DoMethod( obj, MM_WINDOWIGNORELIST_LISTTOGADGETS );
 

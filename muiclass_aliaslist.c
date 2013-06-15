@@ -217,7 +217,6 @@ char *linebuffer;
 }
 /* \\\ */
 
-
 /*
 ** Dispatcher, init and dispose
 */
