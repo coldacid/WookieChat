@@ -18,7 +18,6 @@
 #include <proto/intuition.h>
 #include <proto/utility.h>
 #include <proto/exec.h>
-#include <proto/dos.h>
 #include <SDI_hook.h>
 
 #include <mui/NList_mcc.h>
@@ -26,8 +25,8 @@
 #include <string.h>
 #include <stdio.h>
 
-#include "locale.h"
 #include "functions.h"
+#include "locale.h"
 #include "muiclass.h"
 #include "muiclass_windowsettings.h"
 #include "muiclass_eventlist.h"

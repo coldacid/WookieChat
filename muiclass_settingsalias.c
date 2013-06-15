@@ -87,6 +87,8 @@ Object *objs[ GID_LAST ];
 
 		CopyMem( &objs[0], &mccdata->mcc_ClassObjects[0], sizeof( mccdata->mcc_ClassObjects));
 		
+		SetAttrs( objs[ GID_ALIAS     ], MUIA_String_Reject, " ", TAG_DONE );
+
 		DoMethod( obj, MUIM_Notify, MUIA_Window_CloseRequest, TRUE, obj, 3, MUIM_Set, MUIA_Window_Open, FALSE );
 
 		DoMethod( objs[ GID_ADD       ], MUIM_Notify, MUIA_Pressed, FALSE, objs[ GID_ALIASLIST ], 3, MM_ALIASLIST_ADD, 0, 0 );

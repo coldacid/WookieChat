@@ -23,7 +23,9 @@
 #include <mui/NList_mcc.h>
 #include <mui/NListview_mcc.h>
 #include <string.h>
+#include <stdio.h>
 
+#include "functions.h"
 #include "locale.h"
 #include "muiclass.h"
 #include "muiclass_windowsettings.h"
@@ -92,18 +94,15 @@ static ULONG OM_Destruct( struct IClass *cl, Object *obj, struct MUIP_NList_Dest
 static ULONG OM_Import( struct IClass *cl, Object *obj, struct MUIP_Import *msg )
 {
 ULONG i;
-char button[ BUTTONENTRY_NAME_SIZEOF + BUTTONENTRY_COMMAND_SIZEOF + 4 ];
 char *text;
 
 	DoMethod( obj, MUIM_NList_Clear );
 	for( i = 0 ;  ; i++ ) {
 		if( ( text = (char *) DoMethod( msg->dataspace, MUIM_Dataspace_Find, OID_BUT_LIST + i + 1 ) ) ) {
-			strncpy( button, text, BUTTONENTRY_NAME_SIZEOF + BUTTONENTRY_COMMAND_SIZEOF + 1 );
-			if( ( text = strchr( button, (char) 0x20 ) ) ) {
-				*text++ = 0x00;
-				DoMethod( obj, MM_BUTTONLIST_ADD, button, text );
-			} else {
-				DoMethod( obj, MM_BUTTONLIST_ADD, button, (char *) LGS( MSG_MUICLASS_BUTTONLIST_DEFAULTCOMMAND ) );
+			struct SimpleReadArgsData *srad;
+			if( ( srad = SimpleReadArgsParse( "NAME/A,COMMAND/A", text ) ) ) {
+				DoMethod( obj, MM_BUTTONLIST_ADD, srad->srad_ArgArray[0], srad->srad_ArgArray[1] );
+				SimpleReadArgsFree( srad );
 			}
 		} else {
 			break;
@@ -121,16 +120,14 @@ char *text;
 static ULONG OM_Export( struct IClass *cl, Object *obj, struct MUIP_Import *msg )
 {
 struct ButtonEntry *be;
-char buffer[ BUTTONENTRY_NAME_SIZEOF + BUTTONENTRY_COMMAND_SIZEOF + 4 ];
+char buffer[ BUTTONENTRY_NAME_SIZEOF + BUTTONENTRY_COMMAND_SIZEOF + 64 ];
 ULONG i;
 
 	for( i = 0 ;  ; i++ ) {
 		be = NULL;
 		DoMethod( obj, MUIM_NList_GetEntry, i, &be );
 		if( be ) {
-			strncpy( buffer, (char *) be->be_Name, BUTTONENTRY_NAME_SIZEOF );
-			strcat(  buffer, (char *) " " );
-			strncat( buffer, (char *) be->be_Command, BUTTONENTRY_COMMAND_SIZEOF );
+			sprintf( buffer, "\"%s\" \"%s\"", be->be_Name, be->be_Command );
 			DoMethod( msg->dataspace, MUIM_Dataspace_Add, buffer, strlen( buffer ) + 1, OID_BUT_LIST + i + 1 );
 		} else {
 			break;

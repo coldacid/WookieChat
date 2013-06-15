@@ -5742,9 +5742,9 @@ MSG_MUICLASS_WINDOWIGNORELIST_REMOVE_HELP
 /
 /
 ;
-MSG_MUICLASS_WINDOWIGNORELIST_IGNOREMASK_GAD
-Ignore Entry:
-Ignoriere Eintrag:
+MSG_MUICLASS_WINDOWIGNORELIST_PATTERN_GAD
+Pattern:
+Pattern:
 Ignorar:
 Ignorer :
 Êáôá÷þñçóç áãíüçóçò:
@@ -5754,7 +5754,7 @@ Ignoremaske:
 Ignoruj:
 Ignorera enligt:
 ;
-MSG_MUICLASS_WINDOWIGNORELIST_IGNOREMASK_HELP
+MSG_MUICLASS_WINDOWIGNORELIST_PATTERN_HELP
 /
 /
 /
@@ -5869,6 +5869,21 @@ regu³.\nMo¿na np. utworzyæ tak± regu³ê: guru#?editatio?!#?userid@#?.se\nlub je¶l
 Värdinfo ser ut så här: nick!userid@hostname\ndvs.Join jahc (~jahc00@jahc.Amigaworld.Net)\njahc är nicket, jahc00 är anvädarid och jahc.Amigaworld.Net är värdnamnet\nFör att ignorera användaren kan du \
 skriva in jahc#?!#?@#?\nDetta ignorerar alla nick som börjar med bokstäverna jahc.\nMed wildcards (#?) blir detta kommando mycket kraftfullt.\nMöjliga kombinationer: guru#?editatio?!#?userid@#?.se\neller för \
 att göra det enkelt:  roberto#?
+;
+;
+; MUICLASS_IGNORELIST
+;
+MSG_MUICLASS_IGNORELIST_DEFAULTPATTERN
+User#?
+Benutzer#?
+User#?
+User#?
+User#?
+User#?
+User#?
+User#?
+User#?
+User#?
 ;
 MSG_LV_PATTERN
 Pattern

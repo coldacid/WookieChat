@@ -1916,11 +1916,11 @@ MSG_MUICLASS_WINDOWIGNORELIST_REMOVE_HELP
 /
 ; /
 ;
-MSG_MUICLASS_WINDOWIGNORELIST_IGNOREMASK_GAD
+MSG_MUICLASS_WINDOWIGNORELIST_PATTERN_GAD
 Ignoruj:
-; Ignore Entry:
+; Pattern:
 ;
-MSG_MUICLASS_WINDOWIGNORELIST_IGNOREMASK_HELP
+MSG_MUICLASS_WINDOWIGNORELIST_PATTERN_HELP
 /
 ; /
 ;
@@ -1953,6 +1953,13 @@ Maska wygl±da tak: pseudonim!identyfikator@wêze³\nnp. [Join] jahc (~jahc00@jahc.
 osobê, mo¿esz dodaæ do listy jahc#?!#?@#?\nWookieChatten sposób bêd± ignorowane wszystkie osoby\nz pseudonimem zaczynaj±cym siê od liter jahc.\nU¿ywanie znaków zastêpczych pozwala na tworzenie \
 z³o¿onych regu³.\nMo¿na np. utworzyæ tak± regu³ê: guru#?editatio?!#?userid@#?.se\nlub je¶li chcesz sobie upro¶ciæ ¿ycie, mo¿esz u¿yæ po prostu: jahc#?
 ; Hostmarks look like this: nick!userid@hostname\ni.e.«Join» jahc (~jahc00@jahc.Amigaworld.Net)\njahc is the nick, jahc00 is the userid, and jahc.Amigaworld.Net is the hostname\nTo ignore this person, you could insert an ignore entry of: jahc#?\nThis will ignore all people with a nick starting with the letters jahc.\nThe use of wildcards makes this ignore command very powerful.\nThings like this are possible: guru#?editatio?!#?userid@#?.se\nor if you want to keep it simple, you could just use: jahc#?
+;
+;
+; MUICLASS_IGNORELIST
+;
+MSG_MUICLASS_IGNORELIST_DEFAULTPATTERN
+User#?
+; User#?
 ;
 MSG_LV_PATTERN
 Pattern

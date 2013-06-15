@@ -1912,11 +1912,11 @@ MSG_MUICLASS_WINDOWIGNORELIST_REMOVE_HELP
 /
 ; /
 ;
-MSG_MUICLASS_WINDOWIGNORELIST_IGNOREMASK_GAD
+MSG_MUICLASS_WINDOWIGNORELIST_PATTERN_GAD
 Ignorar:
-; Ignore Entry:
+; Pattern:
 ;
-MSG_MUICLASS_WINDOWIGNORELIST_IGNOREMASK_HELP
+MSG_MUICLASS_WINDOWIGNORELIST_PATTERN_HELP
 /
 ; /
 ;
@@ -1949,6 +1949,13 @@ MSG_MUICLASS_WINDOWIGNORELIST_INFO
 \033bAmigaworld.Net\033n el anfitrión.\nPara ignorar a esta persona, puede insertar la cadena: \033bjahc#?!#?@#?\033n\nEl uso de comodines hace que este comando sea muy potente.\nPuede hacer cosas \
 como: \033bguru#?editatio?!#?userid@#?.se\033n\no si desea hacerlo más simple: \033broberto#?\033n
 ; Hostmarks look like this: nick!userid@hostname\ni.e.«Join» jahc (~jahc00@jahc.Amigaworld.Net)\njahc is the nick, jahc00 is the userid, and jahc.Amigaworld.Net is the hostname\nTo ignore this person, you could insert an ignore entry of: jahc#?\nThis will ignore all people with a nick starting with the letters jahc.\nThe use of wildcards makes this ignore command very powerful.\nThings like this are possible: guru#?editatio?!#?userid@#?.se\nor if you want to keep it simple, you could just use: jahc#?
+;
+;
+; MUICLASS_IGNORELIST
+;
+MSG_MUICLASS_IGNORELIST_DEFAULTPATTERN
+User#?
+; User#?
 ;
 MSG_LV_PATTERN
 Pattern

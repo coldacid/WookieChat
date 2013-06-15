@@ -1914,11 +1914,11 @@ MSG_MUICLASS_WINDOWIGNORELIST_REMOVE_HELP
 /
 ; /
 ;
-MSG_MUICLASS_WINDOWIGNORELIST_IGNOREMASK_GAD
+MSG_MUICLASS_WINDOWIGNORELIST_PATTERN_GAD
 Mellõzõ bejegyzés
-; Ignore Entry:
+; Pattern:
 ;
-MSG_MUICLASS_WINDOWIGNORELIST_IGNOREMASK_HELP
+MSG_MUICLASS_WINDOWIGNORELIST_PATTERN_HELP
 /
 ; /
 ;
@@ -1951,6 +1951,13 @@ A hoszt jelzõk így néznek ki: becenév!azonosító@hosztnév\ni.e«Join» jahc (~jahc0
 tagok, ez a személy mellõzhetõ: jahc#?!#?@#?\nEz mindenkit mellõzni fog akinek az álneve jahc, vagy azzal kezdõdik.\nA helyettesítõ karakterek használata igen hatékonnyá teszi ezt a parancsot.\nAkár a \
 következõket is megtehetjük: guru#?editatio?!#?userid@#?.se\nvagy ha egyszerüsíteni akarjuk, akár csak enyivel: jahc#?
 ; Hostmarks look like this: nick!userid@hostname\ni.e.«Join» jahc (~jahc00@jahc.Amigaworld.Net)\njahc is the nick, jahc00 is the userid, and jahc.Amigaworld.Net is the hostname\nTo ignore this person, you could insert an ignore entry of: jahc#?\nThis will ignore all people with a nick starting with the letters jahc.\nThe use of wildcards makes this ignore command very powerful.\nThings like this are possible: guru#?editatio?!#?userid@#?.se\nor if you want to keep it simple, you could just use: jahc#?
+;
+;
+; MUICLASS_IGNORELIST
+;
+MSG_MUICLASS_IGNORELIST_DEFAULTPATTERN
+User#?
+; User#?
 ;
 MSG_LV_PATTERN
 Pattern

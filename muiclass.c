@@ -34,6 +34,7 @@
 #include "muiclass_channel.h"
 #include "muiclass_channellist.h"
 #include "muiclass_nicklist.h"
+#include "muiclass_ignorelist.h"
 #include "muiclass_settingsalias.h"
 #include "muiclass_settingsbutton.h"
 #include "muiclass_settingscolor.h"
@@ -83,6 +84,7 @@ if( !(result = MCC_ChannelList_InitClass() ) ) {
 if( !(result = MCC_Channel_InitClass() ) ) {
 if( !(result = MCC_EventList_InitClass() ) ) {
 if( !(result = MCC_NickList_InitClass() ) ) {
+if( !(result = MCC_IgnoreList_InitClass() ) ) {
 if( !(result = MCC_SettingsAlias_InitClass() ) ) {
 if( !(result = MCC_SettingsButton_InitClass() ) ) {
 if( !(result = MCC_SettingsColor_InitClass() ) ) {
@@ -104,7 +106,7 @@ if( ( application = NewObject( appclasses[ CLASSID_APPLICATION ]->mcc_Class, NUL
 } else {
 	result = MSG_ERROR_UNABLETOSETUPMUICLASS;
 }
-}}}}}}}}}}}}}}}}}}}}}}}
+}}}}}}}}}}}}}}}}}}}}}}}}
    return( result );
 }
 /* \\\ */
@@ -128,6 +130,7 @@ void MUIClass_Close( void )
 	MCC_Channel_DisposeClass();
 	MCC_EventList_DisposeClass();
 	MCC_NickList_DisposeClass();
+	MCC_IgnoreList_DisposeClass();
 	MCC_SettingsAlias_DisposeClass();
 	MCC_SettingsButton_DisposeClass();
 	MCC_SettingsColor_DisposeClass();

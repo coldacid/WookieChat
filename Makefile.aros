@@ -16,6 +16,7 @@ SOURCES   = functions.c                 \
 			muiclass_channel.c          \
 			muiclass_channellist.c      \
 			muiclass_eventlist.c        \
+			muiclass_ignorelist.c       \
 			muiclass_nicklist.c         \
 			muiclass_settingsalias.c    \
 			muiclass_settingsbutton.c   \

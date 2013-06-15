@@ -8,30 +8,30 @@
     for the specific language governing rights and limitations under the License.
 */
 
-#ifndef MUICLASS_ALIASLIST_H
-#define MUICLASS_ALIASLIST_H 1
+#ifndef MUICLASS_IGNORELIST_H
+#define MUICLASS_IGNORELIST_H 1
 
 /*************************************************************************/
 
 #include <exec/types.h>
 #include "muiclass.h"
 
-#define AliasListObject NEWOBJECT( appclasses[ CLASSID_ALIASLIST ]->mcc_Class, NULL
+#define IgnoreListObject NEWOBJECT( appclasses[ CLASSID_IGNORELIST ]->mcc_Class, NULL
 
 /*
 ** Methods and attributes
 */
 
 enum {
-MM_ALIASLIST_ADD =  0xFED00340,
-MM_ALIASLIST_IMPORTLISTASTEXT,
-MM_ALIASLIST_EXPORTLISTASTEXT,
+MM_IGNORELIST_ADD =  0xFED00380,
+MM_IGNORELIST_IMPORTLISTASTEXT,
+MM_IGNORELIST_EXPORTLISTASTEXT,
 /* Attributes */
 };
 
-struct MP_ALIASLIST_ADD              { ULONG MethodID; STRPTR Alias; STRPTR Text; };
-struct MP_ALIASLIST_IMPORTLISTASTEXT { ULONG MethodID; STRPTR Name; };
-struct MP_ALIASLIST_EXPORTLISTASTEXT { ULONG MethodID; STRPTR Name; };
+struct MP_IGNORELIST_ADD              { ULONG MethodID; STRPTR Pattern; ULONG Flags; };
+struct MP_IGNORELIST_IMPORTLISTASTEXT { ULONG MethodID; STRPTR Name; };
+struct MP_IGNORELIST_EXPORTLISTASTEXT { ULONG MethodID; STRPTR Name; };
 
 /*************************************************************************/
 
@@ -39,25 +39,28 @@ struct MP_ALIASLIST_EXPORTLISTASTEXT { ULONG MethodID; STRPTR Name; };
 ** Prototypes
 */
 
-ULONG   MCC_AliasList_InitClass( void );
-void    MCC_AliasList_DisposeClass( void );
+ULONG   MCC_IgnoreList_InitClass( void );
+void    MCC_IgnoreList_DisposeClass( void );
 
 
 /*************************************************************************/
 
 /*
-** alias entry structure
+** ignore entry structure
 */
 
-#define ALIASENTRY_ALIAS_SIZEOF 16
-#define ALIASENTRY_TEXT_SIZEOF  256
+#define IGNOREENTRY_PATTERN_SIZEOF 0x40
 
-struct AliasEntry {
-	unsigned char ae_Alias[ ALIASENTRY_ALIAS_SIZEOF + 2 ];
-	unsigned char ae_Text[ ALIASENTRY_TEXT_SIZEOF + 2 ];
+struct IgnoreEntry {
+	ULONG         ie_Flags;
+	unsigned char ie_Pattern[ IGNOREENTRY_PATTERN_SIZEOF + 2 ];
 };
+
+#define IGNOREENTRYF_TEXT    0x1
+#define IGNOREENTRYF_CTCP    0x2
+#define IGNOREENTRYF_DCC     0x4
 
 /*************************************************************************/
 
-#endif /* MUICLASS_ALIASLIST_H */
+#endif /* MUICLASS_IGNORELIST_H */
 
