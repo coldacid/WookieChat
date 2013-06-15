@@ -28,14 +28,15 @@
 #include "intern.h"
 #include "locale.h"
 #include "muiclass.h"
+#include "muiclass_urllist.h"
+#include "muiclass_windowsettings.h"
 #include "muiclass_windowurlgrabber.h"
 #include "version.h"
 
 
 /*************************************************************************/
 
-#define URLBUFFER_SIZEOF 0x2000
-#define DEFAULT_URLGRABBER_NAME (_ub_cs) "progdir:urls.txt"
+//#define URLBUFFER_SIZEOF 0x2000
 
 /*
 ** gadgets used by this class
@@ -79,26 +80,11 @@ Object *objs[ GID_LAST ];
 			MUIA_Window_CloseGadget      , TRUE,
 
 			WindowContents, VGroup,
-				Child, objs[ GID_LIST ] = NListviewObject, MUIA_NListview_NList, NListObject,
-														MUIA_Frame               , MUIV_Frame_InputList,
-														MUIA_NList_ConstructHook , MUIV_NList_ConstructHook_String,
-														MUIA_NList_DestructHook  , MUIV_NList_DestructHook_String,
-												        MUIA_NList_AutoCopyToClip, TRUE,
-														MUIA_NList_Input         , TRUE,
-														MUIA_NList_MultiSelect   , MUIV_NList_MultiSelect_Shifted,
-														MUIA_NList_TypeSelect    , MUIV_NList_TypeSelect_Line,
-														MUIA_CycleChain          , 1,
-
-												        #ifndef __AROS__
-												        //#ifndef __MORPHOS__
-												        MUIA_NList_ActiveObjectOnClick,TRUE,
-												        //#endif
-												        #endif
-														End,
-				End,
+				Child, objs[ GID_LIST ] = NListviewObject, MUIA_NListview_NList, URLListObject, End, End,
 				Child, HGroup,
-					Child, objs[ GID_REMOVE    ] = MUICreateButton( MSG_MUICLASS_WINDOWURLGRABBER_REMOVE_GAD    ),
-					Child, objs[ GID_REMOVEALL ] = MUICreateButton( MSG_MUICLASS_WINDOWURLGRABBER_REMOVEALL_GAD ),
+					Child, objs[ GID_REMOVE    ] = MUICreateSmallButton( MSG_MUICLASS_WINDOWURLGRABBER_REMOVE_GAD    ),
+					Child, objs[ GID_REMOVEALL ] = MUICreateSmallButton( MSG_MUICLASS_WINDOWURLGRABBER_REMOVEALL_GAD ),
+					Child, HVSpace,
 				End,
 			End,
 		TAG_DONE ) ) ) {
@@ -114,7 +100,7 @@ Object *objs[ GID_LAST ];
 
 		DoMethod( objs[ GID_LIST      ], MUIM_Notify, MUIA_NList_DoubleClick  , TRUE, obj, 1, MM_WINDOWURLGRABBER_DOUBLECLICK );
 
-		DoMethod( obj, MM_WINDOWURLGRABBER_LOADURLS );
+		DoMethod( objs[ GID_LIST      ], MM_URLLIST_IMPORTLISTASTEXT, DEFAULT_SETTINGSURL_NAME );
 
 		return( (ULONG) obj );
     }
@@ -129,7 +115,9 @@ Object *objs[ GID_LAST ];
 
 static ULONG OM_Dispose( struct IClass *cl, Object *obj, Msg msg )
 {
-//struct mccdata *mccdata = INST_DATA( cl, obj );
+struct mccdata *mccdata = INST_DATA( cl, obj );
+
+	DoMethod( mccdata->mcc_ClassObjects[ GID_LIST ], MM_URLLIST_EXPORTLISTASTEXT, DEFAULT_SETTINGSURL_NAME );
 
 	return( DoSuperMethodA( cl, obj, msg ) );
 }
@@ -144,14 +132,18 @@ static ULONG OM_Dispose( struct IClass *cl, Object *obj, Msg msg )
 static ULONG MM_DoubleClick( struct IClass *cl, Object *obj, Msg msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
-char buffer[ URLBUFFER_SIZEOF ];
-STRPTR url = NULL;
+char buffer[ 2* URLENTRY_URL_SIZEOF ]; /* geit FIXME: this function is using old stuff */
+struct URLEntry *ue = NULL;
 
-	DoMethod( mccdata->mcc_ClassObjects[ GID_LIST ], MUIM_NList_GetEntry, MUIV_NList_GetEntry_Active, &url );
-	if( url ) {
-		if( my_settings.browser[0] ) {
-			sprintf( buffer, "run >nil: %s \"%s\"", my_settings.browser, url );
-			/* geit FIXME: What about using OpenURL */
+	DoMethod( mccdata->mcc_ClassObjects[ GID_LIST ], MUIM_NList_GetEntry, MUIV_NList_GetEntry_Active, &ue );
+	if( ue ) {
+		char *browser = (char *) GRC( OID_GEN_BROWSER );
+		if( browser[0] ) {
+			char *tt = buffer;
+			sprintf( buffer, "Run >NIL: %s \"%s\"", browser, ue->ue_URL );
+
+			VPrintf( "'%s'\n", &tt );
+			/* geit FIXME: What about using OpenURL? */
 #ifdef __amigaos4__
 			SystemTags((_s_cs) buffer, TAG_DONE );
 #else
@@ -171,94 +163,6 @@ STRPTR url = NULL;
 	return( 0 );
 }
 /* \\\ */
-
-/* /// MM_LoadURLs()
-**
-*/
-
-/*************************************************************************/
-
-static ULONG MM_LoadURLs( struct IClass *cl UNUSED, Object *obj, Msg msg UNUSED )
-{
-BPTR handle;
-char buffer[ URLBUFFER_SIZEOF ];
-
-	if( ( handle = Open( DEFAULT_URLGRABBER_NAME, MODE_OLDFILE ) ) ) {
-		buffer[ URLBUFFER_SIZEOF - 1 ] =  '\0';;
-		while( FGets( handle, (STRPTR) buffer, URLBUFFER_SIZEOF - 1 ) ) {
-			buffer[ strlen( (const char *) buffer ) - 1 ] = '\0';
-			DoMethod( obj, MM_WINDOWURLGRABBER_ADDURL, buffer );
-		}
-		Close( handle );
-	}
-	return( 0 );
-}
-/* \\\ */
-/* /// MM_SaveURLs()
-**
-*/
-
-/*************************************************************************/
-
-static ULONG MM_SaveURLs( struct IClass *cl, Object *obj, Msg msg )
-{
-struct mccdata *mccdata = INST_DATA( cl, obj );
-BPTR handle;
-LONG i, entries;
-STRPTR url;
-
-	if( ( handle = Open( DEFAULT_URLGRABBER_NAME, MODE_NEWFILE ) ) ) {
-		GetAttr( MUIA_NList_Entries, mccdata->mcc_ClassObjects[ GID_LIST ], (IPTR*) &entries );
-
-		for( i = 0 ; i < entries ; i++ ) {
-			DoMethod( mccdata->mcc_ClassObjects[ GID_LIST ], MUIM_NList_GetEntry, i, &url );
-			if( url ) {
-				FPuts( handle, (_ub_cs) url );
-				FPutC( handle, '\n' );
-			}
-		}
-		Close( handle );
-	}
-	return( 0 );
-}
-/* \\\ */
-/* /// MM_AddURL()
-**
-*/
-
-/*************************************************************************/
-
-static ULONG MM_AddURL( struct IClass *cl, Object *obj, struct MP_WINDOWURLGRABBER_ADDURL *msg )
-{
-struct mccdata *mccdata = INST_DATA( cl, obj );
-LONG i, entries;
-STRPTR url;
-
-	if( !Strnicmp( msg->URL, (_ub_cs) "http://", 6 ) ||
-		!Strnicmp( msg->URL, (_ub_cs) "https://", 6 ) ||
-		!Strnicmp( msg->URL, (_ub_cs) "www", 3 ) ) {
-
-		GetAttr( MUIA_NList_Entries, mccdata->mcc_ClassObjects[ GID_LIST ], (IPTR*) &entries );
-
-		/* make sure entry is not in list */
-		for( i = 0 ; i < entries ; i++ ) {
-			url = NULL;
-			DoMethod( mccdata->mcc_ClassObjects[ GID_LIST ], MUIM_NList_GetEntry, i, &url );
-			if( url ) {
-				if( !Stricmp( url, msg->URL ) ) {
-                    break;
-				}
-            }
-        }
-		if( i == entries ) { /* not in list -> add and save */
-			DoMethod( mccdata->mcc_ClassObjects[ GID_LIST ], MUIM_NList_InsertSingle, msg->URL, MUIV_NList_Insert_Bottom );
-			DoMethod( obj, MM_WINDOWURLGRABBER_SAVEURLS );
-        }
-	}
-
-	return( 0 );
-}
-/* \\\ */
 /* /// MM_ExtractURL()
 **
 */
@@ -267,6 +171,7 @@ STRPTR url;
 
 static ULONG MM_ExtractURL( struct IClass *cl, Object *obj, struct MP_WINDOWURLGRABBER_EXTRACTURL *msg )
 {
+struct mccdata *mccdata = INST_DATA( cl, obj );
 LONG b, e, datalength;
 int t;
 STRPTR url = msg->Data;
@@ -286,7 +191,7 @@ char chr;
 				if( chr == ' ' || chr == ')' || chr == '\'')
 				{
 					url[ b + e ] = 0x00; /* terminate string */
-					DoMethod( obj, MM_WINDOWURLGRABBER_ADDURL, &url[ b ] );
+					DoMethod( mccdata->mcc_ClassObjects[ GID_LIST ], MM_URLLIST_ADD, &url[ b ] );
 					t = strlen( (const char *) &url[ b ] ); /* get length */
 					url[ b + e ] = chr; /* repair string */
 					b += t; /* skip this url */
@@ -317,9 +222,6 @@ DISPATCHER(MCC_WindowURLGrabber_Dispatcher)
 		case OM_DISPOSE                      : return( OM_Dispose                       ( cl, obj, (APTR) msg ) );
 
 		case MM_WINDOWURLGRABBER_EXTRACTURL  : return( MM_ExtractURL                    ( cl, obj, (APTR) msg ) );
-		case MM_WINDOWURLGRABBER_ADDURL      : return( MM_AddURL                        ( cl, obj, (APTR) msg ) );
-		case MM_WINDOWURLGRABBER_LOADURLS    : return( MM_LoadURLs                      ( cl, obj, (APTR) msg ) );
-		case MM_WINDOWURLGRABBER_SAVEURLS    : return( MM_SaveURLs                      ( cl, obj, (APTR) msg ) );
 		case MM_WINDOWURLGRABBER_DOUBLECLICK : return( MM_DoubleClick                   ( cl, obj, (APTR) msg ) );
 
 /* application specific methods */

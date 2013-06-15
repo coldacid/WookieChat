@@ -374,7 +374,7 @@ void cleanexit(char *str)
     if (WookieChat)
     {
 
-		DoMethod( WookieChat->WI_urlgrabber, MM_WINDOWURLGRABBER_SAVEURLS );
+		//DoMethod( WookieChat->WI_urlgrabber, MM_WINDOWURLGRABBER_SAVEURLS );
 
         status_conductor = status_root;
         while (status_conductor)

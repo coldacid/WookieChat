@@ -46,6 +46,7 @@ struct MP_WINDOWSETTINGS_READCONFIG { ULONG MethodID; ULONG ObjectID; };
 #define DEFAULT_SETTINGSNICK_NAME       DEFAULT_SETTINGSPATH "/nick.prefs"
 #define DEFAULT_SETTINGSCOLOR_NAME      DEFAULT_SETTINGSPATH "/color.prefs"
 #define DEFAULT_SETTINGSIGNORE_NAME     DEFAULT_SETTINGSPATH "/ignore.prefs"
+#define DEFAULT_SETTINGSURL_NAME        DEFAULT_SETTINGSPATH "/url.prefs"
 
 /*************************************************************************/
 
@@ -192,6 +193,7 @@ OID_ALI_LIST = 0x1000,
 OID_BUT_LIST = 0x2000,
 OID_EVT_LIST = 0x3000,
 OID_IGN_LIST = 0x4000,
+OID_URL_LIST = 0x5000,
 };
 
 /*************************************************************************/

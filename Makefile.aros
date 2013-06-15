@@ -18,6 +18,7 @@ SOURCES   = functions.c                 \
 			muiclass_eventlist.c        \
 			muiclass_ignorelist.c       \
 			muiclass_nicklist.c         \
+			muiclass_urllist.c          \
 			muiclass_settingsalias.c    \
 			muiclass_settingsbutton.c   \
 			muiclass_settingscolor.c    \

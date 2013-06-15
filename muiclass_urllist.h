@@ -8,30 +8,30 @@
     for the specific language governing rights and limitations under the License.
 */
 
-#ifndef MUICLASS_WINDOWURLGRABBER_H
-#define MUICLASS_WINDOWURLGRABBER_H 1
+#ifndef MUICLASS_URLLIST_H
+#define MUICLASS_URLLIST_H 1
 
 /*************************************************************************/
 
 #include <exec/types.h>
 #include "muiclass.h"
 
-
-#define WindowURLGrabberObject NEWOBJECT( appclasses[ CLASSID_WINDOWURLGRABBER ]->mcc_Class, NULL
+#define URLListObject NEWOBJECT( appclasses[ CLASSID_URLLIST ]->mcc_Class, NULL
 
 /*
 ** Methods and attributes
 */
 
 enum {
-MM_WINDOWURLGRABBER_DUMMY =  0xFED000a0,
-MM_WINDOWURLGRABBER_EXTRACTURL,
-MM_WINDOWURLGRABBER_DOUBLECLICK,
+MM_URLLIST_ADD =  0xFED00390,
+MM_URLLIST_IMPORTLISTASTEXT,
+MM_URLLIST_EXPORTLISTASTEXT,
 /* Attributes */
 };
 
-struct MP_WINDOWURLGRABBER_EXTRACTURL { ULONG MethodID; STRPTR Data; };
-struct MP_WINDOWURLGRABBER_ADDURL     { ULONG MethodID; STRPTR URL; };
+struct MP_URLLIST_ADD              { ULONG MethodID; STRPTR URL; };
+struct MP_URLLIST_IMPORTLISTASTEXT { ULONG MethodID; STRPTR Name; };
+struct MP_URLLIST_EXPORTLISTASTEXT { ULONG MethodID; STRPTR Name; };
 
 /*************************************************************************/
 
@@ -39,10 +39,23 @@ struct MP_WINDOWURLGRABBER_ADDURL     { ULONG MethodID; STRPTR URL; };
 ** Prototypes
 */
 
-ULONG   MCC_WindowURLGrabber_InitClass( void );
-void    MCC_WindowURLGrabber_DisposeClass( void );
+ULONG   MCC_URLList_InitClass( void );
+void    MCC_URLList_DisposeClass( void );
+
 
 /*************************************************************************/
 
-#endif /* MUICLASS_WINDOWURLGRABBER_H */
+/*
+** url entry structure
+*/
+
+#define URLENTRY_URL_SIZEOF 0x200
+
+struct URLEntry {
+	unsigned char ue_URL[ URLENTRY_URL_SIZEOF + 2 ];
+};
+
+/*************************************************************************/
+
+#endif /* MUICLASS_URLLIST_H */
 

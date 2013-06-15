@@ -5633,16 +5633,16 @@ Kolekcjoner adresów URL - aby otowrzyæ dwukliknij na adresie
 URL Grabber - Dubbelklicka URL för att öppna
 ;
 MSG_MUICLASS_WINDOWURLGRABBER_REMOVE_GAD
-Remove URL(s)
-Entferne URL(s)
-Eliminar URLs
-Supprimer URL(s)
-Áöáßñåóç URL(s)
-Rimuovi URL(s)
-URL eltávolítása
-Fjerne URL(er)
-Usuñ adres(y)
-Ta bort URL
+_Remove URL
+_Entferne URL
+_Remove URL
+_Remove URL
+_Remove URL
+_Remove URL
+_Remove URL
+_Remove URL
+_Remove URL
+_Remove URL
 ;
 MSG_MUICLASS_WINDOWURLGRABBER_REMOVE_HELP
 /
@@ -5657,8 +5657,8 @@ MSG_MUICLASS_WINDOWURLGRABBER_REMOVE_HELP
 /
 ;
 MSG_MUICLASS_WINDOWURLGRABBER_REMOVEALL_GAD
-Clear All
-Lösche alles
+Clear _All
+Lösche _alles
 Limpiar todo
 Supprimer tout
 ÅêêáèÜñéóç üëùí
@@ -5679,6 +5679,22 @@ MSG_MUICLASS_WINDOWURLGRABBER_REMOVEALL_HELP
 /
 /
 /
+;
+;
+; MUICLASS_URLLIST
+;
+MSG_LV_URL
+URL
+URL
+URL
+URL
+URL
+URL
+URL
+URL
+URL
+URL
+;
 ;
 ; MUICLASS_WINDOWIGNORELIST
 ;
