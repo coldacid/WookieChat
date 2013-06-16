@@ -43,6 +43,11 @@
 enum
 {
 GID_SERVERLIST = 0,
+GID_SERVERADD,
+GID_SERVERREMOVE,
+GID_SERVERADDRESS,
+GID_SERVERPORT,
+GID_SERVERPASSWORD,
 GID_NICKLIST,
 GID_NICKADD,
 GID_NICKREMOVE,
@@ -53,10 +58,6 @@ GID_CHANNELADD,
 GID_CHANNELREMOVE,
 GID_CHANNELNAME,
 GID_CHANNELPASSWORD,
-GID_ADDRESS,
-GID_PORT,
-GID_ADD,
-GID_REMOVE,
 GID_LAST
 };
 
@@ -81,7 +82,7 @@ static ULONG OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
 {
 Object *objs[ GID_LAST ];
 
-	if( (obj = (Object *) DoSuperNew( cl, obj, MUIA_Group_Horiz, FALSE, MUIA_Group_PageMode, TRUE,
+	if( (obj = (Object *) DoSuperNew( cl, obj, MUIA_Group_Horiz, FALSE, //MUIA_Group_PageMode, TRUE,
 
 				Child, HGroup,
 					Child, NListviewObject, MUIA_NListview_NList, objs[ GID_SERVERLIST ] = ServerListObject, End, End,
@@ -112,12 +113,14 @@ Object *objs[ GID_LAST ];
 					End,
 				End,
 				Child, HGroup,
-					Child, objs[ GID_ADD        ] = MUICreateSmallButton( MSG_MUICLASS_SETTINGSSERVER_ADD_GAD ),
-					Child, objs[ GID_REMOVE     ] = MUICreateSmallButton( MSG_MUICLASS_SETTINGSSERVER_REMOVE_GAD ),
+					Child, objs[ GID_SERVERADD     ] = MUICreateSmallButton( MSG_MUICLASS_SETTINGSSERVER_ADD_GAD ),
+					Child, objs[ GID_SERVERREMOVE  ] = MUICreateSmallButton( MSG_MUICLASS_SETTINGSSERVER_REMOVE_GAD ),
 					Child, MUICreateLabel( MSG_MUICLASS_SETTINGSSERVER_ADDRESS_GAD ),
-					Child, objs[ GID_ADDRESS    ] = MUICreateStringFixed( MSG_MUICLASS_SETTINGSSERVER_ADDRESS_GAD, SERVERENTRY_ADDRESS_SIZEOF ),
+					Child, objs[ GID_SERVERADDRESS ] = MUICreateStringFixed( MSG_MUICLASS_SETTINGSSERVER_ADDRESS_GAD, SERVERENTRY_ADDRESS_SIZEOF ),
 					Child, MUICreateLabel( MSG_MUICLASS_SETTINGSSERVER_PORT_GAD ),
-					Child, objs[ GID_PORT       ] = MUICreateInteger( MSG_MUICLASS_SETTINGSSERVER_PORT_GAD, 5 ),
+					Child, objs[ GID_SERVERPORT    ] = MUICreateInteger( MSG_MUICLASS_SETTINGSSERVER_PORT_GAD, 5 ),
+					Child, MUICreateLabel( MSG_MUICLASS_SETTINGSSERVER_PASSWORD_GAD ),
+					Child, objs[ GID_SERVERADDRESS ] = MUICreateStringFixed( MSG_MUICLASS_SETTINGSSERVER_PASSWORD_GAD, SERVERENTRY_PASSWORD_SIZEOF ),
 					Child, HVSpace,
 				End,
 
@@ -127,26 +130,78 @@ Object *objs[ GID_LAST ];
 
 		CopyMem( &objs[0], &mccdata->mcc_ClassObjects[0], sizeof( mccdata->mcc_ClassObjects));
 		
-		SetAttrs( objs[ GID_ADDRESS  ], MUIA_String_Reject, " /\?", TAG_DONE );
-		SetAttrs( objs[ GID_SERVERLIST ] , MA_SERVERLIST_NICKLISTOBJ, objs[ GID_NICKLIST ], MA_SERVERLIST_CHANNELLISTOBJ, objs[ GID_CHANNELLIST ], TAG_DONE );
+		SetAttrs( objs[ GID_SERVERADDRESS    ], MUIA_String_Reject, " /\?", TAG_DONE );
+		SetAttrs( objs[ GID_NICKNAME         ], MUIA_String_Reject, " /\?", TAG_DONE );
+		SetAttrs( objs[ GID_NICKPASSWORD     ], MUIA_String_Reject, " /\?", TAG_DONE );
+		SetAttrs( objs[ GID_CHANNELNAME      ], MUIA_String_Reject, " /\?", TAG_DONE );
+		SetAttrs( objs[ GID_CHANNELPASSWORD  ], MUIA_String_Reject, " /\?", TAG_DONE );
+		SetAttrs( objs[ GID_SERVERLIST       ] , MA_SERVERLIST_NICKLISTOBJ, objs[ GID_NICKLIST ], MA_SERVERLIST_CHANNELLISTOBJ, objs[ GID_CHANNELLIST ], TAG_DONE );
 
 		DoMethod( obj, MUIM_Notify, MUIA_Window_CloseRequest, TRUE, obj, 3, MUIM_Set, MUIA_Window_Open, FALSE );
 
-//		  DoMethod( objs[ GID_ADD       ], MUIM_Notify, MUIA_Pressed, FALSE, objs[ GID_SERVERLIST ], 3, MM_SERVERLIST_ADD, 0, 0 );
-//		  DoMethod( objs[ GID_REMOVE    ], MUIM_Notify, MUIA_Pressed, FALSE, objs[ GID_SERVERLIST ], 2, MUIM_NList_Remove, MUIV_NList_Remove_Selected );
 
-//		  DoMethod( objs[ GID_SERVERLIST ], MUIM_Notify, MUIA_NList_Active   , MUIV_EveryTime, obj, 1, MM_SETTINGSSERVER_LISTTOGADGETS );
-//		  DoMethod( objs[ GID_SERVER     ], MUIM_Notify, MUIA_String_Contents, MUIV_EveryTime, obj, 1, MM_SETTINGSSERVER_GADGETSTOLIST );
-//		  DoMethod( objs[ GID_TEXT      ], MUIM_Notify, MUIA_String_Contents, MUIV_EveryTime, obj, 1, MM_SETTINGSSERVER_GADGETSTOLIST );
+		DoMethod( objs[ GID_SERVERLIST    ], MUIM_Notify, MUIA_NList_Active   , MUIV_EveryTime, obj, 1, MM_SETTINGSSERVER_SERVERLISTTOGADGETS );
+//		  DoMethod( objs[ GID_SERVERADD       ], MUIM_Notify, MUIA_Pressed, FALSE, objs[ GID_SERVERLIST ], 3, MM_SERVERLIST_SERVERADD, 0, 0 );
+//		  DoMethod( objs[ GID_SERVERREMOVE    ], MUIM_Notify, MUIA_Pressed, FALSE, objs[ GID_SERVERLIST ], 2, MUIM_NList_Remove, MUIV_NList_Remove_Selected );
+		DoMethod( objs[ GID_SERVERADDRESS ], MUIM_Notify, MUIA_String_Contents, MUIV_EveryTime, obj, 1, MM_SETTINGSSERVER_SERVERGADGETSTOLIST );
+		DoMethod( objs[ GID_SERVERPORT    ], MUIM_Notify, MUIA_String_Contents, MUIV_EveryTime, obj, 1, MM_SETTINGSSERVER_SERVERGADGETSTOLIST );
 
-//		  DoMethod( obj, MM_SETTINGSSERVER_LISTTOGADGETS );
+		DoMethod( objs[ GID_NICKLIST      ], MUIM_Notify, MUIA_NList_Active   , MUIV_EveryTime, obj, 1, MM_SETTINGSSERVER_NICKLISTTOGADGETS );
+//		  DoMethod( objs[ GID_SERVERADD       ], MUIM_Notify, MUIA_Pressed, FALSE, objs[ GID_SERVERLIST ], 3, MM_SERVERLIST_SERVERADD, 0, 0 );
+//		  DoMethod( objs[ GID_SERVERREMOVE    ], MUIM_Notify, MUIA_Pressed, FALSE, objs[ GID_SERVERLIST ], 2, MUIM_NList_Remove, MUIV_NList_Remove_Selected );
+		DoMethod( objs[ GID_CHANNELLIST   ], MUIM_Notify, MUIA_NList_Active   , MUIV_EveryTime, obj, 1, MM_SETTINGSSERVER_CHANNELLISTTOGADGETS );
+//		  DoMethod( objs[ GID_SERVERADD       ], MUIM_Notify, MUIA_Pressed, FALSE, objs[ GID_SERVERLIST ], 3, MM_SERVERLIST_SERVERADD, 0, 0 );
+//		  DoMethod( objs[ GID_SERVERREMOVE    ], MUIM_Notify, MUIA_Pressed, FALSE, objs[ GID_SERVERLIST ], 2, MUIM_NList_Remove, MUIV_NList_Remove_Selected );
+
+//		  DoMethod( obj, MM_SETTINGSSERVER_SERVERLISTTOGADGETS );
 
 		return( (ULONG) obj );
     }
 	return( (ULONG) NULL );
 }
 /* \\\ */
+/* /// MM_ResetToDefaults()
+**
+*/
+
+/*************************************************************************/
+
+static ULONG MM_ResetToDefaults( struct IClass *cl, Object *obj, Msg *msg )
+{
 #if 0
+struct mccdata *mccdata = INST_DATA( cl, obj );
+ULONG i;
+
+	for( i = 0 ; TAB_CONFIGITEMS[ i ].GadgetID != -1 ; i++ ) {
+		SetAttrs( mccdata->mcc_ClassObjects[ TAB_CONFIGITEMS[ i ].GadgetID ], TAB_CONFIGITEMS[ i ].Attr, TAB_CONFIGITEMS[ i ].Default, MUIA_ObjectID, TAB_CONFIGITEMS[ i ].ObjectID, TAG_DONE );
+	}
+#endif
+	return( 0 );
+}
+/* \\\ */
+
+/* /// MM_ReadConfig()
+**
+*/
+
+/*************************************************************************/
+
+static ULONG MM_ReadConfig( struct IClass *cl, Object *obj, struct MP_SETTINGSSERVER_READCONFIG *msg )
+{
+#if 0
+struct mccdata *mccdata = INST_DATA( cl, obj );
+ULONG i;
+
+	for( i = 0 ; TAB_CONFIGITEMS[ i ].GadgetID != -1 ; i++ ) {
+		if( TAB_CONFIGITEMS[ i ].ObjectID == msg->ObjectID ) {
+			return( (ULONG) MUIGetVar( mccdata->mcc_ClassObjects[ TAB_CONFIGITEMS[ i ].GadgetID ], TAB_CONFIGITEMS[ i ].Attr ) );
+		}
+	}
+#endif
+	return( 0 );
+}
+/* \\\ */
+
 /* /// MM_DisEnable()
 **
 */
@@ -157,88 +212,189 @@ static ULONG MM_DisEnable( struct IClass *cl, Object *obj, Msg *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 LONG pos;
-BOOL disabled = TRUE;
+BOOL server, nick, channel;
+
+	server = nick = channel = FALSE;
 
 	pos = MUIGetVar( mccdata->mcc_ClassObjects[ GID_SERVERLIST ], MUIA_NList_Active );
-	if( pos >= 0 ) {
-		disabled = FALSE;
+	if( pos < 0 ) {
+		server = TRUE;
+	}
+	pos = MUIGetVar( mccdata->mcc_ClassObjects[ GID_NICKLIST ], MUIA_NList_Active );
+	if( pos < 0 ) {
+		nick = TRUE;
+	}
+	pos = MUIGetVar( mccdata->mcc_ClassObjects[ GID_CHANNELLIST ], MUIA_NList_Active );
+	if( pos < 0 ) {
+		channel = TRUE;
 	}
 
-	SetAttrs( mccdata->mcc_ClassObjects[ GID_REMOVE  ], MUIA_Disabled, disabled, TAG_DONE );
-	SetAttrs( mccdata->mcc_ClassObjects[ GID_SERVER   ], MUIA_Disabled, disabled, TAG_DONE );
-	SetAttrs( mccdata->mcc_ClassObjects[ GID_TEXT    ], MUIA_Disabled, disabled, TAG_DONE );
+	SetAttrs( mccdata->mcc_ClassObjects[ GID_SERVERREMOVE    ], MUIA_Disabled, server          , TAG_DONE );
+	SetAttrs( mccdata->mcc_ClassObjects[ GID_SERVERADDRESS   ], MUIA_Disabled, server          , TAG_DONE );
+	SetAttrs( mccdata->mcc_ClassObjects[ GID_SERVERPORT      ], MUIA_Disabled, server          , TAG_DONE );
+	SetAttrs( mccdata->mcc_ClassObjects[ GID_NICKLIST        ], MUIA_Disabled, server          , TAG_DONE );
+	SetAttrs( mccdata->mcc_ClassObjects[ GID_NICKADD         ], MUIA_Disabled, server          , TAG_DONE );
+	SetAttrs( mccdata->mcc_ClassObjects[ GID_NICKREMOVE      ], MUIA_Disabled, server | nick   , TAG_DONE );
+	SetAttrs( mccdata->mcc_ClassObjects[ GID_NICKNAME        ], MUIA_Disabled, server | nick   , TAG_DONE );
+	SetAttrs( mccdata->mcc_ClassObjects[ GID_NICKPASSWORD    ], MUIA_Disabled, server | nick   , TAG_DONE );
+	SetAttrs( mccdata->mcc_ClassObjects[ GID_CHANNELLIST     ], MUIA_Disabled, server          , TAG_DONE );
+	SetAttrs( mccdata->mcc_ClassObjects[ GID_CHANNELADD      ], MUIA_Disabled, server          , TAG_DONE );
+	SetAttrs( mccdata->mcc_ClassObjects[ GID_CHANNELREMOVE   ], MUIA_Disabled, server | channel, TAG_DONE );
+	SetAttrs( mccdata->mcc_ClassObjects[ GID_CHANNELNAME     ], MUIA_Disabled, server | channel, TAG_DONE );
+	SetAttrs( mccdata->mcc_ClassObjects[ GID_CHANNELPASSWORD ], MUIA_Disabled, server | channel, TAG_DONE );
 
 	return( 0 );
 }
 /* \\\ */
-/* /// MM_GadgetsToList()
+/* /// MM_ServerGadgetsToList()
 **
 */
 
 /*************************************************************************/
 
-static ULONG MM_GadgetsToList( struct IClass *cl, Object *obj, Msg *msg UNUSED )
+static ULONG MM_ServerGadgetsToList( struct IClass *cl, Object *obj, Msg *msg UNUSED )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
-struct ServerEntry *ae = NULL;
+struct ServerEntry *se = NULL;
 
-	DoMethod( mccdata->mcc_ClassObjects[ GID_SERVERLIST ], MUIM_NList_GetEntry, MUIV_NList_GetEntry_Active, &ae );
+	DoMethod( mccdata->mcc_ClassObjects[ GID_SERVERLIST ], MUIM_NList_GetEntry, MUIV_NList_GetEntry_Active, &se );
 
-	if( ae ) {
+	if( se ) {
 		STRPTR str;
-		if( ( str = (STRPTR) MUIGetVar( mccdata->mcc_ClassObjects[ GID_SERVER ], MUIA_String_Contents ) ) ) {
-			strcpy( (char *) ae->ae_Server, (char *) str );
+		if( ( str = (STRPTR) MUIGetVar( mccdata->mcc_ClassObjects[ GID_SERVERADDRESS  ], MUIA_String_Contents ) ) ) {
+			strcpy( (char *) se->se_Address, (char *) str );
 		}
-		if( ( str = (STRPTR) MUIGetVar( mccdata->mcc_ClassObjects[ GID_TEXT ], MUIA_String_Contents ) ) ) {
-			strcpy( (char *) ae->ae_Text, (char *) str );
+		if( ( str = (STRPTR) MUIGetVar( mccdata->mcc_ClassObjects[ GID_SERVERPASSWORD ], MUIA_String_Contents ) ) ) {
+			strcpy( (char *) se->se_Password, (char *) str );
 		}
 		DoMethod( mccdata->mcc_ClassObjects[ GID_SERVERLIST ], MUIM_NList_Redraw, MUIV_NList_Redraw_Active );
 	}
 	return( 0 );
 }
 /* \\\ */
-/* /// MM_ListToGadgets()
+/* /// MM_ServerListToGadgets()
 **
 */
 
 /*************************************************************************/
 
-static ULONG MM_ListToGadgets( struct IClass *cl, Object *obj, Msg *msg UNUSED )
+static ULONG MM_ServerListToGadgets( struct IClass *cl, Object *obj, Msg *msg UNUSED )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
-struct ServerEntry *ae = NULL;
+struct ServerEntry *se = NULL;
 
-	DoMethod( mccdata->mcc_ClassObjects[ GID_SERVERLIST ], MUIM_NList_GetEntry, MUIV_NList_GetEntry_Active, &ae );
+	DoMethod( mccdata->mcc_ClassObjects[ GID_SERVERLIST ], MUIM_NList_GetEntry, MUIV_NList_GetEntry_Active, &se );
 
-	if( ae ) {
-		SetAttrs( mccdata->mcc_ClassObjects[ GID_SERVER ], MUIA_NoNotify, TRUE, MUIA_String_Contents, ae->ae_Server, TAG_DONE );
-		SetAttrs( mccdata->mcc_ClassObjects[ GID_TEXT  ], MUIA_NoNotify, TRUE, MUIA_String_Contents, ae->ae_Text , TAG_DONE );
+	if( se ) {
+		SetAttrs( mccdata->mcc_ClassObjects[ GID_SERVERADDRESS  ], MUIA_NoNotify, TRUE, MUIA_String_Contents, se->se_Address , TAG_DONE );
+		SetAttrs( mccdata->mcc_ClassObjects[ GID_SERVERPASSWORD ], MUIA_NoNotify, TRUE, MUIA_String_Contents, se->se_Password, TAG_DONE );
 	}
-
 	DoMethod( obj, MM_SETTINGSSERVER_DISENABLE );
 
 	return( 0 );
 }
+
 /* \\\ */
-/* /// MM_ReadConfig()
+/* /// MM_NickGadgetsToList()
 **
 */
 
 /*************************************************************************/
 
-static ULONG MM_ReadConfig( struct IClass *cl, Object *obj, struct MP_SETTINGSSERVER_READCONFIG *msg )
+static ULONG MM_NickGadgetsToList( struct IClass *cl, Object *obj, Msg *msg UNUSED )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
+struct NickEntry *ne = NULL;
 
-	switch( msg->ObjectID ) {
-		case OID_ALI_LIST:
-			return( (ULONG) mccdata->mcc_ClassObjects[ GID_SERVERLIST ] );
-		default:
-			return( 0 );
+	DoMethod( mccdata->mcc_ClassObjects[ GID_NICKLIST ], MUIM_NList_GetEntry, MUIV_NList_GetEntry_Active, &ne );
+
+	if( ne ) {
+		STRPTR str;
+		if( ( str = (STRPTR) MUIGetVar( mccdata->mcc_ClassObjects[ GID_NICKNAME       ], MUIA_String_Contents ) ) ) {
+			strcpy( (char *) ne->ne_Nick    , (char *) str );
+		}
+		if( ( str = (STRPTR) MUIGetVar( mccdata->mcc_ClassObjects[ GID_NICKPASSWORD ], MUIA_String_Contents ) ) ) {
+			strcpy( (char *) ne->ne_Password, (char *) str );
+		}
+		DoMethod( mccdata->mcc_ClassObjects[ GID_NICKLIST ], MUIM_NList_Redraw, MUIV_NList_Redraw_Active );
 	}
+	return( 0 );
 }
 /* \\\ */
-#endif
+/* /// MM_NickListToGadgets()
+**
+*/
+
+/*************************************************************************/
+
+static ULONG MM_NickListToGadgets( struct IClass *cl, Object *obj, Msg *msg UNUSED )
+{
+struct mccdata *mccdata = INST_DATA( cl, obj );
+struct NickEntry *ne = NULL;
+
+	DoMethod( mccdata->mcc_ClassObjects[ GID_NICKLIST ], MUIM_NList_GetEntry, MUIV_NList_GetEntry_Active, &ne );
+
+	if( ne ) {
+		SetAttrs( mccdata->mcc_ClassObjects[ GID_NICKNAME     ], MUIA_NoNotify, TRUE, MUIA_String_Contents, ne->ne_Nick    , TAG_DONE );
+		SetAttrs( mccdata->mcc_ClassObjects[ GID_NICKPASSWORD ], MUIA_NoNotify, TRUE, MUIA_String_Contents, ne->ne_Password, TAG_DONE );
+	}
+	DoMethod( obj, MM_SETTINGSSERVER_DISENABLE );
+
+	return( 0 );
+}
+
+/* \\\ */
+
+/* /// MM_ChannelGadgetsToList()
+**
+*/
+
+/*************************************************************************/
+
+static ULONG MM_ChannelGadgetsToList( struct IClass *cl, Object *obj, Msg *msg UNUSED )
+{
+struct mccdata *mccdata = INST_DATA( cl, obj );
+struct ChannelEntry *ce = NULL;
+
+	DoMethod( mccdata->mcc_ClassObjects[ GID_CHANNELLIST ], MUIM_NList_GetEntry, MUIV_NList_GetEntry_Active, &ce );
+
+	if( ce ) {
+		STRPTR str;
+		if( ( str = (STRPTR) MUIGetVar( mccdata->mcc_ClassObjects[ GID_CHANNELNAME     ], MUIA_String_Contents ) ) ) {
+			strcpy( (char *) ce->ce_Channel , (char *) str );
+		}
+		if( ( str = (STRPTR) MUIGetVar( mccdata->mcc_ClassObjects[ GID_CHANNELPASSWORD ], MUIA_String_Contents ) ) ) {
+			strcpy( (char *) ce->ce_Password, (char *) str );
+		}
+		DoMethod( mccdata->mcc_ClassObjects[ GID_CHANNELLIST ], MUIM_NList_Redraw, MUIV_NList_Redraw_Active );
+	}
+	return( 0 );
+}
+/* \\\ */
+/* /// MM_ChannelListToGadgets()
+**
+*/
+
+/*************************************************************************/
+
+static ULONG MM_ChannelListToGadgets( struct IClass *cl, Object *obj, Msg *msg UNUSED )
+{
+struct mccdata *mccdata = INST_DATA( cl, obj );
+struct ChannelEntry *ce = NULL;
+
+	DoMethod( mccdata->mcc_ClassObjects[ GID_CHANNELLIST ], MUIM_NList_GetEntry, MUIV_NList_GetEntry_Active, &ce );
+
+	if( ce ) {
+		SetAttrs( mccdata->mcc_ClassObjects[ GID_CHANNELNAME     ], MUIA_NoNotify, TRUE, MUIA_String_Contents, ce->ce_Channel , TAG_DONE );
+		SetAttrs( mccdata->mcc_ClassObjects[ GID_CHANNELPASSWORD ], MUIA_NoNotify, TRUE, MUIA_String_Contents, ce->ce_Password, TAG_DONE );
+	}
+	DoMethod( obj, MM_SETTINGSSERVER_DISENABLE );
+
+	return( 0 );
+}
+
+/* \\\ */
+
 /*
 ** Dispatcher, init and dispose
 */
@@ -253,12 +409,16 @@ DISPATCHER(MCC_SettingsServer_Dispatcher)
 {
     switch (msg->MethodID)
     {
-		case OM_NEW                             : return( OM_New                     ( cl, obj, (APTR) msg ) );
-//		  case MM_SETTINGSSERVER_DISENABLE         : return( MM_DisEnable                     ( cl, obj, (APTR) msg ) );
-//		  case MM_SETTINGSSERVER_GADGETSTOLIST     : return( MM_GadgetsToList                 ( cl, obj, (APTR) msg ) );
-//		  case MM_SETTINGSSERVER_LISTTOGADGETS     : return( MM_ListToGadgets                 ( cl, obj, (APTR) msg ) );
-//		  case MM_SETTINGSSERVER_READCONFIG        : return( MM_ReadConfig  ( cl, obj, (APTR) msg ) );
-
+		case OM_NEW                                     : return( OM_New                     ( cl, obj, (APTR) msg ) );
+		case MM_SETTINGSSERVER_READCONFIG               : return( MM_ReadConfig              ( cl, obj, (APTR) msg ) );
+		case MM_SETTINGSSERVER_RESETTODEFAULTS          : return( MM_ResetToDefaults         ( cl, obj, (APTR) msg ) );
+		case MM_SETTINGSSERVER_DISENABLE                : return( MM_DisEnable               ( cl, obj, (APTR) msg ) );
+		case MM_SETTINGSSERVER_SERVERGADGETSTOLIST      : return( MM_ServerGadgetsToList     ( cl, obj, (APTR) msg ) );
+		case MM_SETTINGSSERVER_SERVERLISTTOGADGETS      : return( MM_ServerListToGadgets     ( cl, obj, (APTR) msg ) );
+		case MM_SETTINGSSERVER_NICKGADGETSTOLIST        : return( MM_NickGadgetsToList       ( cl, obj, (APTR) msg ) );
+		case MM_SETTINGSSERVER_NICKLISTTOGADGETS        : return( MM_NickListToGadgets       ( cl, obj, (APTR) msg ) );
+		case MM_SETTINGSSERVER_CHANNELGADGETSTOLIST     : return( MM_ChannelGadgetsToList    ( cl, obj, (APTR) msg ) );
+		case MM_SETTINGSSERVER_CHANNELLISTTOGADGETS     : return( MM_ChannelListToGadgets    ( cl, obj, (APTR) msg ) );
 	}
 	return( DoSuperMethodA( cl, obj, msg ) );
 

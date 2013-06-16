@@ -24,12 +24,17 @@
 
 enum {
 MM_SERVERLIST_ADD =  0xFED00370,
+MM_SERVERLIST_ACTIVECHANGE,
+MM_SERVERLIST_IMPORTLISTASTEXT,
+MM_SERVERLIST_EXPORTLISTASTEXT,
 /* Attributes */
 MA_SERVERLIST_CHANNELLISTOBJ,
 MA_SERVERLIST_NICKLISTOBJ,
 };
 
-struct MP_SERVERLIST_ADD    { ULONG MethodID; STRPTR Name; STRPTR Address; ULONG Port; STRPTR Password; ULONG Flags; STRPTR Charset; };
+struct MP_SERVERLIST_ADD              { ULONG MethodID; STRPTR Name; STRPTR Address; ULONG Port; STRPTR Password; STRPTR Charset; ULONG Flags;  };
+struct MP_SERVERLIST_IMPORTLISTASTEXT { ULONG MethodID; STRPTR Name; };
+struct MP_SERVERLIST_EXPORTLISTASTEXT { ULONG MethodID; STRPTR Name; };
 
 /*************************************************************************/
 
@@ -63,6 +68,7 @@ struct ServerEntry {
 	char          se_Password[ SERVERENTRY_PASSWORD_SIZEOF + 2 ];
 };
 
+#define SERVERENTRYF_AUTOCONNECT 1
 
 /*************************************************************************/
 

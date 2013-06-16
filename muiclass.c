@@ -585,3 +585,21 @@ IPTR DoSuperNew(struct IClass *cl, Object *obj, ULONG tag1, ...)
     AROS_SLOWSTACKTAGS_POST
 }
 #endif
+
+
+#ifdef __MORPHOS__
+#ifdef ENABLE_GEITDEBUG
+#define DEBUG
+#include "debug.h"
+#include "debug.c"
+#undef DEBUG
+#undef REG
+#undef REGARGS
+#undef STDARGS
+#undef FAR
+#undef INLINE
+#else
+#undef debug
+void debug() {}
+#endif /* ENABLE_GEITDEBUG */
+#endif /* __MORPHOS__ */

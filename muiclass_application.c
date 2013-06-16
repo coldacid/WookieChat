@@ -214,7 +214,6 @@ struct mccdata *mccdata = INST_DATA( cl, obj );
 }
 /* \\\ */
 
-
 /*
 ** Dispatcher, init and dispose
 */

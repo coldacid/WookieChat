@@ -26,6 +26,8 @@
 #include <string.h>
 #include <stdio.h>
 
+#include "functions.h"
+#include "intern.h"
 #include "locale.h"
 #include "muiclass.h"
 #include "muiclass_windowsettings.h"
@@ -35,6 +37,8 @@
 #include "version.h"
 
 /*************************************************************************/
+
+#define LINEBUFFER_SIZEOF 0x2000
 
 /*
 ** gadgets used by this class
@@ -64,12 +68,17 @@ struct mccdata
 
 static ULONG OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
 {
-	return( (ULONG) (obj = (Object *) DoSuperNew( cl, obj,
+	if( ( obj = (Object *) DoSuperNew( cl, obj,
 													MUIA_NList_Title         , TRUE,
 													MUIA_CycleChain          , 1,
 													MUIA_NList_Format        , "BAR,BAR,BAR,BAR",
-													TAG_DONE ) ) );
+													MUIA_ObjectID            , OID_SVR_LIST,
+													TAG_DONE ) ) ) {
 
+		DoMethod( obj, MUIM_Notify, MUIA_NList_Active, MUIV_EveryTime, obj, 1, MM_SERVERLIST_ACTIVECHANGE );
+
+	}
+	return( (ULONG) obj );
 }
 /* \\\ */
 /* /// OM_Set()
@@ -108,13 +117,15 @@ struct TagItem *tstate;
 static ULONG OM_Display( struct IClass *cl, Object *obj, struct MUIP_NList_Display *msg )
 {
 STRPTR *array = msg->strings;
-struct ServerEntry *ee;
+struct ServerEntry *se;
+static char displayport[10];
 
-	if( ( ee = msg->entry ) ) {
-		*array++ = (STRPTR) "ss";
-		*array++ = (STRPTR) "ss";
-		*array++ = (STRPTR) "ss";
-		*array++ = (STRPTR) "ss";
+	if( ( se = msg->entry ) ) {
+		sprintf( displayport, (char*) "%ld", se->se_Port );
+		*array++ = (STRPTR) se->se_Name;
+		*array++ = (STRPTR) displayport;
+		*array++ = (STRPTR) ( se->se_Flags & SERVERENTRYF_AUTOCONNECT ) ? LGS( MSG_YES ) : LGS( MSG_NO );
+		*array++ = (STRPTR) se->se_Charset;
 	} else {
 		*array++ = (STRPTR) LGS( MSG_LV_SERVER  );
 		*array++ = (STRPTR) LGS( MSG_LV_PORT    );
@@ -143,9 +154,13 @@ ULONG i;
 			for( i = 0 ; ; i++ ) {
 				tce = NULL;
 				DoMethod( mccdata->mcc_ClassObjects[ GID_CHANNELLIST ], MUIM_NList_GetEntry, i, &tce );
-				if( tce && ( tce == ce ) ) {
-					/* if channel is in list, remove or we will display trashed data */
-					DoMethod( mccdata->mcc_ClassObjects[ GID_CHANNELLIST ], MUIM_NList_Remove, i );
+				if( tce ) {
+					if( ( tce == ce ) ) {
+						/* if channel is in list, remove or we will display trashed data */
+						DoMethod( mccdata->mcc_ClassObjects[ GID_CHANNELLIST ], MUIM_NList_Remove, i );
+						break;
+					}
+				} else {
 					break;
 				}
 			}
@@ -155,9 +170,13 @@ ULONG i;
 			for( i = 0 ; ; i++ ) {
 				tne = NULL;
 				DoMethod( mccdata->mcc_ClassObjects[ GID_NICKLIST ], MUIM_NList_GetEntry, i, &tne );
-				if( tne && ( tne == ne ) ) {
-					/* if channel is in list, remove or we will display trashed data */
-					DoMethod( mccdata->mcc_ClassObjects[ GID_CHANNELLIST ], MUIM_NList_Remove, i );
+				if( tne ) {
+					if( ( tne == ne ) ) {
+						/* if channel is in list, remove or we will display trashed data */
+						DoMethod( mccdata->mcc_ClassObjects[ GID_CHANNELLIST ], MUIM_NList_Remove, i );
+						break;
+					}
+				} else {
 					break;
 				}
 			}
@@ -168,7 +187,7 @@ ULONG i;
 	return( 0 );
 }
 /* \\\ */
-#if 0
+
 /* /// OM_Import()
 **
 */
@@ -177,20 +196,10 @@ ULONG i;
 
 static ULONG OM_Import( struct IClass *cl, Object *obj, struct MUIP_Import *msg )
 {
-struct ServerEntry *ee;
-ULONG i;
-char *text, *buffer;
+	DoMethod( obj, MM_SERVERLIST_IMPORTLISTASTEXT, DEFAULT_SETTINGSSERVER_NAME );
 
-	for( i = 0 ;  ; i++ ) {
-		ee = NULL;
-		DoMethod( obj, MUIM_NList_GetEntry, i, &ee );
-		if( ee ) {
-			if( ( text = (char *) DoMethod( msg->dataspace, MUIM_Dataspace_Find, OID_SVR_LIST + ee->ee_Type + 1 ) ) ) {
-			}
-		} else {
-			break;
-		}
-	}
+	DoMethod( obj, MM_SERVERLIST_ACTIVECHANGE );
+
 	return( DoSuperMethodA( cl, obj, (Msg) msg ) );
 }
 /* \\\ */
@@ -202,65 +211,12 @@ char *text, *buffer;
 
 static ULONG OM_Export( struct IClass *cl, Object *obj, struct MUIP_Import *msg )
 {
-struct ServerEntry *ee;
-char buffer[ SERVERENTRY_SCRIPT_SIZEOF + SERVERENTRY_TEXT_SIZEOF + 64 ];
-ULONG i;
 
-	for( i = 0 ;  ; i++ ) {
-		ee = NULL;
-		DoMethod( obj, MUIM_NList_GetEntry, i, &ee );
-		if( ee ) {
-			sprintf( buffer, "SERVER \"%s\" PORT %ld CHARSET \"%s\" SPASSWORD \"%s\" NPASSWORD \"%s\" JOIN ", ee->ee_Mode, ee->ee_Script, ee->ee_Text );
-			DoMethod( msg->dataspace, MUIM_Dataspace_Add, buffer, strlen( buffer ) + 1, OID_EVT_LIST + ee->ee_Type + 1 );
-		} else {
-			break;
-		}
-	}
+	DoMethod( obj, MM_SERVERLIST_EXPORTLISTASTEXT, DEFAULT_SETTINGSSERVER_NAME );
+
 	return( DoSuperMethodA( cl, obj, (Msg) msg ) );
 }
 /* \\\ */
-/* /// MM_Add()
-**
-*/
-
-/*************************************************************************/
-
-static ULONG MM_Add( struct IClass *cl, Object *obj, struct MP_SERVERLIST_ADD *msg )
-{
-struct ServerEntry *ee;
-ULONG i, newitem = 0;
-
-	/* old item in list ? */
-	for( i = 0 ;  ; i++ ) {
-		ee = NULL;
-		DoMethod( obj, MUIM_NList_GetEntry, i, &ee );
-		if( ee ) {
-			if( ee->ee_Type == msg->Type ) {
-				break;
-			}
-		} else {
-			break;
-		}
-	}
-	/* no item found? Then alloc new entry */
-	if( !ee ) {
-		ee = AllocMem( sizeof( struct ServerEntry ), MEMF_ANY|MEMF_CLEAR );
-		newitem++;
-	}
-	if( ee ) {
-		/* fill / update entry */
-		ee->ee_Type = msg->Type;
-		ee->ee_Mode = msg->Mode;
-		strncpy( (char *) ee->ee_Script  , (char *) ( msg->Script ? msg->Script : (STRPTR) "" ), SERVERENTRY_SCRIPT_SIZEOF );
-		strncpy( (char *) ee->ee_Text    , (char *) ( msg->Text   ? msg->Text   : (STRPTR) "" ), SERVERENTRY_TEXT_SIZEOF   );
-		if( newitem ) { /* only add if entry is new */
-			DoMethod( obj, MUIM_NList_InsertSingle, ee, MUIV_NList_Insert_Bottom );
-		}
-	}
-	return( (ULONG) ee );
-}
-/* \\\ */
-#endif
 
 /* /// MM_Add()
 **
@@ -281,8 +237,133 @@ struct ServerEntry *se;
 		strncpy( (char *) se->se_Charset , (char *) ( msg->Charset  ? msg->Charset  : (STRPTR) "UTF-8" ), SERVERENTRY_CHARSET_SIZEOF  );
 		se->se_Port  = msg->Port;
 		se->se_Flags = msg->Flags;
+		DoMethod( obj, MUIM_NList_InsertSingle, se, MUIV_NList_Insert_Bottom );
 	}
 	return( (ULONG) se );
+}
+/* \\\ */
+/* /// MM_ActiveChange()
+**
+*/
+
+/*************************************************************************/
+
+static ULONG MM_ActiveChange( struct IClass *cl, Object *obj, Msg *msg )
+{
+struct mccdata *mccdata = INST_DATA( cl, obj );
+struct ServerEntry *se;
+struct ChannelEntry *ce;
+struct NickEntry *ne;
+
+	DoMethod( mccdata->mcc_ClassObjects[ GID_CHANNELLIST ], MUIM_NList_Clear );
+	DoMethod( mccdata->mcc_ClassObjects[ GID_NICKLIST    ], MUIM_NList_Clear );
+
+	se = NULL;
+	DoMethod( obj, MUIM_NList_GetEntry, MUIV_NList_GetEntry_Active, &se );
+	if( se ) {
+		for( ce = (APTR) se->se_ChannelList.lh_Head ; ce->ce_Succ ; ce = ce->ce_Succ ) {
+			DoMethod( mccdata->mcc_ClassObjects[ GID_CHANNELLIST ], MUIM_NList_InsertSingle, ce, MUIV_NList_Insert_Bottom );
+		}
+		for( ne = (APTR) se->se_NickList.lh_Head ; ne->ne_Succ ; ne = ne->ne_Succ ) {
+			DoMethod( mccdata->mcc_ClassObjects[ GID_NICKLIST ], MUIM_NList_InsertSingle, ne, MUIV_NList_Insert_Bottom );
+		}
+	}
+	return( 0 );
+}
+/* \\\ */
+
+/* /// MM_ExportListAsText()
+*/
+
+/*************************************************************************/
+
+static ULONG MM_ExportListAsText( struct IClass *cl, Object *obj, struct MP_SERVERLIST_EXPORTLISTASTEXT *msg )
+{
+BPTR handle;
+ULONG i;
+struct ServerEntry *se;
+
+	if( ( handle = Open( (_ub_cs) msg->Name, MODE_NEWFILE ) ) ) {
+		for( i = 0 ;  ; i++ ) {
+			se = NULL;
+			DoMethod( obj, MUIM_NList_GetEntry, i, &se );
+			if( se ) {
+				IPTR args[10];
+				args[0] = (IPTR) se->se_Name;
+				args[1] = (IPTR) se->se_Address;
+				args[2] = (IPTR) se->se_Port;
+				args[3] = (IPTR) se->se_Password;
+				args[4] = (IPTR) se->se_Charset;
+				args[5] = (IPTR) ( ( se->se_Flags & SERVERENTRYF_AUTOCONNECT ) ? " CONNECT" : "" );
+				VPrintf( (CONST_STRPTR)  "SERVER \"%s\" ADDRESS \"%s\" PORT %ld PASSWORD \"%s\" CHARSET \"%s\"%s\n", &args );
+				#if 0
+				sprintf( buffer, "SERVER \"%s\" ADDRESS \"%s\" PORT %ld PASSWORD \"%s\" CHARSET \"%s\"%s",
+													se->se_Name,
+													se->se_Address,
+													se->se_Port,
+													se->se_Password,
+													se->se_Charset,
+													( ( se->se_Flags & SERVERENTRYF_AUTOCONNECT ) ? " CONNECT" : "" )
+													);
+				FPuts( handle, (CONST_STRPTR) buffer );
+				#endif
+			} else {
+	            break;
+			}
+		}
+		Close( handle );
+    }
+	return( 0 );
+}
+/* \\\ */
+/* /// MM_ImportListAsText()
+*/
+
+
+/*************************************************************************/
+
+static ULONG MM_ImportListAsText( struct IClass *cl, Object *obj, struct MP_SERVERLIST_IMPORTLISTASTEXT *msg )
+{
+struct mccdata *mccdata = INST_DATA( cl, obj );
+BPTR handle;
+char *linebuffer;
+struct ServerEntry *se = NULL;
+
+	DoMethod( obj, MUIM_NList_Clear );
+
+	if( ( linebuffer = AllocVec( LINEBUFFER_SIZEOF, MEMF_ANY ) ) ) {
+		if( ( handle = Open( (_ub_cs) msg->Name, MODE_OLDFILE ) ) ) {
+			while( FGets( handle, (STRPTR) linebuffer, LINEBUFFER_SIZEOF - 1 ) ) {
+				struct SimpleReadArgsData *srad;
+				if( *linebuffer && *linebuffer != ';' ) {
+					if( ( srad = SimpleReadArgsParse( "SERVER/A,ADDRESS/A,PORT/N/A,PASSWORD/A,CHARSET/A,CONNECT/S", linebuffer ) ) ) {
+						enum{ SERVERARG_SERVER = 0, SERVERARG_ADDRESS, SERVERARG_PORT, SERVERARG_PASSWORD, SERVERARG_CHARSET, SERVERARG_CONNECT };
+						se = (APTR) DoMethod( obj, MM_SERVERLIST_ADD, srad->srad_ArgArray[SERVERARG_SERVER],
+																		srad->srad_ArgArray[SERVERARG_ADDRESS],
+																		*((ULONG*)srad->srad_ArgArray[SERVERARG_PORT]),
+																		srad->srad_ArgArray[SERVERARG_PASSWORD],
+																		srad->srad_ArgArray[SERVERARG_CHARSET],
+																		( srad->srad_ArgArray[SERVERARG_CONNECT] ? SERVERENTRYF_AUTOCONNECT : 0 ) );
+						SimpleReadArgsFree( srad );
+					} else {
+						if( se ) {
+							if( ( srad = SimpleReadArgsParse( "CHANNEL/A,PASSWORD/A", linebuffer ) ) ) {
+								DoMethod( mccdata->mcc_ClassObjects[ GID_CHANNELLIST ], MM_CHANNELLIST_ADD, se, srad->srad_ArgArray[0], srad->srad_ArgArray[1] );
+								SimpleReadArgsFree( srad );
+							} else {
+								if( ( srad = SimpleReadArgsParse( "NICK/A,PASSWORD/A", linebuffer ) ) ) {
+									DoMethod( mccdata->mcc_ClassObjects[ GID_NICKLIST ], MM_NICKLIST_ADD, se, srad->srad_ArgArray[0], srad->srad_ArgArray[1] );
+								}
+							}
+						}
+					}
+				}
+			}
+			Close( handle );
+        }
+		FreeVec( linebuffer );
+    }
+	return( 0 );
 }
 /* \\\ */
 
@@ -305,11 +386,14 @@ DISPATCHER(MCC_ServerList_Dispatcher)
 		case OM_SET                          : return( OM_Set                           ( cl, obj, (APTR) msg ) );
 		case MUIM_NList_Display              : return( OM_Display                       ( cl, obj, (APTR) msg ) );
 		case MUIM_NList_Destruct             : return( OM_Destruct                      ( cl, obj, (APTR) msg ) );
-#if 0
+
 		case MUIM_Import                     : return( OM_Import                        ( cl, obj, (APTR) msg ) );
 		case MUIM_Export                     : return( OM_Export                        ( cl, obj, (APTR) msg ) );
-#endif
+
 		case MM_SERVERLIST_ADD               : return( MM_Add                           ( cl, obj, (APTR) msg ) );
+		case MM_SERVERLIST_ACTIVECHANGE      : return( MM_ActiveChange                  ( cl, obj, (APTR) msg ) );
+		case MM_SERVERLIST_IMPORTLISTASTEXT  : return( MM_ImportListAsText              ( cl, obj, (APTR) msg ) );
+		case MM_SERVERLIST_EXPORTLISTASTEXT  : return( MM_ExportListAsText              ( cl, obj, (APTR) msg ) );
     }
 	return( DoSuperMethodA( cl, obj, msg ) );
 

@@ -151,7 +151,7 @@ ULONG i;
 		CopyMem( &objs[0], &mccdata->mcc_ClassObjects[0], sizeof( mccdata->mcc_ClassObjects));
 
 		for( i = 0 ; i < SETTINGS_LAST ; i++ ) {
-			DoMethod( objs[ GID_PAGELIST ], MUIM_NList_InsertSingle, LGS( MSG_PG_NICK + i ), MUIV_NList_Insert_Bottom );
+			DoMethod( objs[ GID_PAGELIST ], MUIM_NList_InsertSingle, LGS( MSG_PG_SERVER + i ), MUIV_NList_Insert_Bottom );
 		}
 
 

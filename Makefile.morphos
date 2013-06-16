@@ -1,7 +1,7 @@
 CC          = ppc-morphos-gcc-4
 LIBS        = -laboxstubs -labox -ldebug
 INCS        =
-DEFINES     =
+DEFINES     = -DENABLE_GEITDEBUG
 CFLAGS      = $(INCS) $(DEFINES) -std=gnu99 -noixemul -Wall -Wno-format -g -O0
 APPLICATION = WookieChat
 SYSTEM      = MorphOS
