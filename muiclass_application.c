@@ -109,10 +109,8 @@ Object *objs[ GID_LAST ];
 		CopyMem( &objs[0], &mccdata->mcc_ClassObjects[0], sizeof( mccdata->mcc_ClassObjects));
 
 		/* load settings */
-
 		DoMethod( obj, MUIM_Application_Load, MUIV_Application_Load_ENVARC );
 		DoMethod( obj, MUIM_Application_Load, MUIV_Application_Load_ENV );
-
 		
 		return( (ULONG) obj );
     }
@@ -145,8 +143,6 @@ struct mccdata *mccdata = INST_DATA( cl, obj );
 static ULONG OM_Get(struct IClass *cl, Object *obj, struct opGet *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
-
-//	  debug( SOURCENAME ": OM_Get( IClass: 0x%08lx, Object: 0x%08lx, MSG: 0x%08lx)\n", cl, obj, msg );
 
 	switch( msg->opg_AttrID ) {
 		case MA_APPLICATION_WINDOWMAIN          : *msg->opg_Storage = (ULONG) mccdata->mcc_ClassObjects[ WID_MAIN          ] ; return( TRUE );

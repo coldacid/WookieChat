@@ -52,7 +52,7 @@ void    MCC_ServerList_DisposeClass( void );
 ** server entry structure
 */
 
-#define SERVERENTRY_NAME_SIZEOF       30
+#define SERVERENTRY_NAME_SIZEOF       16
 #define SERVERENTRY_ADDRESS_SIZEOF   254
 #define SERVERENTRY_CHARSET_SIZEOF    30
 #define SERVERENTRY_PASSWORD_SIZEOF   30

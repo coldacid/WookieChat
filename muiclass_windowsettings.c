@@ -229,8 +229,6 @@ static ULONG OM_Get( struct IClass *cl, Object *obj, struct opGet *msg )
 {
 struct mccdata *mccdata = INST_DATA(cl,obj);
 
-//	  debug( SOURCENAME ": MCC_OM_Get( IClass: 0x%08lx, Object: 0x%08lx, MSG: 0x%08lx)\n", cl, obj, msg );
-
 	switch( msg->opg_AttrID ) {
 		case MA_WINDOWSETTINGS_VISUALCHANGE: *msg->opg_Storage = mccdata->mcc_VisualChange   ; return( TRUE );
 		default: return( DoSuperMethodA( cl, obj, (Msg) msg ) );

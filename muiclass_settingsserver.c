@@ -45,9 +45,12 @@ enum
 GID_SERVERLIST = 0,
 GID_SERVERADD,
 GID_SERVERREMOVE,
+GID_SERVERNAME,
 GID_SERVERADDRESS,
 GID_SERVERPORT,
 GID_SERVERPASSWORD,
+GID_SERVERAUTOCONNECT,
+GID_SERVERCHARSET,
 GID_NICKLIST,
 GID_NICKADD,
 GID_NICKREMOVE,
@@ -113,14 +116,23 @@ Object *objs[ GID_LAST ];
 					End,
 				End,
 				Child, HGroup,
-					Child, objs[ GID_SERVERADD     ] = MUICreateSmallButton( MSG_MUICLASS_SETTINGSSERVER_ADD_GAD ),
-					Child, objs[ GID_SERVERREMOVE  ] = MUICreateSmallButton( MSG_MUICLASS_SETTINGSSERVER_REMOVE_GAD ),
+					Child, objs[ GID_SERVERADD      ] = MUICreateSmallButton( MSG_MUICLASS_SETTINGSSERVER_ADD_GAD ),
+					Child, objs[ GID_SERVERREMOVE   ] = MUICreateSmallButton( MSG_MUICLASS_SETTINGSSERVER_REMOVE_GAD ),
+					Child, MUICreateLabel( MSG_MUICLASS_SETTINGSSERVER_NAME_GAD ),
+					Child, objs[ GID_SERVERNAME     ] = MUICreateStringFixed( MSG_MUICLASS_SETTINGSSERVER_NAME_GAD, SERVERENTRY_NAME_SIZEOF ),
 					Child, MUICreateLabel( MSG_MUICLASS_SETTINGSSERVER_ADDRESS_GAD ),
-					Child, objs[ GID_SERVERADDRESS ] = MUICreateStringFixed( MSG_MUICLASS_SETTINGSSERVER_ADDRESS_GAD, SERVERENTRY_ADDRESS_SIZEOF ),
+					Child, objs[ GID_SERVERADDRESS  ] = MUICreateString( MSG_MUICLASS_SETTINGSSERVER_ADDRESS_GAD, SERVERENTRY_ADDRESS_SIZEOF ),
+					Child, HVSpace,
+				End,
+				Child, HGroup,
 					Child, MUICreateLabel( MSG_MUICLASS_SETTINGSSERVER_PORT_GAD ),
-					Child, objs[ GID_SERVERPORT    ] = MUICreateInteger( MSG_MUICLASS_SETTINGSSERVER_PORT_GAD, 5 ),
+					Child, objs[ GID_SERVERPORT     ] = MUICreateInteger( MSG_MUICLASS_SETTINGSSERVER_PORT_GAD, 5 ),
 					Child, MUICreateLabel( MSG_MUICLASS_SETTINGSSERVER_PASSWORD_GAD ),
-					Child, objs[ GID_SERVERADDRESS ] = MUICreateStringFixed( MSG_MUICLASS_SETTINGSSERVER_PASSWORD_GAD, SERVERENTRY_PASSWORD_SIZEOF ),
+					Child, objs[ GID_SERVERPASSWORD ] = MUICreateString( MSG_MUICLASS_SETTINGSSERVER_PASSWORD_GAD, SERVERENTRY_PASSWORD_SIZEOF ),
+					Child, MUICreateLabel( MSG_MUICLASS_SETTINGSSERVER_CHARSET_GAD ),
+					Child, objs[ GID_SERVERCHARSET ] = MUICreateString( MSG_MUICLASS_SETTINGSSERVER_CHARSET_GAD, SERVERENTRY_CHARSET_SIZEOF ),
+					Child, objs[ GID_SERVERAUTOCONNECT ] = MUICreateCheckbox( MSG_MUICLASS_SETTINGSSERVER_AUTOCONNECT_GAD, FALSE ),
+					Child, MUICreateLabelLeft( MSG_MUICLASS_SETTINGSSERVER_AUTOCONNECT_GAD ),
 					Child, HVSpace,
 				End,
 
@@ -131,6 +143,8 @@ Object *objs[ GID_LAST ];
 		CopyMem( &objs[0], &mccdata->mcc_ClassObjects[0], sizeof( mccdata->mcc_ClassObjects));
 		
 		SetAttrs( objs[ GID_SERVERADDRESS    ], MUIA_String_Reject, " /\?", TAG_DONE );
+		SetAttrs( objs[ GID_SERVERPASSWORD   ], MUIA_String_Reject, " /\?", TAG_DONE );
+		SetAttrs( objs[ GID_SERVERCHARSET    ], MUIA_String_Reject, " /\?", TAG_DONE );
 		SetAttrs( objs[ GID_NICKNAME         ], MUIA_String_Reject, " /\?", TAG_DONE );
 		SetAttrs( objs[ GID_NICKPASSWORD     ], MUIA_String_Reject, " /\?", TAG_DONE );
 		SetAttrs( objs[ GID_CHANNELNAME      ], MUIA_String_Reject, " /\?", TAG_DONE );
@@ -141,8 +155,9 @@ Object *objs[ GID_LAST ];
 
 
 		DoMethod( objs[ GID_SERVERLIST    ], MUIM_Notify, MUIA_NList_Active   , MUIV_EveryTime, obj, 1, MM_SETTINGSSERVER_SERVERLISTTOGADGETS );
-//		  DoMethod( objs[ GID_SERVERADD       ], MUIM_Notify, MUIA_Pressed, FALSE, objs[ GID_SERVERLIST ], 3, MM_SERVERLIST_SERVERADD, 0, 0 );
-//		  DoMethod( objs[ GID_SERVERREMOVE    ], MUIM_Notify, MUIA_Pressed, FALSE, objs[ GID_SERVERLIST ], 2, MUIM_NList_Remove, MUIV_NList_Remove_Selected );
+		DoMethod( objs[ GID_SERVERADD     ], MUIM_Notify, MUIA_Pressed        , FALSE         , objs[ GID_SERVERLIST ], 6, MM_SERVERLIST_ADD, NULL, NULL, 6667, NULL, NULL, 0 );
+		DoMethod( objs[ GID_SERVERREMOVE  ], MUIM_Notify, MUIA_Pressed        , FALSE         , objs[ GID_SERVERLIST ], 2, MUIM_NList_Remove, MUIV_NList_Remove_Selected );
+		DoMethod( objs[ GID_SERVERNAME    ], MUIM_Notify, MUIA_String_Contents, MUIV_EveryTime, obj, 1, MM_SETTINGSSERVER_SERVERGADGETSTOLIST );
 		DoMethod( objs[ GID_SERVERADDRESS ], MUIM_Notify, MUIA_String_Contents, MUIV_EveryTime, obj, 1, MM_SETTINGSSERVER_SERVERGADGETSTOLIST );
 		DoMethod( objs[ GID_SERVERPORT    ], MUIM_Notify, MUIA_String_Contents, MUIV_EveryTime, obj, 1, MM_SETTINGSSERVER_SERVERGADGETSTOLIST );
 
@@ -153,7 +168,7 @@ Object *objs[ GID_LAST ];
 //		  DoMethod( objs[ GID_SERVERADD       ], MUIM_Notify, MUIA_Pressed, FALSE, objs[ GID_SERVERLIST ], 3, MM_SERVERLIST_SERVERADD, 0, 0 );
 //		  DoMethod( objs[ GID_SERVERREMOVE    ], MUIM_Notify, MUIA_Pressed, FALSE, objs[ GID_SERVERLIST ], 2, MUIM_NList_Remove, MUIV_NList_Remove_Selected );
 
-//		  DoMethod( obj, MM_SETTINGSSERVER_SERVERLISTTOGADGETS );
+	    DoMethod( obj, MM_SETTINGSSERVER_SERVERLISTTOGADGETS );
 
 		return( (ULONG) obj );
     }
@@ -229,19 +244,23 @@ BOOL server, nick, channel;
 		channel = TRUE;
 	}
 
-	SetAttrs( mccdata->mcc_ClassObjects[ GID_SERVERREMOVE    ], MUIA_Disabled, server          , TAG_DONE );
-	SetAttrs( mccdata->mcc_ClassObjects[ GID_SERVERADDRESS   ], MUIA_Disabled, server          , TAG_DONE );
-	SetAttrs( mccdata->mcc_ClassObjects[ GID_SERVERPORT      ], MUIA_Disabled, server          , TAG_DONE );
-	SetAttrs( mccdata->mcc_ClassObjects[ GID_NICKLIST        ], MUIA_Disabled, server          , TAG_DONE );
-	SetAttrs( mccdata->mcc_ClassObjects[ GID_NICKADD         ], MUIA_Disabled, server          , TAG_DONE );
-	SetAttrs( mccdata->mcc_ClassObjects[ GID_NICKREMOVE      ], MUIA_Disabled, server | nick   , TAG_DONE );
-	SetAttrs( mccdata->mcc_ClassObjects[ GID_NICKNAME        ], MUIA_Disabled, server | nick   , TAG_DONE );
-	SetAttrs( mccdata->mcc_ClassObjects[ GID_NICKPASSWORD    ], MUIA_Disabled, server | nick   , TAG_DONE );
-	SetAttrs( mccdata->mcc_ClassObjects[ GID_CHANNELLIST     ], MUIA_Disabled, server          , TAG_DONE );
-	SetAttrs( mccdata->mcc_ClassObjects[ GID_CHANNELADD      ], MUIA_Disabled, server          , TAG_DONE );
-	SetAttrs( mccdata->mcc_ClassObjects[ GID_CHANNELREMOVE   ], MUIA_Disabled, server | channel, TAG_DONE );
-	SetAttrs( mccdata->mcc_ClassObjects[ GID_CHANNELNAME     ], MUIA_Disabled, server | channel, TAG_DONE );
-	SetAttrs( mccdata->mcc_ClassObjects[ GID_CHANNELPASSWORD ], MUIA_Disabled, server | channel, TAG_DONE );
+	SetAttrs( mccdata->mcc_ClassObjects[ GID_SERVERREMOVE      ], MUIA_Disabled, server          , TAG_DONE );
+	SetAttrs( mccdata->mcc_ClassObjects[ GID_SERVERNAME        ], MUIA_Disabled, server          , TAG_DONE );
+	SetAttrs( mccdata->mcc_ClassObjects[ GID_SERVERADDRESS     ], MUIA_Disabled, server          , TAG_DONE );
+	SetAttrs( mccdata->mcc_ClassObjects[ GID_SERVERPORT        ], MUIA_Disabled, server          , TAG_DONE );
+	SetAttrs( mccdata->mcc_ClassObjects[ GID_SERVERPASSWORD    ], MUIA_Disabled, server          , TAG_DONE );
+	SetAttrs( mccdata->mcc_ClassObjects[ GID_SERVERCHARSET     ], MUIA_Disabled, server          , TAG_DONE );
+	SetAttrs( mccdata->mcc_ClassObjects[ GID_SERVERAUTOCONNECT ], MUIA_Disabled, server          , TAG_DONE );
+	SetAttrs( mccdata->mcc_ClassObjects[ GID_NICKLIST          ], MUIA_Disabled, server          , TAG_DONE );
+	SetAttrs( mccdata->mcc_ClassObjects[ GID_NICKADD           ], MUIA_Disabled, server          , TAG_DONE );
+	SetAttrs( mccdata->mcc_ClassObjects[ GID_NICKREMOVE        ], MUIA_Disabled, server | nick   , TAG_DONE );
+	SetAttrs( mccdata->mcc_ClassObjects[ GID_NICKNAME          ], MUIA_Disabled, server | nick   , TAG_DONE );
+	SetAttrs( mccdata->mcc_ClassObjects[ GID_NICKPASSWORD      ], MUIA_Disabled, server | nick   , TAG_DONE );
+	SetAttrs( mccdata->mcc_ClassObjects[ GID_CHANNELLIST       ], MUIA_Disabled, server          , TAG_DONE );
+	SetAttrs( mccdata->mcc_ClassObjects[ GID_CHANNELADD        ], MUIA_Disabled, server          , TAG_DONE );
+	SetAttrs( mccdata->mcc_ClassObjects[ GID_CHANNELREMOVE     ], MUIA_Disabled, server | channel, TAG_DONE );
+	SetAttrs( mccdata->mcc_ClassObjects[ GID_CHANNELNAME       ], MUIA_Disabled, server | channel, TAG_DONE );
+	SetAttrs( mccdata->mcc_ClassObjects[ GID_CHANNELPASSWORD   ], MUIA_Disabled, server | channel, TAG_DONE );
 
 	return( 0 );
 }
@@ -261,12 +280,21 @@ struct ServerEntry *se = NULL;
 
 	if( se ) {
 		STRPTR str;
+		if( ( str = (STRPTR) MUIGetVar( mccdata->mcc_ClassObjects[ GID_SERVERNAME     ], MUIA_String_Contents ) ) ) {
+			strcpy( (char *) se->se_Name, (char *) str );
+		}
 		if( ( str = (STRPTR) MUIGetVar( mccdata->mcc_ClassObjects[ GID_SERVERADDRESS  ], MUIA_String_Contents ) ) ) {
 			strcpy( (char *) se->se_Address, (char *) str );
 		}
 		if( ( str = (STRPTR) MUIGetVar( mccdata->mcc_ClassObjects[ GID_SERVERPASSWORD ], MUIA_String_Contents ) ) ) {
 			strcpy( (char *) se->se_Password, (char *) str );
 		}
+		if( ( str = (STRPTR) MUIGetVar( mccdata->mcc_ClassObjects[ GID_SERVERCHARSET ], MUIA_String_Contents ) ) ) {
+			strcpy( (char *) se->se_Charset, (char *) str );
+		}
+		se->se_Port  = MUIGetVar( mccdata->mcc_ClassObjects[ GID_SERVERPORT ], MUIA_String_Integer );
+		se->se_Flags = MUIGetVar( mccdata->mcc_ClassObjects[ GID_SERVERAUTOCONNECT ], MUIA_Selected ) ? SERVERENTRYF_AUTOCONNECT : 0;
+
 		DoMethod( mccdata->mcc_ClassObjects[ GID_SERVERLIST ], MUIM_NList_Redraw, MUIV_NList_Redraw_Active );
 	}
 	return( 0 );
@@ -286,8 +314,12 @@ struct ServerEntry *se = NULL;
 	DoMethod( mccdata->mcc_ClassObjects[ GID_SERVERLIST ], MUIM_NList_GetEntry, MUIV_NList_GetEntry_Active, &se );
 
 	if( se ) {
-		SetAttrs( mccdata->mcc_ClassObjects[ GID_SERVERADDRESS  ], MUIA_NoNotify, TRUE, MUIA_String_Contents, se->se_Address , TAG_DONE );
-		SetAttrs( mccdata->mcc_ClassObjects[ GID_SERVERPASSWORD ], MUIA_NoNotify, TRUE, MUIA_String_Contents, se->se_Password, TAG_DONE );
+		SetAttrs( mccdata->mcc_ClassObjects[ GID_SERVERNAME        ], MUIA_NoNotify, TRUE, MUIA_String_Contents, se->se_Name    , TAG_DONE );
+		SetAttrs( mccdata->mcc_ClassObjects[ GID_SERVERADDRESS     ], MUIA_NoNotify, TRUE, MUIA_String_Contents, se->se_Address , TAG_DONE );
+		SetAttrs( mccdata->mcc_ClassObjects[ GID_SERVERPASSWORD    ], MUIA_NoNotify, TRUE, MUIA_String_Contents, se->se_Password, TAG_DONE );
+		SetAttrs( mccdata->mcc_ClassObjects[ GID_SERVERCHARSET     ], MUIA_NoNotify, TRUE, MUIA_String_Contents, se->se_Charset , TAG_DONE );
+		SetAttrs( mccdata->mcc_ClassObjects[ GID_SERVERPORT        ], MUIA_NoNotify, TRUE, MUIA_String_Integer , se->se_Port    , TAG_DONE );
+		SetAttrs( mccdata->mcc_ClassObjects[ GID_SERVERAUTOCONNECT ], MUIA_NoNotify, TRUE, MUIA_Selected       , ( ( se->se_Flags & SERVERENTRYF_AUTOCONNECT ) ? TRUE : FALSE ), TAG_DONE );
 	}
 	DoMethod( obj, MM_SETTINGSSERVER_DISENABLE );
 

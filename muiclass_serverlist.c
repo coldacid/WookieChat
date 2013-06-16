@@ -231,8 +231,8 @@ struct ServerEntry *se;
 	if( ( se = AllocVec( sizeof( struct ServerEntry ), MEMF_ANY|MEMF_CLEAR ) ) ) {
 		NEWLIST( &se->se_ChannelList );
 		NEWLIST( &se->se_NickList );
-		strncpy( (char *) se->se_Name    , (char *)   msg->Name   ,                                       SERVERENTRY_NAME_SIZEOF     );
-		strncpy( (char *) se->se_Address , (char *)   msg->Address,                                       SERVERENTRY_ADDRESS_SIZEOF  );
+		strncpy( (char *) se->se_Name    , (char *) ( msg->Name     ? msg->Name     : LGS( MSG_MUICLASS_SERVERLIST_DEFAULTNAME )), SERVERENTRY_NAME_SIZEOF     );
+		strncpy( (char *) se->se_Address , (char *) ( msg->Address  ? msg->Address  : LGS( MSG_MUICLASS_SERVERLIST_DEFAULTADDRESS )), SERVERENTRY_ADDRESS_SIZEOF  );
 		strncpy( (char *) se->se_Password, (char *) ( msg->Password ? msg->Password : (STRPTR) ""      ), SERVERENTRY_PASSWORD_SIZEOF );
 		strncpy( (char *) se->se_Charset , (char *) ( msg->Charset  ? msg->Charset  : (STRPTR) "UTF-8" ), SERVERENTRY_CHARSET_SIZEOF  );
 		se->se_Port  = msg->Port;

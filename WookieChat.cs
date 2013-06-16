@@ -9453,18 +9453,42 @@ MSG_MUICLASS_SETTINGSSERVER_REMOVE_HELP
 /
 ;
 MSG_MUICLASS_SETTINGSSERVER_AUTOCONNECT_GAD
-Auto connect with this server.
-Automatisch mit diesem Server verbinden.
-Auto connect with this server.
-Auto connect with this server.
-Auto connect with this server.
-Auto connect with this server.
-Auto connect with this server.
-Auto connect with this server.
-Auto connect with this server.
-Auto connect with this server.
+Auto connect
+Automatisch verbinden
+Auto connect
+Auto connect
+Auto connect
+Auto connect
+Auto connect
+Auto connect
+Auto connect
+Auto connect
 ;
 MSG_MUICLASS_SETTINGSSERVER_AUTOCONNECT_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
+MSG_MUICLASS_SETTINGSSERVER_NAME_GAD
+Name:
+Name:
+Name:
+Name:
+Name:
+Name:
+Name:
+Name:
+Name:
+Name:
+;
+MSG_MUICLASS_SETTINGSSERVER_NAME_HELP
 /
 /
 /
@@ -9766,6 +9790,30 @@ MSG_MUICLASS_SETTINGSSERVER_CHANNELPASSWORD_HELP
 ;
 ;
 ; MUICLASS_SERVERLIST
+;
+MSG_MUICLASS_SERVERLIST_DEFAULTNAME
+<name me>
+<name me>
+<name me>
+<name me>
+<name me>
+<name me>
+<name me>
+<name me>
+<name me>
+<name me>
+;
+MSG_MUICLASS_SERVERLIST_DEFAULTADDRESS
+irc.xxxx.yy
+irc.xxxx.yy
+irc.xxxx.yy
+irc.xxxx.yy
+irc.xxxx.yy
+irc.xxxx.yy
+irc.xxxx.yy
+irc.xxxx.yy
+irc.xxxx.yy
+irc.xxxx.yy
 ;
 MSG_LV_SERVER
 Server
