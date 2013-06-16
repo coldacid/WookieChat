@@ -1625,8 +1625,9 @@ struct channel_entry * ConstructLI_channel2_TextFunc(void) {
   register struct channel_entry *a1 __asm("a1");             struct channel_entry *anew_entry = a1;
   register struct Hook *a0 __asm("a0");                   struct Hook *hook = a0;
 #endif
-
-    struct channel_entry *work_entry = (struct channel_entry*) AllocMem(sizeof(struct channel_entry),MEMF_ANY);
+// geit FIXME: I replaced this to avoid bogus length values. No clue what goes wrong */
+//	  struct channel_entry *work_entry = (struct channel_entry*) AllocMem(sizeof(struct channel_entry),MEMF_ANY);
+	struct channel_entry *work_entry = (struct channel_entry*) AllocVec(sizeof(struct channel_entry),MEMF_ANY);
     *work_entry=*anew_entry;
     return work_entry;
 
@@ -1660,7 +1661,9 @@ static void DestructLI_channel2_TextFunc(void)
 
   if (new_entry)
   {
-        FreeMem((struct channel_entry*) new_entry, sizeof(new_entry));
+// geit FIXME: I replaced this to avoid bogus length values. No clue what goes wrong */
+//		 FreeMem((struct channel_entry*) new_entry, sizeof(new_entry));
+		FreeVec((struct channel_entry*) new_entry );
         new_entry=NULL;
 
     }
@@ -1691,7 +1694,9 @@ struct channel_entry * ConstructLI_channel_TextFunc(void) {
   register struct Hook *a0 __asm("a0");                   struct Hook *hook = a0;
 #endif
 
-    struct channel_entry *work_entry = (struct channel_entry*) AllocMem(sizeof(struct channel_entry),MEMF_ANY);
+// geit FIXME: I replaced this to avoid bogus length values. No clue what goes wrong */
+//	  struct channel_entry *work_entry = (struct channel_entry*) AllocMem(sizeof(struct channel_entry),MEMF_ANY);
+	struct channel_entry *work_entry = (struct channel_entry*) AllocVec(sizeof(struct channel_entry),MEMF_ANY);
     *work_entry=*anew_entry;
     return work_entry;
 
@@ -1725,7 +1730,9 @@ static void DestructLI_channel_TextFunc(void)
 
   if (new_entry)
   {
-        FreeMem((struct channel_entry*) new_entry, sizeof(new_entry));
+// geit FIXME: I replaced this to avoid bogus length values. No clue what goes wrong */
+//		 FreeMem((struct channel_entry*) new_entry, sizeof(new_entry));
+		FreeVec((struct channel_entry*) new_entry );
         new_entry=NULL;
 
     }
