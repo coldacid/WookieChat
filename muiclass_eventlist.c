@@ -48,10 +48,9 @@ static ULONG OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
 							MUIA_NList_Format        , "BAR,BAR,BAR,BAR",
 							MUIA_ObjectID            , OID_EVT_LIST,
 							TAG_DONE ) ) ) {
-
 		ULONG i;
 		for( i = 0 ; i < EVENTTYPE_LAST ; i++ ) {
-			DoMethod( obj, MM_EVENTLIST_ADD, i, 0, 0 );
+			DoMethod( obj, MM_EVENTLIST_ADD, i, 0, NULL, NULL );
 		}
 	}
 	return( (ULONG) obj );
