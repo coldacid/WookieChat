@@ -1,0 +1,12 @@
+SERVER "Freenode"   ADDRESS "irc.freenode.net"    PORT 6667 PASSWORD "" CONNECT CHARSET=UTF-8
+CHANNEL #morphos.de PASSWORD ""
+CHANNEL #aros.de PASSWORD ""
+CHANNEL #amiganews.de PASSWORD "topsecret"
+NICK geit  PASSWORD ""
+NICK geit_ PASSWORD "w00t"
+NICK geit_ PASSWORD ""
+;
+SERVER "AmigaWorld" ADDRESS "chat.AmigaWorld.Net" PORT 6667 PASSWORD "" CONNECT CHARSET=ISO-8859-1
+CHANNEL #amigaworld PASSWORD ""
+CHANNEL #amigadev   PASSWORD ""
+
