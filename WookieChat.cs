@@ -9866,6 +9866,18 @@ Charset
 ;
 ; MUICLASS_NICKLIST
 ;
+MSG_MUICLASS_NICKLIST_DEFAULTNAME
+Nickname
+Nickname
+Nickname
+Nickname
+Nickname
+Nickname
+Nickname
+Nickname
+Nickname
+Nickname
+;
 MSG_LV_NICK
 Nick
 Nick
@@ -9892,7 +9904,19 @@ Password
 ;
 ;
 ;
-; MUICLASS_NICKLIST
+; MUICLASS_CHANNELLIST
+;
+MSG_MUICLASS_CHANNELLIST_DEFAULTNAME
+#channelname
+#kanalname
+#channelname
+#channelname
+#channelname
+#channelname
+#channelname
+#channelname
+#channelname
+#channelname
 ;
 MSG_LV_CHANNEL
 Channel
@@ -9905,5 +9929,29 @@ Channel
 Channel
 Channel
 Channel
+;
+MSG_LV_YES
+Yes
+Ja
+Sí
+Oui
+Íáé
+Si
+Igen
+Ja
+Tak
+Ja
+;
+MSG_LV_NO
+No
+NEIN
+No
+Non
+¼÷é
+No
+Nem
+Nei
+Nie
+Nej
 ;
 

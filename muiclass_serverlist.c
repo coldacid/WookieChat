@@ -124,7 +124,7 @@ static char displayport[10];
 		sprintf( displayport, (char*) "%ld", se->se_Port );
 		*array++ = (STRPTR) se->se_Name;
 		*array++ = (STRPTR) displayport;
-		*array++ = (STRPTR) ( se->se_Flags & SERVERENTRYF_AUTOCONNECT ) ? LGS( MSG_YES ) : LGS( MSG_NO );
+		*array++ = (STRPTR) ( se->se_Flags & SERVERENTRYF_AUTOCONNECT ) ? LGS( MSG_LV_YES ) : LGS( MSG_LV_NO );
 		*array++ = (STRPTR) se->se_Charset;
 	} else {
 		*array++ = (STRPTR) LGS( MSG_LV_SERVER  );

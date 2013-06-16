@@ -3332,6 +3332,10 @@ Charset
 ;
 ; MUICLASS_NICKLIST
 ;
+MSG_MUICLASS_NICKLIST_DEFAULTNAME
+Nickname
+; Nickname
+;
 MSG_LV_NICK
 Nick
 ; Nick
@@ -3342,9 +3346,21 @@ Password
 ;
 ;
 ;
-; MUICLASS_NICKLIST
+; MUICLASS_CHANNELLIST
+;
+MSG_MUICLASS_CHANNELLIST_DEFAULTNAME
+#channelname
+; #channelname
 ;
 MSG_LV_CHANNEL
 Channel
 ; Channel
+;
+MSG_LV_YES
+Íáé
+; Yes
+;
+MSG_LV_NO
+¼÷é
+; No
 ;

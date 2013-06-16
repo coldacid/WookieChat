@@ -45,6 +45,7 @@ static ULONG OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
 													MUIA_NList_Title         , TRUE,
 													MUIA_CycleChain          , 1,
 													MUIA_NList_Format        , "BAR,",
+													MUIA_ObjectID, 4545454,
 													TAG_DONE ) ) );
 }
 /* \\\ */
@@ -81,7 +82,7 @@ static ULONG MM_Add( struct IClass *cl, Object *obj, struct MP_NICKLIST_ADD *msg
 struct NickEntry *ne;
 
 	if( ( ne = AllocVec( sizeof( struct NickEntry ), MEMF_ANY|MEMF_CLEAR ) ) ) {
-		strncpy( (char *) ne->ne_Nick    , (char *)   msg->Nick,                                     NICKENTRY_NICK_SIZEOF      );
+		strncpy( (char *) ne->ne_Nick    , (char *) ( msg->Nick     ? msg->Nick     : LGS( MSG_MUICLASS_NICKLIST_DEFAULTNAME )), NICKENTRY_NICK_SIZEOF     );
 		strncpy( (char *) ne->ne_Password, (char *) ( msg->Password ? msg->Password : (STRPTR) "" ), NICKENTRY_PASSWORD_SIZEOF  );
 		if( msg->ServerEntry ) {
 			AddTail( &((struct ServerEntry *) msg->ServerEntry)->se_NickList, (struct Node *) ne );
