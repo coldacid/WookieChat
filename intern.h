@@ -8,6 +8,11 @@
     for the specific language governing rights and limitations under the License.
 */
 
+#ifndef WOOKIEINTERN_H
+#define WOOKIEINTERN_H 1
+
+/***************************************************************************/
+
 #define ENABLE_NEWWOOKIECODE 1 /* this one enables new application related functions and disables
 							 ** no longer needed code */
 
@@ -1303,4 +1308,9 @@ enum
 {
     PRIVMSG = 1, CTCP, DCC
 };
+
+/***************************************************************************/
+
+#endif /* WOOKIEINTERN_H */
+
 

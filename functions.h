@@ -23,6 +23,52 @@
 #include <proto/exec.h>
 #include <proto/dos.h>
 
+#include "intern.h"
+
+/*************************************************************************/
+
+/*
+** intuition
+*/
+
+#define ShowRequesterError(message,args) ShowRequester( message, MSG_REQUESTER_OK_GADGETS, args )
+ULONG ShowRequester     ( ULONG message, ULONG gadgets, IPTR *args );
+
+/***************************************************************************/
+
+/*
+** exec functions
+*/
+
+/* /// libraries data
+*/
+
+struct LibraryData {
+	char            *Name;
+	int              Version;
+	int              Flags;
+	struct Library **LibBase;
+#ifdef __amigaos4__
+	APTR            *IBase;
+#endif
+};
+
+#define LIBFLAGSF_OPTIONAL 1  /* no error message and no abort! Make sure you check library base
+								before using a library marked as optional */
+
+#ifndef __amigaos4__
+#define LIBMACRO(name,version,flags,base,ibase) { (char *) name, version, flags, (struct Library **) &base }
+#define LIBMACROEND  { NULL, NULL, 0, NULL }
+#else
+#define LIBMACRO(name,version,flags,base,ibase) { (char *) name, version, flags, (struct Library **) &base, &ibase }
+#define LIBMACROEND  { NULL, NULL, 0, NULL, NULL }
+#endif
+
+/* \\\ */
+
+BOOL Libraries_Open( void );
+void Libraries_Close( void );
+
 /*************************************************************************/
 
 /*
@@ -30,6 +76,8 @@
 */
 
 void Dos_ShowFailure( void );
+
+/*************************************************************************/
 
 /*
 ** Icon
@@ -40,6 +88,8 @@ BOOL               Icon_ToolTypeGetBool( struct DiskObject *o, STRPTR tooltype, 
 long               Icon_ToolTypeGetInteger( struct DiskObject *o, STRPTR tooltype, long defvalue );
 STRPTR             Icon_ToolTypeGetString( struct DiskObject *o, STRPTR tooltype, STRPTR deftooltype );
 
+/*************************************************************************/
+
 /*
 ** WBMessage
 */
@@ -48,6 +98,8 @@ extern struct WBStartup *wbmessage;
 
 void WBMessage_Get  ( void );
 void WBMessage_Reply( void );
+
+/*************************************************************************/
 
 /*
 ** SimpleArgumentParsing

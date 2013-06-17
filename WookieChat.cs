@@ -4736,6 +4736,41 @@ Choose when you want to execute this ARexx script
 ; so after rework is complete all strings left
 ; on top of this line are obsolete
 ;
+MSG_REQUESTER_TITLE
+Wookiechat Request...
+Wookiechat Meldung ...
+Wookiechat Request...
+Wookiechat Request...
+Wookiechat Request...
+Wookiechat Request...
+Wookiechat Request...
+Wookiechat Request...
+Wookiechat Request...
+Wookiechat Request...
+;
+MSG_REQUESTER_OK_GADGETS
+Ok
+Ok
+Ok
+Ok
+Ok
+Ok
+Ok
+Ok
+Ok
+Ok
+;
+MSG_ERROR_UNABLETOOPENLIBRARY
+Unable to open\n'%s'\nversion %ld!
+Konnte die Library\n'%s'\n mit der Version %ld\nnicht öffnen!
+Unable to open\n'%s'\nversion %ld!
+Unable to open\n'%s'\nversion %ld!
+Unable to open\n'%s'\nversion %ld!
+Unable to open\n'%s'\nversion %ld!
+Unable to open\n'%s'\nversion %ld!
+Unable to open\n'%s'\nversion %ld!
+Unable to open\n'%s'\nversion %ld!
+Unable to open\n'%s'\nversion %ld!
 ;
 ;
 ; MUICLASS_APPLICATION
@@ -6857,18 +6892,6 @@ MSG_MUICLASS_SETTINGSCOLOR_HIGHLIGHTACTIVITY_HELP
 ;
 ;
 ; MUICLASS_WINDOWQUIT
-;
-MSG_MUICLASS_WINDOWQUIT_TITLE
-WookieChar Request
-WookieChar Requester
-WookieChar Request
-WookieChar Request
-WookieChar Request
-WookieChar Request
-WookieChar Request
-WookieChar Request
-WookieChar Request
-WookieChar Request
 ;
 MSG_MUICLASS_WINDOWQUIT_QUIT_TEXT
 Do you really want to quit WookieChat?

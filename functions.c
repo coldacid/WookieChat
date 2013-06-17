@@ -14,11 +14,15 @@
 
 #include <workbench/icon.h>
 #include <workbench/startup.h>
+#include <intuition/intuition.h>
 
 #include <proto/icon.h>
 #include <proto/exec.h>
 #include <proto/dos.h>
 #include <proto/utility.h>
+#include <proto/muimaster.h>
+#include <proto/intuition.h>
+#include <proto/locale.h>
 
 #include "locale.h"
 #include "intern.h"
@@ -26,6 +30,180 @@
 #include "functions.h"
 
 /***************************************************************************/
+
+/*
+** intuition
+*/
+
+/* /// ShowRequester()
+**
+*/
+
+/***************************************************************************/
+
+ULONG ShowRequester( ULONG message, ULONG gadgets, IPTR *args )
+{
+	if( MUIMasterBase ) {
+		return( MUI_RequestA( NULL, NULL, 0, (char *) LGS( MSG_REQUESTER_TITLE ), (char *) LGS( gadgets ), (char *) LGS( message ), args ) );
+	} else {
+		if( IntuitionBase ) {
+			struct EasyStruct es = { sizeof( struct EasyStruct ), 0, LGS( MSG_REQUESTER_TITLE ), LGS( message ), LGS( gadgets ) };
+			return( EasyRequestArgs( NULL, &es, NULL, args ) );
+		} else {
+			char *str, *tmp;
+			if( ( str = AllocVec( strlen( (char *) LGS( message ) ), MEMF_ANY ) ) ) {
+				strcpy( str, (char *) LGS( message ) );
+				while( ( tmp = strchr( str, '\n' ) ) ) {
+					*tmp = 0x20; /* replace \n by space */
+				}
+				VPrintf( (CONST_STRPTR) str, args );
+				FreeVec( str );
+			}
+		}
+	}
+	return( 0 );
+}
+/* \\\ */
+
+/*
+** exec functions
+*/
+
+#ifdef __AROS__
+struct LocaleBase       *LocaleBase;
+struct Library          *MUIMasterBase;
+struct IntuitionBase    *IntuitionBase;
+struct Library          *AslBase;
+struct Library          *IconBase;
+struct GfxBase          *GfxBase;
+struct UtilityBase      *UtilityBase;
+struct Library          *SocketBase;
+struct Library          *DataTypesBase;
+struct Library          *CodesetsBase;
+#elif __amigaos4__
+struct Library          *LocaleBase;
+struct Library          *MUIMasterBase;
+struct Library          *IntuitionBase;
+struct Library          *AslBase;
+struct Library          *IconBase;
+struct Library          *GfxBase;
+struct Library          *UtilityBase;
+struct Library          *SocketBase;
+struct Library          *DataTypesBase;
+struct Library          *CodesetsBase;
+struct LocaleIFace      *ILocale;
+struct MUIMasterIFace   *IMUIMaster;
+struct IntuitionIFace   *IIntuition;
+struct AslIFace         *IAsl;
+struct IconIFace        *IIcon;
+struct GraphicsIFace    *IGraphics;
+struct UtilityIFace     *IUtility;
+struct SocketIFace      *ISocket;
+struct DataTypesIFace   *IDataTypes;
+struct CodesetsIFace    *ICodesets;
+#elif __MORPHOS__
+struct Library          *LocaleBase;
+struct Library          *MUIMasterBase;
+struct IntuitionBase    *IntuitionBase;
+struct Library          *AslBase;
+struct Library          *IconBase;
+struct GfxBase          *GfxBase;
+struct Library          *UtilityBase;
+struct Library          *SocketBase;
+struct Library          *DataTypesBase;
+struct Library          *CodesetsBase;
+#else
+struct Library          *LocaleBase;
+struct Library          *MUIMasterBase;
+struct Library          *IntuitionBase;
+struct Library          *AslBase;
+struct Library          *IconBase;
+struct Library          *GfxBase;
+struct Library          *UtilityBase;
+struct Library          *SocketBase;
+struct Library          *DataTypesBase;
+struct Library          *CodesetsBase;
+#endif
+
+static struct LibraryData LibraryArray[] = {
+	LIBMACRO( "locale.library"           ,  0, LIBFLAGSF_OPTIONAL, LocaleBase      , ILocale    ),
+	LIBMACRO( "muimaster.library"        ,  0, 0                 , MUIMasterBase   , IMUIMaster ),
+	LIBMACRO( "intuition.library"        , 33, 0                 , IntuitionBase   , IIntuition ),
+	LIBMACRO( "asl.library"              ,  0, 0                 , AslBase         , IAsl       ),
+	LIBMACRO( "icon.library"             ,  0, 0                 , IconBase        , IIcon      ),
+	LIBMACRO( "graphics.library"         ,  0, 0                 , GfxBase         , IGfx       ),
+	LIBMACRO( "utility.library"          ,  0, 0                 , UtilityBase     , IUtility   ),
+	LIBMACRO( "bsdsocket.library"        ,  0, 0                 , SocketBase      , ISocket    ),
+	LIBMACRO( "datatypes.library"        , 43, 0                 , DataTypesBase   , IDataTypes ),
+	LIBMACRO( "codesets.library"         ,  6, 0                 , CodesetsBase    , ICodesets  ),
+    LIBMACROEND
+};
+
+/* /// Libraries_Open()
+**
+*/
+
+/*************************************************************************/
+
+BOOL Libraries_Open(void)
+{
+
+ULONG i = 0;
+BOOL result = FALSE;
+
+	while( LibraryArray[ i ].Name ) {
+		if( ( (*(LibraryArray[ i ].LibBase)) = OpenLibrary( (_ub_cs) LibraryArray[ i ].Name, LibraryArray[ i ].Version ) ) ) {
+#ifdef __amigaos4__
+			if( ((*(LibraryArray[ i ].IBase)) = (APTR) GetInterface( (*(LibraryArray[ i ].LibBase)), "main", 1, NULL ) ) ) {
+				i++;
+				continue;
+			} else {
+				CloseLibrary( (APTR) (*(LibraryArray[i].IBase)) );
+				(*(LibraryArray[ i ].IBase)) = NULL;
+			}
+#else
+			i++;
+			continue;
+#endif
+		}
+		if( !( LibraryArray[ i ].Flags & LIBFLAGSF_OPTIONAL ) ) {
+			IPTR args[2];
+			args[0] = (IPTR) LibraryArray[ i ].Name;
+			args[1] = (IPTR) LibraryArray[ i ].Version;
+			ShowRequester( MSG_ERROR_UNABLETOOPENLIBRARY, MSG_REQUESTER_OK_GADGETS, &args[0] );
+            result = TRUE;
+            break;
+		}
+		i++;
+	}
+	return( result );
+}
+/* \\\ Libraries_Open */
+/* /// Libraries_Close()
+**
+*/
+
+/*************************************************************************/
+
+void Libraries_Close(void)
+{
+ULONG i = 0;
+
+	 while( LibraryArray[ i ].Name ) {
+#ifdef __amigaos4__
+		if( (*(LibraryArray[i].IBase)) ) {
+			DropInterface( (APTR) (*(LibraryArray[ i ].IBase)) );
+			//(*(LibraryArray[i].IBase)) = NULL; /* removed because of startup.o */
+        }
+#endif
+		if( (*(LibraryArray[i].LibBase)) ) {
+			CloseLibrary( (struct Library *) (*(LibraryArray[i].LibBase)) );
+			//(*(LibraryArray[i].LibBase)) = NULL; /* removed because of startup.o */
+        }
+        i++;
+    }
+}
+/* \\\ Libraries_Close */
 
 /*
 ** DOS Functions

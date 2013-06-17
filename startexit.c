@@ -11,6 +11,10 @@
 /* ===================================================================
                            Start-Exit Code
    =================================================================== */
+
+
+#define ENABLE_NEWLIBOPEN 1  /* use clean library code */
+
 #include "includes.h"
 #include <workbench/icon.h>
 #include <workbench/workbench.h>
@@ -28,6 +32,7 @@
 #include "muiclass.h"
 #include "muiclass_windowurlgrabber.h"
 
+#ifndef ENABLE_NEWLIBOPEN
 #ifdef __AROS__
 struct Library * AslBase = NULL;
 struct Library * IconBase = NULL;
@@ -73,7 +78,7 @@ struct Library * SocketBase = NULL;
 struct Library * DataTypesBase = NULL;
 struct Library * CodesetsBase = NULL;
 #endif
-
+#endif /* ENABLE_NEWLIBOPEN */
 #ifdef __AROS__
 typedef CONST_STRPTR nml;
 #else
@@ -142,6 +147,11 @@ void LoadAllLibs(void)
     //default values before tooltypes and shell switches are read
     my_settings.os3_about_window_gfx = 0;
 
+#ifdef ENABLE_NEWLIBOPEN
+	if( Libraries_Open() ) {
+		cleanexit((char*)"cant open a library\n");
+	}
+#else
 #ifdef __amigaos4__
     DataTypesBase = (struct Library*)OpenLibrary((_ub_css)"datatypes.library",0);
     if(!DataTypesBase) cleanexit((char*)"cant open datatypes.library\n");
@@ -299,7 +309,7 @@ void LoadAllLibs(void)
     if(!CodesetsBase) cleanexit((char*)"cant open codesets.library\nDownload and install this:\nhttp://aminet.net/util/libs/codesets-6.4.lha\n\n");
 
 #endif
-
+#endif
 	Locale_Open( (STRPTR)(APPLICATIONNAME "avoid catalog for now"), VERSION, REVISION );
 
 	MUIClass_Open(); /* init our mui classes */
@@ -591,6 +601,7 @@ void cleanexit(char *str)
     if (str)
         printf("Error: %s\n", str);
 
+#ifndef ENABLE_NEWLIBOPEN
 #ifdef __amigaos4__
     DropInterface((struct Interface*)IUtility);
     DropInterface((struct Interface*)IMUIMaster);
@@ -598,12 +609,12 @@ void cleanexit(char *str)
     DropInterface((struct Interface*)IRexxSys);
     DropInterface((struct Interface*)ICodesets);
 #endif
+#endif /* ENABLE_NEWLIBOPEN */
 
     if (dobj)
         FreeDiskObject(dobj);
 
-	Locale_Close();
-
+#ifndef ENABLE_NEWLIBOPEN
 #ifdef __AROS__
     if (UtilityBase)
         CloseLibrary((struct Library*) UtilityBase);
@@ -629,11 +640,16 @@ void cleanexit(char *str)
 
     if (MUIMasterBase)
         CloseLibrary(MUIMasterBase);
-
+#endif /* ENABLE_NEWLIBOPEN */
     free(new_entry2.hostname);
 
     nicklist_deinit();
 
+	Locale_Close();
+
+#ifdef ENABLE_NEWLIBOPEN
+	Libraries_Close();
+#endif /* ENABLE_NEWLIBOPEN */
 
     exit(0);
 }

@@ -61,7 +61,7 @@ static ULONG OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
 Object *objs[ GID_LAST ];
 
 	if( (obj = (Object *)DoSuperNew( cl, obj,
-			MUIA_Window_Title            , LGS( MSG_MUICLASS_WINDOWQUIT_TITLE ),
+			MUIA_Window_Title            , LGS( MSG_REQUESTER_TITLE ),
 			MUIA_Window_ID               , MAKE_ID('Q','U','I','T'),
 			MUIA_Window_CloseGadget      , FALSE,
 			MUIA_Window_NoMenus	       	 , TRUE,
