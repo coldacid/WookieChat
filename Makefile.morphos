@@ -19,6 +19,7 @@ SOURCES   = functions.c                 \
 			muiclass_connectedlist.c    \
 			muiclass_eventlist.c        \
 			muiclass_ignorelist.c       \
+			muiclass_network.c          \
 			muiclass_nicklist.c         \
 			muiclass_userlist.c         \
 			muiclass_serverlist.c       \

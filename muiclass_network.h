@@ -8,37 +8,28 @@
     for the specific language governing rights and limitations under the License.
 */
 
-#ifndef MUICLASS_AUDIO_H
-#define MUICLASS_AUDIO_H 1
+#ifndef MUICLASS_NETWORK_H
+#define MUICLASS_NETWORK_H 1
 
 /*************************************************************************/
 
 #include <exec/types.h>
 #include "muiclass.h"
 
-#define AudioObject NEWOBJECT( appclasses[ CLASSID_AUDIO ]->mcc_Class, NULL
+#define NetworkObject NEWOBJECT( appclasses[ CLASSID_NETWORK ]->mcc_Class, NULL
 
 /*
 ** Methods and attributes
 */
 
 enum {
-MM_AUDIO_PLAY =  0xFED00340,
+MM_NETWORK_PLAY =  0xFED00350,
 /* Attributes */
-MA_AUDIO_OBJECTSETTINGS,
+MA_NETWORK_OBJECTSETTINGS,
+MA_NETWORK_OBJECTAUDIO,
 };
 
-struct MP_AUDIO_PLAY    { ULONG MethodID; ULONG SID; char *Name; };
-
-/*************************************************************************/
-
-enum{
-SID_TABOPENING = 0,
-SID_HIGHLIGHT,
-SID_PRIVMSG,
-SID_CTCP,
-SID_LAST
-};
+struct MP_NETWORK_PLAY    { ULONG MethodID; ULONG SID; char *Name; };
 
 /*************************************************************************/
 
@@ -46,10 +37,10 @@ SID_LAST
 ** Prototypes
 */
 
-ULONG   MCC_Audio_InitClass( void );
-void    MCC_Audio_DisposeClass( void );
+ULONG   MCC_Network_InitClass( void );
+void    MCC_Network_DisposeClass( void );
 
 /*************************************************************************/
 
-#endif /* MUICLASS_AUDIO_H */
+#endif /* MUICLASS_NETWORK_H */
 

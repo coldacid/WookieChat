@@ -29,6 +29,7 @@
 #include "muiclass.h"
 #include "muiclass_audio.h"
 #include "muiclass_application.h"
+#include "muiclass_network.h"
 #include "muiclass_windowmain.h"
 #include "muiclass_windowquit.h"
 #include "muiclass_windowabout.h"
@@ -59,6 +60,7 @@ WID_SETTINGS,
 WID_IGNORELIST,
 WID_URLGRABBER,
 GID_AUDIO,
+GID_NETWORK,
 GID_LAST
 };
 
@@ -105,7 +107,8 @@ Object *objs[ GID_LAST ];
 					MUIA_Application_Window     , objs[ WID_URLGRABBER    ] = WindowURLGrabberObject, End,
 					/* this is just a dummy to store/handle our non visible classes, without additional code */
 					MUIA_Application_Window     , WindowObject, WindowContents, VGroup,
-										Child   , objs[ GID_AUDIO ] = AudioObject , End,
+										Child   , objs[ GID_AUDIO   ] = AudioObject , End,
+										Child   , objs[ GID_NETWORK ] = NetworkObject , End,
 							End,
 						End,
 					TAG_DONE ) ) ) {
@@ -114,7 +117,8 @@ Object *objs[ GID_LAST ];
 
 		CopyMem( &objs[0], &mccdata->mcc_ClassObjects[0], sizeof( mccdata->mcc_ClassObjects));
 
-//		  DoMethod( objs[ GID_AUDIO ], MM_AUDIO_PLAY, SID_TABOPENING, NULL );
+		SetAttrs( objs[ GID_NETWORK ], MA_NETWORK_OBJECTSETTINGS, objs[ WID_SETTINGS ], MA_NETWORK_OBJECTAUDIO, objs[ GID_AUDIO    ], TAG_DONE );
+		SetAttrs( objs[ GID_AUDIO   ], MA_AUDIO_OBJECTSETTINGS  , objs[ WID_SETTINGS ], TAG_DONE );
 
 		/* load settings */
 		DoMethod( obj, MUIM_Application_Load, MUIV_Application_Load_ENVARC );

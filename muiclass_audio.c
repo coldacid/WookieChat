@@ -79,6 +79,29 @@ ULONG i;
 	return( DoSuperMethodA( cl, obj,(Msg) msg ) );
 }
 /* \\\ */
+/* /// OM_Set()
+**
+*/
+
+/*************************************************************************/
+
+static ULONG OM_Set( struct IClass *cl, Object *obj, struct opSet *msg )
+{
+struct mccdata *mccdata = INST_DATA( cl, obj );
+struct TagItem *tag;
+struct TagItem *tstate;
+
+	for( tstate = msg->ops_AttrList ; ( tag = NextTagItem( &tstate ) ) ; ) {
+		ULONG tidata = tag->ti_Data;
+        switch( tag->ti_Tag ) {
+			case MA_AUDIO_OBJECTSETTINGS:
+				mccdata->mcc_ClassObjects[ WID_SETTINGS ] = (APTR) tidata;
+				break;
+		}
+    }
+	return( DoSuperMethodA( cl, obj,(Msg) msg ) );
+}
+/* \\\ */
 /* /// MM_Play()
 **
 */
@@ -89,67 +112,66 @@ static ULONG MM_Play( struct IClass *cl, Object *obj, struct MP_AUDIO_PLAY *msg 
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 
-	if( !mccdata->mcc_ClassObjects[ WID_SETTINGS ] ) {
-		mccdata->mcc_ClassObjects[ WID_SETTINGS ] = (Object *) MUIGetVar( _app( obj ), MA_APPLICATION_WINDOWSETTINGS );
-	}
-	/* no playback if disabled */
-	if( LocalReadConfig( OID_SND_ENABLE ) ) {
-		char *extplayer = (char *) LRC( OID_SND_USEEXTERNALPLAYER );
-		/* we need to load sample */
-		if( !mccdata->mcc_SampleObjects[ msg->SID ] || msg->Name || extplayer ) {
-			char *path;
-			BPTR lock = 0;
+	if( mccdata->mcc_ClassObjects[ WID_SETTINGS ] ) {
+		/* no playback if disabled */
+		if( LocalReadConfig( OID_SND_ENABLE ) ) {
+			char *extplayer = (char *) LRC( OID_SND_USEEXTERNALPLAYER );
+			/* we need to load sample */
+			if( !mccdata->mcc_SampleObjects[ msg->SID ] || msg->Name || extplayer ) {
+				char *path;
+				BPTR lock = 0;
 
-			path = (char *) LocalReadConfig( OID_SND_CTCPSAMPLES );
-			if( !path || !path[0] ) {
-				path = DEFAULT_SETTINGSSAMPLEPATH;
-			}
-			if( !(lock = Lock( (_s_cs) path, ACCESS_READ ) ) ) {
-				lock = CurrentDir( lock );
-			}
-			/* if name is specified we need to load sample, so free old one, if present */
-			if( mccdata->mcc_SampleObjects[ msg->SID ] ) {
-				DisposeDTObject( mccdata->mcc_SampleObjects[ msg->SID ] );
-			}
-
-			if( !( path = msg->Name ) ) { /* no name, then obtain using purpose and settings */
-				switch( msg->SID ) {
-					case SID_TABOPENING:
-						path = (char *) LocalReadConfig( OID_SND_SPLONTABOPENING );
-						break;
-					case SID_HIGHLIGHT:
-						path = (char *) LocalReadConfig( OID_SND_SPLONHIGHLIGHT );
-						break;
-					case SID_PRIVMSG:
-						path = (char *) LocalReadConfig( OID_SND_SPLONPRIVMSG );
-						break;
+				path = (char *) LocalReadConfig( OID_SND_CTCPSAMPLES );
+				if( !path || !path[0] ) {
+					path = DEFAULT_SETTINGSSAMPLEPATH;
 				}
-			}
+				if( !(lock = Lock( (_s_cs) path, ACCESS_READ ) ) ) {
+					lock = CurrentDir( lock );
+				}
+				/* if name is specified we need to load sample, so free old one, if present */
+				if( mccdata->mcc_SampleObjects[ msg->SID ] ) {
+					DisposeDTObject( mccdata->mcc_SampleObjects[ msg->SID ] );
+				}
 
-			if( path ) {
-				if( !extplayer ) {
-					mccdata->mcc_SampleObjects[ msg->SID ] = NewDTObject( path, DTA_GroupID, GID_SOUND, TAG_END );
-				} else { /* external player does not use objects */
-					char *filename;
-					if( ( extplayer = (char *) LocalReadConfig( OID_SND_EXTERNALPLAYER ) ) && *extplayer ) {
-						if( ( filename = AllocVec( strlen( path ) + strlen( extplayer ) + 32, MEMF_ANY ) ) ) {
-							sprintf( filename, "Run >NIL: %s %s", extplayer, filename );
+				if( !( path = msg->Name ) ) { /* no name, then obtain using purpose and settings */
+					switch( msg->SID ) {
+						case SID_TABOPENING:
+							path = (char *) LocalReadConfig( OID_SND_SPLONTABOPENING );
+							break;
+						case SID_HIGHLIGHT:
+							path = (char *) LocalReadConfig( OID_SND_SPLONHIGHLIGHT );
+							break;
+						case SID_PRIVMSG:
+							path = (char *) LocalReadConfig( OID_SND_SPLONPRIVMSG );
+							break;
+					}
+				}
+
+				if( path ) {
+					if( !extplayer ) {
+						mccdata->mcc_SampleObjects[ msg->SID ] = NewDTObject( path, DTA_GroupID, GID_SOUND, TAG_END );
+					} else { /* external player does not use objects */
+						char *filename;
+						if( ( extplayer = (char *) LocalReadConfig( OID_SND_EXTERNALPLAYER ) ) && *extplayer ) {
+							if( ( filename = AllocVec( strlen( path ) + strlen( extplayer ) + 32, MEMF_ANY ) ) ) {
+								sprintf( filename, "Run >NIL: %s %s", extplayer, filename );
 #ifdef __amigaos4__
-							SystemTags( (_s_cs) filename, TAG_DONE);
+								SystemTags( (_s_cs) filename, TAG_DONE);
 #else
-							Execute(    (_s_cs) filename, 0, 0 );
+								Execute(    (_s_cs) filename, 0, 0 );
 #endif
-							FreeVec( filename );
+								FreeVec( filename );
+							}
 						}
 					}
 				}
+				if( lock ) {
+					UnLock( CurrentDir( lock ) );
+				}
 			}
-			if( lock ) {
-				UnLock( CurrentDir( lock ) );
+			if( mccdata->mcc_SampleObjects[ msg->SID ] ) {
+				DoMethod( mccdata->mcc_SampleObjects[ msg->SID ], DTM_TRIGGER, NULL, STM_PLAY, NULL );
 			}
-		}
-		if( mccdata->mcc_SampleObjects[ msg->SID ] ) {
-			DoMethod( mccdata->mcc_SampleObjects[ msg->SID ], DTM_TRIGGER, NULL, STM_PLAY, NULL );
 		}
 	}
 	return( 0 );
@@ -170,9 +192,10 @@ DISPATCHER(MCC_Audio_Dispatcher)
 {
     switch (msg->MethodID)
     {
-		case OM_NEW                        : return( OM_New                           ( cl, obj, (APTR) msg ) );
-		case OM_DISPOSE                    : return( OM_Dispose                       ( cl, obj, (APTR) msg ) );
-		case MM_AUDIO_PLAY                 : return( MM_Play                          ( cl, obj, (APTR) msg ) );
+		case OM_NEW                        : return( OM_New       ( cl, obj, (APTR) msg ) );
+		case OM_DISPOSE                    : return( OM_Dispose   ( cl, obj, (APTR) msg ) );
+		case OM_SET                        : return( OM_Set       ( cl, obj, (APTR) msg ) );
+		case MM_AUDIO_PLAY                 : return( MM_Play      ( cl, obj, (APTR) msg ) );
     }
 	return( DoSuperMethodA( cl, obj, msg ) );
 

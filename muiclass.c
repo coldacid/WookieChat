@@ -36,6 +36,7 @@
 #include "muiclass_connectedlist.h"
 #include "muiclass_eventlist.h"
 #include "muiclass_ignorelist.h"
+#include "muiclass_network.h"
 #include "muiclass_nicklist.h"
 #include "muiclass_serverlist.h"
 #include "muiclass_settingsalias.h"
@@ -91,6 +92,7 @@ if( !(result = MCC_Channel_InitClass() ) ) {
 if( !(result = MCC_ConnectedList_InitClass() ) ) {
 if( !(result = MCC_EventList_InitClass() ) ) {
 if( !(result = MCC_IgnoreList_InitClass() ) ) {
+if( !(result = MCC_Network_InitClass() ) ) {
 if( !(result = MCC_NickList_InitClass() ) ) {
 if( !(result = MCC_ServerList_InitClass() ) ) {
 if( !(result = MCC_SettingsAlias_InitClass() ) ) {
@@ -116,7 +118,7 @@ if( ( application = NewObject( appclasses[ CLASSID_APPLICATION ]->mcc_Class, NUL
 } else {
 	result = MSG_ERROR_UNABLETOSETUPMUICLASS;
 }
-}}}}}}}}}}}}}}}}}}}}}}}}}}}}}
+}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}
    return( result );
 }
 /* \\\ */
@@ -142,6 +144,7 @@ void MUIClass_Close( void )
 	MCC_ConnectedList_DisposeClass();
 	MCC_EventList_DisposeClass();
 	MCC_IgnoreList_DisposeClass();
+	MCC_Network_DisposeClass();
 	MCC_NickList_DisposeClass();
 	MCC_ServerList_DisposeClass();
 	MCC_SettingsAlias_DisposeClass();
