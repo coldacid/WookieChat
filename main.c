@@ -31,6 +31,7 @@
 
 #include "functions.h"
 #include "muiclass.h"
+#include "version.h"
 #include "intern.h"
 #include "objapp.h"
 #include "audio.h"
@@ -55,6 +56,8 @@ BOOL PRO_CHARSETS_ENABLED   = FALSE;
 BOOL start_reconnect_delay_timer;
 
 /* Locals */
+#if ENABLE_NEWWOOKIECODE
+#else
 static int delay_b4_ping_server_count=0;
 static char ban_window_title[200];
 static BOOL aslresult;
@@ -63,23 +66,24 @@ static char old_alias_entry[800];
 static char new_filename[1000];
 static char orig_filename[1000];
 static char filename[1000];
-static char *text;
 static char wookie_dir[400]; //the pathname wookiechat is located in
 static ULONG iconified_and_new_text;
 static char string11[900];
-static char *string4;
-static char *string5;
 static char string8[900];
 static char string9[900];
-static char *string2;
-static char *string3;
 static char string7[900];
-static char *string1;
-static char buffer3[BUFFERSIZE*2];
 static char file_name[800];
 static BOOL is_chooser_window_open = FALSE;
 static char sendstuff[1500];
 static char group_name[100];
+#endif
+static char *text;
+static char buffer3[BUFFERSIZE*2];
+static char *string1;
+static char *string4;
+static char *string5;
+static char *string2;
+static char *string3;
 static struct Settings temp_settings;
 
 void copy_settings_to_undo_buffer()
@@ -694,6 +698,54 @@ int __stack = 550000;
 #ifdef __amigaos4__
 const char *__stdiowin = "NIL:";
 #endif
+
+/*************************************************************************/
+
+#if ENABLE_NEWWOOKIECODE
+
+/* /// main()
+**
+*/
+
+/*************************************************************************/
+
+int main(int argc, char *argv[])
+{
+ULONG result = MSG_ERROR_NOERROR;
+
+	WBMessage_Get();
+	Locale_Open( (STRPTR)( APPLICATIONNAME "avoid catalog for now"), VERSION, REVISION );
+	if( !Libraries_Open() ) {
+		if( !( result = MUIClass_Open() ) ) { /* init our mui classes */
+			IPTR signalmask;
+			LONG returnid;
+
+			while( 1 ) {
+				returnid = DoMethod( application, MUIM_Application_Input, &signalmask );
+
+				if( returnid == MUIV_Application_ReturnID_Quit ) {
+					break;
+				}
+			}
+		}
+		MUIClass_Close(); /* close our mui classes */
+	}
+	if( result ) {
+		ShowRequesterError( result, &result );
+		result = 20;
+	}
+	Locale_Close();
+	Libraries_Close();
+	WBMessage_Reply(); /* release wbmessage */
+
+	return( result );
+}
+#else
+
+/* /// OLD MAIN ->>>
+*/
+
+/*************************************************************************/
 
 int main(int argc, char *argv[])
 {
@@ -4866,6 +4918,7 @@ int main(int argc, char *argv[])
             return 0;
 
         }
-
+/* \\\ */
+#endif
 
 
