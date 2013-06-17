@@ -645,8 +645,10 @@ void cleanexit(char *str)
 
     nicklist_deinit();
 
+/******************************************
+** This is the new code
+******************************************/
 	Locale_Close();
-
 #ifdef ENABLE_NEWLIBOPEN
 	Libraries_Close();
 #endif /* ENABLE_NEWLIBOPEN */

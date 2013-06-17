@@ -11,6 +11,7 @@ FLEXCAT     = flexcat
 SOURCES   = functions.c                 \
 			muiclass.c                  \
 			muiclass_aliaslist.c        \
+			muiclass_audio.c            \
 			muiclass_application.c      \
 			muiclass_buttonlist.c       \
 			muiclass_channel.c          \

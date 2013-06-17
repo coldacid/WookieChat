@@ -41,7 +41,8 @@ struct MP_WINDOWSETTINGS_READCONFIG { ULONG MethodID; ULONG ObjectID; };
 */
 
 #define DEFAULT_SETTINGSPATH            "PROGDIR:Prefs"
-#define DEFAULT_SETTINGSPRESETSPATH     DEFAULT_SETTINGSPATH "/Presets"
+#define DEFAULT_SETTINGSPRESETSPATH     "PROGDIR:Presets"
+#define DEFAULT_SETTINGSSAMPLEPATH      DEFAULT_SETTINGSPRESETSPATH "/SoundEffects"
 
 #define DEFAULT_SETTINGSNICK_NAME       DEFAULT_SETTINGSPATH "/nick.prefs"
 #define DEFAULT_SETTINGSCOLOR_NAME      DEFAULT_SETTINGSPATH "/color.prefs"
@@ -80,6 +81,9 @@ SETTINGS_LAST,
 */
 
 #define GRC(a) GlobalReadConfig(a)
+
+#define LocalReadConfig(a) DoMethod( mccdata->mcc_ClassObjects[ WID_SETTINGS ], MM_WINDOWSETTINGS_READCONFIG, a )
+#define LRC(a) LocalReadConfig(a)
 
 /*************************************************************************/
 
@@ -151,6 +155,7 @@ OID_SND_SPLONPRIVMSG,
 OID_SND_CTCPSAMPLES,
 OID_SND_USEEXTERNALPLAYER,
 OID_SND_EXTERNALPLAYER,
+OID_SND_ENABLE,
 /* alias settings */
 OID_SETTINGSALIAS = 700,
 /* button settings */

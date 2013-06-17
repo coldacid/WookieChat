@@ -27,6 +27,7 @@
 #include "locale.h"
 #include "functions.h"
 #include "muiclass.h"
+#include "muiclass_audio.h"
 #include "muiclass_application.h"
 #include "muiclass_windowmain.h"
 #include "muiclass_windowquit.h"
@@ -57,6 +58,7 @@ WID_ABOUT,
 WID_SETTINGS,
 WID_IGNORELIST,
 WID_URLGRABBER,
+GID_AUDIO,
 GID_LAST
 };
 
@@ -101,12 +103,18 @@ Object *objs[ GID_LAST ];
 					MUIA_Application_Window     , objs[ WID_SETTINGS      ] = WindowSettingsObject, End,
 					MUIA_Application_Window     , objs[ WID_IGNORELIST    ] = WindowIgnoreListObject, End,
 					MUIA_Application_Window     , objs[ WID_URLGRABBER    ] = WindowURLGrabberObject, End,
-
+					/* this is just a dummy to store/handle our non visible classes, without additional code */
+					MUIA_Application_Window     , WindowObject, WindowContents, VGroup,
+										Child   , objs[ GID_AUDIO ] = AudioObject , End,
+							End,
+						End,
 					TAG_DONE ) ) ) {
 
 		struct mccdata *mccdata = INST_DATA( cl, obj );
 
 		CopyMem( &objs[0], &mccdata->mcc_ClassObjects[0], sizeof( mccdata->mcc_ClassObjects));
+
+//		  DoMethod( objs[ GID_AUDIO ], MM_AUDIO_PLAY, SID_TABOPENING, NULL );
 
 		/* load settings */
 		DoMethod( obj, MUIM_Application_Load, MUIV_Application_Load_ENVARC );

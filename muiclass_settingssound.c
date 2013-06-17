@@ -39,6 +39,7 @@
 
 enum
 {
+GID_ENABLED = 0,
 GID_MODEONTABOPENING,
 GID_SPLONTABOPENING,
 GID_MODEONHIGHLIGHT,
@@ -63,13 +64,14 @@ struct ConfigItem {
 };
 
 static struct ConfigItem TAB_CONFIGITEMS[] = {
+	{ GID_ENABLED           , OID_SND_ENABLE           , MUIA_Selected       , (LONG) 1 },
 	{ GID_MODEONTABOPENING  , OID_SND_MODEONTABOPENING , MUIA_Cycle_Active   , (LONG) 1 },
-	{ GID_SPLONTABOPENING   , OID_SND_SPLONTABOPENING  , MUIA_String_Contents, (LONG) "PROGDIR:Sound/Eagh" },
+	{ GID_SPLONTABOPENING   , OID_SND_SPLONTABOPENING  , MUIA_String_Contents, (LONG) DEFAULT_SETTINGSSAMPLEPATH "/Eagh" },
 	{ GID_MODEONHIGHLIGHT   , OID_SND_MODEONHIGHLIGHT  , MUIA_Cycle_Active   , (LONG) 1 },
-	{ GID_SPLONHIGHLIGHT    , OID_SND_SPLONHIGHLIGHT   , MUIA_String_Contents, (LONG) "PROGDIR:Sound/OhNo" },
+	{ GID_SPLONHIGHLIGHT    , OID_SND_SPLONHIGHLIGHT   , MUIA_String_Contents, (LONG) DEFAULT_SETTINGSSAMPLEPATH "/OhNo" },
 	{ GID_MODEONPRIVMSG     , OID_SND_MODEONPRIVMSG    , MUIA_Cycle_Active   , (LONG) 1 },
-	{ GID_SPLONPRIVMSG      , OID_SND_SPLONPRIVMSG     , MUIA_String_Contents, (LONG) "PROGDIR:Sound/Beep" },
-	{ GID_CTCPSAMPLES       , OID_SND_CTCPSAMPLES      , MUIA_String_Contents, (LONG) "PROGDIR:Sound/" },
+	{ GID_SPLONPRIVMSG      , OID_SND_SPLONPRIVMSG     , MUIA_String_Contents, (LONG) DEFAULT_SETTINGSSAMPLEPATH "/Beep" },
+	{ GID_CTCPSAMPLES       , OID_SND_CTCPSAMPLES      , MUIA_String_Contents, (LONG) DEFAULT_SETTINGSSAMPLEPATH "/" },
 	{ GID_USEEXTERNALPLAYER , OID_SND_USEEXTERNALPLAYER, MUIA_Selected       , (LONG) 0 },
 	{ GID_EXTERNALPLAYER    , OID_SND_EXTERNALPLAYER   , MUIA_String_Contents, (LONG) "/" },
 	{ -1,0,0,0 },
@@ -103,6 +105,11 @@ static STRPTR TAB_CYCLE_HIGHLIGHTMODES[ MSG_CY_TABISINACTIVE - MSG_CY_NEVER + 2 
 					//Child, HVSpace,
 					Child, VGroup,
 						Child, HVSpace,
+						Child, HGroup,
+							Child, objs[ GID_ENABLED ] = MUICreateCheckbox( MSG_MUICLASS_SETTINGSSOUND_ENABLED_GAD, TRUE ),
+							Child, MUICreateLabelLeft( MSG_MUICLASS_SETTINGSSOUND_ENABLED_GAD ),
+							Child, HVSpace,
+						End,
 						Child, MUICreateLabelLeft( MSG_MUICLASS_SETTINGSSOUND_PLAYSAMPLE_INFO ),
 						Child, HGroup,
 							Child, objs[ GID_MODEONTABOPENING ] = MUICreateCycle( MSG_MUICLASS_SETTINGSSOUND_TABOPENING_GAD, TAB_CYCLE_TABOPENMODES, MSG_CY_NEVER, MSG_CY_WINDOWISINACTIVE ),
@@ -138,23 +145,14 @@ static STRPTR TAB_CYCLE_HIGHLIGHTMODES[ MSG_CY_TABISINACTIVE - MSG_CY_NEVER + 2 
 
 		DoMethod( obj, MUIM_Notify, MUIA_Window_CloseRequest, TRUE, obj, 3, MUIM_Set, MUIA_Window_Open, FALSE );
 
-		DoMethod( objs[ GID_MODEONTABOPENING ], MUIM_Notify, MUIA_Cycle_Active, 0, objs[ GID_SPLONTABOPENING  ], 3, MUIM_Set, MUIA_Disabled, TRUE );
-		DoMethod( objs[ GID_MODEONTABOPENING ], MUIM_Notify, MUIA_Cycle_Active, 1, objs[ GID_SPLONTABOPENING  ], 3, MUIM_Set, MUIA_Disabled, FALSE );
-		DoMethod( objs[ GID_MODEONTABOPENING ], MUIM_Notify, MUIA_Cycle_Active, 2, objs[ GID_SPLONTABOPENING  ], 3, MUIM_Set, MUIA_Disabled, FALSE );
+		DoMethod( objs[ GID_ENABLED          ], MUIM_Notify      , MUIA_Selected    , MUIV_EveryTime, obj, 1, MM_SETTINGSSOUND_DISENABLE );
+		DoMethod( objs[ GID_MODEONTABOPENING ], MUIM_Notify      , MUIA_Cycle_Active, MUIV_EveryTime, obj, 1, MM_SETTINGSSOUND_DISENABLE );
+		DoMethod( objs[ GID_MODEONHIGHLIGHT  ], MUIM_Notify      , MUIA_Cycle_Active, MUIV_EveryTime, obj, 1, MM_SETTINGSSOUND_DISENABLE );
+		DoMethod( objs[ GID_MODEONPRIVMSG    ], MUIM_Notify      , MUIA_Cycle_Active, MUIV_EveryTime, obj, 1, MM_SETTINGSSOUND_DISENABLE );
+		DoMethod( objs[ GID_USEEXTERNALPLAYER], MUIM_Notify      , MUIA_Selected    , MUIV_EveryTime, obj, 1, MM_SETTINGSSOUND_DISENABLE );
 
-		DoMethod( objs[ GID_MODEONHIGHLIGHT ], MUIM_Notify, MUIA_Cycle_Active, 0, objs[ GID_SPLONHIGHLIGHT  ], 3, MUIM_Set, MUIA_Disabled, TRUE );
-		DoMethod( objs[ GID_MODEONHIGHLIGHT ], MUIM_Notify, MUIA_Cycle_Active, 1, objs[ GID_SPLONHIGHLIGHT  ], 3, MUIM_Set, MUIA_Disabled, FALSE );
-		DoMethod( objs[ GID_MODEONHIGHLIGHT ], MUIM_Notify, MUIA_Cycle_Active, 2, objs[ GID_SPLONHIGHLIGHT  ], 3, MUIM_Set, MUIA_Disabled, FALSE );
-		DoMethod( objs[ GID_MODEONHIGHLIGHT ], MUIM_Notify, MUIA_Cycle_Active, 3, objs[ GID_SPLONHIGHLIGHT  ], 3, MUIM_Set, MUIA_Disabled, FALSE );
 
-		DoMethod( objs[ GID_MODEONPRIVMSG ], MUIM_Notify, MUIA_Cycle_Active, 0, objs[ GID_SPLONPRIVMSG  ], 3, MUIM_Set, MUIA_Disabled, TRUE );
-		DoMethod( objs[ GID_MODEONPRIVMSG ], MUIM_Notify, MUIA_Cycle_Active, 1, objs[ GID_SPLONPRIVMSG  ], 3, MUIM_Set, MUIA_Disabled, FALSE );
-		DoMethod( objs[ GID_MODEONPRIVMSG ], MUIM_Notify, MUIA_Cycle_Active, 2, objs[ GID_SPLONPRIVMSG  ], 3, MUIM_Set, MUIA_Disabled, FALSE );
-		DoMethod( objs[ GID_MODEONPRIVMSG ], MUIM_Notify, MUIA_Cycle_Active, 3, objs[ GID_SPLONPRIVMSG  ], 3, MUIM_Set, MUIA_Disabled, FALSE );
 
-		DoMethod( objs[ GID_USEEXTERNALPLAYER ], MUIM_Notify, MUIA_Selected, MUIV_EveryTime, objs[ GID_EXTERNALPLAYER  ], 3, MUIM_Set, MUIA_Disabled, MUIV_NotTriggerValue );
-
-		
 		DoMethod( obj, MM_SETTINGSSOUND_RESETTODEFAULTS );
 
 		return( (ULONG) obj );
@@ -176,6 +174,9 @@ ULONG i;
 	for( i = 0 ; TAB_CONFIGITEMS[ i ].GadgetID != -1 ; i++ ) {
 		SetAttrs( mccdata->mcc_ClassObjects[ TAB_CONFIGITEMS[ i ].GadgetID ], TAB_CONFIGITEMS[ i ].Attr, TAB_CONFIGITEMS[ i ].Default, MUIA_ObjectID, TAB_CONFIGITEMS[ i ].ObjectID, TAG_DONE );
 	}
+
+	DoMethod( obj, MM_SETTINGSSOUND_DISENABLE );
+
 	return( 0 );
 }
 /* \\\ */
@@ -198,6 +199,36 @@ ULONG i;
 	return( 0 );
 }
 /* \\\ */
+/* /// MM_DisEnable()
+**
+*/
+
+/*************************************************************************/
+
+static ULONG MM_DisEnable( struct IClass *cl, Object *obj, Msg *msg )
+{
+struct mccdata *mccdata = INST_DATA( cl, obj );
+BOOL global, tab, highlight, privmsg, ext;
+
+	global    = ( MUIGetVar( mccdata->mcc_ClassObjects[ GID_ENABLED            ], MUIA_Selected      ) ? FALSE : TRUE );
+	tab       = ( MUIGetVar( mccdata->mcc_ClassObjects[ GID_MODEONTABOPENING   ], MUIA_Cycle_Active  ) ? FALSE : TRUE );
+	highlight = ( MUIGetVar( mccdata->mcc_ClassObjects[ GID_MODEONHIGHLIGHT    ], MUIA_Cycle_Active  ) ? FALSE : TRUE );
+	privmsg   = ( MUIGetVar( mccdata->mcc_ClassObjects[ GID_MODEONPRIVMSG      ], MUIA_Cycle_Active  ) ? FALSE : TRUE );
+	ext       = ( MUIGetVar( mccdata->mcc_ClassObjects[ GID_USEEXTERNALPLAYER  ], MUIA_Selected      ) ? FALSE : TRUE );
+
+	SetAttrs( mccdata->mcc_ClassObjects[ GID_MODEONTABOPENING   ], MUIA_Disabled, global            , TAG_DONE );
+	SetAttrs( mccdata->mcc_ClassObjects[ GID_SPLONTABOPENING    ], MUIA_Disabled, global | tab      , TAG_DONE );
+	SetAttrs( mccdata->mcc_ClassObjects[ GID_MODEONHIGHLIGHT    ], MUIA_Disabled, global            , TAG_DONE );
+	SetAttrs( mccdata->mcc_ClassObjects[ GID_SPLONHIGHLIGHT     ], MUIA_Disabled, global | highlight, TAG_DONE );
+	SetAttrs( mccdata->mcc_ClassObjects[ GID_MODEONPRIVMSG      ], MUIA_Disabled, global            , TAG_DONE );
+	SetAttrs( mccdata->mcc_ClassObjects[ GID_SPLONPRIVMSG       ], MUIA_Disabled, global |privmsg   , TAG_DONE );
+	SetAttrs( mccdata->mcc_ClassObjects[ GID_CTCPSAMPLES        ], MUIA_Disabled, global            , TAG_DONE );
+	SetAttrs( mccdata->mcc_ClassObjects[ GID_USEEXTERNALPLAYER  ], MUIA_Disabled, global            , TAG_DONE );
+	SetAttrs( mccdata->mcc_ClassObjects[ GID_EXTERNALPLAYER     ], MUIA_Disabled, global | ext      , TAG_DONE );
+
+	return( 0 );
+}
+/* \\\ */
 
 /*
 ** Dispatcher, init and dispose
@@ -216,6 +247,7 @@ DISPATCHER(MCC_SettingsSound_Dispatcher)
 		case OM_NEW                               : return( OM_New                     ( cl, obj, (APTR) msg ) );
 		case MM_SETTINGSSOUND_RESETTODEFAULTS     : return( MM_ResetToDefaults         ( cl, obj, (APTR) msg ) );
 		case MM_SETTINGSSOUND_READCONFIG          : return( MM_ReadConfig              ( cl, obj, (APTR) msg ) );
+		case MM_SETTINGSSOUND_DISENABLE           : return( MM_DisEnable               ( cl, obj, (APTR) msg ) );
 	}
 	return( DoSuperMethodA( cl, obj, msg ) );
 

@@ -7505,6 +7505,30 @@ MSG_MUICLASS_SETTINGSGENERAL_HIGHLIGHT_HELP
 ;
 ; MUICLASS_SETTINGSSOUND
 ;
+MSG_MUICLASS_SETTINGSSOUND_ENABLED_GAD
+Audio output
+Tonausgabe aktiv
+Audio output
+Audio output
+Audio output
+Audio output
+Audio output
+Audio output
+Audio output
+Audio output
+;
+MSG_MUICLASS_SETTINGSSOUND_ENABLED_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
 MSG_MUICLASS_SETTINGSSOUND_PLAYSAMPLE_INFO
 Play sample...
 Ton abspielen ...

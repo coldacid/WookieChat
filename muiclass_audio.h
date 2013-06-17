@@ -8,29 +8,36 @@
     for the specific language governing rights and limitations under the License.
 */
 
-#ifndef MUICLASS_SETTINGSSOUND_H
-#define MUICLASS_SETTINGSSOUND_H 1
+#ifndef MUICLASS_AUDIO_H
+#define MUICLASS_AUDIO_H 1
 
 /*************************************************************************/
 
 #include <exec/types.h>
 #include "muiclass.h"
 
-
-#define SettingsSoundObject NEWOBJECT( appclasses[ CLASSID_SETTINGSSOUND ]->mcc_Class, NULL
+#define AudioObject NEWOBJECT( appclasses[ CLASSID_AUDIO ]->mcc_Class, NULL
 
 /*
 ** Methods and attributes
 */
 
 enum {
-MM_SETTINGSSOUND_RESETTODEFAULTS =  0xFED00250,
-MM_SETTINGSSOUND_READCONFIG,
-MM_SETTINGSSOUND_DISENABLE,
+MM_AUDIO_PLAY =  0xFED00340,
 /* Attributes */
 };
 
-struct MP_SETTINGSSOUND_READCONFIG { ULONG MethodID; ULONG ObjectID; };
+struct MP_AUDIO_PLAY    { ULONG MethodID; ULONG SID; char *Name; };
+
+/*************************************************************************/
+
+enum{
+SID_TABOPENING = 0,
+SID_HIGHLIGHT,
+SID_PRIVMSG,
+SID_CTCP,
+SID_LAST
+};
 
 /*************************************************************************/
 
@@ -38,10 +45,10 @@ struct MP_SETTINGSSOUND_READCONFIG { ULONG MethodID; ULONG ObjectID; };
 ** Prototypes
 */
 
-ULONG   MCC_SettingsSound_InitClass( void );
-void    MCC_SettingsSound_DisposeClass( void );
+ULONG   MCC_Audio_InitClass( void );
+void    MCC_Audio_DisposeClass( void );
 
 /*************************************************************************/
 
-#endif /* MUICLASS_SETTINGSSOUND_H */
+#endif /* MUICLASS_AUDIO_H */
 

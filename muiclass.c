@@ -28,6 +28,7 @@
 #include "locale.h"
 #include "muiclass.h"
 #include "muiclass_aliaslist.h"
+#include "muiclass_audio.h"
 #include "muiclass_application.h"
 #include "muiclass_buttonlist.h"
 #include "muiclass_channel.h"
@@ -82,6 +83,7 @@ ULONG MUIClass_Open( void )
 ULONG result;
 
 if( !(result = MCC_AliasList_InitClass() ) ) {
+if( !(result = MCC_Audio_InitClass() ) ) {
 if( !(result = MCC_Application_InitClass() ) ) {
 if( !(result = MCC_ButtonList_InitClass() ) ) {
 if( !(result = MCC_ChannelList_InitClass() ) ) {
@@ -114,7 +116,7 @@ if( ( application = NewObject( appclasses[ CLASSID_APPLICATION ]->mcc_Class, NUL
 } else {
 	result = MSG_ERROR_UNABLETOSETUPMUICLASS;
 }
-}}}}}}}}}}}}}}}}}}}}}}}}}}}}
+}}}}}}}}}}}}}}}}}}}}}}}}}}}}}
    return( result );
 }
 /* \\\ */
@@ -132,6 +134,7 @@ void MUIClass_Close( void )
     }
 
 	MCC_AliasList_DisposeClass();
+	MCC_Audio_DisposeClass();
 	MCC_Application_DisposeClass();
 	MCC_ButtonList_DisposeClass();
 	MCC_ChannelList_DisposeClass();
