@@ -45,7 +45,7 @@ void    MCC_ChannelList_DisposeClass( void );
 ** channel entry structure
 */
 
-#define CHANNELENTRY_CHANNEL_SIZEOF  30
+#define CHANNELENTRY_CHANNEL_SIZEOF  50 /* 50 from rfc2811 */
 #define CHANNELENTRY_PASSWORD_SIZEOF 30
 
 struct ChannelEntry {

@@ -31,6 +31,8 @@
 
 #include "functions.h"
 #include "muiclass.h"
+#include "muiclass_application.h"
+#include "muiclass_network.h"
 #include "version.h"
 #include "intern.h"
 #include "objapp.h"
@@ -717,13 +719,21 @@ ULONG result = MSG_ERROR_NOERROR;
 	Locale_Open( (STRPTR)( APPLICATIONNAME "avoid catalog for now"), VERSION, REVISION );
 	if( !Libraries_Open() ) {
 		if( !( result = MUIClass_Open() ) ) { /* init our mui classes */
-			IPTR signalmask;
+			Object *networkobj = (APTR) MUIGetVar( application, MA_APPLICATION_OBJECTNETWORK );
+			IPTR signalmask, waitsignals;
 			LONG returnid;
 
 			while( 1 ) {
 				returnid = DoMethod( application, MUIM_Application_Input, &signalmask );
 
 				if( returnid == MUIV_Application_ReturnID_Quit ) {
+					break;
+				}
+
+				waitsignals = signalmask | SIGBREAKF_CTRL_C;
+				DoMethod( networkobj, MM_NETWORK_WAITSELECT, &waitsignals );
+
+				if( waitsignals & SIGBREAKF_CTRL_C ) {
 					break;
 				}
 			}
@@ -4509,7 +4519,7 @@ int main(int argc, char *argv[])
                 select_result = 0;
 
                 if (running && signal)
-                    select_result = WaitSelect(fdmax + 1, &read_fds, &write_fds, NULL, NULL, &waitsignals);
+					select_result = WaitSelect(fdmax + 1, &read_fds, &write_fds, NULL, NULL, waitsignals);
 
                 if (waitsignals & arexx_wants_to_send_signal) //lets send some text
                 {

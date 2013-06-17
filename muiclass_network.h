@@ -14,7 +14,11 @@
 /*************************************************************************/
 
 #include <exec/types.h>
+#include "intern.h"
 #include "muiclass.h"
+#include "muiclass_serverlist.h"
+#include "muiclass_channellist.h"
+#include "muiclass_nicklist.h"
 
 #define NetworkObject NEWOBJECT( appclasses[ CLASSID_NETWORK ]->mcc_Class, NULL
 
@@ -23,15 +27,80 @@
 */
 
 enum {
-MM_NETWORK_PLAY =  0xFED00350,
+MM_NETWORK_CONNECT =  0xFED00360,
+MM_NETWORK_CONNECTALLOC,
+MM_NETWORK_ADDLOG,
+MM_NETWORK_LOGNOTECREATE,
+MM_NETWORK_LOGNOTEADD,
+MM_NETWORK_WAITSELECT,
+MM_NETWORK_HANDLESOCKETS,
 /* Attributes */
 MA_NETWORK_OBJECTSETTINGS,
 MA_NETWORK_OBJECTAUDIO,
 };
 
-struct MP_NETWORK_PLAY    { ULONG MethodID; ULONG SID; char *Name; };
+struct MP_NETWORK_CONNECTALLOC  { ULONG MethodID; struct ServerEntry *ServerEntry; };
+struct MP_NETWORK_CONNECT       { ULONG MethodID; struct ServerEntry *ServerEntry; };
+struct MP_NETWORK_ADDLOG        { ULONG MethodID; struct Connection  *Connection; ULONG Type; char *format; IPTR arg1; IPTR arg2; IPTR arg3; IPTR arg4; };
+struct MP_NETWORK_WAITSELECT    { ULONG MethodID; ULONG *SignalMask; };
 
 /*************************************************************************/
+
+struct Connection {
+	struct Connection *c_Next;
+	struct Connection *c_Pred;
+/* copied over from serverentry */
+	ULONG              c_Port;
+	char               c_Name[ SERVERENTRY_NAME_SIZEOF   + 2 ];
+	char               c_Address[ SERVERENTRY_ADDRESS_SIZEOF   + 2 ];
+	char               c_Charset[ SERVERENTRY_CHARSET_SIZEOF   + 2 ];
+	char               c_Password[ SERVERENTRY_PASSWORD_SIZEOF + 2 ];
+	struct List        c_Channels;
+/* network runtime data */
+	struct sockaddr_in c_ServerSocket;  /* geit FIXME: change name */
+
+	long               c_a_socket;
+/* ident */
+	long               ident_a_socket;
+	long               ident_listen_socket;
+	struct sockaddr_in ident_test;
+	struct sockaddr_in ident_their_addr;
+	char               ident_buffer[2000];
+
+};
+
+struct Channel {
+	char               c_Name[ CHANNELENTRY_CHANNEL_SIZEOF   + 2 ];
+	char               c_Password[ CHANNELENTRY_PASSWORD_SIZEOF   + 2 ];
+};
+
+enum{
+LOGTYPE_ERROR = 0,
+LOGTYPE_ACTION,
+LOGTYPE_NORMAL,
+LOGTYPE_NICKLISTTX,
+LOGTYPE_TABSPEN,
+LOGTYPE_JOIN,
+LOGTYPE_PART,
+LOGTYPE_QUIT,
+LOGTYPE_MODES,
+LOGTYPE_CTCP,
+LOGTYPE_ACTIONS,
+LOGTYPE_INFO,
+LOGTYPE_OWNTEXT,
+LOGTYPE_HIGHLIGHT,
+LOGTYPE_NOTICES,
+LOGTYPE_INVITE,
+LOGTYPE_KICK,
+LOGTYPE_NICKCHANGE,
+LOGTYPE_TOPIC,
+LOGTYPE_WALLOPS,
+LOGTYPE_ACTIVITY,
+LOGTYPE_CHATACTIVITY,
+LOGTYPE_HIGHLIGHTACTIVITY,
+LOGTYPE_LAST
+};
+
 
 /*
 ** Prototypes

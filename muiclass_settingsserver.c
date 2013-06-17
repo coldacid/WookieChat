@@ -141,13 +141,13 @@ Object *objs[ GID_LAST ];
 
 		CopyMem( &objs[0], &mccdata->mcc_ClassObjects[0], sizeof( mccdata->mcc_ClassObjects));
 		
-		SetAttrs( objs[ GID_SERVERADDRESS    ], MUIA_String_Reject, " /\?", TAG_DONE );
-		SetAttrs( objs[ GID_SERVERPASSWORD   ], MUIA_String_Reject, " /\?", TAG_DONE );
-		SetAttrs( objs[ GID_SERVERCHARSET    ], MUIA_String_Reject, " /\?", TAG_DONE );
-		SetAttrs( objs[ GID_NICKNAME         ], MUIA_String_Reject, " /\?", TAG_DONE );
-		SetAttrs( objs[ GID_NICKPASSWORD     ], MUIA_String_Reject, " /\?", TAG_DONE );
-		SetAttrs( objs[ GID_CHANNELNAME      ], MUIA_String_Reject, " /\?", TAG_DONE );
-		SetAttrs( objs[ GID_CHANNELPASSWORD  ], MUIA_String_Reject, " /\?", TAG_DONE );
+		SetAttrs( objs[ GID_SERVERADDRESS    ], MUIA_String_Reject, " /\?,:", TAG_DONE );
+		SetAttrs( objs[ GID_SERVERPASSWORD   ], MUIA_String_Reject, " /\?,:", TAG_DONE );
+		SetAttrs( objs[ GID_SERVERCHARSET    ], MUIA_String_Reject, " /\?,:", TAG_DONE );
+		SetAttrs( objs[ GID_NICKNAME         ], MUIA_String_Reject, " /\?,:", TAG_DONE );
+		SetAttrs( objs[ GID_NICKPASSWORD     ], MUIA_String_Reject, " /\?,:", TAG_DONE );
+		SetAttrs( objs[ GID_CHANNELNAME      ], MUIA_String_Reject, " /\?,:\x7", TAG_DONE );
+		SetAttrs( objs[ GID_CHANNELPASSWORD  ], MUIA_String_Reject, " /\?,:", TAG_DONE );
 		SetAttrs( objs[ GID_SERVERLIST       ] , MA_SERVERLIST_NICKLISTOBJ, objs[ GID_NICKLIST ], MA_SERVERLIST_CHANNELLISTOBJ, objs[ GID_CHANNELLIST ], TAG_DONE );
 
 		DoMethod( obj, MUIM_Notify, MUIA_Window_CloseRequest, TRUE, obj, 3, MUIM_Set, MUIA_Window_Open, FALSE );

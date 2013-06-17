@@ -157,6 +157,7 @@ static ULONG OM_Get(struct IClass *cl, Object *obj, struct opGet *msg )
 struct mccdata *mccdata = INST_DATA( cl, obj );
 
 	switch( msg->opg_AttrID ) {
+		case MA_APPLICATION_OBJECTNETWORK       : *msg->opg_Storage = (ULONG) mccdata->mcc_ClassObjects[ GID_NETWORK       ] ; return( TRUE );
 		case MA_APPLICATION_WINDOWMAIN          : *msg->opg_Storage = (ULONG) mccdata->mcc_ClassObjects[ WID_MAIN          ] ; return( TRUE );
 		case MA_APPLICATION_WINDOWQUIT          : *msg->opg_Storage = (ULONG) mccdata->mcc_ClassObjects[ WID_QUIT          ] ; return( TRUE );
 		case MA_APPLICATION_WINDOWABOUT         : *msg->opg_Storage = (ULONG) mccdata->mcc_ClassObjects[ WID_ABOUT         ] ; return( TRUE );
