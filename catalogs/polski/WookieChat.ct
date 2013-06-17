@@ -1575,8 +1575,8 @@ Ok
 ; Ok
 ;
 MSG_ERROR_UNABLETOOPENLIBRARY
-Unable to open\n'%s'\nversion %ld!
-; Unable to open\n'%s'\nversion %ld!
+Unable to open library\n'%s' version %ld!
+; Unable to open library\n'%s' version %ld!
 ;
 ;
 ; MUICLASS_APPLICATION

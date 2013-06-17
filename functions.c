@@ -126,10 +126,10 @@ struct Library          *CodesetsBase;
 #endif
 
 static struct LibraryData LibraryArray[] = {
-	LIBMACRO( "locale.library"           ,  0, LIBFLAGSF_OPTIONAL, LocaleBase      , ILocale    ),
-	LIBMACRO( "muimaster.library"        ,  0, 0                 , MUIMasterBase   , IMUIMaster ),
-	LIBMACRO( "intuition.library"        , 33, 0                 , IntuitionBase   , IIntuition ),
-	LIBMACRO( "asl.library"              ,  0, 0                 , AslBase         , IAsl       ),
+	LIBMACRO( "locale.library"           ,  0, LIBFLAGSF_OPTIONAL, LocaleBase      , ILocale    ), /* first to get localised error output */
+	LIBMACRO( "intuition.library"        , 33, 0                 , IntuitionBase   , IIntuition ), /* second to deliver requesters */
+	LIBMACRO( "muimaster.library"        ,  0, 0                 , MUIMasterBase   , IMUIMaster ), /* third for mui requesters */
+	LIBMACRO( "asl.library"              ,  0, 0                 , AslBase         , IAsl       ), /* now all other stuff */
 	LIBMACRO( "icon.library"             ,  0, 0                 , IconBase        , IIcon      ),
 	LIBMACRO( "graphics.library"         ,  0, 0                 , GfxBase         , IGfx       ),
 	LIBMACRO( "utility.library"          ,  0, 0                 , UtilityBase     , IUtility   ),

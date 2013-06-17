@@ -4761,16 +4761,16 @@ Ok
 Ok
 ;
 MSG_ERROR_UNABLETOOPENLIBRARY
-Unable to open\n'%s'\nversion %ld!
-Konnte die Library\n'%s'\n mit der Version %ld\nnicht öffnen!
-Unable to open\n'%s'\nversion %ld!
-Unable to open\n'%s'\nversion %ld!
-Unable to open\n'%s'\nversion %ld!
-Unable to open\n'%s'\nversion %ld!
-Unable to open\n'%s'\nversion %ld!
-Unable to open\n'%s'\nversion %ld!
-Unable to open\n'%s'\nversion %ld!
-Unable to open\n'%s'\nversion %ld!
+Unable to open library\n'%s' version %ld!
+Konnte die Library '%s'\nmit der Version %ld nicht öffnen!
+Unable to open library\n'%s' version %ld!
+Unable to open library\n'%s' version %ld!
+Unable to open library\n'%s' version %ld!
+Unable to open library\n'%s' version %ld!
+Unable to open library\n'%s' version %ld!
+Unable to open library\n'%s' version %ld!
+Unable to open library\n'%s' version %ld!
+Unable to open library\n'%s' version %ld!
 ;
 ;
 ; MUICLASS_APPLICATION
