@@ -20,21 +20,15 @@
 #include <proto/exec.h>
 #include <SDI_hook.h>
 
-#include <mui/NList_mcc.h>
-#include <mui/NListview_mcc.h>
 #include <string.h>
 #include <stdio.h>
 
 #include "functions.h"
-#include "intern.h"
 #include "locale.h"
 #include "muiclass.h"
 #include "muiclass_application.h"
 #include "muiclass_windowsettings.h"
 #include "muiclass_audio.h"
-#include "version.h"
-
-#define LINEBUFFER_SIZEOF 0x2000
 
 /*************************************************************************/
 
@@ -61,12 +55,7 @@ struct mccdata
 
 static ULONG OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
 {
-	return( (ULONG) DoSuperNew( cl, obj,
-							MUIA_NList_Title         , TRUE,
-							MUIA_CycleChain          , 1,
-							MUIA_NList_Format        , "BAR,",
-							MUIA_ObjectID            , OID_ALI_LIST,
-							TAG_DONE ) );
+	return( (ULONG) DoSuperNew( cl, obj, TAG_DONE ) );
 }
 /* \\\ */
 /* /// OM_Destruct()
@@ -144,7 +133,7 @@ struct mccdata *mccdata = INST_DATA( cl, obj );
 					char *filename;
 					if( ( extplayer = (char *) LocalReadConfig( OID_SND_EXTERNALPLAYER ) ) && *extplayer ) {
 						if( ( filename = AllocVec( strlen( path ) + strlen( extplayer ) + 32, MEMF_ANY ) ) ) {
-							sprintf( filename, "run >nil: %s %s", extplayer, filename );
+							sprintf( filename, "Run >NIL: %s %s", extplayer, filename );
 #ifdef __amigaos4__
 							SystemTags( (_s_cs) filename, TAG_DONE);
 #else
@@ -215,7 +204,4 @@ void MCC_Audio_DisposeClass( void )
     }
 }
 /* \\\ */
-
-
-
 
