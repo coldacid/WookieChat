@@ -45,6 +45,7 @@ GID_LAST
 struct mccdata
 {
 	Object                *mcc_ClassObjects[ GID_LAST ];
+	struct List            mcc_ConnectedList;
 };
 
 /* /// OM_New()
@@ -56,9 +57,14 @@ struct mccdata
 static ULONG OM_New( struct IClass *cl, Object *obj, struct opSet *msg )
 {
 	if( ( obj = (Object*) DoSuperNew( cl, obj, TAG_DONE ) ) ) {
+		struct mccdata *mccdata = INST_DATA( cl, obj );
+		
 		SetAttrs( obj, TAG_MORE, msg->ops_AttrList );
+
+		NEWLIST( &mccdata->mcc_ConnectedList ); /* init list */
+
 	}
-	return( (ULON) obj );
+	return( (ULONG) obj );
 }
 /* \\\ */
 /* /// OM_Destruct()
