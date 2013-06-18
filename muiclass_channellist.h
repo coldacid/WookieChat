@@ -51,7 +51,7 @@ void    MCC_ChannelList_DisposeClass( void );
 struct ChannelEntry {
 	struct ChannelEntry    *ce_Succ;
 	struct ChannelEntry    *ce_Pred;
-	char                    ce_Channel[ CHANNELENTRY_CHANNEL_SIZEOF + 2 ];
+	char                    ce_Name[ CHANNELENTRY_CHANNEL_SIZEOF + 2 ];
 	char                    ce_Password[ CHANNELENTRY_PASSWORD_SIZEOF + 2 ];
 };
 

@@ -61,7 +61,7 @@ STRPTR *array = msg->strings;
 struct NickEntry *ne;
 
 	if( ( ne = msg->entry ) ) {
-		*array++ = (STRPTR) ne->ne_Nick;
+		*array++ = (STRPTR) ne->ne_Name;
 		*array++ = (STRPTR) ne->ne_Password;
 	} else {
 		*array++ = (STRPTR) LGS( MSG_LV_NICK     );
@@ -82,7 +82,7 @@ static ULONG MM_Add( struct IClass *cl, Object *obj, struct MP_NICKLIST_ADD *msg
 struct NickEntry *ne;
 
 	if( ( ne = AllocVec( sizeof( struct NickEntry ), MEMF_ANY|MEMF_CLEAR ) ) ) {
-		strncpy( (char *) ne->ne_Nick    , (char *) ( msg->Nick     ? msg->Nick     : LGS( MSG_MUICLASS_NICKLIST_DEFAULTNAME )), NICKENTRY_NICK_SIZEOF     );
+		strncpy( (char *) ne->ne_Name    , (char *) ( msg->Nick     ? msg->Nick     : LGS( MSG_MUICLASS_NICKLIST_DEFAULTNAME )), NICKENTRY_NICK_SIZEOF     );
 		strncpy( (char *) ne->ne_Password, (char *) ( msg->Password ? msg->Password : (STRPTR) "" ), NICKENTRY_PASSWORD_SIZEOF  );
 		if( msg->ServerEntry ) {
 			AddTail( &((struct ServerEntry *) msg->ServerEntry)->se_NickList, (struct Node *) ne );

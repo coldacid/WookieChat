@@ -395,7 +395,7 @@ struct NickEntry *ne = NULL;
 	if( ne ) {
 		STRPTR str;
 		if( ( str = (STRPTR) MUIGetVar( mccdata->mcc_ClassObjects[ GID_NICKNAME       ], MUIA_String_Contents ) ) ) {
-			strcpy( (char *) ne->ne_Nick    , (char *) str );
+			strcpy( (char *) ne->ne_Name    , (char *) str );
 		}
 		if( ( str = (STRPTR) MUIGetVar( mccdata->mcc_ClassObjects[ GID_NICKPASSWORD ], MUIA_String_Contents ) ) ) {
 			strcpy( (char *) ne->ne_Password, (char *) str );
@@ -419,7 +419,7 @@ struct NickEntry *ne = NULL;
 	DoMethod( mccdata->mcc_ClassObjects[ GID_NICKLIST ], MUIM_NList_GetEntry, MUIV_NList_GetEntry_Active, &ne );
 
 	if( ne ) {
-		SetAttrs( mccdata->mcc_ClassObjects[ GID_NICKNAME     ], MUIA_NoNotify, TRUE, MUIA_String_Contents, ne->ne_Nick    , TAG_DONE );
+		SetAttrs( mccdata->mcc_ClassObjects[ GID_NICKNAME     ], MUIA_NoNotify, TRUE, MUIA_String_Contents, ne->ne_Name    , TAG_DONE );
 		SetAttrs( mccdata->mcc_ClassObjects[ GID_NICKPASSWORD ], MUIA_NoNotify, TRUE, MUIA_String_Contents, ne->ne_Password, TAG_DONE );
 	}
 	DoMethod( obj, MM_SETTINGSSERVER_DISENABLE );
@@ -491,7 +491,7 @@ struct ChannelEntry *ce = NULL;
 	if( ce ) {
 		STRPTR str;
 		if( ( str = (STRPTR) MUIGetVar( mccdata->mcc_ClassObjects[ GID_CHANNELNAME     ], MUIA_String_Contents ) ) ) {
-			strcpy( (char *) ce->ce_Channel , (char *) str );
+			strcpy( (char *) ce->ce_Name    , (char *) str );
 		}
 		if( ( str = (STRPTR) MUIGetVar( mccdata->mcc_ClassObjects[ GID_CHANNELPASSWORD ], MUIA_String_Contents ) ) ) {
 			strcpy( (char *) ce->ce_Password, (char *) str );
@@ -515,7 +515,7 @@ struct ChannelEntry *ce = NULL;
 	DoMethod( mccdata->mcc_ClassObjects[ GID_CHANNELLIST ], MUIM_NList_GetEntry, MUIV_NList_GetEntry_Active, &ce );
 
 	if( ce ) {
-		SetAttrs( mccdata->mcc_ClassObjects[ GID_CHANNELNAME     ], MUIA_NoNotify, TRUE, MUIA_String_Contents, ce->ce_Channel , TAG_DONE );
+		SetAttrs( mccdata->mcc_ClassObjects[ GID_CHANNELNAME     ], MUIA_NoNotify, TRUE, MUIA_String_Contents, ce->ce_Name    , TAG_DONE );
 		SetAttrs( mccdata->mcc_ClassObjects[ GID_CHANNELPASSWORD ], MUIA_NoNotify, TRUE, MUIA_String_Contents, ce->ce_Password, TAG_DONE );
 	}
 	DoMethod( obj, MM_SETTINGSSERVER_DISENABLE );

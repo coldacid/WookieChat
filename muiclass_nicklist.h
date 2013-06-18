@@ -52,7 +52,7 @@ void    MCC_NickList_DisposeClass( void );
 struct NickEntry {
 	struct NickEntry    *ne_Succ;
 	struct NickEntry    *ne_Pred;
-	char                 ne_Nick[ NICKENTRY_NICK_SIZEOF + 2 ];
+	char                 ne_Name[ NICKENTRY_NICK_SIZEOF + 2 ];
 	char                 ne_Password[ NICKENTRY_PASSWORD_SIZEOF + 2 ];
 };
 

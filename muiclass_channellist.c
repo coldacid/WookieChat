@@ -60,7 +60,7 @@ STRPTR *array = msg->strings;
 struct ChannelEntry *ce;
 
 	if( ( ce = msg->entry ) ) {
-		*array++ = (STRPTR) ce->ce_Channel;
+		*array++ = (STRPTR) ce->ce_Name;
 		*array++ = (STRPTR) ce->ce_Password;
 	} else {
 		*array++ = (STRPTR) LGS( MSG_LV_CHANNEL  );
@@ -81,7 +81,7 @@ static ULONG MM_Add( struct IClass *cl, Object *obj, struct MP_CHANNELLIST_ADD *
 struct ChannelEntry *ce;
 
 	if( ( ce = AllocVec( sizeof( struct ChannelEntry ), MEMF_ANY|MEMF_CLEAR ) ) ) {
-		strncpy( (char *) ce->ce_Channel , (char *) ( msg->Channel  ? msg->Channel  : LGS( MSG_MUICLASS_CHANNELLIST_DEFAULTNAME )), CHANNELENTRY_CHANNEL_SIZEOF     );
+		strncpy( (char *) ce->ce_Name    , (char *) ( msg->Channel  ? msg->Channel  : LGS( MSG_MUICLASS_CHANNELLIST_DEFAULTNAME )), CHANNELENTRY_CHANNEL_SIZEOF     );
 		strncpy( (char *) ce->ce_Password, (char *) ( msg->Password ? msg->Password : (STRPTR) "" ), CHANNELENTRY_PASSWORD_SIZEOF  );
 		if( msg->ServerEntry ) {
 			AddTail( &((struct ServerEntry *) msg->ServerEntry)->se_ChannelList, (struct Node *) ce );
