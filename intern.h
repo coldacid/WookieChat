@@ -13,10 +13,6 @@
 
 /***************************************************************************/
 
-#define ENABLE_NEWWOOKIECODE 1 /* this one enables new application related functions and disables
-							 ** no longer needed code */
-
-
 #include <exec/types.h>
 #include <exec/ports.h>
 #include <dos/dos.h>

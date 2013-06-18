@@ -154,7 +154,6 @@ ULONG i;
 			DoMethod( objs[ GID_PAGELIST ], MUIM_NList_InsertSingle, LGS( MSG_PG_SERVER + i ), MUIV_NList_Insert_Bottom );
 		}
 
-
 		/* create drawers */
 		{ BPTR lock;
 		if( ( lock = CreateDir( (_s_cs) DEFAULT_SETTINGSPATH ) ) ) {

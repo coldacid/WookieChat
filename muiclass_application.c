@@ -196,11 +196,9 @@ struct mccdata *mccdata = INST_DATA( cl, obj );
 		}
 	}
 
-
 #if ENABLE_NEWWOOKIECODE
 	SetAttrs( mccdata->mcc_ClassObjects[ WID_MAIN ], MUIA_Window_Open, TRUE, TAG_DONE );
 	DoMethod( mccdata->mcc_ClassObjects[ WID_MAIN ], MM_WINDOWMAIN_COLORCHANGE );
-
 #endif
 
 	return( 0 );

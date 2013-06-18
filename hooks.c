@@ -1417,7 +1417,7 @@ static void DisplayLI_channel_TextFunc(void)
 
 
         //put the new colour code over the start of our Entry
-        stccpy(a_entry->Display_entry,a_entry->entry,600);
+		stccpy(a_entry->Display_entry,a_entry->entry,600);
         strncpy(a_entry->Display_entry,new_array,strlen(new_array));
 
         array[0]=(char*)a_entry->Display_entry;
@@ -1498,7 +1498,7 @@ static void Display_listviewtabs_TextFunc(void)
 
 
         //put the new colour code over the start of our Entry
-        stccpy(a_entry->Display_entry,a_entry->entry,600);
+		stccpy(a_entry->Display_entry,a_entry->entry,600);
         strncpy(a_entry->Display_entry,new_array,strlen(new_array));
 
         array[0]=(char*)a_entry->Display_entry;

@@ -1,14 +1,34 @@
+NEWWOOKIE   = 1
 CC          = ppc-morphos-gcc-4
+LD          = ppc-morphos-gcc-4
+LDFLAGS     = -noixemul -nostartfiles -Map=$(OBJDIR)/$@.map
+STRIP       = ppc-morphos-strip
 LIBS        = -laboxstubs -labox -ldebug
 INCS        =
-DEFINES     = -DENABLE_GEITDEBUG
+ifndef NEWWOOKIE
+DEFINES     = -DENABLE_GEITDEBUG -DENABLE_NEWWOOKIECODE=0
+else
+DEFINES     = -DENABLE_GEITDEBUG -DENABLE_NEWWOOKIECODE=1
+endif
 CFLAGS      = $(INCS) $(DEFINES) -std=gnu99 -noixemul -Wall -Wno-format -g -O0
 APPLICATION = WookieChat
 SYSTEM      = MorphOS
 CATALOGS    = english deutsch español français greek italiano magyar norsk polski svenska
 FLEXCAT     = flexcat
 
-SOURCES   = functions.c                 \
+ifdef NEWWOOKIE
+SOURCES   = wookiechat.c
+else
+SOURCES   = main.c arexx_hooks.c auto_reconnect_server.c closeserverselectwin.c coloursettings.c \
+            connect2server.c dcc.c display_logfile_lines.c do_waitselect_code.c \
+            events_arexx.c globals.c graphical_smilies.c highlight_search.c hooks.c \
+			irc.c nicklist.c pincoming.c process_outgoing.c save_settings.c \
+            sortnicks.c startexit.c subclasses.c tabs_change.c tabs_create_close.c \
+			timers.c objapp.c audio.c
+endif
+
+SOURCES  += version.c                   \
+			functions.c                 \
 			muiclass.c                  \
 			muiclass_aliaslist.c        \
 			muiclass_audio.c            \
@@ -40,19 +60,17 @@ SOURCES   = functions.c                 \
 			muiclass_windowquit.c       \
 			muiclass_windowsettings.c   \
 			muiclass_windowurlgrabber.c \
-			arexx_hooks.c auto_reconnect_server.c closeserverselectwin.c coloursettings.c \
-            connect2server.c dcc.c display_logfile_lines.c do_waitselect_code.c \
-            events_arexx.c globals.c graphical_smilies.c highlight_search.c hooks.c \
-            irc.c main.c nicklist.c pincoming.c process_outgoing.c save_settings.c \
-            sortnicks.c startexit.c subclasses.c tabs_change.c tabs_create_close.c \
-			timers.c objapp.c audio.c locale.c version.c
+			locale.c
 
 OBJECTS   = $(SOURCES:.c=.o)
 
-all: $(APPLICATION)_strings.h $(APPLICATION) catalogs
+all: $(APPLICATION)_strings.h $(APPLICATION)_$(SYSTEM) catalogs
  
-$(APPLICATION): $(OBJECTS)
-	$(CC) $(CFLAGS) -o $(APPLICATION)_$(SYSTEM) $(OBJECTS) $(LIBS)
+$(APPLICATION)_$(SYSTEM): $(OBJECTS)
+	@echo "    [LD] $@"
+	@$(LD) $(LDFLAGS) -o $(APPLICATION)_$(SYSTEM) $(OBJECTS) $(LIBS)
+	@echo "    [STRIP] $@"
+	@$(STRIP) --strip-all --strip-unneeded --remove-section .comment $@
 
 clean:
 	-rm -f $(OBJECTS)
@@ -63,10 +81,9 @@ clean:
 
 -include $(OBJECTS:.o=.d)
 
-%.o: %.c $(APPLICATION)_strings.h *.h
-	$(CC) $(CFLAGS) -c -o $@ $<
-
-#	 @$(CC) -MM $(CFLAGS) $< > $*.d
+%.o: %.c $(APPLICATION)_strings.h *.h Makefile.morphos
+	@echo "    [CC] $@"
+	@$(CC) $(CFLAGS) -c -o $@ $<
 
 #  locale
 #

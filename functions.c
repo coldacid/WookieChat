@@ -70,9 +70,11 @@ ULONG ShowRequester( ULONG message, ULONG gadgets, IPTR *args )
 */
 
 #ifdef __AROS__
+struct ExecBase         *SysBase;
 struct LocaleBase       *LocaleBase;
 struct Library          *MUIMasterBase;
 struct IntuitionBase    *IntuitionBase;
+struct Library          *DOSBase;
 struct Library          *AslBase;
 struct Library          *IconBase;
 struct GfxBase          *GfxBase;
@@ -81,9 +83,11 @@ struct Library          *SocketBase;
 struct Library          *DataTypesBase;
 struct Library          *CodesetsBase;
 #elif __amigaos4__
+struct Library          *SysBase;
 struct Library          *LocaleBase;
 struct Library          *MUIMasterBase;
 struct Library          *IntuitionBase;
+struct Library          *DOSBase;
 struct Library          *AslBase;
 struct Library          *IconBase;
 struct Library          *GfxBase;
@@ -102,9 +106,11 @@ struct SocketIFace      *ISocket;
 struct DataTypesIFace   *IDataTypes;
 struct CodesetsIFace    *ICodesets;
 #elif __MORPHOS__
+struct ExecBase         *SysBase;
 struct Library          *LocaleBase;
 struct Library          *MUIMasterBase;
 struct IntuitionBase    *IntuitionBase;
+struct DosLibrary       *DOSBase;
 struct Library          *AslBase;
 struct Library          *IconBase;
 struct GfxBase          *GfxBase;
@@ -113,9 +119,11 @@ struct Library          *SocketBase;
 struct Library          *DataTypesBase;
 struct Library          *CodesetsBase;
 #else
+struct ExecBase         *SysBase;
 struct Library          *LocaleBase;
 struct Library          *MUIMasterBase;
 struct Library          *IntuitionBase;
+struct DosLibrary       *DOSBase;
 struct Library          *AslBase;
 struct Library          *IconBase;
 struct Library          *GfxBase;
@@ -129,11 +137,12 @@ static struct LibraryData LibraryArray[] = {
 	LIBMACRO( "locale.library"           ,  0, LIBFLAGSF_OPTIONAL, LocaleBase      , ILocale    ), /* first to get localised error output */
 	LIBMACRO( "intuition.library"        , 33, 0                 , IntuitionBase   , IIntuition ), /* second to deliver requesters */
 	LIBMACRO( "muimaster.library"        ,  0, 0                 , MUIMasterBase   , IMUIMaster ), /* third for mui requesters */
-	LIBMACRO( "asl.library"              ,  0, 0                 , AslBase         , IAsl       ), /* now all other stuff */
+	LIBMACRO( "dos.library"              ,  0, 0                 , DOSBase         , IDos       ), /* now all other stuff */
+	LIBMACRO( "asl.library"              ,  0, 0                 , AslBase         , IAsl       ),
 	LIBMACRO( "icon.library"             ,  0, 0                 , IconBase        , IIcon      ),
 	LIBMACRO( "graphics.library"         ,  0, 0                 , GfxBase         , IGfx       ),
 	LIBMACRO( "utility.library"          ,  0, 0                 , UtilityBase     , IUtility   ),
-	LIBMACRO( "bsdsocket.library"        ,  0, 0                 , SocketBase      , ISocket    ),
+	LIBMACRO( "bsdsocket.library"        ,  0, LIBFLAGSF_OPTIONAL, SocketBase      , ISocket    ),
 	LIBMACRO( "datatypes.library"        , 43, 0                 , DataTypesBase   , IDataTypes ),
 	LIBMACRO( "codesets.library"         ,  6, 0                 , CodesetsBase    , ICodesets  ),
     LIBMACROEND

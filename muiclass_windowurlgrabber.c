@@ -147,6 +147,7 @@ struct URLEntry *ue = NULL;
 			Execute((_s_cs) buffer, 0, 0 );
 #endif
 		} else {
+#if 0
             timestamp_2_string();
 			sprintf( buffer, "%s%s%s%s %s", timestamp,
 								LGS( MSG_OPENING_BRACKET ),
@@ -155,6 +156,7 @@ struct URLEntry *ue = NULL;
 								LGS( MSG_NO_BROWSER_SELECTED ) );
 
 			add_text_to_current_list( buffer, 9, ACTIVITY_CHAT );
+#endif
 		}
 	}
 	return( 0 );
