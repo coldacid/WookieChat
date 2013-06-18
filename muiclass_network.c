@@ -199,6 +199,29 @@ struct Channel      *c;
 	return( 0 );
 }
 /* \\\ */
+
+/* /// MM_ServerFind()
+**
+*/
+
+/*************************************************************************/
+
+static ULONG MM_ServerFind( struct IClass *cl, Object *obj, struct MP_NETWORK_SERVERFIND *msg )
+{
+struct mccdata *mccdata = INST_DATA( cl, obj );
+struct ServerEntry *se = msg->ServerEntry;
+struct Server *s;
+
+	for( s = (APTR) mccdata->mcc_ConnectedList.lh_Head ; s->s_Succ ; s = s->s_Succ ) {
+		if( s->s_Port == se->se_Port ) { /* different port -> different server */
+			if( !Stricmp( (CONST_STRPTR) s->s_Address, (CONST_STRPTR) se->se_Address ) ) {
+				return( (IPTR) s );
+			}
+		}
+	}
+	return( 0 );
+}
+/* \\\ */
 /* /// MM_ServerConnect()
 **
 */
@@ -307,7 +330,27 @@ char *result;
 	return( 0 );
 }
 /* \\\ */
+/* /// MM_ServerDisConnect()
+**
+*/
 
+/*************************************************************************/
+
+static ULONG MM_ServerDisConnect( struct IClass *cl, Object *obj, struct MP_NETWORK_SERVERDISCONNECT *msg )
+{
+struct Server *s = msg->Server;
+
+	if( SocketBase ) {
+		if( s->s_a_socket != -1 ) { /* still open? */
+			CloseSocket( s->s_a_socket );
+		}
+		if( s->ident_listen_socket != -1 ) { /* still open? */
+			CloseSocket( s->ident_listen_socket );
+		}
+	}
+	return( 0 );
+}
+/* \\\ */
 
 /* /// MM_WaitSelect()
 **
@@ -410,18 +453,20 @@ DISPATCHER(MCC_Network_Dispatcher)
 {
     switch (msg->MethodID)
     {
-		case OM_NEW                        : return( OM_New                      ( cl, obj, (APTR) msg ) );
-		case OM_DISPOSE                    : return( OM_Dispose                  ( cl, obj, (APTR) msg ) );
-		case OM_SET                        : return( OM_Set                      ( cl, obj, (APTR) msg ) );
-		case MM_NETWORK_WAITSELECT         : return( MM_WaitSelect               ( cl, obj, (APTR) msg ) );
-		case MM_NETWORK_SERVERFIND     : return( MM_ServerAlloc          ( cl, obj, (APTR) msg ) );
-		case MM_NETWORK_SERVERALLOC    : return( MM_ServerAlloc          ( cl, obj, (APTR) msg ) );
-		case MM_NETWORK_SERVERFREE     : return( MM_ServerFree           ( cl, obj, (APTR) msg ) );
-		case MM_NETWORK_SERVERCONNECT  : return( MM_ServerConnect        ( cl, obj, (APTR) msg ) );
+		case OM_NEW                        : return( OM_New              ( cl, obj, (APTR) msg ) );
+		case OM_DISPOSE                    : return( OM_Dispose          ( cl, obj, (APTR) msg ) );
+		case OM_SET                        : return( OM_Set              ( cl, obj, (APTR) msg ) );
+		case MM_NETWORK_WAITSELECT         : return( MM_WaitSelect       ( cl, obj, (APTR) msg ) );
 
-		case MM_NETWORK_CHANNELFIND        : return( MM_ChannelFind              ( cl, obj, (APTR) msg ) );
-		case MM_NETWORK_CHANNELALLOC       : return( MM_ChannelAlloc             ( cl, obj, (APTR) msg ) );
-		case MM_NETWORK_CHANNELFREE        : return( MM_ChannelFree              ( cl, obj, (APTR) msg ) );
+		case MM_NETWORK_SERVERFIND         : return( MM_ServerFind       ( cl, obj, (APTR) msg ) );
+		case MM_NETWORK_SERVERALLOC        : return( MM_ServerAlloc      ( cl, obj, (APTR) msg ) );
+		case MM_NETWORK_SERVERFREE         : return( MM_ServerFree       ( cl, obj, (APTR) msg ) );
+		case MM_NETWORK_SERVERCONNECT      : return( MM_ServerConnect    ( cl, obj, (APTR) msg ) );
+		case MM_NETWORK_SERVERDISCONNECT   : return( MM_ServerDisConnect ( cl, obj, (APTR) msg ) );
+
+		case MM_NETWORK_CHANNELFIND        : return( MM_ChannelFind      ( cl, obj, (APTR) msg ) );
+		case MM_NETWORK_CHANNELALLOC       : return( MM_ChannelAlloc     ( cl, obj, (APTR) msg ) );
+		case MM_NETWORK_CHANNELFREE        : return( MM_ChannelFree      ( cl, obj, (APTR) msg ) );
     }
 	return( DoSuperMethodA( cl, obj, msg ) );
 
