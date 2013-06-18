@@ -24,6 +24,7 @@
 #include "intern.h"
 #include "locale.h"
 #include "muiclass.h"
+#include "muiclass_application.h"
 #include "muiclass_windowabout.h"
 #include "version.h"
 
@@ -131,6 +132,20 @@ NTIP struct TagItem *tstate;
 	return( DoSuperMethodA( cl, obj,(Msg) msg ) );
 }
 /* \\\ */
+/* /// OM_Get()
+**
+*/
+
+/*************************************************************************/
+
+static ULONG OM_Get(struct IClass *cl, Object *obj, struct opGet *msg )
+{
+	switch( msg->opg_AttrID ) {
+		case MA_APPLICATION_CLASSID: *msg->opg_Storage = CLASSID_WINDOWABOUT ; return( TRUE );
+		default: return( DoSuperMethodA( cl, obj, (Msg) msg ) );
+    }
+}
+/* \\\ */
 
 /*
 ** Dispatcher, init and dispose
@@ -146,10 +161,11 @@ DISPATCHER(MCC_WindowAbout_Dispatcher)
 {
     switch (msg->MethodID)
     {
-		case OM_NEW                          : return( OM_New                           ( cl, obj, (APTR) msg ) );
-		case OM_DISPOSE                      : return( OM_Dispose                       ( cl, obj, (APTR) msg ) );
+		case OM_NEW                          : return( OM_New      ( cl, obj, (APTR) msg ) );
+		case OM_DISPOSE                      : return( OM_Dispose  ( cl, obj, (APTR) msg ) );
 
-		case OM_SET                          : return( OM_Set                           ( cl, obj, (APTR) msg ) );
+		case OM_SET                          : return( OM_Set      ( cl, obj, (APTR) msg ) );
+		case OM_GET                          : return( OM_Get      ( cl, obj, (APTR) msg ) );
 
 /* application specific methods */
 

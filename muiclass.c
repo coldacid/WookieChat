@@ -53,7 +53,7 @@
 #include "muiclass_userlist.h"
 #include "muiclass_windowabout.h"
 #include "muiclass_windowignorelist.h"
-#include "muiclass_windowmain.h"
+#include "muiclass_windowchat.h"
 #include "muiclass_windowquit.h"
 #include "muiclass_windowsettings.h"
 #include "muiclass_windowurlgrabber.h"
@@ -109,7 +109,7 @@ if( !(result = MCC_URLList_InitClass() ) ) {
 if( !(result = MCC_UserList_InitClass() ) ) {
 if( !(result = MCC_WindowAbout_InitClass() ) ) {
 if( !(result = MCC_WindowIgnoreList_InitClass() ) ) {
-if( !(result = MCC_WindowMain_InitClass() ) ) {
+if( !(result = MCC_WindowChat_InitClass() ) ) {
 if( !(result = MCC_WindowQuit_InitClass() ) ) {
 if( !(result = MCC_WindowSettings_InitClass() ) ) {
 if( !(result = MCC_WindowURLGrabber_InitClass() ) ) {
@@ -161,7 +161,7 @@ void MUIClass_Close( void )
 	MCC_UserList_DisposeClass();
 	MCC_WindowAbout_DisposeClass();
 	MCC_WindowIgnoreList_DisposeClass();
-	MCC_WindowMain_DisposeClass();
+	MCC_WindowChat_DisposeClass();
 	MCC_WindowQuit_DisposeClass();
 	MCC_WindowSettings_DisposeClass();
 	MCC_WindowURLGrabber_DisposeClass();

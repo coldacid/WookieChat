@@ -4788,9 +4788,9 @@ IRC Client
 IRC Client
 ;
 ;
-; MUICLASS_WINDOWMAIN
+; MUICLASS_WINDOWCHAT
 ;
-MSG_MUICLASS_WINDOWMAIN_TITLE
+MSG_MUICLASS_WINDOWCHAT_TITLE
 WookieChat V%ld.%ld
 WookieChat V%ld.%ld
 WookieChat V%ld.%ld
@@ -4802,7 +4802,7 @@ WookieChat V%ld.%ld
 WookieChat V%ld.%ld
 WookieChat V%ld.%ld
 ;
-MSG_MUICLASS_WINDOWMAIN_CLOSETAB_GAD
+MSG_MUICLASS_WINDOWCHAT_CLOSETAB_GAD
 X
 X
 X
@@ -4814,7 +4814,7 @@ X
 X
 X
 ;
-MSG_MUICLASS_WINDOWMAIN_CLOSETAB_HELP
+MSG_MUICLASS_WINDOWCHAT_CLOSETAB_HELP
 Close the current tab.
 Diesen Tabulator Schliessen.
 Cerrar la pestaña actual.
@@ -4826,7 +4826,7 @@ Steng denne taben.
 Zamyka aktualn± zak³adkê.
 Stäng flik.
 ;
-MSG_MUICLASS_WINDOWMAIN_TOPIC_HELP
+MSG_MUICLASS_WINDOWCHAT_TOPIC_HELP
 This is the channels current topic.
 Das ist das Grundthema.
 La temática actual del canal.
@@ -4838,7 +4838,7 @@ Dette er kanalens overskrift.
 To jest temat aktualnego kana³u.
 Detta är kanalens nuvarande ämne (topic).
 ;
-MSG_MUICLASS_WINDOWMAIN_MODET_GAD
+MSG_MUICLASS_WINDOWCHAT_MODET_GAD
 T
 T
 T
@@ -4850,7 +4850,7 @@ T
 T
 T
 ;
-MSG_MUICLASS_WINDOWMAIN_MODET_HELP
+MSG_MUICLASS_WINDOWCHAT_MODET_HELP
 Topic protection. This setting prevents regular users from changing the channel topic.
 Themenschutz.\nSie müssen Operator sein, um das Thema ändern zu können.
 Proteger temática. Evita a usuarios regulares\nque cambien la temática del canal.
@@ -4862,7 +4862,7 @@ Overskriftsbeskyttelse. Denne forhindrer ordinære brukere fra å forandre kanalov
 Zabezpieczenie tematu. To ustawienie zapobiega zmianom tematu przez normalnych u¿ytkowników.
 Topic protection. Hindrar vanliga användare från att ändra kanalens ämne.
 ;
-MSG_MUICLASS_WINDOWMAIN_MODEN_GAD
+MSG_MUICLASS_WINDOWCHAT_MODEN_GAD
 N
 N
 N
@@ -4874,7 +4874,7 @@ N
 N
 N
 ;
-MSG_MUICLASS_WINDOWMAIN_MODEN_HELP
+MSG_MUICLASS_WINDOWCHAT_MODEN_HELP
 No messaging. This setting forces users to be in the channel to be able to talk in it.
 Keine Nachrichten.\nNachrichten von Clients ausserhalb des Kanals verbieten.
 No mensajes. Obliga a los usuarios del\ncanal a permitir hablar en el mismo.
@@ -4886,7 +4886,7 @@ Ingen beskjeder. Dette tvinger brukerne til å være i kanalen for å kunne snakke 
 Przesy³anie wiadomo¶ci zabronione. To ustawienie wymusza na u¿ytkownikach obecno¶æ na kanale aby móc na nim rozmawiaæ.
 No messaging. Kräver att användaren finns i kanalen för att kunna skriva till den.
 ;
-MSG_MUICLASS_WINDOWMAIN_MODES_GAD
+MSG_MUICLASS_WINDOWCHAT_MODES_GAD
 S
 S
 S
@@ -4898,7 +4898,7 @@ S
 S
 S
 ;
-MSG_MUICLASS_WINDOWMAIN_MODES_HELP
+MSG_MUICLASS_WINDOWCHAT_MODES_HELP
 Secret mode. If this is set, the channel is invisible until you have joined.
 Geheim-Modus.\nWenn gesetzt, ist der Kanal bis zum Eintreten unsichtbar.
 Modo secreto. Hace al canal "invisible"\nhasta que accede a él.
@@ -4910,7 +4910,7 @@ Hemmelig modus. Hvis denne er satt er kanalen usynlig inntil du har entret den.
 Tajny. Je¶li ta opcja jest w³±czona, kana³ jest niewidoczny, dopóki u¿ytkownik siê do niego nie do³±czy.
 Secret mode. Om satt, är kanalen osynlig tills du gått in i den.
 ;
-MSG_MUICLASS_WINDOWMAIN_MODEI_GAD
+MSG_MUICLASS_WINDOWCHAT_MODEI_GAD
 I
 I
 I
@@ -4922,7 +4922,7 @@ I
 I
 I
 ;
-MSG_MUICLASS_WINDOWMAIN_MODEI_HELP
+MSG_MUICLASS_WINDOWCHAT_MODEI_HELP
 Invite only. Only users who have been invited to the channel may join.
 Nur für eingeladene Benutzer.
 Sólo invitados. Permite acceder unicamente\na usuarios que han sido invitados.
@@ -4934,7 +4934,7 @@ Kun invitasjon. Kun brukere som er invitert til kanalen kan entre den.
 Dostêpny tylko za zaproszeniem. Tylko u¿ytkownicy, którzy zostan± zaproszeni bêd± mogli siê do³±czyæ.
 Invite only. Bara inbjudna användare får komma in.
 ;
-MSG_MUICLASS_WINDOWMAIN_MODEP_GAD
+MSG_MUICLASS_WINDOWCHAT_MODEP_GAD
 P
 P
 P
@@ -4946,7 +4946,7 @@ P
 P
 P
 ;
-MSG_MUICLASS_WINDOWMAIN_MODEP_HELP
+MSG_MUICLASS_WINDOWCHAT_MODEP_HELP
 Private mode. If set, channel topic is not shown on global channel lists.
 Privat-Modus.\nWenn gesetzt, wird das Thema dieses Kanals nicht in der allgemeinen Kanalliste angezeigt.
 Modo privado. La temática del canal no se\nmuestra en la lista global de canales.
@@ -4958,7 +4958,7 @@ Privat modus. Hvis denne er satt vises ikke kanalen i globale kanallister.
 Prywatny. Je¶li ta opcja jest w³±czona, temat kana³u nie zostanie wy¶wietlony na globalnej li¶cie kana³ów.
 Private mode. Om satt, kommer kanalens ämne inte att visas i globala listningar.
 ;
-MSG_MUICLASS_WINDOWMAIN_MODEM_GAD
+MSG_MUICLASS_WINDOWCHAT_MODEM_GAD
 M
 M
 M
@@ -4970,7 +4970,7 @@ M
 M
 M
 ;
-MSG_MUICLASS_WINDOWMAIN_MODEM_HELP
+MSG_MUICLASS_WINDOWCHAT_MODEM_HELP
 Moderated mode. Only users with operator, halfop or voice status (thats @ % or +) may talk in channel when set.
 Moderierter Kanal.\nNur Nutzer mit Operator, Halfop oder Voice Status (das sind @ % oder +) dürfen in diesem Kanal sprechen, wenn gesetzt.
 Modo moderado. Pueden hablar solamente\noperadores, medio-operadores o con voz\n(op[@], halfop[%%], voice[+]).
@@ -4982,7 +4982,7 @@ Moderert modus. Bare brukere som er operatør, halvoperatør eller som har voice-s
 Tryb moderowany. Po w³±czeniu tej opcji, tylko u¿ytkownicy ze statusem operatora, pó³operatora lub g³osem (@ % lub +) mog± rozmawiaæ na kanale.
 Moderated mode. Bara användare med operator, halfop eller voice (dvs. @ % or +) får tala i kanalen.
 ;
-MSG_MUICLASS_WINDOWMAIN_MODEB_GAD
+MSG_MUICLASS_WINDOWCHAT_MODEB_GAD
 B
 B
 B
@@ -4994,7 +4994,7 @@ B
 B
 B
 ;
-MSG_MUICLASS_WINDOWMAIN_MODEB_HELP
+MSG_MUICLASS_WINDOWCHAT_MODEB_HELP
 Click to view a list of all banmasks for this channel.
 Klicke um eine komplette Liste aller Bannmasken für diesen Kanal zu sehen.
 Pulse para ver la lista de todas\nlas prohibiciones en este canal.
@@ -5006,7 +5006,7 @@ Klikk for å vise en liste over alle banmasker for denne kanalen.
 Naci¶nij, aby zobaczyæ listê wszystkich masek blokad dla tego kana³u.
 Klicka för att visa en lista över kanalens ban villkor.
 ;
-MSG_MUICLASS_WINDOWMAIN_MODEK_GAD
+MSG_MUICLASS_WINDOWCHAT_MODEK_GAD
 K
 K
 K
@@ -5018,7 +5018,7 @@ K
 K
 K
 ;
-MSG_MUICLASS_WINDOWMAIN_MODEK_HELP
+MSG_MUICLASS_WINDOWCHAT_MODEK_HELP
 Keyword mode. When this is set, users need to supply a keyword (password) to enter.
 Passwort-Modus, wurde er gesetzt, benötigen Nutzer ein Passwort um einzutreten.
 Modo palabra clave. El usuario\ndebe indicar una palabra clave\n(contraseña) para entrar.
@@ -5030,7 +5030,7 @@ Passordmodus. Når denne er satt, må brukere gi et passord for å entre kanalen.
 Tryb z has³em. Je¶li ta opcja jest w³±czona, u¿ytkownicy bêd± musieli podaæ has³o, aby móc siê do³±czyæ.
 Keyword mode. Om satt, behöver användare ge ett lösenord för att komma in.
 ;
-MSG_MUICLASS_WINDOWMAIN_MODEKEYWORD_HELP
+MSG_MUICLASS_WINDOWCHAT_MODEKEYWORD_HELP
 Current channel keyword.
 gegenwärtiges Kanal Kennwort.
 Contraseña actual del canal.
@@ -5042,7 +5042,7 @@ Aktiv kanals passord..
 Aktualne has³o kana³u.
 Gällande lösenord.
 ;
-MSG_MUICLASS_WINDOWMAIN_MODEL_GAD
+MSG_MUICLASS_WINDOWCHAT_MODEL_GAD
 L
 L
 L
@@ -5054,7 +5054,7 @@ L
 L
 L
 ;
-MSG_MUICLASS_WINDOWMAIN_MODEL_HELP
+MSG_MUICLASS_WINDOWCHAT_MODEL_HELP
 Enforce a limit to how many users can currently join the channel.
 Limitiert die Anzahl der Nutzer für diesen Kanal.
 Forzar el límite de usuarios\nposibles a acceder al canal.
@@ -5066,7 +5066,7 @@ Setter en grense på hvor mange brukere som kan entre kanalen.
 Ustala limit maksymalnie po³±czonych u¿ytkowników.
 Sätt en gräns för hur många användare som kan komma in i kanalen.
 ;
-MSG_MUICLASS_WINDOWMAIN_MODELIMIT_HELP
+MSG_MUICLASS_WINDOWCHAT_MODELIMIT_HELP
 Current user limit.
 Gegenwärtiges Benutzerlimit.
 Límite actual de usuarios.
@@ -5078,7 +5078,7 @@ Aktuell grense på brukere.
 Obecny limit u¿ytkowników.
 Nuvarande max användarantal.
 ;
-MSG_MUICLASS_WINDOWMAIN_NICKLIST_HELP
+MSG_MUICLASS_WINDOWCHAT_NICKLIST_HELP
 Graphical Usermodes Key:\nGreen = Channel Operators or @\nBlue = HalfOps or \% \nYellow = Voiced Users or +
 Grafische Nutzermodi:\nGrün = KanalOperator oder @\nBlau = HalbOperator oder %\nGelb = Sprachberechtigte Nutzer oder +
 Colores según el tipo de usuario:\nVerde = operadores (@)\nAzul = medio-operadores (%)\nAmarillo = con voz (+)
@@ -5090,7 +5090,7 @@ Grafisk brukermodus nøkkel:\nGrønn = kanal-oper eller @\nBlå = halvoper eller \%
 Graficzne tryby u¿ytkowników - podpowied¼:\nzielony = operator kana³u lub @\nniebieski = pó³operator kana³u lub \%\n¿ó³ty = u¿ytkownik z przyznanym g³osem lub +
 Färgnyckel för grafiska användarlägen:\nGrön = Operator eller @\nBlå = HalfOp eller \% \nGul = Användare med röst eller +
 ;
-MSG_MUICLASS_WINDOWMAIN_MESSAGE_HELP
+MSG_MUICLASS_WINDOWCHAT_MESSAGE_HELP
 Type your message here!
 Geben sie ihre Nachricht oder ihr Kommando hier ein!
 Type your message here!

@@ -27,7 +27,8 @@
 */
 
 enum {
-MM_NETWORK_CONNECT =  0xFED00360,
+MM_NETWORK_AUTORECONNECT =  0xFED00360,
+MM_NETWORK_CONNECT,
 MM_NETWORK_CONNECTALLOC,
 MM_NETWORK_ADDLOG,
 MM_NETWORK_LOGNOTECREATE,
@@ -39,8 +40,8 @@ MA_NETWORK_OBJECTSETTINGS,
 MA_NETWORK_OBJECTAUDIO,
 };
 
-struct MP_NETWORK_CONNECTALLOC  { ULONG MethodID; struct ServerEntry *ServerEntry; };
-struct MP_NETWORK_CONNECT       { ULONG MethodID; struct ServerEntry *ServerEntry; };
+struct MP_NETWORK_CONNECTALLOC  { ULONG MethodID; struct ServerEntry *ServerEntry; Object *Chat; };
+struct MP_NETWORK_CONNECT       { ULONG MethodID; struct ServerEntry *ServerEntry; Object *Chat; };
 struct MP_NETWORK_ADDLOG        { ULONG MethodID; struct Connection  *Connection; ULONG Type; char *format; IPTR arg1; IPTR arg2; IPTR arg3; IPTR arg4; };
 struct MP_NETWORK_WAITSELECT    { ULONG MethodID; ULONG *SignalMask; };
 
@@ -57,6 +58,7 @@ struct Connection {
 	char               c_Password[ SERVERENTRY_PASSWORD_SIZEOF + 2 ];
 	struct List        c_Channels;
 /* network runtime data */
+	ULONG              c_State; /* this is the current state */
 	struct sockaddr_in c_ServerSocket;  /* geit FIXME: change name */
 
 	long               c_a_socket;
@@ -70,10 +72,17 @@ struct Connection {
 };
 
 struct Channel {
-	char               c_Name[ CHANNELENTRY_CHANNEL_SIZEOF   + 2 ];
+	char               c_Name[ CHANNELENTRY_CHANNEL_SIZEOF        + 2 ];
 	char               c_Password[ CHANNELENTRY_PASSWORD_SIZEOF   + 2 ];
+	Object            *c_ChatWindow;
 };
 
+enum{
+SVRSTATE_NOTCONNECTED = 0,
+SVRSTATE_CONNECTED,
+SVRSTATE_RETRY,
+SVRSTATR_FAILED,
+};
 enum{
 LOGTYPE_ERROR = 0,
 LOGTYPE_ACTION,

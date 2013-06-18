@@ -1585,109 +1585,109 @@ IRC Klient
 ; IRC Client
 ;
 ;
-; MUICLASS_WINDOWMAIN
+; MUICLASS_WINDOWCHAT
 ;
-MSG_MUICLASS_WINDOWMAIN_TITLE
+MSG_MUICLASS_WINDOWCHAT_TITLE
 WookieChat V%ld.%ld
 ; WookieChat V%ld.%ld
 ;
-MSG_MUICLASS_WINDOWMAIN_CLOSETAB_GAD
+MSG_MUICLASS_WINDOWCHAT_CLOSETAB_GAD
 X
 ; X
 ;
-MSG_MUICLASS_WINDOWMAIN_CLOSETAB_HELP
+MSG_MUICLASS_WINDOWCHAT_CLOSETAB_HELP
 Diesen Tabulator Schliessen.
 ; Close the current tab.
 ;
-MSG_MUICLASS_WINDOWMAIN_TOPIC_HELP
+MSG_MUICLASS_WINDOWCHAT_TOPIC_HELP
 Das ist das Grundthema.
 ; This is the channels current topic.
 ;
-MSG_MUICLASS_WINDOWMAIN_MODET_GAD
+MSG_MUICLASS_WINDOWCHAT_MODET_GAD
 T
 ; T
 ;
-MSG_MUICLASS_WINDOWMAIN_MODET_HELP
+MSG_MUICLASS_WINDOWCHAT_MODET_HELP
 Themenschutz.\nSie müssen Operator sein, um das Thema ändern zu können.
 ; Topic protection. This setting prevents regular users from changing the channel topic.
 ;
-MSG_MUICLASS_WINDOWMAIN_MODEN_GAD
+MSG_MUICLASS_WINDOWCHAT_MODEN_GAD
 N
 ; N
 ;
-MSG_MUICLASS_WINDOWMAIN_MODEN_HELP
+MSG_MUICLASS_WINDOWCHAT_MODEN_HELP
 Keine Nachrichten.\nNachrichten von Clients ausserhalb des Kanals verbieten.
 ; No messaging. This setting forces users to be in the channel to be able to talk in it.
 ;
-MSG_MUICLASS_WINDOWMAIN_MODES_GAD
+MSG_MUICLASS_WINDOWCHAT_MODES_GAD
 S
 ; S
 ;
-MSG_MUICLASS_WINDOWMAIN_MODES_HELP
+MSG_MUICLASS_WINDOWCHAT_MODES_HELP
 Geheim-Modus.\nWenn gesetzt, ist der Kanal bis zum Eintreten unsichtbar.
 ; Secret mode. If this is set, the channel is invisible until you have joined.
 ;
-MSG_MUICLASS_WINDOWMAIN_MODEI_GAD
+MSG_MUICLASS_WINDOWCHAT_MODEI_GAD
 I
 ; I
 ;
-MSG_MUICLASS_WINDOWMAIN_MODEI_HELP
+MSG_MUICLASS_WINDOWCHAT_MODEI_HELP
 Nur für eingeladene Benutzer.
 ; Invite only. Only users who have been invited to the channel may join.
 ;
-MSG_MUICLASS_WINDOWMAIN_MODEP_GAD
+MSG_MUICLASS_WINDOWCHAT_MODEP_GAD
 P
 ; P
 ;
-MSG_MUICLASS_WINDOWMAIN_MODEP_HELP
+MSG_MUICLASS_WINDOWCHAT_MODEP_HELP
 Privat-Modus.\nWenn gesetzt, wird das Thema dieses Kanals nicht in der allgemeinen Kanalliste angezeigt.
 ; Private mode. If set, channel topic is not shown on global channel lists.
 ;
-MSG_MUICLASS_WINDOWMAIN_MODEM_GAD
+MSG_MUICLASS_WINDOWCHAT_MODEM_GAD
 M
 ; M
 ;
-MSG_MUICLASS_WINDOWMAIN_MODEM_HELP
+MSG_MUICLASS_WINDOWCHAT_MODEM_HELP
 Moderierter Kanal.\nNur Nutzer mit Operator, Halfop oder Voice Status (das sind @ % oder +) dürfen in diesem Kanal sprechen, wenn gesetzt.
 ; Moderated mode. Only users with operator, halfop or voice status (thats @ % or +) may talk in channel when set.
 ;
-MSG_MUICLASS_WINDOWMAIN_MODEB_GAD
+MSG_MUICLASS_WINDOWCHAT_MODEB_GAD
 B
 ; B
 ;
-MSG_MUICLASS_WINDOWMAIN_MODEB_HELP
+MSG_MUICLASS_WINDOWCHAT_MODEB_HELP
 Klicke um eine komplette Liste aller Bannmasken für diesen Kanal zu sehen.
 ; Click to view a list of all banmasks for this channel.
 ;
-MSG_MUICLASS_WINDOWMAIN_MODEK_GAD
+MSG_MUICLASS_WINDOWCHAT_MODEK_GAD
 K
 ; K
 ;
-MSG_MUICLASS_WINDOWMAIN_MODEK_HELP
+MSG_MUICLASS_WINDOWCHAT_MODEK_HELP
 Passwort-Modus, wurde er gesetzt, benötigen Nutzer ein Passwort um einzutreten.
 ; Keyword mode. When this is set, users need to supply a keyword (password) to enter.
 ;
-MSG_MUICLASS_WINDOWMAIN_MODEKEYWORD_HELP
+MSG_MUICLASS_WINDOWCHAT_MODEKEYWORD_HELP
 gegenwärtiges Kanal Kennwort.
 ; Current channel keyword.
 ;
-MSG_MUICLASS_WINDOWMAIN_MODEL_GAD
+MSG_MUICLASS_WINDOWCHAT_MODEL_GAD
 L
 ; L
 ;
-MSG_MUICLASS_WINDOWMAIN_MODEL_HELP
+MSG_MUICLASS_WINDOWCHAT_MODEL_HELP
 Limitiert die Anzahl der Nutzer für diesen Kanal.
 ; Enforce a limit to how many users can currently join the channel.
 ;
-MSG_MUICLASS_WINDOWMAIN_MODELIMIT_HELP
+MSG_MUICLASS_WINDOWCHAT_MODELIMIT_HELP
 Gegenwärtiges Benutzerlimit.
 ; Current user limit.
 ;
-MSG_MUICLASS_WINDOWMAIN_NICKLIST_HELP
+MSG_MUICLASS_WINDOWCHAT_NICKLIST_HELP
 Grafische Nutzermodi:\nGrün = KanalOperator oder @\nBlau = HalbOperator oder %\nGelb = Sprachberechtigte Nutzer oder +
 ; Graphical Usermodes Key:\nGreen = Channel Operators or @\nBlue = HalfOps or \% \nYellow = Voiced Users or +
 ;
-MSG_MUICLASS_WINDOWMAIN_MESSAGE_HELP
+MSG_MUICLASS_WINDOWCHAT_MESSAGE_HELP
 Geben sie ihre Nachricht oder ihr Kommando hier ein!
 ; Type your message here!
 ;

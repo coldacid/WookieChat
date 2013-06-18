@@ -53,7 +53,7 @@ CLASSID_USERLIST,
 CLASSID_WINDOWABOUT,
 CLASSID_WINDOWCOLORSETTINGS,
 CLASSID_WINDOWIGNORELIST,
-CLASSID_WINDOWMAIN,
+CLASSID_WINDOWCHAT,
 CLASSID_WINDOWQUIT,
 CLASSID_WINDOWSETTINGS,
 CLASSID_WINDOWURLGRABBER,
@@ -93,6 +93,21 @@ struct MUI_PenSpec *MUIDataspaceImportPoppen( Object *poppen, Object *dataspace,
 void                MUIDataspaceExportPoppen( Object *poppen, Object *dataspace, ULONG objectid );
 
 /*************************************************************************/
+
+/*
+** mui list parsing
+*/
+
+#define FORCHILD(_o, _a) \
+	{ \
+		APTR child, _cstate = (APTR)((struct MinList *) MUIGetVar(_o, _a))->mlh_Head; \
+		while ((child = NextObject(&_cstate)))
+
+#define NEXTCHILD }
+
+/*
+** compatibly stuff
+*/
 
 #ifdef __AROS__
 IPTR NewObjectAROS( struct IClass *classPtr, UBYTE *classID, ULONG tag1, ... );

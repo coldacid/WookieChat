@@ -8,8 +8,8 @@
     for the specific language governing rights and limitations under the License.
 */
 
-#ifndef MUICLASS_WINDOWMAIN_H
-#define MUICLASS_WINDOWMAIN_H 1
+#ifndef MUICLASS_WINDOWCHAT_H
+#define MUICLASS_WINDOWCHAT_H 1
 
 /*************************************************************************/
 
@@ -17,20 +17,20 @@
 #include "muiclass.h"
 
 
-#define WindowMainObject NEWOBJECT( appclasses[ CLASSID_WINDOWMAIN ]->mcc_Class, NULL
+#define WindowChatObject NEWOBJECT( appclasses[ CLASSID_WINDOWCHAT ]->mcc_Class, NULL
 
 /*
 ** Methods and attributes
 */
 
 enum {
-MM_WINDOWMAIN_DUMMY =  0xFED00020,
-MM_WINDOWMAIN_MENUSELECT,
-MM_WINDOWMAIN_COLORCHANGE,
+MM_WINDOWCHAT_DUMMY =  0xFED00020,
+MM_WINDOWCHAT_MENUSELECT,
+MM_WINDOWCHAT_COLORCHANGE,
 /* Attributes */
 };
 
-struct MP_WINDOWMAIN_MENUSELECT { ULONG MethodID; ULONG MenuID; };
+struct MP_WINDOWCHAT_MENUSELECT { ULONG MethodID; ULONG MenuID; };
 
 /*************************************************************************/
 
@@ -38,10 +38,10 @@ struct MP_WINDOWMAIN_MENUSELECT { ULONG MethodID; ULONG MenuID; };
 ** Prototypes
 */
 
-ULONG   MCC_WindowMain_InitClass( void );
-void    MCC_WindowMain_DisposeClass( void );
+ULONG   MCC_WindowChat_InitClass( void );
+void    MCC_WindowChat_DisposeClass( void );
 
 /*************************************************************************/
 
-#endif /* MUICLASS_WINDOWMAIN_H */
+#endif /* MUICLASS_WINDOWCHAT_H */
 

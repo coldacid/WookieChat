@@ -9,7 +9,7 @@
 */
 
 /*
-** muiclass_windowmain.c
+** muiclass_windowchat.c
 */
 
 #include <libraries/mui.h>
@@ -27,7 +27,7 @@
 #include "locale.h"
 #include "muiclass.h"
 #include "muiclass_application.h"
-#include "muiclass_windowmain.h"
+#include "muiclass_windowchat.h"
 #include "muiclass_windowquit.h"
 #include "muiclass_windowsettings.h"
 #include "muiclass_userlist.h"
@@ -120,7 +120,7 @@ static ULONG OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
 Object *objs[ GID_LAST ];
 
 	if( (obj = (Object *)DoSuperNew( cl, obj,
-			MUIA_Window_Title            , LGS( MSG_MUICLASS_WINDOWMAIN_TITLE ),
+			MUIA_Window_Title            , LGS( MSG_MUICLASS_WINDOWCHAT_TITLE ),
 			MUIA_Window_ID               , MAKE_ID('M','A','I','N'),
 			MUIA_Window_Menustrip, MenustripObject,
 								Child, MenuObject, MUIA_Menu_Title, LGS( MSG_MENU_PROJECT_TITLE ),
@@ -160,29 +160,29 @@ Object *objs[ GID_LAST ];
 						End,
 			WindowContents, VGroup,
 						Child, HGroup,
-							Child, objs[ GID_CLOSETAB    ] = MUICreateSmallButton( MSG_MUICLASS_WINDOWMAIN_CLOSETAB_GAD ),
-							Child, objs[ GID_TOPIC       ] = MUICreateString( MSG_MUICLASS_WINDOWMAIN_TOPIC_HELP-1, TOPIC_SIZEOF ),
+							Child, objs[ GID_CLOSETAB    ] = MUICreateSmallButton( MSG_MUICLASS_WINDOWCHAT_CLOSETAB_GAD ),
+							Child, objs[ GID_TOPIC       ] = MUICreateString( MSG_MUICLASS_WINDOWCHAT_TOPIC_HELP-1, TOPIC_SIZEOF ),
 							Child, BalanceObject, End,
-							Child, objs[ GID_MODET       ] = MUICreateSmallButton( MSG_MUICLASS_WINDOWMAIN_MODET_GAD ),
-							Child, objs[ GID_MODEN       ] = MUICreateSmallButton( MSG_MUICLASS_WINDOWMAIN_MODEN_GAD ),
-							Child, objs[ GID_MODES       ] = MUICreateSmallButton( MSG_MUICLASS_WINDOWMAIN_MODES_GAD ),
-							Child, objs[ GID_MODEI       ] = MUICreateSmallButton( MSG_MUICLASS_WINDOWMAIN_MODEI_GAD ),
-							Child, objs[ GID_MODEP       ] = MUICreateSmallButton( MSG_MUICLASS_WINDOWMAIN_MODEP_GAD ),
-							Child, objs[ GID_MODEM       ] = MUICreateSmallButton( MSG_MUICLASS_WINDOWMAIN_MODEM_GAD ),
-							Child, objs[ GID_MODEB       ] = MUICreateSmallButton( MSG_MUICLASS_WINDOWMAIN_MODEB_GAD ),
-							Child, objs[ GID_MODEK       ] = MUICreateSmallButton( MSG_MUICLASS_WINDOWMAIN_MODEK_GAD ),
-							Child, objs[ GID_MODEKEYWORD ] = MUICreateString( MSG_MUICLASS_WINDOWMAIN_MODEKEYWORD_HELP-1, KEYWORDLIMIT_SIZEOF ),
-							Child, objs[ GID_MODEL       ] = MUICreateSmallButton( MSG_MUICLASS_WINDOWMAIN_MODEL_GAD ),
-							Child, objs[ GID_MODELIMIT   ] = MUICreateString( MSG_MUICLASS_WINDOWMAIN_MODELIMIT_HELP-1, USERLIMIT_SIZEOF ),
+							Child, objs[ GID_MODET       ] = MUICreateSmallButton( MSG_MUICLASS_WINDOWCHAT_MODET_GAD ),
+							Child, objs[ GID_MODEN       ] = MUICreateSmallButton( MSG_MUICLASS_WINDOWCHAT_MODEN_GAD ),
+							Child, objs[ GID_MODES       ] = MUICreateSmallButton( MSG_MUICLASS_WINDOWCHAT_MODES_GAD ),
+							Child, objs[ GID_MODEI       ] = MUICreateSmallButton( MSG_MUICLASS_WINDOWCHAT_MODEI_GAD ),
+							Child, objs[ GID_MODEP       ] = MUICreateSmallButton( MSG_MUICLASS_WINDOWCHAT_MODEP_GAD ),
+							Child, objs[ GID_MODEM       ] = MUICreateSmallButton( MSG_MUICLASS_WINDOWCHAT_MODEM_GAD ),
+							Child, objs[ GID_MODEB       ] = MUICreateSmallButton( MSG_MUICLASS_WINDOWCHAT_MODEB_GAD ),
+							Child, objs[ GID_MODEK       ] = MUICreateSmallButton( MSG_MUICLASS_WINDOWCHAT_MODEK_GAD ),
+							Child, objs[ GID_MODEKEYWORD ] = MUICreateString( MSG_MUICLASS_WINDOWCHAT_MODEKEYWORD_HELP-1, KEYWORDLIMIT_SIZEOF ),
+							Child, objs[ GID_MODEL       ] = MUICreateSmallButton( MSG_MUICLASS_WINDOWCHAT_MODEL_GAD ),
+							Child, objs[ GID_MODELIMIT   ] = MUICreateString( MSG_MUICLASS_WINDOWCHAT_MODELIMIT_HELP-1, USERLIMIT_SIZEOF ),
 						End,
 						Child, HGroup,
 							Child, NListviewObject, MUIA_NListview_NList, objs[ GID_CHANNEL ] = ChannelObject, End, End,
 							Child, VGroup,
-								Child, NListviewObject, MUIA_NListview_NList, objs[ GID_USERLIST      ] = UserListObject, End, MUIA_ShortHelp, LGS( MSG_MUICLASS_WINDOWMAIN_NICKLIST_HELP ), End,
+								Child, NListviewObject, MUIA_NListview_NList, objs[ GID_USERLIST      ] = UserListObject, End, MUIA_ShortHelp, LGS( MSG_MUICLASS_WINDOWCHAT_NICKLIST_HELP ), End,
 								Child, NListviewObject, MUIA_NListview_NList, objs[ GID_CONNECTEDLIST ] = ConnectedListObject, End, End,
 							End,
 						 End,
-						Child, objs[ GID_MESSAGE         ] = MUICreateString( MSG_MUICLASS_WINDOWMAIN_MESSAGE_HELP-1, MESSAGE_SIZEOF ),
+						Child, objs[ GID_MESSAGE         ] = MUICreateString( MSG_MUICLASS_WINDOWCHAT_MESSAGE_HELP-1, MESSAGE_SIZEOF ),
 
 					 End,
 		TAG_DONE ) ) ) {
@@ -192,16 +192,30 @@ Object *objs[ GID_LAST ];
 
 		CopyMem( &objs[0], &mccdata->mcc_ClassObjects[0], sizeof( mccdata->mcc_ClassObjects));
 
-		sprintf( &mccdata->mcc_WindowTitle[0], (const char *) LGS( MSG_MUICLASS_WINDOWMAIN_TITLE ), VERSION, REVISION );
+		sprintf( &mccdata->mcc_WindowTitle[0], (const char *) LGS( MSG_MUICLASS_WINDOWCHAT_TITLE ), VERSION, REVISION );
 		SetAttrs( obj, MUIA_Window_Title, mccdata->mcc_WindowTitle, TAG_DONE );
 
 		for( i = FIRSTMENU_ITEM ; i <= LASTMENU_ITEM ; i++ ) {
-			DoMethod( mccdata->mcc_ClassObjects[ i ], MUIM_Notify, MUIA_Menuitem_Trigger, MUIV_EveryTime, obj, 2, MM_WINDOWMAIN_MENUSELECT, i );
+			DoMethod( mccdata->mcc_ClassObjects[ i ], MUIM_Notify, MUIA_Menuitem_Trigger, MUIV_EveryTime, obj, 2, MM_WINDOWCHAT_MENUSELECT, i );
 		}
 
 		return( (ULONG) obj );
     }
 	return( (ULONG) NULL );
+}
+/* \\\ */
+/* /// OM_Get()
+**
+*/
+
+/*************************************************************************/
+
+static ULONG OM_Get(struct IClass *cl, Object *obj, struct opGet *msg )
+{
+	switch( msg->opg_AttrID ) {
+		case MA_APPLICATION_CLASSID: *msg->opg_Storage = CLASSID_WINDOWCHAT ; return( TRUE );
+		default: return( DoSuperMethodA( cl, obj, (Msg) msg ) );
+    }
 }
 /* \\\ */
 /* /// OM_Dispose()
@@ -244,7 +258,7 @@ Object *winobj;
 
 /*************************************************************************/
 
-static ULONG MM_MenuSelect( struct IClass *cl, Object *obj, struct MP_WINDOWMAIN_MENUSELECT *msg )
+static ULONG MM_MenuSelect( struct IClass *cl, Object *obj, struct MP_WINDOWCHAT_MENUSELECT *msg )
 {
 //struct mccdata *mccdata = INST_DATA( cl, obj );
 Object *tmpobj;
@@ -307,51 +321,52 @@ Object *settingsobj;
 ** Dispatcher, init and dispose
 */
 
-/* /// MCC_WindowMain_Dispatcher()
+/* /// MCC_WindowChat_Dispatcher()
 **
 */
 
 /*************************************************************************/
 
-DISPATCHER(MCC_WindowMain_Dispatcher)
+DISPATCHER(MCC_WindowChat_Dispatcher)
 {
     switch (msg->MethodID)
     {
-		case OM_NEW                          : return( OM_New                           ( cl, obj, (APTR) msg ) );
-		case OM_DISPOSE                      : return( OM_Dispose                       ( cl, obj, (APTR) msg ) );
+		case OM_NEW                          : return( OM_New           ( cl, obj, (APTR) msg ) );
+		case OM_DISPOSE                      : return( OM_Dispose       ( cl, obj, (APTR) msg ) );
 
-		case MUIM_Window_Setup               : return( OM_Setup                         ( cl, obj, (APTR) msg ) );
+		case OM_GET                          : return( OM_Get           ( cl, obj, (APTR) msg ) );
+		case MUIM_Window_Setup               : return( OM_Setup         ( cl, obj, (APTR) msg ) );
 
-		case MM_WINDOWMAIN_MENUSELECT        : return( MM_MenuSelect                    ( cl, obj, (APTR) msg ) );
-		case MM_WINDOWMAIN_COLORCHANGE       : return( MM_ColorChange                   ( cl, obj, (APTR) msg ) );
+		case MM_WINDOWCHAT_MENUSELECT        : return( MM_MenuSelect    ( cl, obj, (APTR) msg ) );
+		case MM_WINDOWCHAT_COLORCHANGE       : return( MM_ColorChange   ( cl, obj, (APTR) msg ) );
     }
 	return( DoSuperMethodA( cl, obj, msg ) );
 
 }
 /* \\\ */
-/* /// MCC_WindowMain_InitClass()
+/* /// MCC_WindowChat_InitClass()
 **
 */
 
 /*************************************************************************/
 
-ULONG MCC_WindowMain_InitClass( void )
+ULONG MCC_WindowChat_InitClass( void )
 {
-	appclasses[ CLASSID_WINDOWMAIN ] = MUI_CreateCustomClass( NULL, (ClassID)MUIC_Window, NULL, sizeof( struct mccdata ) ,  (APTR) ENTRY(MCC_WindowMain_Dispatcher) );
-	return( appclasses[ CLASSID_WINDOWMAIN ] ? MSG_ERROR_NOERROR : MSG_ERROR_UNABLETOSETUPMUICLASS );
+	appclasses[ CLASSID_WINDOWCHAT ] = MUI_CreateCustomClass( NULL, (ClassID)MUIC_Window, NULL, sizeof( struct mccdata ) ,  (APTR) ENTRY(MCC_WindowChat_Dispatcher) );
+	return( appclasses[ CLASSID_WINDOWCHAT ] ? MSG_ERROR_NOERROR : MSG_ERROR_UNABLETOSETUPMUICLASS );
 }
 /* \\\ */
-/* /// MCC_WindowMain_DisposeClass()
+/* /// MCC_WindowChat_DisposeClass()
 **
 */
 
 /*************************************************************************/
 
-void MCC_WindowMain_DisposeClass( void )
+void MCC_WindowChat_DisposeClass( void )
 {
-	if( appclasses[ CLASSID_WINDOWMAIN ] ) {
-		MUI_DeleteCustomClass( appclasses[ CLASSID_WINDOWMAIN ] );
-		appclasses[ CLASSID_WINDOWMAIN ] = NULL;
+	if( appclasses[ CLASSID_WINDOWCHAT ] ) {
+		MUI_DeleteCustomClass( appclasses[ CLASSID_WINDOWCHAT ] );
+		appclasses[ CLASSID_WINDOWCHAT ] = NULL;
     }
 }
 /* \\\ */

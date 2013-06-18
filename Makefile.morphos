@@ -56,7 +56,7 @@ SOURCES  += version.c                   \
 			muiclass_settingsserver.c   \
 			muiclass_windowabout.c      \
 			muiclass_windowignorelist.c \
-			muiclass_windowmain.c       \
+			muiclass_windowchat.c       \
 			muiclass_windowquit.c       \
 			muiclass_windowsettings.c   \
 			muiclass_windowurlgrabber.c \

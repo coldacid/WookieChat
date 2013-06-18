@@ -38,7 +38,7 @@ but e.g. starting with color, keeping it compatible would result in additional
 code. Same for the main settings. 
 
 Since the original WookieChat dumped all config files into PROGDIR:. The goal
-for V3.0 should be using a Prefs drawer within PROGDIR: and keep all files
-and presets inside.
+for V3.0 should be using a Prefs drawer within PROGDIR: and keep all files inside.
+A preset drawer does the same for presets.
 
 

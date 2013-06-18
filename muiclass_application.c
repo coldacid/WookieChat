@@ -30,7 +30,7 @@
 #include "muiclass_audio.h"
 #include "muiclass_application.h"
 #include "muiclass_network.h"
-#include "muiclass_windowmain.h"
+#include "muiclass_windowchat.h"
 #include "muiclass_windowquit.h"
 #include "muiclass_windowabout.h"
 #include "muiclass_windowsettings.h"
@@ -53,8 +53,7 @@ READARGS_LAST
 
 enum
 {
-WID_MAIN = 0,
-WID_QUIT,
+WID_QUIT = 0,
 WID_ABOUT,
 WID_SETTINGS,
 WID_IGNORELIST,
@@ -99,17 +98,17 @@ Object *objs[ GID_LAST ];
 					MUIA_Application_Version    , (char*) VERSION_MUI,
 					MUIA_Application_Copyright  , (char*) VERSION_COPYRIGHT,
 					MUIA_Application_Description, (char*) LGS( MSG_MUICLASS_APPLICATION_DESCRIPTION ),
-					MUIA_Application_Window     , objs[ WID_MAIN          ] = WindowMainObject, End,
-					MUIA_Application_Window     , objs[ WID_QUIT          ] = WindowQuitObject, End,
-					MUIA_Application_Window     , objs[ WID_ABOUT         ] = WindowAboutObject, End,
-					MUIA_Application_Window     , objs[ WID_SETTINGS      ] = WindowSettingsObject, End,
+					MUIA_Application_Window     , objs[ WID_QUIT          ] = WindowQuitObject      , End,
+					MUIA_Application_Window     , objs[ WID_ABOUT         ] = WindowAboutObject     , End,
+					MUIA_Application_Window     , objs[ WID_SETTINGS      ] = WindowSettingsObject  , End,
 					MUIA_Application_Window     , objs[ WID_IGNORELIST    ] = WindowIgnoreListObject, End,
 					MUIA_Application_Window     , objs[ WID_URLGRABBER    ] = WindowURLGrabberObject, End,
 					/* this is just a dummy to store/handle our non visible classes, without additional code */
-					MUIA_Application_Window     , WindowObject, WindowContents, VGroup,
+					MUIA_Application_Window     , WindowObject, MA_APPLICATION_CLASSID, -1,
+									WindowContents, VGroup,
 										Child   , objs[ GID_AUDIO   ] = AudioObject , End,
 										Child   , objs[ GID_NETWORK ] = NetworkObject , End,
-							End,
+									End,
 						End,
 					TAG_DONE ) ) ) {
 
@@ -158,7 +157,6 @@ struct mccdata *mccdata = INST_DATA( cl, obj );
 
 	switch( msg->opg_AttrID ) {
 		case MA_APPLICATION_OBJECTNETWORK       : *msg->opg_Storage = (ULONG) mccdata->mcc_ClassObjects[ GID_NETWORK       ] ; return( TRUE );
-		case MA_APPLICATION_WINDOWMAIN          : *msg->opg_Storage = (ULONG) mccdata->mcc_ClassObjects[ WID_MAIN          ] ; return( TRUE );
 		case MA_APPLICATION_WINDOWQUIT          : *msg->opg_Storage = (ULONG) mccdata->mcc_ClassObjects[ WID_QUIT          ] ; return( TRUE );
 		case MA_APPLICATION_WINDOWABOUT         : *msg->opg_Storage = (ULONG) mccdata->mcc_ClassObjects[ WID_ABOUT         ] ; return( TRUE );
 		case MA_APPLICATION_WINDOWSETTINGS      : *msg->opg_Storage = (ULONG) mccdata->mcc_ClassObjects[ WID_SETTINGS      ] ; return( TRUE );
@@ -196,9 +194,12 @@ struct mccdata *mccdata = INST_DATA( cl, obj );
 		}
 	}
 
+	/* auto connect or open prefs */
+	DoMethod( mccdata->mcc_ClassObjects[ GID_NETWORK ], MM_NETWORK_AUTORECONNECT );
+
 #if ENABLE_NEWWOOKIECODE
-	SetAttrs( mccdata->mcc_ClassObjects[ WID_MAIN ], MUIA_Window_Open, TRUE, TAG_DONE );
-	DoMethod( mccdata->mcc_ClassObjects[ WID_MAIN ], MM_WINDOWMAIN_COLORCHANGE );
+//	  SetAttrs( mccdata->mcc_ClassObjects[ WID_CHAT ], MUIA_Window_Open, TRUE, TAG_DONE );
+//	  DoMethod( mccdata->mcc_ClassObjects[ WID_CHAT ], MM_WINDOWCHAT_COLORCHANGE );
 #endif
 
 	return( 0 );
@@ -213,11 +214,63 @@ struct mccdata *mccdata = INST_DATA( cl, obj );
 static ULONG MM_Application_Load( struct IClass *cl, Object *obj, Msg msg )
 {
 ULONG rc = DoSuperMethodA( cl, obj, (Msg) msg );
-struct mccdata *mccdata = INST_DATA( cl, obj );
+//struct mccdata *mccdata = INST_DATA( cl, obj );
 
-	DoMethod( mccdata->mcc_ClassObjects[ WID_MAIN ], MM_WINDOWMAIN_COLORCHANGE );
+//	  DoMethod( mccdata->mcc_ClassObjects[ WID_CHAT ], MM_WINDOWCHAT_COLORCHANGE );
 
 	return( rc );
+}
+/* \\\ */
+/* /// MM_WindowDispose()
+**
+*/
+
+/*************************************************************************/
+
+static ULONG MM_WindowDispose( struct IClass *cl UNUSED, Object *obj, struct MP_APPLICATION_WINDOWDISPOSE *msg )
+{
+Object *win;
+
+	if( ( win = (Object *) DoMethod( obj, MM_APPLICATION_WINDOWFIND, msg->Window ) ) ) {
+		DoMethod( _app(obj), OM_REMMEMBER, win );
+		MUI_DisposeObject( win );
+	}
+	return( 0 );
+}
+/* \\\ */
+/* /// MM_WindowNewChat()
+**
+*/
+
+/*************************************************************************/
+
+static ULONG MM_WindowNewChat( struct IClass *cl UNUSED, Object *obj, Msg *msg )
+{
+Object *win;
+
+	if( ( win = WindowChatObject, End ) ) {
+		DoMethod( obj, OM_ADDMEMBER, win );
+		if( win ) {
+			SetAttrs( win, MUIA_Window_Open, TRUE, TAG_DONE );
+		}
+	}
+	return( (ULONG) win );
+}
+/* \\\ */
+/* /// MM_ChatFind()
+**
+*/
+
+/*************************************************************************/
+
+static ULONG MM_WindowFind( struct IClass *cl UNUSED , Object *obj, struct MP_APPLICATION_WINDOWFIND *msg )
+{
+	FORCHILD( obj, MUIA_Application_WindowList ) {
+		if( child == msg->Window ) {
+			return( (ULONG) child );
+		}
+	} NEXTCHILD
+	return( 0 );
 }
 /* \\\ */
 
@@ -240,9 +293,13 @@ DISPATCHER(MCC_Application_Dispatcher)
 
 		case OM_GET                          : return( OM_Get                           ( cl, obj, (APTR) msg ) );
 
-		case MM_APPLICATION_STARTUP          : return( MM_Startup                       ( cl, obj, (APTR) msg ) );
 		case MUIM_Application_Load           : return( MM_Application_Load              ( cl, obj, (APTR) msg ) );
 		case MUIM_Application_Save           : return( MM_Application_Load              ( cl, obj, (APTR) msg ) );
+
+		case MM_APPLICATION_STARTUP          : return( MM_Startup                       ( cl, obj, (APTR) msg ) );
+		case MM_APPLICATION_WINDOWFIND       : return( MM_WindowFind                    ( cl, obj, (APTR) msg ) );
+		case MM_APPLICATION_WINDOWDISPOSE    : return( MM_WindowDispose                 ( cl, obj, (APTR) msg ) );
+		case MM_APPLICATION_WINDOWNEWCHAT    : return( MM_WindowNewChat                 ( cl, obj, (APTR) msg ) );
     }
 	return( DoSuperMethodA( cl, obj, msg ) );
 

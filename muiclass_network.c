@@ -139,7 +139,7 @@ struct Connection *c = NULL;
 			if( !( c->c_Port = se->se_Port ) ) {
 				c->c_Port = 6667;
 			}
-
+			c->c_State = SVRSTATE_NOTCONNECTED;
 		}
 	}
 	return( (IPTR) c );

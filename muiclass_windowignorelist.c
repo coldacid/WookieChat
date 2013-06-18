@@ -29,6 +29,7 @@
 #include "functions.h"
 #include "locale.h"
 #include "muiclass.h"
+#include "muiclass_application.h"
 #include "muiclass_ignorelist.h"
 #include "muiclass_windowsettings.h"
 #include "muiclass_windowignorelist.h"
@@ -120,6 +121,20 @@ Object *objs[ GID_LAST ];
 		return( (ULONG) obj );
     }
 	return( (ULONG) NULL );
+}
+/* \\\ */
+/* /// OM_Get()
+**
+*/
+
+/*************************************************************************/
+
+static ULONG OM_Get(struct IClass *cl, Object *obj, struct opGet *msg )
+{
+	switch( msg->opg_AttrID ) {
+		case MA_APPLICATION_CLASSID: *msg->opg_Storage = CLASSID_WINDOWIGNORELIST ; return( TRUE );
+		default: return( DoSuperMethodA( cl, obj, (Msg) msg ) );
+    }
 }
 /* \\\ */
 /* /// MM_DisEnable()
@@ -270,12 +285,13 @@ DISPATCHER(MCC_WindowIgnoreList_Dispatcher)
 {
     switch (msg->MethodID)
     {
-		case OM_NEW                                : return( OM_New                           ( cl, obj, (APTR) msg ) );
+		case OM_NEW                                : return( OM_New           ( cl, obj, (APTR) msg ) );
+		case OM_GET                                : return( OM_Get           ( cl, obj, (APTR) msg ) );
 
-		case MM_WINDOWIGNORELIST_DISENABLE         : return( MM_DisEnable                     ( cl, obj, (APTR) msg ) );
-		case MM_WINDOWIGNORELIST_GADGETSTOLIST     : return( MM_GadgetsToList                 ( cl, obj, (APTR) msg ) );
-		case MM_WINDOWIGNORELIST_LISTTOGADGETS     : return( MM_ListToGadgets                 ( cl, obj, (APTR) msg ) );
-		case MM_WINDOWIGNORELIST_CHECKIGNORE       : return( MM_CheckIgnore                   ( cl, obj, (APTR) msg ) );
+		case MM_WINDOWIGNORELIST_DISENABLE         : return( MM_DisEnable     ( cl, obj, (APTR) msg ) );
+		case MM_WINDOWIGNORELIST_GADGETSTOLIST     : return( MM_GadgetsToList ( cl, obj, (APTR) msg ) );
+		case MM_WINDOWIGNORELIST_LISTTOGADGETS     : return( MM_ListToGadgets ( cl, obj, (APTR) msg ) );
+		case MM_WINDOWIGNORELIST_CHECKIGNORE       : return( MM_CheckIgnore   ( cl, obj, (APTR) msg ) );
     }
 	return( DoSuperMethodA( cl, obj, msg ) );
 

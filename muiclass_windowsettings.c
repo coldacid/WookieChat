@@ -229,6 +229,7 @@ static ULONG OM_Get( struct IClass *cl, Object *obj, struct opGet *msg )
 struct mccdata *mccdata = INST_DATA(cl,obj);
 
 	switch( msg->opg_AttrID ) {
+		case MA_APPLICATION_CLASSID: *msg->opg_Storage = CLASSID_WINDOWSETTINGS ; return( TRUE );
 		case MA_WINDOWSETTINGS_VISUALCHANGE: *msg->opg_Storage = mccdata->mcc_VisualChange   ; return( TRUE );
 		default: return( DoSuperMethodA( cl, obj, (Msg) msg ) );
     }

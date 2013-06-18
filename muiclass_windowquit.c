@@ -23,6 +23,7 @@
 
 #include "locale.h"
 #include "muiclass.h"
+#include "muiclass_application.h"
 #include "muiclass_windowquit.h"
 #include "version.h"
 
@@ -99,6 +100,20 @@ static ULONG OM_Dispose( struct IClass *cl, Object *obj, Msg msg )
 	return( DoSuperMethodA( cl, obj, msg ) );
 }
 /* \\\ */
+/* /// OM_Get()
+**
+*/
+
+/*************************************************************************/
+
+static ULONG OM_Get(struct IClass *cl, Object *obj, struct opGet *msg )
+{
+	switch( msg->opg_AttrID ) {
+		case MA_APPLICATION_CLASSID: *msg->opg_Storage = CLASSID_WINDOWQUIT ; return( TRUE );
+		default: return( DoSuperMethodA( cl, obj, (Msg) msg ) );
+    }
+}
+/* \\\ */
 
 /* /// OM_Setup()
 **
@@ -132,11 +147,10 @@ DISPATCHER(MCC_WindowQuit_Dispatcher)
 {
     switch (msg->MethodID)
     {
-		case OM_NEW                          : return( OM_New                           ( cl, obj, (APTR) msg ) );
-		case OM_DISPOSE                      : return( OM_Dispose                       ( cl, obj, (APTR) msg ) );
-
-		case MUIM_Window_Setup               : return( OM_Setup                         ( cl, obj, (APTR) msg ) );
-
+		case OM_NEW                          : return( OM_New      ( cl, obj, (APTR) msg ) );
+		case OM_DISPOSE                      : return( OM_Dispose  ( cl, obj, (APTR) msg ) );
+		case OM_GET                          : return( OM_Get      ( cl, obj, (APTR) msg ) );
+		case MUIM_Window_Setup               : return( OM_Setup    ( cl, obj, (APTR) msg ) );
     }
 	return( DoSuperMethodA( cl, obj, msg ) );
 
@@ -154,8 +168,6 @@ ULONG MCC_WindowQuit_InitClass( void )
 	return( appclasses[ CLASSID_WINDOWQUIT ] ? MSG_ERROR_NOERROR : MSG_ERROR_UNABLETOSETUPMUICLASS );
 }
 /* \\\ */
-
-
 /* /// MCC_WindowQuit_DisposeClass()
 **
 */
