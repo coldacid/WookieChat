@@ -47,7 +47,7 @@ GID_LAST
 struct mccdata
 {
 	Object                *mcc_ClassObjects[ GID_LAST ];
-	struct List            mcc_ConnectedList;
+	struct List            mcc_ServerList;
 	fd_set                 mcc_ReadMaster;       // master file descriptor list
 	fd_set                 mcc_WriteMaster;      // master file descriptor list
 	int                    mcc_FDMax;            // maximum file descriptor number
@@ -67,7 +67,7 @@ static ULONG OM_New( struct IClass *cl, Object *obj, struct opSet *msg )
 		
 		SetAttrs( obj, TAG_MORE, msg->ops_AttrList );
 
-		NEWLIST( &mccdata->mcc_ConnectedList ); /* init list */
+		NEWLIST( &mccdata->mcc_ServerList ); /* init list */
 
 		/* init defaults */
 		mccdata->mcc_FDMax = -1;
@@ -87,7 +87,7 @@ static ULONG OM_Dispose( struct IClass *cl, Object *obj, Msg *msg )
 struct mccdata *mccdata = INST_DATA( cl, obj );
 struct Server *s;
 
-	while( (s = (APTR) mccdata->mcc_ConnectedList.lh_Head)->s_Succ ) {
+	while( (s = (APTR) mccdata->mcc_ServerList.lh_Head)->s_Succ ) {
 		DoMethod( obj, MM_NETWORK_SERVERFREE, s );
 	}
 	return( DoSuperMethodA( cl, obj,(Msg) msg ) );
@@ -139,7 +139,7 @@ struct Channel      *c;
 		if( ( c = AllocVec( sizeof( struct Server ), MEMF_ANY|MEMF_CLEAR ) ) ) {
 			NEWLIST( &s->s_ChannelList );
 			NEWLIST( &s->s_NickList );
-			AddTail( &mccdata->mcc_ConnectedList, (struct Node *) c );
+			AddTail( &mccdata->mcc_ServerList, (struct Node *) c );
 			/* we cannot link to server entry as it may be removed by user during
 			** runtime, so we spy important data */
 			strcpy( s->s_Name    , se->se_Name );
@@ -212,7 +212,7 @@ struct mccdata *mccdata = INST_DATA( cl, obj );
 struct ServerEntry *se = msg->ServerEntry;
 struct Server *s;
 
-	for( s = (APTR) mccdata->mcc_ConnectedList.lh_Head ; s->s_Succ ; s = s->s_Succ ) {
+	for( s = (APTR) mccdata->mcc_ServerList.lh_Head ; s->s_Succ ; s = s->s_Succ ) {
 		if( s->s_Port == se->se_Port ) { /* different port -> different server */
 			if( !Stricmp( (CONST_STRPTR) s->s_Address, (CONST_STRPTR) se->se_Address ) ) {
 				return( (IPTR) s );
@@ -368,7 +368,37 @@ fd_set write_fds = mccdata->mcc_WriteMaster;
 	selectresult  = WaitSelect( mccdata->mcc_FDMax + 1, &read_fds, &write_fds, NULL, NULL, msg->SignalMask );
 
 	if( selectresult > 0 ) {
+		struct Server *s;
+		ULONG i;
+
 		DoMethod( obj, MM_NETWORK_HANDLESOCKETS );
+		//WaitSelect() sockets are are ready for reading
+		for( i = 0; i <= mccdata->mcc_FDMax; i++ ) {
+			if( FD_ISSET( i, &read_fds ) ) {
+
+				for( s = (APTR) mccdata->mcc_ServerList.lh_Head ; s->s_Succ ; s = s->s_Succ ) {
+					if( ( i == s->s_a_socket ) || ( i == s->ident_a_socket ) || ( i == s->ident_listen_socket ) ) {
+						break;
+					}
+				}
+				if( !s->s_Succ ) {
+					s = (APTR) mccdata->mcc_ServerList.lh_Head;
+				}
+				if( s->s_Succ ) {
+					
+					UBYTE buffer[0x100];
+					LONG length;
+
+					length = recv( i, buffer, 0x100, 0 );
+					buffer[ 0x100 - 1 ] = 0x00;
+					debug("Buffer '%s'\n", buffer );
+				}
+			}
+			if( FD_ISSET( i, &write_fds ) ) {
+
+			}
+		}
+
 		debug("handle sockets\n");
 	}
 	return( *((ULONG*)msg->SignalMask ) );

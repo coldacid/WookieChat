@@ -85,11 +85,6 @@ static char *string2;
 static char *string3;
 static struct Settings temp_settings;
 
-/* /// OLD MAIN ->>>
-*/
-
-/*************************************************************************/
-
 int main(int argc, char *argv[])
 {
 
