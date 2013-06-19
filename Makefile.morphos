@@ -60,6 +60,7 @@ SOURCES  += version.c                   \
 			muiclass_windowquit.c       \
 			muiclass_windowsettings.c   \
 			muiclass_windowurlgrabber.c \
+			system_morphos.c            \
 			locale.c
 
 OBJECTS   = $(SOURCES:.c=.o)

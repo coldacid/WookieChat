@@ -71,6 +71,12 @@ typedef ULONG           IPTR;
  #define MUIA_Text_HiIndex 0x804214f5
 #endif
 
+/*
+** debug
+*/
+
+#define debug(...) {}
+
 /*************************************************************************/
 
 #endif /* SYSTEM_GENERAL_H */

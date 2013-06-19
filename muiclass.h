@@ -117,17 +117,6 @@ IPTR DoSuperNew(struct IClass *cl, Object *obj, ULONG tag1, ...);
 #define NEWOBJECT   NewObject
 #endif
 
-#ifdef __MORPHOS__
-#define ClassID char *
-
-#ifdef ENABLE_GEITDEBUG
-#define DEBUG
-#include "debug.h"
-#undef DEBUG
-#else
-#define debug(...) {}
-#endif /* ENABLE_GEITDEBUG */
-#endif /* __MORPHOS__ */
 
 /*************************************************************************/
 

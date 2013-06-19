@@ -20,6 +20,7 @@
 #include <proto/muimaster.h>
 #include <libraries/mui.h>
 #include <intuition/intuition.h>
+#include <intuition/classusr.h>
 #include <utility/utility.h>
 #include <stdarg.h>
 #include <string.h>
@@ -588,20 +589,3 @@ IPTR DoSuperNew(struct IClass *cl, Object *obj, ULONG tag1, ...)
 }
 #endif
 
-
-#ifdef __MORPHOS__
-#ifdef ENABLE_GEITDEBUG
-#define DEBUG
-#include "debug.h"
-#include "debug.c"
-#undef DEBUG
-#undef REG
-#undef REGARGS
-#undef STDARGS
-#undef FAR
-#undef INLINE
-#else
-#undef debug
-void debug() {}
-#endif /* ENABLE_GEITDEBUG */
-#endif /* __MORPHOS__ */
