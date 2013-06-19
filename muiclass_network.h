@@ -44,9 +44,15 @@ MM_NETWORK_SERVERFIND,
 MM_NETWORK_SERVERALLOC,
 MM_NETWORK_SERVERFREE,
 
+MM_NETWORK_SERVERSOCKETINIT,
+MM_NETWORK_SERVERSOCKETCLOSE,
+
 MM_NETWORK_SERVERCONNECTAUTO,
 MM_NETWORK_SERVERCONNECT,
 MM_NETWORK_SERVERDISCONNECT,
+
+MM_NETWORK_SERVERRECEIVEDATA,
+MM_NETWORK_SERVERSENDDATA,
 
 MM_NETWORK_CHANNELFIND,
 MM_NETWORK_CHANNELALLOC,
@@ -62,8 +68,14 @@ struct MP_NETWORK_SERVERALLOC          { ULONG MethodID; struct ServerEntry *Ser
 struct MP_NETWORK_SERVERFREE           { ULONG MethodID; struct Server  *Server; };
 
 struct MP_NETWORK_SERVERCONNECTAUTO    { ULONG MethodID; };
+struct MP_NETWORK_SERVERSOCKETINIT     { ULONG MethodID; struct Server  *Server; };
+struct MP_NETWORK_SERVERSOCKETCLOSE    { ULONG MethodID; struct Server  *Server; };
+
 struct MP_NETWORK_SERVERCONNECT        { ULONG MethodID; struct Server  *Server; };
 struct MP_NETWORK_SERVERDISCONNECT     { ULONG MethodID; struct Server  *Server; };
+
+struct MP_NETWORK_SERVERRECEIVEDATA    { ULONG MethodID; struct Server  *Server; char *Data; ULONG Length; };
+struct MP_NETWORK_SERVERSENDDATA       { ULONG MethodID; struct Server  *Server; char *Data; ULONG Length; };
 
 struct MP_NETWORK_ADDLOG               { ULONG MethodID; struct Server  *Server; ULONG Type; char *format; IPTR arg1; IPTR arg2; IPTR arg3; IPTR arg4; };
 struct MP_NETWORK_WAITSELECT           { ULONG MethodID; ULONG *SignalMask; };
@@ -87,9 +99,9 @@ struct Server {
 	struct List        s_NickList;
 /* network runtime data */
 	ULONG              s_State; /* this is the current state */
-	struct sockaddr_in s_ServerSocket;
-
-	long               s_a_socket;  /* geit FIXME: change name */
+	ULONG              s_Retry;
+	//struct sockaddr_in s_ServerSocket;
+	LONG               s_ServerSocket;
 /* ident */
 	long               ident_a_socket;
 	long               ident_listen_socket;
@@ -121,7 +133,7 @@ enum{
 SVRSTATE_NOTCONNECTED = 0,
 SVRSTATE_CONNECTED,
 SVRSTATE_RETRY,
-SVRSTATR_FAILED,
+SVRSTATE_FAILED,
 };
 enum{
 LOGTYPE_ERROR = 0,

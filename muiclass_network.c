@@ -160,12 +160,14 @@ struct NickEntry    *ne;
 struct Channel      *c;
 struct ChannelEntry *ce;
 
+	debug("MM_ServerAlloc()\n");
+
 	if( ( se = msg->ServerEntry ) ) {
 		if( ( s = AllocVec( sizeof( struct Server ), MEMF_ANY|MEMF_CLEAR ) ) ) {
 			NEWLIST( &s->s_ChannelList );
 			NEWLIST( &s->s_NickList );
 			AddTail( &mccdata->mcc_ServerList, (struct Node *) s );
-			s->s_a_socket          = -1;
+			s->s_ServerSocket      = -1;
 			s->ident_listen_socket = -1;
 			/* we cannot link to server entry as it may be removed by user during
 			** runtime, so we spy important data */
@@ -202,6 +204,8 @@ struct ChannelEntry *ce;
 			}
 		}
 	}
+	debug("MM_ServerAlloc() - done\n");
+
 	return( (IPTR) s );
 }
 /* \\\ */
@@ -285,6 +289,61 @@ ULONG i;
 	return( 0 );
 }
 /* \\\ */
+#define INVALID_SOCKET -1
+#define SOCKET_ERROR   -1
+
+/* /// MM_ServerSocketInit()
+**
+*/
+
+static ULONG MM_ServerSocketInit( struct IClass *cl, Object *obj, struct MP_NETWORK_SERVERSOCKETINIT *msg )
+{
+struct mccdata *mccdata = INST_DATA( cl, obj );
+struct Server *s;
+ULONG result;
+
+	debug("MM_ServerSocketInit()\n");
+
+	result = MSG_ERROR_NOERROR + 1; /* socket error */
+	if( ( s = msg->Server ) ) {
+
+		if( ( s->s_ServerSocket = socket( AF_INET, SOCK_STREAM, IPPROTO_TCP ) ) != INVALID_SOCKET ) {
+			ULONG on = 1;
+			result = MSG_ERROR_NOERROR + 2; /* invalid socket */
+
+			if( setsockopt( s->s_ServerSocket, SOL_SOCKET, SO_REUSEADDR, (char const*) &on, sizeof( ULONG ) ) != -1 ) {
+				if( mccdata->mcc_FDMax < s->s_ServerSocket ) {
+					mccdata->mcc_FDMax = s->s_ServerSocket;
+				}
+
+				if( IoctlSocket( s->s_ServerSocket, FIONBIO, (char*) &on) >= 0 ) {
+					result = MSG_ERROR_NOERROR;
+				}
+			}
+		}
+    }
+	debug("MM_ServerSocketInit() - Done %08lx\n", result );
+	return( result );
+}
+/* \\\ */
+/* /// MM_ServerSocketClose()
+**
+*/
+
+static ULONG MM_ServerSocketClose( struct IClass *cl, Object *obj, struct MP_NETWORK_SERVERSOCKETCLOSE *msg )
+{
+struct Server *s;
+
+	if( ( s = msg->Server ) ) {
+		if( s->s_ServerSocket != -1 ) { /* still open? */
+			CloseSocket( s->s_ServerSocket );
+			s->s_ServerSocket = -1;
+		}
+		s->s_State = SVRSTATE_NOTCONNECTED;
+	}
+	return( 0 );
+}
+/* \\\ */
 /* /// MM_ServerConnect()
 **
 */
@@ -293,105 +352,54 @@ ULONG i;
 
 static ULONG MM_ServerConnect( struct IClass *cl, Object *obj, struct MP_NETWORK_SERVERCONNECT *msg )
 {
-struct mccdata *mccdata = INST_DATA( cl, obj );
-struct Server *s = NULL;
-char *result;
+struct Server *s = msg->Server;
+ULONG result;
 
+	debug("MM_ServerConnect()\n" );
+
+	result = MSG_ERROR_NOERROR + 4; /* bsdsocket missing */
 	if( !SocketBase ) {
 		SocketBase = OpenLibrary( (_ub_cs) "bsdsocket.library", 0L );
 #ifdef __amigaos4__
 		ISocket = (struct SocketIFace*) GetInterface( (struct Library *) SocketBase, "main", 1, NULL );
 #endif
     }
+
 	if( SocketBase ) {
-		if( ( s = msg->Server ) ) {
-			struct hostent *host;
-			result = (char *) DoMethod( obj, MM_NETWORK_LOGNOTECREATE, LOGTYPE_ERROR, "%s: gethostbyname() %s.", s->s_Address, LGS( MSG_DCC_FAILED ) );
+		struct hostent *he;
+		result = MSG_ERROR_NOERROR + 5; /* host error */
 
-			if( ( host = gethostbyname ( (APTR) s->s_Address ) ) ) { // get the host info
-				debug("got host %08lx\n", host->h_addr );
-				memset( &( s->s_ServerSocket ), 0, sizeof( s->s_ServerSocket ) );
-				s->s_ServerSocket.sin_family = AF_INET;
-				s->s_ServerSocket.sin_port   = htons( s->s_Port );
-				s->s_ServerSocket.sin_addr   = *( (struct in_addr *) host->h_addr );
+		if( !( result = DoMethod( obj, MM_NETWORK_SERVERSOCKETINIT, s ) ) ) {
+			debug("connecting to '%s' Port %ld\n",s->s_Address, s->s_Port );
+			if( ( he = gethostbyname( (const UBYTE *) s->s_Address) ) ) {
+				debug("%20lh\n", he );
+				struct sockaddr_in addr;
 
-				result = (char *) DoMethod( obj, MM_NETWORK_LOGNOTECREATE, LOGTYPE_ERROR, "%s: gethostbyname() %s.", s->s_Address, LGS( MSG_DCC_FAILED ) );
+				addr.sin_family = AF_INET;
+				addr.sin_port   = htons( s->s_Port );
+				addr.sin_addr   = *((struct in_addr *) he->h_addr);;
 
-				s->s_a_socket = socket( AF_INET, SOCK_STREAM, 0 );
-				if( mccdata->mcc_FDMax < s->s_a_socket ) {
-					mccdata->mcc_FDMax = s->s_a_socket;
+				memset( &( addr.sin_zero ), '\0', 8 );
+
+				result = MSG_ERROR_NOERROR + 6; /* socket error */
+				if( ( connect( s->s_ServerSocket, (struct sockaddr*) &addr, sizeof( struct sockaddr ) ) != SOCKET_ERROR ) ) {
+					s->s_State = SVRSTATE_CONNECTED;
+					result = MSG_ERROR_NOERROR;
 				}
-
-				FD_CLR( s->s_a_socket, &mccdata->mcc_ReadMaster  );
-				FD_CLR( s->s_a_socket, &mccdata->mcc_WriteMaster );
-
-				//DoMethod( obj, MM_NETWORK_ADDLOG, LOGTYPE_ACTIVITY, LGS( MSG_CONNECT_TO_A_NEW_SERVER ) );
-
-				if( s->s_a_socket != -1 ) { /* still open? */
-					CloseSocket( s->s_a_socket );
-				}
-
-				if( s->s_a_socket != -1 ) {
-					FD_SET( s->s_a_socket, &mccdata->mcc_ReadMaster  );
-					FD_SET( s->s_a_socket, &mccdata->mcc_WriteMaster );
-				}
-
-				if( 1 /* ident */ ) {
-					int yes = 1;
-
-					if( s->ident_listen_socket != -1 ) { /* still open? */
-						CloseSocket( s->ident_listen_socket );
-					}
-					s->ident_listen_socket = socket( AF_INET, SOCK_STREAM, 0 );
-					s->ident_a_socket = -1;
-	
-					if( s->ident_listen_socket == -1 )
-						debug("unable to create listening socket\nerror number:%ld\n", Errno());
-					else
-						debug("dcc listen socket created, number: %ld\n", s->ident_listen_socket );
-
-					if( mccdata->mcc_FDMax < s->ident_listen_socket ) {
-						mccdata->mcc_FDMax = s->ident_listen_socket;
-					}
-
-					memset( &s->ident_test, 0, sizeof( s->ident_test));
-					s->ident_test.sin_family      = AF_INET; // host byte order
-					s->ident_test.sin_addr.s_addr = htonl(INADDR_ANY); // auto-fill with my IP
-					s->ident_test.sin_port        = htons(113); // short, network byte order
-
-					if( setsockopt( (int) s->ident_listen_socket, (int) SOL_SOCKET, (int) SO_REUSEADDR, &yes, (int) sizeof( yes ) ) == -1 )
-						debug( "unable to reuse address\n");
-
-					if( setsockopt( (int) s->ident_listen_socket, (int) SOL_SOCKET, (int) SO_REUSEPORT, &yes, (int) sizeof( yes ) ) == -1 )
-						debug("unable to reuse port\n");
-
-					if( bind( s->ident_listen_socket, (struct sockaddr *) &s->ident_test, sizeof( s->ident_test ) ) == -1 )
-						debug("unable to bind address to socket, error number: %ld\n", Errno() );
-
-					if( IoctlSocket( s->ident_listen_socket, FIONBIO, (char*) &yes ) < 0 )
-						debug("unable to change non-blocking I/O option for socket, error number:%ld\n", Errno() );
-debug("fd set\n");
-					FD_SET( s->ident_listen_socket, &mccdata->mcc_ReadMaster );
-
-debug("listen\n");
-					listen( (int) s->ident_listen_socket, (int) 5 );
-				}   // END of IDENTD setup
-
-				long i = 1;
-				long cres;
-debug("ioctl\n");
-				IoctlSocket( s->s_a_socket, FIONBIO, (char*) &i );
-debug("connect\n");
-
-				cres = connect( s->s_a_socket, (struct sockaddr*) &s->s_ServerSocket, sizeof( struct sockaddr ) );
-				debug("connect res %08lx\n", cres );
 			}
-			if( result ) {
-				DoMethod( obj, MM_NETWORK_LOGNOTEADD, s, result );
+			if( result )  {
+				DoMethod( obj, MM_NETWORK_SERVERSOCKETCLOSE, s );
+				s->s_Retry++;
+				if( s->s_Retry <= 5 ) {
+					s->s_State = SVRSTATE_RETRY;
+				} else {
+					s->s_State = SVRSTATE_FAILED;
+				}
 			}
 		}
-	}
-	return( 0 );
+    }
+	debug("MM_ServerConnect() - Done %08lx\n", result );
+	return( result );
 }
 /* \\\ */
 /* /// MM_ServerDisconnect()
@@ -407,22 +415,59 @@ struct Server *s = msg->Server;
 	debug("disconnect '%s'\n", s->s_Name );
 
 	if( SocketBase ) {
-		debug("disconnect #1 '%s'\n", s->s_Name );
-		if( s->s_a_socket != -1 ) { /* still open? */
-			CloseSocket( s->s_a_socket );
-			s->s_a_socket = -1;
-		}
-		debug("disconnect #2 '%s'\n", s->s_Name );
-
-		if( s->ident_listen_socket != -1 ) { /* still open? */
-			CloseSocket( s->ident_listen_socket );
-			s->ident_listen_socket = -1;
-		}
+		DoMethod( obj, MM_NETWORK_SERVERSOCKETCLOSE, s );
 	}
 	return( 0 );
 }
 /* \\\ */
+/* /// MM_ServerSendData()
+**
+*/
 
+/*************************************************************************/
+
+static ULONG MM_ServerSendData( struct IClass *cl, Object *obj, struct MP_NETWORK_SERVERSENDDATA *msg )
+{
+struct Server *s = msg->Server;
+ULONG result;
+
+	result = MSG_ERROR_NOERROR + 10;
+
+	if( s->s_State == SVRSTATE_CONNECTED ) {
+		if( ( send( s->s_ServerSocket, (CONST UBYTE *) msg->Data, ( msg->Length ? msg->Length : strlen( msg->Data ) ), 0 ) != -1 ) ) {
+			result = MSG_ERROR_NOERROR;
+		}
+	}
+	return( result );
+}
+/* \\\ */
+
+/* /// MM_ServerReceiveData()
+**
+*/
+
+/*************************************************************************/
+
+static ULONG MM_ServerReceiveData( struct IClass *cl, Object *obj, struct MP_NETWORK_SERVERRECEIVEDATA *msg )
+{
+struct Server *s = msg->Server;
+LONG bytes;
+
+	if( s->s_State == SVRSTATE_CONNECTED ) {
+
+		memset( msg->Data, 0, msg->Length );
+
+		bytes = recv( s->s_ServerSocket, (UBYTE *) msg->Data, msg->Length - 1, 0 );
+
+		if( bytes > 0 ) {
+			return( bytes );
+		} else {
+			DoMethod( obj, MM_NETWORK_SERVERDISCONNECT );
+		}
+	}
+	return(0);
+}
+/* \\\ */
 /* /// MM_WaitSelect()
 **
 */
@@ -449,7 +494,7 @@ LONG waitsignals = *((ULONG*) msg->SignalMask );
 			if( FD_ISSET( i, &mccdata->mcc_ReadFDS ) ) {
 
 				for( s = (APTR) mccdata->mcc_ServerList.lh_Head ; s->s_Succ ; s = s->s_Succ ) {
-					if( ( i == s->s_a_socket ) || ( i == s->ident_a_socket ) || ( i == s->ident_listen_socket ) ) {
+					if( ( i == s->s_ServerSocket ) || ( i == s->ident_a_socket ) || ( i == s->ident_listen_socket ) ) {
 						break;
 					}
 				}
@@ -568,12 +613,17 @@ DISPATCHER(MCC_Network_Dispatcher)
 		case OM_SET                        : return( OM_Set              ( cl, obj, (APTR) msg ) );
 		case MM_NETWORK_WAITSELECT         : return( MM_WaitSelect       ( cl, obj, (APTR) msg ) );
 
+		case MM_NETWORK_SERVERSOCKETINIT   : return( MM_ServerSocketInit ( cl, obj, (APTR) msg ) );
+		case MM_NETWORK_SERVERSOCKETCLOSE  : return( MM_ServerSocketClose( cl, obj, (APTR) msg ) );
+
 		case MM_NETWORK_SERVERFIND         : return( MM_ServerFind       ( cl, obj, (APTR) msg ) );
 		case MM_NETWORK_SERVERALLOC        : return( MM_ServerAlloc      ( cl, obj, (APTR) msg ) );
 		case MM_NETWORK_SERVERFREE         : return( MM_ServerFree       ( cl, obj, (APTR) msg ) );
 		case MM_NETWORK_SERVERCONNECT      : return( MM_ServerConnect    ( cl, obj, (APTR) msg ) );
 		case MM_NETWORK_SERVERDISCONNECT   : return( MM_ServerDisconnect ( cl, obj, (APTR) msg ) );
 		case MM_NETWORK_SERVERCONNECTAUTO  : return( MM_ServerConnectAuto( cl, obj, (APTR) msg ) );
+		case MM_NETWORK_SERVERRECEIVEDATA  : return( MM_ServerReceiveData( cl, obj, (APTR) msg ) );
+		case MM_NETWORK_SERVERSENDDATA     : return( MM_ServerSendData   ( cl, obj, (APTR) msg ) );
 
 		case MM_NETWORK_CHANNELFIND        : return( MM_ChannelFind      ( cl, obj, (APTR) msg ) );
 		case MM_NETWORK_CHANNELALLOC       : return( MM_ChannelAlloc     ( cl, obj, (APTR) msg ) );
