@@ -167,7 +167,6 @@ struct ChannelEntry *ce;
 			AddTail( &mccdata->mcc_ServerList, (struct Node *) s );
 			s->s_a_socket          = -1;
 			s->ident_listen_socket = -1;
-
 			/* we cannot link to server entry as it may be removed by user during
 			** runtime, so we spy important data */
 			strcpy( s->s_Name    , se->se_Name );
@@ -178,9 +177,16 @@ struct ChannelEntry *ce;
 				s->s_Port = 6667;
 			}
 			s->s_State = SVRSTATE_NOTCONNECTED;
+
+			/* add a server channel */
+			if( ( c = (APTR) DoMethod( obj, MM_NETWORK_CHANNELALLOC, s, s->s_Name ) ) ) {
+				c->c_Flags |= CHANNELF_SERVER;
+			}
+
 			for( ce = (APTR) se->se_ChannelList.lh_Head ; ce->ce_Succ ; ce = ce->ce_Succ ) {
 				if( ( c = (APTR) DoMethod( obj, MM_NETWORK_CHANNELALLOC, s, ce->ce_Name ) ) ) {
 					strcpy( c->c_Password, ce->ce_Password );
+					c->c_ChatWindow = msg->WindowChat;
 				}
 			}
 			for( ne = (APTR) se->se_ChannelList.lh_Head ; ne->ne_Succ ; ne = ne->ne_Succ ) {
@@ -246,7 +252,7 @@ static ULONG MM_ServerConnectAuto( struct IClass *cl, Object *obj, struct MP_NET
 struct mccdata *mccdata = INST_DATA( cl, obj );
 struct ServerEntry *se;
 struct Server      *s;
-Object *serverlist;
+Object *serverlist, *chatwindow;
 ULONG i;
 
 	serverlist = (APTR) LocalReadConfig( OID_SVR_LIST );
@@ -254,11 +260,14 @@ ULONG i;
 	for( i = 0 ; ; i++ ) {
 		se = NULL;
 
+		if( !( chatwindow = (Object*) DoMethod( _app(obj), MM_APPLICATION_CHATFINDACTIVE ) ) ) {
+			chatwindow = (Object*) DoMethod( _app(obj), MM_APPLICATION_WINDOWNEWCHAT );
+		}
+
 		DoMethod( serverlist, MUIM_NList_GetEntry, i, &se );
 		if( se ) {
 			if( ( se->se_Flags & SERVERENTRYF_AUTOCONNECT ) ) {
-				if( ( s = (APTR) DoMethod( obj, MM_NETWORK_SERVERALLOC, se ) ) ) {
-					debug("connecting to '%s'\n", s->s_Name );
+				if( ( s = (APTR) DoMethod( obj, MM_NETWORK_SERVERALLOC, se, chatwindow ) ) ) {
 					DoMethod( obj, MM_NETWORK_SERVERCONNECT, s );
 				}
 			}
@@ -417,11 +426,12 @@ static ULONG MM_WaitSelect( struct IClass *cl, Object *obj, struct MP_NETWORK_WA
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 LONG selectresult;
+LONG waitsignals = *((ULONG*) msg->SignalMask );
 
 	mccdata->mcc_ReadFDS  = mccdata->mcc_ReadMaster;
 	mccdata->mcc_WriteFDS = mccdata->mcc_WriteMaster;
 
-debug("waitselect %08lx %08lx %08lx %08lx\n", msg->SignalMask, mccdata->mcc_FDMax, mccdata->mcc_ReadFDS, mccdata->mcc_WriteFDS ) ;
+debug("waitselect %08lx %08lx %08lx %08lx\n", *((ULONG*)msg->SignalMask), mccdata->mcc_FDMax, mccdata->mcc_ReadFDS, mccdata->mcc_WriteFDS ) ;
 	selectresult  = WaitSelect( mccdata->mcc_FDMax + 1, &mccdata->mcc_ReadFDS, &mccdata->mcc_WriteFDS, NULL, NULL, msg->SignalMask );
 
 debug("waitselect - done\n");
@@ -463,7 +473,7 @@ debug("waitselect - got read data\n", i);
 
 	} else {
 		debug("wait select failed -> using normal wait to keep application alive\n");
-		*((ULONG*) msg->SignalMask ) = Wait( *((ULONG*) msg->SignalMask ) );
+		*((ULONG*) msg->SignalMask ) = Wait( waitsignals );
 	}
 
 	debug("wait select returning\n");

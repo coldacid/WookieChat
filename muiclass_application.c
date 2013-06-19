@@ -66,13 +66,13 @@ GID_LAST
 /*
 ** data used by this class
 */
-
+#define LASTACTIVE_MAX 100 /* we keep track of the last n windows */
 struct mccdata
 {
 	Object                *mcc_ClassObjects[ GID_LAST ];
 	struct DiskObject     *mcc_DiskObject;
 	IPTR                   mcc_ReadargsArray[ READARGS_LAST ];
-
+	Object                *mcc_LastActiveChat[ LASTACTIVE_MAX ];
 };
 
 /*************************************************************************/
@@ -222,6 +222,29 @@ ULONG rc = DoSuperMethodA( cl, obj, (Msg) msg );
 	return( rc );
 }
 /* \\\ */
+/* /// MM_WindowFind()
+**
+** Check if a window object still exists. This should never fail
+** and was just implemented to add some protection and find errors
+** in chat handling code.
+*/
+
+/*************************************************************************/
+
+static ULONG MM_WindowFind( struct IClass *cl UNUSED , Object *obj, struct MP_APPLICATION_WINDOWFIND *msg )
+{
+
+	FORCHILD( obj, MUIA_Application_WindowList ) {
+		if( msg->Window == child ) { /* child is in window list */
+			return( (IPTR) child );
+		}
+	} NEXTCHILD
+
+	debug("###### something is broken, found invalid window object ###########\n");
+
+	return( 0 );
+}
+/* \\\ */
 /* /// MM_WindowDispose()
 **
 */
@@ -252,25 +275,90 @@ Object *win;
 	if( ( win = WindowChatObject, End ) ) {
 		DoMethod( obj, OM_ADDMEMBER, win );
 		if( win ) {
+			DoMethod( obj, MM_APPLICATION_CHATSETACTIVE, win );
+			DoMethod( win, MUIM_Notify, MUIA_Window_Activate, TRUE, obj, 2, MM_APPLICATION_CHATSETACTIVE, win );
 			SetAttrs( win, MUIA_Window_Open, TRUE, TAG_DONE );
 		}
 	}
 	return( (ULONG) win );
 }
 /* \\\ */
-/* /// MM_ChatFind()
+
+/* /// MM_ChatSetActive()
 **
 */
 
 /*************************************************************************/
 
-static ULONG MM_WindowFind( struct IClass *cl UNUSED , Object *obj, struct MP_APPLICATION_WINDOWFIND *msg )
+static ULONG MM_ChatSetActive( struct IClass *cl UNUSED , Object *obj, struct MP_APPLICATION_CHATSETACTIVE *msg )
 {
-	FORCHILD( obj, MUIA_Application_WindowList ) {
-		if( child == msg->Window ) {
-			return( (ULONG) child );
+struct mccdata *mccdata = INST_DATA( cl, obj );
+ULONG i;
+
+	debug("set activate\n");
+	DoMethod( obj, MM_APPLICATION_CHATREMOVE, msg->Window );
+
+	for( i = 0 ; i < ( LASTACTIVE_MAX - 1 ) ; i++ ) {
+		mccdata->mcc_LastActiveChat[ ( LASTACTIVE_MAX - 1 ) - i  ] = mccdata->mcc_LastActiveChat[ ( LASTACTIVE_MAX - 2 ) - i  ];
+	}
+	mccdata->mcc_LastActiveChat[ 0 ] = msg->Window;
+
+	return( 0 );
+}
+/* \\\ */
+/* /// MM_ChatRemove()
+**
+*/
+
+/*************************************************************************/
+
+static ULONG MM_ChatRemove( struct IClass *cl UNUSED , Object *obj, struct MP_APPLICATION_CHATREMOVE *msg )
+{
+struct mccdata *mccdata = INST_DATA( cl, obj );
+ULONG i, o;
+	/* we purge all windows that no longer exist */
+	for( i = 0 ; i < LASTACTIVE_MAX ; i++ ) {
+		if( mccdata->mcc_LastActiveChat[ i ] ) {
+			if( !DoMethod( obj, MM_APPLICATION_WINDOWFIND, mccdata->mcc_LastActiveChat[ i ] ) ) {
+				mccdata->mcc_LastActiveChat[ i ] = NULL; /* not found, so kill it */
+			} else {
+			/* if it is the window to kill, kill it */
+				if( msg->Window == mccdata->mcc_LastActiveChat[ i ] ) {
+					mccdata->mcc_LastActiveChat[ i ] = NULL;
+					/* we could break here, but we loop to purge/find wrong entries */
+				}
+			}
 		}
-	} NEXTCHILD
+	}
+	/* clean array */
+	for( o = 0, i = 0 ; i < LASTACTIVE_MAX ; i++ ) {
+		if( mccdata->mcc_LastActiveChat[ i ] ) {
+			mccdata->mcc_LastActiveChat[ o++ ] = mccdata->mcc_LastActiveChat[ i ];
+		}
+	}
+	return( 0 );
+}
+/* \\\ */
+/* /// MM_ChatFindActive()
+**
+*/
+
+/*************************************************************************/
+
+static ULONG MM_ChatFindActive( struct IClass *cl UNUSED , Object *obj, struct MP_APPLICATION_CHATFINDACTIVE *msg )
+{
+struct mccdata *mccdata = INST_DATA( cl, obj );
+ULONG i;
+
+	for( i = 0 ; i < LASTACTIVE_MAX ; i++ ) {
+		if( mccdata->mcc_LastActiveChat[ i ] ) {
+			/* just for savty */
+			if( DoMethod( obj, MM_APPLICATION_WINDOWFIND, mccdata->mcc_LastActiveChat[ i ] ) ) {
+				return( (IPTR) mccdata->mcc_LastActiveChat[ i ] );
+			}
+		}
+	}
+
 	return( 0 );
 }
 /* \\\ */
@@ -301,6 +389,11 @@ DISPATCHER(MCC_Application_Dispatcher)
 		case MM_APPLICATION_WINDOWFIND       : return( MM_WindowFind                    ( cl, obj, (APTR) msg ) );
 		case MM_APPLICATION_WINDOWDISPOSE    : return( MM_WindowDispose                 ( cl, obj, (APTR) msg ) );
 		case MM_APPLICATION_WINDOWNEWCHAT    : return( MM_WindowNewChat                 ( cl, obj, (APTR) msg ) );
+
+		case MM_APPLICATION_CHATSETACTIVE    : return( MM_ChatSetActive                 ( cl, obj, (APTR) msg ) );
+		case MM_APPLICATION_CHATREMOVE       : return( MM_ChatRemove                    ( cl, obj, (APTR) msg ) );
+		case MM_APPLICATION_CHATFINDACTIVE   : return( MM_ChatFindActive                ( cl, obj, (APTR) msg ) );
+
     }
 	return( DoSuperMethodA( cl, obj, msg ) );
 

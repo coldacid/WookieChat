@@ -58,7 +58,7 @@ MA_NETWORK_OBJECTAUDIO,
 };
 
 struct MP_NETWORK_SERVERFIND           { ULONG MethodID; struct ServerEntry *ServerEntry; };
-struct MP_NETWORK_SERVERALLOC          { ULONG MethodID; struct ServerEntry *ServerEntry; Object *Chat; };
+struct MP_NETWORK_SERVERALLOC          { ULONG MethodID; struct ServerEntry *ServerEntry; Object *WindowChat; };
 struct MP_NETWORK_SERVERFREE           { ULONG MethodID; struct Server  *Server; };
 
 struct MP_NETWORK_SERVERCONNECTAUTO    { ULONG MethodID; };
@@ -102,10 +102,13 @@ struct Server {
 struct Channel {
 	struct Channel    *c_Succ;
 	struct Channel    *c_Pred;
+	ULONG              c_Flags;
 	char               c_Name[ CHANNELENTRY_CHANNEL_SIZEOF        + 2 ];
 	char               c_Password[ CHANNELENTRY_PASSWORD_SIZEOF   + 2 ];
 	Object            *c_ChatWindow;
 };
+
+#define CHANNELF_SERVER 1 /* this is the servers channel */
 
 struct Nick {
 	struct Nick       *n_Succ;
