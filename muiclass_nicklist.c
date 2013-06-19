@@ -24,6 +24,7 @@
 #include <mui/NListview_mcc.h>
 #include <string.h>
 
+#include "system.h"
 #include "locale.h"
 #include "muiclass.h"
 #include "muiclass_nicklist.h"

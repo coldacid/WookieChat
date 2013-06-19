@@ -24,12 +24,12 @@
 #include <mui/NList_mcc.h>
 #include <mui/NListview_mcc.h>
 
+#include "system.h"
 #include "locale.h"
 #include "muiclass.h"
 #include "muiclass_windowsettings.h"
 #include "muiclass_settingscolor.h"
 #include "version.h"
-#include "intern.h"
 
 /*************************************************************************/
 

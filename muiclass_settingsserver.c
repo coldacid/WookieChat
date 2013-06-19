@@ -24,6 +24,7 @@
 #include <mui/NList_mcc.h>
 #include <mui/NListview_mcc.h>
 
+#include "system.h"
 #include "locale.h"
 #include "muiclass.h"
 #include "muiclass_serverlist.h"
@@ -32,7 +33,6 @@
 #include "muiclass_windowsettings.h"
 #include "muiclass_settingsserver.h"
 #include "version.h"
-#include "intern.h"
 
 /*************************************************************************/
 

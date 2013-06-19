@@ -24,7 +24,7 @@
 #include <stdarg.h>
 #include <string.h>
 
-#include "intern.h"
+#include "system.h"
 #include "locale.h"
 #include "muiclass.h"
 #include "muiclass_aliaslist.h"
@@ -57,10 +57,6 @@
 #include "muiclass_windowquit.h"
 #include "muiclass_windowsettings.h"
 #include "muiclass_windowurlgrabber.h"
-
-#ifndef MUIA_Text_HiIndex
- #define MUIA_Text_HiIndex 0x804214f5
-#endif
 
 /*
 ** GUI Globals

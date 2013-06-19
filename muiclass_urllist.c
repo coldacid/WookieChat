@@ -25,8 +25,8 @@
 #include <string.h>
 #include <stdio.h>
 
+#include "system.h"
 #include "functions.h"
-#include "intern.h"
 #include "locale.h"
 #include "muiclass.h"
 #include "muiclass_windowsettings.h"

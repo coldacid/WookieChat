@@ -12,33 +12,49 @@ them all. Instead I created a separate application, which is used and running in
 the old environment. To avoid crashes due no created objects, all old windows
 and even the original application gets created as before.
 
-Use the switch ENABLE_NEWWOOKIECODE in file intern.h to switch between old and
-new wookiechat.
+We already reached a step, where the old wookie code is no longer used. Disable
+the first line (NEWWOOKIE) in makefile by using a # and compile again to get the
+old code again. This will not work forever.
 
-What are the steps to go now?
 
-Well, first of all I plan to create all missing windows as proper subclasses. If
-possible I will remove them from original code. This is not always possible, as
-due the twisted code global references are used all over the place. Basically
-currently only the server and the main preferences window are missing.
+What are the upcoming steps to go for?
+---------------------------------------
 
-The main goal is to convert WookieChat into a real mui application without any
-global variables beside the library bases.
+Since all mayor classes are already there, it is time to implement network and
+output support. The basic framework is already there. muiclass_network.c contains
+all initial required network stuff. DCC asnd CTCP will be added after general chat
+is working.
 
-NOTE: If you feel the need to add a global var, then you are doing something
-wrong. Please contact the developers before messing anything up.
+There is already a big difference between the original (V1,V2) WookieChat. Since
+all parts are mui classes we already support multi chat window by default. The
+plan is to add a context menu to channel list to move the to a separate window.
+Also dragging between windows and dropping outside any window to create a new
+chat window, are planned.
 
-I know class based mui coding is not very handy, compared to some crappy
-returnid check, but once you get behind it, it will benefit the work with
-providing a clean and readable code.
+Note for developers
+--------------------
 
-Since the old code is using old preferences, I plan not to keep the file formats
-in all cases. Currently the URL-grabber and the ignore list are 100% compatible,
-but e.g. starting with color, keeping it compatible would result in additional
-code. Same for the main settings. 
+RULE #1: If you feel the need of adding any global vars, then you are doing
+something wrong. Please contact the main developers before messing anything up.
 
-Since the original WookieChat dumped all config files into PROGDIR:. The goal
-for V3.0 should be using a Prefs drawer within PROGDIR: and keep all files inside.
-A preset drawer does the same for presets.
+RULE #2: If you port WookieChat to a different system, then use system_whatever
+and adapt what is done for other systems if needed.
 
+RULE #3: WookieChat is currently only using NList. If you feel the need, then do
+it like MorphOS is doing when replacing NLIST.
+
+RULE #4: Using ReturnIDs is evil. Face it. There is no way we tollerate this.
+
+RULE #5: Using Hooks in Lists is evil. If you implement a list, then subclass it
+like real man do.
+
+RULE #6: Keep the basic mui class layout. This will keep the code readable. If
+you understand how one class is implemented, then you know how it works for all
+classes.
+
+Additional notes to specific developers: (just remove after reading :D )
+
+NOTE to deadwood: Maybe it is a good idea to open a separate trunk and store the
+version right after fixing locales and before starting adding subclasses and
+kill all unused files from offical trunk.
 

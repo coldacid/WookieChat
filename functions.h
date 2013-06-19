@@ -23,7 +23,7 @@
 #include <proto/exec.h>
 #include <proto/dos.h>
 
-#include "intern.h"
+#include "system.h"
 
 /*************************************************************************/
 

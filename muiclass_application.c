@@ -23,7 +23,7 @@
 #include <SDI_hook.h>
 #include <string.h>
 
-#include "intern.h"
+#include "system.h"
 #include "locale.h"
 #include "functions.h"
 #include "muiclass.h"
@@ -195,11 +195,12 @@ struct mccdata *mccdata = INST_DATA( cl, obj );
 	}
 
 	/* auto connect or open prefs */
-	DoMethod( mccdata->mcc_ClassObjects[ GID_NETWORK ], MM_NETWORK_AUTORECONNECT );
+	DoMethod( mccdata->mcc_ClassObjects[ GID_NETWORK ], MM_NETWORK_SERVERCONNECTAUTO );
 
 #if ENABLE_NEWWOOKIECODE
 //	  SetAttrs( mccdata->mcc_ClassObjects[ WID_CHAT ], MUIA_Window_Open, TRUE, TAG_DONE );
 //	  DoMethod( mccdata->mcc_ClassObjects[ WID_CHAT ], MM_WINDOWCHAT_COLORCHANGE );
+
 #endif
 
 	return( 0 );

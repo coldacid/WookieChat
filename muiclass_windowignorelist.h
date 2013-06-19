@@ -45,5 +45,15 @@ void    MCC_WindowIgnoreList_DisposeClass( void );
 
 /*************************************************************************/
 
+#if ENABLE_NEWWOOKIECODE
+enum /* geit FIXME: need a new name */
+{
+	PRIVMSG = 1,
+	CTCP,
+	DCC
+};
+#endif
+/*************************************************************************/
+
 #endif /* MUICLASS_WINDOWIGNORELIST_H */
 

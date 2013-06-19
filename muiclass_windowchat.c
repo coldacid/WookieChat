@@ -13,6 +13,7 @@
 */
 
 #include <libraries/mui.h>
+#include <libraries/gadtools.h>
 #include <prefs/prefhdr.h>
 #include <proto/muimaster.h>
 #include <proto/intuition.h>
@@ -24,6 +25,7 @@
 #include <mui/NList_mcc.h>
 #include <mui/NListview_mcc.h>
 
+#include "system.h"
 #include "locale.h"
 #include "muiclass.h"
 #include "muiclass_application.h"
@@ -34,7 +36,6 @@
 #include "muiclass_connectedlist.h"
 #include "muiclass_channel.h"
 #include "version.h"
-#include "intern.h"
 
 /*************************************************************************/
 

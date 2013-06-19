@@ -31,13 +31,21 @@
 
 #include "functions.h"
 #include "muiclass.h"
-#include "muiclass_application.h"
-#include "muiclass_network.h"
-#include "version.h"
 #include "intern.h"
 #include "objapp.h"
 #include "audio.h"
 #include "locale.h"
+
+/* small gateway, as we do not use any init code and moving main to the top causes
+   loads of additional problems due the global mess and the missing prototypes 
+*/
+
+int realmain(int argc, char *argv[]);
+
+int main(int argc, char *argv[])
+{
+	return( realmain( argc, argv) );
+};
 
 /* Global flags */
 BOOL NEWDEBUG               = FALSE;
@@ -66,30 +74,640 @@ static char old_alias_entry[800];
 static char new_filename[1000];
 static char orig_filename[1000];
 static char filename[1000];
+static char *text;
 static char wookie_dir[400]; //the pathname wookiechat is located in
 static ULONG iconified_and_new_text;
 static char string11[900];
+static char *string4;
+static char *string5;
 static char string8[900];
 static char string9[900];
+static char *string2;
+static char *string3;
 static char string7[900];
+static char *string1;
+static char buffer3[BUFFERSIZE*2];
 static char file_name[800];
 static BOOL is_chooser_window_open = FALSE;
 static char sendstuff[1500];
 static char group_name[100];
-static char *text;
-static char buffer3[BUFFERSIZE*2];
-static char *string1;
-static char *string4;
-static char *string5;
-static char *string2;
-static char *string3;
 static struct Settings temp_settings;
 
-int main(int argc, char *argv[])
+void copy_settings_to_undo_buffer()
+{
+    temp_settings = my_settings;
+}
+
+void copy_undo_buffer_to_settings()
+{
+    my_settings = temp_settings;
+    set_settings();
+}
+
+UTF8 *utf8 = NULL;
+STRPTR buf[1024];
+
+void send_text(char *text2)
 {
 
-	SysBase = (APTR) (*((struct ExecBase **) 4 ) );
+    if (DEBUG)
+        printf("Wants to send:%s\n", text2);
 
+    if (!status_conductor)
+        return;
+
+    if (utf8)
+    {
+        if ((char*) utf8 != (char*) buf)
+            CodesetsFreeA(utf8, NULL);
+        utf8 = NULL;
+    }
+
+    //if((utf8 = CodesetsUTF8Create(CSA_Source,  text2, CSA_Dest, buf, CSA_DestLen, sizeof(buf), TAG_DONE)))
+#ifdef __AROS__
+    struct TagItem utf8_conv_taglist[] =
+    {
+    { CSA_Source, (STACKIPTR) text2 },
+    { CSA_Dest, (STACKIPTR) buf },
+    { CSA_DestLen, (IPTR) sizeof(buf) },
+    { TAG_DONE, 0 } };
+#else
+    struct TagItem utf8_conv_taglist[] =
+    {
+        {   CSA_Source, (ULONG)text2},
+        {   CSA_Dest,(ULONG)buf},
+        {   CSA_DestLen, sizeof(buf)},
+        {   TAG_DONE,0}};
+#endif
+
+    if ((utf8 = CodesetsUTF8CreateA(utf8_conv_taglist)))
+    {
+
+        text = (char*) utf8;
+
+    }
+    else
+    {
+        text = text2;
+    }
+
+    if (!SocketBase)
+        return;
+    timestamp_2_string();
+    if (!status_conductor->connection_active)
+    {
+		sprintf(buffer3, "%s%s%s%s %s", timestamp,
+				LGS( MSG_OPENING_BRACKET ),
+				LGS( MSG_ERROR ),
+				LGS( MSG_CLOSING_BRACKET ),
+				LGS( MSG_NOT_CONNECTED ));
+        add_text_to_conductor_list(buffer3, 9, ACTIVITY_CHAT);
+        return;
+    }
+
+    int n;
+
+    //if(DEBUG) printf("Sending:%s\n",text);
+
+    if (status_conductor->connection_active == 1)
+    {
+
+        int total = 0; // how many bytes we've sent
+        int bytesleft = strlen(text); // how many we have left to send
+        int length = strlen(text);
+
+        //test for write connectivity
+        /*struct timeval t;
+         t.tv_sec = 0;
+         t.tv_usec = 500000;
+         fd_set rd;
+         int32 canread = 1, i = 0;
+         FD_ZERO(&rd);
+         FD_SET(status_conductor->a_socket, &rd);
+         canread = WaitSelect(status_conductor->a_socket + 1, NULL, &rd, NULL, &t, NULL);
+         if(canread == 0) // && !FD_ISSET(status_conductor->a_socket, &rd))
+         {
+		 sprintf(buffer3,"%s%s%s%s Unable to write text to socket: error number: %li",timestamp,LGS(catalog,217,"["),LGS(catalog,0,"Error"),LGS(catalog,218,"]"),Errno());
+         add_text_to_current_list(buffer3,9, ACTIVITY_CHAT);
+         return;
+         } */
+        //test to write connectivity end
+        while (total < length)
+        {
+            n = send(status_conductor->a_socket, (i_in) text + total, bytesleft, 0);
+            if (n == -1)
+            {
+                break;
+            }
+            total += n;
+            bytesleft -= n;
+
+        }
+
+        if (DEBUG)
+            printf("Sent:%s\n", text);
+
+        if (n == -1)
+        {
+
+            if (DEBUG)
+                printf("error:%li\nunable to send:%s", Errno(), text);
+
+            sprintf(buffer3, "%s%s%s%s Unable to send text: error number: %li", timestamp,
+					LGS( MSG_OPENING_BRACKET ),
+					LGS( MSG_ERROR ),
+					LGS( MSG_CLOSING_BRACKET ),
+					Errno());
+            if (status_conductor->conductor->LV_channel)
+                add_text_to_conductor_list(buffer3, 9, ACTIVITY_CHAT);
+
+            if (Errno() == 57 || Errno() == 32) //Error, not connected!!
+            {
+
+                if (status_conductor->connection_active == 1)
+                {
+					sprintf(buffer3, "%s%s%s%s %s", timestamp,
+							LGS( MSG_OPENING_BRACKET ),
+							LGS( MSG_ERROR ),
+							LGS( MSG_CLOSING_BRACKET ),
+							LGS( MSG_NOT_CONNECTED ) );
+
+                    status_conductor->connection_active = 0;
+                    status_conductor->pass[0] = '\0';
+                    status_conductor->servername[0] = '\0';
+                    status_conductor->networkname[0] = '\0';
+
+                    status_conductor->conductor = status_conductor->root;
+                    while (status_conductor->conductor)
+                    {
+                        if (status_conductor->conductor->LV_channel)
+                            add_text_to_conductor_list(buffer3, 9, ACTIVITY_CHAT);
+                        status_conductor->conductor = status_conductor->conductor->next;
+                    }
+
+                }
+            }
+
+        }
+    }
+
+}
+
+void send_dcc_chat(char *text)
+{
+    if (!SocketBase)
+        return;
+    timestamp_2_string();
+
+    if (!dcc_chat_conductor->connected)
+    {
+		sprintf(buffer3, "%s%s%s%s %s", timestamp,
+				LGS( MSG_OPENING_BRACKET ),
+				LGS( MSG_ERROR ),
+				LGS( MSG_CLOSING_BRACKET ),
+				LGS( MSG_NOT_CONNECTED_TO_USER ) );
+        add_text_to_conductor_list(buffer3, 9, ACTIVITY_CHAT);
+        return;
+    }
+
+    int n;
+
+    if (dcc_chat_conductor->connected)
+    {
+        int total = 0; // how many bytes we've sent
+        int bytesleft = strlen(text); // how many we have left to send
+        int length = strlen(text);
+
+        while (total < length)
+        {
+            n = send(dcc_chat_conductor->dcc_socket, (i_in) text + total, bytesleft, 0);
+            if (n == -1)
+            {
+                break;
+            }
+            total += n;
+            bytesleft -= n;
+        }
+
+    }
+    else
+    {
+        if (DEBUG)
+            printf("not connected to dcc chat\n");
+    }
+
+    if (n == -1)
+    {
+
+        if (DEBUG)
+            printf("error:%li\nunable to send:%s", Errno(), text);
+        if (Errno() == 57 || Errno() == 32) //Error, not connected!!
+        {
+
+            if (dcc_chat_conductor->connected == 1)
+            {
+				sprintf(buffer3, "%s%s%s%s %s", timestamp,
+						LGS( MSG_OPENING_BRACKET ),
+						LGS( MSG_ERROR ),
+						LGS( MSG_CLOSING_BRACKET ),
+						LGS( MSG_NOT_CONNECTED_TO_USER ) );
+                if (dcc_chat_conductor->conductor->LV_channel)
+                    add_text_to_conductor_list(buffer3, 9, ACTIVITY_CHAT);
+                dcc_chat_conductor->connected = 0;
+            }
+
+        }
+
+    }
+
+}
+
+void send_current(char *text2)
+{
+    if (!status_conductor)
+        return;
+    if (!SocketBase)
+        return;
+    timestamp_2_string();
+
+    if (DEBUG)
+        printf("sending:%s\n", text2);
+
+    //struct TagItem my_send_charset1_taglist[] = { {CSA_Source, (ULONG)text2 }, {CSA_SourceCodeset, (ULONG)charsets[local_charset]}, {CSA_DestCodeset, (ULONG)charsets[status_current->remote_charset]}, {TAG_DONE, 0} };
+    /*struct TagItem my_send_charset1_taglist[] = { {CSA_Source, (ULONG)text2 }, {CSA_SourceCodeset, (ULONG)local_charsets[local_charset]}, {CSA_DestCodeset, (ULONG)remote_charsets[status_current->remote_charset]}, {TAG_DONE, 0} };
+     text = CodesetsConvertStrA(my_send_charset1_taglist);
+     if(!text)
+     {
+     printf("failed conversion when sending to a server..\n");
+     text=text2;
+     }
+     else
+     {
+
+     if(!strcmp(text,"") && strlen(text2) > 0)
+     {
+     if(DEBUG)
+     {
+     printf("text field is blank..\n");
+     printf("original text field wasnt blank..\n");
+     printf("lets resend the original..\n");
+     }
+     text=text2;
+     }
+
+     }*/
+    text = text2;
+
+    if (!status_current->connection_active)
+    {
+		sprintf(buffer3, "%s%s%s%s %s", timestamp,
+				LGS( MSG_OPENING_BRACKET ),
+				LGS( MSG_ERROR ),
+				LGS( MSG_CLOSING_BRACKET ),
+				LGS( MSG_NOT_CONNECTED ) );
+
+        add_text_to_current_list(buffer3, 9, ACTIVITY_CHAT);
+        return;
+    }
+
+    //if(DEBUG) printf("Sending1:%s\n",text);
+    int n;
+
+    if (status_current->connection_active)
+    {
+        int total = 0; // how many bytes we've sent
+        int bytesleft = strlen(text); // how many we have left to send
+
+        int length = strlen(text);
+
+        //test for write connectivity
+        /*struct timeval t;
+         t.tv_sec = 0;
+         t.tv_usec = 500000;
+         fd_set rd;
+         int32 canread = 1, i = 0;
+         FD_ZERO(&rd);
+         FD_SET(status_current->a_socket, &rd);
+         canread = WaitSelect(status_current->a_socket + 1, NULL, &rd, NULL, &t, NULL);
+         if(canread == 0) // && !FD_ISSET(status_current->a_socket, &rd))
+         {
+		 sprintf(buffer3,"%s%s%s%s Unable to write text to socket: error number: %li",timestamp,LGS(catalog,217,"["),LGS(catalog,0,"Error"),LGS(catalog,218,"]"),Errno());
+         add_text_to_current_list(buffer3,9, ACTIVITY_CHAT);
+         return;
+         } */
+        //test to write connectivity end
+        while (total < length)
+        {
+            n = send(status_current->a_socket, (i_in) text + total, bytesleft, 0);
+            if (n == -1)
+            {
+                break;
+            }
+            total += n;
+            bytesleft -= n;
+        }
+
+        if (n == -1)
+        {
+
+            if (DEBUG)
+                printf("error:%li\nunable to send:%s", Errno(), text);
+            sprintf(buffer3, "%s%s%s%s Unable to send text: error number: %li", timestamp,
+					LGS( MSG_OPENING_BRACKET ),
+					LGS( MSG_ERROR ),
+					LGS( MSG_CLOSING_BRACKET ),
+					Errno());
+            if (status_current->conductor->LV_channel)
+                add_text_to_current_list(buffer3, 9, ACTIVITY_CHAT);
+
+            if (Errno() == 57 || Errno() == 32) //Error, not connected!!
+            {
+
+                if (status_current->connection_active == 1)
+                {
+
+					sprintf(buffer3, "%s%s%s%s %s", timestamp,
+							LGS( MSG_OPENING_BRACKET ),
+							LGS( MSG_ERROR ),
+							LGS( MSG_CLOSING_BRACKET ),
+							LGS( MSG_NOT_CONNECTED ) );
+
+                    status_current->conductor = status_current->root;
+                    while (status_current->conductor)
+                    {
+                        if (status_current->conductor->LV_channel)
+                            add_text_to_current_list(buffer3, 9, ACTIVITY_CHAT);
+                        status_current->conductor = status_conductor->conductor->next;
+                    }
+
+                    status_current->connection_active = 0;
+                    status_current->pass[0] = '\0';
+                    status_current->servername[0] = '\0';
+                    status_current->networkname[0] = '\0';
+                }
+
+            }
+
+        }
+
+    }
+    else if (DEBUG)
+        printf("no connection\n");
+}
+
+struct WBArg *wbarg;
+
+#ifdef __amigaos4__
+typedef CONST_STRPTR c1_in;
+typedef STRPTR *c2_in;
+#elif __MORPHOS__
+typedef STRPTR c1_in;
+typedef STRPTR *c2_in;
+#elif __AROS__
+typedef const STRPTR c1_in;
+typedef const STRPTR *c2_in;
+#else
+typedef UBYTE *c1_in;
+typedef UBYTE **c2_in;
+#endif
+
+BOOL ParseToolTypes(struct WBArg *wbarg)
+{
+    struct DiskObject *dobj;
+    c2_in toolarray;
+    char *s;
+    BOOL success = FALSE;
+
+    if (!wbarg->wa_Name)
+        return 0;
+
+	if ((*wbarg->wa_Name) && (dobj = GetDiskObject((c1_in) (wbarg->wa_Name))))
+    {
+        toolarray = /*(char **)*/ dobj->do_ToolTypes;
+        if ((s = (char *) FindToolType((c2_in) toolarray, (c1_in) "SMALLTABS")))
+        {
+            if (!stricmp(s, "true"))
+                SMALLTABS = TRUE;
+        }
+        if ((s = (char *) FindToolType((c2_in) toolarray, (c1_in) "DEBUG")))
+        {
+            //if(!stricmp(s,"true")) DEBUG=1;
+        }
+        if ((s = (char *) FindToolType((c2_in) toolarray, (c1_in) "RAW")))
+        {
+            if (!stricmp(s, "true"))
+                RAW = TRUE;
+        }
+        if ((s = (char *) FindToolType((c2_in) toolarray, (c1_in) "PROXY")))
+        {
+            if (!stricmp(s, "true"))
+                USING_A_PROXY = TRUE;
+        }
+        if ((s = (char *) FindToolType((c2_in) toolarray, (c1_in) "NOZUNE")))
+        {
+            if (!stricmp(s, "true"))
+                ZUNE_SYSTEM = FALSE;
+
+        }
+        if ((s = (char *) FindToolType((c2_in) toolarray, (c1_in) "ZUNE")))
+        {
+            if (!stricmp(s, "true"))
+                ZUNE_SYSTEM = TRUE;
+            else
+                ZUNE_SYSTEM = FALSE;
+
+        }
+        if ((s = (char *) FindToolType((c2_in) toolarray, (c1_in) "ALTCLIPBOARD")))
+        {
+            if (!stricmp(s, "true"))
+                ALTERNATIVE_CLIPBOARD = TRUE;
+
+        }
+
+        if ((s = (char *) FindToolType((c2_in) toolarray, (c1_in) "ABOUTGFX")))
+        {
+            if (!stricmp(s, "true"))
+                my_settings.os3_about_window_gfx = 1;
+        }
+        if ((s = (char *) FindToolType((c2_in) toolarray, (c1_in) "GEIT")))
+        {
+            if (!stricmp(s, "true"))
+                GEIT = TRUE;
+        }
+        if ((s = (char *) FindToolType((c2_in) toolarray, (c1_in) "AREXX")))
+        {
+            if (!stricmp(s, "true"))
+                USE_AREXX = TRUE;
+            else
+                USE_AREXX = FALSE;
+        }
+
+        /* Free the diskobject we got */
+        FreeDiskObject(dobj);
+        success = TRUE;
+    }
+    return (success);
+}
+
+void set_channel_clipboard_hook(void)
+{
+
+    if (!status_current)
+        return;
+    if (!status_current->current_query)
+        return;
+    if (!status_current->current_query->LV_channel)
+        return;
+
+    if (my_settings.which_clipboard_style == COLUMNS || ALTERNATIVE_CLIPBOARD == 1)
+    {
+        setmacro((Object*)status_current->current_query->LV_channel, MUIA_NList_DragColOnly, 1);
+        setmacro((Object*)MN_Clipboard, MUIA_Menuitem_Checked, TRUE);
+        setmacro((Object*)status_current->current_query->LV_channel, MUIA_NList_CopyEntryToClipHook,
+                &Custom_Clipboard2_Hook);
+        //lets use multicolumn hook
+
+    }
+    else
+    {
+        setmacro((Object*)status_current->current_query->LV_channel, MUIA_NList_DragColOnly, -1);
+        setmacro((Object*)MN_Clipboard, MUIA_Menuitem_Checked, FALSE);
+        setmacro((Object*)status_current->current_query->LV_channel, MUIA_NList_CopyEntryToClipHook, NULL);
+        //lets use built in clipboard hook
+
+    }
+
+}
+
+void read_list_of_servers(void)
+{
+    char *work_buffer=malloc(sizeof(char) * 1000);
+    char *work_buffer2=malloc(sizeof(char) * 1000);
+    char *work1=malloc(sizeof(char) * 100);
+    char *len2; //variable used for file access
+    char work_buffer3[600];
+    BPTR newbptr_file = Open((_s_cs)"progdir:servers.txt",MODE_OLDFILE);
+
+    int running3=1;
+    len2=(char*)FGets(newbptr_file,(STRPTR)work_buffer,600);
+    if(len2)
+    {
+        if(stricmp(work_buffer,"WOOKIECHAT_SERVERS_FILE_2\n"))
+        {
+            printf("Old servers.txt file detected!\nRenaming servers.txt to servers2.txt\nNow generating a new servers.txt in the new format\n(Keep servers2.txt as a backup in case something goes wrong!\n");
+
+            Rename((_s_cs)"progdir:servers.txt",(_s_cs)"progdir:servers2.txt");
+
+            BPTR new_servers_file = Open((_s_cs)"progdir:servers.txt",MODE_NEWFILE);
+            if(new_servers_file)
+            {
+                FPuts(new_servers_file,(l_in)"WOOKIECHAT_SERVERS_FILE_2\n");
+
+                FPuts(new_servers_file,(l_in)work_buffer);
+
+                while(running3)
+                {
+                    //read the line from the servers file
+                    len2=(char*)FGets(newbptr_file,(STRPTR)work_buffer,600);
+
+                    if(!len2) { running3=0; }
+
+                    if(DEBUG) printf("running3 = %d\n",running3);
+
+
+                    //work_buffer[strlen(work_buffer)]='\0';
+
+                    strcpy(work_buffer2,work_buffer);
+                    strtok(work_buffer2," ");
+                    work1=strtok(NULL," \n");
+
+                    //its a group name! lets create the initial group entry
+                    if(!work1)
+                    {
+                        //if(!first) FPuts(new_servers_file,(char *)"ENDGROUP\n");
+                        //first=FALSE;
+
+                        //FPuts(new_servers_file,(char *)"GROUP");
+                        FPuts(new_servers_file,(l_in)work_buffer);
+                        //FPuts(new_servers_file,(char *)"\n");
+                        //printf("putting group name:%s",work_buffer);
+
+                    }
+                    else
+                    {
+                        strcpy(work_buffer2,work_buffer);
+                        //printf("1 work_buffer :%s",work_buffer);
+                        //printf("1 work_buffer2:%s",work_buffer2);
+
+                        string3=strtok(work_buffer2," "); //servername
+                        string2=strtok(NULL,"\n ");     //port number
+                        string1=strtok(NULL,"\n ");    //connect automatically, yes or not?
+                        string5=strtok(NULL,"\n ");     //charset
+                        string4=strtok(NULL,"\n ");   //password
+
+                        if(string3)
+                        {
+                            sprintf(work_buffer3,"SERVER=%s ",string3);
+                            FPuts(new_servers_file,(l_in)work_buffer3);
+
+                            if(string2)
+                            {
+                                sprintf(work_buffer3,"PORT=%s",string2);
+                                FPuts(new_servers_file,(l_in)work_buffer3);
+
+                            }
+                        }
+
+                        if(string1)
+                            sprintf(work_buffer3," AUTOCONNECT=%s",string1);
+                        else
+                            sprintf(work_buffer3," AUTOCONNECT=");
+
+                        FPuts(new_servers_file,(l_in)work_buffer3);
+
+                        if(string5)
+                            sprintf(work_buffer3," SERVER_CHARSET=%s",string5);
+                        else
+                            sprintf(work_buffer3," SERVER_CHARSET=");
+
+                        FPuts(new_servers_file,(l_in)work_buffer3);
+
+                        if(string4)
+                            sprintf(work_buffer3," SERVER_PASSWORD=%s",string4);
+                        else
+                            sprintf(work_buffer3," SERVER_PASSWORD=");
+                        FPuts(new_servers_file,(l_in)work_buffer3);
+
+
+                        sprintf(work_buffer3," AUTOJOINS=");
+                        FPuts(new_servers_file,(l_in)work_buffer3);
+
+                        FPuts(new_servers_file,(l_in)"\n");
+                    }
+                }
+                Close(new_servers_file);
+            }
+        }
+    }
+
+    Close(newbptr_file);
+
+
+    return;
+}
+
+static char *stack_cookie __attribute__((used)) = (char*) "$STACK: 550000";
+
+#ifdef __MORPHOS__
+int __stack = 550000;
+#endif
+
+#ifdef __amigaos4__
+const char *__stdiowin = "NIL:";
+#endif
+
+int realmain(int argc, char *argv[])
+{
 
     //SignalCheck_Init();
 
@@ -3850,7 +4468,7 @@ int main(int argc, char *argv[])
                 select_result = 0;
 
                 if (running && signal)
-					select_result = WaitSelect(fdmax + 1, &read_fds, &write_fds, NULL, NULL, &waitsignals);
+                    select_result = WaitSelect(fdmax + 1, &read_fds, &write_fds, NULL, NULL, &waitsignals);
 
                 if (waitsignals & arexx_wants_to_send_signal) //lets send some text
                 {
@@ -4259,639 +4877,6 @@ int main(int argc, char *argv[])
             return 0;
 
         }
-/* \\\ */
 
-
-size_t stccpy ( char	   * dest, const char * src, size_t	      n)
-{
-    char * ptr = dest;
-
-    while (n>1 && *src)
-    {
-        *ptr = *src;
-	ptr ++;
-	src ++;
-	n--;
-    }
-
-    *ptr++ = '\0';
-
-    return (ptr-dest);
-}
-
-void copy_settings_to_undo_buffer()
-{
-    temp_settings = my_settings;
-}
-
-void copy_undo_buffer_to_settings()
-{
-    my_settings = temp_settings;
-    set_settings();
-}
-
-UTF8 *utf8 = NULL;
-STRPTR buf[1024];
-
-void send_text(char *text2)
-{
-
-    if (DEBUG)
-        printf("Wants to send:%s\n", text2);
-
-    if (!status_conductor)
-        return;
-
-    if (utf8)
-    {
-        if ((char*) utf8 != (char*) buf)
-            CodesetsFreeA(utf8, NULL);
-        utf8 = NULL;
-    }
-
-    //if((utf8 = CodesetsUTF8Create(CSA_Source,  text2, CSA_Dest, buf, CSA_DestLen, sizeof(buf), TAG_DONE)))
-#ifdef __AROS__
-    struct TagItem utf8_conv_taglist[] =
-    {
-    { CSA_Source, (STACKIPTR) text2 },
-    { CSA_Dest, (STACKIPTR) buf },
-    { CSA_DestLen, (IPTR) sizeof(buf) },
-    { TAG_DONE, 0 } };
-#else
-    struct TagItem utf8_conv_taglist[] =
-    {
-        {   CSA_Source, (ULONG)text2},
-        {   CSA_Dest,(ULONG)buf},
-        {   CSA_DestLen, sizeof(buf)},
-        {   TAG_DONE,0}};
-#endif
-
-    if ((utf8 = CodesetsUTF8CreateA(utf8_conv_taglist)))
-    {
-
-        text = (char*) utf8;
-
-    }
-    else
-    {
-        text = text2;
-    }
-
-    if (!SocketBase)
-        return;
-    timestamp_2_string();
-    if (!status_conductor->connection_active)
-    {
-		sprintf(buffer3, "%s%s%s%s %s", timestamp,
-				LGS( MSG_OPENING_BRACKET ),
-				LGS( MSG_ERROR ),
-				LGS( MSG_CLOSING_BRACKET ),
-				LGS( MSG_NOT_CONNECTED ));
-        add_text_to_conductor_list(buffer3, 9, ACTIVITY_CHAT);
-        return;
-    }
-
-    int n;
-
-    //if(DEBUG) printf("Sending:%s\n",text);
-
-    if (status_conductor->connection_active == 1)
-    {
-
-        int total = 0; // how many bytes we've sent
-        int bytesleft = strlen(text); // how many we have left to send
-        int length = strlen(text);
-
-        //test for write connectivity
-        /*struct timeval t;
-         t.tv_sec = 0;
-         t.tv_usec = 500000;
-         fd_set rd;
-         int32 canread = 1, i = 0;
-         FD_ZERO(&rd);
-         FD_SET(status_conductor->a_socket, &rd);
-         canread = WaitSelect(status_conductor->a_socket + 1, NULL, &rd, NULL, &t, NULL);
-         if(canread == 0) // && !FD_ISSET(status_conductor->a_socket, &rd))
-         {
-		 sprintf(buffer3,"%s%s%s%s Unable to write text to socket: error number: %li",timestamp,LGS(catalog,217,"["),LGS(catalog,0,"Error"),LGS(catalog,218,"]"),Errno());
-         add_text_to_current_list(buffer3,9, ACTIVITY_CHAT);
-         return;
-         } */
-        //test to write connectivity end
-        while (total < length)
-        {
-            n = send(status_conductor->a_socket, (i_in) text + total, bytesleft, 0);
-            if (n == -1)
-            {
-                break;
-            }
-            total += n;
-            bytesleft -= n;
-
-        }
-
-        if (DEBUG)
-            printf("Sent:%s\n", text);
-
-        if (n == -1)
-        {
-
-            if (DEBUG)
-                printf("error:%li\nunable to send:%s", Errno(), text);
-
-            sprintf(buffer3, "%s%s%s%s Unable to send text: error number: %li", timestamp,
-					LGS( MSG_OPENING_BRACKET ),
-					LGS( MSG_ERROR ),
-					LGS( MSG_CLOSING_BRACKET ),
-					Errno());
-            if (status_conductor->conductor->LV_channel)
-                add_text_to_conductor_list(buffer3, 9, ACTIVITY_CHAT);
-
-            if (Errno() == 57 || Errno() == 32) //Error, not connected!!
-            {
-
-                if (status_conductor->connection_active == 1)
-                {
-					sprintf(buffer3, "%s%s%s%s %s", timestamp,
-							LGS( MSG_OPENING_BRACKET ),
-							LGS( MSG_ERROR ),
-							LGS( MSG_CLOSING_BRACKET ),
-							LGS( MSG_NOT_CONNECTED ) );
-
-                    status_conductor->connection_active = 0;
-                    status_conductor->pass[0] = '\0';
-                    status_conductor->servername[0] = '\0';
-                    status_conductor->networkname[0] = '\0';
-
-                    status_conductor->conductor = status_conductor->root;
-                    while (status_conductor->conductor)
-                    {
-                        if (status_conductor->conductor->LV_channel)
-                            add_text_to_conductor_list(buffer3, 9, ACTIVITY_CHAT);
-                        status_conductor->conductor = status_conductor->conductor->next;
-                    }
-
-                }
-            }
-
-        }
-    }
-
-}
-
-void send_dcc_chat(char *text)
-{
-    if (!SocketBase)
-        return;
-    timestamp_2_string();
-
-    if (!dcc_chat_conductor->connected)
-    {
-		sprintf(buffer3, "%s%s%s%s %s", timestamp,
-				LGS( MSG_OPENING_BRACKET ),
-				LGS( MSG_ERROR ),
-				LGS( MSG_CLOSING_BRACKET ),
-				LGS( MSG_NOT_CONNECTED_TO_USER ) );
-        add_text_to_conductor_list(buffer3, 9, ACTIVITY_CHAT);
-        return;
-    }
-
-    int n;
-
-    if (dcc_chat_conductor->connected)
-    {
-        int total = 0; // how many bytes we've sent
-        int bytesleft = strlen(text); // how many we have left to send
-        int length = strlen(text);
-
-        while (total < length)
-        {
-            n = send(dcc_chat_conductor->dcc_socket, (i_in) text + total, bytesleft, 0);
-            if (n == -1)
-            {
-                break;
-            }
-            total += n;
-            bytesleft -= n;
-        }
-
-    }
-    else
-    {
-        if (DEBUG)
-            printf("not connected to dcc chat\n");
-    }
-
-    if (n == -1)
-    {
-
-        if (DEBUG)
-            printf("error:%li\nunable to send:%s", Errno(), text);
-        if (Errno() == 57 || Errno() == 32) //Error, not connected!!
-        {
-
-            if (dcc_chat_conductor->connected == 1)
-            {
-				sprintf(buffer3, "%s%s%s%s %s", timestamp,
-						LGS( MSG_OPENING_BRACKET ),
-						LGS( MSG_ERROR ),
-						LGS( MSG_CLOSING_BRACKET ),
-						LGS( MSG_NOT_CONNECTED_TO_USER ) );
-                if (dcc_chat_conductor->conductor->LV_channel)
-                    add_text_to_conductor_list(buffer3, 9, ACTIVITY_CHAT);
-                dcc_chat_conductor->connected = 0;
-            }
-
-        }
-
-    }
-
-}
-
-void send_current(char *text2)
-{
-    if (!status_conductor)
-        return;
-    if (!SocketBase)
-        return;
-    timestamp_2_string();
-
-    if (DEBUG)
-        printf("sending:%s\n", text2);
-
-    //struct TagItem my_send_charset1_taglist[] = { {CSA_Source, (ULONG)text2 }, {CSA_SourceCodeset, (ULONG)charsets[local_charset]}, {CSA_DestCodeset, (ULONG)charsets[status_current->remote_charset]}, {TAG_DONE, 0} };
-    /*struct TagItem my_send_charset1_taglist[] = { {CSA_Source, (ULONG)text2 }, {CSA_SourceCodeset, (ULONG)local_charsets[local_charset]}, {CSA_DestCodeset, (ULONG)remote_charsets[status_current->remote_charset]}, {TAG_DONE, 0} };
-     text = CodesetsConvertStrA(my_send_charset1_taglist);
-     if(!text)
-     {
-     printf("failed conversion when sending to a server..\n");
-     text=text2;
-     }
-     else
-     {
-
-     if(!strcmp(text,"") && strlen(text2) > 0)
-     {
-     if(DEBUG)
-     {
-     printf("text field is blank..\n");
-     printf("original text field wasnt blank..\n");
-     printf("lets resend the original..\n");
-     }
-     text=text2;
-     }
-
-     }*/
-    text = text2;
-
-    if (!status_current->connection_active)
-    {
-		sprintf(buffer3, "%s%s%s%s %s", timestamp,
-				LGS( MSG_OPENING_BRACKET ),
-				LGS( MSG_ERROR ),
-				LGS( MSG_CLOSING_BRACKET ),
-				LGS( MSG_NOT_CONNECTED ) );
-
-        add_text_to_current_list(buffer3, 9, ACTIVITY_CHAT);
-        return;
-    }
-
-    //if(DEBUG) printf("Sending1:%s\n",text);
-    int n;
-
-    if (status_current->connection_active)
-    {
-        int total = 0; // how many bytes we've sent
-        int bytesleft = strlen(text); // how many we have left to send
-
-        int length = strlen(text);
-
-        //test for write connectivity
-        /*struct timeval t;
-         t.tv_sec = 0;
-         t.tv_usec = 500000;
-         fd_set rd;
-         int32 canread = 1, i = 0;
-         FD_ZERO(&rd);
-         FD_SET(status_current->a_socket, &rd);
-         canread = WaitSelect(status_current->a_socket + 1, NULL, &rd, NULL, &t, NULL);
-         if(canread == 0) // && !FD_ISSET(status_current->a_socket, &rd))
-         {
-		 sprintf(buffer3,"%s%s%s%s Unable to write text to socket: error number: %li",timestamp,LGS(catalog,217,"["),LGS(catalog,0,"Error"),LGS(catalog,218,"]"),Errno());
-         add_text_to_current_list(buffer3,9, ACTIVITY_CHAT);
-         return;
-         } */
-        //test to write connectivity end
-        while (total < length)
-        {
-            n = send(status_current->a_socket, (i_in) text + total, bytesleft, 0);
-            if (n == -1)
-            {
-                break;
-            }
-            total += n;
-            bytesleft -= n;
-        }
-
-        if (n == -1)
-        {
-
-            if (DEBUG)
-                printf("error:%li\nunable to send:%s", Errno(), text);
-            sprintf(buffer3, "%s%s%s%s Unable to send text: error number: %li", timestamp,
-					LGS( MSG_OPENING_BRACKET ),
-					LGS( MSG_ERROR ),
-					LGS( MSG_CLOSING_BRACKET ),
-					Errno());
-            if (status_current->conductor->LV_channel)
-                add_text_to_current_list(buffer3, 9, ACTIVITY_CHAT);
-
-            if (Errno() == 57 || Errno() == 32) //Error, not connected!!
-            {
-
-                if (status_current->connection_active == 1)
-                {
-
-					sprintf(buffer3, "%s%s%s%s %s", timestamp,
-							LGS( MSG_OPENING_BRACKET ),
-							LGS( MSG_ERROR ),
-							LGS( MSG_CLOSING_BRACKET ),
-							LGS( MSG_NOT_CONNECTED ) );
-
-                    status_current->conductor = status_current->root;
-                    while (status_current->conductor)
-                    {
-                        if (status_current->conductor->LV_channel)
-                            add_text_to_current_list(buffer3, 9, ACTIVITY_CHAT);
-                        status_current->conductor = status_conductor->conductor->next;
-                    }
-
-                    status_current->connection_active = 0;
-                    status_current->pass[0] = '\0';
-                    status_current->servername[0] = '\0';
-                    status_current->networkname[0] = '\0';
-                }
-
-            }
-
-        }
-
-    }
-    else if (DEBUG)
-        printf("no connection\n");
-}
-
-struct WBArg *wbarg;
-
-#ifdef __amigaos4__
-typedef CONST_STRPTR c1_in;
-typedef STRPTR *c2_in;
-#elif __MORPHOS__
-typedef STRPTR c1_in;
-typedef STRPTR *c2_in;
-#elif __AROS__
-typedef const STRPTR c1_in;
-typedef const STRPTR *c2_in;
-#else
-typedef UBYTE *c1_in;
-typedef UBYTE **c2_in;
-#endif
-
-BOOL ParseToolTypes(struct WBArg *wbarg)
-{
-    struct DiskObject *dobj;
-    c2_in toolarray;
-    char *s;
-    BOOL success = FALSE;
-
-    if (!wbarg->wa_Name)
-        return 0;
-
-	if ((*wbarg->wa_Name) && (dobj = GetDiskObject((c1_in) (wbarg->wa_Name))))
-    {
-        toolarray = /*(char **)*/ dobj->do_ToolTypes;
-        if ((s = (char *) FindToolType((c2_in) toolarray, (c1_in) "SMALLTABS")))
-        {
-            if (!stricmp(s, "true"))
-                SMALLTABS = TRUE;
-        }
-        if ((s = (char *) FindToolType((c2_in) toolarray, (c1_in) "DEBUG")))
-        {
-            //if(!stricmp(s,"true")) DEBUG=1;
-        }
-        if ((s = (char *) FindToolType((c2_in) toolarray, (c1_in) "RAW")))
-        {
-            if (!stricmp(s, "true"))
-                RAW = TRUE;
-        }
-        if ((s = (char *) FindToolType((c2_in) toolarray, (c1_in) "PROXY")))
-        {
-            if (!stricmp(s, "true"))
-                USING_A_PROXY = TRUE;
-        }
-        if ((s = (char *) FindToolType((c2_in) toolarray, (c1_in) "NOZUNE")))
-        {
-            if (!stricmp(s, "true"))
-                ZUNE_SYSTEM = FALSE;
-
-        }
-        if ((s = (char *) FindToolType((c2_in) toolarray, (c1_in) "ZUNE")))
-        {
-            if (!stricmp(s, "true"))
-                ZUNE_SYSTEM = TRUE;
-            else
-                ZUNE_SYSTEM = FALSE;
-
-        }
-        if ((s = (char *) FindToolType((c2_in) toolarray, (c1_in) "ALTCLIPBOARD")))
-        {
-            if (!stricmp(s, "true"))
-                ALTERNATIVE_CLIPBOARD = TRUE;
-
-        }
-
-        if ((s = (char *) FindToolType((c2_in) toolarray, (c1_in) "ABOUTGFX")))
-        {
-            if (!stricmp(s, "true"))
-                my_settings.os3_about_window_gfx = 1;
-        }
-        if ((s = (char *) FindToolType((c2_in) toolarray, (c1_in) "GEIT")))
-        {
-            if (!stricmp(s, "true"))
-                GEIT = TRUE;
-        }
-        if ((s = (char *) FindToolType((c2_in) toolarray, (c1_in) "AREXX")))
-        {
-            if (!stricmp(s, "true"))
-                USE_AREXX = TRUE;
-            else
-                USE_AREXX = FALSE;
-        }
-
-        /* Free the diskobject we got */
-        FreeDiskObject(dobj);
-        success = TRUE;
-    }
-    return (success);
-}
-
-void set_channel_clipboard_hook(void)
-{
-
-    if (!status_current)
-        return;
-    if (!status_current->current_query)
-        return;
-    if (!status_current->current_query->LV_channel)
-        return;
-
-    if (my_settings.which_clipboard_style == COLUMNS || ALTERNATIVE_CLIPBOARD == 1)
-    {
-        setmacro((Object*)status_current->current_query->LV_channel, MUIA_NList_DragColOnly, 1);
-        setmacro((Object*)MN_Clipboard, MUIA_Menuitem_Checked, TRUE);
-        setmacro((Object*)status_current->current_query->LV_channel, MUIA_NList_CopyEntryToClipHook,
-                &Custom_Clipboard2_Hook);
-        //lets use multicolumn hook
-
-    }
-    else
-    {
-        setmacro((Object*)status_current->current_query->LV_channel, MUIA_NList_DragColOnly, -1);
-        setmacro((Object*)MN_Clipboard, MUIA_Menuitem_Checked, FALSE);
-        setmacro((Object*)status_current->current_query->LV_channel, MUIA_NList_CopyEntryToClipHook, NULL);
-        //lets use built in clipboard hook
-
-    }
-
-}
-
-void read_list_of_servers(void)
-{
-    char *work_buffer=malloc(sizeof(char) * 1000);
-    char *work_buffer2=malloc(sizeof(char) * 1000);
-    char *work1=malloc(sizeof(char) * 100);
-    char *len2; //variable used for file access
-    char work_buffer3[600];
-    BPTR newbptr_file = Open((_s_cs)"progdir:servers.txt",MODE_OLDFILE);
-
-    int running3=1;
-    len2=(char*)FGets(newbptr_file,(STRPTR)work_buffer,600);
-    if(len2)
-    {
-        if(stricmp(work_buffer,"WOOKIECHAT_SERVERS_FILE_2\n"))
-        {
-            printf("Old servers.txt file detected!\nRenaming servers.txt to servers2.txt\nNow generating a new servers.txt in the new format\n(Keep servers2.txt as a backup in case something goes wrong!\n");
-
-            Rename((_s_cs)"progdir:servers.txt",(_s_cs)"progdir:servers2.txt");
-
-            BPTR new_servers_file = Open((_s_cs)"progdir:servers.txt",MODE_NEWFILE);
-            if(new_servers_file)
-            {
-                FPuts(new_servers_file,(l_in)"WOOKIECHAT_SERVERS_FILE_2\n");
-
-                FPuts(new_servers_file,(l_in)work_buffer);
-
-                while(running3)
-                {
-                    //read the line from the servers file
-                    len2=(char*)FGets(newbptr_file,(STRPTR)work_buffer,600);
-
-                    if(!len2) { running3=0; }
-
-                    if(DEBUG) printf("running3 = %d\n",running3);
-
-
-                    //work_buffer[strlen(work_buffer)]='\0';
-
-                    strcpy(work_buffer2,work_buffer);
-                    strtok(work_buffer2," ");
-                    work1=strtok(NULL," \n");
-
-                    //its a group name! lets create the initial group entry
-                    if(!work1)
-                    {
-                        //if(!first) FPuts(new_servers_file,(char *)"ENDGROUP\n");
-                        //first=FALSE;
-
-                        //FPuts(new_servers_file,(char *)"GROUP");
-                        FPuts(new_servers_file,(l_in)work_buffer);
-                        //FPuts(new_servers_file,(char *)"\n");
-                        //printf("putting group name:%s",work_buffer);
-
-                    }
-                    else
-                    {
-                        strcpy(work_buffer2,work_buffer);
-                        //printf("1 work_buffer :%s",work_buffer);
-                        //printf("1 work_buffer2:%s",work_buffer2);
-
-                        string3=strtok(work_buffer2," "); //servername
-                        string2=strtok(NULL,"\n ");     //port number
-                        string1=strtok(NULL,"\n ");    //connect automatically, yes or not?
-                        string5=strtok(NULL,"\n ");     //charset
-                        string4=strtok(NULL,"\n ");   //password
-
-                        if(string3)
-                        {
-                            sprintf(work_buffer3,"SERVER=%s ",string3);
-                            FPuts(new_servers_file,(l_in)work_buffer3);
-
-                            if(string2)
-                            {
-                                sprintf(work_buffer3,"PORT=%s",string2);
-                                FPuts(new_servers_file,(l_in)work_buffer3);
-
-                            }
-                        }
-
-                        if(string1)
-                            sprintf(work_buffer3," AUTOCONNECT=%s",string1);
-                        else
-                            sprintf(work_buffer3," AUTOCONNECT=");
-
-                        FPuts(new_servers_file,(l_in)work_buffer3);
-
-                        if(string5)
-                            sprintf(work_buffer3," SERVER_CHARSET=%s",string5);
-                        else
-                            sprintf(work_buffer3," SERVER_CHARSET=");
-
-                        FPuts(new_servers_file,(l_in)work_buffer3);
-
-                        if(string4)
-                            sprintf(work_buffer3," SERVER_PASSWORD=%s",string4);
-                        else
-                            sprintf(work_buffer3," SERVER_PASSWORD=");
-                        FPuts(new_servers_file,(l_in)work_buffer3);
-
-
-                        sprintf(work_buffer3," AUTOJOINS=");
-                        FPuts(new_servers_file,(l_in)work_buffer3);
-
-                        FPuts(new_servers_file,(l_in)"\n");
-                    }
-                }
-                Close(new_servers_file);
-            }
-        }
-    }
-
-    Close(newbptr_file);
-
-
-    return;
-}
-
-static char *stack_cookie __attribute__((used)) = (char*) "$STACK: 550000";
-
-#ifdef __MORPHOS__
-int __stack = 550000;
-#endif
-
-#ifdef __amigaos4__
-const char *__stdiowin = "NIL:";
-#endif
-
-/*************************************************************************/
 
 

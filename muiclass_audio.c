@@ -23,6 +23,7 @@
 #include <string.h>
 #include <stdio.h>
 
+#include "system.h"
 #include "functions.h"
 #include "locale.h"
 #include "muiclass.h"

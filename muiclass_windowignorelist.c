@@ -26,15 +26,20 @@
 #include <string.h>
 #include <stdio.h>
 
+#include "system.h"
 #include "functions.h"
 #include "locale.h"
 #include "muiclass.h"
 #include "muiclass_application.h"
 #include "muiclass_ignorelist.h"
 #include "muiclass_windowsettings.h"
-#include "muiclass_windowignorelist.h"
 #include "version.h"
-#include "intern.h"
+
+/* this can be removed after dumping old code */
+#undef ENABLE_NEWWOOKIECODE
+#define ENABLE_NEWWOOKIECODE 1
+
+#include "muiclass_windowignorelist.h"
 
 /*************************************************************************/
 

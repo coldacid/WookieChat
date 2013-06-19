@@ -23,12 +23,12 @@
 #include <SDI_hook.h>
 #include <string.h>
 
+#include "system.h"
 #include "locale.h"
 #include "muiclass.h"
 #include "muiclass_windowsettings.h"
 #include "muiclass_settingsgui.h"
 #include "version.h"
-#include "intern.h"
 
 /*************************************************************************/
 

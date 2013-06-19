@@ -25,11 +25,11 @@
 #include <string.h>
 #include <stdio.h>
 
+#include "system.h"
 #include "locale.h"
 #include "muiclass.h"
 #include "muiclass_windowdccincoming.h"
 #include "version.h"
-#include "intern.h"
 
 /*************************************************************************/
 

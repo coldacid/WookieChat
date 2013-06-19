@@ -25,7 +25,7 @@
 #include <string.h>
 #include <stdio.h>
 
-#include "intern.h"
+#include "system.h"
 #include "locale.h"
 #include "muiclass.h"
 #include "muiclass_application.h"
@@ -34,10 +34,7 @@
 #include "muiclass_windowurlgrabber.h"
 #include "version.h"
 
-
 /*************************************************************************/
-
-//#define URLBUFFER_SIZEOF 0x2000
 
 /*
 ** gadgets used by this class

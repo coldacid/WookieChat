@@ -14,7 +14,13 @@
 /*************************************************************************/
 
 #include <exec/types.h>
-#include "intern.h"
+#include <sys/types.h>
+#include <netinet/in.h>
+#include <sys/time.h>
+#include <netdb.h>
+
+
+#include "system.h"
 #include "muiclass.h"
 #include "muiclass_serverlist.h"
 #include "muiclass_channellist.h"
@@ -28,8 +34,6 @@
 
 enum {
 MM_NETWORK_AUTORECONNECT =  0xFED00360,
-MM_NETWORK_SERVERCONNECT,
-MM_NETWORK_SERVERDISCONNECT,
 MM_NETWORK_ADDLOG,
 MM_NETWORK_LOGNOTECREATE,
 MM_NETWORK_LOGNOTEADD,
@@ -40,6 +44,10 @@ MM_NETWORK_SERVERFIND,
 MM_NETWORK_SERVERALLOC,
 MM_NETWORK_SERVERFREE,
 
+MM_NETWORK_SERVERCONNECTAUTO,
+MM_NETWORK_SERVERCONNECT,
+MM_NETWORK_SERVERDISCONNECT,
+
 MM_NETWORK_CHANNELFIND,
 MM_NETWORK_CHANNELALLOC,
 MM_NETWORK_CHANNELFREE,
@@ -49,12 +57,13 @@ MA_NETWORK_OBJECTSETTINGS,
 MA_NETWORK_OBJECTAUDIO,
 };
 
-struct MP_NETWORK_SERVERFIND       { ULONG MethodID; struct ServerEntry *ServerEntry; };
-struct MP_NETWORK_SERVERALLOC      { ULONG MethodID; struct ServerEntry *ServerEntry; Object *Chat; };
-struct MP_NETWORK_SERVERFREE       { ULONG MethodID; struct Server  *Server; };
+struct MP_NETWORK_SERVERFIND           { ULONG MethodID; struct ServerEntry *ServerEntry; };
+struct MP_NETWORK_SERVERALLOC          { ULONG MethodID; struct ServerEntry *ServerEntry; Object *Chat; };
+struct MP_NETWORK_SERVERFREE           { ULONG MethodID; struct Server  *Server; };
 
-struct MP_NETWORK_SERVERCONNECT    { ULONG MethodID; struct Server  *Server; };
-struct MP_NETWORK_SERVERDISCONNECT { ULONG MethodID; struct Server  *Server; };
+struct MP_NETWORK_SERVERCONNECTAUTO    { ULONG MethodID; };
+struct MP_NETWORK_SERVERCONNECT        { ULONG MethodID; struct Server  *Server; };
+struct MP_NETWORK_SERVERDISCONNECT     { ULONG MethodID; struct Server  *Server; };
 
 struct MP_NETWORK_ADDLOG               { ULONG MethodID; struct Server  *Server; ULONG Type; char *format; IPTR arg1; IPTR arg2; IPTR arg3; IPTR arg4; };
 struct MP_NETWORK_WAITSELECT           { ULONG MethodID; ULONG *SignalMask; };

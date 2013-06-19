@@ -27,15 +27,19 @@
 
 #include <libraries/gadtools.h>
 
-#ifndef MAKE_ID
-#define MAKE_ID(a,b,c,d)  ((ULONG) (a)<<24 | (ULONG) (b)<<16 | (ULONG) (c)<<8 | (ULONG) (d))
-#endif
+#include "system.h"
+
 
 
 #define MAX_QUEUED_MESSAGES         500
 #define BUFFERSIZE                  30000
 #define MAX_EVENTS                  16
 #define DCC_RECV_BUFFERSIZE         10000
+
+#if 0 /* moved to system.h */
+#ifndef MAKE_ID
+#define MAKE_ID(a,b,c,d)  ((ULONG) (a)<<24 | (ULONG) (b)<<16 | (ULONG) (c)<<8 | (ULONG) (d))
+#endif
 
 /*
  * ub   - UBYTE *
@@ -81,7 +85,7 @@ typedef STRPTR          _s_cs;
 #define NTIP
 typedef ULONG           IPTR;
 #endif
-
+#endif
 struct XYMessage
 {
     struct Message xy_Msg;
@@ -924,6 +928,8 @@ enum
 #define getmacro(obj,attr,store) GetAttr(attr,obj,(ULONG *)store)
 #endif
 
+#if 0 /* moved to system.h */
+
 #ifndef MUIC_DTPIC
 #define MUIC_DTPIC "Dtpic.mui"
 #endif
@@ -946,6 +952,7 @@ enum
 #define MUIA_Window_DisableKeys 0x80424c36
 #endif
 
+#endif
 #endif
 
 
@@ -1300,10 +1307,12 @@ int do_waitselect_code();
 /* closeserverselectwin.c */
 void close_server_select_window();
 
+#if !ENABLE_NEWWOOKIECODE
 enum
 {
     PRIVMSG = 1, CTCP, DCC
 };
+#endif
 
 /***************************************************************************/
 

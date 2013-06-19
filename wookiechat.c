@@ -46,22 +46,22 @@ ULONG result = MSG_ERROR_NOERROR;
 	if( !Libraries_Open() ) {
 		if( !( result = MUIClass_Open() ) ) { /* init our mui classes */
 			Object *networkobj = (APTR) MUIGetVar( application, MA_APPLICATION_OBJECTNETWORK );
-			IPTR signalmask, waitsignals;
+			IPTR waitsignals;
 			LONG returnid;
 
 			while( 1 ) {
-				returnid = DoMethod( application, MUIM_Application_Input, &signalmask );
+				returnid = DoMethod( application, MUIM_Application_Input, &waitsignals );
 
 				if( returnid == MUIV_Application_ReturnID_Quit ) {
 					break;
 				}
 
-				waitsignals = signalmask | SIGBREAKF_CTRL_C;
-				if( ( waitsignals & ~SIGBREAKF_CTRL_C ) ) {
-					DoMethod( networkobj, MM_NETWORK_WAITSELECT, &waitsignals );
-				} else {
-					waitsignals = 0;
+				if( !waitsignals ) {
+					continue;
 				}
+				waitsignals |= SIGBREAKF_CTRL_C;
+
+				DoMethod( networkobj, MM_NETWORK_WAITSELECT, &waitsignals );
 
 				if( waitsignals & SIGBREAKF_CTRL_C ) {
 					break;

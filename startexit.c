@@ -653,5 +653,5 @@ void cleanexit(char *str)
 	Libraries_Close();
 #endif /* ENABLE_NEWLIBOPEN */
 
-    exit(0);
+	//exit(0);
 }

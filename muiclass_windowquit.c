@@ -21,6 +21,7 @@
 #include <SDI_hook.h>
 #include <string.h>
 
+#include "system.h"
 #include "locale.h"
 #include "muiclass.h"
 #include "muiclass_application.h"

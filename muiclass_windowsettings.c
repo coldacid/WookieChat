@@ -24,7 +24,7 @@
 #include <mui/NList_mcc.h>
 #include <mui/NListview_mcc.h>
 
-#include "intern.h"
+#include "system.h"
 #include "locale.h"
 #include "muiclass.h"
 #include "muiclass_application.h"

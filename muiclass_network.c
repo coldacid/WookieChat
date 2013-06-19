@@ -22,9 +22,9 @@
 #include <string.h>
 #include <stdio.h>
 
+#include "system.h"
 #include "functions.h"
 #include "includes.h"
-#include "intern.h"
 #include "locale.h"
 #include "muiclass.h"
 #include "muiclass_application.h"
@@ -51,6 +51,8 @@ struct mccdata
 	fd_set                 mcc_ReadMaster;       // master file descriptor list
 	fd_set                 mcc_WriteMaster;      // master file descriptor list
 	int                    mcc_FDMax;            // maximum file descriptor number
+	fd_set                 mcc_ReadFDS;          // master file descriptor list
+	fd_set                 mcc_WriteFDS;         // master file descriptor list
 
 };
 
@@ -119,6 +121,29 @@ struct TagItem *tstate;
 	return( DoSuperMethodA( cl, obj,(Msg) msg ) );
 }
 /* \\\ */
+
+/* /// MM_ServerFind()
+**
+*/
+
+/*************************************************************************/
+
+static ULONG MM_ServerFind( struct IClass *cl, Object *obj, struct MP_NETWORK_SERVERFIND *msg )
+{
+struct mccdata *mccdata = INST_DATA( cl, obj );
+struct ServerEntry *se = msg->ServerEntry;
+struct Server *s;
+
+	for( s = (APTR) mccdata->mcc_ServerList.lh_Head ; s->s_Succ ; s = s->s_Succ ) {
+		if( s->s_Port == se->se_Port ) { /* different port -> different server */
+			if( !Stricmp( (CONST_STRPTR) s->s_Address, (CONST_STRPTR) se->se_Address ) ) {
+				return( (IPTR) s );
+			}
+		}
+	}
+	return( 0 );
+}
+/* \\\ */
 /* /// MM_ServerAlloc()
 **
 */
@@ -128,18 +153,21 @@ struct TagItem *tstate;
 static ULONG MM_ServerAlloc( struct IClass *cl, Object *obj, struct MP_NETWORK_SERVERALLOC *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
+struct Server       *s = NULL;
 struct ServerEntry  *se;
-struct NickEntry    *ne;
-struct ChannelEntry *ce;
-struct Server   *s = NULL;
 struct Nick         *n;
+struct NickEntry    *ne;
 struct Channel      *c;
+struct ChannelEntry *ce;
 
 	if( ( se = msg->ServerEntry ) ) {
-		if( ( c = AllocVec( sizeof( struct Server ), MEMF_ANY|MEMF_CLEAR ) ) ) {
+		if( ( s = AllocVec( sizeof( struct Server ), MEMF_ANY|MEMF_CLEAR ) ) ) {
 			NEWLIST( &s->s_ChannelList );
 			NEWLIST( &s->s_NickList );
-			AddTail( &mccdata->mcc_ServerList, (struct Node *) c );
+			AddTail( &mccdata->mcc_ServerList, (struct Node *) s );
+			s->s_a_socket          = -1;
+			s->ident_listen_socket = -1;
+
 			/* we cannot link to server entry as it may be removed by user during
 			** runtime, so we spy important data */
 			strcpy( s->s_Name    , se->se_Name );
@@ -180,43 +208,62 @@ struct Server   *s = msg->Server;
 struct Nick         *n;
 struct Channel      *c;
 
+	debug("server free '%s'\n", s->s_Name );
+
 	/* dissnnect if needed */
 
 	DoMethod( obj, MM_NETWORK_SERVERDISCONNECT, s );
 
 	/* remove all channels */
 	while( ( c = (APTR) s->s_ChannelList.lh_Head )->c_Succ ) {
-		DoMethod( obj, MM_NETWORK_CHANNELFREE, c );
+		DoMethod( obj, MM_NETWORK_CHANNELFREE, s, c );
 	}
 
 	/* remove all nicks */
 	while( ( n = (APTR) s->s_NickList.lh_Head )->n_Succ ) {
+		/* remove from list */
 		Remove( (struct Node *) n );
+		/* free structure */
 		FreeVec( n );
 	}
+	/* remove from list */
+	Remove( (struct Node *) s );
+	/* free structure */
 	FreeVec( s );
 
 	return( 0 );
 }
 /* \\\ */
 
-/* /// MM_ServerFind()
+/* /// MM_ServerConnectAuto()
 **
 */
 
 /*************************************************************************/
 
-static ULONG MM_ServerFind( struct IClass *cl, Object *obj, struct MP_NETWORK_SERVERFIND *msg )
+static ULONG MM_ServerConnectAuto( struct IClass *cl, Object *obj, struct MP_NETWORK_SERVERCONNECTAUTO *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
-struct ServerEntry *se = msg->ServerEntry;
-struct Server *s;
+struct ServerEntry *se;
+struct Server      *s;
+Object *serverlist;
+ULONG i;
 
-	for( s = (APTR) mccdata->mcc_ServerList.lh_Head ; s->s_Succ ; s = s->s_Succ ) {
-		if( s->s_Port == se->se_Port ) { /* different port -> different server */
-			if( !Stricmp( (CONST_STRPTR) s->s_Address, (CONST_STRPTR) se->se_Address ) ) {
-				return( (IPTR) s );
+	serverlist = (APTR) LocalReadConfig( OID_SVR_LIST );
+
+	for( i = 0 ; ; i++ ) {
+		se = NULL;
+
+		DoMethod( serverlist, MUIM_NList_GetEntry, i, &se );
+		if( se ) {
+			if( ( se->se_Flags & SERVERENTRYF_AUTOCONNECT ) ) {
+				if( ( s = (APTR) DoMethod( obj, MM_NETWORK_SERVERALLOC, se ) ) ) {
+					debug("connecting to '%s'\n", s->s_Name );
+					DoMethod( obj, MM_NETWORK_SERVERCONNECT, s );
+				}
 			}
+		} else {
+			break;
 		}
 	}
 	return( 0 );
@@ -246,7 +293,7 @@ char *result;
 			result = (char *) DoMethod( obj, MM_NETWORK_LOGNOTECREATE, LOGTYPE_ERROR, "%s: gethostbyname() %s.", s->s_Address, LGS( MSG_DCC_FAILED ) );
 
 			if( ( host = gethostbyname ( (APTR) s->s_Address ) ) ) { // get the host info
-
+				debug("got host %08lx\n", host->h_addr );
 				memset( &( s->s_ServerSocket ), 0, sizeof( s->s_ServerSocket ) );
 				s->s_ServerSocket.sin_family = AF_INET;
 				s->s_ServerSocket.sin_port   = htons( s->s_Port );
@@ -283,9 +330,9 @@ char *result;
 					s->ident_a_socket = -1;
 	
 					if( s->ident_listen_socket == -1 )
-						debug("unable to create listening socket\nerror number:%li\n", Errno());
+						debug("unable to create listening socket\nerror number:%ld\n", Errno());
 					else
-						debug("dcc listen socket created, number: %li\n", s->ident_listen_socket );
+						debug("dcc listen socket created, number: %ld\n", s->ident_listen_socket );
 
 					if( mccdata->mcc_FDMax < s->ident_listen_socket ) {
 						mccdata->mcc_FDMax = s->ident_listen_socket;
@@ -303,24 +350,25 @@ char *result;
 						debug("unable to reuse port\n");
 
 					if( bind( s->ident_listen_socket, (struct sockaddr *) &s->ident_test, sizeof( s->ident_test ) ) == -1 )
-						debug("unable to bind address to socket, error number:%li\n", Errno() );
+						debug("unable to bind address to socket, error number: %ld\n", Errno() );
 
 					if( IoctlSocket( s->ident_listen_socket, FIONBIO, (char*) &yes ) < 0 )
-						debug("unable to change non-blocking I/O option for socket, error number:%li\n", Errno() );
-
+						debug("unable to change non-blocking I/O option for socket, error number:%ld\n", Errno() );
+debug("fd set\n");
 					FD_SET( s->ident_listen_socket, &mccdata->mcc_ReadMaster );
 
+debug("listen\n");
 					listen( (int) s->ident_listen_socket, (int) 5 );
 				}   // END of IDENTD setup
 
 				long i = 1;
-
+				long cres;
+debug("ioctl\n");
 				IoctlSocket( s->s_a_socket, FIONBIO, (char*) &i );
+debug("connect\n");
 
-
-
-				connect( s->s_a_socket, (struct sockaddr*) &s->s_ServerSocket, sizeof( struct sockaddr ) );
-
+				cres = connect( s->s_a_socket, (struct sockaddr*) &s->s_ServerSocket, sizeof( struct sockaddr ) );
+				debug("connect res %08lx\n", cres );
 			}
 			if( result ) {
 				DoMethod( obj, MM_NETWORK_LOGNOTEADD, s, result );
@@ -330,22 +378,29 @@ char *result;
 	return( 0 );
 }
 /* \\\ */
-/* /// MM_ServerDisConnect()
+/* /// MM_ServerDisconnect()
 **
 */
 
 /*************************************************************************/
 
-static ULONG MM_ServerDisConnect( struct IClass *cl, Object *obj, struct MP_NETWORK_SERVERDISCONNECT *msg )
+static ULONG MM_ServerDisconnect( struct IClass *cl, Object *obj, struct MP_NETWORK_SERVERDISCONNECT *msg )
 {
 struct Server *s = msg->Server;
 
+	debug("disconnect '%s'\n", s->s_Name );
+
 	if( SocketBase ) {
+		debug("disconnect #1 '%s'\n", s->s_Name );
 		if( s->s_a_socket != -1 ) { /* still open? */
 			CloseSocket( s->s_a_socket );
+			s->s_a_socket = -1;
 		}
+		debug("disconnect #2 '%s'\n", s->s_Name );
+
 		if( s->ident_listen_socket != -1 ) { /* still open? */
 			CloseSocket( s->ident_listen_socket );
+			s->ident_listen_socket = -1;
 		}
 	}
 	return( 0 );
@@ -362,19 +417,26 @@ static ULONG MM_WaitSelect( struct IClass *cl, Object *obj, struct MP_NETWORK_WA
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 LONG selectresult;
-fd_set read_fds  = mccdata->mcc_ReadMaster;
-fd_set write_fds = mccdata->mcc_WriteMaster;
 
-	selectresult  = WaitSelect( mccdata->mcc_FDMax + 1, &read_fds, &write_fds, NULL, NULL, msg->SignalMask );
+	mccdata->mcc_ReadFDS  = mccdata->mcc_ReadMaster;
+	mccdata->mcc_WriteFDS = mccdata->mcc_WriteMaster;
 
+debug("waitselect %08lx %08lx %08lx %08lx\n", msg->SignalMask, mccdata->mcc_FDMax, mccdata->mcc_ReadFDS, mccdata->mcc_WriteFDS ) ;
+	selectresult  = WaitSelect( mccdata->mcc_FDMax + 1, &mccdata->mcc_ReadFDS, &mccdata->mcc_WriteFDS, NULL, NULL, msg->SignalMask );
+
+debug("waitselect - done\n");
 	if( selectresult > 0 ) {
 		struct Server *s;
 		ULONG i;
 
-		DoMethod( obj, MM_NETWORK_HANDLESOCKETS );
+debug("waitselect - got data\n");
+
+//		  DoMethod( obj, MM_NETWORK_HANDLESOCKETS );
 		//WaitSelect() sockets are are ready for reading
 		for( i = 0; i <= mccdata->mcc_FDMax; i++ ) {
-			if( FD_ISSET( i, &read_fds ) ) {
+debug("waitselect - fd %08lx\n", i);
+			if( FD_ISSET( i, &mccdata->mcc_ReadFDS ) ) {
+debug("waitselect - got read data\n", i);
 
 				for( s = (APTR) mccdata->mcc_ServerList.lh_Head ; s->s_Succ ; s = s->s_Succ ) {
 					if( ( i == s->s_a_socket ) || ( i == s->ident_a_socket ) || ( i == s->ident_listen_socket ) ) {
@@ -388,20 +450,25 @@ fd_set write_fds = mccdata->mcc_WriteMaster;
 					
 					UBYTE buffer[0x100];
 					LONG length;
-
+					debug("plan on reading\n");
 					length = recv( i, buffer, 0x100, 0 );
 					buffer[ 0x100 - 1 ] = 0x00;
 					debug("Buffer '%s'\n", buffer );
 				}
 			}
-			if( FD_ISSET( i, &write_fds ) ) {
+			if( FD_ISSET( i, &mccdata->mcc_WriteFDS ) ) {
 
 			}
 		}
 
-		debug("handle sockets\n");
+	} else {
+		debug("wait select failed -> using normal wait to keep application alive\n");
+		*((ULONG*) msg->SignalMask ) = Wait( *((ULONG*) msg->SignalMask ) );
 	}
-	return( *((ULONG*)msg->SignalMask ) );
+
+	debug("wait select returning\n");
+	
+	return( selectresult );
 }
 /* \\\ */
 
@@ -458,11 +525,17 @@ static ULONG MM_ChannelFree( struct IClass *cl, Object *obj, struct MP_NETWORK_C
 {
 struct Channel      *c  = msg->Channel;
 
+	debug("channel free #1 '%s'\n", c->c_Name );
+
 	if( c ) {
 		if( c->c_ChatWindow ) {
+	debug("channel free #2 '%s'\n", c->c_Name );
 			DoMethod( c->c_ChatWindow, MM_WINDOWCHAT_CHANNELREMOVE, c );
+	debug("channel free #3 '%s'\n", c->c_Name );
 		}
+	debug("channel free #4 '%s'\n", c->c_Name );
 		Remove( (struct Node *) c );
+	debug("channel free #5 '%s'\n", c->c_Name );
 		FreeVec( c );
 	}
 	return( 0 );
@@ -492,7 +565,8 @@ DISPATCHER(MCC_Network_Dispatcher)
 		case MM_NETWORK_SERVERALLOC        : return( MM_ServerAlloc      ( cl, obj, (APTR) msg ) );
 		case MM_NETWORK_SERVERFREE         : return( MM_ServerFree       ( cl, obj, (APTR) msg ) );
 		case MM_NETWORK_SERVERCONNECT      : return( MM_ServerConnect    ( cl, obj, (APTR) msg ) );
-		case MM_NETWORK_SERVERDISCONNECT   : return( MM_ServerDisConnect ( cl, obj, (APTR) msg ) );
+		case MM_NETWORK_SERVERDISCONNECT   : return( MM_ServerDisconnect ( cl, obj, (APTR) msg ) );
+		case MM_NETWORK_SERVERCONNECTAUTO  : return( MM_ServerConnectAuto( cl, obj, (APTR) msg ) );
 
 		case MM_NETWORK_CHANNELFIND        : return( MM_ChannelFind      ( cl, obj, (APTR) msg ) );
 		case MM_NETWORK_CHANNELALLOC       : return( MM_ChannelAlloc     ( cl, obj, (APTR) msg ) );

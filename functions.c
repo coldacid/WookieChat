@@ -24,8 +24,8 @@
 #include <proto/intuition.h>
 #include <proto/locale.h>
 
+#include "system.h"
 #include "locale.h"
-#include "intern.h"
 #include "version.h"
 #include "functions.h"
 
