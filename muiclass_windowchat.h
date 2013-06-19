@@ -15,6 +15,7 @@
 
 #include <exec/types.h>
 #include "muiclass.h"
+#include "muiclass_network.h"
 
 
 #define WindowChatObject NEWOBJECT( appclasses[ CLASSID_WINDOWCHAT ]->mcc_Class, NULL
@@ -27,11 +28,15 @@ enum {
 MM_WINDOWCHAT_DUMMY =  0xFED00020,
 MM_WINDOWCHAT_MENUSELECT,
 MM_WINDOWCHAT_COLORCHANGE,
+
+MM_WINDOWCHAT_CHANNELADD,
 MM_WINDOWCHAT_CHANNELREMOVE,
 /* Attributes */
 };
 
 struct MP_WINDOWCHAT_MENUSELECT { ULONG MethodID; ULONG MenuID; };
+struct MP_WINDOWCHAT_CHANNELREMOVE { ULONG MethodID; struct Channel *Channel; };
+struct MP_WINDOWCHAT_CHANNELADD    { ULONG MethodID; struct Channel *Channel; };
 
 /*************************************************************************/
 

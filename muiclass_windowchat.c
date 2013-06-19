@@ -317,6 +317,36 @@ Object *settingsobj;
 	return( 0 );
 }
 /* \\\ */
+/* /// MM_ChannelAdd()
+**
+*/
+
+/*************************************************************************/
+
+static ULONG MM_ChannelAdd( struct IClass *cl, Object *obj, struct MP_WINDOWCHAT_CHANNELADD *msg )
+{
+struct mccdata *mccdata = INST_DATA( cl, obj );
+debug("win channel add\n");
+	DoMethod( mccdata->mcc_ClassObjects[ GID_CONNECTEDLIST ], MM_CONNECTEDLIST_ADD, msg->Channel );
+
+	return( 0 );
+}
+/* \\\ */
+/* /// MM_ChannelRemove()
+**
+*/
+
+/*************************************************************************/
+
+static ULONG MM_ChannelRemove( struct IClass *cl, Object *obj, struct MP_WINDOWCHAT_CHANNELREMOVE *msg )
+{
+struct mccdata *mccdata = INST_DATA( cl, obj );
+
+	DoMethod( mccdata->mcc_ClassObjects[ GID_CONNECTEDLIST ], MM_CONNECTEDLIST_REMOVE, msg->Channel );
+
+	return( 0 );
+}
+/* \\\ */
 
 /*
 ** Dispatcher, init and dispose
@@ -340,6 +370,9 @@ DISPATCHER(MCC_WindowChat_Dispatcher)
 
 		case MM_WINDOWCHAT_MENUSELECT        : return( MM_MenuSelect    ( cl, obj, (APTR) msg ) );
 		case MM_WINDOWCHAT_COLORCHANGE       : return( MM_ColorChange   ( cl, obj, (APTR) msg ) );
+
+		case MM_WINDOWCHAT_CHANNELADD        : return( MM_ChannelAdd    ( cl, obj, (APTR) msg ) );
+		case MM_WINDOWCHAT_CHANNELREMOVE     : return( MM_ChannelRemove ( cl, obj, (APTR) msg ) );
     }
 	return( DoSuperMethodA( cl, obj, msg ) );
 

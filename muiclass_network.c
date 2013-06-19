@@ -180,8 +180,12 @@ struct ChannelEntry *ce;
 
 			/* add a server channel */
 			if( ( c = (APTR) DoMethod( obj, MM_NETWORK_CHANNELALLOC, s, s->s_Name ) ) ) {
-				c->c_Flags |= CHANNELF_SERVER;
+				c->c_Flags      |= CHANNELF_SERVER;
+				c->c_ChatWindow  = msg->WindowChat;
+				debug("now adding channel\n");
+				DoMethod( c->c_ChatWindow, MM_WINDOWCHAT_CHANNELADD, c );
 			}
+			debug("c was %08lx\n", c);
 
 			for( ce = (APTR) se->se_ChannelList.lh_Head ; ce->ce_Succ ; ce = ce->ce_Succ ) {
 				if( ( c = (APTR) DoMethod( obj, MM_NETWORK_CHANNELALLOC, s, ce->ce_Name ) ) ) {
@@ -266,8 +270,11 @@ ULONG i;
 
 		DoMethod( serverlist, MUIM_NList_GetEntry, i, &se );
 		if( se ) {
+
 			if( ( se->se_Flags & SERVERENTRYF_AUTOCONNECT ) ) {
+
 				if( ( s = (APTR) DoMethod( obj, MM_NETWORK_SERVERALLOC, se, chatwindow ) ) ) {
+
 					DoMethod( obj, MM_NETWORK_SERVERCONNECT, s );
 				}
 			}
@@ -431,22 +438,15 @@ LONG waitsignals = *((ULONG*) msg->SignalMask );
 	mccdata->mcc_ReadFDS  = mccdata->mcc_ReadMaster;
 	mccdata->mcc_WriteFDS = mccdata->mcc_WriteMaster;
 
-debug("waitselect %08lx %08lx %08lx %08lx\n", *((ULONG*)msg->SignalMask), mccdata->mcc_FDMax, mccdata->mcc_ReadFDS, mccdata->mcc_WriteFDS ) ;
 	selectresult  = WaitSelect( mccdata->mcc_FDMax + 1, &mccdata->mcc_ReadFDS, &mccdata->mcc_WriteFDS, NULL, NULL, msg->SignalMask );
 
-debug("waitselect - done\n");
 	if( selectresult > 0 ) {
 		struct Server *s;
 		ULONG i;
 
-debug("waitselect - got data\n");
-
-//		  DoMethod( obj, MM_NETWORK_HANDLESOCKETS );
-		//WaitSelect() sockets are are ready for reading
 		for( i = 0; i <= mccdata->mcc_FDMax; i++ ) {
-debug("waitselect - fd %08lx\n", i);
+
 			if( FD_ISSET( i, &mccdata->mcc_ReadFDS ) ) {
-debug("waitselect - got read data\n", i);
 
 				for( s = (APTR) mccdata->mcc_ServerList.lh_Head ; s->s_Succ ; s = s->s_Succ ) {
 					if( ( i == s->s_a_socket ) || ( i == s->ident_a_socket ) || ( i == s->ident_listen_socket ) ) {
@@ -472,12 +472,9 @@ debug("waitselect - got read data\n", i);
 		}
 
 	} else {
-		debug("wait select failed -> using normal wait to keep application alive\n");
+//		  debug("wait select failed -> using normal wait to keep application alive\n");
 		*((ULONG*) msg->SignalMask ) = Wait( waitsignals );
 	}
-
-	debug("wait select returning\n");
-	
 	return( selectresult );
 }
 /* \\\ */

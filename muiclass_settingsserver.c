@@ -208,8 +208,13 @@ ULONG i;
 
 static ULONG MM_ReadConfig( struct IClass *cl, Object *obj, struct MP_SETTINGSSERVER_READCONFIG *msg )
 {
-#if 0
 struct mccdata *mccdata = INST_DATA( cl, obj );
+
+	if( msg->ObjectID == OID_SVR_LIST ) {
+		return( (IPTR) mccdata->mcc_ClassObjects[ GID_SERVERLIST ] );
+	}
+
+#if 0
 ULONG i;
 
 	for( i = 0 ; TAB_CONFIGITEMS[ i ].GadgetID != -1 ; i++ ) {

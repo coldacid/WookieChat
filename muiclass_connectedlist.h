@@ -15,6 +15,7 @@
 
 #include <exec/types.h>
 #include "muiclass.h"
+#include "muiclass_network.h"
 
 
 #define ConnectedListObject NEWOBJECT( appclasses[ CLASSID_CONNECTEDLIST ]->mcc_Class, NULL
@@ -25,8 +26,13 @@
 
 enum {
 MM_CONNECTEDLIST_DUMMY =  0xFED00800,
+MM_CONNECTEDLIST_ADD,
+MM_CONNECTEDLIST_REMOVE,
 /* Attributes */
 };
+
+struct MP_CONNECTEDLIST_ADD    { ULONG MethodID; struct Channel *Channel; };
+struct MP_CONNECTEDLIST_REMOVE { ULONG MethodID; struct Channel *Channel; };
 
 /*************************************************************************/
 

@@ -28,6 +28,7 @@
 #include "system.h"
 #include "locale.h"
 #include "muiclass.h"
+#include "muiclass_network.h"
 #include "muiclass_connectedlist.h"
 #include "version.h"
 
@@ -53,6 +54,10 @@ struct mccdata
 };
 
 /*************************************************************************/
+
+struct Connected {
+	struct Channel *c_Channel;
+};
 
 /* /// OM_New()
 **
@@ -89,6 +94,53 @@ static ULONG OM_Dispose( struct IClass *cl, Object *obj, Msg msg )
 	return( DoSuperMethodA( cl, obj, msg ) );
 }
 /* \\\ */
+/* /// OM_Display()
+**
+*/
+
+/*************************************************************************/
+
+static ULONG OM_Display( struct IClass *cl, Object *obj, struct MUIP_NList_Display *msg )
+{
+struct Connected *c = msg->entry;
+STRPTR *array = msg->strings;
+
+	if( ( c = msg->entry ) ) {
+		*array = (STRPTR) c->c_Channel->c_Name;
+	}
+	return( 0 );
+}
+/* \\\ */
+/* /// OM_Construct()
+**
+*/
+
+/*************************************************************************/
+
+static ULONG OM_Construct( struct IClass *cl, Object *obj, struct MUIP_NList_Construct *msg )
+{
+struct Connected *c;
+
+	if( ( c = AllocPooled( msg->pool, sizeof( struct Connected ) ) ) ) {
+		c->c_Channel = msg->entry;
+    }
+	return( (IPTR) c );
+}
+/* \\\ */
+/* /// OM_Destruct()
+**
+*/
+
+/*************************************************************************/
+
+static ULONG OM_Destruct( struct IClass *cl, Object *obj, struct MUIP_NList_Destruct *msg )
+{
+	if( msg->entry ) {
+		FreePooled( msg->pool, msg->entry, sizeof( struct Connected ) );
+    }
+	return( 0 );
+}
+/* \\\ */
 /* /// OM_Set()
 **
 */
@@ -112,6 +164,70 @@ struct TagItem *tstate;
 }
 /* \\\ */
 
+/* /// MM_Remove()
+**
+*/
+
+/*************************************************************************/
+
+static ULONG MM_Remove( struct IClass *cl, Object *obj, struct MP_CONNECTEDLIST_REMOVE *msg )
+{
+struct Connected *c;
+ULONG i;
+
+//	  DoMethod( mccdata->mcc_ClassObjects[ GID_CONNECTEDBUTTONS ], MM_CONNECTEDBUTTONS_REMOVE, msg->Channel );
+
+	for( i = 0 ;  ; i++ ) {
+		c = NULL;
+		DoMethod( obj, MUIM_NList_GetEntry, i, &c );
+		if( c ) {
+			if( c->c_Channel == msg->Channel ) {
+				DoMethod( obj, MUIM_NList_Remove, i );
+				break;
+			}
+		} else {
+			break;
+		}
+	}
+	return( 0 );
+}
+/* \\\ */
+/* /// MM_Add()
+**
+*/
+
+/*************************************************************************/
+
+static ULONG MM_Add( struct IClass *cl, Object *obj, struct MP_CONNECTEDLIST_ADD *msg )
+{
+struct Connected *c;
+ULONG i;
+
+debug("list channel add\n");
+
+	/* only add, if not already in list */
+	for( i = 0 ;  ; i++ ) {
+		c = NULL;
+		DoMethod( obj, MUIM_NList_GetEntry, i, &c );
+		if( c ) {
+			if( c->c_Channel == msg->Channel ) {
+				return( 0 );
+			}
+		} else {
+			break;
+		}
+	}
+
+debug("list channel adding\n");
+
+//	  DoMethod( mccdata->mcc_ClassObjects[ GID_CONNECTEDBUTTONS ], MM_CONNECTEDBUTTONS_ADD, msg->Channel );
+
+	DoMethod( obj, MUIM_NList_InsertSingle, msg->Channel, MUIV_NList_Insert_Bottom );
+
+	return( 0 );
+}
+/* \\\ */
+
 /*
 ** Dispatcher, init and dispose
 */
@@ -128,11 +244,14 @@ DISPATCHER(MCC_ConnectedList_Dispatcher)
     {
 		case OM_NEW                          : return( OM_New                           ( cl, obj, (APTR) msg ) );
 		case OM_DISPOSE                      : return( OM_Dispose                       ( cl, obj, (APTR) msg ) );
-
 		case OM_SET                          : return( OM_Set                           ( cl, obj, (APTR) msg ) );
 
-/* application specific methods */
+		case MUIM_NList_Display              : return( OM_Display                       ( cl, obj, (APTR) msg ) );
+		case MUIM_NList_Destruct             : return( OM_Destruct                      ( cl, obj, (APTR) msg ) );
+		case MUIM_NList_Construct            : return( OM_Construct                     ( cl, obj, (APTR) msg ) );
 
+		case MM_CONNECTEDLIST_ADD            : return( MM_Add                           ( cl, obj, (APTR) msg ) );
+		case MM_CONNECTEDLIST_REMOVE         : return( MM_Remove                        ( cl, obj, (APTR) msg ) );
     }
 	return( DoSuperMethodA( cl, obj, msg ) );
 
