@@ -25,11 +25,8 @@
 
 enum {
 MM_CHATLOG_DUMMY =  0xFED00320,
-MM_CHATLOG_MESSAGERECEIVED,
 /* Attributes */
 };
-
-struct MP_CHATLOG_MESSAGERECEIVED { ULONG MethodID; struct Channel *Channel; char *Text; ULONG Flags; };
 
 /*************************************************************************/
 

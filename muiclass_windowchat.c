@@ -365,7 +365,7 @@ struct ChatChannel *cc;
 		}
 	}
 	if( c ) {
-		DoMethod( mccdata->mcc_ClassObjects[ GID_CHATCHANNELLIST ], MM_CHATCHANNELLIST_MESSAGERECEIVED, c, msg->Message, msg->Flags );
+		DoMethod( mccdata->mcc_ClassObjects[ GID_CHATCHANNELLIST ], MM_CHATCHANNELLIST_MESSAGERECEIVED, c, msg->ChatLogEntry, msg->Flags );
 	}
 	return( 0 );
 }

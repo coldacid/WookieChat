@@ -53,8 +53,10 @@ struct mccdata
 	int                    mcc_FDMax;            // maximum file descriptor number
 	fd_set                 mcc_ReadFDS;          // master file descriptor list
 	fd_set                 mcc_WriteFDS;         // master file descriptor list
-
 };
+
+#define INVALID_SOCKET -1
+#define SOCKET_ERROR   -1
 
 /* /// OM_New()
 **
@@ -182,14 +184,14 @@ struct ChannelEntry *ce;
 			/* add a server channel */
 			if( ( c = (APTR) DoMethod( obj, MM_NETWORK_CHANNELALLOC, s, s->s_Name ) ) ) {
 				c->c_Flags      |= CHANNELF_SERVER;
-				c->c_ChatWindow  = msg->WindowChat;
-				DoMethod( c->c_ChatWindow, MM_WINDOWCHAT_CHANNELADD, c );
+				c->c_WindowChat  = msg->WindowChat;
+				DoMethod( c->c_WindowChat, MM_WINDOWCHAT_CHANNELADD, c );
 			}
 
 			for( ce = (APTR) se->se_ChannelList.lh_Head ; ce->ce_Succ ; ce = ce->ce_Succ ) {
 				if( ( c = (APTR) DoMethod( obj, MM_NETWORK_CHANNELALLOC, s, ce->ce_Name ) ) ) {
 					strcpy( c->c_Password, ce->ce_Password );
-					c->c_ChatWindow = msg->WindowChat;
+					c->c_WindowChat = msg->WindowChat;
 				}
 			}
 			for( ne = (APTR) se->se_ChannelList.lh_Head ; ne->ne_Succ ; ne = ne->ne_Succ ) {
@@ -233,6 +235,7 @@ struct Channel      *c;
 		/* free structure */
 		FreeVec( n );
 	}
+
 	/* remove from list */
 	Remove( (struct Node *) s );
 	/* free structure */
@@ -282,9 +285,6 @@ ULONG i;
 	return( 0 );
 }
 /* \\\ */
-#define INVALID_SOCKET -1
-#define SOCKET_ERROR   -1
-
 /* /// MM_ServerSocketInit()
 **
 */
@@ -377,11 +377,13 @@ struct Server *s;
 			CloseSocket( s->s_IdentSocket );
 			s->s_IdentSocket = -1;
 		}
-		s->s_State = SVRSTATE_NOTCONNECTED;
+		s->s_State        = SVRSTATE_NOTCONNECTED;
+		s->s_BufferFilled = 0;
 	}
 	return( 0 );
 }
 /* \\\ */
+
 /* /// MM_ServerConnect()
 **
 */
@@ -459,6 +461,36 @@ struct Server *s = msg->Server;
 	return( 0 );
 }
 /* \\\ */
+
+/* /// MM_ServerMessageReceived()
+**
+*/
+
+static ULONG MM_ServerMessageReceived( struct IClass *cl, Object *obj, struct MP_NETWORK_SERVERMESSAGERECEIVED *msg )
+{
+//struct mccdata *mccdata = INST_DATA( cl, obj );
+struct Server  *s = msg->Server;
+struct Channel *c;
+
+	/* first we need to find out the type of message */
+
+	for( c = (APTR) s->s_ChannelList.lh_Head ; c->c_Succ ; c = c->c_Succ ) {
+		break;
+		DoMethod( c->c_WindowChat, MM_WINDOWCHAT_MESSAGERECEIVED, c, msg->Message, 0 );
+	}
+
+
+
+	if( c->c_Succ ) {
+		struct ChatLogEntry *cle;
+		
+		if( ( cle = (APTR) DoMethod( obj, MM_NETWORK_CHATLOGENTRYALLOC, c, msg->Message ) ) ) {
+			DoMethod( c->c_WindowChat, MM_WINDOWCHAT_MESSAGERECEIVED, c, cle, 0 );
+		}
+	}
+	return( 0 );
+}
+/* \\\ */
 /* /// MM_ServerSendData()
 **
 */
@@ -480,7 +512,6 @@ ULONG result;
 	return( result );
 }
 /* \\\ */
-
 /* /// MM_ServerReceiveData()
 **
 */
@@ -507,6 +538,7 @@ LONG bytes;
 	return(0);
 }
 /* \\\ */
+
 /* /// MM_WaitSelect()
 **
 */
@@ -538,27 +570,35 @@ LONG waitsignals = *((ULONG*) msg->SignalMask );
 					}
 				}
 				if( s->s_Succ ) {
-					UBYTE buffer[0x100];
-					LONG length;
-					debug("plan on reading\n");
-					memset( &buffer, 0, 0x100 );
+					LONG length, maxread;
+					maxread = SERVERBUFFER_SIZEOF - s->s_BufferFilled;
+					debug("maxread is %ld\n", maxread );
+					if( maxread < 0 ) {
+						s->s_BufferFilled = 0;
+						maxread           = SERVERBUFFER_SIZEOF;
+						debug("something is wrong here\n");
+					}
 
-					length = recv( s->s_ServerSocket, buffer, 0x100, 0 );
-					debug("errno %ld\n", Errno() );
-					if( !length || (length == -1 && Errno() == 32) ) {
-						if (FD_ISSET( s->s_ServerSocket, &mccdata->mcc_ReadMaster))
-							FD_CLR( s->s_ServerSocket, &mccdata->mcc_ReadMaster);
-					}
+					length  = recv( s->s_ServerSocket, (UBYTE*) &s->s_Buffer[ s->s_BufferFilled ], maxread, 0 );
+
 					if( length > 0 ) {
-						buffer[ 0x100 - 1 ] = 0x00;
-						debug("Buffer %256lh\n", buffer );
+						s->s_BufferFilled += length;
+						s->s_Buffer[ s->s_BufferFilled ] = 0x00;
 					}
-					if( !length ) {
-						if (FD_ISSET( s->s_ServerSocket, &mccdata->mcc_WriteMaster))
-							FD_CLR( s->s_ServerSocket, &mccdata->mcc_WriteMaster);
-						if (FD_ISSET( s->s_ServerSocket, &mccdata->mcc_ReadMaster))
-							FD_CLR( s->s_ServerSocket, &mccdata->mcc_ReadMaster);
+
+					if( s->s_BufferFilled ) {
+						char *tmp;
+						if( ( tmp = strchr( s->s_Buffer, 0x0d ) ) ) {
+							*tmp = 0x00;
+							DoMethod( obj, MM_NETWORK_SERVERMESSAGERECEIVED, s, s->s_Buffer );
+							CopyMem( &s->s_Buffer[ s->s_BufferFilled ], s->s_Buffer, SERVERBUFFER_SIZEOF - s->s_BufferFilled );
+							s->s_BufferFilled = 0;
+						}
 					}
+					
+					//if (FD_ISSET( s->s_ServerSocket, &mccdata->mcc_ReadMaster)) {
+						//FD_CLR( s->s_ServerSocket, &mccdata->mcc_ReadMaster);
+					//}
 				}
 			}
 			if( FD_ISSET( fd, &mccdata->mcc_WriteFDS ) ) {
@@ -629,13 +669,60 @@ struct Channel      *c;
 static ULONG MM_ChannelFree( struct IClass *cl, Object *obj, struct MP_NETWORK_CHANNELFREE *msg )
 {
 struct Channel      *c  = msg->Channel;
+struct ChatLogEntry *cle;
 
 	if( c ) {
-		if( c->c_ChatWindow ) {
-			DoMethod( c->c_ChatWindow, MM_WINDOWCHAT_CHANNELREMOVE, c );
+		if( c->c_WindowChat ) {
+			DoMethod( c->c_WindowChat, MM_WINDOWCHAT_CHANNELREMOVE, c );
+		}
+		/* remove all chat log entries */
+		while( ( cle = (APTR) c->c_ChatLog.lh_Head )->cle_Succ ) {
+			DoMethod( obj, MM_NETWORK_CHATLOGENTRYFREE, c, cle );
 		}
 		Remove( (struct Node *) c );
 		FreeVec( c );
+	}
+	return( 0 );
+}
+/* \\\ */
+
+/* /// MM_ChatLogEntryAlloc()
+**
+*/
+
+/*************************************************************************/
+
+static ULONG MM_ChatLogEntryAlloc( struct IClass *cl, Object *obj, struct MP_NETWORK_CHATLOGENTRYALLOC *msg )
+{
+struct ChatLogEntry *cle;
+
+	if( ( cle = AllocVec( sizeof( struct ChatLogEntry ), MEMF_ANY ) ) ) {
+		AddTail( &msg->Channel->c_ChatLog, (struct Node *) cle );
+		if( ( cle->cle_Message = AllocVec( strlen( msg->Message ) + 1, MEMF_ANY ) ) ) {
+			strcpy( cle->cle_Message, msg->Message );
+		}
+	}
+	return( (IPTR) cle );
+}
+/* \\\ */
+/* /// MM_ChatLogEntryFree()
+**
+*/
+
+/*************************************************************************/
+
+static ULONG MM_ChatLogEntryFree( struct IClass *cl, Object *obj, struct MP_NETWORK_CHATLOGENTRYFREE *msg )
+{
+struct ChatLogEntry *cle;
+
+	if( ( cle = msg->ChatLogEntry ) ) {
+		if( cle->cle_Message ) {
+			FreeVec( cle->cle_Message );
+		}
+		if( cle->cle_Succ && cle->cle_Pred ) {
+			Remove( ( struct Node *) cle );
+		}
+		FreeVec( cle );
 	}
 	return( 0 );
 }
@@ -655,26 +742,30 @@ DISPATCHER(MCC_Network_Dispatcher)
 {
     switch (msg->MethodID)
     {
-		case OM_NEW                        : return( OM_New              ( cl, obj, (APTR) msg ) );
-		case OM_DISPOSE                    : return( OM_Dispose          ( cl, obj, (APTR) msg ) );
-		case OM_SET                        : return( OM_Set              ( cl, obj, (APTR) msg ) );
-		case MM_NETWORK_WAITSELECT         : return( MM_WaitSelect       ( cl, obj, (APTR) msg ) );
+		case OM_NEW                             : return( OM_New                    ( cl, obj, (APTR) msg ) );
+		case OM_DISPOSE                         : return( OM_Dispose                ( cl, obj, (APTR) msg ) );
+		case OM_SET                             : return( OM_Set                    ( cl, obj, (APTR) msg ) );
+		case MM_NETWORK_WAITSELECT              : return( MM_WaitSelect             ( cl, obj, (APTR) msg ) );
+		case MM_NETWORK_SERVERMESSAGERECEIVED   : return( MM_ServerMessageReceived  ( cl, obj, (APTR) msg ) );
 
-		case MM_NETWORK_SERVERSOCKETINIT   : return( MM_ServerSocketInit ( cl, obj, (APTR) msg ) );
-		case MM_NETWORK_SERVERSOCKETCLOSE  : return( MM_ServerSocketClose( cl, obj, (APTR) msg ) );
+		case MM_NETWORK_SERVERSOCKETINIT        : return( MM_ServerSocketInit       ( cl, obj, (APTR) msg ) );
+		case MM_NETWORK_SERVERSOCKETCLOSE       : return( MM_ServerSocketClose      ( cl, obj, (APTR) msg ) );
 
-		case MM_NETWORK_SERVERFIND         : return( MM_ServerFind       ( cl, obj, (APTR) msg ) );
-		case MM_NETWORK_SERVERALLOC        : return( MM_ServerAlloc      ( cl, obj, (APTR) msg ) );
-		case MM_NETWORK_SERVERFREE         : return( MM_ServerFree       ( cl, obj, (APTR) msg ) );
-		case MM_NETWORK_SERVERCONNECT      : return( MM_ServerConnect    ( cl, obj, (APTR) msg ) );
-		case MM_NETWORK_SERVERDISCONNECT   : return( MM_ServerDisconnect ( cl, obj, (APTR) msg ) );
-		case MM_NETWORK_SERVERCONNECTAUTO  : return( MM_ServerConnectAuto( cl, obj, (APTR) msg ) );
-		case MM_NETWORK_SERVERRECEIVEDATA  : return( MM_ServerReceiveData( cl, obj, (APTR) msg ) );
-		case MM_NETWORK_SERVERSENDDATA     : return( MM_ServerSendData   ( cl, obj, (APTR) msg ) );
+		case MM_NETWORK_SERVERFIND              : return( MM_ServerFind             ( cl, obj, (APTR) msg ) );
+		case MM_NETWORK_SERVERALLOC             : return( MM_ServerAlloc            ( cl, obj, (APTR) msg ) );
+		case MM_NETWORK_SERVERFREE              : return( MM_ServerFree             ( cl, obj, (APTR) msg ) );
+		case MM_NETWORK_SERVERCONNECT           : return( MM_ServerConnect          ( cl, obj, (APTR) msg ) );
+		case MM_NETWORK_SERVERDISCONNECT        : return( MM_ServerDisconnect       ( cl, obj, (APTR) msg ) );
+		case MM_NETWORK_SERVERCONNECTAUTO       : return( MM_ServerConnectAuto      ( cl, obj, (APTR) msg ) );
+		case MM_NETWORK_SERVERRECEIVEDATA       : return( MM_ServerReceiveData      ( cl, obj, (APTR) msg ) );
+		case MM_NETWORK_SERVERSENDDATA          : return( MM_ServerSendData         ( cl, obj, (APTR) msg ) );
 
-		case MM_NETWORK_CHANNELFIND        : return( MM_ChannelFind      ( cl, obj, (APTR) msg ) );
-		case MM_NETWORK_CHANNELALLOC       : return( MM_ChannelAlloc     ( cl, obj, (APTR) msg ) );
-		case MM_NETWORK_CHANNELFREE        : return( MM_ChannelFree      ( cl, obj, (APTR) msg ) );
+		case MM_NETWORK_CHANNELFIND             : return( MM_ChannelFind            ( cl, obj, (APTR) msg ) );
+		case MM_NETWORK_CHANNELALLOC            : return( MM_ChannelAlloc           ( cl, obj, (APTR) msg ) );
+		case MM_NETWORK_CHANNELFREE             : return( MM_ChannelFree            ( cl, obj, (APTR) msg ) );
+
+		case MM_NETWORK_CHATLOGENTRYALLOC       : return( MM_ChatLogEntryAlloc      ( cl, obj, (APTR) msg ) );
+		case MM_NETWORK_CHATLOGENTRYFREE        : return( MM_ChatLogEntryFree       ( cl, obj, (APTR) msg ) );
     }
 	return( DoSuperMethodA( cl, obj, msg ) );
 

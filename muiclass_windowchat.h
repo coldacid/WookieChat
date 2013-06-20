@@ -37,9 +37,9 @@ MM_WINDOWCHAT_CHANNELREMOVE,
 MA_WINDOWCHAT_OBJECTNETWORK,
 };
 
-struct MP_WINDOWCHAT_MENUSELECT { ULONG MethodID; ULONG MenuID; };
+struct MP_WINDOWCHAT_MENUSELECT      { ULONG MethodID; ULONG MenuID; };
 
-struct MP_WINDOWCHAT_MESSAGERECEIVED { ULONG MethodID; struct Channel *Channel; char *Message; ULONG Flags; };
+struct MP_WINDOWCHAT_MESSAGERECEIVED { ULONG MethodID; struct Channel *Channel; struct ChatLogEntry *ChatLogEntry; ULONG Flags; };
 struct MP_WINDOWCHAT_MESSAGEENTERED  { ULONG MethodID; };
 struct MP_WINDOWCHAT_CHANNELREMOVE   { ULONG MethodID; struct Channel *Channel; };
 struct MP_WINDOWCHAT_CHANNELADD      { ULONG MethodID; struct Channel *Channel; };

@@ -28,6 +28,7 @@
 #include "locale.h"
 #include "muiclass.h"
 #include "muiclass_chatlog.h"
+#include "muiclass_network.h"
 #include "version.h"
 
 /*************************************************************************/
@@ -89,26 +90,22 @@ static ULONG OM_Dispose( struct IClass *cl, Object *obj, Msg msg )
 	return( DoSuperMethodA( cl, obj, msg ) );
 }
 /* \\\ */
-/* /// OM_Set()
+
+/* /// OM_Display()
 **
 */
 
 /*************************************************************************/
 
-static ULONG OM_Set( struct IClass *cl, Object *obj, struct opSet *msg )
+static ULONG OM_Display( struct IClass *cl, Object *obj, struct MUIP_NList_Display *msg )
 {
-#if 0
-struct mccdata *mccdata = INST_DATA( cl, obj );
-struct TagItem *tag;
-struct TagItem *tstate;
+struct ChatLogEntry *cle;
+STRPTR *array = msg->strings;
 
-	for( tstate = msg->ops_AttrList ; ( tag = NextTagItem( &tstate ) ) ; ) {
-		ULONG tidata = tag->ti_Data;
-        switch( tag->ti_Tag ) {
-		}
-    }
-#endif
-	return( DoSuperMethodA( cl, obj,(Msg) msg ) );
+	if( ( cle = msg->entry ) ) {
+		*array = (STRPTR) cle->cle_Message;
+	}
+	return( 0 );
 }
 /* \\\ */
 
@@ -126,13 +123,9 @@ DISPATCHER(MCC_ChatLog_Dispatcher)
 {
     switch (msg->MethodID)
     {
-		case OM_NEW                          : return( OM_New                           ( cl, obj, (APTR) msg ) );
-		case OM_DISPOSE                      : return( OM_Dispose                       ( cl, obj, (APTR) msg ) );
-
-		case OM_SET                          : return( OM_Set                           ( cl, obj, (APTR) msg ) );
-
-/* application specific methods */
-
+		case OM_NEW                          : return( OM_New        ( cl, obj, (APTR) msg ) );
+		case OM_DISPOSE                      : return( OM_Dispose    ( cl, obj, (APTR) msg ) );
+		case MUIM_NList_Display              : return( OM_Display    ( cl, obj, (APTR) msg ) );
     }
 	return( DoSuperMethodA( cl, obj, msg ) );
 

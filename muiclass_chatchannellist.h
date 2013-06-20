@@ -36,8 +36,7 @@ MM_CHATCHANNELLIST_OBJECTCHATUSERLIST,
 
 struct MP_CHATCHANNELLIST_ADD             { ULONG MethodID; struct Channel *Channel; };
 struct MP_CHATCHANNELLIST_REMOVE          { ULONG MethodID; struct Channel *Channel; };
-
-struct MP_CHATCHANNELLIST_MESSAGERECEIVED { ULONG MethodID; struct Channel *Channel; char *Text; ULONG Flags; };
+struct MP_CHATCHANNELLIST_MESSAGERECEIVED { ULONG MethodID; struct Channel *Channel; struct ChatLogEntry *ChatLogEntry; ULONG Flags; };
 
 /*************************************************************************/
 

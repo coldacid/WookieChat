@@ -94,7 +94,7 @@ static ULONG OM_Dispose( struct IClass *cl, Object *obj, Msg msg )
 
 static ULONG OM_Display( struct IClass *cl, Object *obj, struct MUIP_NList_Display *msg )
 {
-struct ChatChannel *cc = msg->entry;
+struct ChatChannel *cc;
 STRPTR *array = msg->strings;
 
 	if( ( cc = msg->entry ) ) {
@@ -232,9 +232,11 @@ debug("list channel adding\n");
 
 static ULONG MM_MessageReceived( struct IClass *cl, Object *obj, struct MP_CHATCHANNELLIST_MESSAGERECEIVED *msg )
 {
-//struct Connected *co;
+struct mccdata *mccdata = INST_DATA( cl, obj );
 
-//	  DoMethod( obj, MUIM_NList_InsertSingle, msg->Channel, MUIV_NList_Insert_Bottom );
+	debug("message received in window '%s'\n", msg->ChatLogEntry->cle_Message );
+
+	DoMethod( mccdata->mcc_ClassObjects[ GID_CHATLOG ], MUIM_NList_InsertSingle, msg->ChatLogEntry, MUIV_NList_Insert_Bottom );
 
 	return( 0 );
 }
