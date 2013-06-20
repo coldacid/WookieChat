@@ -31,19 +31,18 @@ SOURCES  += version.c                   \
 			functions.c                 \
 			muiclass.c                  \
 			muiclass_aliaslist.c        \
-			muiclass_audio.c            \
 			muiclass_application.c      \
+			muiclass_audio.c            \
 			muiclass_buttonlist.c       \
-			muiclass_channel.c          \
 			muiclass_channellist.c      \
-			muiclass_connectedlist.c    \
+			muiclass_chatchannellist.c  \
+			muiclass_chatlog.c          \
+			muiclass_chatuserlist.c     \
 			muiclass_eventlist.c        \
 			muiclass_ignorelist.c       \
 			muiclass_network.c          \
 			muiclass_nicklist.c         \
-			muiclass_userlist.c         \
 			muiclass_serverlist.c       \
-			muiclass_urllist.c          \
 			muiclass_settingsalias.c    \
 			muiclass_settingsbutton.c   \
 			muiclass_settingscolor.c    \
@@ -52,11 +51,12 @@ SOURCES  += version.c                   \
 			muiclass_settingsgeneral.c  \
 			muiclass_settingsgui.c      \
 			muiclass_settingslog.c      \
-			muiclass_settingssound.c    \
 			muiclass_settingsserver.c   \
+			muiclass_settingssound.c    \
+			muiclass_urllist.c          \
 			muiclass_windowabout.c      \
-			muiclass_windowignorelist.c \
 			muiclass_windowchat.c       \
+			muiclass_windowignorelist.c \
 			muiclass_windowquit.c       \
 			muiclass_windowsettings.c   \
 			muiclass_windowurlgrabber.c \

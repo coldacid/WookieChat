@@ -8,8 +8,8 @@
     for the specific language governing rights and limitations under the License.
 */
 
-#ifndef MUICLASS_CHANNEL_H
-#define MUICLASS_CHANNEL_H 1
+#ifndef MUICLASS_CHATLOG_H
+#define MUICLASS_CHATLOG_H 1
 
 /*************************************************************************/
 
@@ -17,19 +17,19 @@
 #include "muiclass.h"
 
 
-#define ChannelObject NEWOBJECT( appclasses[ CLASSID_CHANNEL ]->mcc_Class, NULL
+#define ChatLogObject NEWOBJECT( appclasses[ CLASSID_CHATLOG ]->mcc_Class, NULL
 
 /*
 ** Methods and attributes
 */
 
 enum {
-MM_CHANNEL_DUMMY =  0xFED00320,
-MM_CHANNEL_MESSAGERECEIVED,
+MM_CHATLOG_DUMMY =  0xFED00320,
+MM_CHATLOG_MESSAGERECEIVED,
 /* Attributes */
 };
 
-struct MP_CHANNEL_MESSAGERECEIVED { ULONG MethodID; struct Channel *Channel; char *Text; ULONG Flags; };
+struct MP_CHATLOG_MESSAGERECEIVED { ULONG MethodID; struct Channel *Channel; char *Text; ULONG Flags; };
 
 /*************************************************************************/
 
@@ -37,10 +37,10 @@ struct MP_CHANNEL_MESSAGERECEIVED { ULONG MethodID; struct Channel *Channel; cha
 ** Prototypes
 */
 
-ULONG   MCC_Channel_InitClass( void );
-void    MCC_Channel_DisposeClass( void );
+ULONG   MCC_ChatLog_InitClass( void );
+void    MCC_ChatLog_DisposeClass( void );
 
 /*************************************************************************/
 
-#endif /* MUICLASS_CHANNEL_H */
+#endif /* MUICLASS_CHATLOG_H */
 

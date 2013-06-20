@@ -8,8 +8,8 @@
     for the specific language governing rights and limitations under the License.
 */
 
-#ifndef MUICLASS_CONNECTEDLIST_H
-#define MUICLASS_CONNECTEDLIST_H 1
+#ifndef MUICLASS_CHATCHANNELLIST_H
+#define MUICLASS_CHATCHANNELLIST_H 1
 
 /*************************************************************************/
 
@@ -18,21 +18,21 @@
 #include "muiclass_network.h"
 
 
-#define ConnectedListObject NEWOBJECT( appclasses[ CLASSID_CONNECTEDLIST ]->mcc_Class, NULL
+#define ChatChannelListObject NEWOBJECT( appclasses[ CLASSID_CHATCHANNELLIST ]->mcc_Class, NULL
 
 /*
 ** Methods and attributes
 */
 
 enum {
-MM_CONNECTEDLIST_DUMMY =  0xFED00800,
-MM_CONNECTEDLIST_ADD,
-MM_CONNECTEDLIST_REMOVE,
+MM_CHATCHANNELLIST_DUMMY =  0xFED00800,
+MM_CHATCHANNELLIST_ADD,
+MM_CHATCHANNELLIST_REMOVE,
 /* Attributes */
 };
 
-struct MP_CONNECTEDLIST_ADD    { ULONG MethodID; struct Channel *Channel; };
-struct MP_CONNECTEDLIST_REMOVE { ULONG MethodID; struct Channel *Channel; };
+struct MP_CHATCHANNELLIST_ADD    { ULONG MethodID; struct Channel *Channel; };
+struct MP_CHATCHANNELLIST_REMOVE { ULONG MethodID; struct Channel *Channel; };
 
 /*************************************************************************/
 
@@ -40,8 +40,8 @@ struct MP_CONNECTEDLIST_REMOVE { ULONG MethodID; struct Channel *Channel; };
 ** Prototypes
 */
 
-ULONG   MCC_ConnectedList_InitClass( void );
-void    MCC_ConnectedList_DisposeClass( void );
+ULONG   MCC_ChatChannelList_InitClass( void );
+void    MCC_ChatChannelList_DisposeClass( void );
 
 /*************************************************************************/
 
@@ -55,5 +55,5 @@ struct Connected {
 
 /*************************************************************************/
 
-#endif /* MUICLASS_CONNECTEDLIST_H */
+#endif /* MUICLASS_CHATCHANNELLIST_H */
 

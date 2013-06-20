@@ -32,9 +32,9 @@
 #include "muiclass_windowchat.h"
 #include "muiclass_windowquit.h"
 #include "muiclass_windowsettings.h"
-#include "muiclass_userlist.h"
-#include "muiclass_connectedlist.h"
-#include "muiclass_channel.h"
+#include "muiclass_chatuserlist.h"
+#include "muiclass_chatchannellist.h"
+#include "muiclass_chatlog.h"
 #include "version.h"
 
 /*************************************************************************/
@@ -82,8 +82,8 @@ GID_MODEK,
 GID_MODEKEYWORD,
 GID_MODEL,
 GID_MODELIMIT,
-GID_USERLIST,
-GID_CONNECTEDLIST,
+GID_CHATUSERLIST,
+GID_CHATCHANNELLIST,
 GID_CHATLOG,
 GID_MESSAGE,
 GID_LAST
@@ -177,10 +177,10 @@ Object *objs[ GID_LAST ];
 							Child, objs[ GID_MODELIMIT   ] = MUICreateString( MSG_MUICLASS_WINDOWCHAT_MODELIMIT_HELP-1, USERLIMIT_SIZEOF ),
 						End,
 						Child, HGroup,
-							Child, NListviewObject, MUIA_NListview_NList, objs[ GID_CHATLOG ] = ChannelObject, End, End,
+							Child, NListviewObject, MUIA_NListview_NList, objs[ GID_CHATLOG ] = ChatLogObject, End, End,
 							Child, VGroup,
-								Child, NListviewObject, MUIA_NListview_NList, objs[ GID_USERLIST      ] = UserListObject, End, MUIA_ShortHelp, LGS( MSG_MUICLASS_WINDOWCHAT_NICKLIST_HELP ), End,
-								Child, NListviewObject, MUIA_NListview_NList, objs[ GID_CONNECTEDLIST ] = ConnectedListObject, End, End,
+								Child, NListviewObject, MUIA_NListview_NList, objs[ GID_CHATUSERLIST      ] = ChatUserListObject, End, MUIA_ShortHelp, LGS( MSG_MUICLASS_WINDOWCHAT_NICKLIST_HELP ), End,
+								Child, NListviewObject, MUIA_NListview_NList, objs[ GID_CHATCHANNELLIST   ] = ChatChannelListObject, End, End,
 							End,
 						 End,
 						Child, objs[ GID_MESSAGE         ] = MUICreateString( MSG_MUICLASS_WINDOWCHAT_MESSAGE_HELP-1, MESSAGE_SIZEOF ),
@@ -310,9 +310,9 @@ struct mccdata *mccdata = INST_DATA( cl, obj );
 Object *settingsobj;
 
 	if( ( settingsobj = (Object *) MUIGetVar( _app(obj), MA_APPLICATION_WINDOWSETTINGS ) ) ) {
-		SetAttrs( mccdata->mcc_ClassObjects[ GID_CHATLOG       ], MUIA_Background, DoMethod( settingsobj, MM_WINDOWSETTINGS_READCONFIG, OID_COL_CHANNELBG ), TAG_DONE );
-		SetAttrs( mccdata->mcc_ClassObjects[ GID_USERLIST      ], MUIA_Background, DoMethod( settingsobj, MM_WINDOWSETTINGS_READCONFIG, OID_COL_NICKLISTBG ), TAG_DONE );
-		SetAttrs( mccdata->mcc_ClassObjects[ GID_CONNECTEDLIST ], MUIA_Background, DoMethod( settingsobj, MM_WINDOWSETTINGS_READCONFIG, OID_COL_TABLISTBG ), TAG_DONE );
+		SetAttrs( mccdata->mcc_ClassObjects[ GID_CHATLOG         ], MUIA_Background, DoMethod( settingsobj, MM_WINDOWSETTINGS_READCONFIG, OID_COL_CHANNELBG ), TAG_DONE );
+		SetAttrs( mccdata->mcc_ClassObjects[ GID_CHATUSERLIST    ], MUIA_Background, DoMethod( settingsobj, MM_WINDOWSETTINGS_READCONFIG, OID_COL_NICKLISTBG ), TAG_DONE );
+		SetAttrs( mccdata->mcc_ClassObjects[ GID_CHATCHANNELLIST ], MUIA_Background, DoMethod( settingsobj, MM_WINDOWSETTINGS_READCONFIG, OID_COL_TABLISTBG ), TAG_DONE );
 	}
 	return( 0 );
 }
@@ -332,13 +332,13 @@ struct Connected *co;
 
 	if( !( c = msg->Channel ) ) {
 		co = NULL;
-		DoMethod( mccdata->mcc_ClassObjects[ GID_CONNECTEDLIST ], MUIM_NList_GetEntry, 0, &c );
+		DoMethod( mccdata->mcc_ClassObjects[ GID_CHATCHANNELLIST ], MUIM_NList_GetEntry, 0, &c );
 		if( co ) {
 			c = co->co_Channel;
 		}
 	}
 	if( c ) {
-		DoMethod( mccdata->mcc_ClassObjects[ GID_CHATLOG ], MM_CHANNEL_MESSAGERECEIVED, c, msg->Message, msg->Flags );
+		DoMethod( mccdata->mcc_ClassObjects[ GID_CHATLOG ], MM_CHATLOG_MESSAGERECEIVED, c, msg->Message, msg->Flags );
 	}
 	return( 0 );
 }
@@ -353,8 +353,8 @@ struct Connected *co;
 static ULONG MM_ChannelAdd( struct IClass *cl, Object *obj, struct MP_WINDOWCHAT_CHANNELADD *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
-debug("win channel add\n");
-	DoMethod( mccdata->mcc_ClassObjects[ GID_CONNECTEDLIST ], MM_CONNECTEDLIST_ADD, msg->Channel );
+
+	DoMethod( mccdata->mcc_ClassObjects[ GID_CHATCHANNELLIST ], MM_CHATCHANNELLIST_ADD, msg->Channel );
 
 	return( 0 );
 }
@@ -369,7 +369,7 @@ static ULONG MM_ChannelRemove( struct IClass *cl, Object *obj, struct MP_WINDOWC
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 
-	DoMethod( mccdata->mcc_ClassObjects[ GID_CONNECTEDLIST ], MM_CONNECTEDLIST_REMOVE, msg->Channel );
+	DoMethod( mccdata->mcc_ClassObjects[ GID_CHATCHANNELLIST ], MM_CHATCHANNELLIST_REMOVE, msg->Channel );
 
 	return( 0 );
 }

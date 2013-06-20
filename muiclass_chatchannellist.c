@@ -9,7 +9,7 @@
 */
 
 /*
-** muiclass_connectedlist.c
+** muiclass_chatchannellist.c
 */
 
 #include <libraries/mui.h>
@@ -29,7 +29,7 @@
 #include "locale.h"
 #include "muiclass.h"
 #include "muiclass_network.h"
-#include "muiclass_connectedlist.h"
+#include "muiclass_chatchannellist.h"
 #include "version.h"
 
 /*************************************************************************/
@@ -166,7 +166,7 @@ struct TagItem *tstate;
 
 /*************************************************************************/
 
-static ULONG MM_Remove( struct IClass *cl, Object *obj, struct MP_CONNECTEDLIST_REMOVE *msg )
+static ULONG MM_Remove( struct IClass *cl, Object *obj, struct MP_CHATCHANNELLIST_REMOVE *msg )
 {
 struct Connected *co;
 ULONG i;
@@ -194,7 +194,7 @@ ULONG i;
 
 /*************************************************************************/
 
-static ULONG MM_Add( struct IClass *cl, Object *obj, struct MP_CONNECTEDLIST_ADD *msg )
+static ULONG MM_Add( struct IClass *cl, Object *obj, struct MP_CHATCHANNELLIST_ADD *msg )
 {
 struct Connected *co;
 ULONG i;
@@ -228,13 +228,13 @@ debug("list channel adding\n");
 ** Dispatcher, init and dispose
 */
 
-/* /// MCC_ConnectedList_Dispatcher()
+/* /// MCC_ChatChannelList_Dispatcher()
 **
 */
 
 /*************************************************************************/
 
-DISPATCHER(MCC_ConnectedList_Dispatcher)
+DISPATCHER(MCC_ChatChannelList_Dispatcher)
 {
     switch (msg->MethodID)
     {
@@ -246,36 +246,36 @@ DISPATCHER(MCC_ConnectedList_Dispatcher)
 		case MUIM_NList_Destruct             : return( OM_Destruct                      ( cl, obj, (APTR) msg ) );
 		case MUIM_NList_Construct            : return( OM_Construct                     ( cl, obj, (APTR) msg ) );
 
-		case MM_CONNECTEDLIST_ADD            : return( MM_Add                           ( cl, obj, (APTR) msg ) );
-		case MM_CONNECTEDLIST_REMOVE         : return( MM_Remove                        ( cl, obj, (APTR) msg ) );
+		case MM_CHATCHANNELLIST_ADD            : return( MM_Add                           ( cl, obj, (APTR) msg ) );
+		case MM_CHATCHANNELLIST_REMOVE         : return( MM_Remove                        ( cl, obj, (APTR) msg ) );
     }
 	return( DoSuperMethodA( cl, obj, msg ) );
 
 }
 /* \\\ */
-/* /// MCC_ConnectedList_InitClass()
+/* /// MCC_ChatChannelList_InitClass()
 **
 */
 
 /*************************************************************************/
 
-ULONG MCC_ConnectedList_InitClass( void )
+ULONG MCC_ChatChannelList_InitClass( void )
 {
-	appclasses[ CLASSID_CONNECTEDLIST ] = MUI_CreateCustomClass( NULL, (ClassID) MUIC_NList, NULL, sizeof( struct mccdata ) ,  (APTR) ENTRY(MCC_ConnectedList_Dispatcher) );
-	return( appclasses[ CLASSID_CONNECTEDLIST ] ? MSG_ERROR_NOERROR : MSG_ERROR_UNABLETOSETUPMUICLASS );
+	appclasses[ CLASSID_CHATCHANNELLIST ] = MUI_CreateCustomClass( NULL, (ClassID) MUIC_NList, NULL, sizeof( struct mccdata ) ,  (APTR) ENTRY(MCC_ChatChannelList_Dispatcher) );
+	return( appclasses[ CLASSID_CHATCHANNELLIST ] ? MSG_ERROR_NOERROR : MSG_ERROR_UNABLETOSETUPMUICLASS );
 }
 /* \\\ */
-/* /// MCC_ConnectedList_DisposeClass()
+/* /// MCC_ChatChannelList_DisposeClass()
 **
 */
 
 /*************************************************************************/
 
-void MCC_ConnectedList_DisposeClass( void )
+void MCC_ChatChannelList_DisposeClass( void )
 {
-	if( appclasses[ CLASSID_CONNECTEDLIST ] ) {
-		MUI_DeleteCustomClass( appclasses[ CLASSID_CONNECTEDLIST ] );
-		appclasses[ CLASSID_CONNECTEDLIST ] = NULL;
+	if( appclasses[ CLASSID_CHATCHANNELLIST ] ) {
+		MUI_DeleteCustomClass( appclasses[ CLASSID_CHATCHANNELLIST ] );
+		appclasses[ CLASSID_CHATCHANNELLIST ] = NULL;
     }
 }
 /* \\\ */

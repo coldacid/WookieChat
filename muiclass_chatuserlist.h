@@ -8,8 +8,8 @@
     for the specific language governing rights and limitations under the License.
 */
 
-#ifndef MUICLASS_USERLIST_H
-#define MUICLASS_USERLIST_H 1
+#ifndef MUICLASS_CHATUSERLIST_H
+#define MUICLASS_CHATUSERLIST_H 1
 
 /*************************************************************************/
 
@@ -17,14 +17,14 @@
 #include "muiclass.h"
 
 
-#define UserListObject NEWOBJECT( appclasses[ CLASSID_USERLIST ]->mcc_Class, NULL
+#define ChatUserListObject NEWOBJECT( appclasses[ CLASSID_CHATUSERLIST ]->mcc_Class, NULL
 
 /*
 ** Methods and attributes
 */
 
 enum {
-MM_USERLIST_DUMMY =  0xFED00700,
+MM_CHATUSERLIST_DUMMY =  0xFED00700,
 /* Attributes */
 };
 
@@ -34,10 +34,10 @@ MM_USERLIST_DUMMY =  0xFED00700,
 ** Prototypes
 */
 
-ULONG   MCC_UserList_InitClass( void );
-void    MCC_UserList_DisposeClass( void );
+ULONG   MCC_ChatUserList_InitClass( void );
+void    MCC_ChatUserList_DisposeClass( void );
 
 /*************************************************************************/
 
-#endif /* MUICLASS_USERLIST_H */
+#endif /* MUICLASS_CHATUSERLIST_H */
 

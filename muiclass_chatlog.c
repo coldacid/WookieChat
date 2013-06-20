@@ -9,7 +9,7 @@
 */
 
 /*
-** muiclass_userlist.c
+** muiclass_chatlog.c
 */
 
 #include <libraries/mui.h>
@@ -27,10 +27,11 @@
 #include "system.h"
 #include "locale.h"
 #include "muiclass.h"
-#include "muiclass_userlist.h"
+#include "muiclass_chatlog.h"
 #include "version.h"
 
 /*************************************************************************/
+
 
 /*
 ** gadgets used by this class
@@ -115,13 +116,13 @@ struct TagItem *tstate;
 ** Dispatcher, init and dispose
 */
 
-/* /// MCC_UserList_Dispatcher()
+/* /// MCC_ChatLog_Dispatcher()
 **
 */
 
 /*************************************************************************/
 
-DISPATCHER(MCC_UserList_Dispatcher)
+DISPATCHER(MCC_ChatLog_Dispatcher)
 {
     switch (msg->MethodID)
     {
@@ -137,29 +138,29 @@ DISPATCHER(MCC_UserList_Dispatcher)
 
 }
 /* \\\ */
-/* /// MCC_UserList_InitClass()
+/* /// MCC_ChatLog_InitClass()
 **
 */
 
 /*************************************************************************/
 
-ULONG MCC_UserList_InitClass( void )
+ULONG MCC_ChatLog_InitClass( void )
 {
-	appclasses[ CLASSID_USERLIST ] = MUI_CreateCustomClass( NULL, (ClassID) MUIC_NList, NULL, sizeof( struct mccdata ) ,  (APTR) ENTRY(MCC_UserList_Dispatcher) );
-	return( appclasses[ CLASSID_USERLIST ] ? MSG_ERROR_NOERROR : MSG_ERROR_UNABLETOSETUPMUICLASS );
+	appclasses[ CLASSID_CHATLOG ] = MUI_CreateCustomClass( NULL, (ClassID) MUIC_NList, NULL, sizeof( struct mccdata ) ,  (APTR) ENTRY(MCC_ChatLog_Dispatcher) );
+	return( appclasses[ CLASSID_CHATLOG ] ? MSG_ERROR_NOERROR : MSG_ERROR_UNABLETOSETUPMUICLASS );
 }
 /* \\\ */
-/* /// MCC_UserList_DisposeClass()
+/* /// MCC_ChatLog_DisposeClass()
 **
 */
 
 /*************************************************************************/
 
-void MCC_UserList_DisposeClass( void )
+void MCC_ChatLog_DisposeClass( void )
 {
-	if( appclasses[ CLASSID_USERLIST ] ) {
-		MUI_DeleteCustomClass( appclasses[ CLASSID_USERLIST ] );
-		appclasses[ CLASSID_USERLIST ] = NULL;
+	if( appclasses[ CLASSID_CHATLOG ] ) {
+		MUI_DeleteCustomClass( appclasses[ CLASSID_CHATLOG ] );
+		appclasses[ CLASSID_CHATLOG ] = NULL;
     }
 }
 /* \\\ */

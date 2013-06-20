@@ -9,7 +9,7 @@
 */
 
 /*
-** muiclass_channel.c
+** muiclass_chatuserlist.c
 */
 
 #include <libraries/mui.h>
@@ -27,11 +27,10 @@
 #include "system.h"
 #include "locale.h"
 #include "muiclass.h"
-#include "muiclass_channel.h"
+#include "muiclass_chatuserlist.h"
 #include "version.h"
 
 /*************************************************************************/
-
 
 /*
 ** gadgets used by this class
@@ -116,13 +115,13 @@ struct TagItem *tstate;
 ** Dispatcher, init and dispose
 */
 
-/* /// MCC_Channel_Dispatcher()
+/* /// MCC_ChatUserList_Dispatcher()
 **
 */
 
 /*************************************************************************/
 
-DISPATCHER(MCC_Channel_Dispatcher)
+DISPATCHER(MCC_ChatUserList_Dispatcher)
 {
     switch (msg->MethodID)
     {
@@ -138,29 +137,29 @@ DISPATCHER(MCC_Channel_Dispatcher)
 
 }
 /* \\\ */
-/* /// MCC_Channel_InitClass()
+/* /// MCC_ChatUserList_InitClass()
 **
 */
 
 /*************************************************************************/
 
-ULONG MCC_Channel_InitClass( void )
+ULONG MCC_ChatUserList_InitClass( void )
 {
-	appclasses[ CLASSID_CHANNEL ] = MUI_CreateCustomClass( NULL, (ClassID) MUIC_NList, NULL, sizeof( struct mccdata ) ,  (APTR) ENTRY(MCC_Channel_Dispatcher) );
-	return( appclasses[ CLASSID_CHANNEL ] ? MSG_ERROR_NOERROR : MSG_ERROR_UNABLETOSETUPMUICLASS );
+	appclasses[ CLASSID_CHATUSERLIST ] = MUI_CreateCustomClass( NULL, (ClassID) MUIC_NList, NULL, sizeof( struct mccdata ) ,  (APTR) ENTRY(MCC_ChatUserList_Dispatcher) );
+	return( appclasses[ CLASSID_CHATUSERLIST ] ? MSG_ERROR_NOERROR : MSG_ERROR_UNABLETOSETUPMUICLASS );
 }
 /* \\\ */
-/* /// MCC_Channel_DisposeClass()
+/* /// MCC_ChatUserList_DisposeClass()
 **
 */
 
 /*************************************************************************/
 
-void MCC_Channel_DisposeClass( void )
+void MCC_ChatUserList_DisposeClass( void )
 {
-	if( appclasses[ CLASSID_CHANNEL ] ) {
-		MUI_DeleteCustomClass( appclasses[ CLASSID_CHANNEL ] );
-		appclasses[ CLASSID_CHANNEL ] = NULL;
+	if( appclasses[ CLASSID_CHATUSERLIST ] ) {
+		MUI_DeleteCustomClass( appclasses[ CLASSID_CHATUSERLIST ] );
+		appclasses[ CLASSID_CHATUSERLIST ] = NULL;
     }
 }
 /* \\\ */
