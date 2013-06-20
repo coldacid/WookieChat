@@ -116,20 +116,20 @@ Object *objs[ GID_LAST ];
 					End,
 				End,
 				Child, HGroup,
-					Child, objs[ GID_SERVERADD      ] = MUICreateSmallButton( MSG_MUICLASS_SETTINGSSERVER_ADD_GAD ),
-					Child, objs[ GID_SERVERREMOVE   ] = MUICreateSmallButton( MSG_MUICLASS_SETTINGSSERVER_REMOVE_GAD ),
+					Child, objs[ GID_SERVERADD         ] = MUICreateSmallButton( MSG_MUICLASS_SETTINGSSERVER_ADD_GAD ),
+					Child, objs[ GID_SERVERREMOVE      ] = MUICreateSmallButton( MSG_MUICLASS_SETTINGSSERVER_REMOVE_GAD ),
 					Child, MUICreateLabel( MSG_MUICLASS_SETTINGSSERVER_NAME_GAD ),
-					Child, objs[ GID_SERVERNAME     ] = MUICreateStringFixed( MSG_MUICLASS_SETTINGSSERVER_NAME_GAD, SERVERENTRY_NAME_SIZEOF ),
+					Child, objs[ GID_SERVERNAME        ] = MUICreateStringFixed( MSG_MUICLASS_SETTINGSSERVER_NAME_GAD, SERVERENTRY_NAME_SIZEOF ),
 					Child, MUICreateLabel( MSG_MUICLASS_SETTINGSSERVER_ADDRESS_GAD ),
-					Child, objs[ GID_SERVERADDRESS  ] = MUICreateString( MSG_MUICLASS_SETTINGSSERVER_ADDRESS_GAD, SERVERENTRY_ADDRESS_SIZEOF ),
+					Child, objs[ GID_SERVERADDRESS     ] = MUICreateString( MSG_MUICLASS_SETTINGSSERVER_ADDRESS_GAD, SERVERENTRY_ADDRESS_SIZEOF ),
 				End,
 				Child, HGroup,
 					Child, MUICreateLabel( MSG_MUICLASS_SETTINGSSERVER_PORT_GAD ),
-					Child, objs[ GID_SERVERPORT     ] = MUICreateInteger( MSG_MUICLASS_SETTINGSSERVER_PORT_GAD, 5 ),
+					Child, objs[ GID_SERVERPORT        ] = MUICreateInteger( MSG_MUICLASS_SETTINGSSERVER_PORT_GAD, 5 ),
 					Child, MUICreateLabel( MSG_MUICLASS_SETTINGSSERVER_PASSWORD_GAD ),
-					Child, objs[ GID_SERVERPASSWORD ] = MUICreateString( MSG_MUICLASS_SETTINGSSERVER_PASSWORD_GAD, SERVERENTRY_PASSWORD_SIZEOF ),
+					Child, objs[ GID_SERVERPASSWORD    ] = MUICreateString( MSG_MUICLASS_SETTINGSSERVER_PASSWORD_GAD, SERVERENTRY_PASSWORD_SIZEOF ),
 					Child, MUICreateLabel( MSG_MUICLASS_SETTINGSSERVER_CHARSET_GAD ),
-					Child, objs[ GID_SERVERCHARSET ] = MUICreateString( MSG_MUICLASS_SETTINGSSERVER_CHARSET_GAD, SERVERENTRY_CHARSET_SIZEOF ),
+					Child, objs[ GID_SERVERCHARSET     ] = MUICreateString( MSG_MUICLASS_SETTINGSSERVER_CHARSET_GAD, SERVERENTRY_CHARSET_SIZEOF ),
 					Child, objs[ GID_SERVERAUTOCONNECT ] = MUICreateCheckbox( MSG_MUICLASS_SETTINGSSERVER_AUTOCONNECT_GAD, FALSE ),
 					Child, MUICreateLabelLeft( MSG_MUICLASS_SETTINGSSERVER_AUTOCONNECT_GAD ),
 					Child, HVSpace,
@@ -152,26 +152,27 @@ Object *objs[ GID_LAST ];
 
 		DoMethod( obj, MUIM_Notify, MUIA_Window_CloseRequest, TRUE, obj, 3, MUIM_Set, MUIA_Window_Open, FALSE );
 
-		DoMethod( objs[ GID_SERVERLIST      ], MUIM_Notify, MUIA_NList_Active   , MUIV_EveryTime, obj, 1, MM_SETTINGSSERVER_SERVERLISTTOGADGETS );
-		DoMethod( objs[ GID_SERVERADD       ], MUIM_Notify, MUIA_Pressed        , FALSE         , objs[ GID_SERVERLIST ], 6, MM_SERVERLIST_ADD, NULL, NULL, 6667, NULL, NULL, 0 );
-		DoMethod( objs[ GID_SERVERADD       ], MUIM_Notify, MUIA_Pressed        , FALSE         , objs[ GID_SERVERLIST ], 3, MUIM_Set, MUIA_NList_Active, MUIV_NList_Active_Bottom );
-		DoMethod( objs[ GID_SERVERREMOVE    ], MUIM_Notify, MUIA_Pressed        , FALSE         , objs[ GID_SERVERLIST ], 2, MUIM_NList_Remove, MUIV_NList_Remove_Selected );
-		DoMethod( objs[ GID_SERVERNAME      ], MUIM_Notify, MUIA_String_Contents, MUIV_EveryTime, obj, 1, MM_SETTINGSSERVER_SERVERGADGETSTOLIST );
-		DoMethod( objs[ GID_SERVERADDRESS   ], MUIM_Notify, MUIA_String_Contents, MUIV_EveryTime, obj, 1, MM_SETTINGSSERVER_SERVERGADGETSTOLIST );
-		DoMethod( objs[ GID_SERVERPORT      ], MUIM_Notify, MUIA_String_Contents, MUIV_EveryTime, obj, 1, MM_SETTINGSSERVER_SERVERGADGETSTOLIST );
-		DoMethod( objs[ GID_SERVERPASSWORD  ], MUIM_Notify, MUIA_String_Contents, MUIV_EveryTime, obj, 1, MM_SETTINGSSERVER_SERVERGADGETSTOLIST );
+		DoMethod( objs[ GID_SERVERLIST        ], MUIM_Notify, MUIA_NList_Active   , MUIV_EveryTime, obj, 1, MM_SETTINGSSERVER_SERVERLISTTOGADGETS );
+		DoMethod( objs[ GID_SERVERADD         ], MUIM_Notify, MUIA_Pressed        , FALSE         , objs[ GID_SERVERLIST ], 6, MM_SERVERLIST_ADD, NULL, NULL, 6667, NULL, NULL, 0 );
+		DoMethod( objs[ GID_SERVERADD         ], MUIM_Notify, MUIA_Pressed        , FALSE         , objs[ GID_SERVERLIST ], 3, MUIM_Set, MUIA_NList_Active, MUIV_NList_Active_Bottom );
+		DoMethod( objs[ GID_SERVERREMOVE      ], MUIM_Notify, MUIA_Pressed        , FALSE         , objs[ GID_SERVERLIST ], 2, MUIM_NList_Remove, MUIV_NList_Remove_Selected );
+		DoMethod( objs[ GID_SERVERNAME        ], MUIM_Notify, MUIA_String_Contents, MUIV_EveryTime, obj, 1, MM_SETTINGSSERVER_SERVERGADGETSTOLIST );
+		DoMethod( objs[ GID_SERVERADDRESS     ], MUIM_Notify, MUIA_String_Contents, MUIV_EveryTime, obj, 1, MM_SETTINGSSERVER_SERVERGADGETSTOLIST );
+		DoMethod( objs[ GID_SERVERPORT        ], MUIM_Notify, MUIA_String_Integer , MUIV_EveryTime, obj, 1, MM_SETTINGSSERVER_SERVERGADGETSTOLIST );
+		DoMethod( objs[ GID_SERVERPASSWORD    ], MUIM_Notify, MUIA_String_Contents, MUIV_EveryTime, obj, 1, MM_SETTINGSSERVER_SERVERGADGETSTOLIST );
+		DoMethod( objs[ GID_SERVERAUTOCONNECT ], MUIM_Notify, MUIA_Selected       , MUIV_EveryTime, obj, 1, MM_SETTINGSSERVER_SERVERGADGETSTOLIST );
 
-		DoMethod( objs[ GID_NICKLIST        ], MUIM_Notify, MUIA_NList_Active   , MUIV_EveryTime, obj, 1, MM_SETTINGSSERVER_NICKLISTTOGADGETS );
-		DoMethod( objs[ GID_NICKADD         ], MUIM_Notify, MUIA_Pressed, FALSE, obj, 1, MM_SETTINGSSERVER_NICKADD    );
-		DoMethod( objs[ GID_NICKREMOVE      ], MUIM_Notify, MUIA_Pressed, FALSE, obj, 1, MM_SETTINGSSERVER_NICKREMOVE );
-		DoMethod( objs[ GID_NICKNAME        ], MUIM_Notify, MUIA_String_Contents, MUIV_EveryTime, obj, 1, MM_SETTINGSSERVER_NICKGADGETSTOLIST );
-		DoMethod( objs[ GID_NICKPASSWORD    ], MUIM_Notify, MUIA_String_Contents, MUIV_EveryTime, obj, 1, MM_SETTINGSSERVER_NICKGADGETSTOLIST );
+		DoMethod( objs[ GID_NICKLIST          ], MUIM_Notify, MUIA_NList_Active   , MUIV_EveryTime, obj, 1, MM_SETTINGSSERVER_NICKLISTTOGADGETS );
+		DoMethod( objs[ GID_NICKADD           ], MUIM_Notify, MUIA_Pressed, FALSE, obj, 1, MM_SETTINGSSERVER_NICKADD    );
+		DoMethod( objs[ GID_NICKREMOVE        ], MUIM_Notify, MUIA_Pressed, FALSE, obj, 1, MM_SETTINGSSERVER_NICKREMOVE );
+		DoMethod( objs[ GID_NICKNAME          ], MUIM_Notify, MUIA_String_Contents, MUIV_EveryTime, obj, 1, MM_SETTINGSSERVER_NICKGADGETSTOLIST );
+		DoMethod( objs[ GID_NICKPASSWORD      ], MUIM_Notify, MUIA_String_Contents, MUIV_EveryTime, obj, 1, MM_SETTINGSSERVER_NICKGADGETSTOLIST );
 
-		DoMethod( objs[ GID_CHANNELLIST     ], MUIM_Notify, MUIA_NList_Active   , MUIV_EveryTime, obj, 1, MM_SETTINGSSERVER_CHANNELLISTTOGADGETS );
-		DoMethod( objs[ GID_CHANNELADD      ], MUIM_Notify, MUIA_Pressed, FALSE, obj, 1, MM_SETTINGSSERVER_CHANNELADD    );
-		DoMethod( objs[ GID_CHANNELREMOVE   ], MUIM_Notify, MUIA_Pressed, FALSE, obj, 1, MM_SETTINGSSERVER_CHANNELREMOVE );
-		DoMethod( objs[ GID_CHANNELNAME     ], MUIM_Notify, MUIA_String_Contents, MUIV_EveryTime, obj, 1, MM_SETTINGSSERVER_CHANNELGADGETSTOLIST );
-		DoMethod( objs[ GID_CHANNELPASSWORD ], MUIM_Notify, MUIA_String_Contents, MUIV_EveryTime, obj, 1, MM_SETTINGSSERVER_CHANNELGADGETSTOLIST );
+		DoMethod( objs[ GID_CHANNELLIST       ], MUIM_Notify, MUIA_NList_Active   , MUIV_EveryTime, obj, 1, MM_SETTINGSSERVER_CHANNELLISTTOGADGETS );
+		DoMethod( objs[ GID_CHANNELADD        ], MUIM_Notify, MUIA_Pressed, FALSE, obj, 1, MM_SETTINGSSERVER_CHANNELADD    );
+		DoMethod( objs[ GID_CHANNELREMOVE     ], MUIM_Notify, MUIA_Pressed, FALSE, obj, 1, MM_SETTINGSSERVER_CHANNELREMOVE );
+		DoMethod( objs[ GID_CHANNELNAME       ], MUIM_Notify, MUIA_String_Contents, MUIV_EveryTime, obj, 1, MM_SETTINGSSERVER_CHANNELGADGETSTOLIST );
+		DoMethod( objs[ GID_CHANNELPASSWORD   ], MUIM_Notify, MUIA_String_Contents, MUIV_EveryTime, obj, 1, MM_SETTINGSSERVER_CHANNELGADGETSTOLIST );
 
 	    DoMethod( obj, MM_SETTINGSSERVER_SERVERLISTTOGADGETS );
 
@@ -302,8 +303,8 @@ struct ServerEntry *se = NULL;
 		if( ( str = (STRPTR) MUIGetVar( mccdata->mcc_ClassObjects[ GID_SERVERCHARSET ], MUIA_String_Contents ) ) ) {
 			strcpy( (char *) se->se_Charset, (char *) str );
 		}
-		se->se_Port  = MUIGetVar( mccdata->mcc_ClassObjects[ GID_SERVERPORT ], MUIA_String_Integer );
-		se->se_Flags = MUIGetVar( mccdata->mcc_ClassObjects[ GID_SERVERAUTOCONNECT ], MUIA_Selected ) ? SERVERENTRYF_AUTOCONNECT : 0;
+		se->se_Port  =   MUIGetVar( mccdata->mcc_ClassObjects[ GID_SERVERPORT        ], MUIA_String_Integer );
+		se->se_Flags = ( MUIGetVar( mccdata->mcc_ClassObjects[ GID_SERVERAUTOCONNECT ], MUIA_Selected ) ? SERVERENTRYF_AUTOCONNECT : 0 );
 
 		DoMethod( mccdata->mcc_ClassObjects[ GID_SERVERLIST ], MUIM_NList_Redraw, MUIV_NList_Redraw_Active );
 	}

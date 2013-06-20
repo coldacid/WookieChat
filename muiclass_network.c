@@ -185,10 +185,8 @@ struct ChannelEntry *ce;
 			if( ( c = (APTR) DoMethod( obj, MM_NETWORK_CHANNELALLOC, s, s->s_Name ) ) ) {
 				c->c_Flags      |= CHANNELF_SERVER;
 				c->c_ChatWindow  = msg->WindowChat;
-				debug("now adding channel\n");
 				DoMethod( c->c_ChatWindow, MM_WINDOWCHAT_CHANNELADD, c );
 			}
-			debug("c was %08lx\n", c);
 
 			for( ce = (APTR) se->se_ChannelList.lh_Head ; ce->ce_Succ ; ce = ce->ce_Succ ) {
 				if( ( c = (APTR) DoMethod( obj, MM_NETWORK_CHANNELALLOC, s, ce->ce_Name ) ) ) {
@@ -639,17 +637,11 @@ static ULONG MM_ChannelFree( struct IClass *cl, Object *obj, struct MP_NETWORK_C
 {
 struct Channel      *c  = msg->Channel;
 
-	debug("channel free #1 '%s'\n", c->c_Name );
-
 	if( c ) {
 		if( c->c_ChatWindow ) {
-	debug("channel free #2 '%s'\n", c->c_Name );
 			DoMethod( c->c_ChatWindow, MM_WINDOWCHAT_CHANNELREMOVE, c );
-	debug("channel free #3 '%s'\n", c->c_Name );
 		}
-	debug("channel free #4 '%s'\n", c->c_Name );
 		Remove( (struct Node *) c );
-	debug("channel free #5 '%s'\n", c->c_Name );
 		FreeVec( c );
 	}
 	return( 0 );

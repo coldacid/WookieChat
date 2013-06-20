@@ -282,6 +282,8 @@ static ULONG MM_ExportListAsText( struct IClass *cl, Object *obj, struct MP_SERV
 BPTR handle;
 ULONG i;
 struct ServerEntry *se;
+struct ChannelEntry *ce;
+struct NickEntry *ne;
 
 	if( ( handle = Open( (_ub_cs) msg->Name, MODE_NEWFILE ) ) ) {
 		for( i = 0 ;  ; i++ ) {
@@ -295,18 +297,17 @@ struct ServerEntry *se;
 				args[3] = (IPTR) se->se_Password;
 				args[4] = (IPTR) se->se_Charset;
 				args[5] = (IPTR) ( ( se->se_Flags & SERVERENTRYF_AUTOCONNECT ) ? " CONNECT" : "" );
-				VPrintf( (CONST_STRPTR)  "SERVER \"%s\" ADDRESS \"%s\" PORT %ld PASSWORD \"%s\" CHARSET \"%s\"%s\n", &args );
-				#if 0
-				sprintf( buffer, "SERVER \"%s\" ADDRESS \"%s\" PORT %ld PASSWORD \"%s\" CHARSET \"%s\"%s",
-													se->se_Name,
-													se->se_Address,
-													se->se_Port,
-													se->se_Password,
-													se->se_Charset,
-													( ( se->se_Flags & SERVERENTRYF_AUTOCONNECT ) ? " CONNECT" : "" )
-													);
-				FPuts( handle, (CONST_STRPTR) buffer );
-				#endif
+				VFPrintf( handle, (CONST_STRPTR)  "SERVER \"%s\" ADDRESS \"%s\" PORT %ld PASSWORD \"%s\" CHARSET \"%s\"%s\n", &args );
+				for( ce = (APTR) se->se_ChannelList.lh_Head ; ce->ce_Succ ; ce = ce->ce_Succ ) {
+					args[0] = (IPTR) ce->ce_Name;
+					args[1] = (IPTR) ce->ce_Password;
+					VFPrintf( handle, (CONST_STRPTR)  "CHANNEL \"%s\" PASSWORD \"%s\"\n", &args );
+				}
+				for( ne = (APTR) se->se_NickList.lh_Head ; ne->ne_Succ ; ne = ne->ne_Succ ) {
+					args[0] = (IPTR) ne->ne_Name;
+					args[1] = (IPTR) ne->ne_Password;
+					VFPrintf( handle, (CONST_STRPTR)  "NICK \"%s\" PASSWORD \"%s\"\n", &args );
+				}
 			} else {
 	            break;
 			}
@@ -330,7 +331,7 @@ char *linebuffer;
 struct ServerEntry *se = NULL;
 
 	DoMethod( obj, MUIM_NList_Clear );
-
+debug("loading\n");
 	if( ( linebuffer = AllocVec( LINEBUFFER_SIZEOF, MEMF_ANY ) ) ) {
 		if( ( handle = Open( (_ub_cs) msg->Name, MODE_OLDFILE ) ) ) {
 			while( FGets( handle, (STRPTR) linebuffer, LINEBUFFER_SIZEOF - 1 ) ) {

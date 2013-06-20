@@ -9,4 +9,5 @@ NICK geit_ PASSWORD ""
 SERVER "AmigaWorld" ADDRESS "chat.AmigaWorld.Net" PORT 6667 PASSWORD "" CONNECT CHARSET=ISO-8859-1
 CHANNEL #amigaworld PASSWORD ""
 CHANNEL #amigadev   PASSWORD ""
+NICK awgeit  PASSWORD ""
 
