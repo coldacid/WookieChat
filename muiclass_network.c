@@ -160,8 +160,6 @@ struct NickEntry    *ne;
 struct Channel      *c;
 struct ChannelEntry *ce;
 
-	debug("MM_ServerAlloc()\n");
-
 	if( ( se = msg->ServerEntry ) ) {
 		if( ( s = AllocVec( sizeof( struct Server ), MEMF_ANY|MEMF_CLEAR ) ) ) {
 			NEWLIST( &s->s_ChannelList );
@@ -203,8 +201,6 @@ struct ChannelEntry *ce;
 			}
 		}
 	}
-	debug("MM_ServerAlloc() - done\n");
-
 	return( (IPTR) s );
 }
 /* \\\ */
@@ -220,8 +216,6 @@ static ULONG MM_ServerFree( struct IClass *cl, Object *obj, struct MP_NETWORK_SE
 struct Server   *s = msg->Server;
 struct Nick         *n;
 struct Channel      *c;
-
-	debug("server free '%s'\n", s->s_Name );
 
 	/* dissnnect if needed */
 
@@ -301,7 +295,6 @@ struct mccdata *mccdata = INST_DATA( cl, obj );
 struct Server *s;
 ULONG result;
 
-	debug("MM_ServerSocketInit()\n");
 	result = MSG_ERROR_NOERROR + 1; /* socket error */
 	if( ( s = msg->Server ) ) {
 

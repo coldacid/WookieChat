@@ -331,7 +331,7 @@ char *linebuffer;
 struct ServerEntry *se = NULL;
 
 	DoMethod( obj, MUIM_NList_Clear );
-debug("loading\n");
+
 	if( ( linebuffer = AllocVec( LINEBUFFER_SIZEOF, MEMF_ANY ) ) ) {
 		if( ( handle = Open( (_ub_cs) msg->Name, MODE_OLDFILE ) ) ) {
 			while( FGets( handle, (STRPTR) linebuffer, LINEBUFFER_SIZEOF - 1 ) ) {
