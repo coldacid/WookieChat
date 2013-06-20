@@ -4772,6 +4772,41 @@ Unable to open library\n'%s' version %ld!
 Unable to open library\n'%s' version %ld!
 Unable to open library\n'%s' version %ld!
 ;
+MSG_ERROR_UNABLETOCREATEMSGPORT
+Unable to create MessagePort!
+Unable to create MessagePort!
+Unable to create MessagePort!
+Unable to create MessagePort!
+Unable to create MessagePort!
+Unable to create MessagePort!
+Unable to create MessagePort!
+Unable to create MessagePort!
+Unable to create MessagePort!
+Unable to create MessagePort!
+;
+MSG_ERROR_UNABLETOCREATEIOREQUEST
+Unable to create IORequest!
+Unable to create IORequest!
+Unable to create IORequest!
+Unable to create IORequest!
+Unable to create IORequest!
+Unable to create IORequest!
+Unable to create IORequest!
+Unable to create IORequest!
+Unable to create IORequest!
+Unable to create IORequest!
+;
+MSG_ERROR_UNABLETOOPENTIMERDEVICE
+Unable to open 'timer.device'!
+Unable to open 'timer.device'!
+Unable to open 'timer.device'!
+Unable to open 'timer.device'!
+Unable to open 'timer.device'!
+Unable to open 'timer.device'!
+Unable to open 'timer.device'!
+Unable to open 'timer.device'!
+Unable to open 'timer.device'!
+Unable to open 'timer.device'!
 ;
 ; MUICLASS_APPLICATION
 ;

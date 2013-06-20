@@ -234,9 +234,7 @@ static ULONG MM_MessageReceived( struct IClass *cl, Object *obj, struct MP_CHATC
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 
-	debug("message received in window '%s'\n", msg->ChatLogEntry->cle_Message );
-
-	DoMethod( mccdata->mcc_ClassObjects[ GID_CHATLOG ], MUIM_NList_InsertSingle, msg->ChatLogEntry, MUIV_NList_Insert_Bottom );
+	DoMethod( mccdata->mcc_ClassObjects[ GID_CHATLOG ], MUIM_NList_InsertSingleWrap, msg->ChatLogEntry, MUIV_NList_Insert_Bottom, WRAPCOL0, ALIGN_LEFT );
 
 	return( 0 );
 }

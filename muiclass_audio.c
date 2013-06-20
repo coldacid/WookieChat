@@ -17,6 +17,7 @@
 #include <proto/intuition.h>
 #include <proto/utility.h>
 #include <proto/datatypes.h>
+#include <proto/dos.h>
 #include <proto/exec.h>
 #include <SDI_hook.h>
 

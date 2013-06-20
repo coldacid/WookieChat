@@ -15,6 +15,8 @@
 #include <workbench/icon.h>
 #include <workbench/startup.h>
 #include <intuition/intuition.h>
+#include <exec/ports.h>
+#include <devices/timer.h>
 
 #include <proto/icon.h>
 #include <proto/exec.h>
@@ -470,6 +472,92 @@ void SimpleReadArgsFree( struct SimpleReadArgsData *srad )
 		}
 		FreeVec( srad );
 	}
+}
+/* \\\ */
+
+/*
+** Timer Device
+*/
+
+struct Library *TimerBase;
+
+/* /// DeviceTimer_Open()
+**
+** Open timer.device and add timer handler
+*/
+
+/*************************************************************************/
+
+ULONG DeviceTimer_Open( struct Device_Timer *dt )
+{
+ULONG result;
+
+	result = MSG_ERROR_UNABLETOCREATEMSGPORT;
+	if( ( dt->MsgPort = CreateMsgPort() ) ) {
+		result = MSG_ERROR_UNABLETOCREATEIOREQUEST;
+		if( ( dt->IORequest = CreateIORequest( dt->MsgPort, sizeof( struct timerequest ) ) ) ) {
+			result = MSG_ERROR_UNABLETOOPENTIMERDEVICE;
+			if( !OpenDevice( (CONST_STRPTR) "timer.device", UNIT_MICROHZ, (struct IORequest *) dt->IORequest, 0L ) ) {
+
+				TimerBase = (APTR) dt->IORequest->tr_node.io_Device;
+
+				dt->IORequest->tr_node.io_Message.mn_Node.ln_Type = NT_REPLYMSG;
+				dt->SignalMask = ( 1<<dt->MsgPort->mp_SigBit );
+				dt->OpenCheck = 1;
+				result = MSG_ERROR_NOERROR;
+	        }
+	    }
+	}
+	return( result );
+}
+/* \\\ */
+/* /// DeviceTimer_Close()
+**
+** Close timer.device and remove timer handler
+*/
+
+/*************************************************************************/
+
+void DeviceTimer_Close( struct Device_Timer *dt )
+{
+	if( dt->OpenCheck ) {
+
+		while( !CheckIO( &dt->IORequest->tr_node) ) {
+			AbortIO( &dt->IORequest->tr_node );
+			WaitIO( &dt->IORequest->tr_node );  /* wait for outstanding Timer */
+        }
+		CloseDevice( &dt->IORequest->tr_node );
+		dt->OpenCheck = 0;
+    }
+
+	if( dt->IORequest ) {
+		DeleteIORequest( &dt->IORequest->tr_node );
+		dt->IORequest = NULL;
+    }
+
+	if( dt->MsgPort ) {
+		DeleteMsgPort( dt->MsgPort );
+		dt->MsgPort = NULL;
+    }
+}
+/* \\\ */
+/* /// DeviceTimer_SendRequest()
+**
+*/
+
+/*************************************************************************/
+
+void DeviceTimer_SendRequest( struct Device_Timer *dt )
+{
+	if( !CheckIO( &dt->IORequest->tr_node ) ) {
+		WaitIO( &dt->IORequest->tr_node );
+	}
+	dt->IORequest->tr_node.io_Command = TR_ADDREQUEST;
+
+	dt->IORequest->tr_time.tv_secs    = 1;
+	dt->IORequest->tr_time.tv_micro   = 0;
+
+	SendIO( &dt->IORequest->tr_node );
 }
 /* \\\ */
 

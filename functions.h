@@ -14,14 +14,12 @@
 /*************************************************************************/
 
 #include <exec/types.h>
+#include <exec/ports.h>
+#include <devices/timer.h>
 #include <workbench/icon.h>
 #include <workbench/startup.h>
 
 #include <string.h>
-
-#include <proto/utility.h>
-#include <proto/exec.h>
-#include <proto/dos.h>
 
 #include "system.h"
 
@@ -117,7 +115,22 @@ struct SimpleReadArgsData {
 struct SimpleReadArgsData *SimpleReadArgsParse( char *templatestring, char *parsestring );
 void                       SimpleReadArgsFree( struct SimpleReadArgsData *srad );
 
+/*
+** Timer Device
+*/
+
+struct Device_Timer {
+	struct MsgPort        *MsgPort;
+	struct timerequest    *IORequest;
+	ULONG                  SignalMask;
+	ULONG                  OpenCheck;
+};
+
+ULONG DeviceTimer_Open( struct Device_Timer *dt );
+void DeviceTimer_Close( struct Device_Timer *dt );
+void DeviceTimer_SendRequest( struct Device_Timer *dt );
+
 /*************************************************************************/
 
-#endif /* MUICLASS_H */
+#endif /* FUNCTIONS_H */
 

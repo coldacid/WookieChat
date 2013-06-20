@@ -31,8 +31,11 @@
 #include "muiclass_windowsettings.h"
 #include "muiclass_windowchat.h"
 #include "muiclass_network.h"
+#include "version.h"
 
 /*************************************************************************/
+
+static char *STR_NUL = "";
 
 enum{
 WID_SETTINGS = 0,
@@ -43,6 +46,7 @@ GID_LAST
 /*
 ** data used by this class
 */
+#define GLOBALBUFFER_SIZEOF 0x1000
 
 struct mccdata
 {
@@ -53,10 +57,13 @@ struct mccdata
 	int                    mcc_FDMax;            // maximum file descriptor number
 	fd_set                 mcc_ReadFDS;          // master file descriptor list
 	fd_set                 mcc_WriteFDS;         // master file descriptor list
+	char                   mcc_GlobalBuffer[ GLOBALBUFFER_SIZEOF ];
 };
 
 #define INVALID_SOCKET -1
 #define SOCKET_ERROR   -1
+
+/*************************************************************************/
 
 /* /// OM_New()
 **
@@ -80,7 +87,7 @@ static ULONG OM_New( struct IClass *cl, Object *obj, struct opSet *msg )
 	return( (ULONG) obj );
 }
 /* \\\ */
-/* /// OM_Destruct()
+/* /// OM_Dispose()
 **
 */
 
@@ -94,6 +101,7 @@ struct Server *s;
 	while( (s = (APTR) mccdata->mcc_ServerList.lh_Head)->s_Succ ) {
 		DoMethod( obj, MM_NETWORK_SERVERFREE, s );
 	}
+
 	return( DoSuperMethodA( cl, obj,(Msg) msg ) );
 }
 /* \\\ */
@@ -124,6 +132,111 @@ struct TagItem *tstate;
 }
 /* \\\ */
 
+/* /// MM_ServerConnectAuto()
+**
+*/
+
+/*************************************************************************/
+
+static ULONG MM_ServerConnectAuto( struct IClass *cl, Object *obj, struct MP_NETWORK_SERVERCONNECTAUTO *msg )
+{
+struct mccdata *mccdata = INST_DATA( cl, obj );
+struct ServerEntry *se;
+struct Server      *s;
+Object *serverlist, *chatwindow;
+ULONG i;
+
+	serverlist = (APTR) LocalReadConfig( OID_SVR_LIST );
+
+	if( !( chatwindow = (Object*) DoMethod( _app(obj), MM_APPLICATION_CHATFINDACTIVE ) ) ) {
+		chatwindow = (Object*) DoMethod( _app(obj), MM_APPLICATION_WINDOWNEWCHAT );
+	}
+
+	for( i = 0 ; ; i++ ) {
+		se = NULL;
+		DoMethod( serverlist, MUIM_NList_GetEntry, i, &se );
+		if( se ) {
+			if( ( se->se_Flags & SERVERENTRYF_AUTOCONNECT ) ) {
+				if( ( s = (APTR) DoMethod( obj, MM_NETWORK_SERVERALLOC, se, chatwindow ) ) ) {
+					DoMethod( obj, MM_NETWORK_SERVERCONNECT , s );
+					DoMethod( obj, MM_NETWORK_SERVERLOGIN   , s );
+					DoMethod( obj, MM_NETWORK_SERVERAUTOJOIN, s );
+				}
+			}
+		} else {
+			break;
+		}
+	}
+	return( 0 );
+}
+/* \\\ */
+
+#define COMMAND_COMPOSEBUFFER_SIZEOF 0x1000
+
+/* /// MM_ServerLogin()
+**
+*/
+
+/*************************************************************************/
+
+static ULONG MM_ServerLogin( struct IClass *cl, Object *obj, struct MP_NETWORK_SERVERLOGIN *msg )
+{
+struct Server *s = msg->Server;
+struct Nick   *n;
+char *buffer;
+ULONG i;
+
+	if( ( buffer = AllocVec( COMMAND_COMPOSEBUFFER_SIZEOF, MEMF_ANY ) ) ) {
+
+		n = (APTR) s->s_NickList.lh_Head;
+		for( i = 0 ; i <= s->s_Retries ; i++ ) {
+			n = n->n_Succ;
+			if( !n->n_Succ ) {
+				n = (APTR) s->s_NickList.lh_Head;
+			}
+		}
+		if( n->n_Succ ) {
+			sprintf( buffer, "NICK %s", n->n_Name );
+		} else {
+			sprintf( buffer, "NICK User_%ld", &i );
+		}
+		DoMethod( obj, MM_NETWORK_SERVERMESSAGESEND, s, buffer );
+
+		/* user */
+		sprintf( buffer, "USER %s 8 * : " APPLICATIONNAME, "Unconfigured" );
+		DoMethod( obj, MM_NETWORK_SERVERMESSAGESEND, s, buffer );
+
+		FreeVec( buffer );
+	}
+	return( 0 );
+}
+/* \\\ */
+/* /// MM_ServerAutoJoin()
+**
+*/
+
+/*************************************************************************/
+
+static ULONG MM_ServerAutoJoin( struct IClass *cl, Object *obj, struct MP_NETWORK_SERVERAUTOJOIN *msg )
+{
+struct Server  *s = msg->Server;
+struct Channel *c;
+char *buffer;
+
+	if( ( buffer = AllocVec( COMMAND_COMPOSEBUFFER_SIZEOF, MEMF_ANY ) ) ) {
+		for( c = (APTR) s->s_ChannelList.lh_Head ; c->c_Succ ; c = c->c_Succ ) {
+			sprintf( buffer, "JOIN %s", c->c_Name );
+			if( c->c_Password[0] ) {
+				strcat( buffer, "\n" );
+				strcat( buffer, c->c_Password );
+			}
+			DoMethod( obj, MM_NETWORK_SERVERMESSAGESEND, s, buffer );
+		}
+		FreeVec( buffer );
+	}
+	return( 0 );
+}
+/* \\\ */
 /* /// MM_ServerFind()
 **
 */
@@ -166,16 +279,21 @@ struct ChannelEntry *ce;
 		if( ( s = AllocVec( sizeof( struct Server ), MEMF_ANY|MEMF_CLEAR ) ) ) {
 			NEWLIST( &s->s_ChannelList );
 			NEWLIST( &s->s_NickList );
+			NEWLIST( &s->s_SendList );
+
 			AddTail( &mccdata->mcc_ServerList, (struct Node *) s );
+
 			s->s_ServerSocket      = -1;
 			s->s_Ident_a_Socket    = -1;
 			s->s_IdentSocket       = -1;
+
 			/* we cannot link to server entry as it may be removed by user during
 			** runtime, so we spy important data */
-			strcpy( s->s_Name    , se->se_Name );
-			strcpy( s->s_Address , se->se_Address );
-			strcpy( s->s_Charset , se->se_Charset );
+			strcpy( s->s_Name    , se->se_Name     );
+			strcpy( s->s_Address , se->se_Address  );
+			strcpy( s->s_Charset , se->se_Charset  );
 			strcpy( s->s_Password, se->se_Password );
+
 			if( !( s->s_Port = se->se_Port ) ) {
 				s->s_Port = 6667;
 			}
@@ -194,7 +312,7 @@ struct ChannelEntry *ce;
 					c->c_WindowChat = msg->WindowChat;
 				}
 			}
-			for( ne = (APTR) se->se_ChannelList.lh_Head ; ne->ne_Succ ; ne = ne->ne_Succ ) {
+			for( ne = (APTR) se->se_NickList.lh_Head ; ne->ne_Succ ; ne = ne->ne_Succ ) {
 				if( ( n = AllocVec( sizeof( struct Channel ), MEMF_ANY ) ) ) {
 					AddTail( &s->s_NickList, (struct Node *) n );
 					strcpy( n->n_Name    , ne->ne_Name     );
@@ -235,7 +353,10 @@ struct Channel      *c;
 		/* free structure */
 		FreeVec( n );
 	}
-
+	while( ( n = (APTR) s->s_SendList.lh_Head )->n_Succ ) {
+		Remove( (struct Node *) n );
+		FreeVec( n );
+	}
 	/* remove from list */
 	Remove( (struct Node *) s );
 	/* free structure */
@@ -245,46 +366,6 @@ struct Channel      *c;
 }
 /* \\\ */
 
-/* /// MM_ServerConnectAuto()
-**
-*/
-
-/*************************************************************************/
-
-static ULONG MM_ServerConnectAuto( struct IClass *cl, Object *obj, struct MP_NETWORK_SERVERCONNECTAUTO *msg )
-{
-struct mccdata *mccdata = INST_DATA( cl, obj );
-struct ServerEntry *se;
-struct Server      *s;
-Object *serverlist, *chatwindow;
-ULONG i;
-
-	serverlist = (APTR) LocalReadConfig( OID_SVR_LIST );
-
-	for( i = 0 ; ; i++ ) {
-		se = NULL;
-
-		if( !( chatwindow = (Object*) DoMethod( _app(obj), MM_APPLICATION_CHATFINDACTIVE ) ) ) {
-			chatwindow = (Object*) DoMethod( _app(obj), MM_APPLICATION_WINDOWNEWCHAT );
-		}
-
-		DoMethod( serverlist, MUIM_NList_GetEntry, i, &se );
-		if( se ) {
-
-			if( ( se->se_Flags & SERVERENTRYF_AUTOCONNECT ) ) {
-
-				if( ( s = (APTR) DoMethod( obj, MM_NETWORK_SERVERALLOC, se, chatwindow ) ) ) {
-
-					DoMethod( obj, MM_NETWORK_SERVERCONNECT, s );
-				}
-			}
-		} else {
-			break;
-		}
-	}
-	return( 0 );
-}
-/* \\\ */
 /* /// MM_ServerSocketInit()
 **
 */
@@ -311,7 +392,7 @@ ULONG result;
 
 				if ( s->s_ServerSocket != -1 ) {
 					FD_SET( s->s_ServerSocket, &mccdata->mcc_ReadMaster  );
-					FD_SET( s->s_ServerSocket, &mccdata->mcc_WriteMaster );
+					FD_CLR( s->s_ServerSocket, &mccdata->mcc_WriteMaster );
 				}
 
 
@@ -412,7 +493,6 @@ ULONG result;
 		if( !( result = DoMethod( obj, MM_NETWORK_SERVERSOCKETINIT, s ) ) ) {
 			debug("connecting to '%s' Port %ld\n",s->s_Address, s->s_Port );
 			if( ( he = gethostbyname( (const UBYTE *) s->s_Address) ) ) {
-				debug("%20lh\n", he );
 				struct sockaddr_in addr;
 
 				addr.sin_family = AF_INET;
@@ -423,15 +503,18 @@ ULONG result;
 
 				result = MSG_ERROR_NOERROR + 6; /* socket error */
 				connect( s->s_ServerSocket, (struct sockaddr*) &addr, sizeof( struct sockaddr ) );
-				//s->s_State = SVRSTATE_CONNECTED;
+				s->s_State = SVRSTATE_CONNECTED;
+
+				DoMethod( obj, MM_NETWORK_SERVERMESSAGESEND, s, "HELLO" );
+
 				result = MSG_ERROR_NOERROR;
 				return( result );
 
 			}
 			if( result )  {
 				DoMethod( obj, MM_NETWORK_SERVERSOCKETCLOSE, s );
-				s->s_Retry++;
-				if( s->s_Retry <= 5 ) {
+				s->s_Retries++;
+				if( s->s_Retries <= 5 ) {
 					s->s_State = SVRSTATE_RETRY;
 				} else {
 					s->s_State = SVRSTATE_FAILED;
@@ -471,26 +554,72 @@ static ULONG MM_ServerMessageReceived( struct IClass *cl, Object *obj, struct MP
 //struct mccdata *mccdata = INST_DATA( cl, obj );
 struct Server  *s = msg->Server;
 struct Channel *c;
+struct ChatLogEntry *cle;
 
-	/* first we need to find out the type of message */
+	debug("received\n");
+	if( ( cle = (APTR) DoMethod( obj, MM_NETWORK_CHATLOGENTRYALLOC, msg->Message, 0 ) ) ) {
+	debug("alloc done\n");
+		c = (APTR) DoMethod( obj, MM_NETWORK_CHATLOGENTRYPROCESS, s, cle );
+	debug("process done\n");
 
-	for( c = (APTR) s->s_ChannelList.lh_Head ; c->c_Succ ; c = c->c_Succ ) {
-		break;
-		DoMethod( c->c_WindowChat, MM_WINDOWCHAT_MESSAGERECEIVED, c, msg->Message, 0 );
-	}
-
-
-
-	if( c->c_Succ ) {
-		struct ChatLogEntry *cle;
-		
-		if( ( cle = (APTR) DoMethod( obj, MM_NETWORK_CHATLOGENTRYALLOC, c, msg->Message ) ) ) {
+		if( !c ) {
+			c = (APTR) s->s_ChannelList.lh_Head; /* get some channel */
+		}
+		if( c && c->c_Succ ) {
 			DoMethod( c->c_WindowChat, MM_WINDOWCHAT_MESSAGERECEIVED, c, cle, 0 );
 		}
 	}
 	return( 0 );
 }
 /* \\\ */
+/* /// MM_ServerMessageSend()
+**
+*/
+
+/*************************************************************************/
+
+struct SendNode {
+	struct SendNode *sn_Succ;
+	struct SendNode *sn_Pred;
+	char             sn_Message[0];
+};
+
+static ULONG MM_ServerMessageSend( struct IClass *cl, Object *obj, struct MP_NETWORK_SERVERMESSAGESEND *msg )
+{
+struct SendNode *sn;
+
+	if( ( sn = AllocVec( sizeof( struct SendNode ) + strlen( msg->Message ) + 2, MEMF_ANY ) )) {
+		strcpy( sn->sn_Message, msg->Message );
+		strcat( sn->sn_Message, "\n" );
+		AddTail( &msg->Server->s_SendList, (struct Node *) sn );
+
+	}
+	return( 0 );
+}
+/* \\\ */
+/* /// MM_ServerMessageSendProc()
+**
+*/
+
+/*************************************************************************/
+
+static ULONG MM_ServerMessageSendProc( struct IClass *cl, Object *obj, Msg *msg )
+{
+struct mccdata *mccdata = INST_DATA( cl, obj );
+struct Server   *s;
+struct SendNode *sn;
+
+	for( s = (APTR) mccdata->mcc_ServerList.lh_Head ; s->s_Succ ; s = s->s_Succ ) {
+		if( ( sn = (APTR) s->s_SendList.lh_Head )->sn_Succ ) {
+			DoMethod( obj, MM_NETWORK_SERVERSENDDATA, s, sn->sn_Message, 0 );
+			Remove( (struct Node *) sn );
+			FreeVec( sn );
+		}
+	}
+	return( 0 );
+}
+/* \\\ */
+
 /* /// MM_ServerSendData()
 **
 */
@@ -558,47 +687,59 @@ LONG waitsignals = *((ULONG*) msg->SignalMask );
 
 	if( selectresult > 0 ) {
 		struct Server *s;
-		ULONG fd;
+		LONG fd;
 //debug("got something %08lx\n", mccdata->mcc_FDMax );
 		for( fd = 0; fd <= mccdata->mcc_FDMax ; fd++ ) {
-
 			if( FD_ISSET( fd, &mccdata->mcc_ReadFDS ) ) {
-				debug("got data\n");
+				//debug("got data\n");
 				for( s = (APTR) mccdata->mcc_ServerList.lh_Head ; s->s_Succ ; s = s->s_Succ ) {
 					if( ( fd == s->s_ServerSocket ) || ( fd == s->s_Ident_a_Socket ) ) {
+				//		  debug("found %08lx, %ld\n", s, fd );
 						break;
 					}
 				}
 				if( s->s_Succ ) {
-					LONG length, maxread;
-					maxread = SERVERBUFFER_SIZEOF - s->s_BufferFilled;
-					debug("maxread is %ld\n", maxread );
-					if( maxread < 0 ) {
-						s->s_BufferFilled = 0;
-						maxread           = SERVERBUFFER_SIZEOF;
-						debug("something is wrong here\n");
-					}
+					LONG length;
+					char *tmp;
 
-					length  = recv( s->s_ServerSocket, (UBYTE*) &s->s_Buffer[ s->s_BufferFilled ], maxread, 0 );
+					length  = recv( s->s_ServerSocket, (UBYTE*) &s->s_Buffer[ s->s_BufferFilled ], ( SERVERBUFFER_SIZEOF - s->s_BufferFilled ) , 0 );
 
 					if( length > 0 ) {
 						s->s_BufferFilled += length;
 						s->s_Buffer[ s->s_BufferFilled ] = 0x00;
 					}
 
-					if( s->s_BufferFilled ) {
-						char *tmp;
-						if( ( tmp = strchr( s->s_Buffer, 0x0d ) ) ) {
-							*tmp = 0x00;
-							DoMethod( obj, MM_NETWORK_SERVERMESSAGERECEIVED, s, s->s_Buffer );
-							CopyMem( &s->s_Buffer[ s->s_BufferFilled ], s->s_Buffer, SERVERBUFFER_SIZEOF - s->s_BufferFilled );
+					//if( s->s_BufferFilled ) {
+					while( s->s_BufferFilled && ( tmp = strchr( s->s_Buffer, 0x0d ) ) ) {
+						*tmp++ = 0x00;
+						DoMethod( obj, MM_NETWORK_SERVERMESSAGERECEIVED, s, s->s_Buffer );
+/* dump line */
+						if( strlen( s->s_Buffer ) > 80 ) {
+							s->s_Buffer[80] = 0x00;
+						}
+						debug("CL:%s\n", s->s_Buffer );
+/* \\\ */
+						while( ( *tmp == 0x0a || *tmp == 0x0d ) ) { tmp++; }
+						s->s_BufferFilled -= ( ((ULONG) tmp) - ((ULONG) s->s_Buffer) );
+						//debug("buffer fill %ld\n", s->s_BufferFilled );
+						if( s->s_BufferFilled < 0 ) {
+						//	  debug("WARN buffer fill %ld\n", s->s_BufferFilled );
 							s->s_BufferFilled = 0;
 						}
+
+						if( s->s_BufferFilled ) {
+							CopyMem( tmp, s->s_Buffer, s->s_BufferFilled );
+						}
 					}
-					
-					//if (FD_ISSET( s->s_ServerSocket, &mccdata->mcc_ReadMaster)) {
-						//FD_CLR( s->s_ServerSocket, &mccdata->mcc_ReadMaster);
 					//}
+					
+					if( length <= 0 ) {
+						if(FD_ISSET( s->s_ServerSocket, &mccdata->mcc_ReadMaster ) ) {
+							FD_CLR( s->s_ServerSocket, &mccdata->mcc_ReadMaster );
+						}
+					}
+
+					//if( s->s_State == SVRSTATE_PRECONNECTED ) {
 				}
 			}
 			if( FD_ISSET( fd, &mccdata->mcc_WriteFDS ) ) {
@@ -650,6 +791,7 @@ struct Channel      *c;
 		if( (msg->Name[0] ) ) {
 			if( ( c = AllocVec( sizeof( struct Channel ), MEMF_ANY|MEMF_CLEAR ) ) ) {
 				NEWLIST( &c->c_ChatLog );
+				NEWLIST( &c->c_UserList );
 				AddTail( &s->s_ChannelList, (struct Node *) c );
 				if( msg->Name ) {
 					strcpy( c->c_Name, msg->Name );
@@ -677,7 +819,7 @@ struct ChatLogEntry *cle;
 		}
 		/* remove all chat log entries */
 		while( ( cle = (APTR) c->c_ChatLog.lh_Head )->cle_Succ ) {
-			DoMethod( obj, MM_NETWORK_CHATLOGENTRYFREE, c, cle );
+			DoMethod( obj, MM_NETWORK_CHATLOGENTRYFREE, cle );
 		}
 		Remove( (struct Node *) c );
 		FreeVec( c );
@@ -696,12 +838,41 @@ static ULONG MM_ChatLogEntryAlloc( struct IClass *cl, Object *obj, struct MP_NET
 {
 struct ChatLogEntry *cle;
 
-	if( ( cle = AllocVec( sizeof( struct ChatLogEntry ), MEMF_ANY ) ) ) {
-		AddTail( &msg->Channel->c_ChatLog, (struct Node *) cle );
-		if( ( cle->cle_Message = AllocVec( strlen( msg->Message ) + 1, MEMF_ANY ) ) ) {
-			strcpy( cle->cle_Message, msg->Message );
+	if( ( cle = AllocVec( sizeof( struct ChatLogEntry ) + strlen( msg->Message ) + 1, MEMF_ANY ) ) ) {
+	/* irc message lines look like this:
+	** ":<from> <command> <params> :<message>"
+	**
+	*/
+		DateStamp( &cle->cle_DateStamp );
+		strcpy( cle->cle_Data, msg->Message );
+
+		if( ( cle->cle_Message = strstr( cle->cle_Data, " :" ) ) ) {
+			cle->cle_Message[0] = 0x00;
+			cle->cle_Message += 2;
+		} else {
+			cle->cle_Message = STR_NUL;
+		}
+
+		cle->cle_Command = cle->cle_Data;
+		cle->cle_From  = STR_NUL;
+		if( ( cle->cle_Data[0] == ':' ) ) {
+			cle->cle_From = cle->cle_Data;
+			cle->cle_From++;
+			cle->cle_Command = strchr( cle->cle_Data, 0x20 );
+			*cle->cle_Command++ = 0x00;
+		}
+
+		if( ( cle->cle_Arguments = strchr( cle->cle_Command, 0x20 ) ) ) {
+			*cle->cle_Arguments++ = 0x00;
+		} else {
+			cle->cle_Arguments = STR_NUL;
 		}
 	}
+	debug("cle From %s\n", cle->cle_From );
+	debug("cle Command %s\n", cle->cle_Command );
+	debug("cle Arguments %s\n", cle->cle_Arguments );
+	debug("cle Message %s\n", cle->cle_Message );
+
 	return( (IPTR) cle );
 }
 /* \\\ */
@@ -716,14 +887,153 @@ static ULONG MM_ChatLogEntryFree( struct IClass *cl, Object *obj, struct MP_NETW
 struct ChatLogEntry *cle;
 
 	if( ( cle = msg->ChatLogEntry ) ) {
-		if( cle->cle_Message ) {
-			FreeVec( cle->cle_Message );
-		}
 		if( cle->cle_Succ && cle->cle_Pred ) {
 			Remove( ( struct Node *) cle );
 		}
 		FreeVec( cle );
 	}
+	return( 0 );
+}
+/* \\\ */
+
+
+/* /// IRCCommands
+*/
+
+/*************************************************************************/
+
+static ULONG IRCCMD_HandlePrivMsg         ( Object *obj, struct Server *Server, struct ChatLogEntry *ChatLogEntry );
+static ULONG IRCCMD_HandleNotice          ( Object *obj, struct Server *Server, struct ChatLogEntry *ChatLogEntry );
+static ULONG IRCCMD_HandlePing            ( Object *obj, struct Server *Server, struct ChatLogEntry *ChatLogEntry );
+static ULONG IRCCMD_HandleChannelJoinPart ( Object *obj, struct Server *Server, struct ChatLogEntry *ChatLogEntry );
+static ULONG IRCCMD_HandleUserNickChange  ( Object *obj, struct Server *Server, struct ChatLogEntry *ChatLogEntry );
+static ULONG IRCCMD_HandleUserQuit        ( Object *obj, struct Server *Server, struct ChatLogEntry *ChatLogEntry );
+static ULONG IRCCMD_HandleChannelNamesList( Object *obj, struct Server *Server, struct ChatLogEntry *ChatLogEntry );
+static ULONG IRCCMD_HandleNicknameInUse   ( Object *obj, struct Server *Server, struct ChatLogEntry *ChatLogEntry );
+static ULONG IRCCMD_HandleServerMessage   ( Object *obj, struct Server *Server, struct ChatLogEntry *ChatLogEntry );
+
+struct IRCCommands {
+	char *CMD_Name;
+	ULONG (* CMD_Function)( Object *obj, struct Server *Server, struct ChatLogEntry *ChatLogEntry );
+};
+
+struct IRCCommands TAB_IRCCOMMANDS[] =
+{
+	{ "PRIVMSG",            IRCCMD_HandlePrivMsg                   },
+	{ "NOTICE",             IRCCMD_HandleNotice                    },
+	{ "PING",               IRCCMD_HandlePing                      },
+//	  { "JOIN",               IRCCMD_HandleChannelJoinPart           },
+//	  { "PART",               IRCCMD_HandleChannelJoinPart           },
+//	  { "NICK",               IRCCMD_HandleUserNickChange            },
+//	  { "QUIT",               IRCCMD_HandleUserQuit                  },
+//	  { "353",                IRCCMD_HandleChannelNamesList          },
+//	  { "433",                IRCCMD_HandleNicknameInUse             },
+    { "001",                IRCCMD_HandleServerMessage             },
+    { "002",                IRCCMD_HandleServerMessage             },
+    { "003",                IRCCMD_HandleServerMessage             },
+    { "004",                IRCCMD_HandleServerMessage             },
+    { "005",                IRCCMD_HandleServerMessage             },
+    { "250",                IRCCMD_HandleServerMessage             },
+    { "251",                IRCCMD_HandleServerMessage             },
+    { "252",                IRCCMD_HandleServerMessage             },
+    { "253",                IRCCMD_HandleServerMessage             },
+    { "254",                IRCCMD_HandleServerMessage             },
+    { "255",                IRCCMD_HandleServerMessage             },
+    { "265",                IRCCMD_HandleServerMessage             },
+    { "266",                IRCCMD_HandleServerMessage             },
+    { "366",                IRCCMD_HandleServerMessage             },
+    { "372",                IRCCMD_HandleServerMessage             },
+    { "375",                IRCCMD_HandleServerMessage             },
+    { "376",                IRCCMD_HandleServerMessage             },
+    { "439",                IRCCMD_HandleServerMessage             },
+	{ NULL, NULL },
+};
+/* \\\ */
+/* /// MM_ChatLogEntryProcess()
+**
+*/
+
+/*************************************************************************/
+
+static ULONG MM_ChatLogEntryProcess( struct IClass *cl, Object *obj, struct MP_NETWORK_CHATLOGENTRYPROCESS *msg )
+{
+struct ChatLogEntry *cle = msg->ChatLogEntry;
+ULONG result = 0, i;
+
+	debug("## process\n");
+	if( cle->cle_Command && cle->cle_Command[0] ) {
+	debug("## process  '%s'\n", cle->cle_Command );
+		for( i = 0 ; TAB_IRCCOMMANDS[i].CMD_Name ; i++ ) {
+			if( !Stricmp( (CONST_STRPTR) cle->cle_Command, (CONST_STRPTR) TAB_IRCCOMMANDS[i].CMD_Name ) ) {
+				result = TAB_IRCCOMMANDS[i].CMD_Function( obj, msg->Server, cle );
+				break;
+			}
+		}
+	}
+	return( result );
+}
+/* \\\ */
+
+/* /// IRCCMD_HandlePrivMsg()
+**
+*/
+
+/*************************************************************************/
+
+static ULONG IRCCMD_HandlePrivMsg( Object *obj, struct Server *s, struct ChatLogEntry *cle )
+{
+struct Channel *c;
+struct Channel *serverchannel = NULL;
+struct Channel *privchannel   = NULL;
+
+	for( c = (APTR) s->s_ChannelList.lh_Head ; c->c_Succ ; c = c->c_Succ ) {
+		if( !Stricmp( (CONST_STRPTR) c->c_Name, (CONST_STRPTR) cle->cle_Arguments ) ) {
+			privchannel = c;
+		}
+		if( c->c_Flags & CHANNELF_SERVER ) {
+			serverchannel = c;
+		}
+	}
+	return( (IPTR) ( privchannel ? privchannel : serverchannel ) );
+}
+/* \\\ */
+/* /// IRCCMD_HandleNotice()
+**
+*/
+
+/*************************************************************************/
+
+static ULONG IRCCMD_HandleNotice( Object *obj, struct Server *s, struct ChatLogEntry *cle )
+{
+
+	debug("#### HANDLE NOTICE ### chatlog is\nFrom: '%s'\nCommand: '%s'\nAruments: '%s'\nMessage: '%s'\n", cle->cle_From, cle->cle_Command, cle->cle_Arguments, cle->cle_Message );
+
+	return( 0 );
+}
+/* \\\ */
+/* /// IRCCMD_HandlePing()
+**
+*/
+
+/*************************************************************************/
+
+static ULONG IRCCMD_HandlePing( Object *obj, struct Server *s, struct ChatLogEntry *cle )
+{
+	DoMethod( obj, MM_NETWORK_SERVERMESSAGESEND, s, "PONG" );
+
+	return( 0 );
+}
+/* \\\ */
+/* /// IRCCMD_HandleServerMessage()
+**
+*/
+
+/*************************************************************************/
+
+static ULONG IRCCMD_HandleServerMessage( Object *obj, struct Server *s, struct ChatLogEntry *cle )
+{
+	debug("#### HANDLE SERVER MESSAGE ### chatlog is\nFrom: '%s'\nCommand: '%s'\nAruments: '%s'\nMessage: '%s'\n", cle->cle_From, cle->cle_Command, cle->cle_Arguments, cle->cle_Message );
+
 	return( 0 );
 }
 /* \\\ */
@@ -744,9 +1054,12 @@ DISPATCHER(MCC_Network_Dispatcher)
     {
 		case OM_NEW                             : return( OM_New                    ( cl, obj, (APTR) msg ) );
 		case OM_DISPOSE                         : return( OM_Dispose                ( cl, obj, (APTR) msg ) );
+
 		case OM_SET                             : return( OM_Set                    ( cl, obj, (APTR) msg ) );
 		case MM_NETWORK_WAITSELECT              : return( MM_WaitSelect             ( cl, obj, (APTR) msg ) );
 		case MM_NETWORK_SERVERMESSAGERECEIVED   : return( MM_ServerMessageReceived  ( cl, obj, (APTR) msg ) );
+		case MM_NETWORK_SERVERMESSAGESEND       : return( MM_ServerMessageSend      ( cl, obj, (APTR) msg ) );
+		case MM_NETWORK_SERVERMESSAGESENDPROC   : return( MM_ServerMessageSendProc  ( cl, obj, (APTR) msg ) );
 
 		case MM_NETWORK_SERVERSOCKETINIT        : return( MM_ServerSocketInit       ( cl, obj, (APTR) msg ) );
 		case MM_NETWORK_SERVERSOCKETCLOSE       : return( MM_ServerSocketClose      ( cl, obj, (APTR) msg ) );
@@ -757,6 +1070,9 @@ DISPATCHER(MCC_Network_Dispatcher)
 		case MM_NETWORK_SERVERCONNECT           : return( MM_ServerConnect          ( cl, obj, (APTR) msg ) );
 		case MM_NETWORK_SERVERDISCONNECT        : return( MM_ServerDisconnect       ( cl, obj, (APTR) msg ) );
 		case MM_NETWORK_SERVERCONNECTAUTO       : return( MM_ServerConnectAuto      ( cl, obj, (APTR) msg ) );
+		case MM_NETWORK_SERVERLOGIN             : return( MM_ServerLogin            ( cl, obj, (APTR) msg ) );
+		case MM_NETWORK_SERVERAUTOJOIN          : return( MM_ServerAutoJoin         ( cl, obj, (APTR) msg ) );
+
 		case MM_NETWORK_SERVERRECEIVEDATA       : return( MM_ServerReceiveData      ( cl, obj, (APTR) msg ) );
 		case MM_NETWORK_SERVERSENDDATA          : return( MM_ServerSendData         ( cl, obj, (APTR) msg ) );
 
@@ -766,6 +1082,7 @@ DISPATCHER(MCC_Network_Dispatcher)
 
 		case MM_NETWORK_CHATLOGENTRYALLOC       : return( MM_ChatLogEntryAlloc      ( cl, obj, (APTR) msg ) );
 		case MM_NETWORK_CHATLOGENTRYFREE        : return( MM_ChatLogEntryFree       ( cl, obj, (APTR) msg ) );
+		case MM_NETWORK_CHATLOGENTRYPROCESS     : return( MM_ChatLogEntryProcess    ( cl, obj, (APTR) msg ) );
     }
 	return( DoSuperMethodA( cl, obj, msg ) );
 
@@ -797,7 +1114,6 @@ void MCC_Network_DisposeClass( void )
     }
 }
 /* \\\ */
-
 
 
 

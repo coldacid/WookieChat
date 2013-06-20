@@ -14,6 +14,7 @@
 /*************************************************************************/
 
 #include <exec/types.h>
+#include <dos/dos.h>
 #include <sys/types.h>
 #include <netinet/in.h>
 #include <sys/time.h>
@@ -45,8 +46,13 @@ MM_NETWORK_SERVERSOCKETCLOSE,
 MM_NETWORK_SERVERCONNECTAUTO,
 MM_NETWORK_SERVERCONNECT,
 MM_NETWORK_SERVERDISCONNECT,
+MM_NETWORK_SERVERLOGIN,
+MM_NETWORK_SERVERAUTOJOIN,
 
 MM_NETWORK_SERVERMESSAGERECEIVED,
+MM_NETWORK_SERVERMESSAGESEND,
+MM_NETWORK_SERVERMESSAGESENDPROC,
+
 MM_NETWORK_SERVERRECEIVEDATA,
 MM_NETWORK_SERVERSENDDATA,
 
@@ -58,6 +64,7 @@ MM_NETWORK_CHANNELFREE,
 
 MM_NETWORK_CHATLOGENTRYALLOC,
 MM_NETWORK_CHATLOGENTRYFREE,
+MM_NETWORK_CHATLOGENTRYPROCESS,
 
 /* Attributes */
 MA_NETWORK_OBJECTSETTINGS,
@@ -66,27 +73,33 @@ MA_NETWORK_OBJECTAUDIO,
 
 struct MP_NETWORK_SERVERFIND              { ULONG MethodID; struct ServerEntry *ServerEntry; };
 struct MP_NETWORK_SERVERALLOC             { ULONG MethodID; struct ServerEntry *ServerEntry; Object *WindowChat; };
-struct MP_NETWORK_SERVERFREE              { ULONG MethodID; struct Server  *Server; };
+struct MP_NETWORK_SERVERFREE              { ULONG MethodID; struct Server *Server; };
 
 struct MP_NETWORK_SERVERCONNECTAUTO       { ULONG MethodID; };
-struct MP_NETWORK_SERVERSOCKETINIT        { ULONG MethodID; struct Server  *Server; };
-struct MP_NETWORK_SERVERSOCKETCLOSE       { ULONG MethodID; struct Server  *Server; };
+struct MP_NETWORK_SERVERSOCKETINIT        { ULONG MethodID; struct Server *Server; };
+struct MP_NETWORK_SERVERSOCKETCLOSE       { ULONG MethodID; struct Server *Server; };
 
-struct MP_NETWORK_SERVERCONNECT           { ULONG MethodID; struct Server  *Server; };
-struct MP_NETWORK_SERVERDISCONNECT        { ULONG MethodID; struct Server  *Server; };
+struct MP_NETWORK_SERVERCONNECT           { ULONG MethodID; struct Server *Server; };
+struct MP_NETWORK_SERVERDISCONNECT        { ULONG MethodID; struct Server *Server; };
 
-struct MP_NETWORK_SERVERMESSAGERECEIVED   { ULONG MethodID; struct Server  *Server; char *Message; };
-struct MP_NETWORK_SERVERRECEIVEDATA       { ULONG MethodID; struct Server  *Server; char *Data; ULONG Length; };
-struct MP_NETWORK_SERVERSENDDATA          { ULONG MethodID; struct Server  *Server; char *Data; ULONG Length; };
+struct MP_NETWORK_SERVERLOGIN             { ULONG MethodID; struct Server *Server; };
+struct MP_NETWORK_SERVERAUTOJOIN          { ULONG MethodID; struct Server *Server; };
+
+struct MP_NETWORK_SERVERMESSAGERECEIVED   { ULONG MethodID; struct Server *Server; char *Message; };
+struct MP_NETWORK_SERVERMESSAGESEND       { ULONG MethodID; struct Server *Server; char *Message; };
+
+struct MP_NETWORK_SERVERRECEIVEDATA       { ULONG MethodID; struct Server *Server; char *Data; ULONG Length; };
+struct MP_NETWORK_SERVERSENDDATA          { ULONG MethodID; struct Server *Server; char *Data; ULONG Length; };
 
 struct MP_NETWORK_WAITSELECT              { ULONG MethodID; ULONG *SignalMask; };
 
-struct MP_NETWORK_CHANNELFIND             { ULONG MethodID; struct Server  *Server; char *Name; };
-struct MP_NETWORK_CHANNELALLOC            { ULONG MethodID; struct Server  *Server; char *Name; };
-struct MP_NETWORK_CHANNELFREE             { ULONG MethodID; struct Server  *Server; struct Channel *Channel; };
+struct MP_NETWORK_CHANNELFIND             { ULONG MethodID; struct Server *Server; char *Name; };
+struct MP_NETWORK_CHANNELALLOC            { ULONG MethodID; struct Server *Server; char *Name; };
+struct MP_NETWORK_CHANNELFREE             { ULONG MethodID; struct Server *Server; struct Channel *Channel; };
 
-struct MP_NETWORK_CHATLOGENTRYALLOC       { ULONG MethodID; struct Channel *Channel; char *Message; };
-struct MP_NETWORK_CHATLOGENTRYFREE        { ULONG MethodID; struct Channel *Channel; struct ChatLogEntry *ChatLogEntry; };
+struct MP_NETWORK_CHATLOGENTRYALLOC       { ULONG MethodID; char *Message; ULONG Flags; };
+struct MP_NETWORK_CHATLOGENTRYFREE        { ULONG MethodID; struct ChatLogEntry *ChatLogEntry; };
+struct MP_NETWORK_CHATLOGENTRYPROCESS     { ULONG MethodID; struct Server *Server; struct ChatLogEntry *ChatLogEntry; };
 
 /*************************************************************************/
 
@@ -103,11 +116,12 @@ struct Server {
 	char               s_Password[ SERVERENTRY_PASSWORD_SIZEOF + 2 ];
 	struct List        s_ChannelList;
 	struct List        s_NickList;
+	struct List        s_SendList;
 /* network runtime data */
 	ULONG              s_State; /* this is the current state */
-	ULONG              s_Retry;
+	ULONG              s_Retries;
 	char               s_Buffer[ SERVERBUFFER_SIZEOF + 1 ];
-	ULONG              s_BufferFilled;
+	LONG 			   s_BufferFilled;
 	//struct sockaddr_in s_ServerSocket;
 	LONG               s_ServerSocket;
 /* ident */
@@ -128,6 +142,7 @@ struct Channel {
 	char               c_Password[ CHANNELENTRY_PASSWORD_SIZEOF   + 2 ];
 	Object            *c_WindowChat;
 	struct List        c_ChatLog;
+	struct List        c_UserList;
 };
 
 #define CHANNELF_SERVER 1 /* this is the servers channel */
@@ -143,12 +158,18 @@ struct Nick {
 struct ChatLogEntry {
 	struct ChatLogEntry *cle_Succ;
 	struct ChatLogEntry *cle_Pred;
+	struct DateStamp     cle_DateStamp;
+	char                *cle_From;
+	char                *cle_Command;
+	char                *cle_Arguments;
 	char                *cle_Message;
+	char                 cle_Data[0];
 };
 
 
 enum{
 SVRSTATE_NOTCONNECTED = 0,
+SVRSTATE_PRECONNECTED,
 SVRSTATE_CONNECTED,
 SVRSTATE_RETRY,
 SVRSTATE_FAILED,

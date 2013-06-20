@@ -90,7 +90,6 @@ static ULONG OM_Dispose( struct IClass *cl, Object *obj, Msg msg )
 	return( DoSuperMethodA( cl, obj, msg ) );
 }
 /* \\\ */
-
 /* /// OM_Display()
 **
 */

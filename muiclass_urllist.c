@@ -18,6 +18,7 @@
 #include <proto/intuition.h>
 #include <proto/utility.h>
 #include <proto/exec.h>
+#include <proto/dos.h>
 #include <SDI_hook.h>
 
 #include <mui/NList_mcc.h>

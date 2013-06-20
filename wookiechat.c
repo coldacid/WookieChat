@@ -38,37 +38,41 @@
 int main(int argc, char *argv[])
 {
 ULONG result = MSG_ERROR_NOERROR;
+struct Device_Timer dt;
 
 	SysBase = (APTR) (*((struct ExecBase **) 4 ) );
+
+	memset( &dt, 0, sizeof( dt ) );
 
 	WBMessage_Get();
 	Locale_Open( (STRPTR)( APPLICATIONNAME "avoid catalog for now"), VERSION, REVISION );
 	if( !Libraries_Open() ) {
-		if( !( result = MUIClass_Open() ) ) { /* init our mui classes */
-			Object *networkobj = (APTR) MUIGetVar( application, MA_APPLICATION_OBJECTNETWORK );
-			IPTR waitsignals = 0;
-			LONG returnid;
+		if( !( result = DeviceTimer_Open( &dt ) ) ) {
+			DeviceTimer_SendRequest( &dt );
+			if( !( result = MUIClass_Open() ) ) { /* init our mui classes */
+				Object *networkobj = (APTR) MUIGetVar( application, MA_APPLICATION_OBJECTNETWORK );
+				IPTR waitsignals = 0;
 
-			while( 1 ) {
-				waitsignals = 0;
-				returnid = DoMethod( application, MUIM_Application_Input, &waitsignals );
+				while( DoMethod( application, MUIM_Application_NewInput, (IPTR) &waitsignals ) != MUIV_Application_ReturnID_Quit )
+				{
+					if( !waitsignals ) {
+						continue;
+					}
+					waitsignals |= dt.SignalMask | SIGBREAKF_CTRL_C;
+					DoMethod( networkobj, MM_NETWORK_WAITSELECT, &waitsignals );
 
-				if( returnid == MUIV_Application_ReturnID_Quit ) {
-					break;
-				}
+					if( waitsignals & SIGBREAKF_CTRL_C ) break;
+					if( waitsignals & SIGBREAKF_CTRL_D ) break;
 
-				if( !waitsignals ) {
-					continue;
-				}
-				waitsignals |= SIGBREAKF_CTRL_C;
-				DoMethod( networkobj, MM_NETWORK_WAITSELECT, &waitsignals );
-
-				if( waitsignals & SIGBREAKF_CTRL_C ) {
-					break;
+					if( CheckIO( &(&dt)->IORequest->tr_node ) ) {
+						DoMethod( networkobj, MM_NETWORK_SERVERMESSAGESENDPROC );
+						DeviceTimer_SendRequest( &dt );
+					}
 				}
 			}
+			MUIClass_Close(); /* close our mui classes */
 		}
-		MUIClass_Close(); /* close our mui classes */
+		DeviceTimer_Close( &dt );
 	}
 	if( result ) {
 		ShowRequesterError( result, &result );

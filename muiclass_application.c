@@ -98,6 +98,7 @@ Object *objs[ GID_LAST ];
 					MUIA_Application_Version    , (char*) VERSION_MUI,
 					MUIA_Application_Copyright  , (char*) VERSION_COPYRIGHT,
 					MUIA_Application_Description, (char*) LGS( MSG_MUICLASS_APPLICATION_DESCRIPTION ),
+					MUIA_Application_SingleTask , FALSE,
 					MUIA_Application_Window     , objs[ WID_QUIT          ] = WindowQuitObject      , End,
 					MUIA_Application_Window     , objs[ WID_ABOUT         ] = WindowAboutObject     , End,
 					MUIA_Application_Window     , objs[ WID_SETTINGS      ] = WindowSettingsObject  , End,
@@ -296,7 +297,6 @@ static ULONG MM_ChatSetActive( struct IClass *cl UNUSED , Object *obj, struct MP
 struct mccdata *mccdata = INST_DATA( cl, obj );
 ULONG i;
 
-	debug("set activate\n");
 	DoMethod( obj, MM_APPLICATION_CHATREMOVE, msg->Window );
 
 	for( i = 0 ; i < ( LASTACTIVE_MAX - 1 ) ; i++ ) {
@@ -318,6 +318,7 @@ static ULONG MM_ChatRemove( struct IClass *cl UNUSED , Object *obj, struct MP_AP
 struct mccdata *mccdata = INST_DATA( cl, obj );
 ULONG i, o;
 	/* we purge all windows that no longer exist */
+
 	for( i = 0 ; i < LASTACTIVE_MAX ; i++ ) {
 		if( mccdata->mcc_LastActiveChat[ i ] ) {
 			if( !DoMethod( obj, MM_APPLICATION_WINDOWFIND, mccdata->mcc_LastActiveChat[ i ] ) ) {
