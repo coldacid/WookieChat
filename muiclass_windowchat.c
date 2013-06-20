@@ -46,6 +46,7 @@
 enum
 {
 GID_MENUSTRIP = 0,
+GID_NETWORK,
 MID_SELECTSERVER,
 MID_TABNEW,
 MID_TABNEWGLOBAL,
@@ -122,7 +123,7 @@ Object *objs[ GID_LAST ];
 
 	if( (obj = (Object *)DoSuperNew( cl, obj,
 			MUIA_Window_Title            , LGS( MSG_MUICLASS_WINDOWCHAT_TITLE ),
-			MUIA_Window_ID               , MAKE_ID('M','A','I','N'),
+			MUIA_Window_ID               , MAKE_ID('C','H','A','T'),
 			MUIA_Window_Menustrip, MenustripObject,
 								Child, MenuObject, MUIA_Menu_Title, LGS( MSG_MENU_PROJECT_TITLE ),
 								Child, objs[ MID_SELECTSERVER       ] = MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MENU_SELECTSERVER_ITEM ), MUIA_Menuitem_Shortcut, LGS( MSG_MENU_SELECTSERVER_KEY ), End,
@@ -190,8 +191,11 @@ Object *objs[ GID_LAST ];
 		ULONG i;
 		struct mccdata *mccdata = INST_DATA( cl, obj );
 
-
 		CopyMem( &objs[0], &mccdata->mcc_ClassObjects[0], sizeof( mccdata->mcc_ClassObjects));
+
+		SetAttrs( objs[ GID_CHATCHANNELLIST ], MM_CHATCHANNELLIST_OBJECTCHATLOG, objs[ GID_CHATLOG ], MM_CHATCHANNELLIST_OBJECTCHATUSERLIST, objs[ GID_CHATUSERLIST ], TAG_DONE );
+
+		SetAttrs( obj, TAG_MORE, msg->ops_AttrList );
 
 		sprintf( &mccdata->mcc_WindowTitle[0], (const char *) LGS( MSG_MUICLASS_WINDOWCHAT_TITLE ), VERSION, REVISION );
 		SetAttrs( obj, MUIA_Window_Title, mccdata->mcc_WindowTitle, TAG_DONE );
@@ -203,6 +207,19 @@ Object *objs[ GID_LAST ];
 		return( (ULONG) obj );
     }
 	return( (ULONG) NULL );
+}
+/* \\\ */
+/* /// OM_Dispose()
+**
+*/
+
+/*************************************************************************/
+
+static ULONG OM_Dispose( struct IClass *cl, Object *obj, Msg msg )
+{
+//struct mccdata *mccdata = INST_DATA( cl, obj );
+
+	return( DoSuperMethodA( cl, obj, msg ) );
 }
 /* \\\ */
 /* /// OM_Get()
@@ -219,17 +236,27 @@ static ULONG OM_Get(struct IClass *cl, Object *obj, struct opGet *msg )
     }
 }
 /* \\\ */
-/* /// OM_Dispose()
+/* /// OM_Set()
 **
 */
 
 /*************************************************************************/
 
-static ULONG OM_Dispose( struct IClass *cl, Object *obj, Msg msg )
+static ULONG OM_Set( struct IClass *cl, Object *obj, struct opSet *msg )
 {
-//struct mccdata *mccdata = INST_DATA( cl, obj );
+struct mccdata *mccdata = INST_DATA( cl, obj );
+struct TagItem *tag;
+struct TagItem *tstate;
 
-	return( DoSuperMethodA( cl, obj, msg ) );
+	for( tstate = msg->ops_AttrList ; ( tag = NextTagItem( &tstate ) ) ; ) {
+		ULONG tidata = tag->ti_Data;
+        switch( tag->ti_Tag ) {
+			case MA_WINDOWCHAT_OBJECTNETWORK:
+				mccdata->mcc_ClassObjects[ GID_NETWORK ] = (APTR) tidata;
+				break;
+		}
+    }
+	return( DoSuperMethodA( cl, obj,(Msg) msg ) );
 }
 /* \\\ */
 
@@ -328,17 +355,17 @@ static ULONG MM_MessageReceived( struct IClass *cl, Object *obj, struct MP_WINDO
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 struct Channel *c;
-struct Connected *co;
+struct ChatChannel *cc;
 
 	if( !( c = msg->Channel ) ) {
-		co = NULL;
-		DoMethod( mccdata->mcc_ClassObjects[ GID_CHATCHANNELLIST ], MUIM_NList_GetEntry, 0, &c );
-		if( co ) {
-			c = co->co_Channel;
+		cc = NULL;
+		DoMethod( mccdata->mcc_ClassObjects[ GID_CHATCHANNELLIST ], MUIM_NList_GetEntry, 0, &cc );
+		if( cc ) {
+			c = cc->cc_Channel;
 		}
 	}
 	if( c ) {
-		DoMethod( mccdata->mcc_ClassObjects[ GID_CHATLOG ], MM_CHATLOG_MESSAGERECEIVED, c, msg->Message, msg->Flags );
+		DoMethod( mccdata->mcc_ClassObjects[ GID_CHATCHANNELLIST ], MM_CHATCHANNELLIST_MESSAGERECEIVED, c, msg->Message, msg->Flags );
 	}
 	return( 0 );
 }
@@ -393,6 +420,8 @@ DISPATCHER(MCC_WindowChat_Dispatcher)
 		case OM_DISPOSE                      : return( OM_Dispose          ( cl, obj, (APTR) msg ) );
 
 		case OM_GET                          : return( OM_Get              ( cl, obj, (APTR) msg ) );
+		case OM_SET                          : return( OM_Set              ( cl, obj, (APTR) msg ) );
+
 		case MUIM_Window_Setup               : return( OM_Setup            ( cl, obj, (APTR) msg ) );
 
 		case MM_WINDOWCHAT_MENUSELECT        : return( MM_MenuSelect       ( cl, obj, (APTR) msg ) );

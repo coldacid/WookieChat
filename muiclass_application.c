@@ -270,9 +270,10 @@ Object *win;
 
 static ULONG MM_WindowNewChat( struct IClass *cl UNUSED, Object *obj, Msg *msg )
 {
+struct mccdata *mccdata = INST_DATA( cl, obj );
 Object *win;
 
-	if( ( win = WindowChatObject, End ) ) {
+	if( ( win = WindowChatObject, MA_WINDOWCHAT_OBJECTNETWORK, mccdata->mcc_ClassObjects[ GID_NETWORK ], End ) ) {
 		DoMethod( obj, OM_ADDMEMBER, win );
 		if( win ) {
 			DoMethod( obj, MM_APPLICATION_CHATSETACTIVE, win );

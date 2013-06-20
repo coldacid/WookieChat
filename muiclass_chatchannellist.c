@@ -40,7 +40,8 @@
 
 enum
 {
-GID_AREXXPORT = 0,
+GID_CHATLOG = 0,
+GID_CHATUSERLIST,
 GID_LAST
 };
 
@@ -63,14 +64,9 @@ struct mccdata
 
 static ULONG OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
 {
-Object *objs[ GID_LAST ];
+	if( (obj = (Object *)DoSuperNew( cl, obj, TAG_DONE ) ) ) {
 
-	if( (obj = (Object *)DoSuperNew( cl, obj,
-		TAG_DONE ) ) ) {
-
-		struct mccdata *mccdata = INST_DATA( cl, obj );
-
-		CopyMem( &objs[0], &mccdata->mcc_ClassObjects[0], sizeof( mccdata->mcc_ClassObjects));
+		//struct mccdata *mccdata = INST_DATA( cl, obj );
 
 		return( (ULONG) obj );
     }
@@ -98,11 +94,11 @@ static ULONG OM_Dispose( struct IClass *cl, Object *obj, Msg msg )
 
 static ULONG OM_Display( struct IClass *cl, Object *obj, struct MUIP_NList_Display *msg )
 {
-struct Connected *co = msg->entry;
+struct ChatChannel *cc = msg->entry;
 STRPTR *array = msg->strings;
 
-	if( ( co = msg->entry ) ) {
-		*array = (STRPTR) co->co_Channel->c_Name;
+	if( ( cc = msg->entry ) ) {
+		*array = (STRPTR) cc->cc_Channel->c_Name;
 	}
 	return( 0 );
 }
@@ -115,12 +111,12 @@ STRPTR *array = msg->strings;
 
 static ULONG OM_Construct( struct IClass *cl, Object *obj, struct MUIP_NList_Construct *msg )
 {
-struct Connected *co;
+struct ChatChannel *cc;
 
-	if( ( co = AllocPooled( msg->pool, sizeof( struct Connected ) ) ) ) {
-		co->co_Channel = msg->entry;
+	if( ( cc = AllocPooled( msg->pool, sizeof( struct ChatChannel ) ) ) ) {
+		cc->cc_Channel = msg->entry;
     }
-	return( (IPTR) co );
+	return( (IPTR) cc );
 }
 /* \\\ */
 /* /// OM_Destruct()
@@ -132,7 +128,7 @@ struct Connected *co;
 static ULONG OM_Destruct( struct IClass *cl, Object *obj, struct MUIP_NList_Destruct *msg )
 {
 	if( msg->entry ) {
-		FreePooled( msg->pool, msg->entry, sizeof( struct Connected ) );
+		FreePooled( msg->pool, msg->entry, sizeof( struct ChatChannel ) );
     }
 	return( 0 );
 }
@@ -145,7 +141,6 @@ static ULONG OM_Destruct( struct IClass *cl, Object *obj, struct MUIP_NList_Dest
 
 static ULONG OM_Set( struct IClass *cl, Object *obj, struct opSet *msg )
 {
-#if 0
 struct mccdata *mccdata = INST_DATA( cl, obj );
 struct TagItem *tag;
 struct TagItem *tstate;
@@ -153,9 +148,14 @@ struct TagItem *tstate;
 	for( tstate = msg->ops_AttrList ; ( tag = NextTagItem( &tstate ) ) ; ) {
 		ULONG tidata = tag->ti_Data;
         switch( tag->ti_Tag ) {
+			case MM_CHATCHANNELLIST_OBJECTCHATLOG:
+				mccdata->mcc_ClassObjects[ GID_CHATLOG ] = (APTR) tidata;
+				break;
+			case MM_CHATCHANNELLIST_OBJECTCHATUSERLIST:
+				mccdata->mcc_ClassObjects[ GID_CHATUSERLIST ] = (APTR) tidata;
+				break;
 		}
     }
-#endif
 	return( DoSuperMethodA( cl, obj,(Msg) msg ) );
 }
 /* \\\ */
@@ -168,16 +168,16 @@ struct TagItem *tstate;
 
 static ULONG MM_Remove( struct IClass *cl, Object *obj, struct MP_CHATCHANNELLIST_REMOVE *msg )
 {
-struct Connected *co;
+struct ChatChannel *cc;
 ULONG i;
 
 //	  DoMethod( mccdata->mcc_ClassObjects[ GID_CONNECTEDBUTTONS ], MM_CONNECTEDBUTTONS_REMOVE, msg->Channel );
 
 	for( i = 0 ;  ; i++ ) {
-		co = NULL;
-		DoMethod( obj, MUIM_NList_GetEntry, i, &co );
-		if( co ) {
-			if( co->co_Channel == msg->Channel ) {
+		cc = NULL;
+		DoMethod( obj, MUIM_NList_GetEntry, i, &cc );
+		if( cc ) {
+			if( cc->cc_Channel == msg->Channel ) {
 				DoMethod( obj, MUIM_NList_Remove, i );
 				break;
 			}
@@ -196,17 +196,17 @@ ULONG i;
 
 static ULONG MM_Add( struct IClass *cl, Object *obj, struct MP_CHATCHANNELLIST_ADD *msg )
 {
-struct Connected *co;
+struct ChatChannel *cc;
 ULONG i;
 
 debug("list channel add\n");
 
 	/* only add, if not already in list */
 	for( i = 0 ;  ; i++ ) {
-		co = NULL;
-		DoMethod( obj, MUIM_NList_GetEntry, i, &co );
-		if( co ) {
-			if( co->co_Channel == msg->Channel ) {
+		cc = NULL;
+		DoMethod( obj, MUIM_NList_GetEntry, i, &cc );
+		if( cc ) {
+			if( cc->cc_Channel == msg->Channel ) {
 				return( 0 );
 			}
 		} else {
@@ -219,6 +219,22 @@ debug("list channel adding\n");
 //	  DoMethod( mccdata->mcc_ClassObjects[ GID_CONNECTEDBUTTONS ], MM_CONNECTEDBUTTONS_ADD, msg->Channel );
 
 	DoMethod( obj, MUIM_NList_InsertSingle, msg->Channel, MUIV_NList_Insert_Bottom );
+
+	return( 0 );
+}
+/* \\\ */
+
+/* /// MM_MessageReceived()
+**
+*/
+
+/*************************************************************************/
+
+static ULONG MM_MessageReceived( struct IClass *cl, Object *obj, struct MP_CHATCHANNELLIST_MESSAGERECEIVED *msg )
+{
+//struct Connected *co;
+
+//	  DoMethod( obj, MUIM_NList_InsertSingle, msg->Channel, MUIV_NList_Insert_Bottom );
 
 	return( 0 );
 }
@@ -238,16 +254,18 @@ DISPATCHER(MCC_ChatChannelList_Dispatcher)
 {
     switch (msg->MethodID)
     {
-		case OM_NEW                          : return( OM_New                           ( cl, obj, (APTR) msg ) );
-		case OM_DISPOSE                      : return( OM_Dispose                       ( cl, obj, (APTR) msg ) );
-		case OM_SET                          : return( OM_Set                           ( cl, obj, (APTR) msg ) );
+		case OM_NEW                              : return( OM_New                 ( cl, obj, (APTR) msg ) );
+		case OM_DISPOSE                          : return( OM_Dispose             ( cl, obj, (APTR) msg ) );
+		case OM_SET                              : return( OM_Set                 ( cl, obj, (APTR) msg ) );
 
-		case MUIM_NList_Display              : return( OM_Display                       ( cl, obj, (APTR) msg ) );
-		case MUIM_NList_Destruct             : return( OM_Destruct                      ( cl, obj, (APTR) msg ) );
-		case MUIM_NList_Construct            : return( OM_Construct                     ( cl, obj, (APTR) msg ) );
+		case MUIM_NList_Display                  : return( OM_Display             ( cl, obj, (APTR) msg ) );
+		case MUIM_NList_Destruct                 : return( OM_Destruct            ( cl, obj, (APTR) msg ) );
+		case MUIM_NList_Construct                : return( OM_Construct           ( cl, obj, (APTR) msg ) );
 
-		case MM_CHATCHANNELLIST_ADD            : return( MM_Add                           ( cl, obj, (APTR) msg ) );
-		case MM_CHATCHANNELLIST_REMOVE         : return( MM_Remove                        ( cl, obj, (APTR) msg ) );
+		case MM_CHATCHANNELLIST_ADD              : return( MM_Add                 ( cl, obj, (APTR) msg ) );
+		case MM_CHATCHANNELLIST_REMOVE           : return( MM_Remove              ( cl, obj, (APTR) msg ) );
+
+		case MM_CHATCHANNELLIST_MESSAGERECEIVED  : return( MM_MessageReceived     ( cl, obj, (APTR) msg ) );
     }
 	return( DoSuperMethodA( cl, obj, msg ) );
 

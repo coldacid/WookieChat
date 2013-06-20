@@ -28,11 +28,16 @@ enum {
 MM_CHATCHANNELLIST_DUMMY =  0xFED00800,
 MM_CHATCHANNELLIST_ADD,
 MM_CHATCHANNELLIST_REMOVE,
+MM_CHATCHANNELLIST_MESSAGERECEIVED,
 /* Attributes */
+MM_CHATCHANNELLIST_OBJECTCHATLOG,
+MM_CHATCHANNELLIST_OBJECTCHATUSERLIST,
 };
 
-struct MP_CHATCHANNELLIST_ADD    { ULONG MethodID; struct Channel *Channel; };
-struct MP_CHATCHANNELLIST_REMOVE { ULONG MethodID; struct Channel *Channel; };
+struct MP_CHATCHANNELLIST_ADD             { ULONG MethodID; struct Channel *Channel; };
+struct MP_CHATCHANNELLIST_REMOVE          { ULONG MethodID; struct Channel *Channel; };
+
+struct MP_CHATCHANNELLIST_MESSAGERECEIVED { ULONG MethodID; struct Channel *Channel; char *Text; ULONG Flags; };
 
 /*************************************************************************/
 
@@ -49,8 +54,8 @@ void    MCC_ChatChannelList_DisposeClass( void );
 ** Connected structure
 */
 
-struct Connected {
-	struct Channel        *co_Channel;
+struct ChatChannel {
+	struct Channel        *cc_Channel;
 };
 
 /*************************************************************************/
