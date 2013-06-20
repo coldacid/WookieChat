@@ -168,7 +168,8 @@ struct ChannelEntry *ce;
 			NEWLIST( &s->s_NickList );
 			AddTail( &mccdata->mcc_ServerList, (struct Node *) s );
 			s->s_ServerSocket      = -1;
-			s->ident_listen_socket = -1;
+			s->s_Ident_a_Socket    = -1;
+			s->s_IdentSocket       = -1;
 			/* we cannot link to server entry as it may be removed by user during
 			** runtime, so we spy important data */
 			strcpy( s->s_Name    , se->se_Name );
@@ -303,9 +304,10 @@ struct Server *s;
 ULONG result;
 
 	debug("MM_ServerSocketInit()\n");
-
 	result = MSG_ERROR_NOERROR + 1; /* socket error */
 	if( ( s = msg->Server ) ) {
+
+		DoMethod( obj, MM_NETWORK_SERVERSOCKETCLOSE, s );
 
 		if( ( s->s_ServerSocket = socket( AF_INET, SOCK_STREAM, IPPROTO_TCP ) ) != INVALID_SOCKET ) {
 			ULONG on = 1;
@@ -316,8 +318,45 @@ ULONG result;
 					mccdata->mcc_FDMax = s->s_ServerSocket;
 				}
 
+				if ( s->s_ServerSocket != -1 ) {
+					FD_SET( s->s_ServerSocket, &mccdata->mcc_ReadMaster  );
+					FD_SET( s->s_ServerSocket, &mccdata->mcc_WriteMaster );
+				}
+
+
+				if( 0 ) {  /* add ident config here */
+					s->s_Ident_a_Socket = -1;
+					if( ( s->s_IdentSocket = socket( AF_INET, SOCK_STREAM, 0 ) ) != INVALID_SOCKET ) {
+						if( mccdata->mcc_FDMax < s->s_IdentSocket ) {
+							mccdata->mcc_FDMax = s->s_IdentSocket;
+						}
+					}
+
+					memset( &s->s_IdentTest, '\0', sizeof( s->s_IdentTest) );
+					s->s_IdentTest.sin_family      = AF_INET; // host byte order
+					s->s_IdentTest.sin_addr.s_addr = htonl(INADDR_ANY); // auto-fill with my IP
+					s->s_IdentTest.sin_port        = htons(113); // short, network byte order
+
+					ULONG yes = 1;
+
+					if( setsockopt( (int) s->s_IdentSocket, (int) SOL_SOCKET, (int) SO_REUSEADDR, &yes, (int) sizeof( yes ) ) == -1 ) {
+						debug( "unable to reuse address\n" );
+					}
+					if( setsockopt( (int) s->s_IdentSocket, (int) SOL_SOCKET, (int) SO_REUSEPORT, &yes, (int) sizeof( yes ) ) == -1 ) {
+						debug( "unable to reuse port\n" );
+					}
+					if( bind( s->s_IdentSocket, (struct sockaddr *) &s->s_IdentTest, sizeof( s->s_IdentTest) ) == -1 ) {
+						debug( "unable to bind address to socket, error number: %ld\n", Errno() );
+					}
+					if( IoctlSocket( s->s_IdentSocket, FIONBIO, (char*) &yes ) < 0 ) {
+						debug("unable to change non-blocking I/O option for socket, error number:%ld\n", Errno() );
+					}
+					FD_SET( s->s_IdentSocket, &mccdata->mcc_ReadMaster );
+
+					listen( (int) s->s_IdentSocket, (int) 5 );
+				}
 				if( IoctlSocket( s->s_ServerSocket, FIONBIO, (char*) &on) >= 0 ) {
-					result = MSG_ERROR_NOERROR;
+					result = MSG_ERROR_NOERROR; /* invalid socket */
 				}
 			}
 		}
@@ -332,12 +371,20 @@ ULONG result;
 
 static ULONG MM_ServerSocketClose( struct IClass *cl, Object *obj, struct MP_NETWORK_SERVERSOCKETCLOSE *msg )
 {
+struct mccdata *mccdata = INST_DATA( cl, obj );
 struct Server *s;
 
 	if( ( s = msg->Server ) ) {
 		if( s->s_ServerSocket != -1 ) { /* still open? */
+			FD_CLR( s->s_ServerSocket, &mccdata->mcc_ReadMaster  );
+			FD_CLR( s->s_ServerSocket, &mccdata->mcc_WriteMaster );
+
 			CloseSocket( s->s_ServerSocket );
 			s->s_ServerSocket = -1;
+		}
+		if( s->s_IdentSocket != -1 ) { /* still open? */
+			CloseSocket( s->s_IdentSocket );
+			s->s_IdentSocket = -1;
 		}
 		s->s_State = SVRSTATE_NOTCONNECTED;
 	}
@@ -382,10 +429,11 @@ ULONG result;
 				memset( &( addr.sin_zero ), '\0', 8 );
 
 				result = MSG_ERROR_NOERROR + 6; /* socket error */
-				if( ( connect( s->s_ServerSocket, (struct sockaddr*) &addr, sizeof( struct sockaddr ) ) != SOCKET_ERROR ) ) {
-					s->s_State = SVRSTATE_CONNECTED;
-					result = MSG_ERROR_NOERROR;
-				}
+				connect( s->s_ServerSocket, (struct sockaddr*) &addr, sizeof( struct sockaddr ) );
+				//s->s_State = SVRSTATE_CONNECTED;
+				result = MSG_ERROR_NOERROR;
+				return( result );
+
 			}
 			if( result )  {
 				DoMethod( obj, MM_NETWORK_SERVERSOCKETCLOSE, s );
@@ -487,32 +535,45 @@ LONG waitsignals = *((ULONG*) msg->SignalMask );
 
 	if( selectresult > 0 ) {
 		struct Server *s;
-		ULONG i;
+		ULONG fd;
+//debug("got something %08lx\n", mccdata->mcc_FDMax );
+		for( fd = 0; fd <= mccdata->mcc_FDMax ; fd++ ) {
 
-		for( i = 0; i <= mccdata->mcc_FDMax; i++ ) {
-
-			if( FD_ISSET( i, &mccdata->mcc_ReadFDS ) ) {
-
+			if( FD_ISSET( fd, &mccdata->mcc_ReadFDS ) ) {
+				debug("got data\n");
 				for( s = (APTR) mccdata->mcc_ServerList.lh_Head ; s->s_Succ ; s = s->s_Succ ) {
-					if( ( i == s->s_ServerSocket ) || ( i == s->ident_a_socket ) || ( i == s->ident_listen_socket ) ) {
+					if( ( fd == s->s_ServerSocket ) || ( fd == s->s_Ident_a_Socket ) ) {
 						break;
 					}
 				}
-				if( !s->s_Succ ) {
-					s = (APTR) mccdata->mcc_ServerList.lh_Head;
-				}
 				if( s->s_Succ ) {
-					
 					UBYTE buffer[0x100];
 					LONG length;
 					debug("plan on reading\n");
-					length = recv( i, buffer, 0x100, 0 );
-					buffer[ 0x100 - 1 ] = 0x00;
-					debug("Buffer '%s'\n", buffer );
+					memset( &buffer, 0, 0x100 );
+
+					length = recv( s->s_ServerSocket, buffer, 0x100, 0 );
+					debug("errno %ld\n", Errno() );
+					if( !length || (length == -1 && Errno() == 32) ) {
+						if (FD_ISSET( s->s_ServerSocket, &mccdata->mcc_ReadMaster))
+							FD_CLR( s->s_ServerSocket, &mccdata->mcc_ReadMaster);
+					}
+					if( length > 0 ) {
+						buffer[ 0x100 - 1 ] = 0x00;
+						debug("Buffer %256lh\n", buffer );
+					}
+					if( !length ) {
+						if (FD_ISSET( s->s_ServerSocket, &mccdata->mcc_WriteMaster))
+							FD_CLR( s->s_ServerSocket, &mccdata->mcc_WriteMaster);
+						if (FD_ISSET( s->s_ServerSocket, &mccdata->mcc_ReadMaster))
+							FD_CLR( s->s_ServerSocket, &mccdata->mcc_ReadMaster);
+					}
 				}
 			}
-			if( FD_ISSET( i, &mccdata->mcc_WriteFDS ) ) {
-
+			if( FD_ISSET( fd, &mccdata->mcc_WriteFDS ) ) {
+				if( FD_ISSET( fd, &mccdata->mcc_WriteMaster ) ) {
+					//FD_CLR( fd, &mccdata->mcc_WriteMaster);
+				}
 			}
 		}
 
@@ -557,6 +618,7 @@ struct Channel      *c;
 	if( !( msg->Name ) || !(msg->Name[0]) || !( c = (APTR) DoMethod( obj, MM_NETWORK_CHANNELFIND, s, msg->Name ) ) ) {
 		if( (msg->Name[0] ) ) {
 			if( ( c = AllocVec( sizeof( struct Channel ), MEMF_ANY|MEMF_CLEAR ) ) ) {
+				NEWLIST( &c->c_ChatLog );
 				AddTail( &s->s_ChannelList, (struct Node *) c );
 				if( msg->Name ) {
 					strcpy( c->c_Name, msg->Name );

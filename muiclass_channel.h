@@ -25,8 +25,11 @@
 
 enum {
 MM_CHANNEL_DUMMY =  0xFED00320,
+MM_CHANNEL_MESSAGERECEIVED,
 /* Attributes */
 };
+
+struct MP_CHANNEL_MESSAGERECEIVED { ULONG MethodID; struct Channel *Channel; char *Text; ULONG Flags; };
 
 /*************************************************************************/
 

@@ -55,10 +55,6 @@ struct mccdata
 
 /*************************************************************************/
 
-struct Connected {
-	struct Channel *c_Channel;
-};
-
 /* /// OM_New()
 **
 */
@@ -102,11 +98,11 @@ static ULONG OM_Dispose( struct IClass *cl, Object *obj, Msg msg )
 
 static ULONG OM_Display( struct IClass *cl, Object *obj, struct MUIP_NList_Display *msg )
 {
-struct Connected *c = msg->entry;
+struct Connected *co = msg->entry;
 STRPTR *array = msg->strings;
 
-	if( ( c = msg->entry ) ) {
-		*array = (STRPTR) c->c_Channel->c_Name;
+	if( ( co = msg->entry ) ) {
+		*array = (STRPTR) co->co_Channel->c_Name;
 	}
 	return( 0 );
 }
@@ -119,12 +115,12 @@ STRPTR *array = msg->strings;
 
 static ULONG OM_Construct( struct IClass *cl, Object *obj, struct MUIP_NList_Construct *msg )
 {
-struct Connected *c;
+struct Connected *co;
 
-	if( ( c = AllocPooled( msg->pool, sizeof( struct Connected ) ) ) ) {
-		c->c_Channel = msg->entry;
+	if( ( co = AllocPooled( msg->pool, sizeof( struct Connected ) ) ) ) {
+		co->co_Channel = msg->entry;
     }
-	return( (IPTR) c );
+	return( (IPTR) co );
 }
 /* \\\ */
 /* /// OM_Destruct()
@@ -172,16 +168,16 @@ struct TagItem *tstate;
 
 static ULONG MM_Remove( struct IClass *cl, Object *obj, struct MP_CONNECTEDLIST_REMOVE *msg )
 {
-struct Connected *c;
+struct Connected *co;
 ULONG i;
 
 //	  DoMethod( mccdata->mcc_ClassObjects[ GID_CONNECTEDBUTTONS ], MM_CONNECTEDBUTTONS_REMOVE, msg->Channel );
 
 	for( i = 0 ;  ; i++ ) {
-		c = NULL;
-		DoMethod( obj, MUIM_NList_GetEntry, i, &c );
-		if( c ) {
-			if( c->c_Channel == msg->Channel ) {
+		co = NULL;
+		DoMethod( obj, MUIM_NList_GetEntry, i, &co );
+		if( co ) {
+			if( co->co_Channel == msg->Channel ) {
 				DoMethod( obj, MUIM_NList_Remove, i );
 				break;
 			}
@@ -200,17 +196,17 @@ ULONG i;
 
 static ULONG MM_Add( struct IClass *cl, Object *obj, struct MP_CONNECTEDLIST_ADD *msg )
 {
-struct Connected *c;
+struct Connected *co;
 ULONG i;
 
 debug("list channel add\n");
 
 	/* only add, if not already in list */
 	for( i = 0 ;  ; i++ ) {
-		c = NULL;
-		DoMethod( obj, MUIM_NList_GetEntry, i, &c );
-		if( c ) {
-			if( c->c_Channel == msg->Channel ) {
+		co = NULL;
+		DoMethod( obj, MUIM_NList_GetEntry, i, &co );
+		if( co ) {
+			if( co->co_Channel == msg->Channel ) {
 				return( 0 );
 			}
 		} else {

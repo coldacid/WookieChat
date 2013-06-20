@@ -45,5 +45,15 @@ void    MCC_ConnectedList_DisposeClass( void );
 
 /*************************************************************************/
 
+/*
+** Connected structure
+*/
+
+struct Connected {
+	struct Channel        *co_Channel;
+};
+
+/*************************************************************************/
+
 #endif /* MUICLASS_CONNECTEDLIST_H */
 

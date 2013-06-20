@@ -84,7 +84,7 @@ GID_MODEL,
 GID_MODELIMIT,
 GID_USERLIST,
 GID_CONNECTEDLIST,
-GID_CHANNEL,
+GID_CHATLOG,
 GID_MESSAGE,
 GID_LAST
 };
@@ -177,7 +177,7 @@ Object *objs[ GID_LAST ];
 							Child, objs[ GID_MODELIMIT   ] = MUICreateString( MSG_MUICLASS_WINDOWCHAT_MODELIMIT_HELP-1, USERLIMIT_SIZEOF ),
 						End,
 						Child, HGroup,
-							Child, NListviewObject, MUIA_NListview_NList, objs[ GID_CHANNEL ] = ChannelObject, End, End,
+							Child, NListviewObject, MUIA_NListview_NList, objs[ GID_CHATLOG ] = ChannelObject, End, End,
 							Child, VGroup,
 								Child, NListviewObject, MUIA_NListview_NList, objs[ GID_USERLIST      ] = UserListObject, End, MUIA_ShortHelp, LGS( MSG_MUICLASS_WINDOWCHAT_NICKLIST_HELP ), End,
 								Child, NListviewObject, MUIA_NListview_NList, objs[ GID_CONNECTEDLIST ] = ConnectedListObject, End, End,
@@ -310,13 +310,40 @@ struct mccdata *mccdata = INST_DATA( cl, obj );
 Object *settingsobj;
 
 	if( ( settingsobj = (Object *) MUIGetVar( _app(obj), MA_APPLICATION_WINDOWSETTINGS ) ) ) {
-		SetAttrs( mccdata->mcc_ClassObjects[ GID_CHANNEL       ], MUIA_Background, DoMethod( settingsobj, MM_WINDOWSETTINGS_READCONFIG, OID_COL_CHANNELBG ), TAG_DONE );
+		SetAttrs( mccdata->mcc_ClassObjects[ GID_CHATLOG       ], MUIA_Background, DoMethod( settingsobj, MM_WINDOWSETTINGS_READCONFIG, OID_COL_CHANNELBG ), TAG_DONE );
 		SetAttrs( mccdata->mcc_ClassObjects[ GID_USERLIST      ], MUIA_Background, DoMethod( settingsobj, MM_WINDOWSETTINGS_READCONFIG, OID_COL_NICKLISTBG ), TAG_DONE );
 		SetAttrs( mccdata->mcc_ClassObjects[ GID_CONNECTEDLIST ], MUIA_Background, DoMethod( settingsobj, MM_WINDOWSETTINGS_READCONFIG, OID_COL_TABLISTBG ), TAG_DONE );
 	}
 	return( 0 );
 }
 /* \\\ */
+
+/* /// MM_MessageReceived()
+**
+*/
+
+/*************************************************************************/
+
+static ULONG MM_MessageReceived( struct IClass *cl, Object *obj, struct MP_WINDOWCHAT_MESSAGERECEIVED *msg )
+{
+struct mccdata *mccdata = INST_DATA( cl, obj );
+struct Channel *c;
+struct Connected *co;
+
+	if( !( c = msg->Channel ) ) {
+		co = NULL;
+		DoMethod( mccdata->mcc_ClassObjects[ GID_CONNECTEDLIST ], MUIM_NList_GetEntry, 0, &c );
+		if( co ) {
+			c = co->co_Channel;
+		}
+	}
+	if( c ) {
+		DoMethod( mccdata->mcc_ClassObjects[ GID_CHATLOG ], MM_CHANNEL_MESSAGERECEIVED, c, msg->Message, msg->Flags );
+	}
+	return( 0 );
+}
+/* \\\ */
+
 /* /// MM_ChannelAdd()
 **
 */
@@ -362,17 +389,18 @@ DISPATCHER(MCC_WindowChat_Dispatcher)
 {
     switch (msg->MethodID)
     {
-		case OM_NEW                          : return( OM_New           ( cl, obj, (APTR) msg ) );
-		case OM_DISPOSE                      : return( OM_Dispose       ( cl, obj, (APTR) msg ) );
+		case OM_NEW                          : return( OM_New              ( cl, obj, (APTR) msg ) );
+		case OM_DISPOSE                      : return( OM_Dispose          ( cl, obj, (APTR) msg ) );
 
-		case OM_GET                          : return( OM_Get           ( cl, obj, (APTR) msg ) );
-		case MUIM_Window_Setup               : return( OM_Setup         ( cl, obj, (APTR) msg ) );
+		case OM_GET                          : return( OM_Get              ( cl, obj, (APTR) msg ) );
+		case MUIM_Window_Setup               : return( OM_Setup            ( cl, obj, (APTR) msg ) );
 
-		case MM_WINDOWCHAT_MENUSELECT        : return( MM_MenuSelect    ( cl, obj, (APTR) msg ) );
-		case MM_WINDOWCHAT_COLORCHANGE       : return( MM_ColorChange   ( cl, obj, (APTR) msg ) );
+		case MM_WINDOWCHAT_MENUSELECT        : return( MM_MenuSelect       ( cl, obj, (APTR) msg ) );
+		case MM_WINDOWCHAT_COLORCHANGE       : return( MM_ColorChange      ( cl, obj, (APTR) msg ) );
 
-		case MM_WINDOWCHAT_CHANNELADD        : return( MM_ChannelAdd    ( cl, obj, (APTR) msg ) );
-		case MM_WINDOWCHAT_CHANNELREMOVE     : return( MM_ChannelRemove ( cl, obj, (APTR) msg ) );
+		case MM_WINDOWCHAT_MESSAGERECEIVED   : return( MM_MessageReceived  ( cl, obj, (APTR) msg ) );
+		case MM_WINDOWCHAT_CHANNELADD        : return( MM_ChannelAdd       ( cl, obj, (APTR) msg ) );
+		case MM_WINDOWCHAT_CHANNELREMOVE     : return( MM_ChannelRemove    ( cl, obj, (APTR) msg ) );
     }
 	return( DoSuperMethodA( cl, obj, msg ) );
 

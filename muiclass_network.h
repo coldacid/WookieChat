@@ -103,9 +103,10 @@ struct Server {
 	//struct sockaddr_in s_ServerSocket;
 	LONG               s_ServerSocket;
 /* ident */
-	long               ident_a_socket;
+	long               s_IdentSocket;
+	long               s_Ident_a_Socket;
+	struct sockaddr_in s_IdentTest;
 	long               ident_listen_socket;
-	struct sockaddr_in ident_test;
 	struct sockaddr_in ident_their_addr;
 	char               ident_buffer[2000];
 
@@ -118,6 +119,7 @@ struct Channel {
 	char               c_Name[ CHANNELENTRY_CHANNEL_SIZEOF        + 2 ];
 	char               c_Password[ CHANNELENTRY_PASSWORD_SIZEOF   + 2 ];
 	Object            *c_ChatWindow;
+	struct List        c_ChatLog;
 };
 
 #define CHANNELF_SERVER 1 /* this is the servers channel */
