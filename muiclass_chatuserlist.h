@@ -37,6 +37,14 @@ MM_CHATUSERLIST_DUMMY =  0xFED00700,
 ULONG   MCC_ChatUserList_InitClass( void );
 void    MCC_ChatUserList_DisposeClass( void );
 
+/*
+** ChatNick structure
+*/
+
+struct ChatNick {
+	struct ChatNickEntry *cn_ChatNickEntry;
+};
+
 /*************************************************************************/
 
 #endif /* MUICLASS_CHATUSERLIST_H */

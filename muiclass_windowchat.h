@@ -31,18 +31,27 @@ MM_WINDOWCHAT_COLORCHANGE,
 
 MM_WINDOWCHAT_MESSAGERECEIVED,
 MM_WINDOWCHAT_MESSAGEENTERED,
+
 MM_WINDOWCHAT_CHANNELADD,
 MM_WINDOWCHAT_CHANNELREMOVE,
+MM_WINDOWCHAT_CHANNELCHANGE,
+MM_WINDOWCHAT_CHANNELCHANGETOPIC,
+MM_WINDOWCHAT_CHANNELNICKADD,
+MM_WINDOWCHAT_CHANNELNICKREMOVE,
 /* Attributes */
 MA_WINDOWCHAT_OBJECTNETWORK,
 };
 
-struct MP_WINDOWCHAT_MENUSELECT      { ULONG MethodID; ULONG MenuID; };
+struct MP_WINDOWCHAT_MENUSELECT         { ULONG MethodID; ULONG MenuID; };
 
-struct MP_WINDOWCHAT_MESSAGERECEIVED { ULONG MethodID; struct Channel *Channel; struct ChatLogEntry *ChatLogEntry; ULONG Flags; };
-struct MP_WINDOWCHAT_MESSAGEENTERED  { ULONG MethodID; };
-struct MP_WINDOWCHAT_CHANNELREMOVE   { ULONG MethodID; struct Channel *Channel; };
-struct MP_WINDOWCHAT_CHANNELADD      { ULONG MethodID; struct Channel *Channel; };
+struct MP_WINDOWCHAT_MESSAGERECEIVED    { ULONG MethodID; struct ChatLogEntry *ChatLogEntry; };
+struct MP_WINDOWCHAT_MESSAGEENTERED     { ULONG MethodID; };
+struct MP_WINDOWCHAT_CHANNELREMOVE      { ULONG MethodID; struct Channel *Channel; };
+struct MP_WINDOWCHAT_CHANNELADD         { ULONG MethodID; struct Channel *Channel; };
+struct MP_WINDOWCHAT_CHANNELCHANGE      { ULONG MethodID; };
+struct MP_WINDOWCHAT_CHANNELCHANGETOPIC { ULONG MethodID; struct Channel *Channel; };
+struct MP_WINDOWCHAT_CHANNELNICKREMOVE  { ULONG MethodID; struct Channel *Channel; struct ChatNickEntry *ChatNickEntry; };
+struct MP_WINDOWCHAT_CHANNELNICKADD     { ULONG MethodID; struct Channel *Channel; struct ChatNickEntry *ChatNickEntry; };
 
 /*************************************************************************/
 

@@ -39,6 +39,7 @@ MM_NETWORK_ =  0xFED00360,
 MM_NETWORK_SERVERFIND,
 MM_NETWORK_SERVERALLOC,
 MM_NETWORK_SERVERFREE,
+MM_NETWORK_SERVERFINDCHANNEL,
 
 MM_NETWORK_SERVERSOCKETINIT,
 MM_NETWORK_SERVERSOCKETCLOSE,
@@ -65,6 +66,10 @@ MM_NETWORK_CHANNELFREE,
 MM_NETWORK_CHATLOGENTRYALLOC,
 MM_NETWORK_CHATLOGENTRYFREE,
 MM_NETWORK_CHATLOGENTRYPROCESS,
+MM_NETWORK_CHATLOGENTRYADD,
+
+MM_NETWORK_CHATNICKENTRYALLOC,
+MM_NETWORK_CHATNICKENTRYFREE,
 
 /* Attributes */
 MA_NETWORK_OBJECTSETTINGS,
@@ -72,8 +77,9 @@ MA_NETWORK_OBJECTAUDIO,
 };
 
 struct MP_NETWORK_SERVERFIND              { ULONG MethodID; struct ServerEntry *ServerEntry; };
-struct MP_NETWORK_SERVERALLOC             { ULONG MethodID; struct ServerEntry *ServerEntry; Object *WindowChat; };
+struct MP_NETWORK_SERVERALLOC             { ULONG MethodID; struct ServerEntry *ServerEntry; };
 struct MP_NETWORK_SERVERFREE              { ULONG MethodID; struct Server *Server; };
+struct MP_NETWORK_SERVERFINDCHANNEL       { ULONG MethodID; struct Server *Server; char *ChannelName; };
 
 struct MP_NETWORK_SERVERCONNECTAUTO       { ULONG MethodID; };
 struct MP_NETWORK_SERVERSOCKETINIT        { ULONG MethodID; struct Server *Server; };
@@ -100,6 +106,10 @@ struct MP_NETWORK_CHANNELFREE             { ULONG MethodID; struct Server *Serve
 struct MP_NETWORK_CHATLOGENTRYALLOC       { ULONG MethodID; char *Message; ULONG Flags; };
 struct MP_NETWORK_CHATLOGENTRYFREE        { ULONG MethodID; struct ChatLogEntry *ChatLogEntry; };
 struct MP_NETWORK_CHATLOGENTRYPROCESS     { ULONG MethodID; struct Server *Server; struct ChatLogEntry *ChatLogEntry; };
+struct MP_NETWORK_CHATLOGENTRYADD         { ULONG MethodID; struct Server *Server; struct ChatLogEntry *ChatLogEntry; };
+
+struct MP_NETWORK_CHATNICKENTRYALLOC      { ULONG MethodID; struct Channel *Channel; char *NickName; };
+struct MP_NETWORK_CHATNICKENTRYFREE       { ULONG MethodID; struct Channel *Channel; struct ChatNickEntry *ChatNickEntry; };
 
 /*************************************************************************/
 
@@ -137,12 +147,12 @@ struct Server {
 struct Channel {
 	struct Channel    *c_Succ;
 	struct Channel    *c_Pred;
+	struct List        c_ChatLogList;
+	struct List        c_ChatNickList;
+	char              *c_Topic;
 	ULONG              c_Flags;
 	char               c_Name[ CHANNELENTRY_CHANNEL_SIZEOF        + 2 ];
 	char               c_Password[ CHANNELENTRY_PASSWORD_SIZEOF   + 2 ];
-	Object            *c_WindowChat;
-	struct List        c_ChatLog;
-	struct List        c_UserList;
 };
 
 #define CHANNELF_SERVER 1 /* this is the servers channel */
@@ -163,10 +173,14 @@ struct ChatLogEntry {
 	char                *cle_Command;
 	char                *cle_Arguments;
 	char                *cle_Message;
-	char                 cle_Data[0];
+	char                 cle_Data[1];
 };
 
-
+struct ChatNickEntry {
+	struct ChatNickEntry *cne_Succ;
+	struct ChatNickEntry *cne_Pred;
+	char                  cne_Nick[1];
+};
 enum{
 SVRSTATE_NOTCONNECTED = 0,
 SVRSTATE_PRECONNECTED,

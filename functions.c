@@ -561,3 +561,26 @@ void DeviceTimer_SendRequest( struct Device_Timer *dt )
 }
 /* \\\ */
 
+/*
+** Exec Lists
+*/
+
+/* /// List_GetListFromNode()
+**
+*/
+
+/*************************************************************************/
+
+APTR List_GetListFromNode( APTR snode )
+{
+struct Node *node;
+
+	if( snode ) {
+        for( node = snode ; node->ln_Succ ; node = node->ln_Succ ) {}
+		return( (APTR) ( (( (IPTR) node )) - ((IPTR) sizeof(IPTR)) ) );
+    } else {
+		return( NULL );
+    }
+}
+/* \\\ */
+

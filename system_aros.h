@@ -38,6 +38,10 @@ typedef CONST_STRPTR    _ub_cs;
 typedef CONST_STRPTR    _s_cs;
 #define NTIP const
 
+#ifndef offsetof
+#define offsetof(type, member)  __builtin_offsetof(type, member)
+#endif
+
 /*
 ** missign mui defines
 */

@@ -26,8 +26,10 @@
 #include <mui/NListview_mcc.h>
 
 #include "system.h"
+#include "functions.h"
 #include "locale.h"
 #include "muiclass.h"
+#include "muiclass_network.h"
 #include "muiclass_application.h"
 #include "muiclass_windowchat.h"
 #include "muiclass_windowquit.h"
@@ -173,13 +175,15 @@ Object *objs[ GID_LAST ];
 							Child, objs[ GID_MODEM       ] = MUICreateSmallButton( MSG_MUICLASS_WINDOWCHAT_MODEM_GAD ),
 							Child, objs[ GID_MODEB       ] = MUICreateSmallButton( MSG_MUICLASS_WINDOWCHAT_MODEB_GAD ),
 							Child, objs[ GID_MODEK       ] = MUICreateSmallButton( MSG_MUICLASS_WINDOWCHAT_MODEK_GAD ),
-							Child, objs[ GID_MODEKEYWORD ] = MUICreateString( MSG_MUICLASS_WINDOWCHAT_MODEKEYWORD_HELP-1, KEYWORDLIMIT_SIZEOF ),
-							Child, objs[ GID_MODEL       ] = MUICreateSmallButton( MSG_MUICLASS_WINDOWCHAT_MODEL_GAD ),
-							Child, objs[ GID_MODELIMIT   ] = MUICreateString( MSG_MUICLASS_WINDOWCHAT_MODELIMIT_HELP-1, USERLIMIT_SIZEOF ),
+							Child, HGroup, MUIA_HorizWeight, 40,
+								Child, objs[ GID_MODEKEYWORD ] = MUICreateString( MSG_MUICLASS_WINDOWCHAT_MODEKEYWORD_HELP-1, KEYWORDLIMIT_SIZEOF ),
+								Child, objs[ GID_MODEL       ] = MUICreateSmallButton( MSG_MUICLASS_WINDOWCHAT_MODEL_GAD ),
+								Child, objs[ GID_MODELIMIT   ] = MUICreateString( MSG_MUICLASS_WINDOWCHAT_MODELIMIT_HELP-1, USERLIMIT_SIZEOF ),
+							End,
 						End,
 						Child, HGroup,
 							Child, NListviewObject, MUIA_NListview_NList, objs[ GID_CHATLOG ] = ChatLogObject, End, End,
-							Child, VGroup,
+							Child, VGroup, MUIA_HorizWeight, 20,
 								Child, NListviewObject, MUIA_NListview_NList, objs[ GID_CHATUSERLIST      ] = ChatUserListObject, End, MUIA_ShortHelp, LGS( MSG_MUICLASS_WINDOWCHAT_NICKLIST_HELP ), End,
 								Child, NListviewObject, MUIA_NListview_NList, objs[ GID_CHATCHANNELLIST   ] = ChatChannelListObject, End, End,
 							End,
@@ -192,8 +196,6 @@ Object *objs[ GID_LAST ];
 		struct mccdata *mccdata = INST_DATA( cl, obj );
 
 		CopyMem( &objs[0], &mccdata->mcc_ClassObjects[0], sizeof( mccdata->mcc_ClassObjects));
-
-		SetAttrs( objs[ GID_CHATCHANNELLIST ], MM_CHATCHANNELLIST_OBJECTCHATLOG, objs[ GID_CHATLOG ], MM_CHATCHANNELLIST_OBJECTCHATUSERLIST, objs[ GID_CHATUSERLIST ], TAG_DONE );
 
 		SetAttrs( obj, TAG_MORE, msg->ops_AttrList );
 
@@ -268,13 +270,13 @@ struct TagItem *tstate;
 
 static ULONG OM_Setup( struct IClass *cl, Object *obj, Msg *msg )
 {
+struct mccdata *mccdata = INST_DATA( cl, obj );
 Object *winobj;
 
 	winobj = (Object *) MUIGetVar( _app(obj), MA_APPLICATION_WINDOWQUIT );
 	DoMethod( obj, MUIM_Notify, MUIA_Window_CloseRequest, TRUE, winobj, 3, MUIM_Set, MUIA_Window_Open, TRUE );
 
-	winobj = (Object *) MUIGetVar( _app(obj), MA_APPLICATION_WINDOWSETTINGS );
-
+	DoMethod( mccdata->mcc_ClassObjects[ GID_CHATCHANNELLIST ], MUIM_Notify, MUIA_NList_Active, MUIV_EveryTime, obj, 1, MM_WINDOWCHAT_CHANNELCHANGE );
 
 	return( DoSuperMethodA( cl, obj,(Msg) msg ) );
 }
@@ -345,32 +347,6 @@ Object *settingsobj;
 }
 /* \\\ */
 
-/* /// MM_MessageReceived()
-**
-*/
-
-/*************************************************************************/
-
-static ULONG MM_MessageReceived( struct IClass *cl, Object *obj, struct MP_WINDOWCHAT_MESSAGERECEIVED *msg )
-{
-struct mccdata *mccdata = INST_DATA( cl, obj );
-struct Channel *c;
-struct ChatChannel *cc;
-
-	if( !( c = msg->Channel ) ) {
-		cc = NULL;
-		DoMethod( mccdata->mcc_ClassObjects[ GID_CHATCHANNELLIST ], MUIM_NList_GetEntry, 0, &cc );
-		if( cc ) {
-			c = cc->cc_Channel;
-		}
-	}
-	if( c ) {
-		DoMethod( mccdata->mcc_ClassObjects[ GID_CHATCHANNELLIST ], MM_CHATCHANNELLIST_MESSAGERECEIVED, c, msg->ChatLogEntry, msg->Flags );
-	}
-	return( 0 );
-}
-/* \\\ */
-
 /* /// MM_ChannelAdd()
 **
 */
@@ -380,8 +356,25 @@ struct ChatChannel *cc;
 static ULONG MM_ChannelAdd( struct IClass *cl, Object *obj, struct MP_WINDOWCHAT_CHANNELADD *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
+struct ChatChannel *cc;
+ULONG i;
 
-	DoMethod( mccdata->mcc_ClassObjects[ GID_CHATCHANNELLIST ], MM_CHATCHANNELLIST_ADD, msg->Channel );
+	/* only add, if not already in list */
+	for( i = 0 ;  ; i++ ) {
+		cc = NULL;
+		DoMethod( mccdata->mcc_ClassObjects[ GID_CHATCHANNELLIST ], MUIM_NList_GetEntry, i, &cc );
+		if( cc ) {
+			if( cc->cc_Channel == msg->Channel ) {
+				return( 0 );
+			}
+		} else {
+			break;
+		}
+	}
+
+//	  DoMethod( mccdata->mcc_ClassObjects[ GID_CONNECTEDBUTTONS ], MM_CONNECTEDBUTTONS_ADD, msg->Channel );
+
+	DoMethod( mccdata->mcc_ClassObjects[ GID_CHATCHANNELLIST ], MUIM_NList_InsertSingle, msg->Channel, MUIV_NList_Insert_Bottom );
 
 	return( 0 );
 }
@@ -395,9 +388,165 @@ struct mccdata *mccdata = INST_DATA( cl, obj );
 static ULONG MM_ChannelRemove( struct IClass *cl, Object *obj, struct MP_WINDOWCHAT_CHANNELREMOVE *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
+struct ChatChannel *cc;
+ULONG i;
 
-	DoMethod( mccdata->mcc_ClassObjects[ GID_CHATCHANNELLIST ], MM_CHATCHANNELLIST_REMOVE, msg->Channel );
+//	  DoMethod( mccdata->mcc_ClassObjects[ GID_CONNECTEDBUTTONS ], MM_CONNECTEDBUTTONS_REMOVE, msg->Channel );
 
+	for( i = 0 ;  ; i++ ) {
+		cc = NULL;
+		DoMethod( mccdata->mcc_ClassObjects[ GID_CHATCHANNELLIST ], MUIM_NList_GetEntry, i, &cc );
+		if( cc ) {
+			if( cc->cc_Channel == msg->Channel ) {
+				DoMethod( mccdata->mcc_ClassObjects[ GID_CHATCHANNELLIST ], MUIM_NList_Remove, i );
+				if( i ) {
+					i--; /* next time this pos is a differen list entry different */
+				}
+			}
+		} else {
+			break;
+		}
+	}
+	return( 0 );
+}
+/* \\\ */
+/* /// MM_ChannelChange()
+**
+*/
+
+/*************************************************************************/
+
+static ULONG MM_ChannelChange( struct IClass *cl, Object *obj, struct MP_WINDOWCHAT_CHANNELCHANGE *msg )
+{
+struct mccdata *mccdata = INST_DATA( cl, obj );
+struct ChatChannel     *cc;
+struct Channel         *c;
+
+	DoMethod( mccdata->mcc_ClassObjects[ GID_CHATLOG      ], MUIM_NList_Clear );
+	DoMethod( mccdata->mcc_ClassObjects[ GID_CHATUSERLIST ], MUIM_NList_Clear );
+
+	cc = NULL;
+	DoMethod( mccdata->mcc_ClassObjects[ GID_CHATCHANNELLIST ], MUIM_NList_GetEntry, MUIV_NList_GetEntry_Active, &cc );
+	if( cc ) {
+		if( ( c = cc->cc_Channel ) ) {
+			struct Node *node;
+			DoMethod( obj, MM_WINDOWCHAT_CHANNELCHANGETOPIC, c );
+			for( node = (APTR) c->c_ChatLogList.lh_Head ; node->ln_Succ ; node = node->ln_Succ ) {
+				DoMethod( mccdata->mcc_ClassObjects[ GID_CHATLOG ], MUIM_NList_InsertSingleWrap, node, MUIV_NList_Insert_Bottom, WRAPCOL0, ALIGN_LEFT );
+			}
+			for( node = (APTR) c->c_ChatNickList.lh_Head ; node->ln_Succ ; node = node->ln_Succ ) {
+				DoMethod( mccdata->mcc_ClassObjects[ GID_CHATUSERLIST ], MUIM_NList_InsertSingleWrap, node, MUIV_NList_Insert_Bottom, WRAPCOL0, ALIGN_LEFT );
+			}
+			DoMethod( mccdata->mcc_ClassObjects[ GID_CHATUSERLIST ], MUIM_NList_Sort );
+
+		}
+	}
+	return( 0 );
+}
+/* \\\ */
+/* /// MM_ChannelChangeTopic()
+**
+*/
+
+/*************************************************************************/
+
+static ULONG MM_ChannelChangeTopic( struct IClass *cl, Object *obj, struct MP_WINDOWCHAT_CHANNELCHANGETOPIC *msg )
+{
+struct mccdata *mccdata = INST_DATA( cl, obj );
+struct ChatChannel     *cc;
+struct Channel         *c;
+
+	cc = NULL;
+	DoMethod( mccdata->mcc_ClassObjects[ GID_CHATCHANNELLIST ], MUIM_NList_GetEntry, MUIV_NList_GetEntry_Active, &cc );
+	if( cc ) {
+		if( ( c = cc->cc_Channel ) ) {
+			char *topic;
+			if( ( topic = c->c_Topic ) ) {
+				SetAttrs( mccdata->mcc_ClassObjects[ GID_TOPIC ], MUIA_NoNotify, TRUE, MUIA_String_Contents, topic, TAG_DONE );
+			}
+		}
+	}
+	return( 0 );
+}
+/* \\\ */
+
+/* /// MM_ChannelNickAdd()
+**
+*/
+
+/*************************************************************************/
+
+static ULONG MM_ChannelNickAdd( struct IClass *cl, Object *obj, struct MP_WINDOWCHAT_CHANNELNICKADD *msg )
+{
+struct mccdata *mccdata = INST_DATA( cl, obj );
+struct ChatChannel *cc;
+
+	cc = NULL;
+	DoMethod( mccdata->mcc_ClassObjects[ GID_CHATCHANNELLIST ], MUIM_NList_GetEntry, MUIV_NList_GetEntry_Active, &cc );
+	if( cc ) {
+		/* is this channel visible right now? */
+		if( cc->cc_Channel == msg->Channel ) { /* yes, then update user list */
+			DoMethod( mccdata->mcc_ClassObjects[ GID_CHATUSERLIST ], MUIM_NList_InsertSingle, msg->ChatNickEntry, MUIV_NList_Insert_Bottom );
+			DoMethod( mccdata->mcc_ClassObjects[ GID_CHATUSERLIST ], MUIM_NList_Sort );
+		}
+	}
+	return( 0 );
+}
+/* \\\ */
+/* /// MM_ChannelNickRemove()
+**
+*/
+
+/*************************************************************************/
+
+static ULONG MM_ChannelNickRemove( struct IClass *cl, Object *obj, struct MP_WINDOWCHAT_CHANNELNICKREMOVE *msg )
+{
+struct mccdata *mccdata = INST_DATA( cl, obj );
+struct ChatNick *cn;
+ULONG i;
+
+	for( i = 0 ;  ; i++ ) {
+		cn = NULL;
+		DoMethod( mccdata->mcc_ClassObjects[ GID_CHATUSERLIST ], MUIM_NList_GetEntry, i, &cn );
+		if( cn ) {
+			if( cn->cn_ChatNickEntry == msg->ChatNickEntry ) {
+				DoMethod( mccdata->mcc_ClassObjects[ GID_CHATUSERLIST ], MUIM_NList_Remove, i );
+				break;
+			}
+		} else {
+			break;
+		}
+	}
+	return( 0 );
+}
+/* \\\ */
+
+/* /// MM_MessageReceived()
+**
+*/
+
+/*************************************************************************/
+
+static ULONG MM_MessageReceived( struct IClass *cl, Object *obj, struct MP_WINDOWCHAT_MESSAGERECEIVED *msg )
+{
+struct mccdata *mccdata = INST_DATA( cl, obj );
+struct Channel *c;
+struct ChatChannel *cc;
+
+	/* pointer magic */
+
+	c = (APTR) ( ( (IPTR) List_GetListFromNode( msg->ChatLogEntry ) ) - (IPTR) offsetof( struct Channel, c_ChatLogList ) );
+
+/* is this channel visible right now? */
+
+	cc = NULL;
+	DoMethod( mccdata->mcc_ClassObjects[ GID_CHATCHANNELLIST ], MUIM_NList_GetEntry, MUIV_NList_GetEntry_Active, &cc );
+	if( cc ) {
+		if( cc->cc_Channel == c ) {
+		/* yes, so add to log */
+			DoMethod( mccdata->mcc_ClassObjects[ GID_CHATLOG ], MUIM_NList_InsertSingleWrap, msg->ChatLogEntry, MUIV_NList_Insert_Bottom, WRAPCOL0, ALIGN_LEFT );
+		}
+	}
 	return( 0 );
 }
 /* \\\ */
@@ -416,21 +565,28 @@ DISPATCHER(MCC_WindowChat_Dispatcher)
 {
     switch (msg->MethodID)
     {
-		case OM_NEW                          : return( OM_New              ( cl, obj, (APTR) msg ) );
-		case OM_DISPOSE                      : return( OM_Dispose          ( cl, obj, (APTR) msg ) );
+		case OM_NEW                             : return( OM_New                 ( cl, obj, (APTR) msg ) );
+		case OM_DISPOSE                         : return( OM_Dispose             ( cl, obj, (APTR) msg ) );
+																		   	
+		case OM_GET                             : return( OM_Get                 ( cl, obj, (APTR) msg ) );
+		case OM_SET                             : return( OM_Set                 ( cl, obj, (APTR) msg ) );
 
-		case OM_GET                          : return( OM_Get              ( cl, obj, (APTR) msg ) );
-		case OM_SET                          : return( OM_Set              ( cl, obj, (APTR) msg ) );
+		case MUIM_Window_Setup                  : return( OM_Setup               ( cl, obj, (APTR) msg ) );
 
-		case MUIM_Window_Setup               : return( OM_Setup            ( cl, obj, (APTR) msg ) );
+		case MM_WINDOWCHAT_MENUSELECT           : return( MM_MenuSelect          ( cl, obj, (APTR) msg ) );
+		case MM_WINDOWCHAT_COLORCHANGE          : return( MM_ColorChange         ( cl, obj, (APTR) msg ) );
 
-		case MM_WINDOWCHAT_MENUSELECT        : return( MM_MenuSelect       ( cl, obj, (APTR) msg ) );
-		case MM_WINDOWCHAT_COLORCHANGE       : return( MM_ColorChange      ( cl, obj, (APTR) msg ) );
+		case MM_WINDOWCHAT_MESSAGERECEIVED      : return( MM_MessageReceived     ( cl, obj, (APTR) msg ) );
+		case MM_WINDOWCHAT_CHANNELADD           : return( MM_ChannelAdd          ( cl, obj, (APTR) msg ) );
+		case MM_WINDOWCHAT_CHANNELREMOVE        : return( MM_ChannelRemove       ( cl, obj, (APTR) msg ) );
+		case MM_WINDOWCHAT_CHANNELCHANGE        : return( MM_ChannelChange       ( cl, obj, (APTR) msg ) );
+		case MM_WINDOWCHAT_CHANNELCHANGETOPIC   : return( MM_ChannelChangeTopic  ( cl, obj, (APTR) msg ) );
 
-		case MM_WINDOWCHAT_MESSAGERECEIVED   : return( MM_MessageReceived  ( cl, obj, (APTR) msg ) );
-		case MM_WINDOWCHAT_CHANNELADD        : return( MM_ChannelAdd       ( cl, obj, (APTR) msg ) );
-		case MM_WINDOWCHAT_CHANNELREMOVE     : return( MM_ChannelRemove    ( cl, obj, (APTR) msg ) );
+		case MM_WINDOWCHAT_CHANNELNICKADD       : return( MM_ChannelNickAdd      ( cl, obj, (APTR) msg ) );
+		case MM_WINDOWCHAT_CHANNELNICKREMOVE    : return( MM_ChannelNickRemove   ( cl, obj, (APTR) msg ) );
+
     }
+
 	return( DoSuperMethodA( cl, obj, msg ) );
 
 }

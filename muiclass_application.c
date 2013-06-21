@@ -263,13 +263,13 @@ Object *win;
 	return( 0 );
 }
 /* \\\ */
-/* /// MM_WindowNewChat()
+/* /// MM_WindowChatNew()
 **
 */
 
 /*************************************************************************/
 
-static ULONG MM_WindowNewChat( struct IClass *cl UNUSED, Object *obj, Msg *msg )
+static ULONG MM_WindowChatNew( struct IClass *cl UNUSED, Object *obj, Msg *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 Object *win;
@@ -285,6 +285,10 @@ Object *win;
 	return( (ULONG) win );
 }
 /* \\\ */
+
+/*
+** obsolete
+*/
 
 /* /// MM_ChatSetActive()
 **
@@ -317,6 +321,7 @@ static ULONG MM_ChatRemove( struct IClass *cl UNUSED , Object *obj, struct MP_AP
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 ULONG i, o;
+
 	/* we purge all windows that no longer exist */
 
 	for( i = 0 ; i < LASTACTIVE_MAX ; i++ ) {
@@ -366,6 +371,129 @@ ULONG i;
 /* \\\ */
 
 /*
+** new solution
+*/
+
+/* /// MM_MessageReceived()
+**
+** We distribute this method to all chat windows.
+*/
+
+/*************************************************************************/
+
+static ULONG MM_MessageReceived( struct IClass *cl, Object *obj, struct MP_APPLICATION_MESSAGERECEIVED *msg )
+{
+
+	FORCHILD( obj, MUIA_Application_WindowList ) {
+		if( MUIGetVar( child, MA_APPLICATION_CLASSID ) == CLASSID_WINDOWCHAT ) {
+			DoMethod( child, MM_WINDOWCHAT_MESSAGERECEIVED, msg->ChatLogEntry );
+		}
+	} NEXTCHILD
+	return( 0 );
+}
+/* \\\ */
+/* /// MM_ChannelAdd()
+**
+*/
+
+/*************************************************************************/
+
+static ULONG MM_ChannelAdd( struct IClass *cl, Object *obj, struct MP_APPLICATION_CHANNELADD *msg )
+{
+Object *windowchat;
+
+	if( !( windowchat = (Object *) DoMethod( obj, MM_APPLICATION_CHATFINDACTIVE ) ) ) {
+		FORCHILD( obj, MUIA_Application_WindowList ) {
+			if( MUIGetVar( child, MA_APPLICATION_CLASSID ) == CLASSID_WINDOWCHAT ) {
+				windowchat = child;
+				break;
+			}
+		} NEXTCHILD
+		if( !windowchat ) {
+			windowchat = (Object *) DoMethod( obj, MM_APPLICATION_WINDOWCHATNEW );
+		}
+	}
+	if( windowchat ) {
+		DoMethod( windowchat, MM_WINDOWCHAT_CHANNELADD, msg->Channel );
+	}
+	return( 0 );
+}
+/* \\\ */
+/* /// MM_ChannelRemove()
+**
+** We distribute this method to all chat windows.
+*/
+
+/*************************************************************************/
+
+static ULONG MM_ChannelRemove( struct IClass *cl, Object *obj, struct MP_APPLICATION_CHANNELREMOVE *msg )
+{
+
+	FORCHILD( obj, MUIA_Application_WindowList ) {
+		if( MUIGetVar( child, MA_APPLICATION_CLASSID ) == CLASSID_WINDOWCHAT ) {
+			DoMethod( child, MM_WINDOWCHAT_CHANNELREMOVE, msg->Channel );
+		}
+	} NEXTCHILD
+	return( 0 );
+}
+/* \\\ */
+/* /// MM_ChannelChangeTopic()
+**
+** We distribute this method to all chat windows.
+*/
+
+/*************************************************************************/
+
+static ULONG MM_ChannelChangeTopic( struct IClass *cl, Object *obj, struct MP_APPLICATION_CHANNELREMOVE *msg )
+{
+
+	FORCHILD( obj, MUIA_Application_WindowList ) {
+		if( MUIGetVar( child, MA_APPLICATION_CLASSID ) == CLASSID_WINDOWCHAT ) {
+			DoMethod( child, MM_WINDOWCHAT_CHANNELCHANGETOPIC, msg->Channel );
+		}
+	} NEXTCHILD
+	return( 0 );
+}
+/* \\\ */
+/* /// MM_ChannelNickAdd()
+**
+*/
+
+/*************************************************************************/
+
+static ULONG MM_ChannelNickAdd( struct IClass *cl, Object *obj, struct MP_APPLICATION_CHANNELNICKADD *msg )
+{
+
+	FORCHILD( obj, MUIA_Application_WindowList ) {
+		if( MUIGetVar( child, MA_APPLICATION_CLASSID ) == CLASSID_WINDOWCHAT ) {
+			DoMethod( child, MM_WINDOWCHAT_CHANNELNICKADD, msg->Channel, msg->ChatNickEntry );
+		}
+	} NEXTCHILD
+
+	return( 0 );
+}
+/* \\\ */
+/* /// MM_ChannelNickRemove()
+**
+** We distribute this method to all chat windows.
+*/
+
+/*************************************************************************/
+
+static ULONG MM_ChannelNickRemove( struct IClass *cl, Object *obj, struct MP_APPLICATION_CHANNELNICKREMOVE *msg )
+{
+
+	FORCHILD( obj, MUIA_Application_WindowList ) {
+		if( MUIGetVar( child, MA_APPLICATION_CLASSID ) == CLASSID_WINDOWCHAT ) {
+			DoMethod( child, MM_WINDOWCHAT_CHANNELNICKREMOVE, msg->Channel, msg->ChatNickEntry );
+		}
+	} NEXTCHILD
+
+	return( 0 );
+}
+/* \\\ */
+
+/*
 ** Dispatcher, init and dispose
 */
 
@@ -379,23 +507,29 @@ DISPATCHER(MCC_Application_Dispatcher)
 {
     switch (msg->MethodID)
     {
-		case OM_NEW                          : return( OM_New                           ( cl, obj, (APTR) msg ) );
-		case OM_DISPOSE                      : return( OM_Dispose                       ( cl, obj, (APTR) msg ) );
+		case OM_NEW                             : return( OM_New                 ( cl, obj, (APTR) msg ) );
+		case OM_DISPOSE                         : return( OM_Dispose             ( cl, obj, (APTR) msg ) );
 
-		case OM_GET                          : return( OM_Get                           ( cl, obj, (APTR) msg ) );
+		case OM_GET                             : return( OM_Get                 ( cl, obj, (APTR) msg ) );
 
-		case MUIM_Application_Load           : return( MM_Application_Load              ( cl, obj, (APTR) msg ) );
-		case MUIM_Application_Save           : return( MM_Application_Load              ( cl, obj, (APTR) msg ) );
+		case MUIM_Application_Load              : return( MM_Application_Load    ( cl, obj, (APTR) msg ) );
+		case MUIM_Application_Save              : return( MM_Application_Load    ( cl, obj, (APTR) msg ) );
 
-		case MM_APPLICATION_STARTUP          : return( MM_Startup                       ( cl, obj, (APTR) msg ) );
-		case MM_APPLICATION_WINDOWFIND       : return( MM_WindowFind                    ( cl, obj, (APTR) msg ) );
-		case MM_APPLICATION_WINDOWDISPOSE    : return( MM_WindowDispose                 ( cl, obj, (APTR) msg ) );
-		case MM_APPLICATION_WINDOWNEWCHAT    : return( MM_WindowNewChat                 ( cl, obj, (APTR) msg ) );
+		case MM_APPLICATION_STARTUP             : return( MM_Startup             ( cl, obj, (APTR) msg ) );
+		case MM_APPLICATION_WINDOWFIND          : return( MM_WindowFind          ( cl, obj, (APTR) msg ) );
+		case MM_APPLICATION_WINDOWDISPOSE       : return( MM_WindowDispose       ( cl, obj, (APTR) msg ) );
+		case MM_APPLICATION_WINDOWCHATNEW       : return( MM_WindowChatNew       ( cl, obj, (APTR) msg ) );
 
-		case MM_APPLICATION_CHATSETACTIVE    : return( MM_ChatSetActive                 ( cl, obj, (APTR) msg ) );
-		case MM_APPLICATION_CHATREMOVE       : return( MM_ChatRemove                    ( cl, obj, (APTR) msg ) );
-		case MM_APPLICATION_CHATFINDACTIVE   : return( MM_ChatFindActive                ( cl, obj, (APTR) msg ) );
+		case MM_APPLICATION_CHATSETACTIVE       : return( MM_ChatSetActive       ( cl, obj, (APTR) msg ) );
+		case MM_APPLICATION_CHATREMOVE          : return( MM_ChatRemove          ( cl, obj, (APTR) msg ) );
+		case MM_APPLICATION_CHATFINDACTIVE      : return( MM_ChatFindActive      ( cl, obj, (APTR) msg ) );
 
+		case MM_APPLICATION_MESSAGERECEIVED     : return( MM_MessageReceived     ( cl, obj, (APTR) msg ) );
+		case MM_APPLICATION_CHANNELADD          : return( MM_ChannelAdd          ( cl, obj, (APTR) msg ) );
+		case MM_APPLICATION_CHANNELREMOVE       : return( MM_ChannelRemove       ( cl, obj, (APTR) msg ) );
+		case MM_APPLICATION_CHANNELCHANGETOPIC  : return( MM_ChannelChangeTopic  ( cl, obj, (APTR) msg ) );
+		case MM_APPLICATION_CHANNELNICKADD      : return( MM_ChannelNickAdd      ( cl, obj, (APTR) msg ) );
+		case MM_APPLICATION_CHANNELNICKREMOVE   : return( MM_ChannelNickRemove   ( cl, obj, (APTR) msg ) );
     }
 	return( DoSuperMethodA( cl, obj, msg ) );
 

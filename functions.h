@@ -130,6 +130,12 @@ ULONG DeviceTimer_Open( struct Device_Timer *dt );
 void DeviceTimer_Close( struct Device_Timer *dt );
 void DeviceTimer_SendRequest( struct Device_Timer *dt );
 
+/*
+** exec lists
+*/
+
+APTR List_GetListFromNode( APTR snode );
+
 /*************************************************************************/
 
 #endif /* FUNCTIONS_H */

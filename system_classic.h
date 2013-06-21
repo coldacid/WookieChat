@@ -39,6 +39,10 @@ typedef STRPTR          _s_cs;
 #define NTIP
 typedef ULONG           IPTR;
 
+#ifndef offsetof
+#define offsetof(type, member)  __builtin_offsetof(type, member)
+#endif
+
 /*
 ** missign mui defines
 */
