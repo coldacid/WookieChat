@@ -3387,3 +3387,23 @@ MSG_LV_NO
 Nei
 ; No
 ;
+MSG_MUICLASS_NETWORK_PART
+forlater
+; Part
+;
+MSG_MUICLASS_NETWORK_JOIN
+ankommer
+; Join
+;
+MSG_MUICLASS_NETWORK_QUIT
+Avslutte
+; Quit
+;
+MSG_MUICLASS_NETWORK_TOPIC
+Topic
+; Topic
+;
+MSG_MUICLASS_NETWORK_NOTICE
+Notice
+; Notice
+;

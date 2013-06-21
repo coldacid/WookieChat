@@ -136,7 +136,7 @@ struct Library          *CodesetsBase;
 #endif
 
 static struct LibraryData LibraryArray[] = {
-	LIBMACRO( "locale.library"           ,  0, LIBFLAGSF_OPTIONAL, LocaleBase      , ILocale    ), /* first to get localised error output */
+//	  LIBMACRO( "locale.library"           ,  0, LIBFLAGSF_OPTIONAL, LocaleBase      , ILocale    ), /* locale is handled in main() */
 	LIBMACRO( "intuition.library"        , 33, 0                 , IntuitionBase   , IIntuition ), /* second to deliver requesters */
 	LIBMACRO( "muimaster.library"        ,  0, 0                 , MUIMasterBase   , IMUIMaster ), /* third for mui requesters */
 	LIBMACRO( "dos.library"              ,  0, 0                 , DOSBase         , IDos       ), /* now all other stuff */

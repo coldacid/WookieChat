@@ -15,10 +15,13 @@
 #endif
 #define NEW_CATCOMP_ARRAY_IDS
 #include "locale.h"
+#include "version.h"
 
 #include <proto/locale.h>
 #include <proto/exec.h>
+#include <SDI_hook.h>
 
+#include "functions.h"
 
 static struct Catalog *locale_catalog = NULL;
 static struct Locale  *locale_locale;
@@ -34,9 +37,12 @@ static struct Locale  *locale_locale;
 BOOL Locale_Open( STRPTR catname, ULONG version, ULONG revision)
 {
 
-	if( ( LocaleBase ) ) {
+	if( ( LocaleBase = (APTR) OpenLibrary( (_ub_cs) "locale.library",0 ) ) ) {
+#ifdef __amigaos4__
+extern struct LocaleIFace      *ILocale;
+		if( ( ILocale = (struct LocaleIFace *) GetInterface( LocaleBase, "main", 1, NULL ) ) ) {
+#endif
 		RemLibrary( (struct Library *) LocaleBase );
-
 		if( ( locale_locale = OpenLocale( NULL ) ) ) {
 			if( ( locale_catalog = OpenCatalogA( locale_locale, catname, TAG_DONE ) ) ) {
 
@@ -70,6 +76,14 @@ void Locale_Close(void)
             locale_locale = NULL;
         }
 		RemLibrary( (struct Library *) LocaleBase ); /* flush our catalog */
+#ifdef __amigaos4__
+		DropInterface((struct Interface *)ILocale);
+#endif
+/* flush our catalog */
+		RemLibrary( (struct Library *) LocaleBase );
+
+		CloseLibrary( (APTR) LocaleBase );
+		LocaleBase = NULL;
     }
 }
 /* \\\ */
@@ -82,7 +96,7 @@ void Locale_Close(void)
 STRPTR Locale_GetString( long id )
 {
 #if defined(__AROS__) || defined(__MORPHOS__)
-    if (LocaleBase != NULL && locale_catalog != NULL)
+	if (LocaleBase  && locale_catalog != NULL)
     {
         return (STRPTR)GetCatalogStr(locale_catalog, id, CatCompArray[id].cca_Str);
     }
@@ -93,6 +107,57 @@ STRPTR Locale_GetString( long id )
 #else
 #error Provide locale specific definition for your system
 #endif
+}
+/* \\\ */
+/* /// Locale_FormatDate()
+**
+*/
+
+/* /// FormatDateStream() */
+
+struct FormatDateStream
+{
+    char    *Target;
+    ULONG    TargetSize;
+};
+
+/*************************************************************************/
+
+HOOKPROTO( FormatDate_func, ULONG, struct Locale *locale UNUSED, ULONG c )
+{
+struct FormatDateStream *fs = (struct FormatDateStream*) hook->h_Data;
+
+	if( fs->TargetSize ) {
+		*(fs->Target)++ = (char) c;
+		fs->TargetSize--;
+	}
+    return(0);
+}
+MakeHook( FormatDate_hook, FormatDate_func );
+
+/* \\\ */
+
+/*************************************************************************/
+
+ULONG Locale_FormatDate( char *format, char *target, struct DateStamp *ds, ULONG targetsize )
+{
+struct FormatDateStream fs;
+struct Hook hook;
+
+	CopyMem( &FormatDate_hook, &hook, sizeof( struct Hook )); /* copy hook, to support reentrant */
+
+	fs.Target     = target;
+	fs.TargetSize = targetsize;
+	hook.h_Data   = &fs;
+
+	if( LocaleBase && locale_locale ) {
+
+		FormatDate( locale_locale, (STRPTR) format, ds, &hook );
+	} else {
+		*target = 0x00;
+	}
+
+	return( targetsize - fs.TargetSize );
 }
 /* \\\ */
 

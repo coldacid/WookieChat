@@ -3386,3 +3386,23 @@ MSG_LV_NO
 Nem
 ; No
 ;
+MSG_MUICLASS_NETWORK_PART
+Szétbomlás
+; Part
+;
+MSG_MUICLASS_NETWORK_JOIN
+Csatlakozás
+; Join
+;
+MSG_MUICLASS_NETWORK_QUIT
+Kilépés
+; Quit
+;
+MSG_MUICLASS_NETWORK_TOPIC
+Topic
+; Topic
+;
+MSG_MUICLASS_NETWORK_NOTICE
+Notice
+; Notice
+;

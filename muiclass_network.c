@@ -37,11 +37,32 @@
 
 static char *STR_NUL = "";
 
+/*
+** ServerMessageParse
+*/
+
+struct ServerMessageParse {
+	ULONG                smp_Type;
+	struct DateStamp     smp_DateStamp;
+	char                *smp_From;
+	char                *smp_Command;
+	char                *smp_Arguments;
+	char                *smp_Message;
+	char                *smp_Channel;     /* extracted from Arguments */
+	char                *smp_Nick;        /* extracted from Arguments */
+	char                *smp_FromNick;    /* extracted from Arguments */
+	char                *smp_FromDomain;  /* extracted from Arguments */
+	char                *smp_Flags;     /* extracted from Arguments */
+	char                 smp_FromNickData[ NICKENTRY_NICK_SIZEOF ]; /* extracted from Arguments */
+	char                 smp_Data[1];
+};
+
 enum{
 WID_SETTINGS = 0,
 GID_AUDIO,
 GID_LAST
 };
+
 
 /*
 ** data used by this class
@@ -63,60 +84,64 @@ struct mccdata
 #define INVALID_SOCKET -1
 #define SOCKET_ERROR   -1
 
+/*************************************************************************/
+
 /* /// IRCCommands
 */
 
 /*************************************************************************/
 
-static ULONG IRCCMD_HandlePrivMsg         ( Object *obj, struct Server *Server, struct ChatLogEntry *ChatLogEntry );
-static ULONG IRCCMD_HandleNotice          ( Object *obj, struct Server *Server, struct ChatLogEntry *ChatLogEntry );
-static ULONG IRCCMD_HandlePing            ( Object *obj, struct Server *Server, struct ChatLogEntry *ChatLogEntry );
-static ULONG IRCCMD_HandleChannelJoinPart ( Object *obj, struct Server *Server, struct ChatLogEntry *ChatLogEntry );
-static ULONG IRCCMD_HandleChannelTopic    ( Object *obj, struct Server *Server, struct ChatLogEntry *ChatLogEntry );
-static ULONG IRCCMD_HandleChannelUsers    ( Object *obj, struct Server *Server, struct ChatLogEntry *ChatLogEntry );
-static ULONG IRCCMD_HandleUserNickChange  ( Object *obj, struct Server *Server, struct ChatLogEntry *ChatLogEntry );
-static ULONG IRCCMD_HandleUserQuit        ( Object *obj, struct Server *Server, struct ChatLogEntry *ChatLogEntry );
-static ULONG IRCCMD_HandleChannelNamesList( Object *obj, struct Server *Server, struct ChatLogEntry *ChatLogEntry );
-static ULONG IRCCMD_HandleNicknameInUse   ( Object *obj, struct Server *Server, struct ChatLogEntry *ChatLogEntry );
-static ULONG IRCCMD_HandleServerMessage   ( Object *obj, struct Server *Server, struct ChatLogEntry *ChatLogEntry );
+static ULONG IRCCMD_HandlePrivMsg         ( Object *obj, struct Server *Server, struct ServerMessageParse *ServerMessageParse );
+static ULONG IRCCMD_HandleNotice          ( Object *obj, struct Server *Server, struct ServerMessageParse *ServerMessageParse );
+static ULONG IRCCMD_HandlePing            ( Object *obj, struct Server *Server, struct ServerMessageParse *ServerMessageParse );
+static ULONG IRCCMD_HandleChannelJoinPart ( Object *obj, struct Server *Server, struct ServerMessageParse *ServerMessageParse );
+static ULONG IRCCMD_HandleChannelTopic    ( Object *obj, struct Server *Server, struct ServerMessageParse *ServerMessageParse );
+static ULONG IRCCMD_HandleChannelUsers    ( Object *obj, struct Server *Server, struct ServerMessageParse *ServerMessageParse );
+static ULONG IRCCMD_HandleUserNickChange  ( Object *obj, struct Server *Server, struct ServerMessageParse *ServerMessageParse );
+static ULONG IRCCMD_HandleUserQuit        ( Object *obj, struct Server *Server, struct ServerMessageParse *ServerMessageParse );
+static ULONG IRCCMD_HandleChannelNamesList( Object *obj, struct Server *Server, struct ServerMessageParse *ServerMessageParse );
+static ULONG IRCCMD_HandleNicknameInUse   ( Object *obj, struct Server *Server, struct ServerMessageParse *ServerMessageParse );
+static ULONG IRCCMD_HandleServerMessage   ( Object *obj, struct Server *Server, struct ServerMessageParse *ServerMessageParse );
 
 struct IRCCommands {
 	char *CMD_Name;
-	ULONG (* CMD_Function)( Object *obj, struct Server *Server, struct ChatLogEntry *ChatLogEntry );
+	char *CMD_ArgPattern;
+	ULONG (* CMD_Function)( Object *obj, struct Server *Server, struct ServerMessageParse *ServerMessageParse );
 };
 
 struct IRCCommands TAB_IRCCOMMANDS[] =
 {
-	{ "PRIVMSG",            IRCCMD_HandlePrivMsg                   },
-	{ "NOTICE",             IRCCMD_HandleNotice                    },
-	{ "PING",               IRCCMD_HandlePing                      },
-	{ "JOIN",               IRCCMD_HandleChannelJoinPart           },
+	{ "PRIVMSG",    "C",     IRCCMD_HandlePrivMsg                   },
+	{ "NOTICE",     "N",     IRCCMD_HandleNotice                    },
+	{ "PING",       "",      IRCCMD_HandlePing                      },
+	{ "JOIN",       "C",     IRCCMD_HandleChannelJoinPart           },
+	{ "PART",       "C",     IRCCMD_HandleChannelJoinPart           },
 //	  { "NICK",               IRCCMD_HandleUserNickChange            },
 //	  { "QUIT",               IRCCMD_HandleUserQuit                  },
 //	  { "353",                IRCCMD_HandleChannelNamesList          },
 //	  { "433",                IRCCMD_HandleNicknameInUse             },
-    { "001",                IRCCMD_HandleServerMessage             },
-    { "002",                IRCCMD_HandleServerMessage             },
-    { "003",                IRCCMD_HandleServerMessage             },
-    { "004",                IRCCMD_HandleServerMessage             },
-    { "005",                IRCCMD_HandleServerMessage             },
-    { "250",                IRCCMD_HandleServerMessage             },
-    { "251",                IRCCMD_HandleServerMessage             },
-    { "252",                IRCCMD_HandleServerMessage             },
-    { "253",                IRCCMD_HandleServerMessage             },
-    { "254",                IRCCMD_HandleServerMessage             },
-    { "255",                IRCCMD_HandleServerMessage             },
-    { "265",                IRCCMD_HandleServerMessage             },
-    { "266",                IRCCMD_HandleServerMessage             },
-	{ "331",                IRCCMD_HandleChannelTopic              },
-	{ "332",                IRCCMD_HandleChannelTopic              },
-	{ "353",                IRCCMD_HandleChannelUsers              },
-    { "366",                IRCCMD_HandleServerMessage             },
-    { "372",                IRCCMD_HandleServerMessage             },
-    { "375",                IRCCMD_HandleServerMessage             },
-    { "376",                IRCCMD_HandleServerMessage             },
-    { "439",                IRCCMD_HandleServerMessage             },
-	{ NULL, NULL },
+	{ "001",        "NC",    IRCCMD_HandleServerMessage             },
+	{ "002",        "NC",    IRCCMD_HandleServerMessage             },
+	{ "003",        "NC",    IRCCMD_HandleServerMessage             },
+	{ "004",        "NC",    IRCCMD_HandleServerMessage             },
+	{ "005",        "NC",    IRCCMD_HandleServerMessage             },
+	{ "250",        "NC",    IRCCMD_HandleServerMessage             },
+	{ "251",        "NC",    IRCCMD_HandleServerMessage             },
+	{ "252",        "NC",    IRCCMD_HandleServerMessage             },
+	{ "253",        "NC",    IRCCMD_HandleServerMessage             },
+	{ "254",        "NC",    IRCCMD_HandleServerMessage             },
+	{ "255",        "NC",    IRCCMD_HandleServerMessage             },
+	{ "265",        "NC",    IRCCMD_HandleServerMessage             },
+	{ "266",        "NC",    IRCCMD_HandleServerMessage             },
+	{ "331",        "NC",    IRCCMD_HandleChannelTopic              },
+	{ "332",        "NC",    IRCCMD_HandleChannelTopic              },
+	{ "353",        "N-C",   IRCCMD_HandleChannelUsers              },
+	{ "366",        "NC",    IRCCMD_HandleServerMessage             },
+	{ "372",        "NC",    IRCCMD_HandleServerMessage             },
+	{ "375",        "NC",    IRCCMD_HandleServerMessage             },
+	{ "376",        "NC",    IRCCMD_HandleServerMessage             },
+	{ "439",        "NC",    IRCCMD_HandleServerMessage             },
+	{ NULL, NULL, NULL },
 };
 /* \\\ */
 /* /// IRCCMD_HandlePrivMsg()
@@ -125,19 +150,12 @@ struct IRCCommands TAB_IRCCOMMANDS[] =
 
 /*************************************************************************/
 
-static ULONG IRCCMD_HandlePrivMsg( Object *obj, struct Server *s, struct ChatLogEntry *cle )
+static ULONG IRCCMD_HandlePrivMsg( Object *obj, struct Server *s, struct ServerMessageParse *smp )
 {
-struct Channel *c;
-struct Channel *serverchannel = NULL;
-struct Channel *privchannel   = NULL;
 
-	if( ( c = (APTR) DoMethod( obj, MM_NETWORK_SERVERFINDCHANNEL, s, cle->cle_Arguments ) ) ) {
-		privchannel = c;
-	}
-	if( c->c_Flags & CHANNELF_SERVER ) {
-		serverchannel = c;
-	}
-	return( (IPTR) ( privchannel ? privchannel : serverchannel ) );
+	smp->smp_Type = LOGTYPE_NORMAL;
+
+	return( 0 );
 }
 /* \\\ */
 /* /// IRCCMD_HandleNotice()
@@ -146,10 +164,9 @@ struct Channel *privchannel   = NULL;
 
 /*************************************************************************/
 
-static ULONG IRCCMD_HandleNotice( Object *obj, struct Server *s, struct ChatLogEntry *cle )
+static ULONG IRCCMD_HandleNotice( Object *obj, struct Server *s, struct ServerMessageParse *smp )
 {
-
-	//debug("#### HANDLE NOTICE ### chatlog is\nFrom: '%s'\nCommand: '%s'\nAruments: '%s'\nMessage: '%s'\n", cle->cle_From, cle->cle_Command, cle->cle_Arguments, cle->cle_Message );
+	smp->smp_Type = LOGTYPE_NOTICE;
 
 	return( 0 );
 }
@@ -160,11 +177,11 @@ static ULONG IRCCMD_HandleNotice( Object *obj, struct Server *s, struct ChatLogE
 
 /*************************************************************************/
 
-static ULONG IRCCMD_HandlePing( Object *obj, struct Server *s, struct ChatLogEntry *cle )
+static ULONG IRCCMD_HandlePing( Object *obj, struct Server *s, struct ServerMessageParse *smp )
 {
 	DoMethod( obj, MM_NETWORK_SERVERMESSAGESEND, s, "PONG" );
 
-	return( 0 );
+	return( 1 ); /* filter msg */
 }
 /* \\\ */
 /* /// IRCCMD_HandleServerMessage()
@@ -173,9 +190,9 @@ static ULONG IRCCMD_HandlePing( Object *obj, struct Server *s, struct ChatLogEnt
 
 /*************************************************************************/
 
-static ULONG IRCCMD_HandleServerMessage( Object *obj, struct Server *s, struct ChatLogEntry *cle )
+static ULONG IRCCMD_HandleServerMessage( Object *obj, struct Server *s, struct ServerMessageParse *smp )
 {
-	//debug("#### HANDLE SERVER MESSAGE ### chatlog is\nFrom: '%s'\nCommand: '%s'\nAruments: '%s'\nMessage: '%s'\n", cle->cle_From, cle->cle_Command, cle->cle_Arguments, cle->cle_Message );
+	smp->smp_Type = LOGTYPE_INFO;
 
 	return( 0 );
 }
@@ -186,18 +203,20 @@ static ULONG IRCCMD_HandleServerMessage( Object *obj, struct Server *s, struct C
 
 /*************************************************************************/
 
-static ULONG IRCCMD_HandleChannelJoinPart( Object *obj, struct Server *s, struct ChatLogEntry *cle )
+static ULONG IRCCMD_HandleChannelJoinPart( Object *obj, struct Server *s, struct ServerMessageParse *smp )
 {
 struct Channel *c;
 
-	if( ( c = (APTR) DoMethod( obj, MM_NETWORK_SERVERFINDCHANNEL, s, cle->cle_Arguments ) ) ) {
-		if( !Stricmp( (CONST_STRPTR) cle->cle_Command, (CONST_STRPTR) "JOIN" ) ) {
+	if( ( c = (APTR) DoMethod( obj, MM_NETWORK_SERVERFINDCHANNEL, s, smp->smp_Channel ) ) ) {
+		if( !Stricmp( (CONST_STRPTR) smp->smp_Command, (CONST_STRPTR) "JOIN" ) ) {
+			smp->smp_Type = LOGTYPE_JOIN;
 			DoMethod( _app(obj), MM_APPLICATION_CHANNELADD, c );
 		} else {
+			smp->smp_Type = LOGTYPE_PART;
 			DoMethod( _app(obj), MM_APPLICATION_CHANNELREMOVE, c );
 		}
 	}
-	return( (IPTR) c );
+	return( 0 );
 }
 /* \\\ */
 /* /// IRCCMD_HandleChannelTopic()
@@ -206,25 +225,22 @@ struct Channel *c;
 
 /*************************************************************************/
 
-static ULONG IRCCMD_HandleChannelTopic( Object *obj, struct Server *s, struct ChatLogEntry *cle )
+static ULONG IRCCMD_HandleChannelTopic( Object *obj, struct Server *s, struct ServerMessageParse *smp )
 {
-struct SimpleReadArgsData *srad;
 struct Channel *c;
 
-	if( ( srad = SimpleReadArgsParse( "NICK/A,CHANNEL/A", cle->cle_Arguments ) ) ) {
-		if( ( c = (APTR) DoMethod( obj, MM_NETWORK_SERVERFINDCHANNEL, s, srad->srad_ArgArray[ 1 ] ) ) ) {
-			if( c->c_Topic ) {
-				FreeVec( c->c_Topic );
-			}
-			if( ( c->c_Topic = AllocVec( strlen( cle->cle_Message ), MEMF_ANY ) ) ) {
-				strcpy( c->c_Topic, cle->cle_Message );
-			}
-			debug("## new topic %s\n", c->c_Topic );
-			DoMethod( _app(obj), MM_APPLICATION_CHANNELCHANGETOPIC, c );
+	smp->smp_Type = LOGTYPE_TOPIC;
+
+	if( ( c = (APTR) DoMethod( obj, MM_NETWORK_SERVERFINDCHANNEL, s, smp->smp_Channel ) ) ) {
+		if( c->c_Topic ) {
+			FreeVec( c->c_Topic );
 		}
-		SimpleReadArgsFree( srad );
+		if( ( c->c_Topic = AllocVec( strlen( smp->smp_Message ), MEMF_ANY ) ) ) {
+			strcpy( c->c_Topic, smp->smp_Message );
+		}
+		DoMethod( _app(obj), MM_APPLICATION_CHANNELCHANGETOPIC, c );
 	}
-	return( (IPTR) c );
+	return( 0 );
 }
 /* \\\ */
 /* /// IRCCMD_HandleChannelUsers()
@@ -233,38 +249,28 @@ struct Channel *c;
 
 /*************************************************************************/
 
-static ULONG IRCCMD_HandleChannelUsers( Object *obj, struct Server *s, struct ChatLogEntry *cle )
+static ULONG IRCCMD_HandleChannelUsers( Object *obj, struct Server *s, struct ServerMessageParse *smp )
 {
 struct SimpleReadArgsData *srad;
 struct Channel *c;
 struct ChannelNickEntry *cne;
-char *nick, *mode, *channel;
+char *nick;
 
-	nick = cle->cle_Arguments;
-	debug("nick is '%s'\n", nick);
-	if( ( mode = strchr( nick, 0x20 ) ) ) {
-		mode++;
-		debug("mode is '%s'\n", mode);
-		if( ( channel = strchr( mode, 0x20 ) ) ) {
-			channel++;
-		debug("channel is '%s'\n", channel);
-			if( ( c = (APTR) DoMethod( obj, MM_NETWORK_SERVERFINDCHANNEL, s, channel ) ) ) {
-				if( ( srad = SimpleReadArgsParse( "NICK/M/A", cle->cle_Message ) ) ) {
-					char **array = (APTR) srad->srad_ArgArray[0];
-					while( ( nick = *array++ ) ) {
-						debug("NEW user %s\n", nick );
-						if( ( cne = (APTR) DoMethod( obj, MM_NETWORK_CHATNICKENTRYALLOC, c, nick ) ) ) {
-							DoMethod( _app(obj), MM_APPLICATION_CHANNELNICKADD, c, cne );
-						}
-					}
-					SimpleReadArgsFree( srad );
+	if( ( c = (APTR) DoMethod( obj, MM_NETWORK_SERVERFINDCHANNEL, s, smp->smp_Channel ) ) ) {
+		if( ( srad = SimpleReadArgsParse( "NICK/M/A", smp->smp_Message ) ) ) {
+			char **array = (APTR) srad->srad_ArgArray[0];
+			while( ( nick = *array++ ) ) {
+				if( ( cne = (APTR) DoMethod( obj, MM_NETWORK_CHATNICKENTRYALLOC, c, nick ) ) ) {
+					DoMethod( _app(obj), MM_APPLICATION_CHANNELNICKADD, c, cne );
 				}
 			}
+			SimpleReadArgsFree( srad );
 		}
 	}
-	return( (IPTR) c );
+	return( 0 );
 }
 /* \\\ */
+
 
 /*************************************************************************/
 
@@ -573,8 +579,14 @@ static ULONG MM_ServerFindChannel( struct IClass *cl, Object *obj, struct MP_NET
 struct Channel *c;
 
 	for( c = (APTR) msg->Server->s_ChannelList.lh_Head ; c->c_Succ ; c = c->c_Succ ) {
-		if( !Stricmp( (CONST_STRPTR) c->c_Name, (CONST_STRPTR) msg->ChannelName ) ) {
-			return( (IPTR) c );
+		if( msg->ChannelName ) {
+			if( !Stricmp( (CONST_STRPTR) c->c_Name, (CONST_STRPTR) msg->ChannelName ) ) {
+				return( (IPTR) c );
+			}
+		} else { /* no channel specified, to we search for a server channel */
+			if( c->c_Flags & CHANNELF_SERVER ) {
+				return( (IPTR) c );
+			}
 		}
 	}
 	return( 0 );
@@ -768,19 +780,23 @@ static ULONG MM_ServerMessageReceived( struct IClass *cl, Object *obj, struct MP
 {
 //struct mccdata *mccdata = INST_DATA( cl, obj );
 struct Server  *s = msg->Server;
+struct ServerMessageParse *smp;
 struct ChatLogEntry *cle;
 
-	if( ( cle = (APTR) DoMethod( obj, MM_NETWORK_CHATLOGENTRYALLOC, msg->Message, 0 ) ) ) {
+	if( ( smp = (APTR) DoMethod( obj, MM_NETWORK_SERVERMESSAGEPARSEBEGIN, s, msg->Message ) ) ) {
 
 		/* now we deal with the data. handle ping, user lists and other stuff */
-		DoMethod( obj, MM_NETWORK_CHATLOGENTRYPROCESS, s, cle );
-		
-		/* insert URL grabber stuff here */
 
-		/* finaly distribute message to all chat windows hosting the related channel */
-		if( ( cle = (APTR) DoMethod( obj, MM_NETWORK_CHATLOGENTRYADD, s, cle ) ) ) {
-			DoMethod( _app(obj), MM_APPLICATION_MESSAGERECEIVED, cle );
+		if( !( DoMethod( obj, MM_NETWORK_SERVERMESSAGEPROCESS, s, smp ) ) ) {
+		
+			/* insert URL grabber stuff here */
+
+			/* finaly distribute message to all chat windows hosting the related channel */
+			if( ( cle = (APTR) DoMethod( obj, MM_NETWORK_CHATLOGENTRYCOMPOSE, s, smp ) ) ) {
+				DoMethod( _app(obj), MM_APPLICATION_MESSAGERECEIVED, cle );
+			}
 		}
+		DoMethod( obj, MM_NETWORK_SERVERMESSAGEPARSEEND, smp );
 	}
 	return( 0 );
 }
@@ -830,6 +846,148 @@ struct SendNode *sn;
 		}
 	}
 	return( 0 );
+}
+/* \\\ */
+/* /// MM_ServerMessageParseBegin()
+**
+*/
+
+/*************************************************************************/
+
+static ULONG MM_ServerMessageParseBegin( struct IClass *cl, Object *obj, struct MP_NETWORK_SERVERMESSAGEPARSEBEGIN *msg )
+{
+struct ServerMessageParse *smp;
+char *args, chr, *pattern;
+
+	if( ( smp = AllocVec( sizeof( struct ServerMessageParse ) + strlen( msg->Message ) + 1, MEMF_ANY ) ) ) {
+		smp->smp_Type = LOGTYPE_NOTICE;
+
+	/* irc message lines look like this:
+	** ":<from> <command> <params> :<message>"
+	**
+	*/
+		DateStamp( &smp->smp_DateStamp );
+		strcpy( smp->smp_Data, msg->Message );
+VPrintf( (CONST_STRPTR) msg->Message, (CONST APTR) smp );
+VPrintf( (CONST_STRPTR) "\n", (CONST APTR) smp );
+		if( ( smp->smp_Message = strstr( smp->smp_Data, " :" ) ) ) {
+			smp->smp_Message[0] = 0x00;
+			smp->smp_Message += 2;
+		} else {
+			smp->smp_Message = STR_NUL;
+		}
+
+		smp->smp_Command = smp->smp_Data;
+		smp->smp_From  = STR_NUL;
+		if( ( smp->smp_Data[0] == ':' ) ) {
+			smp->smp_From = smp->smp_Data;
+			smp->smp_From++;
+			smp->smp_Command = strchr( smp->smp_Data, 0x20 );
+			*smp->smp_Command++ = 0x00;
+		}
+
+		if( ( smp->smp_Arguments = strchr( smp->smp_Command, 0x20 ) ) ) {
+			*smp->smp_Arguments++ = 0x00;
+		} else {
+			smp->smp_Arguments = STR_NUL;
+		}
+		/* now we try to split the arguments depending on the command specified */
+		smp->smp_Channel    = STR_NUL;
+		smp->smp_Nick       = STR_NUL;
+		smp->smp_Flags      = STR_NUL;
+		smp->smp_FromNick   = smp->smp_FromNickData;
+		smp->smp_FromDomain = STR_NUL;
+
+		strcpy( smp->smp_FromNickData, smp->smp_From );
+		if( ( args = strchr( smp->smp_FromNickData, '!' ) ) ) {
+			*args++ = 0x00;
+			smp->smp_FromDomain = args;
+		}
+
+
+		ULONG i;
+		for( i = 0 ; TAB_IRCCOMMANDS[ i ].CMD_Name ; i++ ) {
+			if( !Stricmp( (CONST_STRPTR) TAB_IRCCOMMANDS[ i ].CMD_Name, (CONST_STRPTR) smp->smp_Command ) ) {
+				pattern	= TAB_IRCCOMMANDS[ i ].CMD_ArgPattern;
+				args    = smp->smp_Arguments;
+				if( pattern && pattern[0] && args && args[0] ) {
+//					  debug("processing '%s' -> '%s'\n", smp->smp_Command, TAB_IRCCOMMANDS[ i ].CMD_ArgPattern );
+
+					while( *args && ( chr = *pattern++ ) ) {
+						switch( chr ) {
+							case 'C': /* channel */
+								smp->smp_Channel = args;
+								break;
+							case '-': /* ignore  */
+								break;
+							case 'N': /* nick    */
+								smp->smp_Nick = args;
+								break;
+							case 'F': /* flags   */
+								smp->smp_Flags = args;
+								break;
+						}
+						if( ( args = strchr( args, 0x20 ) ) ) {
+							*args++ = 0x00;
+						}
+					}
+				} else {
+//					  debug("has no argument pattern defined\n");
+				}
+				break;
+			}
+		}
+		if( !TAB_IRCCOMMANDS[ i ].CMD_Name ) {
+			VPrintf( (CONST_STRPTR) "!! Command is not in command table !!\n", &smp->smp_Command );
+		}
+	}
+#if 0
+	debug("# From:    '%s'\n", smp->smp_From );
+	debug("# Command: '%s'\n", smp->smp_Command );
+	debug("# Args:    '%s'\n", smp->smp_Arguments );
+	debug("# Message: '%s'\n", smp->smp_Message );
+
+	debug("# Channel: '%s'\n", smp->smp_Channel );
+	debug("# Nick:    '%s'\n", smp->smp_Nick  );
+	debug("# Flags:   '%s'\n", smp->smp_Flags );
+#endif
+	return( (IPTR) smp );
+}
+/* \\\ */
+/* /// MM_ServerMessageParseEnd()
+**
+*/
+
+/*************************************************************************/
+
+static ULONG MM_ServerMessageParseEnd( struct IClass *cl, Object *obj, struct MP_NETWORK_SERVERMESSAGEPARSEEND *msg )
+{
+
+	FreeVec( msg->ServerMessageParse );
+
+	return( 0 );
+}
+/* \\\ */
+/* /// MM_ServerMessageProcess()
+**
+*/
+
+/*************************************************************************/
+
+static ULONG MM_ServerMessageProcess( struct IClass *cl, Object *obj, struct MP_NETWORK_SERVERMESSAGEPROCESS *msg )
+{
+struct ServerMessageParse *smp = msg->ServerMessageParse;
+ULONG result = 0, i;
+
+	if( smp->smp_Command && smp->smp_Command[0] ) {
+		for( i = 0 ; TAB_IRCCOMMANDS[i].CMD_Name ; i++ ) {
+			if( !Stricmp( (CONST_STRPTR) smp->smp_Command, (CONST_STRPTR) TAB_IRCCOMMANDS[i].CMD_Name ) ) {
+				result = TAB_IRCCOMMANDS[i].CMD_Function( obj, msg->Server, smp );
+				break;
+			}
+		}
+	}
+	return( result );
 }
 /* \\\ */
 
@@ -1043,55 +1201,6 @@ struct Node *node;
 }
 /* \\\ */
 
-/* /// MM_ChatLogEntryAlloc()
-**
-*/
-
-/*************************************************************************/
-
-static ULONG MM_ChatLogEntryAlloc( struct IClass *cl, Object *obj, struct MP_NETWORK_CHATLOGENTRYALLOC *msg )
-{
-struct ChatLogEntry *cle;
-
-	if( ( cle = AllocVec( sizeof( struct ChatLogEntry ) + strlen( msg->Message ) + 1, MEMF_ANY ) ) ) {
-	/* irc message lines look like this:
-	** ":<from> <command> <params> :<message>"
-	**
-	*/
-		DateStamp( &cle->cle_DateStamp );
-		strcpy( cle->cle_Data, msg->Message );
-VPrintf( (CONST_STRPTR) msg->Message, (CONST APTR) cle );
-VPrintf( (CONST_STRPTR) "\n", (CONST APTR) cle );
-		if( ( cle->cle_Message = strstr( cle->cle_Data, " :" ) ) ) {
-			cle->cle_Message[0] = 0x00;
-			cle->cle_Message += 2;
-		} else {
-			cle->cle_Message = STR_NUL;
-		}
-
-		cle->cle_Command = cle->cle_Data;
-		cle->cle_From  = STR_NUL;
-		if( ( cle->cle_Data[0] == ':' ) ) {
-			cle->cle_From = cle->cle_Data;
-			cle->cle_From++;
-			cle->cle_Command = strchr( cle->cle_Data, 0x20 );
-			*cle->cle_Command++ = 0x00;
-		}
-
-		if( ( cle->cle_Arguments = strchr( cle->cle_Command, 0x20 ) ) ) {
-			*cle->cle_Arguments++ = 0x00;
-		} else {
-			cle->cle_Arguments = STR_NUL;
-		}
-	}
-	debug("cle From:    '%s'\n", cle->cle_From );
-	debug("cle Command: '%s'\n", cle->cle_Command );
-	debug("cle Args:    '%s'\n", cle->cle_Arguments );
-	debug("cle Message: '%s'\n", cle->cle_Message );
-
-	return( (IPTR) cle );
-}
-/* \\\ */
 /* /// MM_ChatLogEntryFree()
 **
 */
@@ -1111,28 +1220,64 @@ struct ChatLogEntry *cle;
 	return( 0 );
 }
 /* \\\ */
-/* /// MM_ChatLogEntryAdd()
+/* /// MM_ChatLogEntryCompose()
 **
 ** Depending on user settings and the given chat log entry, this function
 ** finds the desired channel and links the log entry to it.
 */
 
-static ULONG MM_ChatLogEntryAdd( struct IClass *cl, Object *obj, struct MP_NETWORK_CHATLOGENTRYADD *msg )
+static ULONG MM_ChatLogEntryCompose( struct IClass *cl, Object *obj, struct MP_NETWORK_CHATLOGENTRYCOMPOSE *msg )
 {
+struct mccdata *mccdata = INST_DATA( cl, obj );
 struct Server  *s;
 struct Channel *c;
-struct ChatLogEntry *cle;
+struct ServerMessageParse *smp;
+struct ChatLogEntry *cle = NULL;
 
 	if( ( s = msg->Server ) ) {
-		if( ( cle = msg->ChatLogEntry ) ) {
-			if( ( c = (APTR) DoMethod( obj, MM_NETWORK_SERVERFINDCHANNEL, s, cle->cle_Arguments ) ) ) {
-				AddTail( &c->c_ChatLogList, (struct Node *) cle );
+		if( ( smp = msg->ServerMessageParse ) ) {
+/*
+** build log message
+*/
+			mccdata->mcc_GlobalBuffer[0] = 0x00;
+			if( ( GlobalReadConfig( OID_GUI_TIMESHOW ) ) ) {
+				Locale_FormatDate( (char *) LocalReadConfig( OID_GUI_TIMEFORMAT ), mccdata->mcc_GlobalBuffer, &smp->smp_DateStamp, GLOBALBUFFER_SIZEOF );
 			}
+			switch( smp->smp_Type ) {
+				case LOGTYPE_NORMAL:
+					sprintf( &mccdata->mcc_GlobalBuffer[ strlen( mccdata->mcc_GlobalBuffer ) ],
+						"<%s> %s", smp->smp_FromNick, smp->smp_Message );
+					break;
+				case LOGTYPE_JOIN:
+					sprintf( &mccdata->mcc_GlobalBuffer[ strlen( mccdata->mcc_GlobalBuffer ) ],
+						"[%s] %s (%s) %s", LGS( MSG_MUICLASS_NETWORK_JOIN ), smp->smp_FromNick, smp->smp_FromDomain, smp->smp_Message );
+					break;
+				case LOGTYPE_PART:
+					sprintf( &mccdata->mcc_GlobalBuffer[ strlen( mccdata->mcc_GlobalBuffer ) ],
+						"[%s] %s (%s) %s", LGS( MSG_MUICLASS_NETWORK_PART ), smp->smp_FromNick, smp->smp_FromDomain, smp->smp_Message );
+					break;
+				case LOGTYPE_NOTICE:
+					sprintf( &mccdata->mcc_GlobalBuffer[ strlen( mccdata->mcc_GlobalBuffer ) ],
+						"[%s] %s %s", LGS( MSG_MUICLASS_NETWORK_NOTICE ), smp->smp_FromNick, smp->smp_Message );
+					break;
+				case LOGTYPE_TOPIC:
+					sprintf( &mccdata->mcc_GlobalBuffer[ strlen( mccdata->mcc_GlobalBuffer ) ],
+						"[%s] %s (%s) %s", LGS( MSG_MUICLASS_NETWORK_TOPIC ), smp->smp_Nick, smp->smp_From, smp->smp_Message );
+					break;
+				default:
+					strcat( mccdata->mcc_GlobalBuffer, (char*) " FIXME " );
+					strcat( mccdata->mcc_GlobalBuffer, smp->smp_Command );
+					strcat( mccdata->mcc_GlobalBuffer, smp->smp_Message );
+					break;
+			}
+/*
+** find output channel
+*/
+			c = (APTR) DoMethod( obj, MM_NETWORK_SERVERFINDCHANNEL, s, smp->smp_Channel );
 			if( !c->c_Succ ) {
 				/* channel not found, so use server tab */
 				for( c = (APTR) s->s_ChannelList.lh_Head ; c->c_Succ ; c = c->c_Succ ) {
 					if( c->c_Flags & CHANNELF_SERVER ) {
-						AddTail( &c->c_ChatLogList, (struct Node *) cle );
 						break;
 					}
 				}
@@ -1140,39 +1285,23 @@ struct ChatLogEntry *cle;
 			}
 			if( !c->c_Succ ) { /* still no channel, then use the first we find */
 				for( c = (APTR) s->s_ChannelList.lh_Head ; c->c_Succ ; ) {
-					AddTail( &c->c_ChatLogList, (struct Node *) cle );
 					break;
 				}
 			}
-			if( !c->c_Succ ) { /* still no channel, then we free the shit */
-				DoMethod( obj, MM_NETWORK_CHATLOGENTRYFREE, cle );
-				cle = NULL;
+/*
+** add to channel
+*/
+			if( c->c_Succ ) { /* no channel no output */
+				if( ( cle = AllocVec( sizeof( struct ChatLogEntry ) + strlen( mccdata->mcc_GlobalBuffer ) + 1, MEMF_ANY ) ) ) {
+					cle->cle_Type = smp->smp_Type;
+					strcpy( cle->cle_Message, mccdata->mcc_GlobalBuffer );
+					AddTail( &c->c_ChatLogList, (struct Node *) cle );
+					DoMethod( _app(obj), MM_APPLICATION_MESSAGERECEIVED, cle );
+				}
 			}
 		}
 	}
 	return( (IPTR) cle );
-}
-/* \\\ */
-/* /// MM_ChatLogEntryProcess()
-**
-*/
-
-/*************************************************************************/
-
-static ULONG MM_ChatLogEntryProcess( struct IClass *cl, Object *obj, struct MP_NETWORK_CHATLOGENTRYPROCESS *msg )
-{
-struct ChatLogEntry *cle = msg->ChatLogEntry;
-ULONG result = 0, i;
-
-	if( cle->cle_Command && cle->cle_Command[0] ) {
-		for( i = 0 ; TAB_IRCCOMMANDS[i].CMD_Name ; i++ ) {
-			if( !Stricmp( (CONST_STRPTR) cle->cle_Command, (CONST_STRPTR) TAB_IRCCOMMANDS[i].CMD_Name ) ) {
-				result = TAB_IRCCOMMANDS[i].CMD_Function( obj, msg->Server, cle );
-				break;
-			}
-		}
-	}
-	return( result );
 }
 /* \\\ */
 
@@ -1246,6 +1375,9 @@ DISPATCHER(MCC_Network_Dispatcher)
 		case MM_NETWORK_SERVERMESSAGERECEIVED   : return( MM_ServerMessageReceived  ( cl, obj, (APTR) msg ) );
 		case MM_NETWORK_SERVERMESSAGESEND       : return( MM_ServerMessageSend      ( cl, obj, (APTR) msg ) );
 		case MM_NETWORK_SERVERMESSAGESENDPROC   : return( MM_ServerMessageSendProc  ( cl, obj, (APTR) msg ) );
+		case MM_NETWORK_SERVERMESSAGEPARSEBEGIN : return( MM_ServerMessageParseBegin( cl, obj, (APTR) msg ) );
+		case MM_NETWORK_SERVERMESSAGEPARSEEND   : return( MM_ServerMessageParseEnd  ( cl, obj, (APTR) msg ) );
+		case MM_NETWORK_SERVERMESSAGEPROCESS    : return( MM_ServerMessageProcess   ( cl, obj, (APTR) msg ) );
 
 		case MM_NETWORK_SERVERSOCKETINIT        : return( MM_ServerSocketInit       ( cl, obj, (APTR) msg ) );
 		case MM_NETWORK_SERVERSOCKETCLOSE       : return( MM_ServerSocketClose      ( cl, obj, (APTR) msg ) );
@@ -1267,10 +1399,8 @@ DISPATCHER(MCC_Network_Dispatcher)
 		case MM_NETWORK_CHANNELALLOC            : return( MM_ChannelAlloc           ( cl, obj, (APTR) msg ) );
 		case MM_NETWORK_CHANNELFREE             : return( MM_ChannelFree            ( cl, obj, (APTR) msg ) );
 
-		case MM_NETWORK_CHATLOGENTRYALLOC       : return( MM_ChatLogEntryAlloc      ( cl, obj, (APTR) msg ) );
 		case MM_NETWORK_CHATLOGENTRYFREE        : return( MM_ChatLogEntryFree       ( cl, obj, (APTR) msg ) );
-		case MM_NETWORK_CHATLOGENTRYADD         : return( MM_ChatLogEntryAdd        ( cl, obj, (APTR) msg ) );
-		case MM_NETWORK_CHATLOGENTRYPROCESS     : return( MM_ChatLogEntryProcess    ( cl, obj, (APTR) msg ) );
+		case MM_NETWORK_CHATLOGENTRYCOMPOSE     : return( MM_ChatLogEntryCompose    ( cl, obj, (APTR) msg ) );
 
 		case MM_NETWORK_CHATNICKENTRYALLOC      : return( MM_ChatNickEntryAlloc     ( cl, obj, (APTR) msg ) );
 		case MM_NETWORK_CHATNICKENTRYFREE       : return( MM_ChatNickEntryFree      ( cl, obj, (APTR) msg ) );

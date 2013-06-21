@@ -29,6 +29,7 @@
 BOOL   Locale_Open( STRPTR catname, ULONG version, ULONG revision);
 void   Locale_Close(void);
 STRPTR Locale_GetString(long ID);
+ULONG  Locale_FormatDate( char *format, char *target, struct DateStamp *ds, ULONG targetsize );
 
 #define LGS( id ) Locale_GetString( id )
 

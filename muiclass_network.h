@@ -53,7 +53,10 @@ MM_NETWORK_SERVERAUTOJOIN,
 MM_NETWORK_SERVERMESSAGERECEIVED,
 MM_NETWORK_SERVERMESSAGESEND,
 MM_NETWORK_SERVERMESSAGESENDPROC,
-
+MM_NETWORK_SERVERMESSAGEPROCESS,
+MM_NETWORK_SERVERMESSAGEPARSEBEGIN,
+MM_NETWORK_SERVERMESSAGEPARSEEND,
+ 
 MM_NETWORK_SERVERRECEIVEDATA,
 MM_NETWORK_SERVERSENDDATA,
 
@@ -65,8 +68,7 @@ MM_NETWORK_CHANNELFREE,
 
 MM_NETWORK_CHATLOGENTRYALLOC,
 MM_NETWORK_CHATLOGENTRYFREE,
-MM_NETWORK_CHATLOGENTRYPROCESS,
-MM_NETWORK_CHATLOGENTRYADD,
+MM_NETWORK_CHATLOGENTRYCOMPOSE,
 
 MM_NETWORK_CHATNICKENTRYALLOC,
 MM_NETWORK_CHATNICKENTRYFREE,
@@ -93,6 +95,9 @@ struct MP_NETWORK_SERVERAUTOJOIN          { ULONG MethodID; struct Server *Serve
 
 struct MP_NETWORK_SERVERMESSAGERECEIVED   { ULONG MethodID; struct Server *Server; char *Message; };
 struct MP_NETWORK_SERVERMESSAGESEND       { ULONG MethodID; struct Server *Server; char *Message; };
+struct MP_NETWORK_SERVERMESSAGEPARSEBEGIN { ULONG MethodID; struct Server *Server; char *Message; };
+struct MP_NETWORK_SERVERMESSAGEPARSEEND   { ULONG MethodID; struct ServerMessageParse *ServerMessageParse; };
+struct MP_NETWORK_SERVERMESSAGEPROCESS    { ULONG MethodID; struct Server *Server; struct ServerMessageParse *ServerMessageParse; };
 
 struct MP_NETWORK_SERVERRECEIVEDATA       { ULONG MethodID; struct Server *Server; char *Data; ULONG Length; };
 struct MP_NETWORK_SERVERSENDDATA          { ULONG MethodID; struct Server *Server; char *Data; ULONG Length; };
@@ -103,10 +108,11 @@ struct MP_NETWORK_CHANNELFIND             { ULONG MethodID; struct Server *Serve
 struct MP_NETWORK_CHANNELALLOC            { ULONG MethodID; struct Server *Server; char *Name; };
 struct MP_NETWORK_CHANNELFREE             { ULONG MethodID; struct Server *Server; struct Channel *Channel; };
 
+
 struct MP_NETWORK_CHATLOGENTRYALLOC       { ULONG MethodID; char *Message; ULONG Flags; };
 struct MP_NETWORK_CHATLOGENTRYFREE        { ULONG MethodID; struct ChatLogEntry *ChatLogEntry; };
 struct MP_NETWORK_CHATLOGENTRYPROCESS     { ULONG MethodID; struct Server *Server; struct ChatLogEntry *ChatLogEntry; };
-struct MP_NETWORK_CHATLOGENTRYADD         { ULONG MethodID; struct Server *Server; struct ChatLogEntry *ChatLogEntry; };
+struct MP_NETWORK_CHATLOGENTRYCOMPOSE     { ULONG MethodID; struct Server *Server; struct ServerMessageParse *ServerMessageParse; };
 
 struct MP_NETWORK_CHATNICKENTRYALLOC      { ULONG MethodID; struct Channel *Channel; char *NickName; };
 struct MP_NETWORK_CHATNICKENTRYFREE       { ULONG MethodID; struct Channel *Channel; struct ChatNickEntry *ChatNickEntry; };
@@ -138,9 +144,9 @@ struct Server {
 	long               s_IdentSocket;
 	long               s_Ident_a_Socket;
 	struct sockaddr_in s_IdentTest;
-	long               ident_listen_socket;
-	struct sockaddr_in ident_their_addr;
-	char               ident_buffer[2000];
+//	  long               ident_listen_socket;
+//	  struct sockaddr_in ident_their_addr;
+//	  char               ident_buffer[2000];
 
 };
 
@@ -164,17 +170,13 @@ struct Nick {
 	char               n_Password[ NICKENTRY_NICK_SIZEOF   + 2 ];
 };
 
-
 struct ChatLogEntry {
 	struct ChatLogEntry *cle_Succ;
 	struct ChatLogEntry *cle_Pred;
-	struct DateStamp     cle_DateStamp;
-	char                *cle_From;
-	char                *cle_Command;
-	char                *cle_Arguments;
-	char                *cle_Message;
-	char                 cle_Data[1];
+	ULONG                cle_Type;
+	char                 cle_Message[1];
 };
+
 
 struct ChatNickEntry {
 	struct ChatNickEntry *cne_Succ;
@@ -203,7 +205,7 @@ LOGTYPE_ACTIONS,
 LOGTYPE_INFO,
 LOGTYPE_OWNTEXT,
 LOGTYPE_HIGHLIGHT,
-LOGTYPE_NOTICES,
+LOGTYPE_NOTICE,
 LOGTYPE_INVITE,
 LOGTYPE_KICK,
 LOGTYPE_NICKCHANGE,

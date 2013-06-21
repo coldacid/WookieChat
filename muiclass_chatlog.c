@@ -27,6 +27,7 @@
 #include "system.h"
 #include "locale.h"
 #include "muiclass.h"
+#include "muiclass_windowsettings.h"
 #include "muiclass_chatlog.h"
 #include "muiclass_network.h"
 #include "version.h"

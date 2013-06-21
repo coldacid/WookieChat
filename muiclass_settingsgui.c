@@ -76,7 +76,7 @@ static struct ConfigItem TAB_CONFIGITEMS[] = {
 	{ GID_SMILIES             , OID_GUI_SMILIES             , MUIA_Selected       , (LONG) 1 },
 	{ GID_SMILIESTHEME        , OID_GUI_SMILIESTHEME        , MUIA_Cycle_Active   , (LONG) 0 },
 	{ GID_TIMESHOW            , OID_GUI_TIMESHOW            , MUIA_Selected       , (LONG) 1 },
-	{ GID_TIMEFORMAT          , OID_GUI_TIMEFORMAT          , MUIA_String_Contents, (LONG) "[%h:%m:%s]" },
+	{ GID_TIMEFORMAT          , OID_GUI_TIMEFORMAT          , MUIA_String_Contents, (LONG) "[%H:%M:%S]" },
 	{ GID_CHANNELVIEWTIMEWIDTH, OID_GUI_CHANNELVIEWTIMEWIDTH, MUIA_Slider_Level   , (LONG) 120 },
 	{ GID_CHANNELVIEWNICKWIDTH, OID_GUI_CHANNELVIEWNICKWIDTH, MUIA_Slider_Level   , (LONG) 250 },
 	{ GID_CHANNELVIEWSPACING  , OID_GUI_CHANNELVIEWSPACING  , MUIA_Slider_Level   , (LONG) 8 },

@@ -562,6 +562,3 @@ void MCC_Application_DisposeClass( void )
 }
 /* \\\ */
 
-
-
-

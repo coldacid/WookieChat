@@ -88,7 +88,7 @@ GID_MODELIMIT,
 GID_CHATUSERLIST,
 GID_CHATCHANNELLIST,
 GID_CHATLOG,
-GID_MESSAGE,
+GID_CHATMESSAGE,
 GID_LAST
 };
 
@@ -96,7 +96,7 @@ GID_LAST
 #define TOPIC_SIZEOF 0x400
 #define KEYWORDLIMIT_SIZEOF 40
 #define USERLIMIT_SIZEOF    40
-#define MESSAGE_SIZEOF      40
+#define MESSAGE_SIZEOF      490
 
 #define FIRSTMENU_ITEM MID_SELECTSERVER	
 #define LASTMENU_ITEM MID_IGNORELIST
@@ -104,11 +104,13 @@ GID_LAST
 /*
 ** data used by this class
 */
+#define COMMAND_SIZEOF 0x1000
 
 struct mccdata
 {
 	Object                *mcc_ClassObjects[ GID_LAST ];
 	char                   mcc_WindowTitle[ WINDOWTITLE_SIZEOF + 2 ];
+	char                   mcc_CommandBuffer[ COMMAND_SIZEOF ];
 };
 
 /*************************************************************************/
@@ -188,7 +190,7 @@ Object *objs[ GID_LAST ];
 								Child, NListviewObject, MUIA_NListview_NList, objs[ GID_CHATCHANNELLIST   ] = ChatChannelListObject, End, End,
 							End,
 						 End,
-						Child, objs[ GID_MESSAGE         ] = MUICreateString( MSG_MUICLASS_WINDOWCHAT_MESSAGE_HELP-1, MESSAGE_SIZEOF ),
+						Child, objs[ GID_CHATMESSAGE  ] = MUICreateString( MSG_MUICLASS_WINDOWCHAT_MESSAGE_HELP-1, MESSAGE_SIZEOF ),
 
 					 End,
 		TAG_DONE ) ) ) {
@@ -277,6 +279,8 @@ Object *winobj;
 	DoMethod( obj, MUIM_Notify, MUIA_Window_CloseRequest, TRUE, winobj, 3, MUIM_Set, MUIA_Window_Open, TRUE );
 
 	DoMethod( mccdata->mcc_ClassObjects[ GID_CHATCHANNELLIST ], MUIM_Notify, MUIA_NList_Active, MUIV_EveryTime, obj, 1, MM_WINDOWCHAT_CHANNELCHANGE );
+
+	DoMethod( mccdata->mcc_ClassObjects[ GID_CHATMESSAGE ], MUIM_Notify, MUIA_String_Acknowledge, MUIV_EveryTime, obj, 1, MM_WINDOWCHAT_MESSAGEENTERED );
 
 	return( DoSuperMethodA( cl, obj,(Msg) msg ) );
 }
@@ -435,7 +439,7 @@ struct Channel         *c;
 				DoMethod( mccdata->mcc_ClassObjects[ GID_CHATLOG ], MUIM_NList_InsertSingleWrap, node, MUIV_NList_Insert_Bottom, WRAPCOL0, ALIGN_LEFT );
 			}
 			for( node = (APTR) c->c_ChatNickList.lh_Head ; node->ln_Succ ; node = node->ln_Succ ) {
-				DoMethod( mccdata->mcc_ClassObjects[ GID_CHATUSERLIST ], MUIM_NList_InsertSingleWrap, node, MUIV_NList_Insert_Bottom, WRAPCOL0, ALIGN_LEFT );
+				DoMethod( mccdata->mcc_ClassObjects[ GID_CHATUSERLIST ], MUIM_NList_InsertSingle, node, MUIV_NList_Insert_Bottom );
 			}
 			DoMethod( mccdata->mcc_ClassObjects[ GID_CHATUSERLIST ], MUIM_NList_Sort );
 
@@ -550,6 +554,35 @@ struct ChatChannel *cc;
 	return( 0 );
 }
 /* \\\ */
+/* /// MM_MessageEntered()
+**
+*/
+
+/*************************************************************************/
+
+static ULONG MM_MessageEntered( struct IClass *cl, Object *obj, struct MP_WINDOWCHAT_MESSAGEENTERED *msg )
+{
+struct mccdata *mccdata = INST_DATA( cl, obj );
+struct ChatChannel *cc;
+struct Server *s;
+
+	cc = NULL;
+	DoMethod( mccdata->mcc_ClassObjects[ GID_CHATCHANNELLIST ], MUIM_NList_GetEntry, MUIV_NList_GetEntry_Active, &cc );
+	if( cc ) {
+		/* pointer magic */
+		s = (APTR) ( ( (IPTR) List_GetListFromNode( cc->cc_Channel ) ) - (IPTR) offsetof( struct Server, s_ChannelList ) );
+		strcpy( mccdata->mcc_CommandBuffer, (char*) "PRIVMSG " );
+		strcat( mccdata->mcc_CommandBuffer, cc->cc_Channel->c_Name );
+		strcat( mccdata->mcc_CommandBuffer, (char*) " :" );
+		strcat( mccdata->mcc_CommandBuffer, (char *) MUIGetVar( mccdata->mcc_ClassObjects[ GID_CHATMESSAGE ], MUIA_String_Contents ) );
+		DoMethod( mccdata->mcc_ClassObjects[ GID_NETWORK ], MM_NETWORK_SERVERMESSAGESEND, s, mccdata->mcc_CommandBuffer );
+		/* geit FIXME: This should be done in subclass of string field, which also keeps command history */
+		SetAttrs( mccdata->mcc_ClassObjects[ GID_CHATMESSAGE ], MUIA_String_Contents, "", TAG_DONE );
+		SetAttrs( obj, MUIA_Window_ActiveObject, mccdata->mcc_ClassObjects[ GID_CHATMESSAGE ], TAG_DONE );
+	}
+	return( 0 );
+}
+/* \\\ */
 
 /*
 ** Dispatcher, init and dispose
@@ -576,6 +609,7 @@ DISPATCHER(MCC_WindowChat_Dispatcher)
 		case MM_WINDOWCHAT_MENUSELECT           : return( MM_MenuSelect          ( cl, obj, (APTR) msg ) );
 		case MM_WINDOWCHAT_COLORCHANGE          : return( MM_ColorChange         ( cl, obj, (APTR) msg ) );
 
+		case MM_WINDOWCHAT_MESSAGEENTERED       : return( MM_MessageEntered      ( cl, obj, (APTR) msg ) );
 		case MM_WINDOWCHAT_MESSAGERECEIVED      : return( MM_MessageReceived     ( cl, obj, (APTR) msg ) );
 		case MM_WINDOWCHAT_CHANNELADD           : return( MM_ChannelAdd          ( cl, obj, (APTR) msg ) );
 		case MM_WINDOWCHAT_CHANNELREMOVE        : return( MM_ChannelRemove       ( cl, obj, (APTR) msg ) );
