@@ -54,7 +54,85 @@ classes.
 
 Additional notes to specific developers: (just remove after reading :D )
 
-NOTE to deadwood: Maybe it is a good idea to open a separate trunk and store the
-version right after fixing locales and before starting adding subclasses and
-kill all unused files from offical trunk.
+Things which need to be done next
+----------------------------------
+
+A separate trunk should be created for the classic WookieChat. Something around
+r85 is fine. Thats after locale fixing and before changing internals. In the result all those
+useless files should be removed from current trunk.
+
+A global memory pool should replace all the AllocVec()/FreeVec() calls in code
+to make it more robust against memory fragmentation.
+
+Chat message input gadget (the long string input in the bottom of each chat
+window), need to be subclassed. This will allow to implement things like nick
+completition and history without the need of dealing with some non standard mui
+class.
+
+The missing commands need to be implemented and their display needs to be fixed.
+Just check out for all those FIXME outputs in chat view.
+
+Some structures need a rework. I (geit) will do that next. It is required as I
+changed plans some time during development. I broke it I fix it. Basically those
+are the prefs structures, which I probably prefix with settings/prefs of some
+kind to make clear they are not to be modified by the runtime application and
+read only.
+
+I always disliked the original way of having a servers window and a prefs
+window. As you can see I already fixed that, but now we have another issue,
+which I am aware of. How to connect to a new server without quit/restart the
+entire application. Well, there is already a method named
+MM_NETWORK_SERVERCONNECTAUTO, which I want to call each time the user saves or
+uses prefs. Currently it lacks proper checking for already established
+connections.
+
+The second issue with the new prefs is to configure it, when being used for the
+first time. The plan is to deliver multiple preset files. I already placed one
+for testing, but the real ones need to be marked with _MorphOS, _AmigaOS4,
+_AROS, ... So we can preconfigure a basic setup depending on the users system.
+e.g. running WookieChat on AROS it will connect to freenode #AROS. Of course we
+cannot include nick names in these files, or we would be doomed. The plan is to
+create a small - kind of - wizard. A small window with a description text field
+and a user name and nick name input. Just that. The wizzard will open, if no
+server or no nick is available. Once the user added these information, he pushes
+connect (or quit if he likes) and is right in the game or back on desktop. :D
+
+Context menus need to be added to support old features (user list), but also to
+support the new multi window support.
+
+Server window still lacks some settings. Basically its the user name and retry.
+retry delay and dupe detection. Others may get obsolete or need to be adapted to
+our needs, but we will see.
+
+Color output, notification and audio need to be reconnected. This can be done by
+grabbing the smp_Type field during message processing.
+
+There is no local echo. We need to think about a smart way to inject the old
+command lines, without trigger events. Probably just using the
+MM_NETWORK_SERVERMESSAGERECEIVED method without processing the information (url
+grabber/response). Maybe some argument does the tick as some commands probably
+need to be processed.
+
+ChatWindow buttons (basically the entire top line), needs to be implemented.
+Information need to be extracted from incoming commands and stored in Channel
+struct. Use the flags field for buttons and a method for smart updating like it
+is done for the topic. It makes no sense to update all lists and cause a
+gigantic hickup like the original WookieChat did. But no need to overkill. MUI
+is smart, so for those buttons one method to update them all is fine.
+
+ChatWindow Title should show an overview like the original wookie did.
+"WookieChat - <nick> connected with <server> - <channel> [# user]"
+
+The bottom channel buttons are a feature that may come in handy again, when
+combined with multiple windows. People like then and I did not forget them. I
+plan a button group, which is simple hidden by using MUIA_ShowMe. Same goes for
+the List. The overhead is minimum. The idea is simply to update the button array
+along side with the channel list. I placed some disabled DoMethod calls in
+WindowChat classes MM_WINDOWCHAT_CHANNELADD and MM_WINDOWCHAT_CHANNELADD.
+
+Proper rexx port is missing. MUI delivers one, which is quite handy, when
+combined with simple args parsing from function.c file.
+
+Icon notification. For MorphOS I would like to add support for MagicBeacon and
+ScreenBar.
 
