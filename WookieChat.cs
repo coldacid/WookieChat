@@ -10171,4 +10171,150 @@ Brukere i kanal
 U¿ytkownicy na kanale
 Användare i kanalen
 ;
+; MUICLASS_QUICKSETUP
+;
+MSG_MUICLASS_WINDOWQUICKSETUP_TITLE
+WookieChat Quick Set-Up
+WookieChar Schnellstarter
+WookieChat Quick Set-Up
+WookieChat Quick Set-Up
+WookieChat Quick Set-Up
+WookieChat Quick Set-Up
+WookieChat Quick Set-Up
+WookieChat Quick Set-Up
+WookieChat Quick Set-Up
+WookieChat Quick Set-Up
+;
+MSG_MUICLASS_WINDOWQUICKSETUP_INFO
+\033cThis is the first time you run WookieChat!\033n\n \nTo finish the automatic configuration\nfill out the field below and continue.
+Dies ist das erste Mal, dass wie WookieChat starten!\n \nUm eine automatische Konfiguration zu vervollständigen\nist es nötig die unteren Felder vollstängig auszufüllen\nund den Vorgang fortzusetzen.
+\033cThis is the first time you run WookieChat!\033n\n \nTo finish the automatic configuration\nfill out the field below and continue.
+\033cThis is the first time you run WookieChat!\033n\n \nTo finish the automatic configuration\nfill out the field below and continue.
+\033cThis is the first time you run WookieChat!\033n\n \nTo finish the automatic configuration\nfill out the field below and continue.
+\033cThis is the first time you run WookieChat!\033n\n \nTo finish the automatic configuration\nfill out the field below and continue.
+\033cThis is the first time you run WookieChat!\033n\n \nTo finish the automatic configuration\nfill out the field below and continue.
+\033cThis is the first time you run WookieChat!\033n\n \nTo finish the automatic configuration\nfill out the field below and continue.
+\033cThis is the first time you run WookieChat!\033n\n \nTo finish the automatic configuration\nfill out the field below and continue.
+\033cThis is the first time you run WookieChat!\033n\n \nTo finish the automatic configuration\nfill out the field below and continue.
+;
+MSG_MUICLASS_WINDOWQUICKSETUP_REALNAME_GAD
+_Real Name:
+_Realname:
+ Nombre _real:
+Nom _réel:
+Ïíïìáôåðþíõìï:
+Nome _reale:
+Valódi név:
+Virkelig navn:
+Prawdziwe imiê:
+Verkligt namn:
+;
+MSG_MUICLASS_WINDOWQUICKSETUP_REALNAME_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
+MSG_MUICLASS_WINDOWQUICKSETUP_USERNAME_GAD
+_User Name:
+N_utzer Name:
+Usuario:
+Nom d'utilisateur:
+¼íïìá ÷ñÞóôç:
+Nome utente:
+Felhasználónév:
+Brukernavn:
+Nazwa u¿ytkownika:
+Användarnamn:
+;
+MSG_MUICLASS_WINDOWQUICKSETUP_USERNAME_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
+MSG_MUICLASS_WINDOWQUICKSETUP_NICKNAME_GAD
+_Nick Name:
+_Nick Name:
+_Nick Name:
+_Nick Name:
+_Nick Name:
+_Nick Name:
+_Nick Name:
+_Nick Name:
+_Nick Name:
+_Nick Name:
+;
+MSG_MUICLASS_WINDOWQUICKSETUP_NICKNAME_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
+MSG_MUICLASS_WINDOWQUICKSETUP_CONTINUE_GAD
+_Continue
+_Fortsetzen
+_Continue
+_Continue
+_Continue
+_Continue
+_Continue
+_Continue
+_Continue
+_Continue
+;
+MSG_MUICLASS_WINDOWQUICKSETUP_CONTINUE_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
+MSG_MUICLASS_WINDOWQUICKSETUP_QUIT_GAD
+_Quit
+_Beenden
+_Quit
+_Quit
+_Quit
+_Quit
+_Quit
+_Quit
+_Quit
+_Quit
+;
+MSG_MUICLASS_WINDOWQUICKSETUP_QUIT_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
 

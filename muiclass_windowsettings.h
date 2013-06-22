@@ -28,11 +28,13 @@
 
 enum {
 MM_WINDOWSETTINGS_READCONFIG =  0xFED00080,
+MM_WINDOWSETTINGS_WRITECONFIG,
 /* Attributes */
 MA_WINDOWSETTINGS_VISUALCHANGE,
 };
 
-struct MP_WINDOWSETTINGS_READCONFIG { ULONG MethodID; ULONG ObjectID; };
+struct MP_WINDOWSETTINGS_READCONFIG  { ULONG MethodID; ULONG ObjectID; };
+struct MP_WINDOWSETTINGS_WRITECONFIG { ULONG MethodID; ULONG ObjectID; APTR Data; };
 
 /*************************************************************************/
 
@@ -50,6 +52,39 @@ struct MP_WINDOWSETTINGS_READCONFIG { ULONG MethodID; ULONG ObjectID; };
 #define DEFAULT_SETTINGSURL_NAME        DEFAULT_SETTINGSPATH "/url.prefs"
 #define DEFAULT_SETTINGSSERVER_NAME     DEFAULT_SETTINGSPATH "/server.prefs"
 
+#ifdef __MORPHOS__
+#define DEFAULT_SERVER_NAME      "Freenode"
+#define DEFAULT_SERVER_ADDRESS   "irc.freenode.net"
+#define DEFAULT_SERVER_PORT      6667
+#define DEFAULT_SERVER_CHARSET   "UFT-8"
+#define DEFAULT_SERVER_PASSWORD  ""
+#define DEFAULT_CHANNEL_NAME     "#morphos"
+#define DEFAULT_CHANNEL_PASSWORD ""
+#elif  __amigaos4__
+#define DEFAULT_SERVER_NAME      "AmigaWorld"
+#define DEFAULT_SERVER_ADDRESS   "chat.amigaworld.net"
+#define DEFAULT_SERVER_PORT      6667
+#define DEFAULT_SERVER_CHARSET   "UFT-8"
+#define DEFAULT_SERVER_PASSWORD  ""
+#define DEFAULT_CHANNEL_NAME     "#amigaworld"
+#define DEFAULT_CHANNEL_PASSWORD ""
+#elif  __AROS__
+#define DEFAULT_SERVER_NAME      "Freenode"
+#define DEFAULT_SERVER_ADDRESS   "irc.freenode.net"
+#define DEFAULT_SERVER_PORT      6667
+#define DEFAULT_SERVER_CHARSET   "UFT-8"
+#define DEFAULT_SERVER_PASSWORD  ""
+#define DEFAULT_CHANNEL_NAME     "#aros"
+#define DEFAULT_CHANNEL_PASSWORD ""
+#else
+#define DEFAULT_SERVER_NAME      "Freenode"
+#define DEFAULT_SERVER_ADDRESS   "irc.freenode.net"
+#define DEFAULT_SERVER_PORT      6667
+#define DEFAULT_SERVER_CHARSET   "UFT-8"
+#define DEFAULT_SERVER_PASSWORD  ""
+#define DEFAULT_CHANNEL_NAME     "#amiganews.de"
+#define DEFAULT_CHANNEL_PASSWORD ""
+#endif
 /*************************************************************************/
 
 /*
@@ -109,7 +144,9 @@ OID_GEN_NICKCOMPLETITION,
 _OID_SETTINGSNICK = 100,
 /* server settings */
 OID_SETTINGSSERVER = 200,
-OID_SVR_LIST,
+OID_SVR_LIST,         /* just returns the list object (WIZARD ONLY) */
+OID_SVR_NICKLIST,     /* just returns the list object (WIZARD ONLY) */
+OID_SVR_CHANNELLIST,  /* just returns the list object (WIZARD ONLY) */
 OID_SVR_REALNAME,
 OID_SVR_USERNAME,
 OID_SVR_RECONNECT,

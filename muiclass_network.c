@@ -572,9 +572,11 @@ ULONG i;
 		if( se ) {
 			if( ( se->se_Flags & SERVERENTRYF_AUTOCONNECT ) ) {
 				if( ( s = (APTR) DoMethod( obj, MM_NETWORK_SERVERALLOC, se ) ) ) {
-					DoMethod( obj, MM_NETWORK_SERVERCONNECT , s );
-					DoMethod( obj, MM_NETWORK_SERVERLOGIN   , s );
-					DoMethod( obj, MM_NETWORK_SERVERAUTOJOIN, s );
+					if( ( s->s_State != SVRSTATE_CONNECTED ) ) {
+						DoMethod( obj, MM_NETWORK_SERVERCONNECT , s );
+						DoMethod( obj, MM_NETWORK_SERVERLOGIN   , s );
+						DoMethod( obj, MM_NETWORK_SERVERAUTOJOIN, s );
+					}
 				}
 			}
 		} else {
@@ -595,6 +597,7 @@ ULONG i;
 
 static ULONG MM_ServerLogin( struct IClass *cl, Object *obj, struct MP_NETWORK_SERVERLOGIN *msg )
 {
+struct mccdata *mccdata = INST_DATA( cl, obj );
 struct Server *s = msg->Server;
 struct Nick   *n;
 char *buffer;
@@ -617,7 +620,7 @@ ULONG i;
 		DoMethod( obj, MM_NETWORK_SERVERMESSAGESEND, s, buffer );
 
 		/* user */
-		sprintf( buffer, "USER %s 8 * : " APPLICATIONNAME, "Unconfigured" );
+		sprintf( buffer, "USER %s 8 * : " APPLICATIONNAME, LRC(OID_SVR_USERNAME) );
 		DoMethod( obj, MM_NETWORK_SERVERMESSAGESEND, s, buffer );
 
 		FreeVec( buffer );
@@ -690,45 +693,48 @@ struct Channel      *c;
 struct ChannelEntry *ce;
 
 	if( ( se = msg->ServerEntry ) ) {
-		if( ( s = AllocVec( sizeof( struct Server ), MEMF_ANY|MEMF_CLEAR ) ) ) {
-			NEWLIST( &s->s_ChannelList );
-			NEWLIST( &s->s_NickList );
-			NEWLIST( &s->s_SendList );
+		/* do not alloc the same server twice */
+		if( !( s = (struct Server *) DoMethod( obj, MM_NETWORK_SERVERFIND, se ) ) ) {
+			if( ( s = AllocVec( sizeof( struct Server ), MEMF_ANY|MEMF_CLEAR ) ) ) {
+				NEWLIST( &s->s_ChannelList );
+				NEWLIST( &s->s_NickList );
+				NEWLIST( &s->s_SendList );
 
-			AddTail( &mccdata->mcc_ServerList, (struct Node *) s );
+				AddTail( &mccdata->mcc_ServerList, (struct Node *) s );
 
-			s->s_ServerSocket      = -1;
-			s->s_Ident_a_Socket    = -1;
-			s->s_IdentSocket       = -1;
+				s->s_ServerSocket      = -1;
+				s->s_Ident_a_Socket    = -1;
+				s->s_IdentSocket       = -1;
 
-			/* we cannot link to server entry as it may be removed by user during
-			** runtime, so we spy important data */
-			strcpy( s->s_Name    , se->se_Name     );
-			strcpy( s->s_Address , se->se_Address  );
-			strcpy( s->s_Charset , se->se_Charset  );
-			strcpy( s->s_Password, se->se_Password );
+				/* we cannot link to server entry as it may be removed by user during
+				** runtime, so we spy important data */
+				strcpy( s->s_Name    , se->se_Name     );
+				strcpy( s->s_Address , se->se_Address  );
+				strcpy( s->s_Charset , se->se_Charset  );
+				strcpy( s->s_Password, se->se_Password );
 
-			if( !( s->s_Port = se->se_Port ) ) {
-				s->s_Port = 6667;
-			}
-			s->s_State = SVRSTATE_NOTCONNECTED;
-
-			/* add a server channel */
-			if( ( c = (APTR) DoMethod( obj, MM_NETWORK_CHANNELALLOC, s, s->s_Name ) ) ) {
-				c->c_Flags      |= CHANNELF_SERVER;
-				DoMethod( _app(obj), MM_APPLICATION_CHANNELADD, c );
-			}
-
-			for( ce = (APTR) se->se_ChannelList.lh_Head ; ce->ce_Succ ; ce = ce->ce_Succ ) {
-				if( ( c = (APTR) DoMethod( obj, MM_NETWORK_CHANNELALLOC, s, ce->ce_Name ) ) ) {
-					strcpy( c->c_Password, ce->ce_Password );
+				if( !( s->s_Port = se->se_Port ) ) {
+					s->s_Port = 6667;
 				}
-			}
-			for( ne = (APTR) se->se_NickList.lh_Head ; ne->ne_Succ ; ne = ne->ne_Succ ) {
-				if( ( n = AllocVec( sizeof( struct Channel ), MEMF_ANY ) ) ) {
-					AddTail( &s->s_NickList, (struct Node *) n );
-					strcpy( n->n_Name    , ne->ne_Name     );
-					strcpy( n->n_Password, ne->ne_Password );
+				s->s_State = SVRSTATE_NOTCONNECTED;
+
+				/* add a server channel */
+				if( ( c = (APTR) DoMethod( obj, MM_NETWORK_CHANNELALLOC, s, s->s_Name ) ) ) {
+					c->c_Flags      |= CHANNELF_SERVER;
+					DoMethod( _app(obj), MM_APPLICATION_CHANNELADD, c );
+				}
+
+				for( ce = (APTR) se->se_ChannelList.lh_Head ; ce->ce_Succ ; ce = ce->ce_Succ ) {
+					if( ( c = (APTR) DoMethod( obj, MM_NETWORK_CHANNELALLOC, s, ce->ce_Name ) ) ) {
+						strcpy( c->c_Password, ce->ce_Password );
+					}
+				}
+				for( ne = (APTR) se->se_NickList.lh_Head ; ne->ne_Succ ; ne = ne->ne_Succ ) {
+					if( ( n = AllocVec( sizeof( struct Channel ), MEMF_ANY ) ) ) {
+						AddTail( &s->s_NickList, (struct Node *) n );
+						strcpy( n->n_Name    , ne->ne_Name     );
+						strcpy( n->n_Password, ne->ne_Password );
+					}
 				}
 			}
 		}

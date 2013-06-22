@@ -56,6 +56,7 @@
 #include "muiclass_windowignorelist.h"
 #include "muiclass_windowchat.h"
 #include "muiclass_windowquit.h"
+#include "muiclass_windowquicksetup.h"
 #include "muiclass_windowsettings.h"
 #include "muiclass_windowurlgrabber.h"
 
@@ -108,6 +109,7 @@ if( !(result = MCC_WindowAbout_InitClass() ) ) {
 if( !(result = MCC_WindowIgnoreList_InitClass() ) ) {
 if( !(result = MCC_WindowChat_InitClass() ) ) {
 if( !(result = MCC_WindowQuit_InitClass() ) ) {
+if( !(result = MCC_WindowQuickSetup_InitClass() ) ) {
 if( !(result = MCC_WindowSettings_InitClass() ) ) {
 if( !(result = MCC_WindowURLGrabber_InitClass() ) ) {
 if( ( application = NewObject( appclasses[ CLASSID_APPLICATION ]->mcc_Class, NULL, TAG_DONE ) ) ) {
@@ -115,7 +117,7 @@ if( ( application = NewObject( appclasses[ CLASSID_APPLICATION ]->mcc_Class, NUL
 } else {
 	result = MSG_ERROR_UNABLETOSETUPMUICLASS;
 }
-}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}
+}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}
    return( result );
 }
 /* \\\ */
@@ -160,6 +162,7 @@ void MUIClass_Close( void )
 	MCC_WindowIgnoreList_DisposeClass();
 	MCC_WindowChat_DisposeClass();
 	MCC_WindowQuit_DisposeClass();
+	MCC_WindowQuickSetup_DisposeClass();
 	MCC_WindowSettings_DisposeClass();
 	MCC_WindowURLGrabber_DisposeClass();
 }

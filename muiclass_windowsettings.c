@@ -88,7 +88,7 @@ ULONG GlobalReadConfig( ULONG objectid )
 Object *settobj;
 ULONG result = 0;
 
-	if( ( settobj = (Object *) MUIGetVar( application, MA_APPLICATION_WINDOWSETTINGS ) ) ) {
+	if( ( settobj = (Object *) MUIGetVar( application, MA_APPLICATION_OBJECTWINDOWSETTINGS ) ) ) {
 		result = DoMethod( settobj, MM_WINDOWSETTINGS_READCONFIG, objectid );
 	}
 	return( (ULONG) result );
@@ -270,6 +270,22 @@ ULONG result;
 	return( (ULONG) result );
 }
 /* \\\ */
+/* /// MM_WriteConfig()
+**
+*/
+
+/*************************************************************************/
+
+static ULONG MM_WriteConfig( struct IClass *cl, Object *obj, struct MP_WINDOWSETTINGS_WRITECONFIG *msg )
+{
+struct mccdata *mccdata = INST_DATA( cl, obj );
+
+	/* right now only the wizard is allowed to change settings beside preferences */
+	DoMethod( mccdata->mcc_ClassObjects[ GID_SERVER ], MM_SETTINGSSERVER_WRITECONFIG, msg->ObjectID, msg->Data );
+
+	return( 0 );
+}
+/* \\\ */
 
 /*
 ** Dispatcher, init and dispose
@@ -291,6 +307,7 @@ DISPATCHER(MCC_WindowSettings_Dispatcher)
 		case OM_GET                             : return( OM_Get         ( cl, obj, (APTR) msg ) );
 
 		case MM_WINDOWSETTINGS_READCONFIG       : return( MM_ReadConfig  ( cl, obj, (APTR) msg ) );
+		case MM_WINDOWSETTINGS_WRITECONFIG      : return( MM_WriteConfig ( cl, obj, (APTR) msg ) );
 	}
 	return( DoSuperMethodA( cl, obj, msg ) );
 

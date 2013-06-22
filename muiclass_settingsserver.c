@@ -36,9 +36,6 @@
 
 /*************************************************************************/
 
-#define SERVERENTRY_USERNAME_SIZEOF 32
-#define SERVERENTRY_REALNAME_SIZEOF 32
-
 /*
 ** gadgets used by this class
 */
@@ -203,6 +200,10 @@ static STRPTR TAB_GROUP_HIGHLIGHTMODES[ MSG_PG_ADDITIONAL - MSG_PG_CONNECTIONS +
 		SetAttrs( objs[ GID_CHANNELPASSWORD  ], MUIA_String_Reject, " /\?,:", TAG_DONE );
 		SetAttrs( objs[ GID_SERVERLIST       ] , MA_SERVERLIST_NICKLISTOBJ, objs[ GID_NICKLIST ], MA_SERVERLIST_CHANNELLISTOBJ, objs[ GID_CHANNELLIST ], TAG_DONE );
 
+		SetAttrs( objs[ GID_REALNAME         ], MUIA_String_Reject, "/\?,:", TAG_DONE );
+		SetAttrs( objs[ GID_USERNAME         ], MUIA_String_Reject, " /\?,:", TAG_DONE );
+
+
 		DoMethod( obj, MUIM_Notify, MUIA_Window_CloseRequest, TRUE, obj, 3, MUIM_Set, MUIA_Window_Open, FALSE );
 
 		DoMethod( objs[ GID_SERVERLIST        ], MUIM_Notify, MUIA_NList_Active   , MUIV_EveryTime, obj, 1, MM_SETTINGSSERVER_SERVERLISTTOGADGETS );
@@ -267,10 +268,35 @@ ULONG i;
 	if( msg->ObjectID == OID_SVR_LIST ) {
 		return( (IPTR) mccdata->mcc_ClassObjects[ GID_SERVERLIST ] );
 	}
+	if( msg->ObjectID == OID_SVR_NICKLIST ) {
+		return( (IPTR) mccdata->mcc_ClassObjects[ GID_NICKLIST ] );
+	}
+	if( msg->ObjectID == OID_SVR_CHANNELLIST ) {
+		return( (IPTR) mccdata->mcc_ClassObjects[ GID_CHANNELLIST ] );
+	}
 
 	for( i = 0 ; TAB_CONFIGITEMS[ i ].GadgetID != -1 ; i++ ) {
 		if( TAB_CONFIGITEMS[ i ].ObjectID == msg->ObjectID ) {
 			return( (ULONG) MUIGetVar( mccdata->mcc_ClassObjects[ TAB_CONFIGITEMS[ i ].GadgetID ], TAB_CONFIGITEMS[ i ].Attr ) );
+		}
+	}
+	return( 0 );
+}
+/* \\\ */
+/* /// MM_WriteConfig()
+**
+*/
+
+/*************************************************************************/
+
+static ULONG MM_WriteConfig( struct IClass *cl, Object *obj, struct MP_SETTINGSSERVER_WRITECONFIG *msg )
+{
+struct mccdata *mccdata = INST_DATA( cl, obj );
+ULONG i;
+
+	for( i = 0 ; TAB_CONFIGITEMS[ i ].GadgetID != -1 ; i++ ) {
+		if( TAB_CONFIGITEMS[ i ].ObjectID == msg->ObjectID ) {
+			SetAttrs( mccdata->mcc_ClassObjects[ TAB_CONFIGITEMS[ i ].GadgetID ], TAB_CONFIGITEMS[ i ].Attr, msg->Data, TAG_DONE );
 		}
 	}
 	return( 0 );
@@ -596,6 +622,7 @@ DISPATCHER(MCC_SettingsServer_Dispatcher)
     {
 		case OM_NEW                                     : return( OM_New                     ( cl, obj, (APTR) msg ) );
 		case MM_SETTINGSSERVER_READCONFIG               : return( MM_ReadConfig              ( cl, obj, (APTR) msg ) );
+		case MM_SETTINGSSERVER_WRITECONFIG              : return( MM_WriteConfig              ( cl, obj, (APTR) msg ) );
 		case MM_SETTINGSSERVER_RESETTODEFAULTS          : return( MM_ResetToDefaults         ( cl, obj, (APTR) msg ) );
 		case MM_SETTINGSSERVER_DISENABLE                : return( MM_DisEnable               ( cl, obj, (APTR) msg ) );
 		case MM_SETTINGSSERVER_SERVERGADGETSTOLIST      : return( MM_ServerGadgetsToList     ( cl, obj, (APTR) msg ) );

@@ -275,7 +275,7 @@ static ULONG OM_Setup( struct IClass *cl, Object *obj, Msg *msg )
 struct mccdata *mccdata = INST_DATA( cl, obj );
 Object *winobj;
 
-	winobj = (Object *) MUIGetVar( _app(obj), MA_APPLICATION_WINDOWQUIT );
+	winobj = (Object *) MUIGetVar( _app(obj), MA_APPLICATION_OBJECTWINDOWQUIT );
 	DoMethod( obj, MUIM_Notify, MUIA_Window_CloseRequest, TRUE, winobj, 3, MUIM_Set, MUIA_Window_Open, TRUE );
 
 	DoMethod( mccdata->mcc_ClassObjects[ GID_CHATCHANNELLIST ], MUIM_Notify, MUIA_NList_Active, MUIV_EveryTime, obj, 1, MM_WINDOWCHAT_CHANNELCHANGE );
@@ -301,18 +301,18 @@ Object *tmpobj;
 
 /* project menu */
 		case MID_ABOUT:
-			tmpobj = (Object *) MUIGetVar( _app(obj), MA_APPLICATION_WINDOWABOUT );
+			tmpobj = (Object *) MUIGetVar( _app(obj), MA_APPLICATION_OBJECTWINDOWABOUT );
 			SetAttrs( tmpobj, MUIA_Window_Open, TRUE, TAG_DONE );
 			break;
 		case MID_QUIT:
-			tmpobj = (Object *) MUIGetVar( _app(obj), MA_APPLICATION_WINDOWQUIT );
+			tmpobj = (Object *) MUIGetVar( _app(obj), MA_APPLICATION_OBJECTWINDOWQUIT );
 			SetAttrs( tmpobj, MUIA_Window_Open, TRUE, TAG_DONE );
 			break;
 /* edit menu */
 
 /* settings menu */
 		case MID_SETTINGS:
-			tmpobj = (Object *) MUIGetVar( _app(obj), MA_APPLICATION_WINDOWSETTINGS );
+			tmpobj = (Object *) MUIGetVar( _app(obj), MA_APPLICATION_OBJECTWINDOWSETTINGS );
 			SetAttrs( tmpobj, MUIA_Window_Open, TRUE, TAG_DONE );
 			break;
 
@@ -320,11 +320,11 @@ Object *tmpobj;
 		case MID_SETTINGSMUI:
 			break;
 		case MID_IGNORELIST:
-			tmpobj = (Object *) MUIGetVar( _app(obj), MA_APPLICATION_WINDOWIGNORELIST );
+			tmpobj = (Object *) MUIGetVar( _app(obj), MA_APPLICATION_OBJECTWINDOWIGNORELIST );
 			SetAttrs( tmpobj, MUIA_Window_Open, TRUE, TAG_DONE );
 			break;
 		case MID_URLGRABBER:
-			tmpobj = (Object *) MUIGetVar( _app(obj), MA_APPLICATION_WINDOWURLGRABBER );
+			tmpobj = (Object *) MUIGetVar( _app(obj), MA_APPLICATION_OBJECTWINDOWURLGRABBER );
 			SetAttrs( tmpobj, MUIA_Window_Open, TRUE, TAG_DONE );
 			break;
 	}
@@ -342,7 +342,7 @@ static ULONG MM_ColorChange( struct IClass *cl, Object *obj, Msg *msg )
 struct mccdata *mccdata = INST_DATA( cl, obj );
 Object *settingsobj;
 
-	if( ( settingsobj = (Object *) MUIGetVar( _app(obj), MA_APPLICATION_WINDOWSETTINGS ) ) ) {
+	if( ( settingsobj = (Object *) MUIGetVar( _app(obj), MA_APPLICATION_OBJECTWINDOWSETTINGS ) ) ) {
 		SetAttrs( mccdata->mcc_ClassObjects[ GID_CHATLOG         ], MUIA_Background, DoMethod( settingsobj, MM_WINDOWSETTINGS_READCONFIG, OID_COL_CHANNELBG ), TAG_DONE );
 		SetAttrs( mccdata->mcc_ClassObjects[ GID_CHATUSERLIST    ], MUIA_Background, DoMethod( settingsobj, MM_WINDOWSETTINGS_READCONFIG, OID_COL_NICKLISTBG ), TAG_DONE );
 		SetAttrs( mccdata->mcc_ClassObjects[ GID_CHATCHANNELLIST ], MUIA_Background, DoMethod( settingsobj, MM_WINDOWSETTINGS_READCONFIG, OID_COL_TABLISTBG ), TAG_DONE );

@@ -1810,8 +1810,8 @@ Einstellungen
 ; Settings
 ;
 MSG_MENU_SETTINGSMAIN_ITEM
-Haupteinstellungen ...
-; Main settings...
+WookieChat ...
+; WookieChat...
 ;
 MSG_MENU_SETTINGSCOLOR_ITEM
 Farbeinstellungen ...
@@ -3433,4 +3433,54 @@ wurde nicht gesetzt!
 MSG_MUICLASS_NETWORK_USERSINCHANNEL
 Anwesende im Kanal
 ; Users in channel
+;
+; MUICLASS_QUICKSETUP
+;
+MSG_MUICLASS_WINDOWQUICKSETUP_TITLE
+WookieChar Schnellstarter
+; WookieChat Quick Set-Up
+;
+MSG_MUICLASS_WINDOWQUICKSETUP_INFO
+Dies ist das erste Mal, dass wie WookieChat starten!\n \nUm eine automatische Konfiguration zu vervollständigen\nist es nötig die unteren Felder vollstängig auszufüllen\nund den Vorgang fortzusetzen.
+; \033cThis is the first time you run WookieChat!\033n\n \nTo finish the automatic configuration\nfill out the field below and continue.
+;
+MSG_MUICLASS_WINDOWQUICKSETUP_REALNAME_GAD
+_Realname:
+; _Real Name:
+;
+MSG_MUICLASS_WINDOWQUICKSETUP_REALNAME_HELP
+/
+; /
+;
+MSG_MUICLASS_WINDOWQUICKSETUP_USERNAME_GAD
+N_utzer Name:
+; _User Name:
+;
+MSG_MUICLASS_WINDOWQUICKSETUP_USERNAME_HELP
+/
+; /
+;
+MSG_MUICLASS_WINDOWQUICKSETUP_NICKNAME_GAD
+_Nick name:
+; _Nick name:
+;
+MSG_MUICLASS_WINDOWQUICKSETUP_NICKNAME_HELP
+/
+; /
+;
+MSG_MUICLASS_WINDOWQUICKSETUP_CONTINUE_GAD
+_Fortsetzen
+; _Continue
+;
+MSG_MUICLASS_WINDOWQUICKSETUP_CONTINUE_HELP
+/
+; /
+;
+MSG_MUICLASS_WINDOWQUICKSETUP_QUIT_GAD
+_Beenden
+; _Quit
+;
+MSG_MUICLASS_WINDOWQUICKSETUP_QUIT_HELP
+/
+; /
 ;

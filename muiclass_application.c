@@ -32,6 +32,7 @@
 #include "muiclass_network.h"
 #include "muiclass_windowchat.h"
 #include "muiclass_windowquit.h"
+#include "muiclass_windowquicksetup.h"
 #include "muiclass_windowabout.h"
 #include "muiclass_windowsettings.h"
 #include "muiclass_windowignorelist.h"
@@ -58,6 +59,7 @@ WID_ABOUT,
 WID_SETTINGS,
 WID_IGNORELIST,
 WID_URLGRABBER,
+WID_QUICKSETUP,
 GID_AUDIO,
 GID_NETWORK,
 GID_LAST
@@ -104,6 +106,7 @@ Object *objs[ GID_LAST ];
 					MUIA_Application_Window     , objs[ WID_SETTINGS      ] = WindowSettingsObject  , End,
 					MUIA_Application_Window     , objs[ WID_IGNORELIST    ] = WindowIgnoreListObject, End,
 					MUIA_Application_Window     , objs[ WID_URLGRABBER    ] = WindowURLGrabberObject, End,
+					MUIA_Application_Window     , objs[ WID_QUICKSETUP    ] = WindowQuickSetupObject, End,
 					/* this is just a dummy to store/handle our non visible classes, without additional code */
 					MUIA_Application_Window     , WindowObject, MA_APPLICATION_CLASSID, -1,
 									WindowContents, VGroup,
@@ -157,12 +160,12 @@ static ULONG OM_Get(struct IClass *cl, Object *obj, struct opGet *msg )
 struct mccdata *mccdata = INST_DATA( cl, obj );
 
 	switch( msg->opg_AttrID ) {
-		case MA_APPLICATION_OBJECTNETWORK       : *msg->opg_Storage = (ULONG) mccdata->mcc_ClassObjects[ GID_NETWORK       ] ; return( TRUE );
-		case MA_APPLICATION_WINDOWQUIT          : *msg->opg_Storage = (ULONG) mccdata->mcc_ClassObjects[ WID_QUIT          ] ; return( TRUE );
-		case MA_APPLICATION_WINDOWABOUT         : *msg->opg_Storage = (ULONG) mccdata->mcc_ClassObjects[ WID_ABOUT         ] ; return( TRUE );
-		case MA_APPLICATION_WINDOWSETTINGS      : *msg->opg_Storage = (ULONG) mccdata->mcc_ClassObjects[ WID_SETTINGS      ] ; return( TRUE );
-		case MA_APPLICATION_WINDOWIGNORELIST    : *msg->opg_Storage = (ULONG) mccdata->mcc_ClassObjects[ WID_IGNORELIST    ] ; return( TRUE );
-		case MA_APPLICATION_WINDOWURLGRABBER    : *msg->opg_Storage = (ULONG) mccdata->mcc_ClassObjects[ WID_URLGRABBER    ] ; return( TRUE );
+		case MA_APPLICATION_OBJECTNETWORK          : *msg->opg_Storage = (ULONG) mccdata->mcc_ClassObjects[ GID_NETWORK       ] ; return( TRUE );
+		case MA_APPLICATION_OBJECTWINDOWQUIT       : *msg->opg_Storage = (ULONG) mccdata->mcc_ClassObjects[ WID_QUIT          ] ; return( TRUE );
+		case MA_APPLICATION_OBJECTWINDOWABOUT      : *msg->opg_Storage = (ULONG) mccdata->mcc_ClassObjects[ WID_ABOUT         ] ; return( TRUE );
+		case MA_APPLICATION_OBJECTWINDOWSETTINGS   : *msg->opg_Storage = (ULONG) mccdata->mcc_ClassObjects[ WID_SETTINGS      ] ; return( TRUE );
+		case MA_APPLICATION_OBJECTWINDOWIGNORELIST : *msg->opg_Storage = (ULONG) mccdata->mcc_ClassObjects[ WID_IGNORELIST    ] ; return( TRUE );
+		case MA_APPLICATION_OBJECTWINDOWURLGRABBER : *msg->opg_Storage = (ULONG) mccdata->mcc_ClassObjects[ WID_URLGRABBER    ] ; return( TRUE );
 		default: return( DoSuperMethodA( cl, obj, (Msg) msg ) );
     }
 }
@@ -195,8 +198,10 @@ struct mccdata *mccdata = INST_DATA( cl, obj );
 		}
 	}
 
-	/* auto connect or open prefs */
-	DoMethod( mccdata->mcc_ClassObjects[ GID_NETWORK ], MM_NETWORK_SERVERCONNECTAUTO );
+	/* auto connect or open wizard */
+	if( !( DoMethod( mccdata->mcc_ClassObjects[ WID_QUICKSETUP ], MM_WINDOWQUICKSETUP_CHECKSETTINGS ) ) ) {
+		DoMethod( mccdata->mcc_ClassObjects[ GID_NETWORK ], MM_NETWORK_SERVERCONNECTAUTO );
+	}
 
 #if ENABLE_NEWWOOKIECODE
 //	  SetAttrs( mccdata->mcc_ClassObjects[ WID_CHAT ], MUIA_Window_Open, TRUE, TAG_DONE );

@@ -58,6 +58,7 @@ SOURCES  += version.c                   \
 			muiclass_windowchat.c       \
 			muiclass_windowignorelist.c \
 			muiclass_windowquit.c       \
+			muiclass_windowquicksetup.c \
 			muiclass_windowsettings.c   \
 			muiclass_windowurlgrabber.c \
 			system_morphos.c            \
