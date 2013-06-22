@@ -66,9 +66,8 @@ MM_NETWORK_CHANNELFIND,
 MM_NETWORK_CHANNELALLOC,
 MM_NETWORK_CHANNELFREE,
 
-MM_NETWORK_CHATLOGENTRYALLOC,
 MM_NETWORK_CHATLOGENTRYFREE,
-MM_NETWORK_CHATLOGENTRYCOMPOSE,
+MM_NETWORK_CHATLOGENTRYADD,
 
 MM_NETWORK_CHATNICKENTRYALLOC,
 MM_NETWORK_CHATNICKENTRYFREE,
@@ -108,11 +107,8 @@ struct MP_NETWORK_CHANNELFIND             { ULONG MethodID; struct Server *Serve
 struct MP_NETWORK_CHANNELALLOC            { ULONG MethodID; struct Server *Server; char *Name; };
 struct MP_NETWORK_CHANNELFREE             { ULONG MethodID; struct Server *Server; struct Channel *Channel; };
 
-
-struct MP_NETWORK_CHATLOGENTRYALLOC       { ULONG MethodID; char *Message; ULONG Flags; };
+struct MP_NETWORK_CHATLOGENTRYADD         { ULONG MethodID; struct Server *Server; struct Channel *Channel; char *Message; };
 struct MP_NETWORK_CHATLOGENTRYFREE        { ULONG MethodID; struct ChatLogEntry *ChatLogEntry; };
-struct MP_NETWORK_CHATLOGENTRYPROCESS     { ULONG MethodID; struct Server *Server; struct ChatLogEntry *ChatLogEntry; };
-struct MP_NETWORK_CHATLOGENTRYCOMPOSE     { ULONG MethodID; struct Server *Server; struct ServerMessageParse *ServerMessageParse; };
 
 struct MP_NETWORK_CHATNICKENTRYALLOC      { ULONG MethodID; struct Channel *Channel; char *NickName; };
 struct MP_NETWORK_CHATNICKENTRYFREE       { ULONG MethodID; struct Channel *Channel; struct ChatNickEntry *ChatNickEntry; };
@@ -134,6 +130,7 @@ struct Server {
 	struct List        s_NickList;
 	struct List        s_SendList;
 /* network runtime data */
+	ULONG              s_Flags;
 	ULONG              s_State; /* this is the current state */
 	ULONG              s_Retries;
 	char               s_Buffer[ SERVERBUFFER_SIZEOF + 1 ];
@@ -150,6 +147,7 @@ struct Server {
 
 };
 
+
 struct Channel {
 	struct Channel    *c_Succ;
 	struct Channel    *c_Pred;
@@ -161,7 +159,8 @@ struct Channel {
 	char               c_Password[ CHANNELENTRY_PASSWORD_SIZEOF   + 2 ];
 };
 
-#define CHANNELF_SERVER 1 /* this is the servers channel */
+#define CHANNELF_SERVER 1     /* this is the servers channel */
+#define CHANNELF_NAMESLIST 1  /* set after first NAMES command and cleared on last */
 
 struct Nick {
 	struct Nick       *n_Succ;

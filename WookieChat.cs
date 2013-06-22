@@ -10036,6 +10036,9 @@ Nei
 Nie
 Nej
 ;
+;
+; MUICLASS_NETWORK
+;
 MSG_MUICLASS_NETWORK_PART
 Part
 Part
@@ -10084,6 +10087,18 @@ Topic
 Topic
 Topic
 ;
+MSG_MUICLASS_NETWORK_NAMES
+Names
+Namen
+Names
+Names
+Names
+Names
+Names
+Names
+Names
+Names
+;
 MSG_MUICLASS_NETWORK_NOTICE
 Notice
 Mitteilung
@@ -10096,3 +10111,64 @@ Notice
 Notice
 Notice
 ;
+MSG_MUICLASS_NETWORK_SERVER
+Server
+Server
+Server
+Server
+Server
+Server
+Server
+Server
+Server
+Server
+;
+MSG_MUICLASS_NETWORK_TOPICSETBY
+set by\x20
+von\x20
+establecida por\x20
+entrι par\x20
+μπήκε από τον\x20
+di\x20
+beαllνtotta:\x20
+satt av\x20
+ustawiony przez\x20
+satt av\x20
+;
+MSG_MUICLASS_NETWORK_TOPICSETONDATE
+\x20on\x20
+\x20am\x20
+\x20el\x20
+\x20le\x20
+\x20στις\x20
+\x20al\x20
+\x20ekkor:\x20
+\x20pε\x20
+\x20dnia\x20
+\x20den\x20
+;
+MSG_MUICLASS_NETWORK_TOPICNOTSET
+not set!
+wurde nicht gesetzt!
+not set!
+not set!
+not set!
+not set!
+not set!
+not set!
+not set!
+not set!
+;
+MSG_MUICLASS_NETWORK_USERSINCHANNEL
+Users in channel
+Anwesende im Kanal
+Usuarios en el canal
+Utilisateurs dans le canal
+Χρήστες στο κανάλι
+Utenti nel canale
+Csatorna felhasznαlσi
+Brukere i kanal
+UΏytkownicy na kanale
+Anvδndare i kanalen
+;
+
