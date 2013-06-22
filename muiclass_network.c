@@ -111,7 +111,9 @@ static ULONG IRCCMD_EndOfNames  ( Object *obj, struct Server *Server, struct Ser
 //static ULONG IRCCMD_HandleUserQuit        ( Object *obj, struct Server *Server, struct ServerMessageParse *ServerMessageParse );
 //static ULONG IRCCMD_HandleChannelNamesList( Object *obj, struct Server *Server, struct ServerMessageParse *ServerMessageParse );
 //static ULONG IRCCMD_HandleNicknameInUse   ( Object *obj, struct Server *Server, struct ServerMessageParse *ServerMessageParse );
+static ULONG IRCCMD_MOTDStart   ( Object *obj, struct Server *Server, struct ServerMessageParse *ServerMessageParse );
 static ULONG IRCCMD_MOTD        ( Object *obj, struct Server *Server, struct ServerMessageParse *ServerMessageParse );
+static ULONG IRCCMD_MOTDEnd     ( Object *obj, struct Server *Server, struct ServerMessageParse *ServerMessageParse );
 static ULONG IRCCMD_HandleServerMessage   ( Object *obj, struct Server *Server, struct ServerMessageParse *ServerMessageParse );
 
 #define IRCCMD_RESULTF_IGNOREMESSAGE 1
@@ -151,7 +153,9 @@ struct IRCCommands TAB_IRCCOMMANDS[] =
 	{ "333",        "NCFD",  IRCCMD_TopicSetBy                      },
 	{ "353",        "N-C",   IRCCMD_NameReply                       },
 	{ "366",        "NC",    IRCCMD_EndOfNames                      },
+	{ "375",        "NC",    IRCCMD_MOTDStart                       },
 	{ "372",        "NC",    IRCCMD_MOTD                            },
+	{ "376",        "NC",    IRCCMD_MOTDEnd                         },
 	{ "375",        "NC",    IRCCMD_HandleServerMessage             },
 	{ "376",        "NC",    IRCCMD_HandleServerMessage             },
 	{ "439",        "NC",    IRCCMD_HandleServerMessage             },
@@ -415,6 +419,29 @@ struct Channel *c;
 	return( IRCCMD_RESULTF_IGNOREMESSAGE );
 }
 /* \\\ */
+/* /// IRCCMD_MOTDStart()
+**
+*/
+
+/*************************************************************************/
+
+static ULONG IRCCMD_MOTDStart( Object *obj, struct Server *s, struct ServerMessageParse *smp )
+{
+struct Channel *c;
+
+	if( ( c = (APTR) DoMethod( obj, MM_NETWORK_SERVERFINDCHANNEL, s, NULL ) ) ) {
+		c->c_Flags |= CHANNELF_MESSAGEOFTHEDAY;
+
+debug("########## %s #############\n", smp->smp_Message );
+		sprintf( &smp->smp_MessageBuffer[ strlen( smp->smp_MessageBuffer ) ],
+			"[%s] %s", LGS( MSG_MUICLASS_NETWORK_SERVER ),
+								smp->smp_Message
+			);
+		return( 0 );
+	}
+	return( IRCCMD_RESULTF_IGNOREMESSAGE );
+}
+/* \\\ */
 /* /// IRCCMD_MOTD()
 **
 */
@@ -423,13 +450,34 @@ struct Channel *c;
 
 static ULONG IRCCMD_MOTD( Object *obj, struct Server *s, struct ServerMessageParse *smp )
 {
+struct Channel *c;
 
-	sprintf( &smp->smp_MessageBuffer[ strlen( smp->smp_MessageBuffer ) ],
-		"[%s] %s", LGS( MSG_MUICLASS_NETWORK_SERVER ),
-							&smp->smp_Message
-		);
+	if( ( c = (APTR) DoMethod( obj, MM_NETWORK_SERVERFINDCHANNEL, s, NULL ) ) ) {
+		if( ( c->c_Flags & CHANNELF_MESSAGEOFTHEDAY ) ) {
+			sprintf( &smp->smp_MessageBuffer[ strlen( smp->smp_MessageBuffer ) ],
+				"[%s] %s", LGS( MSG_MUICLASS_NETWORK_SERVER ),
+									smp->smp_Message
+				);
+				return( 0 );
+		}
+	}
+	return( IRCCMD_RESULTF_IGNOREMESSAGE );
+}
+/* \\\ */
+/* /// IRCCMD_MOTDEnd()
+**
+*/
 
-	return( 0 );
+/*************************************************************************/
+
+static ULONG IRCCMD_MOTDEnd( Object *obj, struct Server *s, struct ServerMessageParse *smp )
+{
+struct Channel *c;
+
+	if( ( c = (APTR) DoMethod( obj, MM_NETWORK_SERVERFINDCHANNEL, s, NULL ) ) ) {
+		c->c_Flags &= ~CHANNELF_MESSAGEOFTHEDAY;
+	}
+	return( IRCCMD_RESULTF_IGNOREMESSAGE );
 }
 /* \\\ */
 
@@ -948,7 +996,7 @@ struct ChatLogEntry *cle;
 
 		/* now we deal with the data. handle ping, user lists and other stuff */
 
-		if( !( DoMethod( obj, MM_NETWORK_SERVERMESSAGEPROCESS, s, smp ) ) ) {
+		if( !( DoMethod( obj, MM_NETWORK_SERVERMESSAGEPROCESS, s, smp ) & IRCCMD_RESULTF_IGNOREMESSAGE ) ) {
 		
 			/* insert URL grabber stuff here */
 
@@ -1103,9 +1151,9 @@ ULONG i;
 		if( ( smp->smp_Data[0] == ':' ) ) {
 			smp->smp_From = smp->smp_Data;
 			smp->smp_From++;
-			smp->smp_Command = strchr( smp->smp_Data, 0x20 );
-			*smp->smp_Command++ = 0x00;
-
+			if( ( smp->smp_Command = strchr( smp->smp_Data, 0x20 ) ) ) {
+				*smp->smp_Command++ = 0x00;
+			}
 		}
 
 		if( ( smp->smp_Arguments = strchr( smp->smp_Command, 0x20 ) ) ) {

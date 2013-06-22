@@ -159,8 +159,9 @@ struct Channel {
 	char               c_Password[ CHANNELENTRY_PASSWORD_SIZEOF   + 2 ];
 };
 
-#define CHANNELF_SERVER 1     /* this is the servers channel */
-#define CHANNELF_NAMESLIST 1  /* set after first NAMES command and cleared on last */
+#define CHANNELF_SERVER          1     /* this is the servers channel */
+#define CHANNELF_NAMESLIST       2  /* set after first NAMES command and cleared on last */
+#define CHANNELF_MESSAGEOFTHEDAY 4  /* set after MOTD START arrives and clears on MOTD END */
 
 struct Nick {
 	struct Nick       *n_Succ;
