@@ -97,24 +97,22 @@ struct mccdata
 
 /*************************************************************************/
 
-static ULONG IRCCMD_PrivMsg     ( Object *obj, struct Server *Server, struct ServerMessageParse *ServerMessageParse );
-static ULONG IRCCMD_Notice      ( Object *obj, struct Server *Server, struct ServerMessageParse *ServerMessageParse );
-static ULONG IRCCMD_Ping        ( Object *obj, struct Server *Server, struct ServerMessageParse *ServerMessageParse );
-static ULONG IRCCMD_Join        ( Object *obj, struct Server *Server, struct ServerMessageParse *ServerMessageParse );
-static ULONG IRCCMD_Part        ( Object *obj, struct Server *Server, struct ServerMessageParse *ServerMessageParse );
-static ULONG IRCCMD_TopicNotSet ( Object *obj, struct Server *Server, struct ServerMessageParse *ServerMessageParse );
-static ULONG IRCCMD_Topic       ( Object *obj, struct Server *Server, struct ServerMessageParse *ServerMessageParse );
-static ULONG IRCCMD_TopicSetBy  ( Object *obj, struct Server *Server, struct ServerMessageParse *ServerMessageParse );
-static ULONG IRCCMD_NameReply   ( Object *obj, struct Server *Server, struct ServerMessageParse *ServerMessageParse );
-static ULONG IRCCMD_EndOfNames  ( Object *obj, struct Server *Server, struct ServerMessageParse *ServerMessageParse );
-//static ULONG IRCCMD_HandleUserNickChange  ( Object *obj, struct Server *Server, struct ServerMessageParse *ServerMessageParse );
-//static ULONG IRCCMD_HandleUserQuit        ( Object *obj, struct Server *Server, struct ServerMessageParse *ServerMessageParse );
-//static ULONG IRCCMD_HandleChannelNamesList( Object *obj, struct Server *Server, struct ServerMessageParse *ServerMessageParse );
-//static ULONG IRCCMD_HandleNicknameInUse   ( Object *obj, struct Server *Server, struct ServerMessageParse *ServerMessageParse );
-static ULONG IRCCMD_MOTDStart   ( Object *obj, struct Server *Server, struct ServerMessageParse *ServerMessageParse );
-static ULONG IRCCMD_MOTD        ( Object *obj, struct Server *Server, struct ServerMessageParse *ServerMessageParse );
-static ULONG IRCCMD_MOTDEnd     ( Object *obj, struct Server *Server, struct ServerMessageParse *ServerMessageParse );
-static ULONG IRCCMD_HandleServerMessage   ( Object *obj, struct Server *Server, struct ServerMessageParse *ServerMessageParse );
+static ULONG IRCCMD_PrivMsg        ( Object *obj, struct Server *Server, struct ServerMessageParse *ServerMessageParse );
+static ULONG IRCCMD_Notice         ( Object *obj, struct Server *Server, struct ServerMessageParse *ServerMessageParse );
+static ULONG IRCCMD_Ping           ( Object *obj, struct Server *Server, struct ServerMessageParse *ServerMessageParse );
+static ULONG IRCCMD_Join           ( Object *obj, struct Server *Server, struct ServerMessageParse *ServerMessageParse );
+static ULONG IRCCMD_Part           ( Object *obj, struct Server *Server, struct ServerMessageParse *ServerMessageParse );
+static ULONG IRCCMD_TopicNotSet    ( Object *obj, struct Server *Server, struct ServerMessageParse *ServerMessageParse );
+static ULONG IRCCMD_Topic          ( Object *obj, struct Server *Server, struct ServerMessageParse *ServerMessageParse );
+static ULONG IRCCMD_TopicSetBy     ( Object *obj, struct Server *Server, struct ServerMessageParse *ServerMessageParse );
+static ULONG IRCCMD_NameReply      ( Object *obj, struct Server *Server, struct ServerMessageParse *ServerMessageParse );
+static ULONG IRCCMD_EndOfNames     ( Object *obj, struct Server *Server, struct ServerMessageParse *ServerMessageParse );
+static ULONG IRCCMD_Quit           ( Object *obj, struct Server *Server, struct ServerMessageParse *ServerMessageParse );
+static ULONG IRCCMD_ChannelModeIs  ( Object *obj, struct Server *Server, struct ServerMessageParse *ServerMessageParse );
+static ULONG IRCCMD_MOTDStart      ( Object *obj, struct Server *Server, struct ServerMessageParse *ServerMessageParse );
+static ULONG IRCCMD_MOTD           ( Object *obj, struct Server *Server, struct ServerMessageParse *ServerMessageParse );
+static ULONG IRCCMD_MOTDEnd        ( Object *obj, struct Server *Server, struct ServerMessageParse *ServerMessageParse );
+static ULONG IRCCMD_GenericServer  ( Object *obj, struct Server *Server, struct ServerMessageParse *ServerMessageParse );
 
 #define IRCCMD_RESULTF_IGNOREMESSAGE 1
 
@@ -131,34 +129,16 @@ struct IRCCommands TAB_IRCCOMMANDS[] =
 	{ "PING",       "",      IRCCMD_Ping                            },
 	{ "JOIN",       "C",     IRCCMD_Join                            },
 	{ "PART",       "C",     IRCCMD_Part                            },
-//	  { "NICK",               IRCCMD_HandleUserNickChange            },
-//	  { "QUIT",               IRCCMD_HandleUserQuit                  },
-//	  { "353",                IRCCMD_HandleChannelNamesList          },
-//	  { "433",                IRCCMD_HandleNicknameInUse             },
-	{ "001",        "NC",    IRCCMD_HandleServerMessage             },
-	{ "002",        "NC",    IRCCMD_HandleServerMessage             },
-	{ "003",        "NC",    IRCCMD_HandleServerMessage             },
-	{ "004",        "NC",    IRCCMD_HandleServerMessage             },
-	{ "005",        "NC",    IRCCMD_HandleServerMessage             },
-	{ "250",        "NC",    IRCCMD_HandleServerMessage             },
-	{ "251",        "NC",    IRCCMD_HandleServerMessage             },
-	{ "252",        "NC",    IRCCMD_HandleServerMessage             },
-	{ "253",        "NC",    IRCCMD_HandleServerMessage             },
-	{ "254",        "NC",    IRCCMD_HandleServerMessage             },
-	{ "255",        "NC",    IRCCMD_HandleServerMessage             },
-	{ "265",        "NC",    IRCCMD_HandleServerMessage             },
-	{ "266",        "NC",    IRCCMD_HandleServerMessage             },
-	{ "331",        "NC",    IRCCMD_TopicNotSet                     },
-	{ "332",        "NC",    IRCCMD_Topic                           },
-	{ "333",        "NCFD",  IRCCMD_TopicSetBy                      },
-	{ "353",        "N-C",   IRCCMD_NameReply                       },
-	{ "366",        "NC",    IRCCMD_EndOfNames                      },
-	{ "375",        "NC",    IRCCMD_MOTDStart                       },
-	{ "372",        "NC",    IRCCMD_MOTD                            },
-	{ "376",        "NC",    IRCCMD_MOTDEnd                         },
-	{ "375",        "NC",    IRCCMD_HandleServerMessage             },
-	{ "376",        "NC",    IRCCMD_HandleServerMessage             },
-	{ "439",        "NC",    IRCCMD_HandleServerMessage             },
+	{ "QUIT",       "",      IRCCMD_Quit                            },
+	{ "331",        "NC",    IRCCMD_TopicNotSet               },
+	{ "332",        "NC",    IRCCMD_Topic                     },
+	{ "333",        "NCFD",  IRCCMD_TopicSetBy                },
+	{ "353",        "N-C",   IRCCMD_NameReply                 },
+	{ "366",        "NC",    IRCCMD_EndOfNames                },
+	{ "375",        "NC",    IRCCMD_MOTDStart                 },
+	{ "372",        "NC",    IRCCMD_MOTD                      },
+	{ "376",        "NC",    IRCCMD_MOTDEnd                   },
+	{ "324",        "NC",    IRCCMD_ChannelModeIs             },
 	{ NULL, NULL, NULL },
 };
 /* \\\ */
@@ -170,10 +150,15 @@ struct IRCCommands TAB_IRCCOMMANDS[] =
 
 static ULONG IRCCMD_PrivMsg( Object *obj, struct Server *s, struct ServerMessageParse *smp )
 {
-
-	sprintf( &smp->smp_MessageBuffer[ strlen( smp->smp_MessageBuffer ) ],
-			"<%s> %s", smp->smp_FromNick, smp->smp_Message
-		);
+	if( strstr( smp->smp_Message, "\001ACTION" ) && smp->smp_Message[ strlen( smp->smp_Message ) - 1 ] == '\001' ) {
+		sprintf( &smp->smp_MessageBuffer[ strlen( smp->smp_MessageBuffer ) ],
+				"* %s%s", smp->smp_FromNick, &smp->smp_Message[ strlen( "\001ACTION" ) ]
+			);
+	} else {
+		sprintf( &smp->smp_MessageBuffer[ strlen( smp->smp_MessageBuffer ) ],
+				"<%s> %s", smp->smp_FromNick, smp->smp_Message
+			);
+	}
 
 	return( 0 );
 }
@@ -208,18 +193,17 @@ static ULONG IRCCMD_Ping( Object *obj, struct Server *s, struct ServerMessagePar
 	return( IRCCMD_RESULTF_IGNOREMESSAGE );
 }
 /* \\\ */
-/* /// IRCCMD_HandleServerMessage()
+/* /// IRCCMD_GenericServer()
 **
 */
 
 /*************************************************************************/
 
-static ULONG IRCCMD_HandleServerMessage( Object *obj, struct Server *s, struct ServerMessageParse *smp )
+static ULONG IRCCMD_GenericServer( Object *obj, struct Server *s, struct ServerMessageParse *smp )
 {
-
-	strcat( smp->smp_MessageBuffer, (char*) " FIXME " );
-	strcat( smp->smp_MessageBuffer, smp->smp_Command );
-	strcat( smp->smp_MessageBuffer, smp->smp_Message );
+	sprintf( &smp->smp_MessageBuffer[ strlen( smp->smp_MessageBuffer ) ],
+		"[%s] %s", LGS( MSG_MUICLASS_NETWORK_SERVER ),
+						smp->smp_StringStorage );
 
 	return( 0 );
 }
@@ -235,7 +219,6 @@ static ULONG IRCCMD_Join( Object *obj, struct Server *s, struct ServerMessagePar
 struct Channel *c;
 
 	if( ( c = (APTR) DoMethod( obj, MM_NETWORK_SERVERFINDCHANNEL, s, smp->smp_Channel ) ) ) {
-		smp->smp_Type = LOGTYPE_JOIN;
 		DoMethod( _app(obj), MM_APPLICATION_CHANNELADD, c );
 	}
 
@@ -261,12 +244,30 @@ static ULONG IRCCMD_Part( Object *obj, struct Server *s, struct ServerMessagePar
 struct Channel *c;
 
 	if( ( c = (APTR) DoMethod( obj, MM_NETWORK_SERVERFINDCHANNEL, s, smp->smp_Channel ) ) ) {
-		smp->smp_Type = LOGTYPE_PART;
 		DoMethod( _app(obj), MM_APPLICATION_CHANNELREMOVE, c );
 	}
 
 	sprintf( &smp->smp_MessageBuffer[ strlen( smp->smp_MessageBuffer ) ],
 		"[%s] %s (%s@%s) %s",  LGS( MSG_MUICLASS_NETWORK_PART ),
+							smp->smp_FromNick,
+							smp->smp_FromUserID,
+							smp->smp_FromHost,
+							smp->smp_Message
+		);
+
+	return( 0 );
+}
+/* \\\ */
+/* /// IRCCMD_Quit()
+**
+*/
+
+/*************************************************************************/
+
+static ULONG IRCCMD_Quit( Object *obj, struct Server *s, struct ServerMessageParse *smp )
+{
+	sprintf( &smp->smp_MessageBuffer[ strlen( smp->smp_MessageBuffer ) ],
+		"[%s] %s (%s@%s) %s",  LGS( MSG_MUICLASS_NETWORK_QUIT ),
 							smp->smp_FromNick,
 							smp->smp_FromUserID,
 							smp->smp_FromHost,
@@ -480,6 +481,22 @@ struct Channel *c;
 	return( IRCCMD_RESULTF_IGNOREMESSAGE );
 }
 /* \\\ */
+/* /// IRCCMD_ChannelModeIs()
+**
+*/
+
+/*************************************************************************/
+
+static ULONG IRCCMD_ChannelModeIs( Object *obj, struct Server *s, struct ServerMessageParse *smp )
+{
+	debug("channel mode is '%s'\n",smp->smp_StringStorage );
+	sprintf( &smp->smp_MessageBuffer[ strlen( smp->smp_MessageBuffer ) ],
+		"[%s] %s",  LGS( MSG_MUICLASS_NETWORK_SERVER ),
+							smp->smp_StringStorage );
+
+	return( 0 );
+}
+/* \\\ */
 
 /*************************************************************************/
 
@@ -605,7 +622,7 @@ ULONG i;
 
 	if( ( buffer = AllocVec( COMMAND_COMPOSEBUFFER_SIZEOF, MEMF_ANY ) ) ) {
 
-		n = (APTR) s->s_NickList.lh_Head;
+		n = (APTR) &s->s_NickList.lh_Head;
 		for( i = 0 ; i <= s->s_Retries ; i++ ) {
 			n = n->n_Succ;
 			if( !n->n_Succ ) {
@@ -642,12 +659,14 @@ char *buffer;
 
 	if( ( buffer = AllocVec( COMMAND_COMPOSEBUFFER_SIZEOF, MEMF_ANY ) ) ) {
 		for( c = (APTR) s->s_ChannelList.lh_Head ; c->c_Succ ; c = c->c_Succ ) {
-			sprintf( buffer, "JOIN %s", c->c_Name );
-			if( c->c_Password[0] ) {
-				strcat( buffer, "\n" );
-				strcat( buffer, c->c_Password );
+			if( !( c->c_Flags & CHANNELF_SERVER ) ) { /* server tab is no real channel */
+				sprintf( buffer, "JOIN %s", c->c_Name );
+				if( c->c_Password[0] ) {
+					strcat( buffer, "\n" );
+					strcat( buffer, c->c_Password );
+				}
+				DoMethod( obj, MM_NETWORK_SERVERMESSAGESEND, s, buffer );
 			}
-			DoMethod( obj, MM_NETWORK_SERVERMESSAGESEND, s, buffer );
 		}
 		FreeVec( buffer );
 	}
@@ -918,7 +937,7 @@ static ULONG MM_ServerConnect( struct IClass *cl, Object *obj, struct MP_NETWORK
 struct Server *s = msg->Server;
 ULONG result;
 
-	debug("MM_ServerConnect()\n" );
+//	  debug("MM_ServerConnect()\n" );
 
 	result = MSG_ERROR_NOERROR + 4; /* bsdsocket missing */
 	if( !SocketBase ) {
@@ -933,7 +952,7 @@ ULONG result;
 		result = MSG_ERROR_NOERROR + 5; /* host error */
 
 		if( !( result = DoMethod( obj, MM_NETWORK_SERVERSOCKETINIT, s ) ) ) {
-			debug("connecting to '%s' Port %ld\n",s->s_Address, s->s_Port );
+//			  debug("connecting to '%s' Port %ld\n",s->s_Address, s->s_Port );
 			if( ( he = gethostbyname( (const UBYTE *) s->s_Address) ) ) {
 				struct sockaddr_in addr;
 
@@ -964,7 +983,7 @@ ULONG result;
 			}
 		}
     }
-	debug("MM_ServerConnect() - Done %08lx\n", result );
+//	  debug("MM_ServerConnect() - Done %08lx\n", result );
 	return( result );
 }
 /* \\\ */
@@ -1034,9 +1053,10 @@ struct SendNode *sn;
 
 	if( ( sn = AllocVec( sizeof( struct SendNode ) + strlen( msg->Message ) + 2, MEMF_ANY ) )) {
 		strcpy( sn->sn_Message, msg->Message );
-		strcat( sn->sn_Message, "\n" );
+		strcat( sn->sn_Message, "\r\n" );
 		AddTail( &msg->Server->s_SendList, (struct Node *) sn );
-
+		/* local echo */
+		DoMethod( obj, MM_NETWORK_SERVERMESSAGERECEIVED, msg->Server, sn->sn_Message );
 	}
 	return( 0 );
 }
@@ -1114,14 +1134,16 @@ ULONG i;
 
 
 	if( ( smp = AllocVec( sizeof( struct ServerMessageParse ) + strlen( msg->Message ) + 1, MEMF_ANY|MEMF_CLEAR ) ) ) {
+		strcpy( smp->smp_Data, msg->Message );
 		dst = smp->smp_StringStorage;
+		strcpy( dst, msg->Message );
+		dst = &dst[ strlen( dst ) + 1 ];
 
 		/* dump to shell */
 		VPrintf( (CONST_STRPTR) msg->Message, (CONST APTR) smp );
 		VPrintf( (CONST_STRPTR) "\n", (CONST APTR) smp );
-
+//		  debug("%128lh\n", msg->Message );
 		DateStamp( &smp->smp_DateStamp );
-		strcpy( smp->smp_Data, msg->Message );
 
 		smp->smp_MessageBuffer[0] = 0x00; /* terminate message string */
 		if( ( GlobalReadConfig( OID_GUI_TIMESHOW ) ) ) {
@@ -1219,7 +1241,7 @@ ULONG i;
 			VPrintf( (CONST_STRPTR) "!! Command is not in command table !!\n", &smp->smp_Command );
 		}
 	}
-#if 1
+#if 0
 	debug("# From:      '%s'\n", smp->smp_From );
 	debug("# Command:   '%s'\n", smp->smp_Command );
 	debug("# Args:      '%s'\n", smp->smp_Arguments );
@@ -1266,6 +1288,10 @@ ULONG result = 0, i;
 				result = TAB_IRCCOMMANDS[i].CMD_Function( obj, msg->Server, smp );
 				break;
 			}
+		}
+		/* commando was not found, so call fallback */
+		if( !TAB_IRCCOMMANDS[i].CMD_Name ) {
+			IRCCMD_GenericServer( obj, msg->Server, smp );
 		}
 	}
 	return( result );
