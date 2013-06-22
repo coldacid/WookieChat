@@ -36,6 +36,9 @@
 
 /*************************************************************************/
 
+#define SERVERENTRY_USERNAME_SIZEOF 32
+#define SERVERENTRY_REALNAME_SIZEOF 32
+
 /*
 ** gadgets used by this class
 */
@@ -61,7 +64,32 @@ GID_CHANNELADD,
 GID_CHANNELREMOVE,
 GID_CHANNELNAME,
 GID_CHANNELPASSWORD,
+GID_REALNAME,
+GID_USERNAME,
+GID_RECONNECT,
+GID_RECONNECTDELAY,
+GID_DUPEDETECTION,
 GID_LAST
+};
+
+/*
+** configitem structure
+*/
+
+struct ConfigItem {
+	ULONG GadgetID;
+	ULONG ObjectID;
+	ULONG Attr;
+	LONG  Default;
+};
+
+static struct ConfigItem TAB_CONFIGITEMS[] = {
+	{ GID_REALNAME          , OID_SVR_REALNAME         , MUIA_String_Contents, (LONG) "" },
+	{ GID_USERNAME          , OID_SVR_USERNAME         , MUIA_String_Contents, (LONG) "" },
+	{ GID_RECONNECT         , OID_SVR_RECONNECT        , MUIA_String_Integer , (LONG) 7 },
+	{ GID_RECONNECTDELAY    , OID_SVR_RECONNECTDELAY   , MUIA_String_Integer , (LONG) 30 },
+	{ GID_DUPEDETECTION     , OID_SVR_DUPEDETECTION    , MUIA_Selected       , (LONG) 0 },
+	{ -1,0,0,0 },
 };
 
 /*
@@ -84,57 +112,82 @@ struct mccdata
 static ULONG OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
 {
 Object *objs[ GID_LAST ];
+static STRPTR TAB_GROUP_HIGHLIGHTMODES[ MSG_PG_ADDITIONAL - MSG_PG_CONNECTIONS + 2 ];
 
-	if( (obj = (Object *) DoSuperNew( cl, obj, MUIA_Group_Horiz, FALSE, //MUIA_Group_PageMode, TRUE,
+	MUIInitStringArray( TAB_GROUP_HIGHLIGHTMODES, MSG_PG_CONNECTIONS, MSG_PG_ADDITIONAL );
 
-				Child, HGroup,
-					Child, NListviewObject, MUIA_NListview_NList, objs[ GID_SERVERLIST ] = ServerListObject, End, End,
-					Child, VGroup,
-						Child, NListviewObject, MUIA_NListview_NList, objs[ GID_NICKLIST    ] = NickListObject, End, End,
-						Child, HGroup,
-							Child, objs[ GID_NICKADD      ] = MUICreateSmallButton( MSG_MUICLASS_SETTINGSSERVER_NICKADD_GAD ),
-							Child, objs[ GID_NICKREMOVE   ] = MUICreateSmallButton( MSG_MUICLASS_SETTINGSSERVER_NICKREMOVE_GAD ),
-							Child, MUICreateLabelLeft( MSG_MUICLASS_SETTINGSSERVER_NICKNAME_GAD ),
-							Child, objs[ GID_NICKNAME     ] = MUICreateString( MSG_MUICLASS_SETTINGSSERVER_NICKNAME_GAD, NICKENTRY_NICK_SIZEOF     ),
-						End,
-						Child, HGroup,
-							Child, MUICreateLabelLeft( MSG_MUICLASS_SETTINGSSERVER_NICKPASSWORD_GAD ),
-							Child, objs[ GID_NICKPASSWORD ] = MUICreateString( MSG_MUICLASS_SETTINGSSERVER_NICKPASSWORD_GAD, NICKENTRY_PASSWORD_SIZEOF ),
-						End,
+	if( (obj = (Object *) DoSuperNew( cl, obj, MUIA_Register_Titles, TAB_GROUP_HIGHLIGHTMODES,
+				Child, VGroup,
+					Child, HGroup,
+						Child, NListviewObject, MUIA_NListview_NList, objs[ GID_SERVERLIST ] = ServerListObject, End, End,
+						Child, VGroup,
+							Child, NListviewObject, MUIA_NListview_NList, objs[ GID_NICKLIST    ] = NickListObject, End, End,
+							Child, HGroup,
+								Child, objs[ GID_NICKADD      ] = MUICreateSmallButton( MSG_MUICLASS_SETTINGSSERVER_NICKADD_GAD ),
+								Child, objs[ GID_NICKREMOVE   ] = MUICreateSmallButton( MSG_MUICLASS_SETTINGSSERVER_NICKREMOVE_GAD ),
+								Child, MUICreateLabelLeft( MSG_MUICLASS_SETTINGSSERVER_NICKNAME_GAD ),
+								Child, objs[ GID_NICKNAME     ] = MUICreateString( MSG_MUICLASS_SETTINGSSERVER_NICKNAME_GAD, NICKENTRY_NICK_SIZEOF     ),
+							End,
+							Child, HGroup,
+								Child, MUICreateLabelLeft( MSG_MUICLASS_SETTINGSSERVER_NICKPASSWORD_GAD ),
+								Child, objs[ GID_NICKPASSWORD ] = MUICreateString( MSG_MUICLASS_SETTINGSSERVER_NICKPASSWORD_GAD, NICKENTRY_PASSWORD_SIZEOF ),
+							End,
 
-						Child, NListviewObject, MUIA_NListview_NList, objs[ GID_CHANNELLIST ] = ChannelListObject, End, End,
-						Child, HGroup,
-							Child, objs[ GID_CHANNELADD      ] = MUICreateSmallButton( MSG_MUICLASS_SETTINGSSERVER_CHANNELADD_GAD ),
-							Child, objs[ GID_CHANNELREMOVE   ] = MUICreateSmallButton( MSG_MUICLASS_SETTINGSSERVER_CHANNELREMOVE_GAD ),
-							Child, MUICreateLabelLeft( MSG_MUICLASS_SETTINGSSERVER_CHANNELNAME_GAD ),
-							Child, objs[ GID_CHANNELNAME     ] = MUICreateString( MSG_MUICLASS_SETTINGSSERVER_CHANNELNAME_GAD, CHANNELENTRY_CHANNEL_SIZEOF     ),
-						End,
-						Child, HGroup,
-							Child, MUICreateLabelLeft( MSG_MUICLASS_SETTINGSSERVER_CHANNELPASSWORD_GAD ),
-							Child, objs[ GID_CHANNELPASSWORD ] = MUICreateString( MSG_MUICLASS_SETTINGSSERVER_CHANNELPASSWORD_GAD, CHANNELENTRY_PASSWORD_SIZEOF ),
+							Child, NListviewObject, MUIA_NListview_NList, objs[ GID_CHANNELLIST ] = ChannelListObject, End, End,
+							Child, HGroup,
+								Child, objs[ GID_CHANNELADD      ] = MUICreateSmallButton( MSG_MUICLASS_SETTINGSSERVER_CHANNELADD_GAD ),
+								Child, objs[ GID_CHANNELREMOVE   ] = MUICreateSmallButton( MSG_MUICLASS_SETTINGSSERVER_CHANNELREMOVE_GAD ),
+								Child, MUICreateLabelLeft( MSG_MUICLASS_SETTINGSSERVER_CHANNELNAME_GAD ),
+								Child, objs[ GID_CHANNELNAME     ] = MUICreateString( MSG_MUICLASS_SETTINGSSERVER_CHANNELNAME_GAD, CHANNELENTRY_CHANNEL_SIZEOF     ),
+							End,
+							Child, HGroup,
+								Child, MUICreateLabelLeft( MSG_MUICLASS_SETTINGSSERVER_CHANNELPASSWORD_GAD ),
+								Child, objs[ GID_CHANNELPASSWORD ] = MUICreateString( MSG_MUICLASS_SETTINGSSERVER_CHANNELPASSWORD_GAD, CHANNELENTRY_PASSWORD_SIZEOF ),
+							End,
 						End,
 					End,
+					Child, HGroup,
+						Child, objs[ GID_SERVERADD         ] = MUICreateSmallButton( MSG_MUICLASS_SETTINGSSERVER_ADD_GAD ),
+						Child, objs[ GID_SERVERREMOVE      ] = MUICreateSmallButton( MSG_MUICLASS_SETTINGSSERVER_REMOVE_GAD ),
+						Child, MUICreateLabel( MSG_MUICLASS_SETTINGSSERVER_NAME_GAD ),
+						Child, objs[ GID_SERVERNAME        ] = MUICreateStringFixed( MSG_MUICLASS_SETTINGSSERVER_NAME_GAD, SERVERENTRY_NAME_SIZEOF ),
+						Child, MUICreateLabel( MSG_MUICLASS_SETTINGSSERVER_ADDRESS_GAD ),
+						Child, objs[ GID_SERVERADDRESS     ] = MUICreateString( MSG_MUICLASS_SETTINGSSERVER_ADDRESS_GAD, SERVERENTRY_ADDRESS_SIZEOF ),
+					End,
+					Child, HGroup,
+						Child, MUICreateLabel( MSG_MUICLASS_SETTINGSSERVER_PORT_GAD ),
+						Child, objs[ GID_SERVERPORT        ] = MUICreateInteger( MSG_MUICLASS_SETTINGSSERVER_PORT_GAD, 5 ),
+						Child, MUICreateLabel( MSG_MUICLASS_SETTINGSSERVER_PASSWORD_GAD ),
+						Child, objs[ GID_SERVERPASSWORD    ] = MUICreateString( MSG_MUICLASS_SETTINGSSERVER_PASSWORD_GAD, SERVERENTRY_PASSWORD_SIZEOF ),
+						Child, MUICreateLabel( MSG_MUICLASS_SETTINGSSERVER_CHARSET_GAD ),
+						Child, objs[ GID_SERVERCHARSET     ] = MUICreateString( MSG_MUICLASS_SETTINGSSERVER_CHARSET_GAD, SERVERENTRY_CHARSET_SIZEOF ),
+						Child, objs[ GID_SERVERAUTOCONNECT ] = MUICreateCheckbox( MSG_MUICLASS_SETTINGSSERVER_AUTOCONNECT_GAD, FALSE ),
+						Child, MUICreateLabelLeft( MSG_MUICLASS_SETTINGSSERVER_AUTOCONNECT_GAD ),
+						Child, HVSpace,
+					End,
 				End,
-				Child, HGroup,
-					Child, objs[ GID_SERVERADD         ] = MUICreateSmallButton( MSG_MUICLASS_SETTINGSSERVER_ADD_GAD ),
-					Child, objs[ GID_SERVERREMOVE      ] = MUICreateSmallButton( MSG_MUICLASS_SETTINGSSERVER_REMOVE_GAD ),
-					Child, MUICreateLabel( MSG_MUICLASS_SETTINGSSERVER_NAME_GAD ),
-					Child, objs[ GID_SERVERNAME        ] = MUICreateStringFixed( MSG_MUICLASS_SETTINGSSERVER_NAME_GAD, SERVERENTRY_NAME_SIZEOF ),
-					Child, MUICreateLabel( MSG_MUICLASS_SETTINGSSERVER_ADDRESS_GAD ),
-					Child, objs[ GID_SERVERADDRESS     ] = MUICreateString( MSG_MUICLASS_SETTINGSSERVER_ADDRESS_GAD, SERVERENTRY_ADDRESS_SIZEOF ),
-				End,
-				Child, HGroup,
-					Child, MUICreateLabel( MSG_MUICLASS_SETTINGSSERVER_PORT_GAD ),
-					Child, objs[ GID_SERVERPORT        ] = MUICreateInteger( MSG_MUICLASS_SETTINGSSERVER_PORT_GAD, 5 ),
-					Child, MUICreateLabel( MSG_MUICLASS_SETTINGSSERVER_PASSWORD_GAD ),
-					Child, objs[ GID_SERVERPASSWORD    ] = MUICreateString( MSG_MUICLASS_SETTINGSSERVER_PASSWORD_GAD, SERVERENTRY_PASSWORD_SIZEOF ),
-					Child, MUICreateLabel( MSG_MUICLASS_SETTINGSSERVER_CHARSET_GAD ),
-					Child, objs[ GID_SERVERCHARSET     ] = MUICreateString( MSG_MUICLASS_SETTINGSSERVER_CHARSET_GAD, SERVERENTRY_CHARSET_SIZEOF ),
-					Child, objs[ GID_SERVERAUTOCONNECT ] = MUICreateCheckbox( MSG_MUICLASS_SETTINGSSERVER_AUTOCONNECT_GAD, FALSE ),
-					Child, MUICreateLabelLeft( MSG_MUICLASS_SETTINGSSERVER_AUTOCONNECT_GAD ),
-					Child, HVSpace,
-				End,
+				Child, ColGroup(2), 
+					Child, MUICreateLabel( MSG_MUICLASS_SETTINGSSERVER_REALNAME_GAD ),
+					Child, objs[ GID_REALNAME              ] = MUICreateString( MSG_MUICLASS_SETTINGSSERVER_REALNAME_GAD, SERVERENTRY_REALNAME_SIZEOF ),
+					Child, MUICreateLabel( MSG_MUICLASS_SETTINGSSERVER_USERNAME_GAD ),
+					Child, objs[ GID_USERNAME              ] = MUICreateString( MSG_MUICLASS_SETTINGSSERVER_USERNAME_GAD, SERVERENTRY_USERNAME_SIZEOF ),
 
+					Child, MUICreateLabel( MSG_MUICLASS_SETTINGSSERVER_RECONNECT_GAD ),
+					Child, HGroup,
+						Child, objs[ GID_RECONNECT         ] = MUICreateInteger( MSG_MUICLASS_SETTINGSSERVER_RECONNECT_GAD, 5 ),
+						Child, HVSpace,
+					End,
+					Child, MUICreateLabel( MSG_MUICLASS_SETTINGSSERVER_RECONNECTDELAY_GAD ),
+					Child, HGroup,
+						Child, objs[ GID_RECONNECTDELAY    ] = MUICreateInteger( MSG_MUICLASS_SETTINGSSERVER_RECONNECTDELAY_GAD, 5 ),
+						Child, HVSpace,
+					End,
+					Child, HGroup,
+						Child, objs[ GID_DUPEDETECTION     ] = MUICreateCheckbox( MSG_MUICLASS_SETTINGSSERVER_DUPEDETECTION_GAD, FALSE ),
+						Child, MUICreateLabelLeft( MSG_MUICLASS_SETTINGSSERVER_DUPEDETECTION_GAD ),
+						Child, HVSpace,
+					End,
+				End,
 		TAG_DONE ) ) ) {
 
 		struct mccdata *mccdata = INST_DATA( cl, obj );
@@ -174,6 +227,7 @@ Object *objs[ GID_LAST ];
 		DoMethod( objs[ GID_CHANNELNAME       ], MUIM_Notify, MUIA_String_Contents, MUIV_EveryTime, obj, 1, MM_SETTINGSSERVER_CHANNELGADGETSTOLIST );
 		DoMethod( objs[ GID_CHANNELPASSWORD   ], MUIM_Notify, MUIA_String_Contents, MUIV_EveryTime, obj, 1, MM_SETTINGSSERVER_CHANNELGADGETSTOLIST );
 
+		DoMethod( obj, MM_SETTINGSSERVER_RESETTODEFAULTS );
 	    DoMethod( obj, MM_SETTINGSSERVER_SERVERLISTTOGADGETS );
 
 		return( (ULONG) obj );
@@ -189,14 +243,12 @@ Object *objs[ GID_LAST ];
 
 static ULONG MM_ResetToDefaults( struct IClass *cl, Object *obj, Msg *msg )
 {
-#if 0
 struct mccdata *mccdata = INST_DATA( cl, obj );
 ULONG i;
 
 	for( i = 0 ; TAB_CONFIGITEMS[ i ].GadgetID != -1 ; i++ ) {
 		SetAttrs( mccdata->mcc_ClassObjects[ TAB_CONFIGITEMS[ i ].GadgetID ], TAB_CONFIGITEMS[ i ].Attr, TAB_CONFIGITEMS[ i ].Default, MUIA_ObjectID, TAB_CONFIGITEMS[ i ].ObjectID, TAG_DONE );
 	}
-#endif
 	return( 0 );
 }
 /* \\\ */
@@ -210,20 +262,17 @@ ULONG i;
 static ULONG MM_ReadConfig( struct IClass *cl, Object *obj, struct MP_SETTINGSSERVER_READCONFIG *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
+ULONG i;
 
 	if( msg->ObjectID == OID_SVR_LIST ) {
 		return( (IPTR) mccdata->mcc_ClassObjects[ GID_SERVERLIST ] );
 	}
-
-#if 0
-ULONG i;
 
 	for( i = 0 ; TAB_CONFIGITEMS[ i ].GadgetID != -1 ; i++ ) {
 		if( TAB_CONFIGITEMS[ i ].ObjectID == msg->ObjectID ) {
 			return( (ULONG) MUIGetVar( mccdata->mcc_ClassObjects[ TAB_CONFIGITEMS[ i ].GadgetID ], TAB_CONFIGITEMS[ i ].Attr ) );
 		}
 	}
-#endif
 	return( 0 );
 }
 /* \\\ */
@@ -574,7 +623,7 @@ DISPATCHER(MCC_SettingsServer_Dispatcher)
 
 ULONG MCC_SettingsServer_InitClass( void )
 {
-	appclasses[ CLASSID_SETTINGSSERVER ] = MUI_CreateCustomClass( NULL, (ClassID)MUIC_Group, NULL, sizeof( struct mccdata ) ,  (APTR) ENTRY(MCC_SettingsServer_Dispatcher) );
+	appclasses[ CLASSID_SETTINGSSERVER ] = MUI_CreateCustomClass( NULL, (ClassID)MUIC_Register, NULL, sizeof( struct mccdata ) ,  (APTR) ENTRY(MCC_SettingsServer_Dispatcher) );
 	return( appclasses[ CLASSID_SETTINGSSERVER ] ? MSG_ERROR_NOERROR : MSG_ERROR_UNABLETOSETUPMUICLASS );
 }
 /* \\\ */
