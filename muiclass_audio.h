@@ -23,7 +23,7 @@
 */
 
 enum {
-MM_AUDIO_PLAY =  0xFED00340,
+MM_AUDIO_PLAY =  0xFED00300,
 /* Attributes */
 MA_AUDIO_OBJECTSETTINGS,
 };

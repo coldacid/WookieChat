@@ -12,11 +12,6 @@ them all. Instead I created a separate application, which is used and running in
 the old environment. To avoid crashes due no created objects, all old windows
 and even the original application gets created as before.
 
-We already reached a step, where the old wookie code is no longer used. Disable
-the first line (NEWWOOKIE) in makefile by using a # and compile again to get the
-old code again. This will not work forever.
-
-
 What are the upcoming steps to go for?
 ---------------------------------------
 

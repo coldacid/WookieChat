@@ -24,7 +24,7 @@
 */
 
 enum {
-MM_WINDOWIGNORELIST_DUMMY =  0xFED000d0,
+MM_WINDOWIGNORELIST_DUMMY =  0xFED00020,
 MM_WINDOWIGNORELIST_DISENABLE,
 MM_WINDOWIGNORELIST_GADGETSTOLIST,
 MM_WINDOWIGNORELIST_LISTTOGADGETS,
@@ -45,14 +45,13 @@ void    MCC_WindowIgnoreList_DisposeClass( void );
 
 /*************************************************************************/
 
-#if ENABLE_NEWWOOKIECODE
-enum /* geit FIXME: need a new name */
+enum /* geit FIXME: need a new name and place for this */
 {
 	PRIVMSG = 1,
 	CTCP,
 	DCC
 };
-#endif
+
 /*************************************************************************/
 
 #endif /* MUICLASS_WINDOWIGNORELIST_H */

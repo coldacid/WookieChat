@@ -23,7 +23,7 @@
 */
 
 enum {
-MM_IGNORELIST_ADD =  0xFED00380,
+MM_IGNORELIST_ADD =  0xFED00a00,
 MM_IGNORELIST_IMPORTLISTASTEXT,
 MM_IGNORELIST_EXPORTLISTASTEXT,
 /* Attributes */
@@ -53,7 +53,7 @@ void    MCC_IgnoreList_DisposeClass( void );
 
 struct IgnoreEntry {
 	ULONG         ie_Flags;
-	unsigned char ie_Pattern[ IGNOREENTRY_PATTERN_SIZEOF + 2 ];
+	char          ie_Pattern[ IGNOREENTRY_PATTERN_SIZEOF + 2 ];
 };
 
 #define IGNOREENTRYF_TEXT    0x1

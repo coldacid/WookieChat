@@ -24,7 +24,6 @@
 #include "muiclass_application.h"
 #include "muiclass_network.h"
 #include "version.h"
-#include "intern.h"
 #include "locale.h"
 
 /*************************************************************************/

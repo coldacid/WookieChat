@@ -75,7 +75,11 @@ struct mccdata
 	struct DiskObject     *mcc_DiskObject;
 	IPTR                   mcc_ReadargsArray[ READARGS_LAST ];
 	Object                *mcc_LastActiveChat[ LASTACTIVE_MAX ];
+	void                  *mcc_MemoryPool;
 };
+
+#define PUDDLE_SIZE   65535
+#define PUDDLE_THRESH  4096
 
 /*************************************************************************/
 
@@ -85,14 +89,17 @@ struct mccdata
 
 
 static STRPTR classlist[] = { (STRPTR)"NList.mcc", (STRPTR)"NListview.mcc", (STRPTR)"NListtree.mcc", (STRPTR)"BetterString.mcc", NULL };
-
+void *mempool;
 /*************************************************************************/
 
 static ULONG OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
 {
 Object *objs[ GID_LAST ];
+void *memorypool;
 
-	if( ( obj = (Object *)DoSuperNew( cl, obj,
+	if( ( memorypool = MemoryCreatePool( MEMF_ANY|MEMF_CLEAR, PUDDLE_SIZE, PUDDLE_THRESH ) ) ) {
+		mempool = memorypool;
+		if( ( obj = (Object *) DoSuperNew( cl, obj,
 			        MUIA_Application_UsedClasses, classlist,
 					MUIA_Application_Author     , (char*) AUTHORNAME,
 					MUIA_Application_Base       , (char*) APPLICATIONNAME "_NEW",
@@ -116,18 +123,21 @@ Object *objs[ GID_LAST ];
 						End,
 					TAG_DONE ) ) ) {
 
-		struct mccdata *mccdata = INST_DATA( cl, obj );
+			struct mccdata *mccdata = INST_DATA( cl, obj );
 
-		CopyMem( &objs[0], &mccdata->mcc_ClassObjects[0], sizeof( mccdata->mcc_ClassObjects));
+			CopyMem( &objs[0], &mccdata->mcc_ClassObjects[0], sizeof( mccdata->mcc_ClassObjects));
 
-		SetAttrs( objs[ GID_NETWORK ], MA_NETWORK_OBJECTSETTINGS, objs[ WID_SETTINGS ], MA_NETWORK_OBJECTAUDIO, objs[ GID_AUDIO    ], TAG_DONE );
-		SetAttrs( objs[ GID_AUDIO   ], MA_AUDIO_OBJECTSETTINGS  , objs[ WID_SETTINGS ], TAG_DONE );
+			mccdata->mcc_MemoryPool = memorypool;
 
-		/* load settings */
-		DoMethod( obj, MUIM_Application_Load, MUIV_Application_Load_ENVARC );
-		DoMethod( obj, MUIM_Application_Load, MUIV_Application_Load_ENV );
-		
-		return( (ULONG) obj );
+			SetAttrs( objs[ GID_NETWORK ], MA_NETWORK_OBJECTSETTINGS, objs[ WID_SETTINGS ], MA_NETWORK_OBJECTAUDIO, objs[ GID_AUDIO    ], TAG_DONE );
+			SetAttrs( objs[ GID_AUDIO   ], MA_AUDIO_OBJECTSETTINGS  , objs[ WID_SETTINGS ], TAG_DONE );
+
+			/* load settings */
+			DoMethod( obj, MUIM_Application_Load, MUIV_Application_Load_ENVARC );
+			DoMethod( obj, MUIM_Application_Load, MUIV_Application_Load_ENV );
+			return( (ULONG) obj );
+		}
+		MemoryDeletePool( memorypool );
     }
 	return( (ULONG) NULL );
 }
@@ -141,12 +151,19 @@ Object *objs[ GID_LAST ];
 static ULONG OM_Dispose( struct IClass *cl, Object *obj, Msg msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
+void *memorypool;
+LONG rc;
 
 	SetAttrs( obj, MUIA_Application_DiskObject, 0, TAG_DONE );
 	if( mccdata->mcc_DiskObject ) {
 		FreeDiskObject( mccdata->mcc_DiskObject );
 	}
-	return( DoSuperMethodA( cl, obj, msg ) );
+	/* make sure the pool is the last thing that gets freed */
+	memorypool = mccdata->mcc_MemoryPool;
+	rc = DoSuperMethodA( cl, obj, msg ); /* is this needed */
+	MemoryDeletePool( memorypool );
+
+	return( rc );
 }
 /* \\\ */
 /* /// OM_Get()
@@ -160,6 +177,7 @@ static ULONG OM_Get(struct IClass *cl, Object *obj, struct opGet *msg )
 struct mccdata *mccdata = INST_DATA( cl, obj );
 
 	switch( msg->opg_AttrID ) {
+		case MA_APPLICATION_MEMORYPOOL             : *msg->opg_Storage = (ULONG) mccdata->mcc_MemoryPool                        ; return( TRUE );
 		case MA_APPLICATION_OBJECTNETWORK          : *msg->opg_Storage = (ULONG) mccdata->mcc_ClassObjects[ GID_NETWORK       ] ; return( TRUE );
 		case MA_APPLICATION_OBJECTWINDOWQUIT       : *msg->opg_Storage = (ULONG) mccdata->mcc_ClassObjects[ WID_QUIT          ] ; return( TRUE );
 		case MA_APPLICATION_OBJECTWINDOWABOUT      : *msg->opg_Storage = (ULONG) mccdata->mcc_ClassObjects[ WID_ABOUT         ] ; return( TRUE );
@@ -203,12 +221,8 @@ struct mccdata *mccdata = INST_DATA( cl, obj );
 		DoMethod( mccdata->mcc_ClassObjects[ GID_NETWORK ], MM_NETWORK_SERVERCONNECTAUTO );
 	}
 
-#if ENABLE_NEWWOOKIECODE
 //	  SetAttrs( mccdata->mcc_ClassObjects[ WID_CHAT ], MUIA_Window_Open, TRUE, TAG_DONE );
 //	  DoMethod( mccdata->mcc_ClassObjects[ WID_CHAT ], MM_WINDOWCHAT_COLORCHANGE );
-
-#endif
-
 	return( 0 );
 }
 /* \\\ */

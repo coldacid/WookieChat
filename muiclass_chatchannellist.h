@@ -25,7 +25,7 @@
 */
 
 enum {
-MM_CHATCHANNELLIST_DUMMY =  0xFED00800,
+MM_CHATCHANNELLIST_DUMMY =  0xFED00600,
 /* Attributes */
 };
 

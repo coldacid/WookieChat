@@ -66,7 +66,7 @@ STRPTR *array = msg->strings;
 struct IgnoreEntry *ie;
 
 	if( ( ie = msg->entry ) ) {
-		*array++ = ie->ie_Pattern;
+		*array++ = (STRPTR) ie->ie_Pattern;
 		*array++ = ( ie->ie_Flags & IGNOREENTRYF_TEXT ) ? LGS( MSG_LV_IGNORE ) : LGS( MSG_LV_ALLOW );
 		*array++ = ( ie->ie_Flags & IGNOREENTRYF_CTCP ) ? LGS( MSG_LV_IGNORE ) : LGS( MSG_LV_ALLOW );
 		*array++ = ( ie->ie_Flags & IGNOREENTRYF_DCC  ) ? LGS( MSG_LV_IGNORE ) : LGS( MSG_LV_ALLOW );
@@ -161,7 +161,7 @@ struct IgnoreEntry *ie;
 
 	if( ( ie = AllocMem( sizeof( struct IgnoreEntry ), MEMF_ANY|MEMF_CLEAR ) ) ) {
 		ie->ie_Flags = msg->Flags;
-		strncpy( (char *) ie->ie_Pattern, (char *) ( msg->Pattern ? msg->Pattern : LGS( MSG_MUICLASS_IGNORELIST_DEFAULTPATTERN ) ), IGNOREENTRY_PATTERN_SIZEOF );
+		strncpy( ie->ie_Pattern, (char *) ( msg->Pattern ? msg->Pattern : LGS( MSG_MUICLASS_IGNORELIST_DEFAULTPATTERN ) ), IGNOREENTRY_PATTERN_SIZEOF );
 		DoMethod( obj, MUIM_NList_InsertSingle, ie, MUIV_NList_Insert_Bottom );
 		SetAttrs( obj, MUIA_NList_Active, MUIV_NList_Active_Bottom, TAG_DONE );
 	}
@@ -219,7 +219,7 @@ char *linebuffer;
 			while( FGets( handle, (STRPTR) linebuffer, LINEBUFFER_SIZEOF - 1 ) ) {
 				struct SimpleReadArgsData *srad;
 				if( ( srad = SimpleReadArgsParse( "PATTERN/A,TEXT/S,CTCP/S,DCC/S", linebuffer ) ) ) {
-					DoMethod( obj, MM_IGNORELIST_ADD,  srad->srad_ArgArray[0], ( srad->srad_ArgArray[1] ? IGNOREENTRYF_TEXT : 0 ) | ( srad->srad_ArgArray[2] ? IGNOREENTRYF_CTCP : 0 ) | ( srad->srad_ArgArray[3] ? IGNOREENTRYF_DCC : 0 ) );
+					DoMethod( obj, MM_IGNORELIST_ADD, srad->srad_ArgArray[0], ( srad->srad_ArgArray[1] ? IGNOREENTRYF_TEXT : 0 ) | ( srad->srad_ArgArray[2] ? IGNOREENTRYF_CTCP : 0 ) | ( srad->srad_ArgArray[3] ? IGNOREENTRYF_DCC : 0 ) );
 					SimpleReadArgsFree( srad );
 				}
 			}

@@ -23,7 +23,7 @@
 */
 
 enum {
-MM_BUTTONLIST_ADD =  0xFED00330,
+MM_BUTTONLIST_ADD =  0xFED00400,
 /* Attributes */
 };
 

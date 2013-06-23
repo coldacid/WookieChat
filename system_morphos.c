@@ -14,18 +14,4 @@
 
 /*************************************************************************/
 
-#ifdef ENABLE_GEITDEBUG
-#define DEBUG
-#include "debug.h"
-#include "debug.c"
-#undef DEBUG
-#undef REG
-#undef REGARGS
-#undef STDARGS
-#undef FAR
-#undef INLINE
-#else
-#undef debug
-void debug() {}
-#endif /* ENABLE_GEITDEBUG */
 

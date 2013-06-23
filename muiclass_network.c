@@ -836,6 +836,7 @@ static ULONG MM_ServerSocketInit( struct IClass *cl, Object *obj, struct MP_NETW
 struct mccdata *mccdata = INST_DATA( cl, obj );
 struct Server *s;
 ULONG result;
+	debug("MM_ServerSocketInit()\n" );
 
 	result = MSG_ERROR_NOERROR + 1; /* socket error */
 	if( ( s = msg->Server ) ) {
@@ -1051,7 +1052,7 @@ static ULONG MM_ServerMessageSend( struct IClass *cl, Object *obj, struct MP_NET
 {
 struct SendNode *sn;
 
-	if( ( sn = AllocVec( sizeof( struct SendNode ) + strlen( msg->Message ) + 2, MEMF_ANY ) )) {
+	if( ( sn = AllocVec( sizeof( struct SendNode ) + strlen( msg->Message ) + 3, MEMF_ANY ) )) {
 		strcpy( sn->sn_Message, msg->Message );
 		strcat( sn->sn_Message, "\r\n" );
 		AddTail( &msg->Server->s_SendList, (struct Node *) sn );

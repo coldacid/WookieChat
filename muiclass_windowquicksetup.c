@@ -197,11 +197,13 @@ ULONG count = 3;
 	str = (STRPTR) LocalReadConfig( OID_SVR_REALNAME );
 	if( str && str[0] ) {
 		SetAttrs( mccdata->mcc_ClassObjects[ GID_REALNAME ], MUIA_String_Contents, str, TAG_DONE );
+		debug("real name is there\n");
 		count--;
 	}
 	str = (STRPTR) LocalReadConfig( OID_SVR_USERNAME );
 	if( str && str[0] ) {
 		SetAttrs( mccdata->mcc_ClassObjects[ GID_USERNAME ], MUIA_String_Contents, str, TAG_DONE );
+		debug("user name is there\n");
 		count--;
 	}
 
@@ -213,6 +215,7 @@ ULONG count = 3;
 		se = NULL;
 		DoMethod( serverlist, MUIM_NList_GetEntry, 0, &se );
 		if( se ) { /* we got a server, so no need to setup */
+		debug("server is there\n");
 			count--;
 		}
 	}

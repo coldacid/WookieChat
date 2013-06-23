@@ -182,7 +182,7 @@ ULONG i;
 			}
 			DoMethod( mccdata->mcc_ClassObjects[ GID_CHANNELLIST ], MM_CHANNELLIST_REMOVE, ne );
 		}
-		FreeMem( se, sizeof( struct ServerEntry ) );
+		FreeVec( se );
     }
 	return( 0 );
 }
@@ -354,6 +354,7 @@ struct ServerEntry *se = NULL;
 							} else {
 								if( ( srad = SimpleReadArgsParse( "NICK/A,PASSWORD/A", linebuffer ) ) ) {
 									DoMethod( mccdata->mcc_ClassObjects[ GID_NICKLIST ], MM_NICKLIST_ADD, se, srad->srad_ArgArray[0], srad->srad_ArgArray[1] );
+									SimpleReadArgsFree( srad );
 								}
 							}
 						}

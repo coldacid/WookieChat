@@ -1,33 +1,18 @@
-#NEWWOOKIE   = 1
 CC          = i386-aros-gcc
 LD          = i386-aros-gcc
 LDFLAGS     =
 STRIP       =
 LIBS        = -lamiga -lmui
 INCS        = -I.
-ifndef NEWWOOKIE
-DEFINES     = -DENABLE_NEWWOOKIECODE=0
-else
-DEFINES     = -DENABLE_NEWWOOKIECODE=1
-endif
+DEFINES     = -DDEBUG -DENABLE_MEMORYTRACKING=1
 CFLAGS      = $(INCS) $(DEFINES) -std=gnu99 -Wall -Wno-format -g -O0
 APPLICATION = WookieChat
 SYSTEM      = AROS
 CATALOGS    = english deutsch español français greek italiano magyar norsk polski svenska
 FLEXCAT     = flexcat
 
-ifdef NEWWOOKIE
-SOURCES   = wookiechat.c
-else
-SOURCES   = main.c arexx_hooks.c auto_reconnect_server.c closeserverselectwin.c coloursettings.c \
-            connect2server.c dcc.c display_logfile_lines.c do_waitselect_code.c \
-            events_arexx.c globals.c graphical_smilies.c highlight_search.c hooks.c \
-			irc.c nicklist.c pincoming.c process_outgoing.c save_settings.c \
-            sortnicks.c startexit.c subclasses.c tabs_change.c tabs_create_close.c \
-			timers.c objapp.c audio.c
-endif
-
-SOURCES  += version.c                   \
+SOURCES   = wookiechat.c                \
+			version.c                   \
 			functions.c                 \
 			muiclass.c                  \
 			muiclass_aliaslist.c        \
@@ -60,7 +45,10 @@ SOURCES  += version.c                   \
 			muiclass_windowquit.c       \
 			muiclass_windowsettings.c   \
 			muiclass_windowurlgrabber.c \
-			locale.c version.c          \
+			locale.c                    \
+			version.c                   \
+			debug.c                     \
+			memorytracking.c            \
 
 OBJECTS   = $(SOURCES:.c=.o)
 

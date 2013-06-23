@@ -24,7 +24,7 @@
 */
 
 enum {
-MM_CHATLOG_DUMMY =  0xFED00320,
+MM_CHATLOG_DUMMY =  0xFED00700,
 /* Attributes */
 };
 

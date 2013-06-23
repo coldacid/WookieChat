@@ -24,7 +24,7 @@
 */
 
 enum {
-MM_NICKLIST_ADD =  0xFED00300,
+MM_NICKLIST_ADD =  0xFED00c00,
 MM_NICKLIST_REMOVE,
 /* Attributes */
 };

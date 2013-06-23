@@ -35,10 +35,6 @@
 #include "muiclass_windowsettings.h"
 #include "version.h"
 
-/* this can be removed after dumping old code */
-#undef ENABLE_NEWWOOKIECODE
-#define ENABLE_NEWWOOKIECODE 1
-
 #include "muiclass_windowignorelist.h"
 
 /*************************************************************************/

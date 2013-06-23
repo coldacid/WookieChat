@@ -23,7 +23,7 @@
 */
 
 enum {
-MM_EVENTLIST_ADD =  0xFED00350,
+MM_EVENTLIST_ADD =  0xFED00900,
 /* Attributes */
 };
 

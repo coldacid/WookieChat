@@ -24,7 +24,7 @@
 */
 
 enum {
-MM_CHATUSERLIST_DUMMY =  0xFED00700,
+MM_CHATUSERLIST_DUMMY =  0xFED00800,
 /* Attributes */
 };
 

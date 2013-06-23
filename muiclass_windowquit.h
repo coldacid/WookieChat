@@ -24,7 +24,7 @@
 */
 
 enum {
-MM_WINDOWQUIT_DUMMY =  0xFED00060,
+MM_WINDOWQUIT_DUMMY =  0xFED00040,
 /* Attributes */
 };
 

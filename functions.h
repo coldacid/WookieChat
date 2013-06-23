@@ -22,6 +22,7 @@
 #include <string.h>
 
 #include "system.h"
+#include "memorytracking.h"
 
 /*************************************************************************/
 

@@ -8,19 +8,36 @@
     for the specific language governing rights and limitations under the License.
 */
 
-#ifndef PINCOMING_H
-#define PINCOMING_H 1
+#ifndef DEBUG_DEBUG_H
+#define DEBUG_DEBUG_H 1
 
 /*************************************************************************/
 
+#include <stdarg.h>
 #include <exec/types.h>
+#include <exec/initializers.h>
 
-/*
-** Prototypes
-*/
+#include <proto/exec.h>
 
-BOOL FindUTF8Chars(char *buffer2);
+#include <SDI_compiler.h>
 
 /*************************************************************************/
 
-#endif /* PINCOMING_H */
+#if defined(DEBUG) && ( !defined(NODEBUG) || defined(FORCEDEBUG) )
+
+/* This is our debug function */
+void STDARGS debug( char *text, ...);
+
+#else
+    #ifdef __VBCC__
+        #define debug(...) do{}while(0)
+    #endif
+    #ifdef __GNUC__
+		#define debug(...) {}
+    #endif
+#endif
+
+/*************************************************************************/
+
+#endif /* DEBUG_DEBUG_H */
+

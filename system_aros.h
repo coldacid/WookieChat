@@ -21,6 +21,8 @@
 
 #include <exec/types.h>
 
+#include "debug.h"
+
 /*************************************************************************/
 
 /*
@@ -73,12 +75,6 @@ typedef CONST_STRPTR    _s_cs;
 #ifndef MUIA_Text_HiIndex
  #define MUIA_Text_HiIndex 0x804214f5
 #endif
-
-/*
-** debug
-*/
-
-#define debug(...) {}
 
 /*************************************************************************/
 
