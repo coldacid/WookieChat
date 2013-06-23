@@ -218,11 +218,9 @@ struct mccdata *mccdata = INST_DATA( cl, obj );
 
 	/* auto connect or open wizard */
 	if( !( DoMethod( mccdata->mcc_ClassObjects[ WID_QUICKSETUP ], MM_WINDOWQUICKSETUP_CHECKSETTINGS ) ) ) {
+		DoMethod( obj, MM_APPLICATION_WINDOWCHATNEW );
 		DoMethod( mccdata->mcc_ClassObjects[ GID_NETWORK ], MM_NETWORK_SERVERCONNECTAUTO );
 	}
-
-//	  SetAttrs( mccdata->mcc_ClassObjects[ WID_CHAT ], MUIA_Window_Open, TRUE, TAG_DONE );
-//	  DoMethod( mccdata->mcc_ClassObjects[ WID_CHAT ], MM_WINDOWCHAT_COLORCHANGE );
 	return( 0 );
 }
 /* \\\ */
