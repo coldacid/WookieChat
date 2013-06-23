@@ -1,11 +1,20 @@
 /*
-    The contents of this file are subject to the AROS Public License Version 1.1
-    (the "License"); you may not use this file except in compliance with the License.
-    You may obtain a copy of the License at http://www.aros.org/license.html
-
-    Software distributed under the License is distributed on an "AS IS" basis,
-    WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
-    for the specific language governing rights and limitations under the License.
+**  MemoryTracking V4.0
+**
+** 	(C)1991 - 2013 by Guido Mersmann
+**
+**  This file turns any AllocVec() call into AllocVecPooled().
+**  Inbetween, when memory tracking itself is enabled it, all
+**  allocations will be traced. Missaligned or false memory blocks
+**  and even hits on the upper/lower boundary will be traced
+**  and dumped as error on standard debug output.
+**
+**  DISTRIBUTION
+**
+**  The contents of this file is considered to be PD and free to
+**  use in any kind of software as long as the original credits
+**  stay intact.
+**
 */
 
 /*************************************************************************/

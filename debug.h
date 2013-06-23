@@ -1,11 +1,16 @@
 /*
-    The contents of this file are subject to the AROS Public License Version 1.1
-    (the "License"); you may not use this file except in compliance with the License.
-    You may obtain a copy of the License at http://www.aros.org/license.html
-
-    Software distributed under the License is distributed on an "AS IS" basis,
-    WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
-    for the specific language governing rights and limitations under the License.
+**  Debug V4.0
+**
+** 	(C)1991 - 2013 by Guido Mersmann
+**
+**  For details and usage read debug.c
+**
+**  DISTRIBUTION
+**
+**  The contents of this file is considered to be PD and free to
+**  use in any kind of software as long as the original credits
+**  stay intact.
+**
 */
 
 #ifndef DEBUG_DEBUG_H
