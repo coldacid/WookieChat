@@ -26,6 +26,7 @@
 #include <stdio.h>
 
 #include "functions.h"
+#include "system.h"
 #include "locale.h"
 #include "muiclass.h"
 #include "muiclass_windowsettings.h"
@@ -80,7 +81,7 @@ struct ButtonEntry *be;
 static ULONG OM_Destruct( struct IClass *cl, Object *obj, struct MUIP_NList_Destruct *msg )
 {
 	if( msg->entry ) {
-		FreeMem( msg->entry, sizeof( struct ButtonEntry ) );
+		FreeVec( msg->entry );
     }
 	return( 0 );
 }
@@ -146,7 +147,7 @@ static ULONG MM_Add( struct IClass *cl, Object *obj, struct MP_BUTTONLIST_ADD *m
 {
 struct ButtonEntry *be;
 
-	if( ( be = AllocMem( sizeof( struct ButtonEntry ), MEMF_ANY|MEMF_CLEAR ) ) ) {
+	if( ( be = AllocVec( sizeof( struct ButtonEntry ), MEMF_ANY|MEMF_CLEAR ) ) ) {
 		strncpy( (char *) be->be_Name    , (char *) ( msg->Name     ? msg->Name    : LGS( MSG_MUICLASS_BUTTONLIST_DEFAULTNAME    ) ), BUTTONENTRY_NAME_SIZEOF );
 		strncpy( (char *) be->be_Command , (char *) ( msg->Command  ? msg->Command : LGS( MSG_MUICLASS_BUTTONLIST_DEFAULTCOMMAND ) ), BUTTONENTRY_COMMAND_SIZEOF );
 		DoMethod( obj, MUIM_NList_InsertSingle, be, MUIV_NList_Insert_Bottom );

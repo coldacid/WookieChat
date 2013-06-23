@@ -22,6 +22,7 @@
 #include <exec/types.h>
 
 #include "debug.h"
+#include "memorytracking.h"
 
 /*************************************************************************/
 

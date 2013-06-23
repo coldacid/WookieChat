@@ -91,7 +91,7 @@ struct EventEntry *ee;
 static ULONG OM_Destruct( struct IClass *cl, Object *obj, struct MUIP_NList_Destruct *msg )
 {
 	if( msg->entry ) {
-		FreeMem( msg->entry, sizeof( struct EventEntry ) );
+		FreeVec( msg->entry );
     }
 	return( 0 );
 }
@@ -177,7 +177,7 @@ ULONG i, newitem = 0;
 	}
 	/* no item found? Then alloc new entry */
 	if( !ee ) {
-		ee = AllocMem( sizeof( struct EventEntry ), MEMF_ANY|MEMF_CLEAR );
+		ee = AllocVec( sizeof( struct EventEntry ), MEMF_ANY|MEMF_CLEAR );
 		newitem++;
 	}
 	if( ee ) {

@@ -20,6 +20,7 @@
 #include <clib/alib_protos.h>
 #include <libraries/mui.h>
 
+#include "system.h"
 #include "functions.h"
 #include "muiclass.h"
 #include "muiclass_application.h"

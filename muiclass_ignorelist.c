@@ -88,7 +88,7 @@ struct IgnoreEntry *ie;
 static ULONG OM_Destruct( struct IClass *cl, Object *obj, struct MUIP_NList_Destruct *msg )
 {
 	if( msg->entry ) {
-		FreeMem( msg->entry, sizeof( struct IgnoreEntry ) );
+		FreeVec( msg->entry );
     }
 	return( 0 );
 }
@@ -159,7 +159,7 @@ static ULONG MM_Add( struct IClass *cl, Object *obj, struct MP_IGNORELIST_ADD *m
 {
 struct IgnoreEntry *ie;
 
-	if( ( ie = AllocMem( sizeof( struct IgnoreEntry ), MEMF_ANY|MEMF_CLEAR ) ) ) {
+	if( ( ie = AllocVec( sizeof( struct IgnoreEntry ), MEMF_ANY|MEMF_CLEAR ) ) ) {
 		ie->ie_Flags = msg->Flags;
 		strncpy( ie->ie_Pattern, (char *) ( msg->Pattern ? msg->Pattern : LGS( MSG_MUICLASS_IGNORELIST_DEFAULTPATTERN ) ), IGNOREENTRY_PATTERN_SIZEOF );
 		DoMethod( obj, MUIM_NList_InsertSingle, ie, MUIV_NList_Insert_Bottom );

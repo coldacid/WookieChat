@@ -84,7 +84,7 @@ struct AliasEntry *ae;
 static ULONG OM_Destruct( struct IClass *cl, Object *obj, struct MUIP_NList_Destruct *msg )
 {
 	if( msg->entry ) {
-		FreeMem( msg->entry, sizeof( struct AliasEntry ) );
+		FreeVec( msg->entry );
     }
 	return( 0 );
 }
@@ -150,7 +150,7 @@ static ULONG MM_Add( struct IClass *cl, Object *obj, struct MP_ALIASLIST_ADD *ms
 {
 struct AliasEntry *ae;
 
-	if( ( ae = AllocMem( sizeof( struct AliasEntry ), MEMF_ANY|MEMF_CLEAR ) ) ) {
+	if( ( ae = AllocVec( sizeof( struct AliasEntry ), MEMF_ANY|MEMF_CLEAR ) ) ) {
 		strncpy( (char *) ae->ae_Alias, (char *) ( msg->Alias ? msg->Alias : LGS( MSG_MUICLASS_ALIASLIST_DEFAULTALIAS ) ), ALIASENTRY_ALIAS_SIZEOF );
 		strncpy( (char *) ae->ae_Text , (char *) ( msg->Text  ? msg->Alias : LGS( MSG_MUICLASS_ALIASLIST_DEFAULTTEXT  ) ), ALIASENTRY_TEXT_SIZEOF  );
 		DoMethod( obj, MUIM_NList_InsertSingle, ae, MUIV_NList_Insert_Bottom );

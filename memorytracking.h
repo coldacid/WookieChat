@@ -23,6 +23,8 @@
 #define offsetof(type, member)  __builtin_offsetof(type, member)
 #endif
 
+extern void *mempool;
+
 /* structures only needed when tracking is enabled */ 
 #if ENABLE_MEMORYTRACKING
 
@@ -88,14 +90,11 @@ struct PoolMemory {
 */
 
 #ifndef MEMORYPROTECTION_CODE
-extern void *mempool;
-#undef AllocVec
-#define AllocVec(size,requirements) MemoryAllocVecPooled(mempool,size, (char*) __func__)
-#undef FreeVec
-#define FreeVec(mb)   MemoryFreeVecPooled( mempool, (APTR) mb, (char*) __func__ )
-#endif
-
-
+ #undef AllocVec
+ #define AllocVec(size,requirements) MemoryAllocVecPooled(mempool,size, (char*) __func__)
+ #undef FreeVec
+ #define FreeVec(mb)   MemoryFreeVecPooled( mempool, (APTR) mb, (char*) __func__ )
+#endif  /* MEMORYPROTECTION_CODE */
 
 void *MemoryCreatePool( ULONG memflags, ULONG puddlesize, ULONG threshsize );
 void  MemoryDeletePool( APTR poolheader );
@@ -114,8 +113,19 @@ void  MemoryFreeVecPooled( APTR poolheader, APTR memory, char *funcname );
 #define MemoryCreatePool( memflags, puddlesize, threshsize ) CreatePool( memflags, puddlesize, threshsize )
 #define MemoryDeletePool( poolheader )                       DeletePool( poolheader )
 
-#define MemoryAllocVecPooled AllocVecPooled
 void  MemoryFreeVecPooled( APTR poolheader, APTR memory );
+
+/*
+** For alloc the code is the same, but the free function
+** provides a check for zero test, so it needs to be called
+** instead of FreeVecPooled directly
+*/
+
+#ifndef MEMORYPROTECTION_CODE
+ #define MemoryAllocVecPooled AllocVecPooled
+ #undef FreeVec
+ #define FreeVec(mb)   MemoryFreeVecPooled( mempool, (APTR) mb )
+#endif  /* MEMORYPROTECTION_CODE */
 
 #endif /* ENABLE_MEMORYTRACKING */
 

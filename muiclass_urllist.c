@@ -81,7 +81,7 @@ struct URLEntry *ue;
 static ULONG OM_Destruct( struct IClass *cl, Object *obj, struct MUIP_NList_Destruct *msg )
 {
 	if( msg->entry ) {
-		FreeMem( msg->entry, sizeof( struct URLEntry ) );
+		FreeVec( msg->entry );
     }
 	return( 0 );
 }
@@ -161,7 +161,7 @@ LONG i, entries;
             }
         }
 		if( i == entries ) { /* not in list -> add and save */
-			if( ( ue = AllocMem( sizeof( struct URLEntry ), MEMF_ANY|MEMF_CLEAR ) ) ) {
+			if( ( ue = AllocVec( sizeof( struct URLEntry ), MEMF_ANY|MEMF_CLEAR ) ) ) {
 				strncpy( (char *) ue->ue_URL, (char *) msg->URL, URLENTRY_URL_SIZEOF );
 				DoMethod( obj, MUIM_NList_InsertSingle, ue, MUIV_NList_Insert_Bottom );
 			}
