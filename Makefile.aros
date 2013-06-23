@@ -43,10 +43,10 @@ SOURCES   = wookiechat.c                \
 			muiclass_windowchat.c       \
 			muiclass_windowignorelist.c \
 			muiclass_windowquit.c       \
+			muiclass_windowquicksetup.c \
 			muiclass_windowsettings.c   \
 			muiclass_windowurlgrabber.c \
 			locale.c                    \
-			version.c                   \
 			debug.c                     \
 			memorytracking.c            \
 

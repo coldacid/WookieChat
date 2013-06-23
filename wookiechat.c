@@ -18,6 +18,7 @@
 #include <proto/intuition.h>
 #include <proto/exec.h>
 #include <clib/alib_protos.h>
+#include <libraries/mui.h>
 
 #include "functions.h"
 #include "muiclass.h"

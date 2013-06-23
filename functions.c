@@ -76,7 +76,7 @@ struct ExecBase         *SysBase;
 struct LocaleBase       *LocaleBase;
 struct Library          *MUIMasterBase;
 struct IntuitionBase    *IntuitionBase;
-struct Library          *DOSBase;
+struct DosLibrary       *DOSBase;
 struct Library          *AslBase;
 struct Library          *IconBase;
 struct GfxBase          *GfxBase;
