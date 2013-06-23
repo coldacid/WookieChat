@@ -272,7 +272,7 @@ ULONG i, size;
 
 /*************************************************************************/
 
-#else /* ENABLE_MEMORYTRACKING */
+#else /* ENABLE_MEMORYTRACKING == 0 */
 
 /* /// MemoryFreeVecPooled()
 */

@@ -23,7 +23,7 @@
 #define offsetof(type, member)  __builtin_offsetof(type, member)
 #endif
 
-extern void *mempool;
+extern void *memorypool;
 
 /* structures only needed when tracking is enabled */ 
 #if ENABLE_MEMORYTRACKING
@@ -91,18 +91,18 @@ struct PoolMemory {
 
 #ifndef MEMORYPROTECTION_CODE
  #undef AllocVec
- #define AllocVec(size,requirements) MemoryAllocVecPooled(mempool,size, (char*) __func__)
+ #define AllocVec(size,requirements) MemoryAllocVecPooled( memorypool, size, (char*) __func__)
  #undef FreeVec
- #define FreeVec(mb)   MemoryFreeVecPooled( mempool, (APTR) mb, (char*) __func__ )
+ #define FreeVec(mb)                 MemoryFreeVecPooled ( memorypool, (APTR) mb, (char*) __func__ )
 #endif  /* MEMORYPROTECTION_CODE */
 
 void *MemoryCreatePool( ULONG memflags, ULONG puddlesize, ULONG threshsize );
 void  MemoryDeletePool( APTR poolheader );
 
 void *MemoryAllocVecPooled( APTR poolheader, ULONG size, char *funcname );
-void  MemoryFreeVecPooled( APTR poolheader, APTR memory, char *funcname );
+void  MemoryFreeVecPooled ( APTR poolheader, APTR memory, char *funcname );
 
-#else /* ENABLE_MEMORYTRACKING */
+#else /* ENABLE_MEMORYTRACKING == 0 */
 
 /*************************************************************************/
 
@@ -123,8 +123,10 @@ void  MemoryFreeVecPooled( APTR poolheader, APTR memory );
 
 #ifndef MEMORYPROTECTION_CODE
  #define MemoryAllocVecPooled AllocVecPooled
- #undef FreeVec
- #define FreeVec(mb)   MemoryFreeVecPooled( mempool, (APTR) mb )
+ #undef  AllocVec
+ #define AllocVec(ms,requirements)  AllocVecPooled( memorypool, ms )
+ #undef  FreeVec
+ #define FreeVec(mb)                MemoryFreeVecPooled( memorypool, (APTR) mb )
 #endif  /* MEMORYPROTECTION_CODE */
 
 #endif /* ENABLE_MEMORYTRACKING */

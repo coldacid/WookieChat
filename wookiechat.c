@@ -18,7 +18,6 @@
 #include <proto/intuition.h>
 #include <proto/exec.h>
 #include <clib/alib_protos.h>
-#include <libraries/mui.h>
 
 #include "system.h"
 #include "functions.h"
@@ -27,6 +26,12 @@
 #include "muiclass_network.h"
 #include "version.h"
 #include "locale.h"
+
+
+#define PUDDLE_SIZE   65535
+#define PUDDLE_THRESH  4096
+
+void *memorypool;
 
 /*************************************************************************/
 
@@ -46,34 +51,40 @@ struct Device_Timer dt;
 	memset( &dt, 0, sizeof( dt ) );
 
 	WBMessage_Get();
+
 	Locale_Open( (STRPTR)( APPLICATIONNAME "avoid catalog for now"), VERSION, REVISION );
-	if( !Libraries_Open() ) {
-		if( !( result = DeviceTimer_Open( &dt ) ) ) {
-			DeviceTimer_SendRequest( &dt );
-			if( !( result = MUIClass_Open() ) ) { /* init our mui classes */
-				Object *networkobj = (APTR) MUIGetVar( application, MA_APPLICATION_OBJECTNETWORK );
-				IPTR waitsignals = 0;
 
-				while( DoMethod( application, MUIM_Application_NewInput, (IPTR) &waitsignals ) != MUIV_Application_ReturnID_Quit )
-				{
-					if( !waitsignals ) {
-						continue;
-					}
-					waitsignals |= dt.SignalMask | SIGBREAKF_CTRL_C;
-					DoMethod( networkobj, MM_NETWORK_WAITSELECT, &waitsignals );
+	if( ( memorypool = MemoryCreatePool( MEMF_ANY|MEMF_CLEAR, PUDDLE_SIZE, PUDDLE_THRESH ) ) ) {
 
-					if( waitsignals & SIGBREAKF_CTRL_C ) break;
-					if( waitsignals & SIGBREAKF_CTRL_D ) break;
+		if( !Libraries_Open() ) {
+			if( !( result = DeviceTimer_Open( &dt ) ) ) {
+				DeviceTimer_SendRequest( &dt );
+				if( !( result = MUIClass_Open() ) ) { /* init our mui classes */
+					Object *networkobj = (APTR) MUIGetVar( application, MA_APPLICATION_OBJECTNETWORK );
+					IPTR waitsignals = 0;
 
-					if( CheckIO( &(&dt)->IORequest->tr_node ) ) {
-						DoMethod( networkobj, MM_NETWORK_SERVERMESSAGESENDPROC );
-						DeviceTimer_SendRequest( &dt );
+					while( DoMethod( application, MUIM_Application_NewInput, (IPTR) &waitsignals ) != MUIV_Application_ReturnID_Quit )
+					{
+						if( !waitsignals ) {
+							continue;
+						}
+						waitsignals |= dt.SignalMask | SIGBREAKF_CTRL_C;
+						DoMethod( networkobj, MM_NETWORK_WAITSELECT, &waitsignals );
+
+						if( waitsignals & SIGBREAKF_CTRL_C ) break;
+						if( waitsignals & SIGBREAKF_CTRL_D ) break;
+
+						if( CheckIO( &(&dt)->IORequest->tr_node ) ) {
+							DoMethod( networkobj, MM_NETWORK_SERVERMESSAGESENDPROC );
+							DeviceTimer_SendRequest( &dt );
+						}
 					}
 				}
+				MUIClass_Close(); /* close our mui classes */
 			}
-			MUIClass_Close(); /* close our mui classes */
+			DeviceTimer_Close( &dt );
 		}
-		DeviceTimer_Close( &dt );
+		MemoryDeletePool( memorypool );
 	}
 	if( result ) {
 		ShowRequesterError( result, &result );

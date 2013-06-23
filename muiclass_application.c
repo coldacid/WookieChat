@@ -75,11 +75,8 @@ struct mccdata
 	struct DiskObject     *mcc_DiskObject;
 	IPTR                   mcc_ReadargsArray[ READARGS_LAST ];
 	Object                *mcc_LastActiveChat[ LASTACTIVE_MAX ];
-	void                  *mcc_MemoryPool;
 };
 
-#define PUDDLE_SIZE   65535
-#define PUDDLE_THRESH  4096
 
 /*************************************************************************/
 
@@ -89,56 +86,49 @@ struct mccdata
 
 
 static STRPTR classlist[] = { (STRPTR)"NList.mcc", (STRPTR)"NListview.mcc", (STRPTR)"NListtree.mcc", (STRPTR)"BetterString.mcc", NULL };
-void *mempool;
+
 /*************************************************************************/
 
 static ULONG OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
 {
 Object *objs[ GID_LAST ];
-void *memorypool;
 
-	if( ( memorypool = MemoryCreatePool( MEMF_ANY|MEMF_CLEAR, PUDDLE_SIZE, PUDDLE_THRESH ) ) ) {
-		mempool = memorypool;
-		if( ( obj = (Object *) DoSuperNew( cl, obj,
-			        MUIA_Application_UsedClasses, classlist,
-					MUIA_Application_Author     , (char*) AUTHORNAME,
-					MUIA_Application_Base       , (char*) APPLICATIONNAME "_NEW",
-					MUIA_Application_Title      , (char*) APPLICATIONNAME "_NEW",
-					MUIA_Application_Version    , (char*) VERSION_MUI,
-					MUIA_Application_Copyright  , (char*) VERSION_COPYRIGHT,
-					MUIA_Application_Description, (char*) LGS( MSG_MUICLASS_APPLICATION_DESCRIPTION ),
-					MUIA_Application_SingleTask , FALSE,
-					MUIA_Application_Window     , objs[ WID_QUIT          ] = WindowQuitObject      , End,
-					MUIA_Application_Window     , objs[ WID_ABOUT         ] = WindowAboutObject     , End,
-					MUIA_Application_Window     , objs[ WID_SETTINGS      ] = WindowSettingsObject  , End,
-					MUIA_Application_Window     , objs[ WID_IGNORELIST    ] = WindowIgnoreListObject, End,
-					MUIA_Application_Window     , objs[ WID_URLGRABBER    ] = WindowURLGrabberObject, End,
-					MUIA_Application_Window     , objs[ WID_QUICKSETUP    ] = WindowQuickSetupObject, End,
-					/* this is just a dummy to store/handle our non visible classes, without additional code */
-					MUIA_Application_Window     , WindowObject, MA_APPLICATION_CLASSID, -1,
-									WindowContents, VGroup,
-										Child   , objs[ GID_AUDIO   ] = AudioObject , End,
-										Child   , objs[ GID_NETWORK ] = NetworkObject , End,
-									End,
-						End,
-					TAG_DONE ) ) ) {
+	if( ( obj = (Object *) DoSuperNew( cl, obj,
+		        MUIA_Application_UsedClasses, classlist,
+				MUIA_Application_Author     , (char*) AUTHORNAME,
+				MUIA_Application_Base       , (char*) APPLICATIONNAME "_NEW",
+				MUIA_Application_Title      , (char*) APPLICATIONNAME "_NEW",
+				MUIA_Application_Version    , (char*) VERSION_MUI,
+				MUIA_Application_Copyright  , (char*) VERSION_COPYRIGHT,
+				MUIA_Application_Description, (char*) LGS( MSG_MUICLASS_APPLICATION_DESCRIPTION ),
+				MUIA_Application_SingleTask , FALSE,
+				MUIA_Application_Window     , objs[ WID_QUIT          ] = WindowQuitObject      , End,
+				MUIA_Application_Window     , objs[ WID_ABOUT         ] = WindowAboutObject     , End,
+				MUIA_Application_Window     , objs[ WID_SETTINGS      ] = WindowSettingsObject  , End,
+				MUIA_Application_Window     , objs[ WID_IGNORELIST    ] = WindowIgnoreListObject, End,
+				MUIA_Application_Window     , objs[ WID_URLGRABBER    ] = WindowURLGrabberObject, End,
+				MUIA_Application_Window     , objs[ WID_QUICKSETUP    ] = WindowQuickSetupObject, End,
+				/* this is just a dummy to store/handle our non visible classes, without additional code */
+				MUIA_Application_Window     , WindowObject, MA_APPLICATION_CLASSID, -1,
+								WindowContents, VGroup,
+									Child   , objs[ GID_AUDIO   ] = AudioObject , End,
+									Child   , objs[ GID_NETWORK ] = NetworkObject , End,
+								End,
+					End,
+				TAG_DONE ) ) ) {
 
-			struct mccdata *mccdata = INST_DATA( cl, obj );
+		struct mccdata *mccdata = INST_DATA( cl, obj );
 
-			CopyMem( &objs[0], &mccdata->mcc_ClassObjects[0], sizeof( mccdata->mcc_ClassObjects));
+		CopyMem( &objs[0], &mccdata->mcc_ClassObjects[0], sizeof( mccdata->mcc_ClassObjects));
 
-			mccdata->mcc_MemoryPool = memorypool;
+		SetAttrs( objs[ GID_NETWORK ], MA_NETWORK_OBJECTSETTINGS, objs[ WID_SETTINGS ], MA_NETWORK_OBJECTAUDIO, objs[ GID_AUDIO    ], TAG_DONE );
+		SetAttrs( objs[ GID_AUDIO   ], MA_AUDIO_OBJECTSETTINGS  , objs[ WID_SETTINGS ], TAG_DONE );
 
-			SetAttrs( objs[ GID_NETWORK ], MA_NETWORK_OBJECTSETTINGS, objs[ WID_SETTINGS ], MA_NETWORK_OBJECTAUDIO, objs[ GID_AUDIO    ], TAG_DONE );
-			SetAttrs( objs[ GID_AUDIO   ], MA_AUDIO_OBJECTSETTINGS  , objs[ WID_SETTINGS ], TAG_DONE );
-
-			/* load settings */
-			DoMethod( obj, MUIM_Application_Load, MUIV_Application_Load_ENVARC );
-			DoMethod( obj, MUIM_Application_Load, MUIV_Application_Load_ENV );
-			return( (ULONG) obj );
-		}
-		MemoryDeletePool( memorypool );
-    }
+		/* load settings */
+		DoMethod( obj, MUIM_Application_Load, MUIV_Application_Load_ENVARC );
+		DoMethod( obj, MUIM_Application_Load, MUIV_Application_Load_ENV );
+		return( (ULONG) obj );
+	}
 	return( (ULONG) NULL );
 }
 /* \\\ */
@@ -151,19 +141,12 @@ void *memorypool;
 static ULONG OM_Dispose( struct IClass *cl, Object *obj, Msg msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
-void *memorypool;
-LONG rc;
 
 	SetAttrs( obj, MUIA_Application_DiskObject, 0, TAG_DONE );
 	if( mccdata->mcc_DiskObject ) {
 		FreeDiskObject( mccdata->mcc_DiskObject );
 	}
-	/* make sure the pool is the last thing that gets freed */
-	memorypool = mccdata->mcc_MemoryPool;
-	rc = DoSuperMethodA( cl, obj, msg ); /* is this needed */
-	MemoryDeletePool( memorypool );
-
-	return( rc );
+	return( DoSuperMethodA( cl, obj, msg ) );
 }
 /* \\\ */
 /* /// OM_Get()
@@ -177,7 +160,6 @@ static ULONG OM_Get(struct IClass *cl, Object *obj, struct opGet *msg )
 struct mccdata *mccdata = INST_DATA( cl, obj );
 
 	switch( msg->opg_AttrID ) {
-		case MA_APPLICATION_MEMORYPOOL             : *msg->opg_Storage = (ULONG) mccdata->mcc_MemoryPool                        ; return( TRUE );
 		case MA_APPLICATION_OBJECTNETWORK          : *msg->opg_Storage = (ULONG) mccdata->mcc_ClassObjects[ GID_NETWORK       ] ; return( TRUE );
 		case MA_APPLICATION_OBJECTWINDOWQUIT       : *msg->opg_Storage = (ULONG) mccdata->mcc_ClassObjects[ WID_QUIT          ] ; return( TRUE );
 		case MA_APPLICATION_OBJECTWINDOWABOUT      : *msg->opg_Storage = (ULONG) mccdata->mcc_ClassObjects[ WID_ABOUT         ] ; return( TRUE );
