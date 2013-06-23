@@ -320,7 +320,7 @@ struct Channel *c;
 		if( c->c_Topic ) {
 			FreeVec( c->c_Topic );
 		}
-		if( ( c->c_Topic = AllocVec( strlen( smp->smp_Message ), MEMF_ANY ) ) ) {
+		if( ( c->c_Topic = AllocVec( strlen( smp->smp_Message ) + 1, MEMF_ANY ) ) ) {
 			strcpy( c->c_Topic, smp->smp_Message );
 		}
 		DoMethod( _app(obj), MM_APPLICATION_CHANNELCHANGETOPIC, c );

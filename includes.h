@@ -16,10 +16,6 @@
 
 #include <dos/dostags.h>
 
-#define MUI_OBSOLETE
-#include <libraries/mui.h>
-#include <mui/NListview_mcc.h>
-
 #ifndef __AROS__
 #include <SDI_compiler.h>
 #include <SDI_hook.h>

@@ -85,7 +85,13 @@ struct mccdata
 */
 
 
-static STRPTR classlist[] = { (STRPTR)"NList.mcc", (STRPTR)"NListview.mcc", (STRPTR)"NListtree.mcc", (STRPTR)"BetterString.mcc", NULL };
+static STRPTR classlist[] = {
+#if ENABLE_NLIST
+		(STRPTR)"NList.mcc",
+		(STRPTR)"NListview.mcc",
+		(STRPTR)"NListtree.mcc",
+#endif
+		NULL };
 
 /*************************************************************************/
 

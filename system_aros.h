@@ -23,6 +23,7 @@
 
 #include "debug.h"
 #include "memorytracking.h"
+#include "mui4wrapper.h"
 
 /*************************************************************************/
 

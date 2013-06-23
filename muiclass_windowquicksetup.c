@@ -19,9 +19,8 @@
 #include <proto/utility.h>
 #include <proto/exec.h>
 #include <SDI_hook.h>
+
 #include <string.h>
-#include <mui/NList_mcc.h>
-#include <mui/NListview_mcc.h>
 
 #include "system.h"
 #include "locale.h"

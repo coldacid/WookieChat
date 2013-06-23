@@ -40,6 +40,7 @@
 #include "muiclass_ignorelist.h"
 #include "muiclass_network.h"
 #include "muiclass_nicklist.h"
+#include "muiclass_settingslist.h"
 #include "muiclass_serverlist.h"
 #include "muiclass_settingsalias.h"
 #include "muiclass_settingsbutton.h"
@@ -103,6 +104,7 @@ if( !(result = MCC_SettingsGeneral_InitClass() ) ) {
 if( !(result = MCC_SettingsGUI_InitClass() ) ) {
 if( !(result = MCC_SettingsLog_InitClass() ) ) {
 if( !(result = MCC_SettingsServer_InitClass() ) ) {
+if( !(result = MCC_SettingsList_InitClass() ) ) {
 if( !(result = MCC_SettingsSound_InitClass() ) ) {
 if( !(result = MCC_URLList_InitClass() ) ) {
 if( !(result = MCC_WindowAbout_InitClass() ) ) {
@@ -117,7 +119,7 @@ if( ( application = NewObject( appclasses[ CLASSID_APPLICATION ]->mcc_Class, NUL
 } else {
 	result = MSG_ERROR_UNABLETOSETUPMUICLASS;
 }
-}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}
+}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}
    return( result );
 }
 /* \\\ */
@@ -147,6 +149,7 @@ void MUIClass_Close( void )
 	MCC_Network_DisposeClass();
 	MCC_NickList_DisposeClass();
 	MCC_ServerList_DisposeClass();
+	MCC_SettingsList_DisposeClass();
 	MCC_SettingsAlias_DisposeClass();
 	MCC_SettingsButton_DisposeClass();
 	MCC_SettingsColor_DisposeClass();

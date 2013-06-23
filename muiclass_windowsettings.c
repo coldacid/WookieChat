@@ -21,13 +21,12 @@
 #include <proto/dos.h>
 #include <SDI_hook.h>
 #include <string.h>
-#include <mui/NList_mcc.h>
-#include <mui/NListview_mcc.h>
 
 #include "system.h"
 #include "locale.h"
 #include "muiclass.h"
 #include "muiclass_application.h"
+#include "muiclass_settingslist.h"
 #include "muiclass_settingsalias.h"
 #include "muiclass_settingsbutton.h"
 #include "muiclass_settingscolor.h"
@@ -115,13 +114,7 @@ ULONG i;
 
 			WindowContents, VGroup,
 				Child, HGroup, 
-					Child, objs[ GID_PAGELIST ] = NListviewObject, MUIA_NListview_NList, NListObject,
-															MUIA_Frame               , MUIV_Frame_InputList,
-															MUIA_NList_ConstructHook , MUIV_NList_ConstructHook_String,
-															MUIA_NList_DestructHook  , MUIV_NList_DestructHook_String,
-													        MUIA_NList_AutoCopyToClip, TRUE,
-															MUIA_NList_Input         , TRUE,
-															End,
+					Child, objs[ GID_PAGELIST ] = NListviewObject, MUIA_NListview_NList, SettingsListObject, End,
 															MUIA_NListview_Horiz_ScrollBar, MUIV_NListview_HSB_Auto,
 															MUIA_FixWidthTxt, "WWWWWWWWWWWWW",
 														End,

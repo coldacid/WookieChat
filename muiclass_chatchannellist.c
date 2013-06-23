@@ -21,8 +21,6 @@
 #include <proto/exec.h>
 #include <SDI_hook.h>
 
-#include <mui/NList_mcc.h>
-#include <mui/NListview_mcc.h>
 #include <string.h>
 
 #include "system.h"
