@@ -18,6 +18,8 @@
 #include <proto/intuition.h>
 #include <proto/utility.h>
 #include <proto/muimaster.h>
+#include <proto/graphics.h>
+
 #include <libraries/mui.h>
 #include <intuition/intuition.h>
 #include <intuition/classusr.h>
@@ -168,6 +170,24 @@ void MUIClass_Close( void )
 	MCC_WindowQuickSetup_DisposeClass();
 	MCC_WindowSettings_DisposeClass();
 	MCC_WindowURLGrabber_DisposeClass();
+}
+/* \\\ */
+
+/* /// MUIPenSpecToRGB()
+**
+*/
+
+/***************************************************************************/
+
+ULONG MUIPenSpecToRGB( Object *obj, struct MUI_PenSpec *penspec )
+{
+int pen = MUI_ObtainPen( muiRenderInfo( obj ), penspec, 0 );
+int pen2 = MUIPEN( pen );
+ULONG col[ 4 ];
+
+	GetRGB32( muiRenderInfo(obj)->mri_Screen->ViewPort.ColorMap, pen2, 1, col);
+	MUI_ReleasePen( muiRenderInfo( obj ), pen );
+	return(	( ( col[ 0 ] >> 8 ) & 0x00ff0000 ) | ( ( col[ 1 ] >> 16 ) & 0x0000ff00 ) | ( ( col[ 2 ] >> 24 ) & 0x000000ff ) );
 }
 /* \\\ */
 

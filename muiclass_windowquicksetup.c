@@ -71,6 +71,8 @@ static ULONG OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
 {
 Object *objs[ GID_LAST ];
 
+	debug( "%s (%ld) %s - Class: 0x00012167x Object: 0x00012167x \n", __FILE__, __LINE__, __func__, cl, obj );
+
 	memset( objs, 0, sizeof( objs ) );
 
 	if( (obj = (Object *)DoSuperNew( cl, obj,
@@ -121,6 +123,8 @@ Object *objs[ GID_LAST ];
 static ULONG OM_Setup( struct IClass *cl, Object *obj, Msg msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
+
+	debug( "%s (%ld) %s - Class: 0x00012167x Object: 0x00012167x \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	DoMethod( obj                                      , MUIM_Notify, MUIA_Window_CloseRequest, TRUE , _app(obj), 2, MUIM_Application_ReturnID, MUIV_Application_ReturnID_Quit );
 	DoMethod( mccdata->mcc_ClassObjects[ GID_QUIT     ], MUIM_Notify, MUIA_Pressed            , FALSE, _app(obj), 2, MUIM_Application_ReturnID, MUIV_Application_ReturnID_Quit );
@@ -188,6 +192,8 @@ struct mccdata *mccdata = INST_DATA( cl, obj );
 STRPTR str;
 ULONG count = 3;
 
+	debug( "%s (%ld) %s - Class: 0x00012167x Object: 0x00012167x \n", __FILE__, __LINE__, __func__, cl, obj );
+
 	if( !mccdata->mcc_ClassObjects[ WID_SETTINGS ] ) {
 		mccdata->mcc_ClassObjects[ GID_NETWORK  ] = (Object*) MUIGetVar( _app(obj), MA_APPLICATION_OBJECTNETWORK );
 		mccdata->mcc_ClassObjects[ WID_SETTINGS ] = (Object*) MUIGetVar( _app(obj), MA_APPLICATION_OBJECTWINDOWSETTINGS );
@@ -196,11 +202,13 @@ ULONG count = 3;
 	str = (STRPTR) LocalReadConfig( OID_SVR_REALNAME );
 	if( str && str[0] ) {
 		SetAttrs( mccdata->mcc_ClassObjects[ GID_REALNAME ], MUIA_String_Contents, str, TAG_DONE );
+		debug("real name is there\n");
 		count--;
 	}
 	str = (STRPTR) LocalReadConfig( OID_SVR_USERNAME );
 	if( str && str[0] ) {
 		SetAttrs( mccdata->mcc_ClassObjects[ GID_USERNAME ], MUIA_String_Contents, str, TAG_DONE );
+		debug("user name is there\n");
 		count--;
 	}
 
@@ -212,6 +220,7 @@ ULONG count = 3;
 		se = NULL;
 		DoMethod( serverlist, MUIM_NList_GetEntry, 0, &se );
 		if( se ) { /* we got a server, so no need to setup */
+		debug("server name is there\n");
 			count--;
 		}
 	}
@@ -235,6 +244,8 @@ static ULONG MM_Continue( struct IClass *cl, Object *obj, Msg *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 char *str;
+
+	debug( "%s (%ld) %s - Class: 0x00012167x Object: 0x00012167x \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	SetAttrs( obj, MUIA_Window_Open, FALSE, TAG_DONE );
 

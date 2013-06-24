@@ -72,6 +72,8 @@ extern Object *application;
 ULONG MUIClass_Open ( void );
 void  MUIClass_Close( void );
 
+ULONG MUIPenSpecToRGB( Object *obj, struct MUI_PenSpec *penspec );
+
 ULONG MUIGetVar( Object *obj, ULONG attr );
 void  MUIInitStringArray( STRPTR array[], ULONG first, ULONG last );
 char  MUIGetKeyLocale( ULONG text );

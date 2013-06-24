@@ -31,6 +31,8 @@
 #include "muiclass_windowsettings.h"
 #include "muiclass_windowchat.h"
 #include "muiclass_network.h"
+#include "muiclass_chatlog.h"
+#include "muiclass_settingscolor.h"
 #include "version.h"
 
 /*************************************************************************/
@@ -45,7 +47,7 @@ static char *STR_NUL = "";
 #define SMP_STRINGSTORAGE_SIZEOF 0x1000
 
 struct ServerMessageParse {
-	ULONG                smp_Type;
+	ULONG                smp_Pen;
 	ULONG                smp_ModeFlags;
 	struct DateStamp     smp_DateStamp;
 	char                 smp_MessageBuffer[ SMP_MESSAGEBUFFER_SIZEOF ];
@@ -151,10 +153,13 @@ struct IRCCommands TAB_IRCCOMMANDS[] =
 static ULONG IRCCMD_PrivMsg( Object *obj, struct Server *s, struct ServerMessageParse *smp )
 {
 	if( strstr( smp->smp_Message, "\001ACTION" ) && smp->smp_Message[ strlen( smp->smp_Message ) - 1 ] == '\001' ) {
+		smp->smp_Pen = PEN_LOGACTION;
+
 		sprintf( &smp->smp_MessageBuffer[ strlen( smp->smp_MessageBuffer ) ],
 				"* %s%s", smp->smp_FromNick, &smp->smp_Message[ strlen( "\001ACTION" ) ]
 			);
 	} else {
+		smp->smp_Pen = PEN_LOGPRIVMSG;
 		sprintf( &smp->smp_MessageBuffer[ strlen( smp->smp_MessageBuffer ) ],
 				"<%s> %s", smp->smp_FromNick, smp->smp_Message
 			);
@@ -171,6 +176,7 @@ static ULONG IRCCMD_PrivMsg( Object *obj, struct Server *s, struct ServerMessage
 
 static ULONG IRCCMD_Notice( Object *obj, struct Server *s, struct ServerMessageParse *smp )
 {
+	smp->smp_Pen = PEN_LOGNOTICE;
 	sprintf( &smp->smp_MessageBuffer[ strlen( smp->smp_MessageBuffer ) ],
 		"[%s] %s %s", LGS( MSG_MUICLASS_NETWORK_NOTICE ),
 						smp->smp_FromNick,
@@ -222,6 +228,7 @@ struct Channel *c;
 		DoMethod( _app(obj), MM_APPLICATION_CHANNELADD, c );
 	}
 
+	smp->smp_Pen = PEN_LOGJOIN;
 	sprintf( &smp->smp_MessageBuffer[ strlen( smp->smp_MessageBuffer ) ],
 		"[%s] %s (%s@%s) %s",  LGS( MSG_MUICLASS_NETWORK_JOIN ),
 							smp->smp_FromNick,
@@ -247,6 +254,7 @@ struct Channel *c;
 		DoMethod( _app(obj), MM_APPLICATION_CHANNELREMOVE, c );
 	}
 
+	smp->smp_Pen = PEN_LOGPART;
 	sprintf( &smp->smp_MessageBuffer[ strlen( smp->smp_MessageBuffer ) ],
 		"[%s] %s (%s@%s) %s",  LGS( MSG_MUICLASS_NETWORK_PART ),
 							smp->smp_FromNick,
@@ -266,6 +274,7 @@ struct Channel *c;
 
 static ULONG IRCCMD_Quit( Object *obj, struct Server *s, struct ServerMessageParse *smp )
 {
+	smp->smp_Pen = PEN_LOGQUIT;
 	sprintf( &smp->smp_MessageBuffer[ strlen( smp->smp_MessageBuffer ) ],
 		"[%s] %s (%s@%s) %s",  LGS( MSG_MUICLASS_NETWORK_QUIT ),
 							smp->smp_FromNick,
@@ -298,6 +307,7 @@ char *msg = (char *) LGS( MSG_MUICLASS_NETWORK_TOPICNOTSET );
 		DoMethod( _app(obj), MM_APPLICATION_CHANNELCHANGETOPIC, c );
 	}
 
+	smp->smp_Pen = PEN_LOGTOPIC;
 	sprintf( &smp->smp_MessageBuffer[ strlen( smp->smp_MessageBuffer ) ],
 		"[%s] %s", LGS( MSG_MUICLASS_NETWORK_TOPIC ),
 					msg
@@ -326,6 +336,7 @@ struct Channel *c;
 		DoMethod( _app(obj), MM_APPLICATION_CHANNELCHANGETOPIC, c );
 	}
 
+	smp->smp_Pen = PEN_LOGTOPIC;
 	sprintf( &smp->smp_MessageBuffer[ strlen( smp->smp_MessageBuffer ) ],
 		"[%s] %s", LGS( MSG_MUICLASS_NETWORK_TOPIC ),
 							smp->smp_Message
@@ -342,6 +353,7 @@ struct Channel *c;
 
 static ULONG IRCCMD_TopicSetBy( Object *obj, struct Server *s, struct ServerMessageParse *smp )
 {
+	smp->smp_Pen = PEN_LOGTOPIC;
 	sprintf( &smp->smp_MessageBuffer[ strlen( smp->smp_MessageBuffer ) ],
 		"[%s] %s %s!%s@%s %s %s", LGS( MSG_MUICLASS_NETWORK_TOPIC ),
 							LGS( MSG_MUICLASS_NETWORK_TOPICSETBY ),
@@ -387,12 +399,13 @@ char *nick, *bufferstart;
 							smp->smp_Channel
 							);
 
-			if( ( cle = (APTR) DoMethod( obj, MM_NETWORK_CHATLOGENTRYADD, s, smp->smp_Channel, smp->smp_MessageBuffer ) ) ) {
+			if( ( cle = (APTR) DoMethod( obj, MM_NETWORK_CHATLOGENTRYADD, s, smp->smp_Channel, PEN_LOGNOTICE, smp->smp_MessageBuffer ) ) ) {
 				DoMethod( _app(obj), MM_APPLICATION_MESSAGERECEIVED, cle );
 			}
 			c->c_Flags |= CHANNELF_NAMESLIST; /* make sure header is only shown once */
 		}
 
+		smp->smp_Pen = PEN_LOGNOTICE;
 		sprintf( bufferstart,
 			"[%s] %s", LGS( MSG_MUICLASS_NETWORK_NAMES ),
 					smp->smp_Message
@@ -433,7 +446,7 @@ struct Channel *c;
 	if( ( c = (APTR) DoMethod( obj, MM_NETWORK_SERVERFINDCHANNEL, s, NULL ) ) ) {
 		c->c_Flags |= CHANNELF_MESSAGEOFTHEDAY;
 
-debug("########## %s #############\n", smp->smp_Message );
+		smp->smp_Pen = PEN_LOGNOTICE;
 		sprintf( &smp->smp_MessageBuffer[ strlen( smp->smp_MessageBuffer ) ],
 			"[%s] %s", LGS( MSG_MUICLASS_NETWORK_SERVER ),
 								smp->smp_Message
@@ -455,6 +468,7 @@ struct Channel *c;
 
 	if( ( c = (APTR) DoMethod( obj, MM_NETWORK_SERVERFINDCHANNEL, s, NULL ) ) ) {
 		if( ( c->c_Flags & CHANNELF_MESSAGEOFTHEDAY ) ) {
+			smp->smp_Pen = PEN_LOGNOTICE;
 			sprintf( &smp->smp_MessageBuffer[ strlen( smp->smp_MessageBuffer ) ],
 				"[%s] %s", LGS( MSG_MUICLASS_NETWORK_SERVER ),
 									smp->smp_Message
@@ -489,7 +503,9 @@ struct Channel *c;
 
 static ULONG IRCCMD_ChannelModeIs( Object *obj, struct Server *s, struct ServerMessageParse *smp )
 {
+
 	debug("channel mode is '%s'\n",smp->smp_StringStorage );
+	smp->smp_Pen = PEN_LOGMODE;
 	sprintf( &smp->smp_MessageBuffer[ strlen( smp->smp_MessageBuffer ) ],
 		"[%s] %s",  LGS( MSG_MUICLASS_NETWORK_SERVER ),
 							smp->smp_StringStorage );
@@ -508,6 +524,9 @@ static ULONG IRCCMD_ChannelModeIs( Object *obj, struct Server *s, struct ServerM
 
 static ULONG OM_New( struct IClass *cl, Object *obj, struct opSet *msg )
 {
+
+	debug( "%s (%ld) %s - Class: 0x00054320x Object: 0x00054320x \n", __FILE__, __LINE__, __func__, cl, obj );
+
 	if( ( obj = (Object*) DoSuperNew( cl, obj, TAG_DONE ) ) ) {
 		struct mccdata *mccdata = INST_DATA( cl, obj );
 		
@@ -533,6 +552,8 @@ static ULONG OM_Dispose( struct IClass *cl, Object *obj, Msg *msg )
 struct mccdata *mccdata = INST_DATA( cl, obj );
 struct Server *s;
 
+	debug( "%s (%ld) %s - Class: 0x00054320x Object: 0x00054320x \n", __FILE__, __LINE__, __func__, cl, obj );
+
 	while( (s = (APTR) mccdata->mcc_ServerList.lh_Head)->s_Succ ) {
 		DoMethod( obj, MM_NETWORK_SERVERFREE, s );
 	}
@@ -551,6 +572,8 @@ static ULONG OM_Set( struct IClass *cl, Object *obj, struct opSet *msg )
 struct mccdata *mccdata = INST_DATA( cl, obj );
 struct TagItem *tag;
 struct TagItem *tstate;
+
+	debug( "%s (%ld) %s - Class: 0x00054320x Object: 0x00054320x \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	for( tstate = msg->ops_AttrList ; ( tag = NextTagItem( &tstate ) ) ; ) {
 		ULONG tidata = tag->ti_Data;
@@ -580,6 +603,8 @@ struct ServerEntry *se;
 struct Server      *s;
 Object *serverlist;
 ULONG i;
+
+	debug( "%s (%ld) %s - Class: 0x00054320x Object: 0x00054320x \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	serverlist = (APTR) LocalReadConfig( OID_SVR_LIST );
 
@@ -620,6 +645,8 @@ struct Nick   *n;
 char *buffer;
 ULONG i;
 
+	debug( "%s (%ld) %s - Class: 0x00054320x Object: 0x00054320x \n", __FILE__, __LINE__, __func__, cl, obj );
+
 	if( ( buffer = AllocVec( COMMAND_COMPOSEBUFFER_SIZEOF, MEMF_ANY ) ) ) {
 
 		n = (APTR) &s->s_NickList.lh_Head;
@@ -657,6 +684,8 @@ struct Server  *s = msg->Server;
 struct Channel *c;
 char *buffer;
 
+	debug( "%s (%ld) %s - Class: 0x00054320x Object: 0x00054320x \n", __FILE__, __LINE__, __func__, cl, obj );
+
 	if( ( buffer = AllocVec( COMMAND_COMPOSEBUFFER_SIZEOF, MEMF_ANY ) ) ) {
 		for( c = (APTR) s->s_ChannelList.lh_Head ; c->c_Succ ; c = c->c_Succ ) {
 			if( !( c->c_Flags & CHANNELF_SERVER ) ) { /* server tab is no real channel */
@@ -685,6 +714,8 @@ struct mccdata *mccdata = INST_DATA( cl, obj );
 struct ServerEntry *se = msg->ServerEntry;
 struct Server *s;
 
+	debug( "%s (%ld) %s - Class: 0x00054320x Object: 0x00054320x \n", __FILE__, __LINE__, __func__, cl, obj );
+
 	for( s = (APTR) mccdata->mcc_ServerList.lh_Head ; s->s_Succ ; s = s->s_Succ ) {
 		if( s->s_Port == se->se_Port ) { /* different port -> different server */
 			if( !Stricmp( (CONST_STRPTR) s->s_Address, (CONST_STRPTR) se->se_Address ) ) {
@@ -710,6 +741,8 @@ struct Nick         *n;
 struct NickEntry    *ne;
 struct Channel      *c;
 struct ChannelEntry *ce;
+
+	debug( "%s (%ld) %s - Class: 0x00054320x Object: 0x00054320x \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	if( ( se = msg->ServerEntry ) ) {
 		/* do not alloc the same server twice */
@@ -774,6 +807,8 @@ struct Server   *s = msg->Server;
 struct Nick         *n;
 struct Channel      *c;
 
+	debug( "%s (%ld) %s - Class: 0x00054320x Object: 0x00054320x \n", __FILE__, __LINE__, __func__, cl, obj );
+
 	/* dissnnect if needed */
 
 	DoMethod( obj, MM_NETWORK_SERVERDISCONNECT, s );
@@ -812,6 +847,8 @@ static ULONG MM_ServerFindChannel( struct IClass *cl, Object *obj, struct MP_NET
 {
 struct Channel *c;
 
+	debug( "%s (%ld) %s - Class: 0x00054320x Object: 0x00054320x \n", __FILE__, __LINE__, __func__, cl, obj );
+
 	for( c = (APTR) msg->Server->s_ChannelList.lh_Head ; c->c_Succ ; c = c->c_Succ ) {
 		if( msg->ChannelName ) {
 			if( !Stricmp( (CONST_STRPTR) c->c_Name, (CONST_STRPTR) msg->ChannelName ) ) {
@@ -836,7 +873,8 @@ static ULONG MM_ServerSocketInit( struct IClass *cl, Object *obj, struct MP_NETW
 struct mccdata *mccdata = INST_DATA( cl, obj );
 struct Server *s;
 ULONG result;
-	debug("MM_ServerSocketInit()\n" );
+
+	debug( "%s (%ld) %s - Class: 0x00054320x Object: 0x00054320x \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	result = MSG_ERROR_NOERROR + 1; /* socket error */
 	if( ( s = msg->Server ) ) {
@@ -908,6 +946,8 @@ static ULONG MM_ServerSocketClose( struct IClass *cl, Object *obj, struct MP_NET
 struct mccdata *mccdata = INST_DATA( cl, obj );
 struct Server *s;
 
+	debug( "%s (%ld) %s - Class: 0x00054320x Object: 0x00054320x \n", __FILE__, __LINE__, __func__, cl, obj );
+
 	if( ( s = msg->Server ) ) {
 		if( s->s_ServerSocket != -1 ) { /* still open? */
 			FD_CLR( s->s_ServerSocket, &mccdata->mcc_ReadMaster  );
@@ -938,7 +978,7 @@ static ULONG MM_ServerConnect( struct IClass *cl, Object *obj, struct MP_NETWORK
 struct Server *s = msg->Server;
 ULONG result;
 
-//	  debug("MM_ServerConnect()\n" );
+	debug( "%s (%ld) %s - Class: 0x00054320x Object: 0x00054320x \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	result = MSG_ERROR_NOERROR + 4; /* bsdsocket missing */
 	if( !SocketBase ) {
@@ -998,7 +1038,7 @@ static ULONG MM_ServerDisconnect( struct IClass *cl, Object *obj, struct MP_NETW
 {
 struct Server *s = msg->Server;
 
-	debug("disconnect '%s'\n", s->s_Name );
+	debug( "%s (%ld) %s - Class: 0x00054320x Object: 0x00054320x \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	if( SocketBase ) {
 		DoMethod( obj, MM_NETWORK_SERVERSOCKETCLOSE, s );
@@ -1018,6 +1058,8 @@ struct Server  *s = msg->Server;
 struct ServerMessageParse *smp;
 struct ChatLogEntry *cle;
 
+	debug( "%s (%ld) %s - Class: 0x00054320x Object: 0x00054320x \n", __FILE__, __LINE__, __func__, cl, obj );
+
 	if( ( smp = (APTR) DoMethod( obj, MM_NETWORK_SERVERMESSAGEPARSEBEGIN, s, msg->Message ) ) ) {
 
 		/* now we deal with the data. handle ping, user lists and other stuff */
@@ -1027,7 +1069,7 @@ struct ChatLogEntry *cle;
 			/* insert URL grabber stuff here */
 
 			/* finaly distribute message to all chat windows hosting the related channel */
-			if( ( cle = (APTR) DoMethod( obj, MM_NETWORK_CHATLOGENTRYADD, s, smp->smp_Channel, smp->smp_MessageBuffer ) ) ) {
+			if( ( cle = (APTR) DoMethod( obj, MM_NETWORK_CHATLOGENTRYADD, s, smp->smp_Channel, smp->smp_Pen, smp->smp_MessageBuffer ) ) ) {
 				DoMethod( _app(obj), MM_APPLICATION_MESSAGERECEIVED, cle );
 			}
 		}
@@ -1052,6 +1094,8 @@ static ULONG MM_ServerMessageSend( struct IClass *cl, Object *obj, struct MP_NET
 {
 struct SendNode *sn;
 
+	debug( "%s (%ld) %s - Class: 0x00054320x Object: 0x00054320x \n", __FILE__, __LINE__, __func__, cl, obj );
+
 	if( ( sn = AllocVec( sizeof( struct SendNode ) + strlen( msg->Message ) + 3, MEMF_ANY ) )) {
 		strcpy( sn->sn_Message, msg->Message );
 		strcat( sn->sn_Message, "\r\n" );
@@ -1073,6 +1117,8 @@ static ULONG MM_ServerMessageSendProc( struct IClass *cl, Object *obj, Msg *msg 
 struct mccdata *mccdata = INST_DATA( cl, obj );
 struct Server   *s;
 struct SendNode *sn;
+
+	debug( "%s (%ld) %s - Class: 0x00054320x Object: 0x00054320x \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	for( s = (APTR) mccdata->mcc_ServerList.lh_Head ; s->s_Succ ; s = s->s_Succ ) {
 		if( ( sn = (APTR) s->s_SendList.lh_Head )->sn_Succ ) {
@@ -1133,8 +1179,10 @@ struct ServerMessageParse *smp;
 char *args, chr, *pattern, *dst, *tmp;
 ULONG i;
 
+	debug( "%s (%ld) %s - Class: 0x00054320x Object: 0x00054320x \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	if( ( smp = AllocVec( sizeof( struct ServerMessageParse ) + strlen( msg->Message ) + 1, MEMF_ANY|MEMF_CLEAR ) ) ) {
+		smp->smp_Pen = PEN_LOGPRIVMSG;
 		strcpy( smp->smp_Data, msg->Message );
 		dst = smp->smp_StringStorage;
 		strcpy( dst, msg->Message );
@@ -1266,6 +1314,7 @@ ULONG i;
 
 static ULONG MM_ServerMessageParseEnd( struct IClass *cl, Object *obj, struct MP_NETWORK_SERVERMESSAGEPARSEEND *msg )
 {
+	debug( "%s (%ld) %s - Class: 0x00054320x Object: 0x00054320x \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	FreeVec( msg->ServerMessageParse );
 
@@ -1282,6 +1331,8 @@ static ULONG MM_ServerMessageProcess( struct IClass *cl, Object *obj, struct MP_
 {
 struct ServerMessageParse *smp = msg->ServerMessageParse;
 ULONG result = 0, i;
+
+	debug( "%s (%ld) %s - Class: 0x00054320x Object: 0x00054320x \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	if( smp->smp_Command && smp->smp_Command[0] ) {
 		for( i = 0 ; TAB_IRCCOMMANDS[i].CMD_Name ; i++ ) {
@@ -1310,6 +1361,8 @@ static ULONG MM_ServerSendData( struct IClass *cl, Object *obj, struct MP_NETWOR
 struct Server *s = msg->Server;
 ULONG result;
 
+	debug( "%s (%ld) %s - Class: 0x00054320x Object: 0x00054320x \n", __FILE__, __LINE__, __func__, cl, obj );
+
 	result = MSG_ERROR_NOERROR + 10;
 
 	if( s->s_State == SVRSTATE_CONNECTED ) {
@@ -1330,6 +1383,8 @@ static ULONG MM_ServerReceiveData( struct IClass *cl, Object *obj, struct MP_NET
 {
 struct Server *s = msg->Server;
 LONG bytes;
+
+	debug( "%s (%ld) %s - Class: 0x00054320x Object: 0x00054320x \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	if( s->s_State == SVRSTATE_CONNECTED ) {
 
@@ -1444,6 +1499,8 @@ static ULONG MM_ChannelFind( struct IClass *cl, Object *obj, struct MP_NETWORK_C
 struct Server   *s = msg->Server;
 struct Channel      *c;
 
+	debug( "%s (%ld) %s - Class: 0x00054320x Object: 0x00054320x \n", __FILE__, __LINE__, __func__, cl, obj );
+
 	for( c = (APTR) s->s_ChannelList.lh_Head ; c->c_Succ ; c = c->c_Succ ) {
 		if( !Stricmp( (CONST_STRPTR) c->c_Name, (CONST_STRPTR) msg->Name ) ) {
 			return( (IPTR) c );
@@ -1462,6 +1519,8 @@ static ULONG MM_ChannelAlloc( struct IClass *cl, Object *obj, struct MP_NETWORK_
 {
 struct Server   *s = msg->Server;
 struct Channel      *c;
+
+	debug( "%s (%ld) %s - Class: 0x00054320x Object: 0x00054320x \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	if( !( msg->Name ) || !(msg->Name[0]) || !( c = (APTR) DoMethod( obj, MM_NETWORK_CHANNELFIND, s, msg->Name ) ) ) {
 		if( (msg->Name[0] ) ) {
@@ -1488,6 +1547,8 @@ static ULONG MM_ChannelFree( struct IClass *cl, Object *obj, struct MP_NETWORK_C
 {
 struct Channel      *c  = msg->Channel;
 struct Node *node;
+
+	debug( "%s (%ld) %s - Class: 0x00054320x Object: 0x00054320x \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	if( c ) {
 		DoMethod( _app(obj), MM_APPLICATION_CHANNELREMOVE, c );
@@ -1519,6 +1580,8 @@ static ULONG MM_ChatLogEntryFree( struct IClass *cl, Object *obj, struct MP_NETW
 {
 struct ChatLogEntry *cle;
 
+	debug( "%s (%ld) %s - Class: 0x00054320x Object: 0x00054320x \n", __FILE__, __LINE__, __func__, cl, obj );
+
 	if( ( cle = msg->ChatLogEntry ) ) {
 		if( cle->cle_Succ && cle->cle_Pred ) {
 			Remove( ( struct Node *) cle );
@@ -1539,6 +1602,8 @@ static ULONG MM_ChatLogEntryAdd( struct IClass *cl, Object *obj, struct MP_NETWO
 struct Server  *s;
 struct Channel *c;
 struct ChatLogEntry *cle = NULL;
+
+	debug( "%s (%ld) %s - Class: 0x00054320x Object: 0x00054320x \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	if( ( s = msg->Server ) ) {
 /*
@@ -1563,6 +1628,7 @@ struct ChatLogEntry *cle = NULL;
 */
 		if( c->c_Succ ) { /* no channel no output */
 			if( ( cle = AllocVec( sizeof( struct ChatLogEntry ) + strlen( msg->Message ) + 1, MEMF_ANY ) ) ) {
+				cle->cle_Color = msg->Color;
 				strcpy( cle->cle_Message, msg->Message );
 				AddTail( &c->c_ChatLogList, (struct Node *) cle );
 			}
@@ -1582,6 +1648,8 @@ static ULONG MM_ChatNickEntryAlloc( struct IClass *cl, Object *obj, struct MP_NE
 {
 struct ChatNickEntry *cne;
 struct Channel *c;
+
+	debug( "%s (%ld) %s - Class: 0x00054320x Object: 0x00054320x \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	if( ( c = msg->Channel ) ) {
 		for( cne = (APTR) c->c_ChatNickList.lh_Head ; cne->cne_Succ ; cne = cne->cne_Succ ) {
@@ -1608,6 +1676,8 @@ struct Channel *c;
 static ULONG MM_ChatNickEntryFree( struct IClass *cl, Object *obj, struct MP_NETWORK_CHATNICKENTRYFREE *msg )
 {
 struct ChatNickEntry *cne;
+
+	debug( "%s (%ld) %s - Class: 0x00054320x Object: 0x00054320x \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	if( ( cne = msg->ChatNickEntry ) ) {
 		if( cne->cne_Succ && cne->cne_Pred ) {

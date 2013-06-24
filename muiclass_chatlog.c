@@ -21,17 +21,19 @@
 #include <SDI_hook.h>
 
 #include <string.h>
+#include <stdio.h>
 
 #include "system.h"
 #include "locale.h"
 #include "muiclass.h"
+#include "muiclass_application.h"
 #include "muiclass_windowsettings.h"
+#include "muiclass_settingscolor.h"
 #include "muiclass_chatlog.h"
 #include "muiclass_network.h"
 #include "version.h"
 
 /*************************************************************************/
-
 
 /*
 ** gadgets used by this class
@@ -39,7 +41,7 @@
 
 enum
 {
-GID_AREXXPORT = 0,
+WID_SETTINGS = 0,
 GID_LAST
 };
 
@@ -50,6 +52,8 @@ GID_LAST
 struct mccdata
 {
 	Object                *mcc_ClassObjects[ GID_LAST ];
+	LONG                   mcc_Pen[PEN_NUMBEROF];
+	ULONG                  mcc_PenRGB[PEN_NUMBEROF];
 };
 
 /*************************************************************************/
@@ -64,6 +68,8 @@ static ULONG OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
 {
 Object *objs[ GID_LAST ];
 
+	debug( "%s (%ld) %s - Class: 0x00007935x Object: 0x00007935x \n", __FILE__, __LINE__, __func__, cl, obj );
+
 	if( (obj = (Object *)DoSuperNew( cl, obj,
 		TAG_DONE ) ) ) {
 
@@ -76,19 +82,42 @@ Object *objs[ GID_LAST ];
 	return( (ULONG) NULL );
 }
 /* \\\ */
-/* /// OM_Dispose()
+/* /// OM_Setup()
 **
 */
 
 /*************************************************************************/
 
-static ULONG OM_Dispose( struct IClass *cl, Object *obj, Msg msg )
+static ULONG OM_Setup( struct IClass *cl, Object *obj, Msg *msg )
 {
-//struct mccdata *mccdata = INST_DATA( cl, obj );
+struct mccdata *mccdata = INST_DATA( cl, obj );
 
-	return( DoSuperMethodA( cl, obj, msg ) );
+	debug( "%s (%ld) %s - Class: 0x00007935x Object: 0x00007935x \n", __FILE__, __LINE__, __func__, cl, obj );
+
+	mccdata->mcc_ClassObjects[ WID_SETTINGS ] = (Object*) MUIGetVar( _app(obj), MA_APPLICATION_OBJECTWINDOWSETTINGS );
+
+	DoMethod( obj, MM_CHATLOG_PENSOBTAIN  );
+
+	return( DoSuperMethodA( cl, obj,(Msg) msg ) );
 }
 /* \\\ */
+/* /// OM_Cleanup()
+**
+*/
+
+/*************************************************************************/
+
+static ULONG OM_Cleanup( struct IClass *cl, Object *obj, Msg *msg )
+{
+
+	debug( "%s (%ld) %s - Class: 0x00007935x Object: 0x00007935x \n", __FILE__, __LINE__, __func__, cl, obj );
+
+	DoMethod( obj, MM_CHATLOG_PENSRELEASE );
+
+	return( DoSuperMethodA( cl, obj,(Msg) msg ) );
+}
+/* \\\ */
+
 /* /// OM_Display()
 **
 */
@@ -97,12 +126,80 @@ static ULONG OM_Dispose( struct IClass *cl, Object *obj, Msg msg )
 
 static ULONG OM_Display( struct IClass *cl, Object *obj, struct MUIP_NList_Display *msg )
 {
+struct mccdata *mccdata = INST_DATA( cl, obj );
 struct ChatLogEntry *cle;
-STRPTR *array = msg->strings;
 
 	if( ( cle = msg->entry ) ) {
-		*array = (STRPTR) cle->cle_Message;
+		char chr = cle->cle_Message[0];
+		ULONG len;
+		sprintf( cle->cle_PreParse        , "\033P[%06lx]", mccdata->mcc_PenRGB[ cle->cle_Color ] );
+		len = strlen( cle->cle_PreParse );
+		sprintf( &cle->cle_Message[ -len ], "\033P[%06lx]", mccdata->mcc_PenRGB[ cle->cle_Color ] );
+		cle->cle_Message[0] = chr;
+		*msg->strings = (STRPTR) &cle->cle_Message[ -len ];
 	}
+	return( 0 );
+}
+/* \\\ */
+
+/* /// MM_PensObtain()
+**
+*/
+
+/*************************************************************************/
+
+static ULONG MM_PensObtain( struct IClass *cl, Object *obj, Msg *msg )
+{
+struct mccdata *mccdata = INST_DATA( cl, obj );
+struct MUI_PenSpec *penspec;
+ULONG i;
+
+	debug( "%s (%ld) %s - Class: 0x00007935x Object: 0x00007935x \n", __FILE__, __LINE__, __func__, cl, obj );
+
+	for( i = 0 ; i < PEN_NUMBEROF ; i++ ) {
+		if( ( penspec = (APTR) LRC( OID_SETTINGSCOLOR + i ) ) ) {
+			mccdata->mcc_Pen[ i ]    = MUI_ObtainPen( muiRenderInfo( obj ), penspec, 0 );
+			mccdata->mcc_PenRGB[ i ] = MUIPenSpecToRGB( obj, penspec );
+		}
+	}
+	SetAttrs( obj, MUIA_Background, LRC( OID_SETTINGSCOLOR + PEN_LOGLISTBACKGROUND ), TAG_DONE );
+
+	return( 0 );
+}
+/* \\\ */
+/* /// MM_PensRelease()
+**
+*/
+
+/*************************************************************************/
+
+static ULONG MM_PensRelease( struct IClass *cl, Object *obj, Msg *msg )
+{
+struct mccdata *mccdata = INST_DATA( cl, obj );
+ULONG i;
+
+	debug( "%s (%ld) %s - Class: 0x00007935x Object: 0x00007935x \n", __FILE__, __LINE__, __func__, cl, obj );
+
+	for( i = 0 ; i < PEN_NUMBEROF ; i++ ) {
+		MUI_ReleasePen( muiRenderInfo( obj ), mccdata->mcc_Pen[ i ] );
+	}
+	return( 0 );
+}
+/* \\\ */
+/* /// MM_PensUpdate()
+**
+*/
+
+/*************************************************************************/
+
+static ULONG MM_PensUpdate( struct IClass *cl, Object *obj, Msg *msg )
+{
+
+	debug( "%s (%ld) %s - Class: 0x00007935x Object: 0x00007935x \n", __FILE__, __LINE__, __func__, cl, obj );
+
+	DoMethod( obj, MM_CHATLOG_PENSOBTAIN  );
+	DoMethod( obj, MM_CHATLOG_PENSRELEASE );
+
 	return( 0 );
 }
 /* \\\ */
@@ -119,11 +216,14 @@ STRPTR *array = msg->strings;
 
 DISPATCHER(MCC_ChatLog_Dispatcher)
 {
-    switch (msg->MethodID)
-    {
+	switch ( msg->MethodID ) {
 		case OM_NEW                          : return( OM_New        ( cl, obj, (APTR) msg ) );
-		case OM_DISPOSE                      : return( OM_Dispose    ( cl, obj, (APTR) msg ) );
+		case MUIM_Setup                      : return( OM_Setup      ( cl, obj, (APTR) msg ) );
+		case MUIM_Cleanup                    : return( OM_Cleanup    ( cl, obj, (APTR) msg ) );
 		case MUIM_NList_Display              : return( OM_Display    ( cl, obj, (APTR) msg ) );
+		case MM_CHATLOG_PENSOBTAIN           : return( MM_PensObtain ( cl, obj, (APTR) msg ) );
+		case MM_CHATLOG_PENSRELEASE          : return( MM_PensRelease( cl, obj, (APTR) msg ) );
+		case MM_CHATLOG_PENSUPDATE           : return( MM_PensUpdate ( cl, obj, (APTR) msg ) );
     }
 	return( DoSuperMethodA( cl, obj, msg ) );
 
@@ -137,7 +237,7 @@ DISPATCHER(MCC_ChatLog_Dispatcher)
 
 ULONG MCC_ChatLog_InitClass( void )
 {
-	appclasses[ CLASSID_CHATLOG ] = MUI_CreateCustomClass( NULL, (ClassID) MUIC_NList, NULL, sizeof( struct mccdata ) ,  (APTR) ENTRY(MCC_ChatLog_Dispatcher) );
+	appclasses[ CLASSID_CHATLOG ] = MUI_CreateCustomClass( NULL, (ClassID) MUIC_NList, NULL, sizeof( struct mccdata ), (APTR) ENTRY(MCC_ChatLog_Dispatcher) );
 	return( appclasses[ CLASSID_CHATLOG ] ? MSG_ERROR_NOERROR : MSG_ERROR_UNABLETOSETUPMUICLASS );
 }
 /* \\\ */
@@ -155,7 +255,4 @@ void MCC_ChatLog_DisposeClass( void )
     }
 }
 /* \\\ */
-
-
-
 

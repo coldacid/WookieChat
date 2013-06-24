@@ -111,6 +111,8 @@ static ULONG OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
 Object *objs[ GID_LAST ];
 static STRPTR TAB_CYCLE_SMILIES[ MSG_CY_BLACK - MSG_CY_TRANSPARENT + 2 ];
 
+	debug( "%s (%ld) %s - Class: 0x00010841x Object: 0x00010841x \n", __FILE__, __LINE__, __func__, cl, obj );
+
 	if( (obj = (Object *) DoSuperNew( cl, obj, MUIA_Group_Horiz, TRUE,
 					Child, HVSpace,
 					Child, VGroup,
@@ -235,6 +237,8 @@ static ULONG MM_ReadConfig( struct IClass *cl, Object *obj, struct MP_SETTINGSGU
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 ULONG i;
+
+	debug( "%s (%ld) %s - Class: 0x00010841x Object: 0x00010841x \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	for( i = 0 ; TAB_CONFIGITEMS[ i ].GadgetID != -1 ; i++ ) {
 		if( TAB_CONFIGITEMS[ i ].ObjectID == msg->ObjectID ) {

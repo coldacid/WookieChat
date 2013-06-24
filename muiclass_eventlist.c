@@ -41,6 +41,9 @@
 
 static ULONG OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
 {
+
+	debug( "%s (%ld) %s - Class: 0x00007310x Object: 0x00007310x \n", __FILE__, __LINE__, __func__, cl, obj );
+
 	if( ( obj =  DoSuperNew( cl, obj,
 							MUIA_NList_Title         , TRUE,
 							MUIA_CycleChain          , 1,
@@ -88,6 +91,9 @@ struct EventEntry *ee;
 
 static ULONG OM_Destruct( struct IClass *cl, Object *obj, struct MUIP_NList_Destruct *msg )
 {
+
+	debug( "%s (%ld) %s - Class: 0x00007310x Object: 0x00007310x \n", __FILE__, __LINE__, __func__, cl, obj );
+
 	if( msg->entry ) {
 		FreeVec( msg->entry );
     }
@@ -106,6 +112,8 @@ static ULONG OM_Import( struct IClass *cl, Object *obj, struct MUIP_Import *msg 
 struct EventEntry *ee;
 ULONG i;
 char *text;
+
+	debug( "%s (%ld) %s - Class: 0x00007310x Object: 0x00007310x \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	for( i = 0 ;  ; i++ ) {
 		ee = NULL;
@@ -137,6 +145,8 @@ struct EventEntry *ee;
 char buffer[ EVENTENTRY_SCRIPT_SIZEOF + EVENTENTRY_TEXT_SIZEOF + 64 ];
 ULONG i;
 
+	debug( "%s (%ld) %s - Class: 0x00007310x Object: 0x00007310x \n", __FILE__, __LINE__, __func__, cl, obj );
+
 	for( i = 0 ;  ; i++ ) {
 		ee = NULL;
 		DoMethod( obj, MUIM_NList_GetEntry, i, &ee );
@@ -160,6 +170,8 @@ static ULONG MM_Add( struct IClass *cl, Object *obj, struct MP_EVENTLIST_ADD *ms
 {
 struct EventEntry *ee;
 ULONG i, newitem = 0;
+
+	debug( "%s (%ld) %s - Class: 0x00007310x Object: 0x00007310x \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	/* old item in list ? */
 	for( i = 0 ;  ; i++ ) {

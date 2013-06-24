@@ -28,6 +28,7 @@
 #include "locale.h"
 #include "muiclass.h"
 #include "muiclass_network.h"
+#include "muiclass_settingscolor.h"
 #include "muiclass_application.h"
 #include "muiclass_windowchat.h"
 #include "muiclass_windowquit.h"
@@ -47,6 +48,7 @@ enum
 {
 GID_MENUSTRIP = 0,
 GID_NETWORK,
+WID_SETTINGS,
 MID_SELECTSERVER,
 MID_TABNEW,
 MID_TABNEWGLOBAL,
@@ -122,6 +124,8 @@ struct mccdata
 static ULONG OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
 {
 Object *objs[ GID_LAST ];
+
+	debug( "%s (%ld) %s - Class: 0x00025165x Object: 0x00025165x \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	if( (obj = (Object *)DoSuperNew( cl, obj,
 			MUIA_Window_Title            , LGS( MSG_MUICLASS_WINDOWCHAT_TITLE ),
@@ -221,6 +225,8 @@ static ULONG OM_Dispose( struct IClass *cl, Object *obj, Msg msg )
 {
 //struct mccdata *mccdata = INST_DATA( cl, obj );
 
+	debug( "%s (%ld) %s - Class: 0x00025165x Object: 0x00025165x \n", __FILE__, __LINE__, __func__, cl, obj );
+
 	return( DoSuperMethodA( cl, obj, msg ) );
 }
 /* \\\ */
@@ -273,6 +279,10 @@ static ULONG OM_Setup( struct IClass *cl, Object *obj, Msg *msg )
 struct mccdata *mccdata = INST_DATA( cl, obj );
 Object *winobj;
 
+	debug( "%s (%ld) %s - Class: 0x00025165x Object: 0x00025165x \n", __FILE__, __LINE__, __func__, cl, obj );
+
+	mccdata->mcc_ClassObjects[ WID_SETTINGS ] = (Object *) MUIGetVar( _app(obj), MA_APPLICATION_OBJECTWINDOWSETTINGS );
+
 	winobj = (Object *) MUIGetVar( _app(obj), MA_APPLICATION_OBJECTWINDOWQUIT );
 	DoMethod( obj, MUIM_Notify, MUIA_Window_CloseRequest, TRUE, winobj, 3, MUIM_Set, MUIA_Window_Open, TRUE );
 
@@ -294,6 +304,8 @@ static ULONG MM_MenuSelect( struct IClass *cl, Object *obj, struct MP_WINDOWCHAT
 {
 //struct mccdata *mccdata = INST_DATA( cl, obj );
 Object *tmpobj;
+
+	debug( "%s (%ld) %s - Class: 0x00025165x Object: 0x00025165x \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	switch( msg->MenuID ) {
 
@@ -338,13 +350,13 @@ Object *tmpobj;
 static ULONG MM_ColorChange( struct IClass *cl, Object *obj, Msg *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
-Object *settingsobj;
 
-	if( ( settingsobj = (Object *) MUIGetVar( _app(obj), MA_APPLICATION_OBJECTWINDOWSETTINGS ) ) ) {
-		SetAttrs( mccdata->mcc_ClassObjects[ GID_CHATLOG         ], MUIA_Background, DoMethod( settingsobj, MM_WINDOWSETTINGS_READCONFIG, OID_COL_CHANNELBG ), TAG_DONE );
-		SetAttrs( mccdata->mcc_ClassObjects[ GID_CHATUSERLIST    ], MUIA_Background, DoMethod( settingsobj, MM_WINDOWSETTINGS_READCONFIG, OID_COL_NICKLISTBG ), TAG_DONE );
-		SetAttrs( mccdata->mcc_ClassObjects[ GID_CHATCHANNELLIST ], MUIA_Background, DoMethod( settingsobj, MM_WINDOWSETTINGS_READCONFIG, OID_COL_TABLISTBG ), TAG_DONE );
-	}
+	debug( "%s (%ld) %s - Class: 0x00025165x Object: 0x00025165x \n", __FILE__, __LINE__, __func__, cl, obj );
+
+	DoMethod( mccdata->mcc_ClassObjects[ GID_CHATLOG         ], MM_CHATLOG_PENSUPDATE         );
+	DoMethod( mccdata->mcc_ClassObjects[ GID_CHATUSERLIST    ], MM_CHATUSERLIST_PENSUPDATE    );
+	DoMethod( mccdata->mcc_ClassObjects[ GID_CHATCHANNELLIST ], MM_CHATCHANNELLIST_PENSUPDATE );
+
 	return( 0 );
 }
 /* \\\ */
@@ -360,6 +372,8 @@ static ULONG MM_ChannelAdd( struct IClass *cl, Object *obj, struct MP_WINDOWCHAT
 struct mccdata *mccdata = INST_DATA( cl, obj );
 struct ChatChannel *cc;
 ULONG i;
+
+	debug( "%s (%ld) %s - Class: 0x00025165x Object: 0x00025165x \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	/* only add, if not already in list */
 	for( i = 0 ;  ; i++ ) {
@@ -393,6 +407,8 @@ struct mccdata *mccdata = INST_DATA( cl, obj );
 struct ChatChannel *cc;
 ULONG i;
 
+	debug( "%s (%ld) %s - Class: 0x00025165x Object: 0x00025165x \n", __FILE__, __LINE__, __func__, cl, obj );
+
 //	  DoMethod( mccdata->mcc_ClassObjects[ GID_CONNECTEDBUTTONS ], MM_CONNECTEDBUTTONS_REMOVE, msg->Channel );
 
 	for( i = 0 ;  ; i++ ) {
@@ -423,6 +439,8 @@ static ULONG MM_ChannelChange( struct IClass *cl, Object *obj, struct MP_WINDOWC
 struct mccdata *mccdata = INST_DATA( cl, obj );
 struct ChatChannel     *cc;
 struct Channel         *c;
+
+	debug( "%s (%ld) %s - Class: 0x00025165x Object: 0x00025165x \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	DoMethod( mccdata->mcc_ClassObjects[ GID_CHATLOG      ], MUIM_NList_Clear );
 	DoMethod( mccdata->mcc_ClassObjects[ GID_CHATUSERLIST ], MUIM_NList_Clear );
@@ -458,6 +476,8 @@ struct mccdata *mccdata = INST_DATA( cl, obj );
 struct ChatChannel     *cc;
 struct Channel         *c;
 
+	debug( "%s (%ld) %s - Class: 0x00025165x Object: 0x00025165x \n", __FILE__, __LINE__, __func__, cl, obj );
+
 	cc = NULL;
 	DoMethod( mccdata->mcc_ClassObjects[ GID_CHATCHANNELLIST ], MUIM_NList_GetEntry, MUIV_NList_GetEntry_Active, &cc );
 	if( cc ) {
@@ -483,6 +503,8 @@ static ULONG MM_ChannelNickAdd( struct IClass *cl, Object *obj, struct MP_WINDOW
 struct mccdata *mccdata = INST_DATA( cl, obj );
 struct ChatChannel *cc;
 
+	debug( "%s (%ld) %s - Class: 0x00025165x Object: 0x00025165x \n", __FILE__, __LINE__, __func__, cl, obj );
+
 	cc = NULL;
 	DoMethod( mccdata->mcc_ClassObjects[ GID_CHATCHANNELLIST ], MUIM_NList_GetEntry, MUIV_NList_GetEntry_Active, &cc );
 	if( cc ) {
@@ -506,6 +528,8 @@ static ULONG MM_ChannelNickRemove( struct IClass *cl, Object *obj, struct MP_WIN
 struct mccdata *mccdata = INST_DATA( cl, obj );
 struct ChatNick *cn;
 ULONG i;
+
+	debug( "%s (%ld) %s - Class: 0x00025165x Object: 0x00025165x \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	for( i = 0 ;  ; i++ ) {
 		cn = NULL;
@@ -535,6 +559,8 @@ struct mccdata *mccdata = INST_DATA( cl, obj );
 struct Channel *c;
 struct ChatChannel *cc;
 
+	debug( "%s (%ld) %s - Class: 0x00025165x Object: 0x00025165x \n", __FILE__, __LINE__, __func__, cl, obj );
+
 	/* pointer magic */
 
 	c = (APTR) ( ( (IPTR) List_GetListFromNode( msg->ChatLogEntry ) ) - (IPTR) offsetof( struct Channel, c_ChatLogList ) );
@@ -563,6 +589,8 @@ static ULONG MM_MessageEntered( struct IClass *cl, Object *obj, struct MP_WINDOW
 struct mccdata *mccdata = INST_DATA( cl, obj );
 struct ChatChannel *cc;
 struct Server *s;
+
+	debug( "%s (%ld) %s - Class: 0x00025165x Object: 0x00025165x \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	cc = NULL;
 	DoMethod( mccdata->mcc_ClassObjects[ GID_CHATCHANNELLIST ], MUIM_NList_GetEntry, MUIV_NList_GetEntry_Active, &cc );

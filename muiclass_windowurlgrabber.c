@@ -70,6 +70,8 @@ static ULONG OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
 {
 Object *objs[ GID_LAST ];
 
+	debug( "%s (%ld) %s - Class: 0x00008044x Object: 0x00008044x \n", __FILE__, __LINE__, __func__, cl, obj );
+
 	if( (obj = (Object *)DoSuperNew( cl, obj,
 			MUIA_Window_Title            , LGS( MSG_MUICLASS_WINDOWURLGRABBER_TITLE ),
 			MUIA_Window_ID               , MAKE_ID('U','R','L','G'),
@@ -114,6 +116,8 @@ static ULONG OM_Dispose( struct IClass *cl, Object *obj, Msg msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 
+	debug( "%s (%ld) %s - Class: 0x00008044x Object: 0x00008044x \n", __FILE__, __LINE__, __func__, cl, obj );
+
 	DoMethod( mccdata->mcc_ClassObjects[ GID_LIST ], MM_URLLIST_EXPORTLISTASTEXT, DEFAULT_SETTINGSURL_NAME );
 
 	return( DoSuperMethodA( cl, obj, msg ) );
@@ -145,6 +149,8 @@ static ULONG MM_DoubleClick( struct IClass *cl, Object *obj, Msg msg )
 struct mccdata *mccdata = INST_DATA( cl, obj );
 char buffer[ 2* URLENTRY_URL_SIZEOF ]; /* geit FIXME: this function is using old stuff */
 struct URLEntry *ue = NULL;
+
+	debug( "%s (%ld) %s - Class: 0x00008044x Object: 0x00008044x \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	DoMethod( mccdata->mcc_ClassObjects[ GID_LIST ], MUIM_NList_GetEntry, MUIV_NList_GetEntry_Active, &ue );
 	if( ue ) {
@@ -186,6 +192,8 @@ LONG b, e, datalength;
 int t;
 STRPTR url = msg->Data;
 char chr;
+
+	debug( "%s (%ld) %s - Class: 0x00008044x Object: 0x00008044x \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	datalength = strlen( (const char *) msg->Data );
 

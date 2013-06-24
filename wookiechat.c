@@ -48,6 +48,8 @@ struct Device_Timer dt;
 
 	SysBase = (APTR) (*((struct ExecBase **) 4 ) );
 
+	debug( "\n\n%78m*\n%s (%ld) %s - WookieChat - Transmission begins...\n", __FILE__, __LINE__, __func__ );
+
 	memset( &dt, 0, sizeof( dt ) );
 
 	WBMessage_Get();
@@ -93,6 +95,8 @@ struct Device_Timer dt;
 	Locale_Close();
 	Libraries_Close();
 	WBMessage_Reply(); /* release wbmessage */
+
+	debug( "%s (%ld) %s - WookieChat - End of Transmission\n", __FILE__, __LINE__, __func__ );
 
 	return( result );
 }

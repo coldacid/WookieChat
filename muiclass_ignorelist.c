@@ -44,6 +44,9 @@
 
 static ULONG OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
 {
+
+	debug( "%s (%ld) %s - Class: 0x00009528x Object: 0x00009528x \n", __FILE__, __LINE__, __func__, cl, obj );
+
 	return( (ULONG) DoSuperNew( cl, obj,
 							MUIA_NList_Title         , TRUE,
 							MUIA_CycleChain          , 1,
@@ -85,6 +88,9 @@ struct IgnoreEntry *ie;
 
 static ULONG OM_Destruct( struct IClass *cl, Object *obj, struct MUIP_NList_Destruct *msg )
 {
+
+	debug( "%s (%ld) %s - Class: 0x00009528x Object: 0x00009528x \n", __FILE__, __LINE__, __func__, cl, obj );
+
 	if( msg->entry ) {
 		FreeVec( msg->entry );
     }
@@ -102,6 +108,8 @@ static ULONG OM_Import( struct IClass *cl, Object *obj, struct MUIP_Import *msg 
 {
 ULONG i;
 char *text;
+
+	debug( "%s (%ld) %s - Class: 0x00009528x Object: 0x00009528x \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	DoMethod( obj, MUIM_NList_Clear );
 	for( i = 0 ;  ; i++ ) {
@@ -130,6 +138,8 @@ struct IgnoreEntry *ie;
 char buffer[ IGNOREENTRY_PATTERN_SIZEOF + 64 ];
 ULONG i;
 
+	debug( "%s (%ld) %s - Class: 0x00009528x Object: 0x00009528x \n", __FILE__, __LINE__, __func__, cl, obj );
+
 	for( i = 0 ;  ; i++ ) {
 		ie = NULL;
 		DoMethod( obj, MUIM_NList_GetEntry, i, &ie );
@@ -157,6 +167,8 @@ static ULONG MM_Add( struct IClass *cl, Object *obj, struct MP_IGNORELIST_ADD *m
 {
 struct IgnoreEntry *ie;
 
+	debug( "%s (%ld) %s - Class: 0x00009528x Object: 0x00009528x \n", __FILE__, __LINE__, __func__, cl, obj );
+
 	if( ( ie = AllocVec( sizeof( struct IgnoreEntry ), MEMF_ANY|MEMF_CLEAR ) ) ) {
 		ie->ie_Flags = msg->Flags;
 		strncpy( ie->ie_Pattern, (char *) ( msg->Pattern ? msg->Pattern : LGS( MSG_MUICLASS_IGNORELIST_DEFAULTPATTERN ) ), IGNOREENTRY_PATTERN_SIZEOF );
@@ -179,6 +191,8 @@ static ULONG MM_ExportListAsText( struct IClass *cl, Object *obj, struct MP_IGNO
 BPTR handle;
 ULONG i;
 struct IgnoreEntry *ie;
+
+	debug( "%s (%ld) %s - Class: 0x00009528x Object: 0x00009528x \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	if( ( handle = Open( (_ub_cs) msg->Name, MODE_NEWFILE ) ) ) {
 		for( i = 0 ;  ; i++ ) {
@@ -210,6 +224,8 @@ static ULONG MM_ImportListAsText( struct IClass *cl, Object *obj, struct MP_IGNO
 BPTR handle;
 char *linebuffer;
 
+	debug( "%s (%ld) %s - Class: 0x00009528x Object: 0x00009528x \n", __FILE__, __LINE__, __func__, cl, obj );
+
 	DoMethod( obj, MUIM_NList_Clear );
 
 	if( ( linebuffer = AllocVec( LINEBUFFER_SIZEOF, MEMF_ANY ) ) ) {
@@ -228,7 +244,6 @@ char *linebuffer;
 	return( 0 );
 }
 /* \\\ */
-
 
 /*
 ** Dispatcher, init and dispose

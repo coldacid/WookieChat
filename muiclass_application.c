@@ -99,11 +99,13 @@ static ULONG OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
 {
 Object *objs[ GID_LAST ];
 
+	debug( "%s (%ld) %s - Class: 0x00017623x Object: 0x00017623x \n", __FILE__, __LINE__, __func__, cl, obj );
+
 	if( ( obj = (Object *) DoSuperNew( cl, obj,
 		        MUIA_Application_UsedClasses, classlist,
 				MUIA_Application_Author     , (char*) AUTHORNAME,
-				MUIA_Application_Base       , (char*) APPLICATIONNAME "_NEW",
-				MUIA_Application_Title      , (char*) APPLICATIONNAME "_NEW",
+				MUIA_Application_Base       , (char*) APPLICATIONNAME "_NEW2",
+				MUIA_Application_Title      , (char*) APPLICATIONNAME "_NEW2",
 				MUIA_Application_Version    , (char*) VERSION_MUI,
 				MUIA_Application_Copyright  , (char*) VERSION_COPYRIGHT,
 				MUIA_Application_Description, (char*) LGS( MSG_MUICLASS_APPLICATION_DESCRIPTION ),

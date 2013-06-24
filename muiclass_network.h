@@ -107,7 +107,7 @@ struct MP_NETWORK_CHANNELFIND             { ULONG MethodID; struct Server *Serve
 struct MP_NETWORK_CHANNELALLOC            { ULONG MethodID; struct Server *Server; char *Name; };
 struct MP_NETWORK_CHANNELFREE             { ULONG MethodID; struct Server *Server; struct Channel *Channel; };
 
-struct MP_NETWORK_CHATLOGENTRYADD         { ULONG MethodID; struct Server *Server; struct Channel *Channel; char *Message; };
+struct MP_NETWORK_CHATLOGENTRYADD         { ULONG MethodID; struct Server *Server; struct Channel *Channel; ULONG Color; char *Message; };
 struct MP_NETWORK_CHATLOGENTRYFREE        { ULONG MethodID; struct ChatLogEntry *ChatLogEntry; };
 
 struct MP_NETWORK_CHATNICKENTRYALLOC      { ULONG MethodID; struct Channel *Channel; char *NickName; };
@@ -173,7 +173,8 @@ struct Nick {
 struct ChatLogEntry {
 	struct ChatLogEntry *cle_Succ;
 	struct ChatLogEntry *cle_Pred;
-	ULONG                cle_Type;
+	ULONG                cle_Color;
+	char                 cle_PreParse[16]; /* used by display method */
 	char                 cle_Message[1];
 };
 
@@ -189,32 +190,6 @@ SVRSTATE_PRECONNECTED,
 SVRSTATE_CONNECTED,
 SVRSTATE_RETRY,
 SVRSTATE_FAILED,
-};
-enum{
-LOGTYPE_ERROR = 0,
-LOGTYPE_ACTION,
-LOGTYPE_NORMAL,
-LOGTYPE_NICKLISTTX,
-LOGTYPE_TABSPEN,
-LOGTYPE_JOIN,
-LOGTYPE_PART,
-LOGTYPE_QUIT,
-LOGTYPE_MODES,
-LOGTYPE_CTCP,
-LOGTYPE_ACTIONS,
-LOGTYPE_INFO,
-LOGTYPE_OWNTEXT,
-LOGTYPE_HIGHLIGHT,
-LOGTYPE_NOTICE,
-LOGTYPE_INVITE,
-LOGTYPE_KICK,
-LOGTYPE_NICKCHANGE,
-LOGTYPE_TOPIC,
-LOGTYPE_WALLOPS,
-LOGTYPE_ACTIVITY,
-LOGTYPE_CHATACTIVITY,
-LOGTYPE_HIGHLIGHTACTIVITY,
-LOGTYPE_LAST
 };
 
 

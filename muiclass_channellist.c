@@ -40,6 +40,8 @@
 static ULONG OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
 {
 
+	debug( "%s (%ld) %s - Class: 0x00004574x Object: 0x00004574x \n", __FILE__, __LINE__, __func__, cl, obj );
+
 	return( (ULONG) (obj = (Object *) DoSuperNew( cl, obj,
 													MUIA_NList_Title         , TRUE,
 													MUIA_CycleChain          , 1,
@@ -68,7 +70,6 @@ struct ChannelEntry *ce;
 	return( 0 );
 }
 /* \\\ */
-
 /* /// MM_Add()
 **
 */
@@ -141,7 +142,7 @@ DISPATCHER(MCC_ChannelList_Dispatcher)
 
 ULONG MCC_ChannelList_InitClass( void )
 {
-	appclasses[ CLASSID_CHANNELLIST ] = MUI_CreateCustomClass( NULL, (ClassID)MUIC_NList, NULL, 0,  (APTR) ENTRY(MCC_ChannelList_Dispatcher) );
+	appclasses[ CLASSID_CHANNELLIST ] = MUI_CreateCustomClass( NULL, (ClassID) MUIC_NList, NULL, 0, (APTR) ENTRY(MCC_ChannelList_Dispatcher) );
 	return( appclasses[ CLASSID_CHANNELLIST ] ? MSG_ERROR_NOERROR : MSG_ERROR_UNABLETOSETUPMUICLASS );
 }
 /* \\\ */

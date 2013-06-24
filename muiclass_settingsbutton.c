@@ -69,6 +69,8 @@ static ULONG OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
 {
 Object *objs[ GID_LAST ];
 
+	debug( "%s (%ld) %s - Class: 0x00009017x Object: 0x00009017x \n", __FILE__, __LINE__, __func__, cl, obj );
+
 	if( (obj = (Object *) DoSuperNew( cl, obj, MUIA_Group_Horiz, FALSE,
 				Child, HGroup,
 					Child, objs[ GID_SHOWBUTTONS   ] = MUICreateCheckbox( MSG_MUICLASS_SETTINGSBUTTON_SHOWBUTTONS_GAD, TRUE ),
@@ -204,6 +206,8 @@ static ULONG MM_ReadConfig( struct IClass *cl, Object *obj, struct MP_SETTINGSBU
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 
+	debug( "%s (%ld) %s - Class: 0x00009017x Object: 0x00009017x \n", __FILE__, __LINE__, __func__, cl, obj );
+
 	switch( msg->ObjectID ) {
 		case OID_BUT_SHOWBUTTONS:
 			return( (ULONG) MUIGetVar( mccdata->mcc_ClassObjects[ GID_SHOWBUTTONS ], MUIA_Selected ) );
@@ -266,6 +270,5 @@ void MCC_SettingsButton_DisposeClass( void )
     }
 }
 /* \\\ */
-
 
 

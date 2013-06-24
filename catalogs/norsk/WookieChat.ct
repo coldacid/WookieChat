@@ -2,1565 +2,6 @@
 ## codeset 0
 ## language norsk
 ;
-MSG_ERROR
-Feil
-; Error
-;
-MSG_BANMASK
-Banmaske
-; Ban mask
-;
-MSG_BANSETBY
-Satt av
-; Set by
-;
-MSG_BANDATEPLACED
-Dato satt
-; Date placed
-;
-MSG_MODE_X
-Steng denne taben.
-; Close the current tab.
-;
-MSG_TOPIC
-Dette er kanalens overskrift.
-; This is the channels current topic.
-;
-MSG_MODE_T
-Overskriftsbeskyttelse. Denne forhindrer ordinære brukere fra å forandre kanaloverskriften.
-; Topic protection. This setting prevents regular users from changing the channel topic.
-;
-MSG_MODE_N
-Ingen beskjeder. Dette tvinger brukerne til å være i kanalen for å kunne snakke i den.
-; No messaging. This setting forces users to be in the channel to be able to talk in it.
-;
-MSG_MODE_S
-Hemmelig modus. Hvis denne er satt er kanalen usynlig inntil du har entret den.
-; Secret mode. If this is set, the channel is invisible until you have joined.
-;
-MSG_MODE_I
-Kun invitasjon. Kun brukere som er invitert til kanalen kan entre den.
-; Invite only. Only users who have been invited to the channel may join.
-;
-MSG_MODE_P
-Privat modus. Hvis denne er satt vises ikke kanalen i globale kanallister.
-; Private mode. If set, channel topic is not shown on global channel lists.
-;
-MSG_MODE_M
-Moderert modus. Bare brukere som er operatør, halvoperatør eller som har voice-status (de med @ % eller +) kan prate i kanalen.
-; Moderated mode. Only users with operator, halfop or voice status (thats @ % or +) may talk in channel when set.
-;
-MSG_MODE_B
-Klikk for å vise en liste over alle banmasker for denne kanalen.
-; Click to view a list of all banmasks for this channel.
-;
-MSG_MODE_K
-Passordmodus. Når denne er satt, må brukere gi et passord for å entre kanalen.
-; Keyword mode. When this is set, users need to supply a keyword (password) to enter.
-;
-MSG_MODE_K_STRING
-Aktiv kanals passord..
-; Current channel keyword.
-;
-MSG_MODE_L
-Setter en grense på hvor mange brukere som kan entre kanalen.
-; Enforce a limit to how many users can currently join the channel.
-;
-MSG_MODE_L_STRING
-Aktuell grense på brukere.
-; Current user limit.
-;
-MSG_HOSTNAME_STR
-Dette er hostnavnet på brukeren som du snakker med.
-; This is the hostname of the user you are currently talking to.
-;
-MSG_ERROR_NLIST
-Vennligst last ned og installer NList MUI klassen fra aminet\n
-; Please download and install the NList MUI Class from aminet\n
-;
-MSG_GENERAL
-Generell
-; General
-;
-MSG_LOGGING
-Logging
-; Logging
-;
-MSG_SOUNDS
-Lyder
-; Sounds
-;
-MSG_ALIASES
-Aliaser
-; Aliases
-;
-MSG_ABOUT
-Om...
-; About...
-;
-MSG_YES
-Ja
-; Yes
-;
-MSG_NO
-Nei
-; No
-;
-MSG_DCC_CHOOSE_FILENAME
-Fil å sende
-; File To Send
-;
-MSG_BUTTON_SEND_FILE
-Send fil
-; Send File
-;
-MSG_DCC_SEND_WINDOW
-DCC SEND fil
-; DCC SEND File
-;
-MSG_REOFFER
-Send på nytt
-; Reoffer File
-;
-MSG_CANCEL_SEND
-Avbryt sending
-; Cancel Send
-;
-MSG_REMOVE
-Fjern
-; Remove
-;
-MSG_RESUME
-Fortsett
-; Resume
-;
-MSG_OVERWRITE
-Skriv over
-; Overwrite
-;
-MSG_ABORT
-Stopp!
-; Abort
-;
-MSG_ALREADY_EXISTS_WINDOW_TITLE
-Innkommene fil eksisterer allerede
-; Incoming File already exists
-;
-MSG_CHOOSE_DOWNLOAD_PATH
-Velg stinavn for å lagre dine filer til.
-; Choose a path to save your downloads to.
-;
-MSG_ACCEPT
-Godta
-; Accept
-;
-MSG_CANCEL_TRANSFER
-Avbryt
-; Cancel
-;
-MSG_PREFS_NICK_COMPLETION_STYLE
-Nicknavn sluttføringsstil
-; Nick Completion Style
-;
-MSG_PREFS_NICK_COMPLETION_STYLE_HELP
-AmIRC sluttføringsstil: Et kolon og et åpenrom legges til etter brukers nicknavn hvis det brukes på begynnelsen av en linje, eller bare et åpenrom bak hvis brukt ellers i linjen. mIRC \
-sluttføringsstil: Verken kolon eller åpenrom brukes, kun nicknavn vises.
-; AmIRC style puts a colon and a space after users nicks if used at the beginning of a line, or just a space afterwards anywhere else. mIRC style: No colon or spaces are used, only the nick is displayed.
-;
-MSG_ASK
-Spør
-; Ask
-;
-MSG_PREFS_AUTO_REJOIN
-Re-entre kanaler automatisk ved kick.
-; Auto-rejoin channels when kicked.
-;
-MSG_PREFS_AUTO_OPEN_TAB
-Auto-åpne private spørre-tab'er ved beskjeder.
-; Auto-open private query tabs when messaged.
-;
-MSG_PREFS_MAX_LINES_BUFFER
-Maksimalt antall linjer å lagre i buffer.
-; Maximum number of lines to keep in buffer.
-;
-MSG_PREFS_LOG_CHANNELS
-Logge kanaler
-; Log channels
-;
-MSG_PREFS_LOG_PRIVATE
-Logge private samtaler
-; Log private chats
-;
-MSG_DEFAULT_KICK_MESSAGE
-Standard beskjed ved kick
-; Default kick message
-;
-MSG_DEFAULT_BAN_MESSAGE
-Standard beskjed ved ban
-; Default ban message
-;
-MSG_QUIT_MESSAGE
-Avslutningsbeskjed
-; Quit message
-;
-MSG_PART_MESSAGE
-Avslutningsbeskjed for kanal
-; Part message
-;
-MSG_REQUEST_WHOIS
-Etterspør whois-informasjon
-; Request whois information
-;
-MSG_OPEN_TAB
-Åpne privat spørre-tab
-; Open private query tab
-;
-MSG_DOUBLECLICK_GROUP_FRAME_TITLE
-Dobbelklikk-hendelser for nickliste
-; Nicklist doubleclick actions
-;
-MSG_CUSTOM_TIMESTAMPS
-Lag ditt eget tidsstempel! Bruk %h for timer, %m for minutter og %s for sekunder. Dette anvendes for å se tidspunktet for en spesiell hendelse (som f.eks. en bruker som entret eller snakket).
-; Customise your timestamps! use these codes: %h for the hour, %m for the minute, and %s for the second. This is useful to see what time an event happened (such as a user joining, or speaking).
-;
-MSG_TIMESTAMP_FORMAT
-Format for tidsstempel
-; Timestamp Format
-;
-MSG_HIGHLIGHT
-Ord som skal høylyses
-; Words to Highlight
-;
-MSG_QUIT_REQUESTER
-Avslutte programmet?
-; Quit Program?
-;
-MSG_FILE_TO_SEND
-Fil å sende
-; File to send
-;
-MSG_WINDOW_TITLE_DCC_INCOMING
-Innkommende filoverføringer...
-; Incoming File Transfers...
-;
-MSG_WINDOW_TITLE_DCC_OUTGOING
-Utgående filoverføringer...
-; Outgoing File Transfers...
-;
-MSG_HIGHLIGHT_TITLE
-Høylyse
-; Highlight
-;
-MSG_PREFS_USE_TIMESTAMPS
-Bruk tidsstempel
-; Use timestamps
-;
-MSG_TIMESTAMPS_TITLE
-Tidsstempler
-; Timestamps
-;
-MSG_TEXT_EDITOR_HELP
-Denne teksteditoren brukes når du editerer dine "Utføre ved oppstart"-handlinger (fra Servervalg-vinduet).
-; This text editor is used when you edit your "Perform on Connect" scripts (from the Server Selection window).
-;
-MSG_TEXT_EDITOR
-Teksteditor
-; Text Editor
-;
-MSG_WEB_BROWSER_LABEL
-Nettleser
-; Web Browser
-;
-MSG_WEB_BROWSER_HELP
-Velg en nettleser til bruk for WookieChat sin "URL-fanger". Ved å dobbelklikke en adresse der vil siden lastes i den valgte nettleseren.
-; Choose a web browser to use with WookieChat's "URL Grabber" Window. Double clicking an address there will load in this chosen browser.
-;
-MSG_WEB_BROWSER_REQUESTER
-Velg en nettleser
-; Choose a browser
-;
-MSG_SAVE
-Lagre
-; Save
-;
-MSG_USE
-Bruk
-; Use
-;
-MSG_CANCEL
-Avbryt
-; Cancel
-;
-MSG_DCC_AUTO_ACCEPT
-Auto-godta innkommende DCC filoverføringer
-; Auto accept incoming DCC File Transfers
-;
-MSG_DCC_ACTION
-Aksjon hvis filen eksisterer
-; Action to take if file exists
-;
-MSG_DCC_LOCAL_ADDRESS
-Bruk lokale adresser for DCC-forbindelser
-; Use local address for DCC connections
-;
-MSG_PORT_RANGE_START
-DCC portområde fra
-; DCC Port range from
-;
-MSG_PORT_RANGE_END
-til
-; to
-;
-MSG_PORT_RANGE_START_HELP
-Dette er starten på et portområde for innkommende DCC-forbindelser. Dette er konfigurerbart slik at du kan velge hvilke porter du vil bruke, og åpne opp en eventuell brannmur du har.
-; This is the start of the port range for incoming DCC connections. This is configurable so you can choose which ports to use and open up on any firewall you might have.
-;
-MSG_PORT_RANGE_END_HELP
-Dette er slutten på et portområde for innkommende DCC-forbindelser. Dette er konfigurerbart slik at du kan velge hvilke porter du vil bruke, og åpne opp en eventuell brannmur du har.
-; This is the end of the port range for incoming DCC connections. This is configurable so you can choose which ports to use and open up on any firewall you might have.
-;
-MSG_NEVER
-Aldri
-; Never
-;
-MSG_ALWAYS
-Alltid
-; Always
-;
-MSG_ONLY_WHEN_WINDOW_INACTIVE
-Bare når vindu er inaktivt
-; Only when window is inactive
-;
-MSG_SOUND_SAMPLE_TAB_OPEN
-Lyd å spille når tab åpner
-; Sample to play when a tab opens
-;
-MSG_PLAY_SAMPLE
-Spill lyd
-; Play sample
-;
-MSG_CHOOSE_FILENAME
-Velg et filnavn
-; Choose a filename
-;
-MSG_SOUND_SAMPLE_HIGHLIGHT
-Lyd å spille ved høylysing
-; Sample to play on highlight
-;
-MSG_SAMPLES_PATH
-Stinavn for lyder ved CTCP SOUND
-; Samples Path for CTCP SOUND
-;
-MSG_SAMPLES_PATH_HELP
-Når du mottar en forespørsel CTCP SOUND, vil WookieChat\nse etter lyder i denne mappen.
-; When you recieve a CTCP SOUND request, WookieChat will\nlook in this path for sound samples.
-;
-MSG_CHOOSE_DIR
-Velg en mappe
-; Choose a directory
-;
-MSG_LOGFILE_RELOADING_LABEL
-Antall linjer å vise fra slutten av loggfiler når man åpner en tab\n(Sett 0 for å la denne muligheten være).
-; Num of lines to display from the end of logfiles when opening a tab\n(Put 0 to disable this feature).
-;
-MSG_CHANNEL
-Kanal
-; Channel
-;
-MSG_CHANNEL_LOG_RELOAD_HELP
-Antall linjer å laste på nytt fra slutten av loggfiler når du entrer en kanal.
-; How many lines to reload from the end of log files when you join a channel.
-;
-MSG_PRIVATE
-Privat tab
-; Private tab
-;
-MSG_PRIVATE_LOG_RELOAD_HELP
-Antall linjer å laste på nytt fra slutten av loggfiler når du åpner en privat spørretab mot en annen bruker.
-; How many lines to reload from the end of log files when you open a private query tab to another user.
-;
-MSG_LOG_RELOADING_TITLE
-Laster logg på nytt
-; Log Reloading
-;
-MSG_ALIAS_HELP
-Skriv inn et alias-navn, deretter kommandoen du vil som skal brukes\nF.eks. om du legger til denne linjen\n/j /join\n..da vil "/j"-kommandoen bli erstattet med "/join".
-; Enter an alias name, then the command you want it to use\nE.g. With this line added to the alias list..\n/j /join\n..then the "/j" command will be replaced with "/join".
-;
-MSG_BUTTON_ADD_ALIAS
-Legg til alias >>
-; Add alias >>
-;
-MSG_BUTTON_REMOVE_ALIAS
-Fjern
-; Remove
-;
-MSG_SETTINGS_WINDOW_TITLE
-Innstillinger
-; Settings
-;
-MSG_COLOR_SETTINGS_WINDOW_TITLE
-Fargeinnstillinger...
-; Color settings...
-;
-MSG_MENU_SELECT_SERVER
-Velg server...
-; Select server...
-;
-MSG_MENU_CLOSE_TAB
-Lukk aktiv tab
-; Close current tab
-;
-MSG_MENU_NEW_SERVER_TAB
-Ny servertab
-; New server tab
-;
-MSG_MENU_OPEN_GLOBAL_TAB
-Åpne global spørretab
-; Open global query tab
-;
-MSG_MENU_QUIT
-Avslutte...
-; Quit...
-;
-MSG_MENU_SAVE_BUFFER
-Lagre buffer som...
-; Save buffer as...
-;
-MSG_MENU_MAIN_TITLE
-Fil
-; Main
-;
-MSG_MENU_MAIN_SETTINGS
-Innstillinger...
-; Main settings...
-;
-MSG_MENU_MULITCOLUMN_DISPLAY
-Multikolonne snakke-visning
-; Multi-column chat display
-;
-MSG_URL_GRABBER
-URL-fanger...
-; URL Grabber...
-;
-MSG_SERVER_NAME
-Servernavn
-; Server Name
-;
-MSG_PORT_NUMBER
-Portnummer
-; Port Number
-;
-MSG_SERVER_PASSWORD
-Serverpassord
-; Server Password
-;
-MSG_WINDOW_EDIT_SERVER
-Editere server
-; Edit Server
-;
-MSG_GROUP_NAME
-Gruppenavn
-; Group Name
-;
-MSG_PERFORM_ON_CONNECT
-Utfør ved forbindelse...
-; Perform on connect...
-;
-MSG_EDIT_GROUP
-Editere gruppe...
-; Edit Group...
-;
-MSG_REAL_NAME
-Virkelig navn
-; Real Name
-;
-MSG_USER_NAME
-Brukernavn
-; User Name
-;
-MSG_NEW_SERVER
-Ny server
-; New Server
-;
-MSG_NEW_GROUP
-Ny gruppe
-; New Group
-;
-MSG_EDIT_ENTRY
-Editere valg...
-; Edit Entry...
-;
-MSG_DELETE_ENTRY
-Ødelegg valg
-; Delete Entry
-;
-MSG_CONNECT_TO_SERVER
-Forbinde til server
-; Connect to server
-;
-MSG_CONNECT_TO_SERVER_IN_NEW_TAB
-Forbinde i ny tab
-; Connect in new tab
-;
-MSG_WINDOW_SELECT_SERVER
-Velg server
-; Select server
-;
-MSG_UNBAN
-Uban
-; Unban
-;
-MSG_REFRESH_BAN_LIST
-Oppfrisk banliste
-; Refresh banlist
-;
-MSG_UNABLE_TO_CREATE_APP
-Kan ikke åpne applikasjon\n
-; Unable to create app\n
-;
-MSG_NOT_CONNECTED
-Ingen forbindelse til server.
-; Not connected to a server.
-;
-MSG_NOT_CONNECTED_TO_USER
-Ingen forbindelse til bruker.
-; Not connected to a user.
-;
-MSG_NO_BROWSER_SELECTED
-Vennligst gå til "Innstillinger" - vinduet, og velg en nettleser for WookieChat.
-; Please go to the "Main Settings" window, and choose a browser for WookieChat to open web sites with.
-;
-MSG_ERROR_MISSING_MCC_BETTERSTRING
-Vennligst last ned og installer MUI-klassen BetterString.mcc.
-; Please download and install the BetterString.mcc MUI Class.
-;
-MSG_ERROR_MISSING_MCC_NLIST
-Vennligst last ned og installer MUI-klassen NList.mcc.
-; Please download and install the NList.mcc MUI Class.
-;
-MSG_ERROR_MISSING_MCC_NLISTVIEW
-Vennligst last ned og installer MUI-klassen NListview.mcc.
-; Please download and install the NListview.mcc MUI Class.
-;
-MSG_ERROR_MISSING
-Disse manglende klassene kan lastes ned fra http://www.aminet.net/ eller http://os4depot.net/. Les WookieChat readme-filene for direkte linker til disse klassene\n
-; These missing classes can be downloaded from http://www.aminet.net/ or http://os4depot.net. Check the WookieChat readme for direct links to these classes\n
-;
-MSG_SAVING_BUFFER_TO
-Lagrer buffer til fil:
-; Saving buffer to file:
-;
-MSG_CANCELLED
-Avbrutt
-; Cancelled
-;
-MSG_DCC_SEND_MESSAGE
-Vennligst velg en fil som skal sendes, og et nicknavn som skal tilbys filen.
-; Please select a file to send, and a nick to offer the file to.
-;
-MSG_DCC_SEND_MESSAGE2
-Vennligst velg en fil å sende
-; Please select a file to send
-;
-MSG_DCC_SEND_MESSAGE3
-Vennligst velg et nicknavn å tilby filen til.
-; Please select a nick to offer the file to.
-;
-MSG_WINDOW_TITLE_BANMASKS
-Liste over banmasker for kanal
-; List of banmasks for channel
-;
-MSG_REMOVING_BAN
-Fjerner banmaske
-; Removing banmask
-;
-MSG_TRANSFERRING
-Overfører
-; Transferring
-;
-MSG_SYNTAX
-Syntaks
-; Syntax
-;
-MSG_STATUS
-Status
-; Status
-;
-MSG_SENT
-Sendt
-; Amount sent
-;
-MSG_FILE_SIZE
-Filstørrelse
-; Size
-;
-MSG_TIME_LEFT
-Gjenværende tid
-; Time Left
-;
-MSG_RECIEVED
-Mottatt
-; Recieved
-;
-MSG_REMOVING_BAN_FOR_CHANNEL
-for kanal\x20
-; for channel\x20
-;
-MSG_LOGGING_STARTED_AT
-Logging startet\x20
-; Logging started at\x20
-;
-MSG_HAS_BEEN_INVITED_TO_CHANNEL
-har blitt invitert til kanal\x20
-; has been invited to channel\x20
-;
-MSG_INVITED_BY_USER
-av bruker
-; by user
-;
-MSG_YOU_HAVE_INVITED
-du har invitert\x20
-; you have invited\x20
-;
-MSG_TO_CHANNEL
-til kanal\x20
-; to channel\x20
-;
-MSG_TOPIC_SET_BY
-satt av\x20
-; set by\x20
-;
-MSG_TOPIC_DATE
-på\x20
-; on\x20
-;
-MSG_NICK_IN_USE_RETRYING_WITH
-i bruk, prøver igjen med\x20
-; in use, retrying with\x20
-;
-MSG_JOIN
-ankommer
-; Join
-;
-MSG_PART
-forlater
-; Part
-;
-MSG_QUIT
-Avslutte
-; Quit
-;
-MSG_USER_WAS_KICKED_BY
-ble kicket av
-; was kicked by
-;
-MSG_YOU_WERE_KICKED_BY
-Du ble kicket av
-; You were kicked by
-;
-MSG_IS_NOW_KNOWN_AS
-er nå kjent som\x20
-; is now known as\x20
-;
-MSG_PLAYS
-spiller
-; plays
-;
-MSG_ATTEMPTING_TO_RESUME
-Forsøker å fortsette
-; Attempting to resume
-;
-MSG_ATTEMPT_TO_ACCEPT
-Forsøker å godta forespørsel om DCC CHAT
-; Attempting to accept DCC CHAT request
-;
-MSG_OFFERED_FROM
-tilbudt fra
-; offered from
-;
-MSG_TOPIC_CHANGED
-forandrer overskrift til
-; changes the topic to
-;
-MSG_FINISHED_SENDING
-Sluttført sending av\x20
-; Finished sending\x20
-;
-MSG_FINISHED_RECIEVING
-Sluttført mottak av
-; Finished recieving
-;
-MSG_CONNECTED_TO
-tilkoblet til\x20
-; connected to\x20
-;
-MSG_AT_AN_AVERAGE_SPEED_OF
-Gjennomsnittlig fart
-; Average speed:
-;
-MSG_DCC_COMPLETE
-Ferdig
-; Complete
-;
-MSG_DCC_INCOMPLETE
-Uferdig
-; Incomplete
-;
-MSG_DCC_CANCELLED
-Avbrutt
-; Cancelled
-;
-MSG_CONNECTED
-Tilkoblet
-; Connected
-;
-MSG_DISCONNECTED
-Avkoblet
-; Disconnected
-;
-MSG_DCC_FAILED
-Feilet
-; Failed
-;
-MSG_CREATE_FILE_FAILED
-Kan ikke skape ny fil for innkommende overførsel
-; unable to create new file for incoming transfer
-;
-MSG_OPEN_FILE_FOR_DCC_SEND_FAILED
-Kan ikke åpne forespurt fil
-; unable to open requested file
-;
-MSG_DCC_STARTED_FILE_TRANSFER
-Startet filoverførsel:
-; Started file transfer:
-;
-MSG_UNABLE_TO_CONNECT
-Kan ikke opprette forbindelse for DCC CHAT
-; Unable to establish DCC CHAT Connection
-;
-MSG_CONNECTED_DCC_CHAT
-Forbindelse opprettet for DCC CHAT
-; DCC CHAT Connection Established
-;
-MSG_TRANSFER_TIME
-Overføringstid:
-; Transfer time:
-;
-MSG_FILE_DOESNT_EXIST
-Feil, filen eksisterer ikke
-; Error, file doesnt exist
-;
-MSG_OFFERING_FILE
-Tilbyr fil
-; Offering file
-;
-MSG_OFFERED_ON
-på
-; on
-;
-MSG_OFFERED_TO
-til
-; to
-;
-MSG_DCC_CHAT_REQUEST
-Sender forespørsel om DCC CHAT
-; Sending DCC CHAT request
-;
-MSG_COLOUR_SETTINGS_LOAD_ERROR
-Kan ikke hente fargeinnstillinger, bruker standard innstillinger. For å unngå å se denne beskjeden igjen, lag en mappe kallt 'Colours' inne i WookieChat sin mappe, åpne og avslutte deretter \
-Fargeinnstillinger-vinduet neste gang du kjører WookieChat.
-; Unable to load colour settings, using default settings. To avoid seeing this message again, create a drawer called 'Colours' inside WookieChat's drawer, then open and close the Colour Settings window the next time you run WookieChat.
-;
-MSG_COLOUR_SETTINGS_SAVE_ERROR
-Kan ikke lagre dine fargeinnstillinger. Vær sikker på at du har en mappe kallt 'Colours" inne i WookieChat sin mappe, slik at dine fargepreferanser blir lagret.
-; Unable to save your colour settings. Make sure you have a drawer called 'Colours' inside WookieChat's drawer, for it to save your colour preferences to.
-;
-MSG_UNABLE_TO_OPEN_TCPIP_STACK
-Vennligst start en TCP/IP-stakk og prøv igjen.
-; Please start a TCP/IP stack and try again.
-;
-MSG_CONNECT_TO_A_NEW_SERVER
-Oppretter forbindelse til ny server
-; Connecting to a new server
-;
-MSG_ATTEMPTING_TO_CONNECT_TO_SERVER
-Forsøker å forbinde til\x20
-; Attempting to connect to\x20
-;
-MSG_CONNECTING
-Oppretter forbindelse
-; Connecting
-;
-MSG_FILE_ALREADY_EXISTS
-eksisterer allerede!
-; already exists!
-;
-MSG_INCOMING_FILE_SIZE
-Størrelse på eksisterende fil
-; Size of existing file
-;
-MSG_FILE_SIZE_OFFERED
-Størrelse på tilbudt fil
-; Size of file being offered
-;
-MSG_TO
-til
-; to
-;
-MSG_DCC_WAITING
-Venter
-; Waiting
-;
-MSG_UPDATING_NAMES_LIST
-Oppdaterer navneliste for kanal
-; Updating Names list for channel
-;
-MSG_USERS_IN_CHANNEL
-Brukere i kanal
-; Users in channel
-;
-MSG_AUTO_REJOINING
-Auto-entrer\x20
-; Auto-rejoining\x20
-;
-MSG_FROM
-fra
-; from
-;
-MSG_SETS_MODE
-setter modus
-; sets mode
-;
-MSG_PLAYING
-spiller
-; playing
-;
-MSG_SENDING_CTCP
-Sender CTCP
-; Sending CTCP
-;
-MSG_WINDOWS_MENU
-Vindu
-; Windows
-;
-MSG_FILENAME
-Filnavn
-; Filename
-;
-MSG_NICKNAMES
-Nicknavn
-; Nick Names
-;
-MSG_OPENING_BRACKET
-[
-; [
-;
-MSG_CLOSING_BRACKET
-]
-; ]
-;
-MSG_NICKLIST_OPTIONS
-Nicklistevalg
-; Nicklist Options
-;
-MSG_WHOIS_MENU_ITEM
-Whois
-; Whois
-;
-MSG_QUERY_MENU_ITEM
-Åpne spørring
-; Open Query
-;
-MSG_GLOBAL_QUERY_MENU_ITEM
-Åpne global spørring
-; Open Global Query
-;
-MSG_CTCP_MENU_TITLE
-CTCP
-; CTCP
-;
-MSG_PING_MENU_ITEM
-Ping
-; Ping
-;
-MSG_VERSION_MENU_ITEM
-Version
-; Version
-;
-MSG_TIME_MENU_ITEM
-Time
-; Time
-;
-MSG_DIRECT_CONNECTION_MENU_TITLE
-Direkte forbindelse
-; Direct Connection
-;
-MSG_SEND_FILE_MENU_ITEM
-Send fil
-; Send file
-;
-MSG_CHAT_MENU_ITEM
-Chat
-; Chat
-;
-MSG_CONTROL_MENU_TITLE
-Kontroll
-; Control
-;
-MSG_OP_MENU_ITEM
-Op
-; Op
-;
-MSG_DEOP_MENU_ITEM
-DeOp
-; DeOp
-;
-MSG_HALFOP_MENU_ITEM
-HalfOp
-; HalfOp
-;
-MSG_DEHALFOP_MENU_ITEM
-DeHalfOp
-; DeHalfOp
-;
-MSG_VOICE_MENU_ITEM
-Voice
-; Voice
-;
-MSG_DEVOICE_MENU_ITEM
-DeVoice
-; DeVoice
-;
-MSG_KICK_MENU_ITEM
-Kick
-; Kick
-;
-MSG_BAN_MENU_ITEM
-Ban
-; Ban
-;
-MSG_SENDER
-Avsender
-; Sender
-;
-MSG_RECIEVER
-Mottaker
-; Reciever
-;
-MSG_CHANNEL_NAME_HELP
-<kanalnavn>
-; <channelname>
-;
-MSG_NICK_HELP
-<nick>
-; <nick>
-;
-MSG_COMMAND_NAME_HELP
-<kommando>
-; <command>
-;
-MSG_SOUND_SAMPLE_NAME_HELP
-<lyd_sample_navn>
-; <sound_sample_name>
-;
-MSG_SOUND_BAN_MASK_HELP
-<ban_maske>
-; <ban_mask>
-;
-MSG_MESSAGE_HELP
-<message>
-; <message>
-;
-MSG_NEW_NICK_HELP
-<nytt_nick>
-; <new_nick>
-;
-MSG_TOPIC_HELP
-<ny_overskrift>
-; <new_topic>
-;
-MSG_SERVERNAME_HELP
-<servernavn>
-; <servername>
-;
-MSG_PORT_HELP
-<port>
-; <port>
-;
-MSG_SWEAR_FILTER
-BanneFilter
-; SwearFilter
-;
-MSG_ENABLED
-Aktivert
-; Enabled
-;
-MSG_DISABLED
-Deaktivert
-; Disabled
-;
-MSG_NICK_OR_CHANNEL_HELP
-<nick eller kanal>
-; <nick or channel>
-;
-MSG_FILENAME_HELP
-<filnavn>
-; <filename>
-;
-MSG_ACTION_HELP
-<aksjon>
-; <action>
-;
-MSG_USERS
-brukere
-; users
-;
-MSG_HIGHLIGHT_STRINGGADGET_HELP_BUBBLE
-Skriv inn ord som WookieChat skal se etter. Tekslinjene med de aktuelle ordene vil bli highlightet. Skriv inn ordene du vil ha highlightet, separert med åpenrom.
-; Enter words here for WookieChat to watch for. Lines of text will appear in the highlight colour if one of these words is found. Enter the words you want to highlight, separated by spaces.
-;
-MSG_RESUME_FILE
-Fortsett filen
-; RESUME file
-;
-MSG_PREFS_SERVERS_GROUP
-Servere
-; Servers
-;
-MSG_MAX_RECONNECT_RETRIES
-Maksimalt antall reoppkoblingsforsøk etter ikke etterspurt utkobling
-; Maximum attempts to reconnect after non-requested disconnection
-;
-MSG_RECONNECT_DELAY
-Pause (i sekunder) mellom reoppkoblingsforsøk
-; Delay (in seconds) in between reconnection attempts
-;
-MSG_RETRY
-Gjenta #
-; Retry #
-;
-MSG_IGNORE_MASK
-Ignorer-maske
-; Ignore Mask
-;
-MSG_IGNORE_TEXT
-Tekst
-; Text
-;
-MSG_SERVERS_WINDOW_SERVERS
-Servere
-; Servers
-;
-MSG_SERVERS_WINDOW_PORT
-Port
-; Port
-;
-MSG_SERVERS_WINDOW_AUTOCONNECT
-Auto-oppkoble
-; Auto-Connect
-;
-MSG_SERVERS_WINDOW_PASSWORD
-Passord
-; Password
-;
-MSG_IGNORE_LONG_DETAILED_HELP
-Hostmerkene ser slik ut: nick!userid@hostname\nfor eks. «Join» jahc (~jahc00@jahc.Amigaworld.Net)\njahc er nicket, jahc00 er brukerens id, og jahc.Amigaworld.Net er hostnavnet\nFor å overse denne \
-personen, kan du sette en ignoremaske som dette: jahc*!*@*\nDette vil overse alle som har et nick som starter med "jahc".\nBruken av wildcards gjør denne ignoremasken veldig kraftfull.\nTing som dette \
-er mulig: guru*editatio*!*userid@*.se\neller hvis du vil gjøre det enkelt, kan du bare bruke for eksempel: roberto*
-; Hostmarks look like this: nick!userid@hostname\ni.e.«Join» jahc (~jahc00@jahc.Amigaworld.Net)\njahc is the nick, jahc00 is the userid, and jahc.Amigaworld.Net is the hostname\nTo ignore this person, you could insert an ignore entry of: jahc*!*@*\nThis will ignore all people with a nick starting with the letters jahc.\nThe use of wildcards makes this ignore command very powerful.\nThings like this are possible: guru*editatio*!*userid@*.se\nor if you want to keep it simple, you could just use: jahc*
-;
-MSG_IGNORE_ENTRY
-Ignoremaske:
-; Ignore Entry:
-;
-MSG_IGNORE_EVENTS
-Hendelser å overse:
-; Which events to ignore:
-;
-MSG_IGNORE_ADD
-Legge til
-; Add
-;
-MSG_IGNORE_EDIT
-Editere
-; Edit
-;
-MSG_IGNORE_REMOVE
-Fjerne
-; Remove
-;
-MSG_AUTO_CONNECT_OPTION
-Koble automatisk til her når WookieChat starter
-; Automatically connect here when WookieChat is started
-;
-MSG_DISPLAY_SERVER_SELECTION_WINDOW
-Vis servervindu ved oppstart:
-; Display Server Window upon startup:
-;
-MSG_UNABLE_TO_RECONNECT_TO_SERVER
-Kunne ikke koble opp, gir opp!
-; Unable to connect, giving up!
-;
-MSG_COMMAND_ALIAS_WINDOW_COLUMN1_TITLE
-Alias
-; Alias
-;
-MSG_COMMAND_ALIAS_WINDOW_COLUMN2_TITLE
-Kommando
-; Command
-;
-MSG_EDIT_ALIAS
-Edit...
-; Edit...
-;
-MSG_EDIT_ALIAS_CHANGE
-Forandre
-; Change
-;
-MSG_EDIT_ALIAS_CANCEL
-Avbryt
-; Cancel
-;
-MSG_MENU_ITEM_CLONE_DETECTION
-Klonedetektering
-; Clone detection
-;
-MSG_CLONES
-Kloner
-; Clones
-;
-MSG_CLONE_DETECTED
-Kloner detektert
-; Detected clones from
-;
-MSG_SAVE_SETTINGS
-Lagre innstillinger
-; Save settings
-;
-MSG_SPLIT_UP_LOGS_PREFS_LABEL
-Splitt opp loggfiler i mindre biter
-; Split up logfiles into smaller chunks
-;
-MSG_LOGSIZE_PREFS_LABEL
-Hvis denne er aktiv, velg størrelse på loggfil (i kilobytes)
-; If the above is enabled, choose a log file size (in kbytes)
-;
-MSG_SPLIT_UP_LOGS_PREFS_HELP
-Når en tab åpnes, vil loggfilen bli undersøkt. Hvis den er over en viss størrelse, vil den bli omdøpt med datoen lagt til slutten, og WookieChat vil fortsette å logge til en ny loggfil. Dette er \
-implementert for effektivitetsgrunner. Det kan ta noen sekunder for å reloade store loggdiler som er noen MB i størrelse.
-; When a tab is opened, the logfile will be examined. If it is over a certain size, then it will be renamed with the date appended to the end, and WookieChat will resume logging in a new empty logfile. This is implemented for performance reasons. It can take a few seconds to reload large logfiles that are a few MB in size.
-;
-MSG_NO_SERVER_TABS_PREFS
-Hindre server tabs
-; Disable server tabs
-;
-MSG_HIDE_WINDOW
-Gjem
-; Hide
-;
-MSG_PREFS_DCC_ADDRESS
-Spesifisere DCC adresse
-; Specify DCC address?
-;
-MSG_PREFS_DCC_ADDRESS_HELP
-WookieChat prøver å oppnå din adresse automatisk for utgående DCC forbindelser. Hvis denne adressen ikke er korrekt, kan du spesifisere den her.
-; WookieChat attempts to obtain your address automatically for outgoing DCC connections. If this address is incorrect, you can specify it here.
-;
-MSG_PREFS_TOGGLE_BUTTON_TABS
-Bruk knappestil tabber
-; Use button-style tabs
-;
-MSG_PREFS_TOGGLE_BUTTON_TABS_HELP
-Skru av denne muligheten for å bruke Listview-stil tabber  (listview er bedre når du har mange tabber åpne, så som 20 eller 30).
-; Turn off this option to use Listview-style tabs (the listview is better having a large amount of tabs open, such as 20 or 30).
-;
-MSG_USER_HAS_QUIT_IRC
-har avsluttet IRC...
-; has left IRC..
-;
-MSG_USER_HAS_RETURNED_TO_IRC
-har returnert til IRC...
-; has returned to IRC...
-;
-MSG_CHECKBOX_ENABLE_GRAPHICAL_SMILEYS
-Tillate grafiske smileys
-; Enable Graphical Smileys
-;
-MSG_BACKGROUND_COLOUR_FOR_GRAPHICAL_SMILEYS
-Bakgrunnsfarge for smileys
-; Background Colour for Smileys
-;
-MSG_GRAPHICAL_SMILEY_SHORTHELP
-Dette vil vise vanlige ASCII "smilefjes" som :) og :D med grafiske bilder.
-; This option will display common ASCII "smiley faces" such as :) and :D with graphical pictures.
-;
-MSG_CHECKBOX_EXTERNAL_PLAYER_FOR_CTCP_SOUND
-Bruk ekstern avspiller for CTCP SOUND
-; Use External Replayer For CTCP SOUND
-;
-MSG_EXTERNAL_PLAYER_FOR_CTCP_SOUND
-Lydavspiller
-; Sound Player
-;
-MSG_DOWNLOAD_PATH
-Nedlastingssti
-; Download Path:
-;
-MSG_LABEL_LISTVIEW_TABS_WEIGHT
-Listview-stil tabs størrelse/vekt
-; Listview tabs vertical weight
-;
-MSG_GROUP_FRAME_TITLE_TAB_PREFERENCES
-Innstillinger
-; Tab Preferences
-;
-MSG_PREFS_HELP_BUBBLE_LISTVIEW_TABS_WEIGHT
-Hvis du ikke har knappestil tabs, kan du konfigurere størrelsen av "tabs listview".
-; If you have disabled button style tabs, you can configure the size of the "tabs listview".
-;
-MSG_PREFS_HELP_BUBBLE_NO_SERVER_TABS
-Du kan skru av dedikert tab for serverbeskjeder for å spare minne og verdifull skjermplass.
-; You can turn off keeping a dedicated tab for server messages to conserve memory and valuable screen space.
-;
-MSG_PREFS_GRAPHICAL_NICKLIST_CHECKBOX
-Tillate grafisk nickliste
-; Enable Graphical Nicklist
-;
-MSG_PREFS_GRAPHICAL_NICKLIST_HELP_BUBBLE
-Dette vil vise de tre mest vanlige brukermodusene for nicklister på en grafisk måte.\nOper (eller @) er grønn, halvoper (eller \% ) er blå, voicede brukere (eller +) er gul\n(Denne opsjonen avhenger \
-av datatyper r grafikk).
-; This will display the three most common nicklist usermodes in a graphical way.\nOperators (or @) are Green, Halfops (or \% ) are Blue, Voiced users (or +) are Yellow\n(This feature is reliant on picture datatypes).
-;
-MSG_PREFS_COLUMN_WIDTH_TIMESTAMP
-Kolonnebredde (i piksler) for tidsstempel
-; Column width (in Pixels) for timestamps
-;
-MSG_PREFS_COLUMN_WIDTH_MIDDLE_NICKS
-Kolonnebredde (i piksler) for den midtre/nick-kolonnen
-; Column width (in Pixels) for the middle/nicks column
-;
-MSG_PREFS_DIVIDER_BAR_SPACE
-Mengde av plass som omgir avdeler-baren for kolonner
-; Amount of space surrounding columns divider bar
-;
-MSG_PREFS_MULTICOLUMN_NICK_DISPLAY
-Fjerne < og > fra nick
-; Remove < and > from around nicks
-;
-MSG_GROUP_FRAME_TITLE_MULTICOLUMN_DISPLAY_SETTINGS
-Multikolonne visningsinnstillinger
-; Multicolumn display settings
-;
-MSG_MENU_MULTICOLUMNCHATDISPLAY_ITEM
-Multikolonne chat-visning
-; Multi-column chat display
-;
-MSG_GRAPHICAL_NICKLIST_HELP_BUBBLE
-Grafisk brukermodus nøkkel:\nGrønn = kanal-oper eller @\nBlå = halvoper eller \% \nGul = voice-brukere eller +
-; Graphical Usermodes Key:\nGreen = Channel Operators or @\nBlue = HalfOps or \% \nYellow = Voiced Users or +
-;
-MSG_GRAPHICAL_SMILEYS_PREVIEW
-Forhåndsvisning grafiske smileys
-; Graphical Smileys Preview
-;
-MSG_PREFS_NICKLIST_HORIZONTAL_WEIGHT
-Nicklistens horisontale vekt
-; Nicklist horizontal weight
-;
-MSG_PREFS_SMILEYS_THEME
-Smileys-tema
-; Smileys theme
-;
-MSG_SERVER_CHARSET
-Server karaktersett
-; Server charset
-;
-MSG_LOCAL_CHARSET
-Lokalt karaktersett
-; Local charset
-;
-MSG_COLUMN_TITLE_CHARSET
-Karaktersett
-; Charset
-;
-MSG_MENU_ITEM_RESCAN_AREXX_DIR
-<Reskanne scripts-mappe>
-; <Rescan scripts directory>
-;
-MSG_MENU_TITLE_AREXX
-Arexx
-; ARexx
-;
-MSG_ABOUT_WINDOW_TEXT
-\033cStolt sponsor: Guru Meditation\nForhandler av Amiga og Linux konsultatsjon\nhttp://gurumeditation.se/
-; \033cProudly sponsored by Guru Meditation\nAmiga reseller and Linux consulting\nhttp://gurumeditation.se/
-;
-MSG_ABOUT_WINDOW_TEXT_2
-ARexx-port:
-; AREXX port:
-;
-MSG_COLOUR_SETTINGS_LABEL_BACKGROUND
-Bakgrunn
-; Background
-;
-MSG_COLOUR_SETTINGS_LABEL_NICKLIST_BACKGROUND
-Bakgrunn for nickliste
-; Nicklist background
-;
-MSG_COLOUR_SETTINGS_LABEL_JOIN
-Entre
-; Join
-;
-MSG_COLOUR_SETTINGS_LABEL_PART
-Forlater
-; Part
-;
-MSG_COLOUR_SETTINGS_LABEL_QUIT
-Avslutter
-; Quit
-;
-MSG_COLOUR_SETTINGS_LABEL_MODES
-Moduser
-; Modes
-;
-MSG_COLOUR_SETTINGS_LABEL_CTCP
-CTCP
-; CTCP
-;
-MSG_COLOUR_SETTINGS_LABEL_ACTIONS
-Handlinger
-; Actions
-;
-MSG_COLOUR_SETTINGS_LABEL_NORMAL
-Normal
-; Normal
-;
-MSG_COLOUR_SETTINGS_LABEL_INFO
-Info
-; Info
-;
-MSG_COLOUR_SETTINGS_LABEL_OWN_TEXT
-Egen tekst
-; Own text
-;
-MSG_COLOUR_SETTINGS_LABEL_HIGHLIGHT
-Høylys
-; Highlight
-;
-MSG_COLOUR_SETTINGS_LABEL_INVITE
-Invitere
-; Invite
-;
-MSG_COLOUR_SETTINGS_LABEL_KICK
-Kicke
-; Kick
-;
-MSG_COLOUR_SETTINGS_LABEL_NICK_CHANGE
-Forandrer nick
-; Nick change
-;
-MSG_COLOUR_SETTINGS_LABEL_TOPIC
-Topic
-; Topic
-;
-MSG_COLOUR_SETTINGS_LABEL_WALLOPS
-Wall ops
-; Wall ops
-;
-MSG_COLOUR_SETTINGS_LABEL_NOTICES
-Notices
-; Notices
-;
-MSG_COLOUR_SETTINGS_LABEL_ACTIVITY
-Aktivitet
-; Activity
-;
-MSG_COLOUR_SETTINGS_LABEL_CHAT_ACTIVITY
-Chatteaktivitet
-; Chat activity
-;
-MSG_COLOUR_SETTINGS_LABEL_HIGHLIGHT_ACTIVITY
-Høylys aktivitet
-; Highlight activity
-;
-MSG_COLOUR_SETTINGS_LABEL_NICKLIST_TEXT
-Tekst nickliste
-; Nicklist text
-;
-MSG_COLOUR_SETTINGS_LABEL_TABS_BACKGROUND
-Tabs bakgrunn
-; Tabs background
-;
-MSG_COLOUR_SETTINGS_LABEL_TAGS_PEN
-Tabs penn
-; Tabs pen
-;
-MSG_SERVER
-Server
-; Server
-;
-MSG_APPLY
-Utføre
-; Apply
-;
-MSG_AUTO_JOIN_CHANNELS
-Automatisk joine disse kanalene
-; Automatically join these channels
-;
-MSG_NICK_REGISTER_PASSWORD
-Passord for nickregistrering
-; Nick registration password
-;
-MSG_NICK_REGISTER_PASSWORD_SHORT_HELP
-Denne muligheten vil bare virke med et registrert nick på et nettverk med en Nickserv service.
-; This option will only work with a registered nick on a network with a Nickserv service.
-;
-MSG_ACCEPT_CHANGES
-Utfør forandringer
-; Accept Changes
-;
-MSG_SOUND_SAMPLE_NEW_MSG
-Sample å spille når en ny PRIVMSG ankommer
-; Sample to play when a new PRIVMSG arrives
-;
-MSG_SOUND_SAMPLE_PLAY_OPTION
-Når private tabs ikke er valgt
-; When private tab is not selected
-;
-MSG_UNABLE_TO_RECONNECT_TO_SERVER_2
-Kan ikke koble til!
-; Unable to connect!
-;
-MSG_RENAME
-Nytt navn
-; Rename
-;
-MSG_ICONIFY_TEXT_NEW_MESSAGES_WAITING
-Nye beskjeder venter
-; New Messages Waiting
-;
-MSG_UPLOAD_PATH
-Upload sti
-; Upload Path
-;
-MSG_ONLY_WHEN_TAB_IS_INACTIVE
-Bare når tab er inaktiv
-; Only when Tab is inactive
-;
-MSG_INVITE
-Invite
-; Invite
-;
-MSG_EVENT
-Event
-; Event
-;
-MSG_USEWHEN
-Use when
-; Use when
-;
-MSG_AREXXSCRIPT
-Arexx Script
-; Arexx Script
-;
-MSG_TEXTTOSENDTOSCRIPT
-Text to send to script
-; Text to send to script
-;
-MSG_NAME
-Name
-; Name
-;
-MSG_COMMAND
-Command
-; Command
-;
-MSG_NICKLISTBUTTONS
-Nick List Buttons
-; Nick List Buttons
-;
-MSG_CHANGENICK
-Change nick
-; Change nick
-;
-MSG_ENTERNEWNICK
-Enter new nick
-; Enter new nick
-;
-MSG_ENTERNICKCANCEL
-Cancel
-; Cancel
-;
-MSG_ENTERNICKCHANGE
-Change
-; Change
-;
-MSG_CLIPBOARD
-Clipboard
-; Clipboard
-;
-MSG_HIDEJOINANDPARTMESSAGES
-Hide Join and Part messages in Channels
-; Hide Join and Part messages in Channels
-;
-MSG_HIDECHANELMODEBUTTONS
-Hide the channel mode buttons at the top of the display
-; Hide the channel mode buttons at the top of the display
-;
-MSG_CY_LISTVIEW
-Listview
-; Listview
-;
-MSG_CY_BUTTONS
-Buttons
-; Buttons
-;
-MSG_METHODOFDISPLAYINGTABS
-Method of displaying Tabs for channels and private messages
-; Method of displaying Tabs for channels and private messages
-;
-MSG_USERNAMEWHENTALK
-Display usermodes beside a persons nick when they talk
-; Display usermodes beside a persons nick when they talk
-;
-MSG_USERLIST_ADD
-Add
-; Add
-;
-MSG_USERLIST_REMOVE
-Remove
-; Remove
-;
-MSG_USERLIST_MOVEUP
-Move up
-; Move up
-;
-MSG_USERLIST_MOVEDOWN
-Move down
-; Move down
-;
-MSG_USERLIST_HELP
-\033lCodes:\n%s = selected nick, %h = hostname of the selected nick,\n%c = current channel, %n = your own nick
-; \033lCodes:\n%s = selected nick, %h = hostname of the selected nick,\n%c = current channel, %n = your own nick
-;
-MSG_USERLIST_HIDEALL
-Hide all from the display
-; Hide all from the display
-;
-MSG_EVENTPLAYHOLDER_HELP
-\033lCodes:\n%b = text being displayed in the window, %t = timestamp,\n%g = network name, %s = servername, %c = channel, %n = own nick, %m = nick
-; \033lCodes:\n%b = text being displayed in the window, %t = timestamp,\n%g = network name, %s = servername, %c = channel, %n = own nick, %m = nick
-;
-MSG_EVENTMODE
-Use when
-; Use when
-;
-MSG_EVENTMODE_HELP
-Choose when you want to execute this ARexx script
-; Choose when you want to execute this ARexx script
-;
-;
 ; All strings below are used and renamed properly,
 ; so after rework is complete all strings left
 ; on top of this line are obsolete
@@ -1821,7 +262,7 @@ MSG_MENU_SETTINGSMUI_ITEM
 MUI-innstillinger...
 ; MUI settings...
 ;
-MSG_MENU_MULITCOLUMNCHATDISPLAY_ITEM
+MSG_MENU_MULTICOLUMNCHATDISPLAY_ITEM
 Multikolonne snakke-visning
 ; Multi-column chat display
 ;
@@ -1929,6 +370,12 @@ MSG_MUICLASS_WINDOWIGNORELIST_TITLE
 Ignore-liste...
 ; Ignore List...
 ;
+MSG_MUICLASS_WINDOWIGNORELIST_INFO
+Hostmerkene ser slik ut: nick!userid@hostname\nfor eks. «Join» jahc (~jahc00@jahc.Amigaworld.Net)\njahc er nicket, jahc00 er brukerens id, og jahc.Amigaworld.Net er hostnavnet\nFor å overse denne \
+personen, kan du sette en ignoremaske som dette: jahc#?!#?@#?\nDette vil overse alle som har et nick som starter med "jahc".\nBruken av wildcards gjør denne ignoremasken veldig kraftfull.\nTing som \
+dette er mulig: guru#?editatio?!#?userid@#?.se\neller hvis du vil gjøre det enkelt, kan du bare bruke for eksempel: roberto#?
+; Hostmarks look like this: nick!userid@hostname\ni.e.«Join» jahc (~jahc00@jahc.Amigaworld.Net)\njahc is the nick, jahc00 is the userid, and jahc.Amigaworld.Net is the hostname\nTo ignore this person, you could insert an ignore entry of: jahc#?\nThis will ignore all people with a nick starting with the letters jahc.\nThe use of wildcards makes this ignore command very powerful.\nThings like this are possible: guru#?editatio?!#?userid@#?.se\nor if you want to keep it simple, you could just use: jahc#?
+;
 MSG_MUICLASS_WINDOWIGNORELIST_ADD_GAD
 Legge til
 ; Add
@@ -1976,12 +423,6 @@ DCC
 MSG_MUICLASS_WINDOWIGNORELIST_DCC_HELP
 /
 ; /
-;
-MSG_MUICLASS_WINDOWIGNORELIST_INFO
-Hostmerkene ser slik ut: nick!userid@hostname\nfor eks. «Join» jahc (~jahc00@jahc.Amigaworld.Net)\njahc er nicket, jahc00 er brukerens id, og jahc.Amigaworld.Net er hostnavnet\nFor å overse denne \
-personen, kan du sette en ignoremaske som dette: jahc#?!#?@#?\nDette vil overse alle som har et nick som starter med "jahc".\nBruken av wildcards gjør denne ignoremasken veldig kraftfull.\nTing som \
-dette er mulig: guru#?editatio?!#?userid@#?.se\neller hvis du vil gjøre det enkelt, kan du bare bruke for eksempel: roberto#?
-; Hostmarks look like this: nick!userid@hostname\ni.e.«Join» jahc (~jahc00@jahc.Amigaworld.Net)\njahc is the nick, jahc00 is the userid, and jahc.Amigaworld.Net is the hostname\nTo ignore this person, you could insert an ignore entry of: jahc#?\nThis will ignore all people with a nick starting with the letters jahc.\nThe use of wildcards makes this ignore command very powerful.\nThings like this are possible: guru#?editatio?!#?userid@#?.se\nor if you want to keep it simple, you could just use: jahc#?
 ;
 ;
 ; MUICLASS_IGNORELIST
@@ -2120,151 +561,187 @@ MSG_MUICLASS_SETTINGSCOLOR_CHOOSECOLOR_TITLE
 Velg farge
 ; Choose Color
 ;
-MSG_MUICLASS_SETTINGSCOLOR_CHANNELBG_GAD
-Bakgrunn:
-; Channel background:
+MSG_MUICLASS_SETTINGSCOLOR_CHANNELLIST_INFO
+Channel List
+; Channel List
 ;
-MSG_MUICLASS_SETTINGSCOLOR_CHANNELBG_HELP
+MSG_MUICLASS_SETTINGSCOLOR_CHANNELLISTBACKGROUND_GAD
+Background:
+; Background:
+;
+MSG_MUICLASS_SETTINGSCOLOR_CHANNELLISTBACKGROUND_HELP
 /
 ; /
 ;
-MSG_MUICLASS_SETTINGSCOLOR_NICKLISTBG_GAD
-Bakgrunn for nickliste:
-; Nicklist background:
+MSG_MUICLASS_SETTINGSCOLOR_CHANNELLISTTEXT_GAD
+No Activity:
+; No Activity:
 ;
-MSG_MUICLASS_SETTINGSCOLOR_NICKLISTBG_HELP
+MSG_MUICLASS_SETTINGSCOLOR_CHANNELLISTTEXT_HELP
 /
 ; /
 ;
-MSG_MUICLASS_SETTINGSCOLOR_TABLISTBG_GAD
-Tabs bakgrunn:
-; Tabs background:
+MSG_MUICLASS_SETTINGSCOLOR_CHANNELLISTUSER_GAD
+User Activity:
+; User Activity:
 ;
-MSG_MUICLASS_SETTINGSCOLOR_TABLISTBG_HELP
+MSG_MUICLASS_SETTINGSCOLOR_CHANNELLISTUSER_HELP
 /
 ; /
 ;
-MSG_MUICLASS_SETTINGSCOLOR_NORMAL_GAD
+MSG_MUICLASS_SETTINGSCOLOR_CHANNELLISTSERVER_GAD
+Server Activity:
+; Server Activity:
+;
+MSG_MUICLASS_SETTINGSCOLOR_CHANNELLISTSERVER_HELP
+/
+; /
+;
+MSG_MUICLASS_SETTINGSCOLOR_CHANNELLISTHIGHLIGHT_GAD
+Highlight Activity:
+; Highlight Activity:
+;
+MSG_MUICLASS_SETTINGSCOLOR_CHANNELLISTHIGHLIGHT_HELP
+/
+; /
+;
+MSG_MUICLASS_SETTINGSCOLOR_USERLIST_INFO
+Userlist
+; Userlist
+;
+MSG_MUICLASS_SETTINGSCOLOR_USERLISTBACKGROUND_GAD
+Background:
+; Background:
+;
+MSG_MUICLASS_SETTINGSCOLOR_USERLISTBACKGROUND_HELP
+/
+; /
+;
+MSG_MUICLASS_SETTINGSCOLOR_USERLISTTEXT_GAD
+Text:
+; Text:
+;
+MSG_MUICLASS_SETTINGSCOLOR_USERLISTTEXT_HELP
+/
+; /
+;
+MSG_MUICLASS_SETTINGSCOLOR_LOGLIST_INFO
+Channel Log
+; Channel Log
+;
+MSG_MUICLASS_SETTINGSCOLOR_LOGLISTBACKGROUND_GAD
+Background:
+; Background:
+;
+MSG_MUICLASS_SETTINGSCOLOR_LOGLISTBACKGROUND_HELP
+/
+; /
+;
+MSG_MUICLASS_SETTINGSCOLOR_LOGPRIVMSG_GAD
 Normal:
 ; Normal:
 ;
-MSG_MUICLASS_SETTINGSCOLOR_NORMAL_HELP
+MSG_MUICLASS_SETTINGSCOLOR_LOGPRIVMSG_HELP
 /
 ; /
 ;
-MSG_MUICLASS_SETTINGSCOLOR_NICKLISTTX_GAD
-Tekst nickliste:
-; Nicklist text:
-;
-MSG_MUICLASS_SETTINGSCOLOR_NICKLISTTX_HELP
-/
-; /
-;
-MSG_MUICLASS_SETTINGSCOLOR_TABSPEN_GAD
-Tabs penn:
-; Tabs pen:
-;
-MSG_MUICLASS_SETTINGSCOLOR_TABSPEN_HELP
-/
-; /
-;
-MSG_MUICLASS_SETTINGSCOLOR_JOIN_GAD
+MSG_MUICLASS_SETTINGSCOLOR_LOGJOIN_GAD
 Entre:
 ; Join:
 ;
-MSG_MUICLASS_SETTINGSCOLOR_JOIN_HELP
+MSG_MUICLASS_SETTINGSCOLOR_LOGJOIN_HELP
 /
 ; /
 ;
-MSG_MUICLASS_SETTINGSCOLOR_PART_GAD
+MSG_MUICLASS_SETTINGSCOLOR_LOGPART_GAD
 Forlater:
 ; Part:
 ;
-MSG_MUICLASS_SETTINGSCOLOR_PART_HELP
+MSG_MUICLASS_SETTINGSCOLOR_LOGPART_HELP
 /
 ; /
 ;
-MSG_MUICLASS_SETTINGSCOLOR_QUIT_GAD
+MSG_MUICLASS_SETTINGSCOLOR_LOGQUIT_GAD
 Avslutter:
 ; Quit:
 ;
-MSG_MUICLASS_SETTINGSCOLOR_QUIT_HELP
+MSG_MUICLASS_SETTINGSCOLOR_LOGQUIT_HELP
 /
 ; /
 ;
-MSG_MUICLASS_SETTINGSCOLOR_MODES_GAD
+MSG_MUICLASS_SETTINGSCOLOR_LOGMODE_GAD
 Moduser:
 ; Modes:
 ;
-MSG_MUICLASS_SETTINGSCOLOR_MODES_HELP
+MSG_MUICLASS_SETTINGSCOLOR_LOGMODE_HELP
 /
 ; /
 ;
-MSG_MUICLASS_SETTINGSCOLOR_CTCP_GAD
+MSG_MUICLASS_SETTINGSCOLOR_LOGCTCP_GAD
 CTCP:
 ; CTCP:
 ;
-MSG_MUICLASS_SETTINGSCOLOR_CTCP_HELP
+MSG_MUICLASS_SETTINGSCOLOR_LOGCTCP_HELP
 /
 ; /
 ;
-MSG_MUICLASS_SETTINGSCOLOR_ACTIONS_GAD
+MSG_MUICLASS_SETTINGSCOLOR_LOGACTION_GAD
 Handlinger:
 ; Actions:
 ;
-MSG_MUICLASS_SETTINGSCOLOR_ACTIONS_HELP
+MSG_MUICLASS_SETTINGSCOLOR_LOGACTION_HELP
 /
 ; /
 ;
-MSG_MUICLASS_SETTINGSCOLOR_INFO_GAD
+MSG_MUICLASS_SETTINGSCOLOR_LOGINFO_GAD
 Info:
 ; Info:
 ;
-MSG_MUICLASS_SETTINGSCOLOR_INFO_HELP
+MSG_MUICLASS_SETTINGSCOLOR_LOGINFO_HELP
 /
 ; /
 ;
-MSG_MUICLASS_SETTINGSCOLOR_OWNTEXT_GAD
-Egen tekst:
-; Own text:
+MSG_MUICLASS_SETTINGSCOLOR_LOGOWNTEXT_GAD
+Own:
+; Own:
 ;
-MSG_MUICLASS_SETTINGSCOLOR_OWNTEXT_HELP
+MSG_MUICLASS_SETTINGSCOLOR_LOGOWNTEXT_HELP
 /
 ; /
 ;
-MSG_MUICLASS_SETTINGSCOLOR_HIGHLIGHT_GAD
+MSG_MUICLASS_SETTINGSCOLOR_LOGHIGHLIGHT_GAD
 Høylys:
 ; Highlight:
 ;
-MSG_MUICLASS_SETTINGSCOLOR_HIGHLIGHT_HELP
+MSG_MUICLASS_SETTINGSCOLOR_LOGHIGHLIGHT_HELP
 /
 ; /
 ;
-MSG_MUICLASS_SETTINGSCOLOR_NOTICES_GAD
+MSG_MUICLASS_SETTINGSCOLOR_LOGNOTICE_GAD
 Notices:
 ; Notices:
 ;
-MSG_MUICLASS_SETTINGSCOLOR_NOTICES_HELP
+MSG_MUICLASS_SETTINGSCOLOR_LOGNOTICE_HELP
 /
 ; /
 ;
-MSG_MUICLASS_SETTINGSCOLOR_INVITE_GAD
+MSG_MUICLASS_SETTINGSCOLOR_LOGINVITE_GAD
 Invitere:
 ; Invite:
 ;
-MSG_MUICLASS_SETTINGSCOLOR_INVITE_HELP
+MSG_MUICLASS_SETTINGSCOLOR_LOGINVITE_HELP
 /
 ; /
 ;
-MSG_MUICLASS_SETTINGSCOLOR_KICK_GAD
+MSG_MUICLASS_SETTINGSCOLOR_LOGKICK_GAD
 Kicke:
 ; Kick:
 ;
-MSG_MUICLASS_SETTINGSCOLOR_KICK_HELP
+MSG_MUICLASS_SETTINGSCOLOR_LOGKICK_HELP
 /
 ; /
 ;
-MSG_MUICLASS_SETTINGSCOLOR_NICKCHANGE_GAD
+MSG_MUICLASS_SETTINGSCOLOR_LOGNICKCHANGE_GAD
 Forandrer nick:
 ; Nick change:
 ;
@@ -2272,45 +749,22 @@ MSG_MUICLASS_SETTINGSCOLOR_NICKCHANGE_HELP
 /
 ; /
 ;
-MSG_MUICLASS_SETTINGSCOLOR_TOPIC_GAD
+MSG_MUICLASS_SETTINGSCOLOR_LOGTOPIC_GAD
 Topic:
 ; Topic:
 ;
-MSG_MUICLASS_SETTINGSCOLOR_TOPIC_HELP
+MSG_MUICLASS_SETTINGSCOLOR_LOGTOPIC_HELP
 /
 ; /
 ;
-MSG_MUICLASS_SETTINGSCOLOR_WALLOPS_GAD
+MSG_MUICLASS_SETTINGSCOLOR_LOGWALLOPS_GAD
 Wall ops:
 ; Wall ops:
 ;
-MSG_MUICLASS_SETTINGSCOLOR_WALLOPS_HELP
+MSG_MUICLASS_SETTINGSCOLOR_LOGWALLOPS_HELP
 /
 ; /
 ;
-MSG_MUICLASS_SETTINGSCOLOR_ACTIVITY_GAD
-Aktivitet:
-; Activity:
-;
-MSG_MUICLASS_SETTINGSCOLOR_ACTIVITY_HELP
-/
-; /
-;
-MSG_MUICLASS_SETTINGSCOLOR_CHATACTIVITY_GAD
-Chatteaktivitet:
-; Chat activity:
-;
-MSG_MUICLASS_SETTINGSCOLOR_CHATACTIVITY_HELP
-/
-; /
-;
-MSG_MUICLASS_SETTINGSCOLOR_HIGHLIGHTACTIVITY_GAD
-Høylys aktivitet:
-; Highlight activity:
-;
-MSG_MUICLASS_SETTINGSCOLOR_HIGHLIGHTACTIVITY_HELP
-/
-; /
 ;
 ;
 ; MUICLASS_WINDOWQUIT
@@ -3461,8 +1915,8 @@ MSG_MUICLASS_WINDOWQUICKSETUP_USERNAME_HELP
 ; /
 ;
 MSG_MUICLASS_WINDOWQUICKSETUP_NICKNAME_GAD
-_Nick name:
-; _Nick name:
+_Nick Name:
+; _Nick Name:
 ;
 MSG_MUICLASS_WINDOWQUICKSETUP_NICKNAME_HELP
 /

@@ -69,6 +69,8 @@ static ULONG OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
 Object *objs[ GID_LAST ];
 static STRPTR TAB_CYCLE_EVENTMODES[ MSG_MUICLASS_EVENTLIST_WINDOWISINACTIVE - MSG_MUICLASS_EVENTLIST_MODENEVER + 2 ];
 
+	debug( "%s (%ld) %s - Class: 0x00008363x Object: 0x00008363x \n", __FILE__, __LINE__, __func__, cl, obj );
+
 	if( (obj = (Object *) DoSuperNew( cl, obj, MUIA_Group_Horiz, FALSE,
 				Child, TextObject, MUIA_Text_PreParse, NULL,
 									MUIA_Text_Contents, LGS( MSG_MUICLASS_SETTINGSEVENT_INFO ),
@@ -189,6 +191,8 @@ struct EventEntry *ee = NULL;
 static ULONG MM_ReadConfig( struct IClass *cl, Object *obj, struct MP_SETTINGSEVENT_READCONFIG *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
+
+	debug( "%s (%ld) %s - Class: 0x00008363x Object: 0x00008363x \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	switch( msg->ObjectID ) {
 		case OID_EVT_LIST:

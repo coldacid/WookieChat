@@ -66,6 +66,9 @@ struct mccdata
 
 static ULONG OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
 {
+
+	debug( "%s (%ld) %s - Class: 0x00014224x Object: 0x00014224x \n", __FILE__, __LINE__, __func__, cl, obj );
+
 	if( ( obj = (Object *) DoSuperNew( cl, obj,
 													MUIA_NList_Title         , TRUE,
 													MUIA_CycleChain          , 1,
@@ -147,6 +150,8 @@ struct ChannelEntry *ce, *tce;
 struct NickEntry *ne, *tne;
 ULONG i;
 
+	debug( "%s (%ld) %s - Class: 0x00014224x Object: 0x00014224x \n", __FILE__, __LINE__, __func__, cl, obj );
+
 	if( ( se = msg->entry ) ) {
 		while( ( ce = (APTR) se->se_ChannelList.lh_Head )->ce_Succ ) {
 			for( i = 0 ; ; i++ ) {
@@ -194,6 +199,9 @@ ULONG i;
 
 static ULONG OM_Import( struct IClass *cl, Object *obj, struct MUIP_Import *msg )
 {
+
+	debug( "%s (%ld) %s - Class: 0x00014224x Object: 0x00014224x \n", __FILE__, __LINE__, __func__, cl, obj );
+	
 	DoMethod( obj, MM_SERVERLIST_IMPORTLISTASTEXT, DEFAULT_SETTINGSSERVER_NAME );
 
 	DoMethod( obj, MM_SERVERLIST_ACTIVECHANGE );
@@ -209,6 +217,7 @@ static ULONG OM_Import( struct IClass *cl, Object *obj, struct MUIP_Import *msg 
 
 static ULONG OM_Export( struct IClass *cl, Object *obj, struct MUIP_Import *msg )
 {
+	debug( "%s (%ld) %s - Class: 0x00014224x Object: 0x00014224x \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	DoMethod( obj, MM_SERVERLIST_EXPORTLISTASTEXT, DEFAULT_SETTINGSSERVER_NAME );
 
@@ -225,6 +234,8 @@ static ULONG OM_Export( struct IClass *cl, Object *obj, struct MUIP_Import *msg 
 static ULONG MM_Add( struct IClass *cl, Object *obj, struct MP_SERVERLIST_ADD *msg )
 {
 struct ServerEntry *se;
+
+	debug( "%s (%ld) %s - Class: 0x00014224x Object: 0x00014224x \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	if( ( se = AllocVec( sizeof( struct ServerEntry ), MEMF_ANY|MEMF_CLEAR ) ) ) {
 		NEWLIST( &se->se_ChannelList );
@@ -252,6 +263,8 @@ struct mccdata *mccdata = INST_DATA( cl, obj );
 struct ServerEntry *se;
 struct ChannelEntry *ce;
 struct NickEntry *ne;
+
+	debug( "%s (%ld) %s - Class: 0x00014224x Object: 0x00014224x \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	DoMethod( mccdata->mcc_ClassObjects[ GID_CHANNELLIST ], MUIM_NList_Clear );
 	DoMethod( mccdata->mcc_ClassObjects[ GID_NICKLIST    ], MUIM_NList_Clear );
@@ -282,6 +295,8 @@ ULONG i;
 struct ServerEntry *se;
 struct ChannelEntry *ce;
 struct NickEntry *ne;
+
+	debug( "%s (%ld) %s - Class: 0x00014224x Object: 0x00014224x \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	if( ( handle = Open( (_ub_cs) msg->Name, MODE_NEWFILE ) ) ) {
 		for( i = 0 ;  ; i++ ) {
@@ -328,6 +343,8 @@ BPTR handle;
 char *linebuffer;
 struct ServerEntry *se = NULL;
 
+	debug( "%s (%ld) %s - Class: 0x00014224x Object: 0x00014224x \n", __FILE__, __LINE__, __func__, cl, obj );
+
 	DoMethod( obj, MUIM_NList_Clear );
 
 	if( ( linebuffer = AllocVec( LINEBUFFER_SIZEOF, MEMF_ANY ) ) ) {
@@ -366,7 +383,6 @@ struct ServerEntry *se = NULL;
 	return( 0 );
 }
 /* \\\ */
-
 
 /*
 ** Dispatcher, init and dispose

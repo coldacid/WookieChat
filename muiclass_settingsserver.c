@@ -109,6 +109,8 @@ static ULONG OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
 Object *objs[ GID_LAST ];
 static STRPTR TAB_GROUP_HIGHLIGHTMODES[ MSG_PG_ADDITIONAL - MSG_PG_CONNECTIONS + 2 ];
 
+	debug( "%s (%ld) %s - Class: 0x00029024x Object: 0x00029024x \n", __FILE__, __LINE__, __func__, cl, obj );
+
 	MUIInitStringArray( TAB_GROUP_HIGHLIGHTMODES, MSG_PG_CONNECTIONS, MSG_PG_ADDITIONAL );
 
 	if( (obj = (Object *) DoSuperNew( cl, obj, MUIA_Register_Titles, TAB_GROUP_HIGHLIGHTMODES,
@@ -263,6 +265,8 @@ static ULONG MM_ReadConfig( struct IClass *cl, Object *obj, struct MP_SETTINGSSE
 struct mccdata *mccdata = INST_DATA( cl, obj );
 ULONG i;
 
+	debug( "%s (%ld) %s - Class: 0x00029024x Object: 0x00029024x \n", __FILE__, __LINE__, __func__, cl, obj );
+
 	if( msg->ObjectID == OID_SVR_LIST ) {
 		return( (IPTR) mccdata->mcc_ClassObjects[ GID_SERVERLIST ] );
 	}
@@ -291,6 +295,8 @@ static ULONG MM_WriteConfig( struct IClass *cl, Object *obj, struct MP_SETTINGSS
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 ULONG i;
+
+	debug( "%s (%ld) %s - Class: 0x00029024x Object: 0x00029024x \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	for( i = 0 ; TAB_CONFIGITEMS[ i ].GadgetID != -1 ; i++ ) {
 		if( TAB_CONFIGITEMS[ i ].ObjectID == msg->ObjectID ) {
@@ -424,6 +430,8 @@ struct mccdata *mccdata = INST_DATA( cl, obj );
 struct ServerEntry *se = NULL;
 struct NickEntry *ne;
 
+	debug( "%s (%ld) %s - Class: 0x00029024x Object: 0x00029024x \n", __FILE__, __LINE__, __func__, cl, obj );
+
 	DoMethod( mccdata->mcc_ClassObjects[ GID_SERVERLIST ], MUIM_NList_GetEntry, MUIV_NList_GetEntry_Active, &se );
 
 	if( se ) {
@@ -447,6 +455,8 @@ static ULONG MM_NickRemove( struct IClass *cl, Object *obj, Msg *msg UNUSED )
 struct mccdata *mccdata = INST_DATA( cl, obj );
 LONG pos;
 struct NickEntry *ne = NULL;
+
+	debug( "%s (%ld) %s - Class: 0x00029024x Object: 0x00029024x \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	pos = MUIGetVar( mccdata->mcc_ClassObjects[ GID_NICKLIST ], MUIA_NList_Active );
 	if( pos >= 0 ) {
@@ -520,6 +530,8 @@ struct mccdata *mccdata = INST_DATA( cl, obj );
 struct ServerEntry *se = NULL;
 struct ChannelEntry *ce;
 
+	debug( "%s (%ld) %s - Class: 0x00029024x Object: 0x00029024x \n", __FILE__, __LINE__, __func__, cl, obj );
+
 	DoMethod( mccdata->mcc_ClassObjects[ GID_SERVERLIST ], MUIM_NList_GetEntry, MUIV_NList_GetEntry_Active, &se );
 
 	if( se ) {
@@ -543,6 +555,8 @@ static ULONG MM_ChannelRemove( struct IClass *cl, Object *obj, Msg *msg UNUSED )
 struct mccdata *mccdata = INST_DATA( cl, obj );
 LONG pos;
 struct ChannelEntry *ce = NULL;
+
+	debug( "%s (%ld) %s - Class: 0x00029024x Object: 0x00029024x \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	pos = MUIGetVar( mccdata->mcc_ClassObjects[ GID_CHANNELLIST ], MUIA_NList_Active );
 	if( pos >= 0 ) {

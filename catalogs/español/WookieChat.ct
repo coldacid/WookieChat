@@ -2,1562 +2,6 @@
 ## codeset 0
 ## language español
 ;
-MSG_ERROR
-ERROR
-; Error
-;
-MSG_BANMASK
-Máscara de Prohibir
-; Ban mask
-;
-MSG_BANSETBY
-Establecido por
-; Set by
-;
-MSG_BANDATEPLACED
-Fecha
-; Date placed
-;
-MSG_MODE_X
-Cerrar la pestaña actual.
-; Close the current tab.
-;
-MSG_TOPIC
-La temática actual del canal.
-; This is the channels current topic.
-;
-MSG_MODE_T
-Proteger temática. Evita a usuarios regulares\nque cambien la temática del canal.
-; Topic protection. This setting prevents regular users from changing the channel topic.
-;
-MSG_MODE_N
-No mensajes. Obliga a los usuarios del\ncanal a permitir hablar en el mismo.
-; No messaging. This setting forces users to be in the channel to be able to talk in it.
-;
-MSG_MODE_S
-Modo secreto. Hace al canal "invisible"\nhasta que accede a él.
-; Secret mode. If this is set, the channel is invisible until you have joined.
-;
-MSG_MODE_I
-Sólo invitados. Permite acceder unicamente\na usuarios que han sido invitados.
-; Invite only. Only users who have been invited to the channel may join.
-;
-MSG_MODE_P
-Modo privado. La temática del canal no se\nmuestra en la lista global de canales.
-; Private mode. If set, channel topic is not shown on global channel lists.
-;
-MSG_MODE_M
-Modo moderado. Pueden hablar solamente\noperadores, medio-operadores o con voz\n(op[@], halfop[%%], voice[+]).
-; Moderated mode. Only users with operator, halfop or voice status (thats @ % or +) may talk in channel when set.
-;
-MSG_MODE_B
-Pulse para ver la lista de todas\nlas prohibiciones en este canal.
-; Click to view a list of all banmasks for this channel.
-;
-MSG_MODE_K
-Modo palabra clave. El usuario\ndebe indicar una palabra clave\n(contraseña) para entrar.
-; Keyword mode. When this is set, users need to supply a keyword (password) to enter.
-;
-MSG_MODE_K_STRING
-Contraseña actual del canal.
-; Current channel keyword.
-;
-MSG_MODE_L
-Forzar el límite de usuarios\nposibles a acceder al canal.
-; Enforce a limit to how many users can currently join the channel.
-;
-MSG_MODE_L_STRING
-Límite actual de usuarios.
-; Current user limit.
-;
-MSG_HOSTNAME_STR
-Nombre del anfitrión del usuario\ncon el que está hablando.
-; This is the hostname of the user you are currently talking to.
-;
-MSG_ERROR_NLIST
-Descargue e instale la clase NList de MUI de AMINET.\n
-; Please download and install the NList MUI Class from aminet\n
-;
-MSG_GENERAL
-General
-; General
-;
-MSG_LOGGING
-Registrar
-; Logging
-;
-MSG_SOUNDS
-Sonidos
-; Sounds
-;
-MSG_ALIASES
-Aliases
-; Aliases
-;
-MSG_ABOUT
-Acerca de...
-; About...
-;
-MSG_YES
-Sí
-; Yes
-;
-MSG_NO
-No
-; No
-;
-MSG_DCC_CHOOSE_FILENAME
-Elija fichero a enviar
-; File To Send
-;
-MSG_BUTTON_SEND_FILE
-Enviar fichero
-; Send File
-;
-MSG_DCC_SEND_WINDOW
-DCC SEND
-; DCC SEND File
-;
-MSG_REOFFER
-Reintentar
-; Reoffer File
-;
-MSG_CANCEL_SEND
-Cancelar envío
-; Cancel Send
-;
-MSG_REMOVE
-Eliminar
-; Remove
-;
-MSG_RESUME
-Reanudar
-; Resume
-;
-MSG_OVERWRITE
-Sobreescribir
-; Overwrite
-;
-MSG_ABORT
-Cancelar
-; Abort
-;
-MSG_ALREADY_EXISTS_WINDOW_TITLE
-WookieChat: Aviso
-; Incoming File already exists
-;
-MSG_CHOOSE_DOWNLOAD_PATH
-Senda para las descargas.
-; Choose a path to save your downloads to.
-;
-MSG_ACCEPT
-Aceptar
-; Accept
-;
-MSG_CANCEL_TRANSFER
-Cancelar
-; Cancel
-;
-MSG_PREFS_NICK_COMPLETION_STYLE
-Estilo en los aliases:
-; Nick Completion Style
-;
-MSG_PREFS_NICK_COMPLETION_STYLE_HELP
-AmIRC pone dos puntos y un espacio después\ndel alias, si está al inicio de una línea,\no un espacio si está en otra parte. mIRC\nno añade nada, sólo muestra el alias.
-; AmIRC style puts a colon and a space after users nicks if used at the beginning of a line, or just a space afterwards anywhere else. mIRC style: No colon or spaces are used, only the nick is displayed.
-;
-MSG_ASK
-Preguntar
-; Ask
-;
-MSG_PREFS_AUTO_REJOIN
-Auto-reacceder al ser expulsado.
-; Auto-rejoin channels when kicked.
-;
-MSG_PREFS_AUTO_OPEN_TAB
-Abrir pestaña privada al recibir mensaje.
-; Auto-open private query tabs when messaged.
-;
-MSG_PREFS_MAX_LINES_BUFFER
-Líneas máximas de búfer.
-; Maximum number of lines to keep in buffer.
-;
-MSG_PREFS_LOG_CHANNELS
-Canales
-; Log channels
-;
-MSG_PREFS_LOG_PRIVATE
- Charlas privadas
-; Log private chats
-;
-MSG_DEFAULT_KICK_MESSAGE
-Al expulsar
-; Default kick message
-;
-MSG_DEFAULT_BAN_MESSAGE
-Mensaje al prohibir
-; Default ban message
-;
-MSG_QUIT_MESSAGE
-Al salir:
-; Quit message
-;
-MSG_PART_MESSAGE
-Al abandonar:
-; Part message
-;
-MSG_REQUEST_WHOIS
-Información del usuario (WHOIS)
-; Request whois information
-;
-MSG_OPEN_TAB
-Abrir pestaña privada
-; Open private query tab
-;
-MSG_DOUBLECLICK_GROUP_FRAME_TITLE
-Doble Pulsación Sobre Aliases
-; Nicklist doubleclick actions
-;
-MSG_CUSTOM_TIMESTAMPS
-Configurar el formato de la hora.\nÚtil para saber cuando pasó un evento\n(acceder a un canal, hablar,...).\n\033b%h\033n - hora; \033b%m\033n - minutos; \033b%s\033n - segundos.
-; Customise your timestamps! use these codes: %h for the hour, %m for the minute, and %s for the second. This is useful to see what time an event happened (such as a user joining, or speaking).
-;
-MSG_TIMESTAMP_FORMAT
- Formato:
-; Timestamp Format
-;
-MSG_HIGHLIGHT
-Resaltar:
-; Words to Highlight
-;
-MSG_QUIT_REQUESTER
-¿Salir de WookieChat?
-; Quit Program?
-;
-MSG_FILE_TO_SEND
-Fichero:
-; File to send
-;
-MSG_WINDOW_TITLE_DCC_INCOMING
-Recibir ficheros...
-; Incoming File Transfers...
-;
-MSG_WINDOW_TITLE_DCC_OUTGOING
-Enviar ficheros...
-; Outgoing File Transfers...
-;
-MSG_HIGHLIGHT_TITLE
-Lista De Palabras A Resaltar
-; Highlight
-;
-MSG_PREFS_USE_TIMESTAMPS
-Mostrar
-; Use timestamps
-;
-MSG_TIMESTAMPS_TITLE
-Hora
-; Timestamps
-;
-MSG_TEXT_EDITOR_HELP
-Editor de scripts al pulsar el\nbotón "Al conectar realizar..."\nde la ventana/lista de servidores.
-; This text editor is used when you edit your "Perform on Connect" scripts (from the Server Selection window).
-;
-MSG_TEXT_EDITOR
-Editor:
-; Text Editor
-;
-MSG_WEB_BROWSER_LABEL
-Navegador:
-; Web Browser
-;
-MSG_WEB_BROWSER_HELP
-Navegador que usa WookiChat en el "Gestor URLs"\nal pulsar dos veces en una de sus entradas.
-; Choose a web browser to use with WookieChat's "URL Grabber" Window. Double clicking an address there will load in this chosen browser.
-;
-MSG_WEB_BROWSER_REQUESTER
-Elija navegador
-; Choose a browser
-;
-MSG_SAVE
-Guardar
-; Save
-;
-MSG_USE
-Usar
-; Use
-;
-MSG_CANCEL
-Cancelar
-; Cancel
-;
-MSG_DCC_AUTO_ACCEPT
-Auto-aceptar transferencias de ficheros DCC
-; Auto accept incoming DCC File Transfers
-;
-MSG_DCC_ACTION
-Acción si el fichero existe:
-; Action to take if file exists
-;
-MSG_DCC_LOCAL_ADDRESS
-Usar dirección local para conexiones DCC
-; Use local address for DCC connections
-;
-MSG_PORT_RANGE_START
-Rango puerto DCC de:
-; DCC Port range from
-;
-MSG_PORT_RANGE_END
- a:
-; to
-;
-MSG_PORT_RANGE_START_HELP
-Inicio del rango de puertos para conexiones\nDCC. Es configurable y puede elegir el\nrango que desee usar y habilitarlos en su\ncortafuegos (firewall).
-; This is the start of the port range for incoming DCC connections. This is configurable so you can choose which ports to use and open up on any firewall you might have.
-;
-MSG_PORT_RANGE_END_HELP
-Fin del rango de puertos para conexiones\nDCC. Es configurable y puede elegir el\nrango que desee usar y habilitarlos en\nsu cortafuegos (firewall).
-; This is the end of the port range for incoming DCC connections. This is configurable so you can choose which ports to use and open up on any firewall you might have.
-;
-MSG_NEVER
-Nunca
-; Never
-;
-MSG_ALWAYS
-Siempre
-; Always
-;
-MSG_ONLY_WHEN_WINDOW_INACTIVE
-Sólo si la ventana está inactiva
-; Only when window is inactive
-;
-MSG_SOUND_SAMPLE_TAB_OPEN
-Al abrir pestaña:
-; Sample to play when a tab opens
-;
-MSG_PLAY_SAMPLE
-Reproducir:
-; Play sample
-;
-MSG_CHOOSE_FILENAME
-Elija fichero
-; Choose a filename
-;
-MSG_SOUND_SAMPLE_HIGHLIGHT
-Al resaltar:
-; Sample to play on highlight
-;
-MSG_SAMPLES_PATH
-Senda sonidos:
-; Samples Path for CTCP SOUND
-;
-MSG_SAMPLES_PATH_HELP
-Al recibir una petición CTCP SOUND,\n'WookieChat' escoje los sonidos de\nesta senda.
-; When you recieve a CTCP SOUND request, WookieChat will\nlook in this path for sound samples.
-;
-MSG_CHOOSE_DIR
-Elija directorio
-; Choose a directory
-;
-MSG_LOGFILE_RELOADING_LABEL
-\033cLíneas a mostrar del final de los registros\nal abrir una pestaña (0 para desactivar).
-; Num of lines to display from the end of logfiles when opening a tab\n(Put 0 to disable this feature).
-;
-MSG_CHANNEL
-Canal:
-; Channel
-;
-MSG_CHANNEL_LOG_RELOAD_HELP
-Número de líneas a recargar del final\ndel registro al acceder a un canal.
-; How many lines to reload from the end of log files when you join a channel.
-;
-MSG_PRIVATE
- Pestaña privada:
-; Private tab
-;
-MSG_PRIVATE_LOG_RELOAD_HELP
-Número de líneas a recargar del final del\nregistro al abrir una pestaña privada.
-; How many lines to reload from the end of log files when you open a private query tab to another user.
-;
-MSG_LOG_RELOADING_TITLE
-Recarga De Registro
-; Log Reloading
-;
-MSG_ALIAS_HELP
-Alias para comandos. Ejemplo: \033b/j /join\033n,\ncon lo que escribiendo sólo \033i/j <canal> \033n\npodrá acceder al <canal> en lugar de\nescribir \033i/join <canal>.\033n.
-; Enter an alias name, then the command you want it to use\nE.g. With this line added to the alias list..\n/j /join\n..then the "/j" command will be replaced with "/join".
-;
-MSG_BUTTON_ADD_ALIAS
-Añadir alias >>
-; Add alias >>
-;
-MSG_BUTTON_REMOVE_ALIAS
-Eliminar
-; Remove
-;
-MSG_SETTINGS_WINDOW_TITLE
-Ajustes
-; Settings
-;
-MSG_COLOR_SETTINGS_WINDOW_TITLE
-Colores...
-; Color settings...
-;
-MSG_MENU_SELECT_SERVER
-Elegir servidor...
-; Select server...
-;
-MSG_MENU_CLOSE_TAB
-Cerrar pestaña actual
-; Close current tab
-;
-MSG_MENU_NEW_SERVER_TAB
-Nueva pestaña
-; New server tab
-;
-MSG_MENU_OPEN_GLOBAL_TAB
-Abrir pestaña global
-; Open global query tab
-;
-MSG_MENU_QUIT
-Salir...
-; Quit...
-;
-MSG_MENU_SAVE_BUFFER
-Guardar búfer como...
-; Save buffer as...
-;
-MSG_MENU_MAIN_TITLE
-Principal
-; Main
-;
-MSG_MENU_MAIN_SETTINGS
-Globales...
-; Main settings...
-;
-MSG_MENU_MULITCOLUMN_DISPLAY
-Múltiples columnas
-; Multi-column chat display
-;
-MSG_URL_GRABBER
-Gestor URLs...
-; URL Grabber...
-;
-MSG_SERVER_NAME
-Servidor:
-; Server Name
-;
-MSG_PORT_NUMBER
-Puerto:
-; Port Number
-;
-MSG_SERVER_PASSWORD
-Contraseña:
-; Server Password
-;
-MSG_WINDOW_EDIT_SERVER
-Editar servidor
-; Edit Server
-;
-MSG_GROUP_NAME
-Nombre grupo:
-; Group Name
-;
-MSG_PERFORM_ON_CONNECT
-Al conectar realizar...
-; Perform on connect...
-;
-MSG_EDIT_GROUP
-Editar grupo...
-; Edit Group...
-;
-MSG_REAL_NAME
- Nombre real:
-; Real Name
-;
-MSG_USER_NAME
-Usuario:
-; User Name
-;
-MSG_NEW_SERVER
-Nuevo servidor
-; New Server
-;
-MSG_NEW_GROUP
-Nuevo grupo
-; New Group
-;
-MSG_EDIT_ENTRY
-Editar entrada...
-; Edit Entry...
-;
-MSG_DELETE_ENTRY
-Borrar entrada
-; Delete Entry
-;
-MSG_CONNECT_TO_SERVER
-Conectar a servidor
-; Connect to server
-;
-MSG_CONNECT_TO_SERVER_IN_NEW_TAB
-Conec. en nueva pestaña
-; Connect in new tab
-;
-MSG_WINDOW_SELECT_SERVER
-WookieChat: Elija servidor
-; Select server
-;
-MSG_UNBAN
-Eliminar entrada
-; Unban
-;
-MSG_REFRESH_BAN_LIST
-Refrescar lista
-; Refresh banlist
-;
-MSG_UNABLE_TO_CREATE_APP
-No se ha podido crear aplicación.\n
-; Unable to create app\n
-;
-MSG_NOT_CONNECTED
-No está conectado a un servidor.
-; Not connected to a server.
-;
-MSG_NOT_CONNECTED_TO_USER
-No está conectado a un usuario.
-; Not connected to a user.
-;
-MSG_NO_BROWSER_SELECTED
-Elija el navegador que 'WookieChat'\nusará con páginas web en\n"Ajustes->Globales.../General".
-; Please go to the "Main Settings" window, and choose a browser for WookieChat to open web sites with.
-;
-MSG_ERROR_MISSING_MCC_BETTERSTRING
-Descarge e instale la clase de MUI 'BetterString.mcc'.
-; Please download and install the BetterString.mcc MUI Class.
-;
-MSG_ERROR_MISSING_MCC_NLIST
-Descarge e instale la clase de MUI 'NList.mcc'.
-; Please download and install the NList.mcc MUI Class.
-;
-MSG_ERROR_MISSING_MCC_NLISTVIEW
-Descarge e instale la clase de MUI 'NListview.mcc'.
-; Please download and install the NListview.mcc MUI Class.
-;
-MSG_ERROR_MISSING
-Las clases que faltan, puede descargarlas de 'http://www.aminet.net/' o 'http://os4depot.net'. Lea "readme.txt" para los enlaces directos a esas clases.\n
-; These missing classes can be downloaded from http://www.aminet.net/ or http://os4depot.net. Check the WookieChat readme for direct links to these classes\n
-;
-MSG_SAVING_BUFFER_TO
-Guardando búfer en
-; Saving buffer to file:
-;
-MSG_CANCELLED
-Cancelado
-; Cancelled
-;
-MSG_DCC_SEND_MESSAGE
-Elija fichero a enviar y a quien (alias) desea ofrecerlo.
-; Please select a file to send, and a nick to offer the file to.
-;
-MSG_DCC_SEND_MESSAGE2
-Elija fichero a enviar
-; Please select a file to send
-;
-MSG_DCC_SEND_MESSAGE3
-Elija a quien (alias) desea enviar el fichero.
-; Please select a nick to offer the file to.
-;
-MSG_WINDOW_TITLE_BANMASKS
-Lista de prohibiciones del canal
-; List of banmasks for channel
-;
-MSG_REMOVING_BAN
-Eliminando prohibiciones
-; Removing banmask
-;
-MSG_TRANSFERRING
-Transfirendo
-; Transferring
-;
-MSG_SYNTAX
-Sintáxis
-; Syntax
-;
-MSG_STATUS
-Estado
-; Status
-;
-MSG_SENT
-Enviado
-; Amount sent
-;
-MSG_FILE_SIZE
-Tamaño
-; Size
-;
-MSG_TIME_LEFT
-Restan
-; Time Left
-;
-MSG_RECIEVED
-Recibido
-; Recieved
-;
-MSG_REMOVING_BAN_FOR_CHANNEL
-para el canal\x20
-; for channel\x20
-;
-MSG_LOGGING_STARTED_AT
-Registro iniciado\x20
-; Logging started at\x20
-;
-MSG_HAS_BEEN_INVITED_TO_CHANNEL
-ha sido invitado la canal\x20
-; has been invited to channel\x20
-;
-MSG_INVITED_BY_USER
-por
-; by user
-;
-MSG_YOU_HAVE_INVITED
-ha invitado a\x20
-; you have invited\x20
-;
-MSG_TO_CHANNEL
-al canal\x20
-; to channel\x20
-;
-MSG_TOPIC_SET_BY
-establecida por\x20
-; set by\x20
-;
-MSG_TOPIC_DATE
-el\x20
-; on\x20
-;
-MSG_NICK_IN_USE_RETRYING_WITH
-en uso, reintentándolo con\x20
-; in use, retrying with\x20
-;
-MSG_JOIN
-Acceder
-; Join
-;
-MSG_PART
-Abandonar
-; Part
-;
-MSG_QUIT
-Salir
-; Quit
-;
-MSG_USER_WAS_KICKED_BY
-fue expulsado por
-; was kicked by
-;
-MSG_YOU_WERE_KICKED_BY
-Ha sido expulsado por
-; You were kicked by
-;
-MSG_IS_NOW_KNOWN_AS
-cambia el alias por\x20
-; is now known as\x20
-;
-MSG_PLAYS
-reproducir
-; plays
-;
-MSG_ATTEMPTING_TO_RESUME
-Intentando reanudar
-; Attempting to resume
-;
-MSG_ATTEMPT_TO_ACCEPT
-Intentando aceptar petición DCC CHAT
-; Attempting to accept DCC CHAT request
-;
-MSG_OFFERED_FROM
-ofrecido por
-; offered from
-;
-MSG_TOPIC_CHANGED
-cambia la temática a
-; changes the topic to
-;
-MSG_FINISHED_SENDING
-Finalizado envío\x20
-; Finished sending\x20
-;
-MSG_FINISHED_RECIEVING
-Finalizada recepción
-; Finished recieving
-;
-MSG_CONNECTED_TO
-conectado a\x20
-; connected to\x20
-;
-MSG_AT_AN_AVERAGE_SPEED_OF
-CPS:
-; Average speed:
-;
-MSG_DCC_COMPLETE
-Completado
-; Complete
-;
-MSG_DCC_INCOMPLETE
-Incompleto
-; Incomplete
-;
-MSG_DCC_CANCELLED
-Cancelado
-; Cancelled
-;
-MSG_CONNECTED
-Conectado
-; Connected
-;
-MSG_DISCONNECTED
-Desconectado
-; Disconnected
-;
-MSG_DCC_FAILED
-fallido
-; Failed
-;
-MSG_CREATE_FILE_FAILED
-no se ha podido crear fichero recibido
-; unable to create new file for incoming transfer
-;
-MSG_OPEN_FILE_FOR_DCC_SEND_FAILED
-no se ha podido abrir fichero elegido
-; unable to open requested file
-;
-MSG_DCC_STARTED_FILE_TRANSFER
-Iniciada transferencia:
-; Started file transfer:
-;
-MSG_UNABLE_TO_CONNECT
-No se ha podido establecer DCC CHAT
-; Unable to establish DCC CHAT Connection
-;
-MSG_CONNECTED_DCC_CHAT
-Establecida DCC CHAT
-; DCC CHAT Connection Established
-;
-MSG_TRANSFER_TIME
-Estimado
-; Transfer time:
-;
-MSG_FILE_DOESNT_EXIST
-¡ERROR! Fichero no existe
-; Error, file doesnt exist
-;
-MSG_OFFERING_FILE
-Ofreciendo
-; Offering file
-;
-MSG_OFFERED_ON
-en
-; on
-;
-MSG_OFFERED_TO
-a
-; to
-;
-MSG_DCC_CHAT_REQUEST
-Enviando petición DCC CHAT
-; Sending DCC CHAT request
-;
-MSG_COLOUR_SETTINGS_LOAD_ERROR
-No se han podido cargar los ajustes de colores,\nusando ajustes por omisión. Para evitar este\naviso, cree un cajón llamado "Colours" en\ndonde reside 'WookieChat' y reinícielo.
-; Unable to load colour settings, using default settings. To avoid seeing this message again, create a drawer called 'Colours' inside WookieChat's drawer, then open and close the Colour Settings window the next time you run WookieChat.
-;
-MSG_COLOUR_SETTINGS_SAVE_ERROR
-No se han podido guardar los ajustes de colores.\nAsegúrese de tener un cajón llamado "Colours"\nen donde reside 'WookieChat' para poder guardarlos.
-; Unable to save your colour settings. Make sure you have a drawer called 'Colours' inside WookieChat's drawer, for it to save your colour preferences to.
-;
-MSG_UNABLE_TO_OPEN_TCPIP_STACK
-¡Debe tener activa una pila TCP/IP.
-; Please start a TCP/IP stack and try again.
-;
-MSG_CONNECT_TO_A_NEW_SERVER
-Conectando a un nuevo servidor
-; Connecting to a new server
-;
-MSG_ATTEMPTING_TO_CONNECT_TO_SERVER
-Intentando conectarse a\x20
-; Attempting to connect to\x20
-;
-MSG_CONNECTING
-Conectando
-; Connecting
-;
-MSG_FILE_ALREADY_EXISTS
-ya existe.\n
-; already exists!
-;
-MSG_INCOMING_FILE_SIZE
-\033cFichero existente
-; Size of existing file
-;
-MSG_FILE_SIZE_OFFERED
-\033cFichero ofrecido
-; Size of file being offered
-;
-MSG_TO
-a
-; to
-;
-MSG_DCC_WAITING
-Esperando
-; Waiting
-;
-MSG_UPDATING_NAMES_LIST
-Actualizando lista de nombres del canal
-; Updating Names list for channel
-;
-MSG_USERS_IN_CHANNEL
-Usuarios en el canal
-; Users in channel
-;
-MSG_AUTO_REJOINING
-Auto-reacceder\x20
-; Auto-rejoining\x20
-;
-MSG_FROM
-de
-; from
-;
-MSG_SETS_MODE
-establece
-; sets mode
-;
-MSG_PLAYING
-reproduciendo
-; playing
-;
-MSG_SENDING_CTCP
-Enviando CTCP
-; Sending CTCP
-;
-MSG_WINDOWS_MENU
-Ventanas
-; Windows
-;
-MSG_FILENAME
-Fichero
-; Filename
-;
-MSG_NICKNAMES
-Aliases:
-; Nick Names
-;
-MSG_OPENING_BRACKET
-[
-; [
-;
-MSG_CLOSING_BRACKET
-]
-; ]
-;
-MSG_NICKLIST_OPTIONS
-Opciones Aliases
-; Nicklist Options
-;
-MSG_WHOIS_MENU_ITEM
-WHOIS
-; Whois
-;
-MSG_QUERY_MENU_ITEM
-Preguntar
-; Open Query
-;
-MSG_GLOBAL_QUERY_MENU_ITEM
-Preguntar Global
-; Open Global Query
-;
-MSG_CTCP_MENU_TITLE
-CTCP
-; CTCP
-;
-MSG_PING_MENU_ITEM
-PING
-; Ping
-;
-MSG_VERSION_MENU_ITEM
-Versión
-; Version
-;
-MSG_TIME_MENU_ITEM
-Hora
-; Time
-;
-MSG_DIRECT_CONNECTION_MENU_TITLE
-Conexión Directa
-; Direct Connection
-;
-MSG_SEND_FILE_MENU_ITEM
-Enviar fichero
-; Send file
-;
-MSG_CHAT_MENU_ITEM
-Charlar
-; Chat
-;
-MSG_CONTROL_MENU_TITLE
-Control
-; Control
-;
-MSG_OP_MENU_ITEM
-OP
-; Op
-;
-MSG_DEOP_MENU_ITEM
-Quitar OP
-; DeOp
-;
-MSG_HALFOP_MENU_ITEM
-HalfOP
-; HalfOp
-;
-MSG_DEHALFOP_MENU_ITEM
-Quitar HalfOP
-; DeHalfOp
-;
-MSG_VOICE_MENU_ITEM
-Voz
-; Voice
-;
-MSG_DEVOICE_MENU_ITEM
-Quitar voz
-; DeVoice
-;
-MSG_KICK_MENU_ITEM
-Expulsar
-; Kick
-;
-MSG_BAN_MENU_ITEM
-Prohibir
-; Ban
-;
-MSG_SENDER
-Remitente
-; Sender
-;
-MSG_RECIEVER
-Destinatario
-; Reciever
-;
-MSG_CHANNEL_NAME_HELP
-<canal>
-; <channelname>
-;
-MSG_NICK_HELP
-<alias>
-; <nick>
-;
-MSG_COMMAND_NAME_HELP
-<comando>
-; <command>
-;
-MSG_SOUND_SAMPLE_NAME_HELP
-<sonido>
-; <sound_sample_name>
-;
-MSG_SOUND_BAN_MASK_HELP
-<máscara_prohibir>
-; <ban_mask>
-;
-MSG_MESSAGE_HELP
-<mensaje>
-; <message>
-;
-MSG_NEW_NICK_HELP
-<nuevo_alias>
-; <new_nick>
-;
-MSG_TOPIC_HELP
-<nueva_temática>
-; <new_topic>
-;
-MSG_SERVERNAME_HELP
-<servidor>
-; <servername>
-;
-MSG_PORT_HELP
-<puerto>
-; <port>
-;
-MSG_SWEAR_FILTER
-Filtro palabrotas
-; SwearFilter
-;
-MSG_ENABLED
-Activado
-; Enabled
-;
-MSG_DISABLED
-Desactivado
-; Disabled
-;
-MSG_NICK_OR_CHANNEL_HELP
-<alias o canal>
-; <nick or channel>
-;
-MSG_FILENAME_HELP
-<fichero>
-; <filename>
-;
-MSG_ACTION_HELP
-<acción>
-; <action>
-;
-MSG_USERS
-usuarios
-; users
-;
-MSG_HIGHLIGHT_STRINGGADGET_HELP_BUBBLE
-Palabras con las que se resaltarán las líneas\nen las que aparecen. Puede añadir tantas como\ndesee, separándolas por espacios.
-; Enter words here for WookieChat to watch for. Lines of text will appear in the highlight colour if one of these words is found. Enter the words you want to highlight, separated by spaces.
-;
-MSG_RESUME_FILE
-REANUDAR fichero
-; RESUME file
-;
-MSG_PREFS_SERVERS_GROUP
-Servidores
-; Servers
-;
-MSG_MAX_RECONNECT_RETRIES
-Intentos máx. reconectar al auto-desconectarse
-; Maximum attempts to reconnect after non-requested disconnection
-;
-MSG_RECONNECT_DELAY
-Espera entre reconexiones (segundos)
-; Delay (in seconds) in between reconnection attempts
-;
-MSG_RETRY
-Reintento #
-; Retry #
-;
-MSG_IGNORE_MASK
-Máscara a Ignorar
-; Ignore Mask
-;
-MSG_IGNORE_TEXT
-Texto
-; Text
-;
-MSG_SERVERS_WINDOW_SERVERS
-Servidor
-; Servers
-;
-MSG_SERVERS_WINDOW_PORT
-Puerto
-; Port
-;
-MSG_SERVERS_WINDOW_AUTOCONNECT
-Auto-Conectar
-; Auto-Connect
-;
-MSG_SERVERS_WINDOW_PASSWORD
-Contraseña
-; Password
-;
-MSG_IGNORE_LONG_DETAILED_HELP
-\033cLas marcas de anfitrión suelen ser: alias!usuarioID@anfitrión\nEjemplo: .. [Acceder] jahc (~jahc00@Amigaworld.Net) ..\n\033bjahc\033n es el alias, \033bjahc00\033n el usuarioID y \
-\033bAmigaworld.Net\033n el anfitrión.\nPara ignorar a esta persona, puede insertar la cadena: \033bjahc*!*@*\033n\nEl uso de comodines hace que este comando sea muy potente.\nPuede hacer cosas como: \
-\033bguru*editatio*!*usuarioID@*.se\033n\no si desea hacerlo más simple: \033broberto*\033n
-; Hostmarks look like this: nick!userid@hostname\ni.e.«Join» jahc (~jahc00@jahc.Amigaworld.Net)\njahc is the nick, jahc00 is the userid, and jahc.Amigaworld.Net is the hostname\nTo ignore this person, you could insert an ignore entry of: jahc*!*@*\nThis will ignore all people with a nick starting with the letters jahc.\nThe use of wildcards makes this ignore command very powerful.\nThings like this are possible: guru*editatio*!*userid@*.se\nor if you want to keep it simple, you could just use: jahc*
-;
-MSG_IGNORE_ENTRY
-Ignorar:
-; Ignore Entry:
-;
-MSG_IGNORE_EVENTS
-Eventos a ignorar:
-; Which events to ignore:
-;
-MSG_IGNORE_ADD
-Añadir
-; Add
-;
-MSG_IGNORE_EDIT
-Editar
-; Edit
-;
-MSG_IGNORE_REMOVE
-Eliminar
-; Remove
-;
-MSG_AUTO_CONNECT_OPTION
-Conectarse automáticamente al inicio
-; Automatically connect here when WookieChat is started
-;
-MSG_DISPLAY_SERVER_SELECTION_WINDOW
-Mostrar esta ventana al inicio
-; Display Server Window upon startup:
-;
-MSG_UNABLE_TO_RECONNECT_TO_SERVER
-No se ha podido conectar; abandonando!
-; Unable to connect, giving up!
-;
-MSG_COMMAND_ALIAS_WINDOW_COLUMN1_TITLE
-Alias
-; Alias
-;
-MSG_COMMAND_ALIAS_WINDOW_COLUMN2_TITLE
-Comando
-; Command
-;
-MSG_EDIT_ALIAS
-Editar...
-; Edit...
-;
-MSG_EDIT_ALIAS_CHANGE
-Cambiar
-; Change
-;
-MSG_EDIT_ALIAS_CANCEL
-Cancelar
-; Cancel
-;
-MSG_MENU_ITEM_CLONE_DETECTION
-Detectar duplicados
-; Clone detection
-;
-MSG_CLONES
-Duplicados
-; Clones
-;
-MSG_CLONE_DETECTED
-Detectados duplicados de
-; Detected clones from
-;
-MSG_SAVE_SETTINGS
-Guardar ajustes
-; Save settings
-;
-MSG_SPLIT_UP_LOGS_PREFS_LABEL
-Separar registros en ficheros pequeños
-; Split up logfiles into smaller chunks
-;
-MSG_LOGSIZE_PREFS_LABEL
-Tamaño de los ficheros pequeños (kB):
-; If the above is enabled, choose a log file size (in kbytes)
-;
-MSG_SPLIT_UP_LOGS_PREFS_HELP
-Al abrir una nueva pestaña, se examina el fichero de\nregistro. Si su tamaño es mayor que el especificado,\neste se renombra con la fecha y se crea uno nuevo.\nEsto se hace por razones de rendimiento \
-(pueden\npasar varios segundos al cargar uno muy grande).
-; When a tab is opened, the logfile will be examined. If it is over a certain size, then it will be renamed with the date appended to the end, and WookieChat will resume logging in a new empty logfile. This is implemented for performance reasons. It can take a few seconds to reload large logfiles that are a few MB in size.
-;
-MSG_NO_SERVER_TABS_PREFS
- No mostrar servidores
-; Disable server tabs
-;
-MSG_HIDE_WINDOW
-Iconificar
-; Hide
-;
-MSG_PREFS_DCC_ADDRESS
-Dirección DCC específica
-; Specify DCC address?
-;
-MSG_PREFS_DCC_ADDRESS_HELP
-WookieChat intenta obtener su dirección de forma\nautomática para conexiones DCC de salida. Si\nesta es incorrecta, puede especificar una aquí.
-; WookieChat attempts to obtain your address automatically for outgoing DCC connections. If this address is incorrect, you can specify it here.
-;
-MSG_PREFS_TOGGLE_BUTTON_TABS
-Canales/servidores como botones
-; Use button-style tabs
-;
-MSG_PREFS_TOGGLE_BUTTON_TABS_HELP
-Desactivado muestra canales/servidores en una lista\nen vez de botones (permitiendo "ver" más entradas).
-; Turn off this option to use Listview-style tabs (the listview is better having a large amount of tabs open, such as 20 or 30).
-;
-MSG_USER_HAS_QUIT_IRC
-abandona el IRC...
-; has left IRC..
-;
-MSG_USER_HAS_RETURNED_TO_IRC
-vuelve al IRC...
-; has returned to IRC...
-;
-MSG_CHECKBOX_ENABLE_GRAPHICAL_SMILEYS
-Emoticonos gráficos
-; Enable Graphical Smileys
-;
-MSG_BACKGROUND_COLOUR_FOR_GRAPHICAL_SMILEYS
- Fondo de emoticonos:
-; Background Colour for Smileys
-;
-MSG_GRAPHICAL_SMILEY_SHORTHELP
-Mostrar los emoticonos :) :/ como gráficos.
-; This option will display common ASCII "smiley faces" such as :) and :D with graphical pictures.
-;
-MSG_CHECKBOX_EXTERNAL_PLAYER_FOR_CTCP_SOUND
-Programa externo para CTCP SOUND
-; Use External Replayer For CTCP SOUND
-;
-MSG_EXTERNAL_PLAYER_FOR_CTCP_SOUND
-Reproductor:
-; Sound Player
-;
-MSG_DOWNLOAD_PATH
-Descargas:
-; Download Path:
-;
-MSG_LABEL_LISTVIEW_TABS_WEIGHT
-Altura de la lista de canales/servidores (pixels)
-; Listview tabs vertical weight
-;
-MSG_GROUP_FRAME_TITLE_TAB_PREFERENCES
-Mostrar Canales/Servidores
-; Tab Preferences
-;
-MSG_PREFS_HELP_BUBBLE_LISTVIEW_TABS_WEIGHT
-Altura de la lista de canales/servidores,\nsi ha elegido no mostrarlos como botones.
-; If you have disabled button style tabs, you can configure the size of the "tabs listview".
-;
-MSG_PREFS_HELP_BUBBLE_NO_SERVER_TABS
-No mostrar el servidor en pestaña/lista, ahorrando\nespacio en la ventana principal y memoria.
-; You can turn off keeping a dedicated tab for server messages to conserve memory and valuable screen space.
-;
-MSG_PREFS_GRAPHICAL_NICKLIST_CHECKBOX
- Lista de alias con colores
-; Enable Graphical Nicklist
-;
-MSG_PREFS_GRAPHICAL_NICKLIST_HELP_BUBBLE
-Mostrar a operarios, medio-operarios y con\nvoz con colores en lugar de los típicos\ncaracteres @, % + (requiere picture.datatype).
-; This will display the three most common nicklist usermodes in a graphical way.\nOperators (or @) are Green, Halfops (or \% ) are Blue, Voiced users (or +) are Yellow\n(This feature is reliant on picture datatypes).
-;
-MSG_PREFS_COLUMN_WIDTH_TIMESTAMP
-Anchura columna Fecha/Hora (pixels)
-; Column width (in Pixels) for timestamps
-;
-MSG_PREFS_COLUMN_WIDTH_MIDDLE_NICKS
-Anchura columna alias (pixels)
-; Column width (in Pixels) for the middle/nicks column
-;
-MSG_PREFS_DIVIDER_BAR_SPACE
-Espacio libre entre columnas y texto (pixels)
-; Amount of space surrounding columns divider bar
-;
-MSG_PREFS_MULTICOLUMN_NICK_DISPLAY
-Eliminar '<' y '>' de los alias
-; Remove < and > from around nicks
-;
-MSG_GROUP_FRAME_TITLE_MULTICOLUMN_DISPLAY_SETTINGS
-Al Mostrar V. Charla En Columnas
-; Multicolumn display settings
-;
-MSG_MENU_MULTICOLUMNCHATDISPLAY_ITEM
-Ventana de charla en columnas
-; Multi-column chat display
-;
-MSG_GRAPHICAL_NICKLIST_HELP_BUBBLE
-Colores según el tipo de usuario:\nVerde = operadores (@)\nAzul = medio-operadores (%)\nAmarillo = con voz (+)
-; Graphical Usermodes Key:\nGreen = Channel Operators or @\nBlue = HalfOps or \% \nYellow = Voiced Users or +
-;
-MSG_GRAPHICAL_SMILEYS_PREVIEW
-Muestra emoticonos gráficos
-; Graphical Smileys Preview
-;
-MSG_PREFS_NICKLIST_HORIZONTAL_WEIGHT
-Anchura de la lista de aliases (pixels)
-; Nicklist horizontal weight
-;
-MSG_PREFS_SMILEYS_THEME
-Emoticonos
-; Smileys theme
-;
-MSG_SERVER_CHARSET
- Juego caracteres
-; Server charset
-;
-MSG_LOCAL_CHARSET
-Juego caracteres local
-; Local charset
-;
-MSG_COLUMN_TITLE_CHARSET
-J. Caracteres
-; Charset
-;
-MSG_MENU_ITEM_RESCAN_AREXX_DIR
-<Releer dir. scripts>
-; <Rescan scripts directory>
-;
-MSG_MENU_TITLE_AREXX
-ARexx
-; ARexx
-;
-MSG_ABOUT_WINDOW_TEXT
-\033cEsponsorado con orgullo por Guru Meditation,\nvendedor de AMIGA y consultor Linux.\nhttp://gurumeditation.se/
-; \033cProudly sponsored by Guru Meditation\nAmiga reseller and Linux consulting\nhttp://gurumeditation.se/
-;
-MSG_ABOUT_WINDOW_TEXT_2
-\n
-; AREXX port:
-;
-MSG_COLOUR_SETTINGS_LABEL_BACKGROUND
-Fondo
-; Background
-;
-MSG_COLOUR_SETTINGS_LABEL_NICKLIST_BACKGROUND
-Lista aliases (fondo)
-; Nicklist background
-;
-MSG_COLOUR_SETTINGS_LABEL_JOIN
-Acceder
-; Join
-;
-MSG_COLOUR_SETTINGS_LABEL_PART
-Abandonar
-; Part
-;
-MSG_COLOUR_SETTINGS_LABEL_QUIT
-Salir
-; Quit
-;
-MSG_COLOUR_SETTINGS_LABEL_MODES
-Modos
-; Modes
-;
-MSG_COLOUR_SETTINGS_LABEL_CTCP
- CTCP
-; CTCP
-;
-MSG_COLOUR_SETTINGS_LABEL_ACTIONS
-Acciones
-; Actions
-;
-MSG_COLOUR_SETTINGS_LABEL_NORMAL
- Normal
-; Normal
-;
-MSG_COLOUR_SETTINGS_LABEL_INFO
-Información
-; Info
-;
-MSG_COLOUR_SETTINGS_LABEL_OWN_TEXT
-Texto propio
-; Own text
-;
-MSG_COLOUR_SETTINGS_LABEL_HIGHLIGHT
-Resaltar
-; Highlight
-;
-MSG_COLOUR_SETTINGS_LABEL_INVITE
-Invitar
-; Invite
-;
-MSG_COLOUR_SETTINGS_LABEL_KICK
-Expulsar
-; Kick
-;
-MSG_COLOUR_SETTINGS_LABEL_NICK_CHANGE
-Cambiar alias
-; Nick change
-;
-MSG_COLOUR_SETTINGS_LABEL_TOPIC
-Temática
-; Topic
-;
-MSG_COLOUR_SETTINGS_LABEL_WALLOPS
-OPs
-; Wall ops
-;
-MSG_COLOUR_SETTINGS_LABEL_NOTICES
-Noticias
-; Notices
-;
-MSG_COLOUR_SETTINGS_LABEL_ACTIVITY
-Actividad
-; Activity
-;
-MSG_COLOUR_SETTINGS_LABEL_CHAT_ACTIVITY
-Actividad (charla)
-; Chat activity
-;
-MSG_COLOUR_SETTINGS_LABEL_HIGHLIGHT_ACTIVITY
-Actividad (resaltar)
-; Highlight activity
-;
-MSG_COLOUR_SETTINGS_LABEL_NICKLIST_TEXT
-Lista aliases (texto)
-; Nicklist text
-;
-MSG_COLOUR_SETTINGS_LABEL_TABS_BACKGROUND
- Lista cans./servs. (fondo)
-; Tabs background
-;
-MSG_COLOUR_SETTINGS_LABEL_TAGS_PEN
- Lista cans./servs. (texto)
-; Tabs pen
-;
-MSG_SERVER
-Servidor
-; Server
-;
-MSG_APPLY
-Aplicar
-; Apply
-;
-MSG_AUTO_JOIN_CHANNELS
- Canales acceder auto.:
-; Automatically join these channels
-;
-MSG_NICK_REGISTER_PASSWORD
- Contraseña registrar alias:
-; Nick registration password
-;
-MSG_NICK_REGISTER_PASSWORD_SHORT_HELP
-Funciona sólo con alias registrados en una red con un servicio de servidor de alias (Nickserv).
-; This option will only work with a registered nick on a network with a Nickserv service.
-;
-MSG_ACCEPT_CHANGES
-Aceptar cambios
-; Accept Changes
-;
-MSG_SOUND_SAMPLE_NEW_MSG
-Mensaje privado (PRIVMSG):
-; Sample to play when a new PRIVMSG arrives
-;
-MSG_SOUND_SAMPLE_PLAY_OPTION
-Si la pestaña no está seleccionada
-; When private tab is not selected
-;
-MSG_UNABLE_TO_RECONNECT_TO_SERVER_2
-No se ha podido conectar!
-; Unable to connect!
-;
-MSG_RENAME
-Rename
-; Rename
-;
-MSG_ICONIFY_TEXT_NEW_MESSAGES_WAITING
-New Messages Waiting
-; New Messages Waiting
-;
-MSG_UPLOAD_PATH
-Upload Path
-; Upload Path
-;
-MSG_ONLY_WHEN_TAB_IS_INACTIVE
-Only when Tab is inactive
-; Only when Tab is inactive
-;
-MSG_INVITE
-Invite
-; Invite
-;
-MSG_EVENT
-Event
-; Event
-;
-MSG_USEWHEN
-Use when
-; Use when
-;
-MSG_AREXXSCRIPT
-Arexx Script
-; Arexx Script
-;
-MSG_TEXTTOSENDTOSCRIPT
-Text to send to script
-; Text to send to script
-;
-MSG_NAME
-Name
-; Name
-;
-MSG_COMMAND
-Command
-; Command
-;
-MSG_NICKLISTBUTTONS
-Nick List Buttons
-; Nick List Buttons
-;
-MSG_CHANGENICK
-Change nick
-; Change nick
-;
-MSG_ENTERNEWNICK
-Enter new nick
-; Enter new nick
-;
-MSG_ENTERNICKCANCEL
-Cancel
-; Cancel
-;
-MSG_ENTERNICKCHANGE
-Change
-; Change
-;
-MSG_CLIPBOARD
-Clipboard
-; Clipboard
-;
-MSG_HIDEJOINANDPARTMESSAGES
-Hide Join and Part messages in Channels
-; Hide Join and Part messages in Channels
-;
-MSG_HIDECHANELMODEBUTTONS
-Hide the channel mode buttons at the top of the display
-; Hide the channel mode buttons at the top of the display
-;
-MSG_CY_LISTVIEW
-Listview
-; Listview
-;
-MSG_CY_BUTTONS
-Buttons
-; Buttons
-;
-MSG_METHODOFDISPLAYINGTABS
-Method of displaying Tabs for channels and private messages
-; Method of displaying Tabs for channels and private messages
-;
-MSG_USERNAMEWHENTALK
-Display usermodes beside a persons nick when they talk
-; Display usermodes beside a persons nick when they talk
-;
-MSG_USERLIST_ADD
-Add
-; Add
-;
-MSG_USERLIST_REMOVE
-Remove
-; Remove
-;
-MSG_USERLIST_MOVEUP
-Move up
-; Move up
-;
-MSG_USERLIST_MOVEDOWN
-Move down
-; Move down
-;
-MSG_USERLIST_HELP
-\033lCodes:\n%s = selected nick, %h = hostname of the selected nick,\n%c = current channel, %n = your own nick
-; \033lCodes:\n%s = selected nick, %h = hostname of the selected nick,\n%c = current channel, %n = your own nick
-;
-MSG_USERLIST_HIDEALL
-Hide all from the display
-; Hide all from the display
-;
-MSG_EVENTPLAYHOLDER_HELP
-\033lCodes:\n%b = text being displayed in the window, %t = timestamp,\n%g = network name, %s = servername, %c = channel, %n = own nick, %m = nick
-; \033lCodes:\n%b = text being displayed in the window, %t = timestamp,\n%g = network name, %s = servername, %c = channel, %n = own nick, %m = nick
-;
-MSG_EVENTMODE
-Use when
-; Use when
-;
-MSG_EVENTMODE_HELP
-Choose when you want to execute this ARexx script
-; Choose when you want to execute this ARexx script
-;
-;
 ; All strings below are used and renamed properly,
 ; so after rework is complete all strings left
 ; on top of this line are obsolete
@@ -1818,7 +262,7 @@ MSG_MENU_SETTINGSMUI_ITEM
 Ajustes MUI...
 ; MUI settings...
 ;
-MSG_MENU_MULITCOLUMNCHATDISPLAY_ITEM
+MSG_MENU_MULTICOLUMNCHATDISPLAY_ITEM
 Múltiples columnas
 ; Multi-column chat display
 ;
@@ -1926,6 +370,12 @@ MSG_MUICLASS_WINDOWIGNORELIST_TITLE
 Lista ignorar...
 ; Ignore List...
 ;
+MSG_MUICLASS_WINDOWIGNORELIST_INFO
+\033cLas marcas de anfitrión suelen ser: alias!usuarioID@anfitrión\nEjemplo: .. [Acceder] jahc (~jahc00@Amigaworld.Net) ..\n\033bjahc\033n es el alias, \033bjahc00\033n el usuarioID y \
+\033bAmigaworld.Net\033n el anfitrión.\nPara ignorar a esta persona, puede insertar la cadena: \033bjahc#?!#?@#?\033n\nEl uso de comodines hace que este comando sea muy potente.\nPuede hacer cosas \
+como: \033bguru#?editatio?!#?userid@#?.se\033n\no si desea hacerlo más simple: \033broberto#?\033n
+; Hostmarks look like this: nick!userid@hostname\ni.e.«Join» jahc (~jahc00@jahc.Amigaworld.Net)\njahc is the nick, jahc00 is the userid, and jahc.Amigaworld.Net is the hostname\nTo ignore this person, you could insert an ignore entry of: jahc#?\nThis will ignore all people with a nick starting with the letters jahc.\nThe use of wildcards makes this ignore command very powerful.\nThings like this are possible: guru#?editatio?!#?userid@#?.se\nor if you want to keep it simple, you could just use: jahc#?
+;
 MSG_MUICLASS_WINDOWIGNORELIST_ADD_GAD
 Añadir
 ; Add
@@ -1973,12 +423,6 @@ DCC
 MSG_MUICLASS_WINDOWIGNORELIST_DCC_HELP
 /
 ; /
-;
-MSG_MUICLASS_WINDOWIGNORELIST_INFO
-\033cLas marcas de anfitrión suelen ser: alias!usuarioID@anfitrión\nEjemplo: .. [Acceder] jahc (~jahc00@Amigaworld.Net) ..\n\033bjahc\033n es el alias, \033bjahc00\033n el usuarioID y \
-\033bAmigaworld.Net\033n el anfitrión.\nPara ignorar a esta persona, puede insertar la cadena: \033bjahc#?!#?@#?\033n\nEl uso de comodines hace que este comando sea muy potente.\nPuede hacer cosas \
-como: \033bguru#?editatio?!#?userid@#?.se\033n\no si desea hacerlo más simple: \033broberto#?\033n
-; Hostmarks look like this: nick!userid@hostname\ni.e.«Join» jahc (~jahc00@jahc.Amigaworld.Net)\njahc is the nick, jahc00 is the userid, and jahc.Amigaworld.Net is the hostname\nTo ignore this person, you could insert an ignore entry of: jahc#?\nThis will ignore all people with a nick starting with the letters jahc.\nThe use of wildcards makes this ignore command very powerful.\nThings like this are possible: guru#?editatio?!#?userid@#?.se\nor if you want to keep it simple, you could just use: jahc#?
 ;
 ;
 ; MUICLASS_IGNORELIST
@@ -2117,151 +561,187 @@ MSG_MUICLASS_SETTINGSCOLOR_CHOOSECOLOR_TITLE
 Elija color
 ; Choose Color
 ;
-MSG_MUICLASS_SETTINGSCOLOR_CHANNELBG_GAD
-Fondo:
-; Channel background:
+MSG_MUICLASS_SETTINGSCOLOR_CHANNELLIST_INFO
+Channel List
+; Channel List
 ;
-MSG_MUICLASS_SETTINGSCOLOR_CHANNELBG_HELP
+MSG_MUICLASS_SETTINGSCOLOR_CHANNELLISTBACKGROUND_GAD
+Background:
+; Background:
+;
+MSG_MUICLASS_SETTINGSCOLOR_CHANNELLISTBACKGROUND_HELP
 /
 ; /
 ;
-MSG_MUICLASS_SETTINGSCOLOR_NICKLISTBG_GAD
-Lista aliases (fondo):
-; Nicklist background:
+MSG_MUICLASS_SETTINGSCOLOR_CHANNELLISTTEXT_GAD
+No Activity:
+; No Activity:
 ;
-MSG_MUICLASS_SETTINGSCOLOR_NICKLISTBG_HELP
+MSG_MUICLASS_SETTINGSCOLOR_CHANNELLISTTEXT_HELP
 /
 ; /
 ;
-MSG_MUICLASS_SETTINGSCOLOR_TABLISTBG_GAD
- Lista cans./servs. (fondo):
-; Tabs background:
+MSG_MUICLASS_SETTINGSCOLOR_CHANNELLISTUSER_GAD
+User Activity:
+; User Activity:
 ;
-MSG_MUICLASS_SETTINGSCOLOR_TABLISTBG_HELP
+MSG_MUICLASS_SETTINGSCOLOR_CHANNELLISTUSER_HELP
 /
 ; /
 ;
-MSG_MUICLASS_SETTINGSCOLOR_NORMAL_GAD
- Normal:
+MSG_MUICLASS_SETTINGSCOLOR_CHANNELLISTSERVER_GAD
+Server Activity:
+; Server Activity:
+;
+MSG_MUICLASS_SETTINGSCOLOR_CHANNELLISTSERVER_HELP
+/
+; /
+;
+MSG_MUICLASS_SETTINGSCOLOR_CHANNELLISTHIGHLIGHT_GAD
+Highlight Activity:
+; Highlight Activity:
+;
+MSG_MUICLASS_SETTINGSCOLOR_CHANNELLISTHIGHLIGHT_HELP
+/
+; /
+;
+MSG_MUICLASS_SETTINGSCOLOR_USERLIST_INFO
+Userlist
+; Userlist
+;
+MSG_MUICLASS_SETTINGSCOLOR_USERLISTBACKGROUND_GAD
+Background:
+; Background:
+;
+MSG_MUICLASS_SETTINGSCOLOR_USERLISTBACKGROUND_HELP
+/
+; /
+;
+MSG_MUICLASS_SETTINGSCOLOR_USERLISTTEXT_GAD
+Text:
+; Text:
+;
+MSG_MUICLASS_SETTINGSCOLOR_USERLISTTEXT_HELP
+/
+; /
+;
+MSG_MUICLASS_SETTINGSCOLOR_LOGLIST_INFO
+Channel Log
+; Channel Log
+;
+MSG_MUICLASS_SETTINGSCOLOR_LOGLISTBACKGROUND_GAD
+Background:
+; Background:
+;
+MSG_MUICLASS_SETTINGSCOLOR_LOGLISTBACKGROUND_HELP
+/
+; /
+;
+MSG_MUICLASS_SETTINGSCOLOR_LOGPRIVMSG_GAD
+Normal:
 ; Normal:
 ;
-MSG_MUICLASS_SETTINGSCOLOR_NORMAL_HELP
+MSG_MUICLASS_SETTINGSCOLOR_LOGPRIVMSG_HELP
 /
 ; /
 ;
-MSG_MUICLASS_SETTINGSCOLOR_NICKLISTTX_GAD
-Lista aliases (texto):
-; Nicklist text:
-;
-MSG_MUICLASS_SETTINGSCOLOR_NICKLISTTX_HELP
-/
-; /
-;
-MSG_MUICLASS_SETTINGSCOLOR_TABSPEN_GAD
- Lista cans./servs. (texto):
-; Tabs pen:
-;
-MSG_MUICLASS_SETTINGSCOLOR_TABSPEN_HELP
-/
-; /
-;
-MSG_MUICLASS_SETTINGSCOLOR_JOIN_GAD
+MSG_MUICLASS_SETTINGSCOLOR_LOGJOIN_GAD
 Acceder:
 ; Join:
 ;
-MSG_MUICLASS_SETTINGSCOLOR_JOIN_HELP
+MSG_MUICLASS_SETTINGSCOLOR_LOGJOIN_HELP
 /
 ; /
 ;
-MSG_MUICLASS_SETTINGSCOLOR_PART_GAD
+MSG_MUICLASS_SETTINGSCOLOR_LOGPART_GAD
 Abandonar:
 ; Part:
 ;
-MSG_MUICLASS_SETTINGSCOLOR_PART_HELP
+MSG_MUICLASS_SETTINGSCOLOR_LOGPART_HELP
 /
 ; /
 ;
-MSG_MUICLASS_SETTINGSCOLOR_QUIT_GAD
+MSG_MUICLASS_SETTINGSCOLOR_LOGQUIT_GAD
 Salir:
 ; Quit:
 ;
-MSG_MUICLASS_SETTINGSCOLOR_QUIT_HELP
+MSG_MUICLASS_SETTINGSCOLOR_LOGQUIT_HELP
 /
 ; /
 ;
-MSG_MUICLASS_SETTINGSCOLOR_MODES_GAD
+MSG_MUICLASS_SETTINGSCOLOR_LOGMODE_GAD
 Modos:
 ; Modes:
 ;
-MSG_MUICLASS_SETTINGSCOLOR_MODES_HELP
+MSG_MUICLASS_SETTINGSCOLOR_LOGMODE_HELP
 /
 ; /
 ;
-MSG_MUICLASS_SETTINGSCOLOR_CTCP_GAD
- CTCP:
+MSG_MUICLASS_SETTINGSCOLOR_LOGCTCP_GAD
+CTCP:
 ; CTCP:
 ;
-MSG_MUICLASS_SETTINGSCOLOR_CTCP_HELP
+MSG_MUICLASS_SETTINGSCOLOR_LOGCTCP_HELP
 /
 ; /
 ;
-MSG_MUICLASS_SETTINGSCOLOR_ACTIONS_GAD
+MSG_MUICLASS_SETTINGSCOLOR_LOGACTION_GAD
 Acciones:
 ; Actions:
 ;
-MSG_MUICLASS_SETTINGSCOLOR_ACTIONS_HELP
+MSG_MUICLASS_SETTINGSCOLOR_LOGACTION_HELP
 /
 ; /
 ;
-MSG_MUICLASS_SETTINGSCOLOR_INFO_GAD
+MSG_MUICLASS_SETTINGSCOLOR_LOGINFO_GAD
 Información:
 ; Info:
 ;
-MSG_MUICLASS_SETTINGSCOLOR_INFO_HELP
+MSG_MUICLASS_SETTINGSCOLOR_LOGINFO_HELP
 /
 ; /
 ;
-MSG_MUICLASS_SETTINGSCOLOR_OWNTEXT_GAD
-Texto propio:
-; Own text:
+MSG_MUICLASS_SETTINGSCOLOR_LOGOWNTEXT_GAD
+Own:
+; Own:
 ;
-MSG_MUICLASS_SETTINGSCOLOR_OWNTEXT_HELP
+MSG_MUICLASS_SETTINGSCOLOR_LOGOWNTEXT_HELP
 /
 ; /
 ;
-MSG_MUICLASS_SETTINGSCOLOR_HIGHLIGHT_GAD
+MSG_MUICLASS_SETTINGSCOLOR_LOGHIGHLIGHT_GAD
 Resaltar:
 ; Highlight:
 ;
-MSG_MUICLASS_SETTINGSCOLOR_HIGHLIGHT_HELP
+MSG_MUICLASS_SETTINGSCOLOR_LOGHIGHLIGHT_HELP
 /
 ; /
 ;
-MSG_MUICLASS_SETTINGSCOLOR_NOTICES_GAD
+MSG_MUICLASS_SETTINGSCOLOR_LOGNOTICE_GAD
 Noticias:
 ; Notices:
 ;
-MSG_MUICLASS_SETTINGSCOLOR_NOTICES_HELP
+MSG_MUICLASS_SETTINGSCOLOR_LOGNOTICE_HELP
 /
 ; /
 ;
-MSG_MUICLASS_SETTINGSCOLOR_INVITE_GAD
+MSG_MUICLASS_SETTINGSCOLOR_LOGINVITE_GAD
 Invitar:
 ; Invite:
 ;
-MSG_MUICLASS_SETTINGSCOLOR_INVITE_HELP
+MSG_MUICLASS_SETTINGSCOLOR_LOGINVITE_HELP
 /
 ; /
 ;
-MSG_MUICLASS_SETTINGSCOLOR_KICK_GAD
+MSG_MUICLASS_SETTINGSCOLOR_LOGKICK_GAD
 Expulsar:
 ; Kick:
 ;
-MSG_MUICLASS_SETTINGSCOLOR_KICK_HELP
+MSG_MUICLASS_SETTINGSCOLOR_LOGKICK_HELP
 /
 ; /
 ;
-MSG_MUICLASS_SETTINGSCOLOR_NICKCHANGE_GAD
+MSG_MUICLASS_SETTINGSCOLOR_LOGNICKCHANGE_GAD
 Cambiar alias:
 ; Nick change:
 ;
@@ -2269,45 +749,22 @@ MSG_MUICLASS_SETTINGSCOLOR_NICKCHANGE_HELP
 /
 ; /
 ;
-MSG_MUICLASS_SETTINGSCOLOR_TOPIC_GAD
+MSG_MUICLASS_SETTINGSCOLOR_LOGTOPIC_GAD
 Temática:
 ; Topic:
 ;
-MSG_MUICLASS_SETTINGSCOLOR_TOPIC_HELP
+MSG_MUICLASS_SETTINGSCOLOR_LOGTOPIC_HELP
 /
 ; /
 ;
-MSG_MUICLASS_SETTINGSCOLOR_WALLOPS_GAD
+MSG_MUICLASS_SETTINGSCOLOR_LOGWALLOPS_GAD
 OPs:
 ; Wall ops:
 ;
-MSG_MUICLASS_SETTINGSCOLOR_WALLOPS_HELP
+MSG_MUICLASS_SETTINGSCOLOR_LOGWALLOPS_HELP
 /
 ; /
 ;
-MSG_MUICLASS_SETTINGSCOLOR_ACTIVITY_GAD
-Actividad:
-; Activity:
-;
-MSG_MUICLASS_SETTINGSCOLOR_ACTIVITY_HELP
-/
-; /
-;
-MSG_MUICLASS_SETTINGSCOLOR_CHATACTIVITY_GAD
-Actividad (charla):
-; Chat activity:
-;
-MSG_MUICLASS_SETTINGSCOLOR_CHATACTIVITY_HELP
-/
-; /
-;
-MSG_MUICLASS_SETTINGSCOLOR_HIGHLIGHTACTIVITY_GAD
-Actividad (resaltar):
-; Highlight activity:
-;
-MSG_MUICLASS_SETTINGSCOLOR_HIGHLIGHTACTIVITY_HELP
-/
-; /
 ;
 ;
 ; MUICLASS_WINDOWQUIT
@@ -3458,8 +1915,8 @@ MSG_MUICLASS_WINDOWQUICKSETUP_USERNAME_HELP
 ; /
 ;
 MSG_MUICLASS_WINDOWQUICKSETUP_NICKNAME_GAD
-_Nick name:
-; _Nick name:
+_Nick Name:
+; _Nick Name:
 ;
 MSG_MUICLASS_WINDOWQUICKSETUP_NICKNAME_HELP
 /
