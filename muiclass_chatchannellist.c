@@ -177,8 +177,11 @@ ULONG i;
 			mccdata->mcc_PenRGB[ i ] = MUIPenSpecToRGB( obj, penspec );
 		}
 	}
-	SetAttrs( obj, MUIA_Background, LRC( OID_SETTINGSCOLOR + PEN_CHANNELLISTBACKGROUND ), TAG_DONE );
-
+	#if ENABLE_NLIST /* NList is not using the standard background tag */
+		SetAttrs( obj, MUIA_NList_ListBackground, LRC( OID_SETTINGSCOLOR + PEN_CHANNELLISTBACKGROUND ), TAG_DONE );
+	#else
+		SetAttrs( obj, MUIA_Background, LRC( OID_SETTINGSCOLOR + PEN_CHANNELLISTBACKGROUND ), TAG_DONE );
+	#endif
 	return( 0 );
 }
 /* \\\ */

@@ -271,6 +271,7 @@ char *str;
 		se = NULL;
 		DoMethod( serverlist, MUIM_NList_GetEntry, 0, &se );
 		if( !se ) { /* we got no server, so setup defaults */
+
 			DoMethod( serverlist,
 						MM_SERVERLIST_ADD,
 						DEFAULT_SERVER_NAME,
@@ -280,9 +281,9 @@ char *str;
 						DEFAULT_SERVER_CHARSET,
 						SERVERENTRYF_AUTOCONNECT );
 
-			SetAttrs( serverlist, MUIA_NList_Active, 0, TAG_DONE ); /* make sure nicklist is valid */
+			SetAttrs( serverlist, MUIA_NList_Active, MUIV_NList_Active_Bottom, TAG_DONE ); /* make sure nicklist is valid */
 			se = NULL;
-			DoMethod( serverlist, MUIM_NList_GetEntry, 0, &se );
+			DoMethod( serverlist, MUIM_NList_GetEntry, MUIV_NList_GetEntry_Active, &se );
 			if( se ) { /* if we get no server here, something is broken */
 				/* add nick, nick_ and nick__ */
 				ne = NULL;
