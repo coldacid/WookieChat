@@ -109,13 +109,41 @@ static ULONG OM_Cleanup( struct IClass *cl, Object *obj, Msg *msg )
 /* /// OM_Display()
 **
 */
+#define USERDISPLAYBUFFER_SIZEOF 0x100
+
+static char STR_USERDISPLAYBUFFER[ USERDISPLAYBUFFER_SIZEOF ];
 
 /*************************************************************************/
 
 static ULONG OM_Display( struct IClass *cl, Object *obj, struct MUIP_NList_Display *msg )
 {
-	if( ( msg->entry ) ) {
-		*msg->strings = (STRPTR) ((struct ChatNick *) msg->entry)->cn_ChatNickEntry->cne_Nick;
+struct mccdata *mccdata = INST_DATA( cl, obj );
+char *nick   =  ((struct ChatNick *) msg->entry)->cn_ChatNickEntry->cne_Nick;
+char *status = NULL;
+
+	if( ( LRC( OID_GUI_NICKLISTGFXINFO ) ) ) {
+		switch( *nick++ ) {
+			case '@':
+				status = "ops";
+				break;
+			case '%':
+				status = "half_ops";
+				break;
+			case '+':
+				status = "voice";
+				break;
+			default:
+				break;
+		}
+		if( status ) {
+			sprintf( STR_USERDISPLAYBUFFER, "\033I[5:PROGDIR:smilies/nicklist/%s] %s", status, nick );
+		} else {
+			nick--;
+			sprintf( STR_USERDISPLAYBUFFER, "    %s", nick );
+		}
+		*msg->strings = (STRPTR) STR_USERDISPLAYBUFFER;
+	} else {
+		*msg->strings = (STRPTR) nick;
 	}
 	return( 0 );
 }

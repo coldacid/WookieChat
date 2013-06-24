@@ -4,7 +4,7 @@ LDFLAGS     = -noixemul -nostartfiles -Map=$(OBJDIR)/$@.map
 STRIP       = ppc-morphos-strip
 LIBS        = -laboxstubs -labox -ldebug
 INCS        =
-DEFINES     = -DDEBUG -DENABLE_MEMORYTRACKING=1 -DENABLE_NLIST=0
+DEFINES     = -DDEBUG -DENABLE_MEMORYTRACKING=1 -DENABLE_NLIST=1
 CFLAGS      = $(INCS) $(DEFINES) -std=gnu99 -noixemul -Wall -Wno-format -g -O0
 APPLICATION = WookieChat
 SYSTEM      = MorphOS
