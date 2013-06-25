@@ -13,12 +13,14 @@
 */
 
 #include <libraries/mui.h>
+#include <libraries/asl.h>
 #include <prefs/prefhdr.h>
 #include <proto/muimaster.h>
 #include <proto/intuition.h>
 #include <proto/utility.h>
 #include <proto/exec.h>
 #include <proto/dos.h>
+#include <proto/asl.h>
 #include <SDI_hook.h>
 #include <string.h>
 
@@ -64,7 +66,11 @@ GID_LOGKICK,
 GID_LOGNICKCHANGE,
 GID_LOGTOPIC,
 GID_LOGWALLOPS,
-GID_LAST
+/* other objects */
+GID_LAST,
+/* these need no storage, so defined after GID_LAST */
+GID_CMENU_IMPORTASTEXT,
+GID_CMENU_EXPORTASTEXT,
 };
 
 /*
@@ -127,9 +133,17 @@ static ULONG OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
 {
 Object *objs[ GID_LAST ];
 
-	debug( "%s (%ld) %s - Class: 0x00016824x Object: 0x00016824x \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
-	if( (obj = (Object *) DoSuperNew( cl, obj, MUIA_Group_Horiz, TRUE,
+	if( (obj = (Object *) DoSuperNew( cl, obj,
+				MUIA_Group_Horiz, TRUE,
+				MUIA_ContextMenu,
+						MenustripObject,
+							Child, MenuObject, MUIA_Menu_Title, LGS( MSG_MUICLASS_SETTINGSCOLOR_IMPORTCOLORS_CMENU ),
+								Child, MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MUICLASS_SETTINGSCOLOR_IMPORT_CMENU ), MUIA_UserData, GID_CMENU_IMPORTASTEXT, End,
+								Child, MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MUICLASS_SETTINGSCOLOR_EXPORT_CMENU ), MUIA_UserData, GID_CMENU_EXPORTASTEXT, End,
+							End,
+						End,
 				Child, HVSpace,
 				Child, VGroup,
 					Child, HVSpace,
@@ -227,14 +241,12 @@ static ULONG OM_Dispose( struct IClass *cl, Object *obj, Msg msg )
 {
 //struct mccdata *mccdata = INST_DATA( cl, obj );
 
-	debug( "%s (%ld) %s - Class: 0x00016824x Object: 0x00016824x \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	return( DoSuperMethodA( cl, obj, msg ) );
 }
 /* \\\ */
-
 /* Poppen are not supported by dataspace, so we need to adapt */
-
 /* /// OM_Import()
 **
 */
@@ -246,7 +258,7 @@ static ULONG OM_Import( struct IClass *cl, Object *obj, struct MUIP_Import *msg 
 struct mccdata *mccdata = INST_DATA( cl, obj );
 ULONG i;
 
-	debug( "%s (%ld) %s - Class: 0x00016824x Object: 0x00016824x \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	for( i = 0 ; TAB_CONFIGITEMS[ i ].GadgetID != -1 ; i++ ) {
 		if( TAB_CONFIGITEMS[ i ].Attr == MUIA_Pendisplay_Spec ) {
@@ -267,7 +279,7 @@ static ULONG OM_Export( struct IClass *cl, Object *obj, struct MUIP_Import *msg 
 struct mccdata *mccdata = INST_DATA( cl, obj );
 ULONG i;
 
-	debug( "%s (%ld) %s - Class: 0x00016824x Object: 0x00016824x \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	for( i = 0 ; TAB_CONFIGITEMS[ i ].GadgetID != -1 ; i++ ) {
 		if( TAB_CONFIGITEMS[ i ].Attr == MUIA_Pendisplay_Spec ) {
@@ -277,6 +289,10 @@ ULONG i;
 	return( DoSuperMethodA( cl, obj, (Msg)msg ) );
 }
 /* \\\ */
+
+/*
+** custom methods
+*/
 
 /* /// MM_ResetToDefaults()
 **
@@ -289,7 +305,7 @@ static ULONG MM_ResetToDefaults( struct IClass *cl, Object *obj, Msg *msg )
 struct mccdata *mccdata = INST_DATA( cl, obj );
 ULONG i;
 
-	debug( "%s (%ld) %s - Class: 0x00016824x Object: 0x00016824x \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	for( i = 0 ; TAB_CONFIGITEMS[ i ].GadgetID != -1 ; i++ ) {
 		SetAttrs( mccdata->mcc_ClassObjects[ TAB_CONFIGITEMS[ i ].GadgetID ],
@@ -311,13 +327,146 @@ static ULONG MM_ReadConfig( struct IClass *cl, Object *obj, struct MP_SETTINGSCO
 struct mccdata *mccdata = INST_DATA( cl, obj );
 ULONG i;
 
-	debug( "%s (%ld) %s - Class: 0x00016824x Object: 0x00016824x \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	for( i = 0 ; TAB_CONFIGITEMS[ i ].GadgetID != -1 ; i++ ) {
 		if( TAB_CONFIGITEMS[ i ].ObjectID == msg->ObjectID ) {
 			return( (ULONG) MUIGetVar( mccdata->mcc_ClassObjects[ TAB_CONFIGITEMS[ i ].GadgetID ], TAB_CONFIGITEMS[ i ].Attr ) );
 		}
 	}
+	return( 0 );
+}
+/* \\\ */
+
+/* /// MM_ContextMenuSelect()
+*/
+
+/*************************************************************************/
+
+static ULONG MM_ContextMenuSelect( struct IClass *cl, Object *obj, struct  MUIP_ContextMenuChoice *msg )
+{
+struct mccdata *mccdata = INST_DATA( cl, obj );
+struct FileRequester *filerequester;
+
+	debug( "%s (%ld) %s - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
+
+	if( msg->item ) {
+		switch( MUIGetVar( msg->item, MUIA_UserData ) ) {
+			case GID_CMENU_IMPORTASTEXT:
+				if( ( filerequester= (struct FileRequester*) AllocAslRequestTags( ASL_FileRequest,
+						ASLFR_Window       , _window(obj),
+						ASLFR_PopToFront   , TRUE,
+						ASLFR_TitleText    , LGS( MSG_MUICLASS_SETTINGSCOLOR_IMPORT_ASLTITLE ),
+						ASLFR_InitialDrawer, DEFAULT_PRESETSCOLORSPATH "/",
+						TAG_DONE, NULL ) ) ) {
+
+					SetAttrs( _app(obj), MUIA_Application_Sleep, TRUE, TAG_DONE );
+					if( AslRequest( filerequester, NULL ) ) {
+						ULONG length; STRPTR path;
+						length = strlen( (char*) filerequester->fr_File ) + strlen( (char*) filerequester->fr_Drawer ) + 4;
+						if( ( path = AllocVec( length, MEMF_ANY ) ) ) {
+							strcpy( (char *) path, (char *) filerequester->fr_Drawer );
+							AddPart( path, filerequester->fr_File, length );
+							debug("ipath is '%s'\n", path);
+							DoMethod( obj, MM_SETTINGSCOLOR_IMPORTASTEXT, path );
+
+							FreeVec( path );
+						}
+					}
+					FreeAslRequest(filerequester);
+					SetAttrs( _app(obj), MUIA_Application_Sleep, FALSE, TAG_DONE );
+				}
+				break;
+			case GID_CMENU_EXPORTASTEXT:
+				if( ( filerequester= (struct FileRequester*) AllocAslRequestTags( ASL_FileRequest,
+						ASLFR_Window       , _window(obj),
+						ASLFR_PopToFront   , TRUE,
+						ASLFR_TitleText    , LGS( MSG_MUICLASS_SETTINGSCOLOR_EXPORT_ASLTITLE ),
+						ASLFR_InitialDrawer, DEFAULT_PRESETSCOLORSPATH "/",
+						TAG_DONE, NULL ) ) ) {
+
+					SetAttrs( _app(obj), MUIA_Application_Sleep, TRUE, TAG_DONE );
+					if( AslRequest( filerequester, NULL ) ) {
+						ULONG length; STRPTR path;
+						length = strlen( (char*) filerequester->fr_File ) + strlen( (char*) filerequester->fr_Drawer ) + 4;
+						if( ( path = AllocVec( length, MEMF_ANY ) ) ) {
+							strcpy( (char *) path, (char *) filerequester->fr_Drawer );
+							AddPart( path, filerequester->fr_File, length );
+							debug("epath is '%s'\n", path);
+							DoMethod( obj, MM_SETTINGSCOLOR_EXPORTASTEXT, path );
+							FreeVec( path );
+						}
+					}
+					FreeAslRequest(filerequester);
+					SetAttrs( _app(obj), MUIA_Application_Sleep, FALSE, TAG_DONE );
+				}
+				break;
+		}
+	}
+	return( 0 );
+}
+/* \\\ */
+/* /// MM_ExportAsText()
+*/
+
+/*************************************************************************/
+
+static ULONG MM_ExportAsText( struct IClass *cl, Object *obj, struct MP_SETTINGSCOLOR_EXPORTASTEXT *msg )
+{
+struct mccdata *mccdata = INST_DATA( cl, obj );
+BPTR handle;
+ULONG i;
+char *str;
+
+	debug( "%s (%ld) %s - Class: 0x00014224x Object: 0x00014224x \n", __FILE__, __LINE__, __func__, cl, obj );
+
+	if( ( handle = Open( (_ub_cs) msg->Name, MODE_NEWFILE ) ) ) {
+		for( i = 0 ; TAB_CONFIGITEMS[ i ].GadgetID != -1 ; i++ ) {
+			str = (char *) MUIGetVar( mccdata->mcc_ClassObjects[ TAB_CONFIGITEMS[ i ].GadgetID ], TAB_CONFIGITEMS[ i ].Attr );
+			VFPrintf( handle, (CONST_STRPTR) "%s\n", &str );
+		}
+		Close( handle );
+    }
+	return( 0 );
+}
+/* \\\ */
+/* /// MM_ImportAsText()
+*/
+
+#define LINEBUFFER_SIZEOF 0x2000
+
+/*************************************************************************/
+
+static ULONG MM_ImportAsText( struct IClass *cl, Object *obj, struct MP_SETTINGSCOLOR_IMPORTASTEXT *msg )
+{
+struct mccdata *mccdata = INST_DATA( cl, obj );
+BPTR handle;
+ULONG i, length;
+char *linebuffer;
+
+	debug( "%s (%ld) %s - Class: 0x00014224x Object: 0x00014224x \n", __FILE__, __LINE__, __func__, cl, obj );
+
+	if( ( linebuffer = AllocVec( LINEBUFFER_SIZEOF, MEMF_ANY ) ) ) {
+		if( ( handle = Open( (_ub_cs) msg->Name, MODE_OLDFILE ) ) ) {
+			for( i = 0 ; TAB_CONFIGITEMS[ i ].GadgetID != -1 ; i++ ) {
+				if( FGets( handle, (STRPTR) linebuffer, LINEBUFFER_SIZEOF - 1 ) ) {
+					/* strip potential 0x0d and 0x0a from line end */
+					while( ( length = strlen( linebuffer ) ) ) {
+						debug("length is %ld\n", length );
+						if( ( linebuffer[ length - 1 ] == '\n' ) || ( linebuffer[ length - 1 ] == '\r' ) ) {
+							linebuffer[ length - 1 ] = '\0';
+						} else {
+							break;
+						}
+					}
+					debug("line is '%s'\n", linebuffer );
+					SetAttrs( mccdata->mcc_ClassObjects[ TAB_CONFIGITEMS[ i ].GadgetID ], TAB_CONFIGITEMS[ i ].Attr, linebuffer );
+				}
+			}
+			Close( handle );
+        }
+		FreeVec( linebuffer );
+    }
 	return( 0 );
 }
 /* \\\ */
@@ -336,13 +485,17 @@ DISPATCHER(MCC_SettingsColor_Dispatcher)
 {
     switch (msg->MethodID)
     {
-		case OM_NEW                            : return( OM_New                           ( cl, obj, (APTR) msg ) );
-		case OM_DISPOSE                        : return( OM_Dispose                       ( cl, obj, (APTR) msg ) );
-		case MUIM_Import                       : return( OM_Import                        ( cl, obj, (APTR) msg ) );
-		case MUIM_Export                       : return( OM_Export                        ( cl, obj, (APTR) msg ) );
+		case OM_NEW                             : return( OM_New                           ( cl, obj, (APTR) msg ) );
+		case OM_DISPOSE                         : return( OM_Dispose                       ( cl, obj, (APTR) msg ) );
+		case MUIM_Import                        : return( OM_Import                        ( cl, obj, (APTR) msg ) );
+		case MUIM_Export                        : return( OM_Export                        ( cl, obj, (APTR) msg ) );
+		case MUIM_ContextMenuChoice : return( MM_ContextMenuSelect             ( cl, obj, (APTR) msg ) );
+		case MM_SETTINGSCOLOR_RESETTODEFAULTS   : return( MM_ResetToDefaults               ( cl, obj, (APTR) msg ) );
+		case MM_SETTINGSCOLOR_READCONFIG        : return( MM_ReadConfig                    ( cl, obj, (APTR) msg ) );
 
-		case MM_SETTINGSCOLOR_RESETTODEFAULTS  : return( MM_ResetToDefaults               ( cl, obj, (APTR) msg ) );
-		case MM_SETTINGSCOLOR_READCONFIG       : return( MM_ReadConfig                    ( cl, obj, (APTR) msg ) );
+		case MM_SETTINGSCOLOR_CONTEXTMENUSELECT : return( MM_ContextMenuSelect             ( cl, obj, (APTR) msg ) );
+		case MM_SETTINGSCOLOR_EXPORTASTEXT      : return( MM_ExportAsText                 ( cl, obj, (APTR) msg ) );
+		case MM_SETTINGSCOLOR_IMPORTASTEXT      : return( MM_ImportAsText                 ( cl, obj, (APTR) msg ) );
 	}
 	return( DoSuperMethodA( cl, obj, msg ) );
 

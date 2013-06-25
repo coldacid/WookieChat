@@ -127,7 +127,7 @@ struct mccdata *mccdata = INST_DATA( cl, obj );
 
 				path = (char *) LocalReadConfig( OID_SND_CTCPSAMPLES );
 				if( !path || !path[0] ) {
-					path = DEFAULT_SETTINGSSAMPLEPATH;
+					path = DEFAULT_PRESETSSOUNDSPATH;
 				}
 				if( !(lock = Lock( (_s_cs) path, ACCESS_READ ) ) ) {
 					lock = CurrentDir( lock );

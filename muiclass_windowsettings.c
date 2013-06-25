@@ -154,7 +154,13 @@ ULONG i;
 		if( ( lock = CreateDir( (_s_cs) DEFAULT_SETTINGSPATH ) ) ) {
 			UnLock( lock );
 		}
-		if( ( lock = CreateDir( (_s_cs) DEFAULT_SETTINGSPRESETSPATH ) ) ) {
+		if( ( lock = CreateDir( (_s_cs) DEFAULT_PRESETSPATH ) ) ) {
+			UnLock( lock );
+		}
+		if( ( lock = CreateDir( (_s_cs) DEFAULT_PRESETSSOUNDSPATH ) ) ) {
+			UnLock( lock );
+		}
+		if( ( lock = CreateDir( (_s_cs) DEFAULT_PRESETSCOLORSPATH ) ) ) {
 			UnLock( lock );
 		}}
 
