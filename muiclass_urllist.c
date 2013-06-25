@@ -45,7 +45,7 @@
 static ULONG OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
 {
 
-	debug( "%s (%ld) %s - Class: 0x00008258x Object: 0x00008258x \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s - Class: 0x08lx Object: 0x08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	return( (ULONG) DoSuperNew( cl, obj,
 							MUIA_NList_Title         , TRUE,
@@ -81,7 +81,7 @@ struct URLEntry *ue;
 
 static ULONG OM_Destruct( struct IClass *cl, Object *obj, struct MUIP_NList_Destruct *msg )
 {
-	debug( "%s (%ld) %s - Class: 0x00008258x Object: 0x00008258x \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s - Class: 0x08lx Object: 0x08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	if( msg->entry ) {
 		FreeVec( msg->entry );
@@ -101,7 +101,7 @@ static ULONG OM_Import( struct IClass *cl, Object *obj, struct MUIP_Import *msg 
 ULONG i;
 char *text;
 
-	debug( "%s (%ld) %s - Class: 0x00008258x Object: 0x00008258x \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s - Class: 0x08lx Object: 0x08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	DoMethod( obj, MUIM_NList_Clear );
 	for( i = 0 ;  ; i++ ) {
@@ -125,7 +125,7 @@ static ULONG OM_Export( struct IClass *cl, Object *obj, struct MUIP_Import *msg 
 struct URLEntry *ue;
 ULONG i;
 
-	debug( "%s (%ld) %s - Class: 0x00008258x Object: 0x00008258x \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s - Class: 0x08lx Object: 0x08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	for( i = 0 ;  ; i++ ) {
 		ue = NULL;
@@ -151,7 +151,7 @@ static ULONG MM_Add( struct IClass *cl, Object *obj, struct MP_URLLIST_ADD *msg 
 struct URLEntry *ue;
 LONG i, entries;
 
-	debug( "%s (%ld) %s - Class: 0x00008258x Object: 0x00008258x \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s - Class: 0x08lx Object: 0x08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	if( !Strnicmp( msg->URL, (_ub_cs) "http://", 6 ) ||
 		!Strnicmp( msg->URL, (_ub_cs) "https://", 6 ) ||
@@ -193,7 +193,7 @@ BPTR handle;
 ULONG i;
 struct URLEntry *ue;
 
-	debug( "%s (%ld) %s - Class: 0x00008258x Object: 0x00008258x \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s - Class: 0x08lx Object: 0x08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	if( ( handle = Open( (_ub_cs) msg->Name, MODE_NEWFILE ) ) ) {
 		for( i = 0 ;  ; i++ ) {
@@ -222,7 +222,7 @@ static ULONG MM_ImportListAsText( struct IClass *cl, Object *obj, struct MP_URLL
 BPTR handle;
 char *linebuffer;
 
-	debug( "%s (%ld) %s - Class: 0x00008258x Object: 0x00008258x \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s - Class: 0x08lx Object: 0x08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	DoMethod( obj, MUIM_NList_Clear );
 

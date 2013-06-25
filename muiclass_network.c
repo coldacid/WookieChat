@@ -525,7 +525,7 @@ static ULONG IRCCMD_ChannelModeIs( Object *obj, struct Server *s, struct ServerM
 static ULONG OM_New( struct IClass *cl, Object *obj, struct opSet *msg )
 {
 
-	debug( "%s (%ld) %s - Class: 0x00054320x Object: 0x00054320x \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s - Class: 0x08lx Object: 0x08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	if( ( obj = (Object*) DoSuperNew( cl, obj, TAG_DONE ) ) ) {
 		struct mccdata *mccdata = INST_DATA( cl, obj );
@@ -552,7 +552,7 @@ static ULONG OM_Dispose( struct IClass *cl, Object *obj, Msg *msg )
 struct mccdata *mccdata = INST_DATA( cl, obj );
 struct Server *s;
 
-	debug( "%s (%ld) %s - Class: 0x00054320x Object: 0x00054320x \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s - Class: 0x08lx Object: 0x08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	while( (s = (APTR) mccdata->mcc_ServerList.lh_Head)->s_Succ ) {
 		DoMethod( obj, MM_NETWORK_SERVERFREE, s );
@@ -573,7 +573,7 @@ struct mccdata *mccdata = INST_DATA( cl, obj );
 struct TagItem *tag;
 struct TagItem *tstate;
 
-	debug( "%s (%ld) %s - Class: 0x00054320x Object: 0x00054320x \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s - Class: 0x08lx Object: 0x08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	for( tstate = msg->ops_AttrList ; ( tag = NextTagItem( &tstate ) ) ; ) {
 		ULONG tidata = tag->ti_Data;
@@ -604,7 +604,7 @@ struct Server      *s;
 Object *serverlist;
 ULONG i;
 
-	debug( "%s (%ld) %s - Class: 0x00054320x Object: 0x00054320x \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s - Class: 0x08lx Object: 0x08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	serverlist = (APTR) LocalReadConfig( OID_SVR_LIST );
 
@@ -645,7 +645,7 @@ struct Nick   *n;
 char *buffer;
 ULONG i;
 
-	debug( "%s (%ld) %s - Class: 0x00054320x Object: 0x00054320x \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s - Class: 0x08lx Object: 0x08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	if( ( buffer = AllocVec( COMMAND_COMPOSEBUFFER_SIZEOF, MEMF_ANY ) ) ) {
 
@@ -684,7 +684,7 @@ struct Server  *s = msg->Server;
 struct Channel *c;
 char *buffer;
 
-	debug( "%s (%ld) %s - Class: 0x00054320x Object: 0x00054320x \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s - Class: 0x08lx Object: 0x08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	if( ( buffer = AllocVec( COMMAND_COMPOSEBUFFER_SIZEOF, MEMF_ANY ) ) ) {
 		for( c = (APTR) s->s_ChannelList.lh_Head ; c->c_Succ ; c = c->c_Succ ) {
@@ -714,7 +714,7 @@ struct mccdata *mccdata = INST_DATA( cl, obj );
 struct ServerEntry *se = msg->ServerEntry;
 struct Server *s;
 
-	debug( "%s (%ld) %s - Class: 0x00054320x Object: 0x00054320x \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s - Class: 0x08lx Object: 0x08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	for( s = (APTR) mccdata->mcc_ServerList.lh_Head ; s->s_Succ ; s = s->s_Succ ) {
 		if( s->s_Port == se->se_Port ) { /* different port -> different server */
@@ -742,7 +742,7 @@ struct NickEntry    *ne;
 struct Channel      *c;
 struct ChannelEntry *ce;
 
-	debug( "%s (%ld) %s - Class: 0x00054320x Object: 0x00054320x \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s - Class: 0x08lx Object: 0x08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	if( ( se = msg->ServerEntry ) ) {
 		/* do not alloc the same server twice */
@@ -807,7 +807,7 @@ struct Server   *s = msg->Server;
 struct Nick         *n;
 struct Channel      *c;
 
-	debug( "%s (%ld) %s - Class: 0x00054320x Object: 0x00054320x \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s - Class: 0x08lx Object: 0x08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	/* dissnnect if needed */
 
@@ -847,7 +847,7 @@ static ULONG MM_ServerFindChannel( struct IClass *cl, Object *obj, struct MP_NET
 {
 struct Channel *c;
 
-	debug( "%s (%ld) %s - Class: 0x00054320x Object: 0x00054320x \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s - Class: 0x08lx Object: 0x08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	for( c = (APTR) msg->Server->s_ChannelList.lh_Head ; c->c_Succ ; c = c->c_Succ ) {
 		if( msg->ChannelName ) {
@@ -874,7 +874,7 @@ struct mccdata *mccdata = INST_DATA( cl, obj );
 struct Server *s;
 ULONG result;
 
-	debug( "%s (%ld) %s - Class: 0x00054320x Object: 0x00054320x \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s - Class: 0x08lx Object: 0x08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	result = MSG_ERROR_NOERROR + 1; /* socket error */
 	if( ( s = msg->Server ) ) {
@@ -946,7 +946,7 @@ static ULONG MM_ServerSocketClose( struct IClass *cl, Object *obj, struct MP_NET
 struct mccdata *mccdata = INST_DATA( cl, obj );
 struct Server *s;
 
-	debug( "%s (%ld) %s - Class: 0x00054320x Object: 0x00054320x \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s - Class: 0x08lx Object: 0x08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	if( ( s = msg->Server ) ) {
 		if( s->s_ServerSocket != -1 ) { /* still open? */
@@ -978,7 +978,7 @@ static ULONG MM_ServerConnect( struct IClass *cl, Object *obj, struct MP_NETWORK
 struct Server *s = msg->Server;
 ULONG result;
 
-	debug( "%s (%ld) %s - Class: 0x00054320x Object: 0x00054320x \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s - Class: 0x08lx Object: 0x08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	result = MSG_ERROR_NOERROR + 4; /* bsdsocket missing */
 	if( !SocketBase ) {
@@ -1038,7 +1038,7 @@ static ULONG MM_ServerDisconnect( struct IClass *cl, Object *obj, struct MP_NETW
 {
 struct Server *s = msg->Server;
 
-	debug( "%s (%ld) %s - Class: 0x00054320x Object: 0x00054320x \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s - Class: 0x08lx Object: 0x08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	if( SocketBase ) {
 		DoMethod( obj, MM_NETWORK_SERVERSOCKETCLOSE, s );
@@ -1058,7 +1058,7 @@ struct Server  *s = msg->Server;
 struct ServerMessageParse *smp;
 struct ChatLogEntry *cle;
 
-	debug( "%s (%ld) %s - Class: 0x00054320x Object: 0x00054320x \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s - Class: 0x08lx Object: 0x08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	if( ( smp = (APTR) DoMethod( obj, MM_NETWORK_SERVERMESSAGEPARSEBEGIN, s, msg->Message ) ) ) {
 
@@ -1094,7 +1094,7 @@ static ULONG MM_ServerMessageSend( struct IClass *cl, Object *obj, struct MP_NET
 {
 struct SendNode *sn;
 
-	debug( "%s (%ld) %s - Class: 0x00054320x Object: 0x00054320x \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s - Class: 0x08lx Object: 0x08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	if( ( sn = AllocVec( sizeof( struct SendNode ) + strlen( msg->Message ) + 3, MEMF_ANY ) )) {
 		strcpy( sn->sn_Message, msg->Message );
@@ -1118,7 +1118,7 @@ struct mccdata *mccdata = INST_DATA( cl, obj );
 struct Server   *s;
 struct SendNode *sn;
 
-//	  debug( "%s (%ld) %s - Class: 0x00054320x Object: 0x00054320x \n", __FILE__, __LINE__, __func__, cl, obj );
+//	  debug( "%s (%ld) %s - Class: 0x08lx Object: 0x08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	for( s = (APTR) mccdata->mcc_ServerList.lh_Head ; s->s_Succ ; s = s->s_Succ ) {
 		if( ( sn = (APTR) s->s_SendList.lh_Head )->sn_Succ ) {
@@ -1179,7 +1179,7 @@ struct ServerMessageParse *smp;
 char *args, chr, *pattern, *dst, *tmp;
 ULONG i;
 
-//	  debug( "%s (%ld) %s - Class: 0x00054320x Object: 0x00054320x \n", __FILE__, __LINE__, __func__, cl, obj );
+//	  debug( "%s (%ld) %s - Class: 0x08lx Object: 0x08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	if( ( smp = AllocVec( sizeof( struct ServerMessageParse ) + strlen( msg->Message ) + 1, MEMF_ANY|MEMF_CLEAR ) ) ) {
 		smp->smp_Pen = PEN_LOGPRIVMSG;
@@ -1314,7 +1314,7 @@ ULONG i;
 
 static ULONG MM_ServerMessageParseEnd( struct IClass *cl, Object *obj, struct MP_NETWORK_SERVERMESSAGEPARSEEND *msg )
 {
-//	  debug( "%s (%ld) %s - Class: 0x00054320x Object: 0x00054320x \n", __FILE__, __LINE__, __func__, cl, obj );
+//	  debug( "%s (%ld) %s - Class: 0x08lx Object: 0x08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	FreeVec( msg->ServerMessageParse );
 
@@ -1332,7 +1332,7 @@ static ULONG MM_ServerMessageProcess( struct IClass *cl, Object *obj, struct MP_
 struct ServerMessageParse *smp = msg->ServerMessageParse;
 ULONG result = 0, i;
 
-//	  debug( "%s (%ld) %s - Class: 0x00054320x Object: 0x00054320x \n", __FILE__, __LINE__, __func__, cl, obj );
+//	  debug( "%s (%ld) %s - Class: 0x08lx Object: 0x08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	if( smp->smp_Command && smp->smp_Command[0] ) {
 		for( i = 0 ; TAB_IRCCOMMANDS[i].CMD_Name ; i++ ) {
@@ -1361,7 +1361,7 @@ static ULONG MM_ServerSendData( struct IClass *cl, Object *obj, struct MP_NETWOR
 struct Server *s = msg->Server;
 ULONG result;
 
-	debug( "%s (%ld) %s - Class: 0x00054320x Object: 0x00054320x \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s - Class: 0x08lx Object: 0x08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	result = MSG_ERROR_NOERROR + 10;
 
@@ -1384,7 +1384,7 @@ static ULONG MM_ServerReceiveData( struct IClass *cl, Object *obj, struct MP_NET
 struct Server *s = msg->Server;
 LONG bytes;
 
-	debug( "%s (%ld) %s - Class: 0x00054320x Object: 0x00054320x \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s - Class: 0x08lx Object: 0x08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	if( s->s_State == SVRSTATE_CONNECTED ) {
 
@@ -1499,7 +1499,7 @@ static ULONG MM_ChannelFind( struct IClass *cl, Object *obj, struct MP_NETWORK_C
 struct Server   *s = msg->Server;
 struct Channel      *c;
 
-	debug( "%s (%ld) %s - Class: 0x00054320x Object: 0x00054320x \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s - Class: 0x08lx Object: 0x08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	for( c = (APTR) s->s_ChannelList.lh_Head ; c->c_Succ ; c = c->c_Succ ) {
 		if( !Stricmp( (CONST_STRPTR) c->c_Name, (CONST_STRPTR) msg->Name ) ) {
@@ -1520,7 +1520,7 @@ static ULONG MM_ChannelAlloc( struct IClass *cl, Object *obj, struct MP_NETWORK_
 struct Server   *s = msg->Server;
 struct Channel      *c;
 
-	debug( "%s (%ld) %s - Class: 0x00054320x Object: 0x00054320x \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s - Class: 0x08lx Object: 0x08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	if( !( msg->Name ) || !(msg->Name[0]) || !( c = (APTR) DoMethod( obj, MM_NETWORK_CHANNELFIND, s, msg->Name ) ) ) {
 		if( (msg->Name[0] ) ) {
@@ -1548,7 +1548,7 @@ static ULONG MM_ChannelFree( struct IClass *cl, Object *obj, struct MP_NETWORK_C
 struct Channel      *c  = msg->Channel;
 struct Node *node;
 
-	debug( "%s (%ld) %s - Class: 0x00054320x Object: 0x00054320x \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s - Class: 0x08lx Object: 0x08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	if( c ) {
 		DoMethod( _app(obj), MM_APPLICATION_CHANNELREMOVE, c );
@@ -1580,7 +1580,7 @@ static ULONG MM_ChatLogEntryFree( struct IClass *cl, Object *obj, struct MP_NETW
 {
 struct ChatLogEntry *cle;
 
-	debug( "%s (%ld) %s - Class: 0x00054320x Object: 0x00054320x \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s - Class: 0x08lx Object: 0x08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	if( ( cle = msg->ChatLogEntry ) ) {
 		if( cle->cle_Succ && cle->cle_Pred ) {
@@ -1603,7 +1603,7 @@ struct Server  *s;
 struct Channel *c;
 struct ChatLogEntry *cle = NULL;
 
-	debug( "%s (%ld) %s - Class: 0x00054320x Object: 0x00054320x \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s - Class: 0x08lx Object: 0x08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	if( ( s = msg->Server ) ) {
 /*
@@ -1649,7 +1649,7 @@ static ULONG MM_ChatNickEntryAlloc( struct IClass *cl, Object *obj, struct MP_NE
 struct ChatNickEntry *cne;
 struct Channel *c;
 
-	debug( "%s (%ld) %s - Class: 0x00054320x Object: 0x00054320x \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s - Class: 0x08lx Object: 0x08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	if( ( c = msg->Channel ) ) {
 		for( cne = (APTR) c->c_ChatNickList.lh_Head ; cne->cne_Succ ; cne = cne->cne_Succ ) {
@@ -1677,7 +1677,7 @@ static ULONG MM_ChatNickEntryFree( struct IClass *cl, Object *obj, struct MP_NET
 {
 struct ChatNickEntry *cne;
 
-	debug( "%s (%ld) %s - Class: 0x00054320x Object: 0x00054320x \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s - Class: 0x08lx Object: 0x08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	if( ( cne = msg->ChatNickEntry ) ) {
 		if( cne->cne_Succ && cne->cne_Pred ) {

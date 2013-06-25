@@ -125,7 +125,7 @@ static ULONG OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
 {
 Object *objs[ GID_LAST ];
 
-	debug( "%s (%ld) %s - Class: 0x00025165x Object: 0x00025165x \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	if( (obj = (Object *)DoSuperNew( cl, obj,
 			MUIA_Window_Title            , LGS( MSG_MUICLASS_WINDOWCHAT_TITLE ),
@@ -225,7 +225,7 @@ static ULONG OM_Dispose( struct IClass *cl, Object *obj, Msg msg )
 {
 //struct mccdata *mccdata = INST_DATA( cl, obj );
 
-	debug( "%s (%ld) %s - Class: 0x00025165x Object: 0x00025165x \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	return( DoSuperMethodA( cl, obj, msg ) );
 }
@@ -279,7 +279,7 @@ static ULONG OM_Setup( struct IClass *cl, Object *obj, Msg *msg )
 struct mccdata *mccdata = INST_DATA( cl, obj );
 Object *winobj;
 
-	debug( "%s (%ld) %s - Class: 0x00025165x Object: 0x00025165x \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	mccdata->mcc_ClassObjects[ WID_SETTINGS ] = (Object *) MUIGetVar( _app(obj), MA_APPLICATION_OBJECTWINDOWSETTINGS );
 
@@ -305,7 +305,7 @@ static ULONG MM_MenuSelect( struct IClass *cl, Object *obj, struct MP_WINDOWCHAT
 //struct mccdata *mccdata = INST_DATA( cl, obj );
 Object *tmpobj;
 
-	debug( "%s (%ld) %s - Class: 0x00025165x Object: 0x00025165x \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	switch( msg->MenuID ) {
 
@@ -341,22 +341,25 @@ Object *tmpobj;
 	return( 0 );
 }
 /* \\\ */
-/* /// MM_ColorChange()
+/* /// MM_VisualChange()
 **
 */
 
 /*************************************************************************/
 
-static ULONG MM_ColorChange( struct IClass *cl, Object *obj, Msg *msg )
+static ULONG MM_VisualChange( struct IClass *cl, Object *obj, Msg *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 
-	debug( "%s (%ld) %s - Class: 0x00025165x Object: 0x00025165x \n", __FILE__, __LINE__, __func__, cl, obj );
-
+	debug( "%s (%ld) %s - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
+/* first update colors of all classes involved */
 	DoMethod( mccdata->mcc_ClassObjects[ GID_CHATLOG         ], MM_CHATLOG_PENSUPDATE         );
 	DoMethod( mccdata->mcc_ClassObjects[ GID_CHATUSERLIST    ], MM_CHATUSERLIST_PENSUPDATE    );
 	DoMethod( mccdata->mcc_ClassObjects[ GID_CHATCHANNELLIST ], MM_CHATCHANNELLIST_PENSUPDATE );
-
+/* second update all elements effected by visual settings */
+	DoMethod( mccdata->mcc_ClassObjects[ GID_CHATLOG         ], MUIM_NList_Redraw, MUIV_NList_Redraw_All );
+	DoMethod( mccdata->mcc_ClassObjects[ GID_CHATUSERLIST    ], MUIM_NList_Redraw, MUIV_NList_Redraw_All );
+	DoMethod( mccdata->mcc_ClassObjects[ GID_CHATCHANNELLIST ], MUIM_NList_Redraw, MUIV_NList_Redraw_All );
 	return( 0 );
 }
 /* \\\ */
@@ -373,7 +376,7 @@ struct mccdata *mccdata = INST_DATA( cl, obj );
 struct ChatChannel *cc;
 ULONG i;
 
-	debug( "%s (%ld) %s - Class: 0x00025165x Object: 0x00025165x \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	/* only add, if not already in list */
 	for( i = 0 ;  ; i++ ) {
@@ -407,7 +410,7 @@ struct mccdata *mccdata = INST_DATA( cl, obj );
 struct ChatChannel *cc;
 ULONG i;
 
-	debug( "%s (%ld) %s - Class: 0x00025165x Object: 0x00025165x \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 //	  DoMethod( mccdata->mcc_ClassObjects[ GID_CONNECTEDBUTTONS ], MM_CONNECTEDBUTTONS_REMOVE, msg->Channel );
 
@@ -440,7 +443,7 @@ struct mccdata *mccdata = INST_DATA( cl, obj );
 struct ChatChannel     *cc;
 struct Channel         *c;
 
-	debug( "%s (%ld) %s - Class: 0x00025165x Object: 0x00025165x \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	DoMethod( mccdata->mcc_ClassObjects[ GID_CHATLOG      ], MUIM_NList_Clear );
 	DoMethod( mccdata->mcc_ClassObjects[ GID_CHATUSERLIST ], MUIM_NList_Clear );
@@ -479,7 +482,7 @@ struct mccdata *mccdata = INST_DATA( cl, obj );
 struct ChatChannel     *cc;
 struct Channel         *c;
 
-	debug( "%s (%ld) %s - Class: 0x00025165x Object: 0x00025165x \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	cc = NULL;
 	DoMethod( mccdata->mcc_ClassObjects[ GID_CHATCHANNELLIST ], MUIM_NList_GetEntry, MUIV_NList_GetEntry_Active, &cc );
@@ -506,7 +509,7 @@ static ULONG MM_ChannelNickAdd( struct IClass *cl, Object *obj, struct MP_WINDOW
 struct mccdata *mccdata = INST_DATA( cl, obj );
 struct ChatChannel *cc;
 
-	debug( "%s (%ld) %s - Class: 0x00025165x Object: 0x00025165x \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	cc = NULL;
 	DoMethod( mccdata->mcc_ClassObjects[ GID_CHATCHANNELLIST ], MUIM_NList_GetEntry, MUIV_NList_GetEntry_Active, &cc );
@@ -532,7 +535,7 @@ struct mccdata *mccdata = INST_DATA( cl, obj );
 struct ChatNick *cn;
 ULONG i;
 
-	debug( "%s (%ld) %s - Class: 0x00025165x Object: 0x00025165x \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	for( i = 0 ;  ; i++ ) {
 		cn = NULL;
@@ -563,7 +566,7 @@ struct Channel *c;
 struct ChatChannel  *cc;
 struct ChatLogEntry *cle = msg->ChatLogEntry;
 
-	debug( "%s (%ld) %s - Class: 0x00025165x Object: 0x00025165x \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	/* pointer magic */
 	debug( "%s (%ld) %s - got message %08lx to window\n", __FILE__, __LINE__, __func__, msg->ChatLogEntry );
@@ -643,7 +646,7 @@ struct mccdata *mccdata = INST_DATA( cl, obj );
 struct ChatChannel *cc;
 struct Server *s;
 
-	debug( "%s (%ld) %s - Class: 0x00025165x Object: 0x00025165x \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	cc = NULL;
 	DoMethod( mccdata->mcc_ClassObjects[ GID_CHATCHANNELLIST ], MUIM_NList_GetEntry, MUIV_NList_GetEntry_Active, &cc );
@@ -686,7 +689,7 @@ DISPATCHER(MCC_WindowChat_Dispatcher)
 		case MUIM_Window_Setup                  : return( OM_Setup               ( cl, obj, (APTR) msg ) );
 
 		case MM_WINDOWCHAT_MENUSELECT           : return( MM_MenuSelect          ( cl, obj, (APTR) msg ) );
-		case MM_WINDOWCHAT_COLORCHANGE          : return( MM_ColorChange         ( cl, obj, (APTR) msg ) );
+		case MM_WINDOWCHAT_VISUALCHANGE         : return( MM_VisualChange        ( cl, obj, (APTR) msg ) );
 
 		case MM_WINDOWCHAT_MESSAGEENTERED       : return( MM_MessageEntered      ( cl, obj, (APTR) msg ) );
 		case MM_WINDOWCHAT_MESSAGERECEIVED      : return( MM_MessageReceived     ( cl, obj, (APTR) msg ) );

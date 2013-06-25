@@ -72,6 +72,9 @@
 #undef  MUIV_NList_Redraw_Active
 #define MUIV_NList_Redraw_Active MUIV_List_Redraw_Active
 
+#undef  MUIV_NList_Redraw_All
+#define MUIV_NList_Redraw_All MUIV_List_Redraw_All
+
 #undef  MUIA_NList_Input
 #define MUIA_NList_Input MUIA_List_Input
 

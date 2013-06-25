@@ -345,7 +345,6 @@ ULONG i;
 
 static ULONG MM_ContextMenuSelect( struct IClass *cl, Object *obj, struct  MUIP_ContextMenuChoice *msg )
 {
-struct mccdata *mccdata = INST_DATA( cl, obj );
 struct FileRequester *filerequester;
 
 	debug( "%s (%ld) %s - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
@@ -418,7 +417,7 @@ BPTR handle;
 ULONG i;
 char *str;
 
-	debug( "%s (%ld) %s - Class: 0x00014224x Object: 0x00014224x \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s - Class: 0x08lxx Object: 0x08lxx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	if( ( handle = Open( (_ub_cs) msg->Name, MODE_NEWFILE ) ) ) {
 		for( i = 0 ; TAB_CONFIGITEMS[ i ].GadgetID != -1 ; i++ ) {
@@ -444,7 +443,7 @@ BPTR handle;
 ULONG i, length;
 char *linebuffer;
 
-	debug( "%s (%ld) %s - Class: 0x00014224x Object: 0x00014224x \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s - Class: 0x08lxx Object: 0x08lxx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	if( ( linebuffer = AllocVec( LINEBUFFER_SIZEOF, MEMF_ANY ) ) ) {
 		if( ( handle = Open( (_ub_cs) msg->Name, MODE_OLDFILE ) ) ) {

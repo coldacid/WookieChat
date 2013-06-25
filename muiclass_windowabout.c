@@ -66,7 +66,7 @@ static ULONG OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
 {
 Object *objs[ GID_LAST ];
 
-	debug( "%s (%ld) %s - Class: 0x00005898x Object: 0x00005898x \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s - Class: 0x08lx Object: 0x08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	if( (obj = (Object *)DoSuperNew( cl, obj,
 			MUIA_Window_Title            , LGS( MSG_MUICLASS_WINDOWABOUT_TITLE ),
@@ -106,7 +106,7 @@ static ULONG OM_Dispose( struct IClass *cl, Object *obj, Msg msg )
 {
 //struct mccdata *mccdata = INST_DATA( cl, obj );
 
-	debug( "%s (%ld) %s - Class: 0x00005898x Object: 0x00005898x \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s - Class: 0x08lx Object: 0x08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	return( DoSuperMethodA( cl, obj, msg ) );
 }

@@ -40,7 +40,7 @@
 static ULONG OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
 {
 
-	debug( "%s (%ld) %s - Class: 0x00004574x Object: 0x00004574x \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s - Class: 0x08lx Object: 0x08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	return( (ULONG) (obj = (Object *) DoSuperNew( cl, obj,
 													MUIA_NList_Title         , TRUE,

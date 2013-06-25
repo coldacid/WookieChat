@@ -75,7 +75,7 @@ static ULONG OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
 {
 Object *objs[ GID_LAST ];
 
-	debug( "%s (%ld) %s - Class: 0x00011296x Object: 0x00011296x \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s - Class: 0x08lx Object: 0x08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	if( (obj = (Object *)DoSuperNew( cl, obj,
 			MUIA_Window_Title            , LGS( MSG_MUICLASS_WINDOWIGNORELIST_TITLE ),
@@ -231,7 +231,7 @@ char pattern[ IGNOREENTRY_PATTERN_SIZEOF * 3 ];
 char *nick;
 ULONG i, length, result = FALSE;
 
-	debug( "%s (%ld) %s - Class: 0x00011296x Object: 0x00011296x \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s - Class: 0x08lx Object: 0x08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	length = strlen( (char *) msg->Nick ) + strlen( (char *) msg->HostName ) + 2;
 

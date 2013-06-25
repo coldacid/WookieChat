@@ -107,7 +107,7 @@ static ULONG OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
 Object *objs[ GID_LAST ];
 ULONG i;
 
-	debug( "%s (%ld) %s - Class: 0x00012062x Object: 0x00012062x \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s - Class: 0x08lx Object: 0x08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	if( (obj = (Object *)DoSuperNew( cl, obj,
 			MUIA_Window_Title            , LGS( MSG_MUICLASS_WINDOWSETTINGS_TITLE ),
@@ -181,7 +181,7 @@ static ULONG OM_Setup( struct IClass *cl, Object *obj, Msg msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 
-	debug( "%s (%ld) %s - Class: 0x00012062x Object: 0x00012062x \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s - Class: 0x08lx Object: 0x08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	DoMethod( obj                                      , MUIM_Notify, MUIA_Window_CloseRequest, TRUE          , obj                  , 3, MUIM_Set, MUIA_Window_Open     , FALSE );
 	DoMethod( obj                                      , MUIM_Notify, MUIA_Window_CloseRequest, TRUE          , obj                  , 2, MUIM_Application_Load, MUIV_Application_Load_ENV    );
@@ -190,10 +190,13 @@ struct mccdata *mccdata = INST_DATA( cl, obj );
 	DoMethod( mccdata->mcc_ClassObjects[ GID_SAVE     ], MUIM_Notify, MUIA_Pressed            , FALSE         , obj                  , 3, MUIM_Set, MUIA_Window_Open     , FALSE );
 	DoMethod( mccdata->mcc_ClassObjects[ GID_SAVE     ], MUIM_Notify, MUIA_Pressed            , FALSE         , _app(obj)            , 2, MUIM_Application_Save, MUIV_Application_Save_ENVARC );
 	DoMethod( mccdata->mcc_ClassObjects[ GID_SAVE     ], MUIM_Notify, MUIA_Pressed            , FALSE         , _app(obj)            , 2, MUIM_Application_Save, MUIV_Application_Save_ENV    );
+	DoMethod( mccdata->mcc_ClassObjects[ GID_SAVE     ], MUIM_Notify, MUIA_Pressed            , FALSE         , _app(obj)            , 1, MM_APPLICATION_VISUALCHANGE );
 	DoMethod( mccdata->mcc_ClassObjects[ GID_USE      ], MUIM_Notify, MUIA_Pressed            , FALSE         , obj                  , 3, MUIM_Set, MUIA_Window_Open     , FALSE );
 	DoMethod( mccdata->mcc_ClassObjects[ GID_USE      ], MUIM_Notify, MUIA_Pressed            , FALSE         , _app(obj)            , 2, MUIM_Application_Save, MUIV_Application_Save_ENV    );
+	DoMethod( mccdata->mcc_ClassObjects[ GID_USE      ], MUIM_Notify, MUIA_Pressed            , FALSE         , _app(obj)            , 1, MM_APPLICATION_VISUALCHANGE );
 	DoMethod( mccdata->mcc_ClassObjects[ GID_CANCEL   ], MUIM_Notify, MUIA_Pressed            , FALSE         , obj                  , 3, MUIM_Set, MUIA_Window_Open     , FALSE );
 	DoMethod( mccdata->mcc_ClassObjects[ GID_CANCEL   ], MUIM_Notify, MUIA_Pressed            , FALSE         , _app(obj)            , 2, MUIM_Application_Load, MUIV_Application_Load_ENV    );
+	DoMethod( mccdata->mcc_ClassObjects[ GID_CANCEL   ], MUIM_Notify, MUIA_Pressed            , FALSE         , _app(obj)            , 1, MM_APPLICATION_VISUALCHANGE );
 
 	return( DoSuperMethodA( cl, obj, msg ) );
 }
@@ -250,7 +253,7 @@ static ULONG MM_ReadConfig( struct IClass *cl, Object *obj, struct MP_WINDOWSETT
 struct mccdata *mccdata = INST_DATA( cl, obj );
 ULONG result;
 
-	debug( "%s (%ld) %s - Class: 0x00012062x Object: 0x00012062x \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s - Class: 0x08lx Object: 0x08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	if( !( result = DoMethod( mccdata->mcc_ClassObjects[ GID_SERVER ], MM_SETTINGSSERVER_READCONFIG, msg->ObjectID ) ) ) {
 		if( !( result = DoMethod( mccdata->mcc_ClassObjects[ GID_GUI ], MM_SETTINGSGUI_READCONFIG, msg->ObjectID ) ) ) {
@@ -285,7 +288,7 @@ static ULONG MM_WriteConfig( struct IClass *cl, Object *obj, struct MP_WINDOWSET
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 
-	debug( "%s (%ld) %s - Class: 0x00012062x Object: 0x00012062x \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s - Class: 0x08lx Object: 0x08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	/* right now only the wizard is allowed to change settings beside preferences */
 	DoMethod( mccdata->mcc_ClassObjects[ GID_SERVER ], MM_SETTINGSSERVER_WRITECONFIG, msg->ObjectID, msg->Data );
