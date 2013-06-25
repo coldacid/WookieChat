@@ -594,10 +594,6 @@ void MUIDataspaceExportPoppen( Object *poppen, Object *dataspace, ULONG objectid
 struct MUI_PenSpec *penspec;
 
 	if( ( penspec = (struct MUI_PenSpec *) MUIGetVar( poppen, MUIA_Pendisplay_Spec ) ) ) {
-		ULONG args[2];
-		args[0] = (ULONG) objectid;
-		args[1] = (ULONG) penspec;
-		VPrintf( "%ld, \"%s\"\n", &args );
 		DoMethod( dataspace, MUIM_Dataspace_Add, penspec, sizeof( struct MUI_PenSpec ), objectid );
 	}
 }

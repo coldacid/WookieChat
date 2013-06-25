@@ -105,32 +105,7 @@ static struct ConfigItem TAB_CONFIGITEMS[] = {
 	{ GID_LOGWALLOPS           , OID_SETTINGSCOLOR + PEN_LOGWALLOPS           , MUIA_Pendisplay_Spec, (LONG) "rFFFFFFFF,07830783,0B570B57" },
 	{ -1,0,0,0 },
 };
-#if 0
-1000, "r1D451D45,2B5D2B5D,8D798D79"
-1001, "rfcf2ff"
-1002, "m2"
-1003, "m3"
-1004, "rFFFFFFFF,FBCCFBCC,25A225A2"
-1005, "r1D451D45,2B5D2B5D,8D798D79"
-1006, "rfcf2ff"
-1007, "r1D451D45,2B5D2B5D,8D798D79"
-1008, "r010701"
-1009, "r61E061E0,FFFFFFFF,8CDC8CDC"
-1010, "r209C209C,A1AFA1AF,1A271A27"
-1011, "r209C209C,A1AFA1AF,1A271A27"
-1012, "rFFFFFFFF,AEACAEAC,D159D159"
-1013, "rFFFFFFFF,07830783,0B570B57"
-1014, "r527F527F,FFFFFFFF,2D292D29"
-1015, "rFFFFFFFF,1A591A59,25292529"
-1016, "r527F527F,FFFFFFFF,2D292D29"
-1017, "rFFFFFFFF,FBCCFBCC,25A225A2"
-1018, "rFFFFFFFF,07830783,0B570B57"
-1019, "rFFFFFFFF,07830783,0B570B57"
-1020, "rFFFFFFFF,07830783,0B570B57"
-1021, "rFFFFFFFF,8FC08FC0,12D012D0"
-1022, "rFFFFFFFF,8FC08FC0,12D012D0"
-1023, "rFFFFFFFF,07830783,0B570B57"
-#endif
+
 /*
 ** data used by this class
 */
@@ -275,7 +250,7 @@ ULONG i;
 
 	for( i = 0 ; TAB_CONFIGITEMS[ i ].GadgetID != -1 ; i++ ) {
 		if( TAB_CONFIGITEMS[ i ].Attr == MUIA_Pendisplay_Spec ) {
-			MUIDataspaceExportPoppen( mccdata->mcc_ClassObjects[ TAB_CONFIGITEMS[ i ].GadgetID ], msg->dataspace, TAB_CONFIGITEMS[ i ].ObjectID );
+			MUIDataspaceImportPoppen( mccdata->mcc_ClassObjects[ TAB_CONFIGITEMS[ i ].GadgetID ], msg->dataspace, TAB_CONFIGITEMS[ i ].ObjectID );
 		}
 	}
 	return( DoSuperMethodA( cl, obj, (Msg)msg ) );
@@ -317,7 +292,10 @@ ULONG i;
 	debug( "%s (%ld) %s - Class: 0x00016824x Object: 0x00016824x \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	for( i = 0 ; TAB_CONFIGITEMS[ i ].GadgetID != -1 ; i++ ) {
-		SetAttrs( mccdata->mcc_ClassObjects[ TAB_CONFIGITEMS[ i ].GadgetID ], TAB_CONFIGITEMS[ i ].Attr, TAB_CONFIGITEMS[ i ].Default, MUIA_ObjectID, TAB_CONFIGITEMS[ i ].ObjectID, TAG_DONE );
+		SetAttrs( mccdata->mcc_ClassObjects[ TAB_CONFIGITEMS[ i ].GadgetID ],
+					TAB_CONFIGITEMS[ i ].Attr, TAB_CONFIGITEMS[ i ].Default,
+					MUIA_ObjectID            , TAB_CONFIGITEMS[ i ].ObjectID,
+					TAG_DONE );
 	}
 	return( 0 );
 }
