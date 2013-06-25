@@ -42,7 +42,7 @@
 static ULONG OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
 {
 
-	debug( "%s (%ld) %s - Class: 0x08lx Object: 0x08lx \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	if( ( obj =  DoSuperNew( cl, obj,
 							MUIA_NList_Title         , TRUE,
@@ -92,7 +92,7 @@ struct EventEntry *ee;
 static ULONG OM_Destruct( struct IClass *cl, Object *obj, struct MUIP_NList_Destruct *msg )
 {
 
-	debug( "%s (%ld) %s - Class: 0x08lx Object: 0x08lx \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	if( msg->entry ) {
 		FreeVec( msg->entry );
@@ -113,7 +113,7 @@ struct EventEntry *ee;
 ULONG i;
 char *text;
 
-	debug( "%s (%ld) %s - Class: 0x08lx Object: 0x08lx \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	for( i = 0 ;  ; i++ ) {
 		ee = NULL;
@@ -145,7 +145,7 @@ struct EventEntry *ee;
 char buffer[ EVENTENTRY_SCRIPT_SIZEOF + EVENTENTRY_TEXT_SIZEOF + 64 ];
 ULONG i;
 
-	debug( "%s (%ld) %s - Class: 0x08lx Object: 0x08lx \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	for( i = 0 ;  ; i++ ) {
 		ee = NULL;
@@ -171,7 +171,7 @@ static ULONG MM_Add( struct IClass *cl, Object *obj, struct MP_EVENTLIST_ADD *ms
 struct EventEntry *ee;
 ULONG i, newitem = 0;
 
-	debug( "%s (%ld) %s - Class: 0x08lx Object: 0x08lx \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	/* old item in list ? */
 	for( i = 0 ;  ; i++ ) {

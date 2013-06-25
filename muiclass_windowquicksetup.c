@@ -71,7 +71,7 @@ static ULONG OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
 {
 Object *objs[ GID_LAST ];
 
-	debug( "%s (%ld) %s - Class: 0x08lx Object: 0x08lx \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	memset( objs, 0, sizeof( objs ) );
 
@@ -124,7 +124,7 @@ static ULONG OM_Setup( struct IClass *cl, Object *obj, Msg msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 
-	debug( "%s (%ld) %s - Class: 0x08lx Object: 0x08lx \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	DoMethod( obj                                      , MUIM_Notify, MUIA_Window_CloseRequest, TRUE , _app(obj), 2, MUIM_Application_ReturnID, MUIV_Application_ReturnID_Quit );
 	DoMethod( mccdata->mcc_ClassObjects[ GID_QUIT     ], MUIM_Notify, MUIA_Pressed            , FALSE, _app(obj), 2, MUIM_Application_ReturnID, MUIV_Application_ReturnID_Quit );
@@ -192,7 +192,7 @@ struct mccdata *mccdata = INST_DATA( cl, obj );
 STRPTR str;
 ULONG count = 3;
 
-	debug( "%s (%ld) %s - Class: 0x08lx Object: 0x08lx \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	if( !mccdata->mcc_ClassObjects[ WID_SETTINGS ] ) {
 		mccdata->mcc_ClassObjects[ GID_NETWORK  ] = (Object*) MUIGetVar( _app(obj), MA_APPLICATION_OBJECTNETWORK );
@@ -245,7 +245,7 @@ static ULONG MM_Continue( struct IClass *cl, Object *obj, Msg *msg )
 struct mccdata *mccdata = INST_DATA( cl, obj );
 char *str;
 
-	debug( "%s (%ld) %s - Class: 0x08lx Object: 0x08lx \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	SetAttrs( obj, MUIA_Window_Open, FALSE, TAG_DONE );
 

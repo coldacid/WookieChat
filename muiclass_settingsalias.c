@@ -67,7 +67,7 @@ static ULONG OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
 {
 Object *objs[ GID_LAST ];
 
-	debug( "%s (%ld) %s - Class: 0x08lx Object: 0x08lx \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	if( (obj = (Object *) DoSuperNew( cl, obj, MUIA_Group_Horiz, FALSE,
 				Child, NListviewObject, MUIA_NListview_NList, objs[ GID_ALIASLIST ] = AliasListObject, End, End,
@@ -117,7 +117,7 @@ struct mccdata *mccdata = INST_DATA( cl, obj );
 LONG pos;
 BOOL disabled = TRUE;
 
-	debug( "%s (%ld) %s - Class: 0x08lx Object: 0x08lx \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	pos = MUIGetVar( mccdata->mcc_ClassObjects[ GID_ALIASLIST ], MUIA_NList_Active );
 	if( pos >= 0 ) {
@@ -190,7 +190,7 @@ static ULONG MM_ReadConfig( struct IClass *cl, Object *obj, struct MP_SETTINGSAL
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 
-	debug( "%s (%ld) %s - Class: 0x08lx Object: 0x08lx \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	switch( msg->ObjectID ) {
 		case OID_ALI_LIST:

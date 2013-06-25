@@ -70,7 +70,7 @@ struct mccdata
 static ULONG OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
 {
 
-	debug( "%s (%ld) %s - Class: 0x08lx Object: 0x08lx \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	return( (IPTR) DoSuperNew( cl, obj, TAG_DONE ) );
 }
@@ -85,7 +85,7 @@ static ULONG OM_Setup( struct IClass *cl, Object *obj, Msg *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 
-	debug( "%s (%ld) %s - Class: 0x08lx Object: 0x08lx \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	mccdata->mcc_ClassObjects[ WID_SETTINGS ] = (Object*) MUIGetVar( _app(obj), MA_APPLICATION_OBJECTWINDOWSETTINGS );
 
@@ -103,7 +103,7 @@ struct mccdata *mccdata = INST_DATA( cl, obj );
 static ULONG OM_Cleanup( struct IClass *cl, Object *obj, Msg *msg )
 {
 
-	debug( "%s (%ld) %s - Class: 0x08lx Object: 0x08lx \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	DoMethod( obj, MM_CHATCHANNELLIST_PENSRELEASE );
 
@@ -139,7 +139,7 @@ static ULONG OM_Construct( struct IClass *cl, Object *obj, struct MUIP_NList_Con
 {
 struct ChatChannel *cc;
 
-	debug( "%s (%ld) %s - Class: 0x08lx Object: 0x08lx \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	if( ( cc = AllocPooled( msg->pool, sizeof( struct ChatChannel ) ) ) ) {
 		cc->cc_Pen     = PEN_CHANNELLISTTEXT;
@@ -157,7 +157,7 @@ struct ChatChannel *cc;
 static ULONG OM_Destruct( struct IClass *cl, Object *obj, struct MUIP_NList_Destruct *msg )
 {
 
-	debug( "%s (%ld) %s - Class: 0x08lx Object: 0x08lx \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	if( msg->entry ) {
 		FreePooled( msg->pool, msg->entry, sizeof( struct ChatChannel ) );
@@ -178,7 +178,7 @@ struct mccdata *mccdata = INST_DATA( cl, obj );
 struct MUI_PenSpec *penspec;
 ULONG i;
 
-	debug( "%s (%ld) %s - Class: 0x08lx Object: 0x08lx \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	for( i = 0 ; i < PEN_NUMBEROF ; i++ ) {
 		if( ( penspec = (APTR) LRC( OID_SETTINGSCOLOR + i ) ) ) {
@@ -206,7 +206,7 @@ static ULONG MM_PensRelease( struct IClass *cl, Object *obj, Msg *msg )
 struct mccdata *mccdata = INST_DATA( cl, obj );
 ULONG i;
 
-	debug( "%s (%ld) %s - Class: 0x08lx Object: 0x08lx \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	for( i = 0 ; i < PEN_NUMBEROF ; i++ ) {
 		MUI_ReleasePen( muiRenderInfo( obj ), mccdata->mcc_MUIPen[ i ] );
@@ -223,7 +223,7 @@ ULONG i;
 static ULONG MM_PensUpdate( struct IClass *cl, Object *obj, Msg *msg )
 {
 
-	debug( "%s (%ld) %s - Class: 0x08lx Object: 0x08lx \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	DoMethod( obj, MM_CHATCHANNELLIST_PENSOBTAIN  );
 	DoMethod( obj, MM_CHATCHANNELLIST_PENSRELEASE );

@@ -40,7 +40,7 @@
 static ULONG OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
 {
 
-	debug( "%s (%ld) %s - Class: 0x08lx Object: 0x08lx \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	return( (ULONG) (obj = (Object *) DoSuperNew( cl, obj,
 													MUIA_NList_Title         , TRUE,
@@ -82,7 +82,7 @@ static ULONG MM_Add( struct IClass *cl, Object *obj, struct MP_NICKLIST_ADD *msg
 {
 struct NickEntry *ne;
 
-	debug( "%s (%ld) %s - Class: 0x08lx Object: 0x08lx \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	if( ( ne = AllocVec( sizeof( struct NickEntry ), MEMF_ANY|MEMF_CLEAR ) ) ) {
 		strncpy( (char *) ne->ne_Name    , (char *) ( msg->Nick     ? msg->Nick     : LGS( MSG_MUICLASS_NICKLIST_DEFAULTNAME )), NICKENTRY_NICK_SIZEOF     );
@@ -104,7 +104,7 @@ static ULONG MM_Remove( struct IClass *cl, Object *obj, struct MP_NICKLIST_REMOV
 {
 struct NickEntry *ne;
 
-	debug( "%s (%ld) %s - Class: 0x08lx Object: 0x08lx \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	if( ( ne = msg->NickEntry ) ) {
 		if( ne->ne_Succ && ne->ne_Pred ) {
