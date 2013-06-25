@@ -1118,7 +1118,7 @@ struct mccdata *mccdata = INST_DATA( cl, obj );
 struct Server   *s;
 struct SendNode *sn;
 
-	debug( "%s (%ld) %s - Class: 0x00054320x Object: 0x00054320x \n", __FILE__, __LINE__, __func__, cl, obj );
+//	  debug( "%s (%ld) %s - Class: 0x00054320x Object: 0x00054320x \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	for( s = (APTR) mccdata->mcc_ServerList.lh_Head ; s->s_Succ ; s = s->s_Succ ) {
 		if( ( sn = (APTR) s->s_SendList.lh_Head )->sn_Succ ) {
@@ -1179,7 +1179,7 @@ struct ServerMessageParse *smp;
 char *args, chr, *pattern, *dst, *tmp;
 ULONG i;
 
-	debug( "%s (%ld) %s - Class: 0x00054320x Object: 0x00054320x \n", __FILE__, __LINE__, __func__, cl, obj );
+//	  debug( "%s (%ld) %s - Class: 0x00054320x Object: 0x00054320x \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	if( ( smp = AllocVec( sizeof( struct ServerMessageParse ) + strlen( msg->Message ) + 1, MEMF_ANY|MEMF_CLEAR ) ) ) {
 		smp->smp_Pen = PEN_LOGPRIVMSG;
@@ -1314,7 +1314,7 @@ ULONG i;
 
 static ULONG MM_ServerMessageParseEnd( struct IClass *cl, Object *obj, struct MP_NETWORK_SERVERMESSAGEPARSEEND *msg )
 {
-	debug( "%s (%ld) %s - Class: 0x00054320x Object: 0x00054320x \n", __FILE__, __LINE__, __func__, cl, obj );
+//	  debug( "%s (%ld) %s - Class: 0x00054320x Object: 0x00054320x \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	FreeVec( msg->ServerMessageParse );
 
@@ -1332,7 +1332,7 @@ static ULONG MM_ServerMessageProcess( struct IClass *cl, Object *obj, struct MP_
 struct ServerMessageParse *smp = msg->ServerMessageParse;
 ULONG result = 0, i;
 
-	debug( "%s (%ld) %s - Class: 0x00054320x Object: 0x00054320x \n", __FILE__, __LINE__, __func__, cl, obj );
+//	  debug( "%s (%ld) %s - Class: 0x00054320x Object: 0x00054320x \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	if( smp->smp_Command && smp->smp_Command[0] ) {
 		for( i = 0 ; TAB_IRCCOMMANDS[i].CMD_Name ; i++ ) {
@@ -1628,7 +1628,7 @@ struct ChatLogEntry *cle = NULL;
 */
 		if( c->c_Succ ) { /* no channel no output */
 			if( ( cle = AllocVec( sizeof( struct ChatLogEntry ) + strlen( msg->Message ) + 1, MEMF_ANY ) ) ) {
-				cle->cle_Color = msg->Color;
+				cle->cle_Pen = msg->Pen;
 				strcpy( cle->cle_Message, msg->Message );
 				AddTail( &c->c_ChatLogList, (struct Node *) cle );
 			}

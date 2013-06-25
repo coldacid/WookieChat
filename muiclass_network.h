@@ -107,7 +107,7 @@ struct MP_NETWORK_CHANNELFIND             { ULONG MethodID; struct Server *Serve
 struct MP_NETWORK_CHANNELALLOC            { ULONG MethodID; struct Server *Server; char *Name; };
 struct MP_NETWORK_CHANNELFREE             { ULONG MethodID; struct Server *Server; struct Channel *Channel; };
 
-struct MP_NETWORK_CHATLOGENTRYADD         { ULONG MethodID; struct Server *Server; struct Channel *Channel; ULONG Color; char *Message; };
+struct MP_NETWORK_CHATLOGENTRYADD         { ULONG MethodID; struct Server *Server; struct Channel *Channel; ULONG Pen; char *Message; };
 struct MP_NETWORK_CHATLOGENTRYFREE        { ULONG MethodID; struct ChatLogEntry *ChatLogEntry; };
 
 struct MP_NETWORK_CHATNICKENTRYALLOC      { ULONG MethodID; struct Channel *Channel; char *NickName; };
@@ -173,7 +173,7 @@ struct Nick {
 struct ChatLogEntry {
 	struct ChatLogEntry *cle_Succ;
 	struct ChatLogEntry *cle_Pred;
-	ULONG                cle_Color;
+	ULONG                cle_Pen;
 	char                 cle_PreParse[16]; /* used by display method */
 	char                 cle_Message[1];
 };

@@ -49,11 +49,15 @@ GID_LAST
 ** data used by this class
 */
 
+#define DISPLAYBUFFER_SIZEOF 0x400
+
 struct mccdata
 {
 	Object                *mcc_ClassObjects[ GID_LAST ];
-	LONG                   mcc_Pen[PEN_NUMBEROF];
-	ULONG                  mcc_PenRGB[PEN_NUMBEROF];
+	LONG                   mcc_MUIPen[ PEN_NUMBEROF ];
+	LONG                   mcc_Pen[ PEN_NUMBEROF ];
+	ULONG                  mcc_PenRGB[ PEN_NUMBEROF ];
+	char                   mcc_DisplayBuffer[ DISPLAYBUFFER_SIZEOF ];
 };
 
 /*************************************************************************/
@@ -130,13 +134,8 @@ struct mccdata *mccdata = INST_DATA( cl, obj );
 struct ChatLogEntry *cle;
 
 	if( ( cle = msg->entry ) ) {
-		char chr = cle->cle_Message[0];
-		ULONG len;
-		sprintf( cle->cle_PreParse        , "\033P[%06lx]", mccdata->mcc_PenRGB[ cle->cle_Color ] );
-		len = strlen( cle->cle_PreParse );
-		sprintf( &cle->cle_Message[ -len ], "\033P[%06lx]", mccdata->mcc_PenRGB[ cle->cle_Color ] );
-		cle->cle_Message[0] = chr;
-		*msg->strings = (STRPTR) &cle->cle_Message[ -len ];
+		sprintf( mccdata->mcc_DisplayBuffer, "\033P[%ld]%s", mccdata->mcc_Pen[ cle->cle_Pen ], cle->cle_Message );
+		*msg->strings = (STRPTR) mccdata->mcc_DisplayBuffer;
 	}
 	return( 0 );
 }
@@ -158,7 +157,8 @@ ULONG i;
 
 	for( i = 0 ; i < PEN_NUMBEROF ; i++ ) {
 		if( ( penspec = (APTR) LRC( OID_SETTINGSCOLOR + i ) ) ) {
-			mccdata->mcc_Pen[ i ]    = MUI_ObtainPen( muiRenderInfo( obj ), penspec, 0 );
+			mccdata->mcc_MUIPen[ i ] = MUI_ObtainPen( muiRenderInfo( obj ), penspec, 0 );
+			mccdata->mcc_Pen[ i ]    = MUIPEN( mccdata->mcc_MUIPen[ i ] );
 			mccdata->mcc_PenRGB[ i ] = MUIPenSpecToRGB( obj, penspec );
 		}
 	}
@@ -185,7 +185,7 @@ ULONG i;
 	debug( "%s (%ld) %s - Class: 0x00007935x Object: 0x00007935x \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	for( i = 0 ; i < PEN_NUMBEROF ; i++ ) {
-		MUI_ReleasePen( muiRenderInfo( obj ), mccdata->mcc_Pen[ i ] );
+		MUI_ReleasePen( muiRenderInfo( obj ), mccdata->mcc_MUIPen[ i ] );
 	}
 	return( 0 );
 }

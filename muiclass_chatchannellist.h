@@ -48,6 +48,7 @@ void    MCC_ChatChannelList_DisposeClass( void );
 */
 
 struct ChatChannel {
+	ULONG                  cc_Pen;
 	struct Channel        *cc_Channel;
 };
 

@@ -450,6 +450,9 @@ struct Channel         *c;
 	if( cc ) {
 		if( ( c = cc->cc_Channel ) ) {
 			struct Node *node;
+			cc->cc_Pen = PEN_CHANNELLISTTEXT;
+			DoMethod( mccdata->mcc_ClassObjects[ GID_CHATCHANNELLIST ], MUIM_NList_Redraw, MUIV_NList_Redraw_Active, cc );
+
 			DoMethod( obj, MM_WINDOWCHAT_CHANNELCHANGETOPIC, c );
 			for( node = (APTR) c->c_ChatLogList.lh_Head ; node->ln_Succ ; node = node->ln_Succ ) {
 				DoMethod( mccdata->mcc_ClassObjects[ GID_CHATLOG ], MUIM_NList_InsertSingleWrap, node, MUIV_NList_Insert_Bottom, WRAPCOL0, ALIGN_LEFT );
@@ -557,11 +560,13 @@ static ULONG MM_MessageReceived( struct IClass *cl, Object *obj, struct MP_WINDO
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 struct Channel *c;
-struct ChatChannel *cc;
+struct ChatChannel  *cc;
+struct ChatLogEntry *cle = msg->ChatLogEntry;
 
 	debug( "%s (%ld) %s - Class: 0x00025165x Object: 0x00025165x \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	/* pointer magic */
+	debug( "%s (%ld) %s - got message %08lx to window\n", __FILE__, __LINE__, __func__, msg->ChatLogEntry );
 
 	c = (APTR) ( ( (IPTR) List_GetListFromNode( msg->ChatLogEntry ) ) - (IPTR) offsetof( struct Channel, c_ChatLogList ) );
 
@@ -570,9 +575,57 @@ struct ChatChannel *cc;
 	cc = NULL;
 	DoMethod( mccdata->mcc_ClassObjects[ GID_CHATCHANNELLIST ], MUIM_NList_GetEntry, MUIV_NList_GetEntry_Active, &cc );
 	if( cc ) {
+
 		if( cc->cc_Channel == c ) {
 		/* yes, so add to log */
-			DoMethod( mccdata->mcc_ClassObjects[ GID_CHATLOG ], MUIM_NList_InsertSingleWrap, msg->ChatLogEntry, MUIV_NList_Insert_Bottom, WRAPCOL0, ALIGN_LEFT );
+			DoMethod( mccdata->mcc_ClassObjects[ GID_CHATLOG ], MUIM_NList_InsertSingleWrap, cle, MUIV_NList_Insert_Bottom, WRAPCOL0, ALIGN_LEFT );
+			cc->cc_Pen = PEN_CHANNELLISTTEXT;
+			DoMethod( mccdata->mcc_ClassObjects[ GID_CHATCHANNELLIST ], MUIM_NList_Redraw, MUIV_NList_Redraw_Active, cc );
+		} else { /* it is not, so handle color */
+			ULONG i;
+			for( i = 0 ; ; i++ ) {
+				cc = NULL;
+				DoMethod( mccdata->mcc_ClassObjects[ GID_CHATCHANNELLIST ], MUIM_NList_GetEntry, i, &cc );
+				if( cc ) {
+					if( cc->cc_Channel == c ) { /* is this our channel to update */
+						switch( cle->cle_Pen ) {
+							case PEN_LOGPRIVMSG:
+							case PEN_LOGACTION:
+							case PEN_LOGHIGHLIGHT:
+								cc->cc_Pen = PEN_CHANNELLISTHIGHLIGHT;
+								break;
+							default: /* no change */
+							case PEN_LOGOWNTEXT:
+								break;
+							case PEN_LOGJOIN:
+							case PEN_LOGPART:
+							case PEN_LOGQUIT:
+							case PEN_LOGKICK:
+							case PEN_LOGNICKCHANGE:
+								if( cc->cc_Pen < PEN_CHANNELLISTUSER ) {
+									cc->cc_Pen = PEN_CHANNELLISTUSER;
+								}
+								break;
+							case PEN_LOGMODE:
+							case PEN_LOGCTCP:
+							case PEN_LOGINFO:
+							case PEN_LOGNOTICE:
+							case PEN_LOGINVITE:
+							case PEN_LOGTOPIC:
+							case PEN_LOGWALLOPS:
+								if( cc->cc_Pen < PEN_CHANNELLISTSERVER ) {
+									cc->cc_Pen = PEN_CHANNELLISTSERVER;
+								}
+								break;
+						}
+						debug("color is now: %ld\n", cc->cc_Pen );
+						DoMethod( mccdata->mcc_ClassObjects[ GID_CHATCHANNELLIST ], MUIM_NList_Redraw, i, cc );
+						break;
+					}
+				} else {
+					break;
+				}
+			}
 		}
 	}
 	return( 0 );

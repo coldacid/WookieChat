@@ -48,11 +48,15 @@ GID_LAST
 ** data used by this class
 */
 
+#define DISPLAYBUFFER_SIZEOF 0x100
+
 struct mccdata
 {
 	Object                *mcc_ClassObjects[ GID_LAST ];
-	LONG                   mcc_Pen[PEN_NUMBEROF];
-	ULONG                  mcc_PenRGB[PEN_NUMBEROF];
+	LONG                   mcc_MUIPen[ PEN_NUMBEROF ];
+	LONG                   mcc_Pen[ PEN_NUMBEROF ];
+	ULONG                  mcc_PenRGB[ PEN_NUMBEROF ];
+	char                   mcc_DisplayBuffer[ DISPLAYBUFFER_SIZEOF ];
 };
 
 
@@ -109,9 +113,6 @@ static ULONG OM_Cleanup( struct IClass *cl, Object *obj, Msg *msg )
 /* /// OM_Display()
 **
 */
-#define USERDISPLAYBUFFER_SIZEOF 0x100
-
-static char STR_USERDISPLAYBUFFER[ USERDISPLAYBUFFER_SIZEOF ];
 
 /*************************************************************************/
 
@@ -120,6 +121,8 @@ static ULONG OM_Display( struct IClass *cl, Object *obj, struct MUIP_NList_Displ
 struct mccdata *mccdata = INST_DATA( cl, obj );
 char *nick   =  ((struct ChatNick *) msg->entry)->cn_ChatNickEntry->cne_Nick;
 char *status = NULL;
+
+	*msg->strings = (STRPTR) mccdata->mcc_DisplayBuffer;
 
 	if( ( LRC( OID_GUI_NICKLISTGFXINFO ) ) ) {
 		switch( *nick++ ) {
@@ -136,14 +139,13 @@ char *status = NULL;
 				break;
 		}
 		if( status ) {
-			sprintf( STR_USERDISPLAYBUFFER, "\033I[5:PROGDIR:smilies/nicklist/%s] %s", status, nick );
+			sprintf( mccdata->mcc_DisplayBuffer, "\033I[5:PROGDIR:smilies/nicklist/%s] \033P[%ld]%s", status, mccdata->mcc_Pen[ PEN_USERLISTTEXT ], nick );
 		} else {
 			nick--;
-			sprintf( STR_USERDISPLAYBUFFER, "    %s", nick );
+			sprintf( mccdata->mcc_DisplayBuffer, "    \033P[%ld]%s", mccdata->mcc_Pen[ PEN_USERLISTTEXT ], nick );
 		}
-		*msg->strings = (STRPTR) STR_USERDISPLAYBUFFER;
 	} else {
-		*msg->strings = (STRPTR) nick;
+		sprintf( mccdata->mcc_DisplayBuffer, "\033P[%ld]%s", mccdata->mcc_Pen[ PEN_USERLISTTEXT ], nick );
 	}
 	return( 0 );
 }
@@ -216,7 +218,8 @@ ULONG i;
 
 	for( i = 0 ; i < PEN_NUMBEROF ; i++ ) {
 		if( ( penspec = (APTR) LRC( OID_SETTINGSCOLOR + i ) ) ) {
-			mccdata->mcc_Pen[ i ]    = MUI_ObtainPen( muiRenderInfo( obj ), penspec, 0 );
+			mccdata->mcc_MUIPen[ i ] = MUI_ObtainPen( muiRenderInfo( obj ), penspec, 0 );
+			mccdata->mcc_Pen[ i ]    = MUIPEN( mccdata->mcc_MUIPen[ i ] );
 			mccdata->mcc_PenRGB[ i ] = MUIPenSpecToRGB( obj, penspec );
 		}
 	}
@@ -243,7 +246,7 @@ ULONG i;
 	debug( "%s (%ld) %s - Class: 0x00007935x Object: 0x00007935x \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	for( i = 0 ; i < PEN_NUMBEROF ; i++ ) {
-		MUI_ReleasePen( muiRenderInfo( obj ), mccdata->mcc_Pen[ i ] );
+		MUI_ReleasePen( muiRenderInfo( obj ), mccdata->mcc_MUIPen[ i ] );
 	}
 	return( 0 );
 }
