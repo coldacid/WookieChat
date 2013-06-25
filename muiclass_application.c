@@ -389,7 +389,6 @@ static ULONG MM_MessageReceived( struct IClass *cl, Object *obj, struct MP_APPLI
 
 	FORCHILD( obj, MUIA_Application_WindowList ) {
 		if( MUIGetVar( child, MA_APPLICATION_CLASSID ) == CLASSID_WINDOWCHAT ) {
-			debug( "%s (%ld) %s - Forwarding message %08lx to window\n", __FILE__, __LINE__, __func__, msg->ChatLogEntry );
 			DoMethod( child, MM_WINDOWCHAT_MESSAGERECEIVED, msg->ChatLogEntry );
 		}
 	} NEXTCHILD

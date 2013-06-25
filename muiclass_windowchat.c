@@ -569,7 +569,6 @@ struct ChatLogEntry *cle = msg->ChatLogEntry;
 	debug( "%s (%ld) %s - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	/* pointer magic */
-	debug( "%s (%ld) %s - got message %08lx to window\n", __FILE__, __LINE__, __func__, msg->ChatLogEntry );
 
 	c = (APTR) ( ( (IPTR) List_GetListFromNode( msg->ChatLogEntry ) ) - (IPTR) offsetof( struct Channel, c_ChatLogList ) );
 
@@ -621,7 +620,6 @@ struct ChatLogEntry *cle = msg->ChatLogEntry;
 								}
 								break;
 						}
-						debug("color is now: %ld\n", cc->cc_Pen );
 						DoMethod( mccdata->mcc_ClassObjects[ GID_CHATCHANNELLIST ], MUIM_NList_Redraw, i, cc );
 						break;
 					}
