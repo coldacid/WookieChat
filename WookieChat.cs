@@ -2734,29 +2734,41 @@ MSG_MUICLASS_SETTINGSGENERAL_NICKCOMPLETITION_HELP
 /
 /
 ;
-MSG_CY_MIRC
-mIRC
-mIRC
-mIRC
-mIRC
-mIRC
-mIRC
-mIRC
-mIRC
-mIRC
-mIRC
+MSG_CY_MIRCSTYLE
+mIRC Style ("nick: ")
+mIRC Style ("nick: ")
+mIRC Style ("nick: ")
+mIRC Style ("nick: ")
+mIRC Style ("nick: ")
+mIRC Style ("nick: ")
+mIRC Style ("nick: ")
+mIRC Style ("nick: ")
+mIRC Style ("nick: ")
+mIRC Style ("nick: ")
 ;
-MSG_CY_AMIRC
-AmIRC
-AmIRC
-AmIRC
-AmIRC
-AmIRC
-AmIRC
-AmIRC
-AmIRC
-AmIRC
-AmIRC
+MSG_CY_AMIRCSTYLE
+AmIRC Style ("nick")
+AmIRC Style ("nick")
+AmIRC Style ("nick")
+AmIRC Style ("nick")
+AmIRC Style ("nick")
+AmIRC Style ("nick")
+AmIRC Style ("nick")
+AmIRC Style ("nick")
+AmIRC Style ("nick")
+AmIRC Style ("nick")
+;
+MSG_CY_WOOKIESTYLE
+Wookie Style ("nick ")
+Wookie Style ("nick ")
+Wookie Style ("nick ")
+Wookie Style ("nick ")
+Wookie Style ("nick ")
+Wookie Style ("nick ")
+Wookie Style ("nick ")
+Wookie Style ("nick ")
+Wookie Style ("nick ")
+Wookie Style ("nick ")
 ;
 MSG_MUICLASS_SETTINGSGENERAL_AUTOMATIC_INFO
 Automatic...

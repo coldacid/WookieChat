@@ -12,6 +12,8 @@
 ** muiclass_settingsgui.c
 */
 
+#define NODEBUG
+
 #define MUI_OBSOLETE
 #include <libraries/mui.h>
 #include <prefs/prefhdr.h>

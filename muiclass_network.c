@@ -12,6 +12,8 @@
 ** muiclass_network.c
 */
 
+#define NODEBUG
+
 #include <libraries/mui.h>
 #include <proto/muimaster.h>
 #include <proto/intuition.h>

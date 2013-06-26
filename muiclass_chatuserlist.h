@@ -15,6 +15,7 @@
 
 #include <exec/types.h>
 #include "muiclass.h"
+#include "muiclass_network.h"
 
 
 #define ChatUserListObject NEWOBJECT( appclasses[ CLASSID_CHATUSERLIST ]->mcc_Class, NULL

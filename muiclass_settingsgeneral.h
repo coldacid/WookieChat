@@ -40,6 +40,15 @@ struct MP_SETTINGSGENERAL_READCONFIG { ULONG MethodID; ULONG ObjectID; };
 ULONG   MCC_SettingsGeneral_InitClass( void );
 void    MCC_SettingsGeneral_DisposeClass( void );
 
+
+/*
+**
+*/
+
+#define NICKCOMPLETITIONMODE_MIRCSTYLE    0
+#define NICKCOMPLETITIONMODE_AMIRCSTYLE   1
+#define NICKCOMPLETITIONMODE_WOOKIESTYLE  2
+
 /*************************************************************************/
 
 #endif /* MUICLASS_SETTINGSGENERAL_H */

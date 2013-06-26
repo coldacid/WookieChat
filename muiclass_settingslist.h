@@ -23,7 +23,7 @@
 */
 
 enum {
-MM_SETTINGSLIST_ =  0xFED00100,
+MM_SETTINGSLIST_ =  0xFED00130,
 /* Attributes */
 };
 

@@ -12,6 +12,8 @@
 ** muiclass_chatchannellist.c
 */
 
+#define NODEBUG
+
 #include <libraries/mui.h>
 #include <intuition/classusr.h>
 #include <prefs/prefhdr.h>

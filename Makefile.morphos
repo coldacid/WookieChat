@@ -25,6 +25,7 @@ SOURCES   = wookiechat.c                \
 			muiclass_chatuserlist.c     \
 			muiclass_eventlist.c        \
 			muiclass_ignorelist.c       \
+			muiclass_messageinput.c     \
 			muiclass_network.c          \
 			muiclass_nicklist.c         \
 			muiclass_settingslist.c     \

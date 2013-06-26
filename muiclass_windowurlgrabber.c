@@ -12,6 +12,8 @@
 ** muiclass_windowurlgrabber.c
 */
 
+#define NODEBUG
+
 #include <libraries/mui.h>
 #include <prefs/prefhdr.h>
 #include <proto/muimaster.h>

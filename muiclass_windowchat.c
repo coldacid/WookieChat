@@ -12,6 +12,8 @@
 ** muiclass_windowchat.c
 */
 
+#define NODEBUG
+
 #include <libraries/mui.h>
 #include <libraries/gadtools.h>
 #include <prefs/prefhdr.h>
@@ -27,6 +29,7 @@
 #include "functions.h"
 #include "locale.h"
 #include "muiclass.h"
+#include "muiclass_messageinput.h"
 #include "muiclass_network.h"
 #include "muiclass_settingscolor.h"
 #include "muiclass_application.h"
@@ -192,8 +195,12 @@ Object *objs[ GID_LAST ];
 								Child, NListviewObject, MUIA_NListview_NList, objs[ GID_CHATCHANNELLIST   ] = ChatChannelListObject, End, End,
 							End,
 						 End,
-						Child, objs[ GID_CHATMESSAGE  ] = MUICreateString( MSG_MUICLASS_WINDOWCHAT_MESSAGE_HELP-1, MESSAGE_SIZEOF ),
-
+						Child, objs[ GID_CHATMESSAGE  ] = MessageInputObject,
+													MUIA_Frame        , MUIV_Frame_String,
+													MUIA_CycleChain   , 1,
+													MUIA_ShortHelp    , LGS( MSG_MUICLASS_WINDOWCHAT_MESSAGE_HELP ),
+													MUIA_String_MaxLen, MESSAGE_SIZEOF,
+													End,
 					 End,
 		TAG_DONE ) ) ) {
 		ULONG i;
@@ -228,6 +235,37 @@ static ULONG OM_Dispose( struct IClass *cl, Object *obj, Msg msg )
 	debug( "%s (%ld) %s - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	return( DoSuperMethodA( cl, obj, msg ) );
+}
+/* \\\ */
+/* /// OM_Setup()
+**
+*/
+
+/*************************************************************************/
+
+static ULONG OM_Setup( struct IClass *cl, Object *obj, Msg *msg )
+{
+struct mccdata *mccdata = INST_DATA( cl, obj );
+Object *winobj;
+
+	debug( "%s (%ld) %s - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
+
+	mccdata->mcc_ClassObjects[ WID_SETTINGS ] = (Object *) MUIGetVar( _app(obj), MA_APPLICATION_OBJECTWINDOWSETTINGS );
+
+	winobj = (Object *) MUIGetVar( _app(obj), MA_APPLICATION_OBJECTWINDOWQUIT );
+	DoMethod( obj, MUIM_Notify, MUIA_Window_CloseRequest, TRUE, winobj, 3, MUIM_Set, MUIA_Window_Open, TRUE );
+
+	DoMethod( mccdata->mcc_ClassObjects[ GID_CHATCHANNELLIST ], MUIM_Notify, MUIA_NList_Active, MUIV_EveryTime, obj, 1, MM_WINDOWCHAT_CHANNELCHANGE );
+
+	DoMethod( mccdata->mcc_ClassObjects[ GID_CHATMESSAGE ], MUIM_Notify, MUIA_String_Acknowledge, MUIV_EveryTime, obj, 1, MM_WINDOWCHAT_MESSAGEENTERED );
+
+	SetAttrs( mccdata->mcc_ClassObjects[ GID_CHATMESSAGE ],
+					MA_MESSAGEINPUT_OBJECTUSERLIST, mccdata->mcc_ClassObjects[ GID_CHATUSERLIST ],
+					MA_MESSAGEINPUT_OBJECTSETTINGS, mccdata->mcc_ClassObjects[ WID_SETTINGS     ],
+					TAG_DONE );
+
+
+	return( DoSuperMethodA( cl, obj,(Msg) msg ) );
 }
 /* \\\ */
 /* /// OM_Get()
@@ -268,31 +306,6 @@ struct TagItem *tstate;
 }
 /* \\\ */
 
-/* /// OM_Setup()
-**
-*/
-
-/*************************************************************************/
-
-static ULONG OM_Setup( struct IClass *cl, Object *obj, Msg *msg )
-{
-struct mccdata *mccdata = INST_DATA( cl, obj );
-Object *winobj;
-
-	debug( "%s (%ld) %s - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
-
-	mccdata->mcc_ClassObjects[ WID_SETTINGS ] = (Object *) MUIGetVar( _app(obj), MA_APPLICATION_OBJECTWINDOWSETTINGS );
-
-	winobj = (Object *) MUIGetVar( _app(obj), MA_APPLICATION_OBJECTWINDOWQUIT );
-	DoMethod( obj, MUIM_Notify, MUIA_Window_CloseRequest, TRUE, winobj, 3, MUIM_Set, MUIA_Window_Open, TRUE );
-
-	DoMethod( mccdata->mcc_ClassObjects[ GID_CHATCHANNELLIST ], MUIM_Notify, MUIA_NList_Active, MUIV_EveryTime, obj, 1, MM_WINDOWCHAT_CHANNELCHANGE );
-
-	DoMethod( mccdata->mcc_ClassObjects[ GID_CHATMESSAGE ], MUIM_Notify, MUIA_String_Acknowledge, MUIV_EveryTime, obj, 1, MM_WINDOWCHAT_MESSAGEENTERED );
-
-	return( DoSuperMethodA( cl, obj,(Msg) msg ) );
-}
-/* \\\ */
 
 /* /// MM_MenuSelect()
 **
@@ -680,11 +693,11 @@ DISPATCHER(MCC_WindowChat_Dispatcher)
     {
 		case OM_NEW                             : return( OM_New                 ( cl, obj, (APTR) msg ) );
 		case OM_DISPOSE                         : return( OM_Dispose             ( cl, obj, (APTR) msg ) );
-																		   	
-		case OM_GET                             : return( OM_Get                 ( cl, obj, (APTR) msg ) );
-		case OM_SET                             : return( OM_Set                 ( cl, obj, (APTR) msg ) );
 
 		case MUIM_Window_Setup                  : return( OM_Setup               ( cl, obj, (APTR) msg ) );
+
+		case OM_GET                             : return( OM_Get                 ( cl, obj, (APTR) msg ) );
+		case OM_SET                             : return( OM_Set                 ( cl, obj, (APTR) msg ) );
 
 		case MM_WINDOWCHAT_MENUSELECT           : return( MM_MenuSelect          ( cl, obj, (APTR) msg ) );
 		case MM_WINDOWCHAT_VISUALCHANGE         : return( MM_VisualChange        ( cl, obj, (APTR) msg ) );

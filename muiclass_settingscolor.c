@@ -12,6 +12,8 @@
 ** muiclass_settingscolor.c
 */
 
+#define NODEBUG
+
 #include <libraries/mui.h>
 #include <libraries/asl.h>
 #include <prefs/prefhdr.h>

@@ -40,6 +40,7 @@
 #include "muiclass_chatuserlist.h"
 #include "muiclass_eventlist.h"
 #include "muiclass_ignorelist.h"
+#include "muiclass_messageinput.h"
 #include "muiclass_network.h"
 #include "muiclass_nicklist.h"
 #include "muiclass_settingslist.h"
@@ -94,6 +95,7 @@ if( !(result = MCC_ChatLog_InitClass() ) ) {
 if( !(result = MCC_ChatUserList_InitClass() ) ) {
 if( !(result = MCC_EventList_InitClass() ) ) {
 if( !(result = MCC_IgnoreList_InitClass() ) ) {
+if( !(result = MCC_MessageInput_InitClass() ) ) {
 if( !(result = MCC_Network_InitClass() ) ) {
 if( !(result = MCC_NickList_InitClass() ) ) {
 if( !(result = MCC_ServerList_InitClass() ) ) {
@@ -121,7 +123,7 @@ if( ( application = NewObject( appclasses[ CLASSID_APPLICATION ]->mcc_Class, NUL
 } else {
 	result = MSG_ERROR_UNABLETOSETUPMUICLASS;
 }
-}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}
+}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}
    return( result );
 }
 /* \\\ */
@@ -148,6 +150,7 @@ void MUIClass_Close( void )
 	MCC_ChatUserList_DisposeClass();
 	MCC_EventList_DisposeClass();
 	MCC_IgnoreList_DisposeClass();
+	MCC_MessageInput_DisposeClass();
 	MCC_Network_DisposeClass();
 	MCC_NickList_DisposeClass();
 	MCC_ServerList_DisposeClass();
