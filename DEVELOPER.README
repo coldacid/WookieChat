@@ -56,14 +56,6 @@ A separate trunk should be created for the classic WookieChat. Something around
 r85 is fine. Thats after locale fixing and before changing internals. In the result all those
 useless files should be removed from current trunk.
 
-A global memory pool should replace all the AllocVec()/FreeVec() calls in code
-to make it more robust against memory fragmentation.
-
-Chat message input gadget (the long string input in the bottom of each chat
-window), need to be subclassed. This will allow to implement things like nick
-completition and history without the need of dealing with some non standard mui
-class.
-
 The missing commands need to be implemented and their display needs to be fixed.
 Just check out for all those FIXME outputs in chat view.
 
@@ -81,17 +73,6 @@ MM_NETWORK_SERVERCONNECTAUTO, which I want to call each time the user saves or
 uses prefs. Currently it lacks proper checking for already established
 connections.
 
-The second issue with the new prefs is to configure it, when being used for the
-first time. The plan is to deliver multiple preset files. I already placed one
-for testing, but the real ones need to be marked with _MorphOS, _AmigaOS4,
-_AROS, ... So we can preconfigure a basic setup depending on the users system.
-e.g. running WookieChat on AROS it will connect to freenode #AROS. Of course we
-cannot include nick names in these files, or we would be doomed. The plan is to
-create a small - kind of - wizard. A small window with a description text field
-and a user name and nick name input. Just that. The wizzard will open, if no
-server or no nick is available. Once the user added these information, he pushes
-connect (or quit if he likes) and is right in the game or back on desktop. :D
-
 Context menus need to be added to support old features (user list), but also to
 support the new multi window support.
 
@@ -99,11 +80,10 @@ Server window still lacks some settings. Basically its the user name and retry.
 retry delay and dupe detection. Others may get obsolete or need to be adapted to
 our needs, but we will see.
 
-Color output, notification and audio need to be reconnected. This can be done by
-grabbing the smp_Type field during message processing.
+Notification and audio need to be reconnected.
 
-There is no local echo. We need to think about a smart way to inject the old
-command lines, without trigger events. Probably just using the
+There is no proper local echo. We need to think about a smart way to inject the
+old command lines, without trigger events. Probably just using the
 MM_NETWORK_SERVERMESSAGERECEIVED method without processing the information (url
 grabber/response). Maybe some argument does the tick as some commands probably
 need to be processed.
