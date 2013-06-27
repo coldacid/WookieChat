@@ -501,8 +501,8 @@ ULONG result;
 				TimerBase = (APTR) dt->IORequest->tr_node.io_Device;
 
 				dt->IORequest->tr_node.io_Message.mn_Node.ln_Type = NT_REPLYMSG;
-				dt->SignalMask = ( 1<<dt->MsgPort->mp_SigBit );
-				dt->OpenCheck = 1;
+				dt->SignalMask = ( 1 << ( dt->MsgPort->mp_SigBit ) );
+				dt->OpenCheck  = 1;
 				result = MSG_ERROR_NOERROR;
 	        }
 	    }

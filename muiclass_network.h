@@ -192,6 +192,34 @@ SVRSTATE_RETRY,
 SVRSTATE_FAILED,
 };
 
+/*
+** ServerMessageParse
+*/
+
+#define SMP_MESSAGEBUFFER_SIZEOF 0x200
+#define SMP_STRINGSTORAGE_SIZEOF 0x1000
+
+struct ServerMessageParse {
+	ULONG                smp_Pen;
+	ULONG                smp_ModeFlags;
+	struct DateStamp     smp_DateStamp;
+	char                 smp_MessageBuffer[ SMP_MESSAGEBUFFER_SIZEOF ];
+	char                *smp_From;
+	char                *smp_Command;
+	char                *smp_Arguments;
+	char                *smp_Message;
+	char                *smp_Channel;     /* extracted from Arguments */
+	char                *smp_Nick;        /* extracted from Arguments */
+	char                *smp_FromNick;    /* extracted from Arguments */
+	char                *smp_FromUserID;  /* extracted from Arguments */
+	char                *smp_FromHost;    /* extracted from Arguments */
+	char                *smp_Flags;       /* extracted from Arguments */
+	char                *smp_Date;        /* extracted from Arguments */
+	/* do not use this buffers in CMD functions. Use pointers above */
+	char                 smp_StringStorage[ SMP_STRINGSTORAGE_SIZEOF ];
+	char                 smp_Data[1];
+};
+
 
 /*
 ** Prototypes

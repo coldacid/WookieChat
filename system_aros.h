@@ -20,6 +20,13 @@
 /*************************************************************************/
 
 #include <exec/types.h>
+#include <sys/types.h>
+#include <netinet/in.h>
+#include <sys/ioctl.h>
+#include <clib/alib_protos.h>
+#include <sys/socket.h>
+#include <bsdsocket/socketbasetags.h>
+#include <proto/socket.h>
 
 #include "debug.h"
 #include "memorytracking.h"

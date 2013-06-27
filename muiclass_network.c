@@ -14,11 +14,14 @@
 
 #define NODEBUG
 
-#include <libraries/mui.h>
 #include <proto/muimaster.h>
 #include <proto/intuition.h>
 #include <proto/utility.h>
 #include <proto/exec.h>
+#include <proto/dos.h>
+#include <proto/socket.h>
+
+#include <libraries/mui.h>
 #include <SDI_hook.h>
 
 #include <string.h>
@@ -26,7 +29,7 @@
 
 #include "system.h"
 #include "functions.h"
-#include "includes.h"
+#include "irccommand.h"
 #include "locale.h"
 #include "muiclass.h"
 #include "muiclass_application.h"
@@ -41,33 +44,6 @@
 
 static char *STR_NUL = "";
 
-/*
-** ServerMessageParse
-*/
-
-#define SMP_MESSAGEBUFFER_SIZEOF 0x200
-#define SMP_STRINGSTORAGE_SIZEOF 0x1000
-
-struct ServerMessageParse {
-	ULONG                smp_Pen;
-	ULONG                smp_ModeFlags;
-	struct DateStamp     smp_DateStamp;
-	char                 smp_MessageBuffer[ SMP_MESSAGEBUFFER_SIZEOF ];
-	char                *smp_From;
-	char                *smp_Command;
-	char                *smp_Arguments;
-	char                *smp_Message;
-	char                *smp_Channel;     /* extracted from Arguments */
-	char                *smp_Nick;        /* extracted from Arguments */
-	char                *smp_FromNick;    /* extracted from Arguments */
-	char                *smp_FromUserID;  /* extracted from Arguments */
-	char                *smp_FromHost;    /* extracted from Arguments */
-	char                *smp_Flags;       /* extracted from Arguments */
-	char                *smp_Date;        /* extracted from Arguments */
-	/* do not use this buffers in CMD functions. Use pointers above */
-	char                 smp_StringStorage[ SMP_STRINGSTORAGE_SIZEOF ];
-	char                 smp_Data[1];
-};
 
 enum{
 WID_SETTINGS = 0,
@@ -94,427 +70,7 @@ struct mccdata
 #define INVALID_SOCKET -1
 #define SOCKET_ERROR   -1
 
-/*************************************************************************/
-
-/* /// IRCCommands
-*/
-
-/*************************************************************************/
-
-static ULONG IRCCMD_PrivMsg        ( Object *obj, struct Server *Server, struct ServerMessageParse *ServerMessageParse );
-static ULONG IRCCMD_Notice         ( Object *obj, struct Server *Server, struct ServerMessageParse *ServerMessageParse );
-static ULONG IRCCMD_Ping           ( Object *obj, struct Server *Server, struct ServerMessageParse *ServerMessageParse );
-static ULONG IRCCMD_Join           ( Object *obj, struct Server *Server, struct ServerMessageParse *ServerMessageParse );
-static ULONG IRCCMD_Part           ( Object *obj, struct Server *Server, struct ServerMessageParse *ServerMessageParse );
-static ULONG IRCCMD_TopicNotSet    ( Object *obj, struct Server *Server, struct ServerMessageParse *ServerMessageParse );
-static ULONG IRCCMD_Topic          ( Object *obj, struct Server *Server, struct ServerMessageParse *ServerMessageParse );
-static ULONG IRCCMD_TopicSetBy     ( Object *obj, struct Server *Server, struct ServerMessageParse *ServerMessageParse );
-static ULONG IRCCMD_NameReply      ( Object *obj, struct Server *Server, struct ServerMessageParse *ServerMessageParse );
-static ULONG IRCCMD_EndOfNames     ( Object *obj, struct Server *Server, struct ServerMessageParse *ServerMessageParse );
-static ULONG IRCCMD_Quit           ( Object *obj, struct Server *Server, struct ServerMessageParse *ServerMessageParse );
-static ULONG IRCCMD_ChannelModeIs  ( Object *obj, struct Server *Server, struct ServerMessageParse *ServerMessageParse );
-static ULONG IRCCMD_MOTDStart      ( Object *obj, struct Server *Server, struct ServerMessageParse *ServerMessageParse );
-static ULONG IRCCMD_MOTD           ( Object *obj, struct Server *Server, struct ServerMessageParse *ServerMessageParse );
-static ULONG IRCCMD_MOTDEnd        ( Object *obj, struct Server *Server, struct ServerMessageParse *ServerMessageParse );
-static ULONG IRCCMD_GenericServer  ( Object *obj, struct Server *Server, struct ServerMessageParse *ServerMessageParse );
-
-#define IRCCMD_RESULTF_IGNOREMESSAGE 1
-
-struct IRCCommands {
-	char *CMD_Name;
-	char *CMD_ArgPattern;
-	ULONG (* CMD_Function)( Object *obj, struct Server *Server, struct ServerMessageParse *ServerMessageParse );
-};
-
-struct IRCCommands TAB_IRCCOMMANDS[] =
-{
-	{ "PRIVMSG",    "C",     IRCCMD_PrivMsg                         },
-	{ "NOTICE",     "N",     IRCCMD_Notice                          },
-	{ "PING",       "",      IRCCMD_Ping                            },
-	{ "JOIN",       "C",     IRCCMD_Join                            },
-	{ "PART",       "C",     IRCCMD_Part                            },
-	{ "QUIT",       "",      IRCCMD_Quit                            },
-	{ "331",        "NC",    IRCCMD_TopicNotSet               },
-	{ "332",        "NC",    IRCCMD_Topic                     },
-	{ "333",        "NCFD",  IRCCMD_TopicSetBy                },
-	{ "353",        "N-C",   IRCCMD_NameReply                 },
-	{ "366",        "NC",    IRCCMD_EndOfNames                },
-	{ "375",        "NC",    IRCCMD_MOTDStart                 },
-	{ "372",        "NC",    IRCCMD_MOTD                      },
-	{ "376",        "NC",    IRCCMD_MOTDEnd                   },
-	{ "324",        "NC",    IRCCMD_ChannelModeIs             },
-	{ NULL, NULL, NULL },
-};
-/* \\\ */
-/* /// IRCCMD_PrivMsg()
-**
-*/
-
-/*************************************************************************/
-
-static ULONG IRCCMD_PrivMsg( Object *obj, struct Server *s, struct ServerMessageParse *smp )
-{
-	if( strstr( smp->smp_Message, "\001ACTION" ) && smp->smp_Message[ strlen( smp->smp_Message ) - 1 ] == '\001' ) {
-		smp->smp_Pen = PEN_LOGACTION;
-
-		sprintf( &smp->smp_MessageBuffer[ strlen( smp->smp_MessageBuffer ) ],
-				"* %s%s", smp->smp_FromNick, &smp->smp_Message[ strlen( "\001ACTION" ) ]
-			);
-	} else {
-		smp->smp_Pen = PEN_LOGPRIVMSG;
-		sprintf( &smp->smp_MessageBuffer[ strlen( smp->smp_MessageBuffer ) ],
-				"<%s> %s", smp->smp_FromNick, smp->smp_Message
-			);
-	}
-
-	return( 0 );
-}
-/* \\\ */
-/* /// IRCCMD_Notice()
-**
-*/
-
-/*************************************************************************/
-
-static ULONG IRCCMD_Notice( Object *obj, struct Server *s, struct ServerMessageParse *smp )
-{
-	smp->smp_Pen = PEN_LOGNOTICE;
-	sprintf( &smp->smp_MessageBuffer[ strlen( smp->smp_MessageBuffer ) ],
-		"[%s] %s %s", LGS( MSG_MUICLASS_NETWORK_NOTICE ),
-						smp->smp_FromNick,
-						smp->smp_Message
-		);
-
-	return( 0 );
-}
-/* \\\ */
-/* /// IRCCMD_Ping()
-**
-*/
-
-/*************************************************************************/
-
-static ULONG IRCCMD_Ping( Object *obj, struct Server *s, struct ServerMessageParse *smp )
-{
-	DoMethod( obj, MM_NETWORK_SERVERMESSAGESEND, s, "PONG" );
-
-	return( IRCCMD_RESULTF_IGNOREMESSAGE );
-}
-/* \\\ */
-/* /// IRCCMD_GenericServer()
-**
-*/
-
-/*************************************************************************/
-
-static ULONG IRCCMD_GenericServer( Object *obj, struct Server *s, struct ServerMessageParse *smp )
-{
-	sprintf( &smp->smp_MessageBuffer[ strlen( smp->smp_MessageBuffer ) ],
-		"[%s] %s", LGS( MSG_MUICLASS_NETWORK_SERVER ),
-						smp->smp_StringStorage );
-
-	return( 0 );
-}
-/* \\\ */
-/* /// IRCCMD_Join()
-**
-*/
-
-/*************************************************************************/
-
-static ULONG IRCCMD_Join( Object *obj, struct Server *s, struct ServerMessageParse *smp )
-{
-struct Channel *c;
-
-	if( ( c = (APTR) DoMethod( obj, MM_NETWORK_SERVERFINDCHANNEL, s, smp->smp_Channel ) ) ) {
-		DoMethod( _app(obj), MM_APPLICATION_CHANNELADD, c );
-	}
-
-	smp->smp_Pen = PEN_LOGJOIN;
-	sprintf( &smp->smp_MessageBuffer[ strlen( smp->smp_MessageBuffer ) ],
-		"[%s] %s (%s@%s) %s",  LGS( MSG_MUICLASS_NETWORK_JOIN ),
-							smp->smp_FromNick,
-							smp->smp_FromUserID,
-							smp->smp_FromHost,
-							smp->smp_Message
-		);
-
-	return( 0 );
-}
-/* \\\ */
-/* /// IRCCMD_Part()
-**
-*/
-
-/*************************************************************************/
-
-static ULONG IRCCMD_Part( Object *obj, struct Server *s, struct ServerMessageParse *smp )
-{
-struct Channel *c;
-
-	if( ( c = (APTR) DoMethod( obj, MM_NETWORK_SERVERFINDCHANNEL, s, smp->smp_Channel ) ) ) {
-		DoMethod( _app(obj), MM_APPLICATION_CHANNELREMOVE, c );
-	}
-
-	smp->smp_Pen = PEN_LOGPART;
-	sprintf( &smp->smp_MessageBuffer[ strlen( smp->smp_MessageBuffer ) ],
-		"[%s] %s (%s@%s) %s",  LGS( MSG_MUICLASS_NETWORK_PART ),
-							smp->smp_FromNick,
-							smp->smp_FromUserID,
-							smp->smp_FromHost,
-							smp->smp_Message
-		);
-
-	return( 0 );
-}
-/* \\\ */
-/* /// IRCCMD_Quit()
-**
-*/
-
-/*************************************************************************/
-
-static ULONG IRCCMD_Quit( Object *obj, struct Server *s, struct ServerMessageParse *smp )
-{
-	smp->smp_Pen = PEN_LOGQUIT;
-	sprintf( &smp->smp_MessageBuffer[ strlen( smp->smp_MessageBuffer ) ],
-		"[%s] %s (%s@%s) %s",  LGS( MSG_MUICLASS_NETWORK_QUIT ),
-							smp->smp_FromNick,
-							smp->smp_FromUserID,
-							smp->smp_FromHost,
-							smp->smp_Message
-		);
-
-	return( 0 );
-}
-/* \\\ */
-/* /// IRCCMD_TopicNotSet()
-**
-*/
-
-/*************************************************************************/
-
-static ULONG IRCCMD_TopicNotSet( Object *obj, struct Server *s, struct ServerMessageParse *smp )
-{
-struct Channel *c;
-char *msg = (char *) LGS( MSG_MUICLASS_NETWORK_TOPICNOTSET );
-
-	if( ( c = (APTR) DoMethod( obj, MM_NETWORK_SERVERFINDCHANNEL, s, smp->smp_Channel ) ) ) {
-		if( c->c_Topic ) {
-			FreeVec( c->c_Topic );
-		}
-		if( ( c->c_Topic = AllocVec( strlen( msg ), MEMF_ANY ) ) ) {
-			strcpy( c->c_Topic, msg );
-		}
-		DoMethod( _app(obj), MM_APPLICATION_CHANNELCHANGETOPIC, c );
-	}
-
-	smp->smp_Pen = PEN_LOGTOPIC;
-	sprintf( &smp->smp_MessageBuffer[ strlen( smp->smp_MessageBuffer ) ],
-		"[%s] %s", LGS( MSG_MUICLASS_NETWORK_TOPIC ),
-					msg
-		);
-
-	return( 0 );
-}
-/* \\\ */
-/* /// IRCCMD_Topic()
-**
-*/
-
-/*************************************************************************/
-
-static ULONG IRCCMD_Topic( Object *obj, struct Server *s, struct ServerMessageParse *smp )
-{
-struct Channel *c;
-
-	if( ( c = (APTR) DoMethod( obj, MM_NETWORK_SERVERFINDCHANNEL, s, smp->smp_Channel ) ) ) {
-		if( c->c_Topic ) {
-			FreeVec( c->c_Topic );
-		}
-		if( ( c->c_Topic = AllocVec( strlen( smp->smp_Message ) + 1, MEMF_ANY ) ) ) {
-			strcpy( c->c_Topic, smp->smp_Message );
-		}
-		DoMethod( _app(obj), MM_APPLICATION_CHANNELCHANGETOPIC, c );
-	}
-
-	smp->smp_Pen = PEN_LOGTOPIC;
-	sprintf( &smp->smp_MessageBuffer[ strlen( smp->smp_MessageBuffer ) ],
-		"[%s] %s", LGS( MSG_MUICLASS_NETWORK_TOPIC ),
-							smp->smp_Message
-		);
-
-	return( 0 );
-}
-/* \\\ */
-/* /// IRCCMD_TopicSetBy()
-**
-*/
-
-/*************************************************************************/
-
-static ULONG IRCCMD_TopicSetBy( Object *obj, struct Server *s, struct ServerMessageParse *smp )
-{
-	smp->smp_Pen = PEN_LOGTOPIC;
-	sprintf( &smp->smp_MessageBuffer[ strlen( smp->smp_MessageBuffer ) ],
-		"[%s] %s %s!%s@%s %s %s", LGS( MSG_MUICLASS_NETWORK_TOPIC ),
-							LGS( MSG_MUICLASS_NETWORK_TOPICSETBY ),
-							smp->smp_FromNick,
-							smp->smp_FromUserID,
-							smp->smp_FromHost,
-							LGS( MSG_MUICLASS_NETWORK_TOPICSETONDATE ),
-							smp->smp_Date
-		);
-
-	return( 0 );
-}
-/* \\\ */
-/* /// IRCCMD_NameReply()
-**
-*/
-
-/*************************************************************************/
-
-static ULONG IRCCMD_NameReply( Object *obj, struct Server *s, struct ServerMessageParse *smp )
-{
-struct SimpleReadArgsData *srad;
-struct Channel *c;
-struct ChannelNickEntry *cne;
-struct ChatLogEntry *cle;
-char *nick, *bufferstart;
-
-	if( ( c = (APTR) DoMethod( obj, MM_NETWORK_SERVERFINDCHANNEL, s, smp->smp_Channel ) ) ) {
-		if( ( srad = SimpleReadArgsParse( "NICK/M/A", smp->smp_Message ) ) ) {
-			char **array = (APTR) srad->srad_ArgArray[0];
-			while( ( nick = *array++ ) ) {
-				if( ( cne = (APTR) DoMethod( obj, MM_NETWORK_CHATNICKENTRYALLOC, c, nick ) ) ) {
-					DoMethod( _app(obj), MM_APPLICATION_CHANNELNICKADD, c, cne );
-				}
-			}
-			SimpleReadArgsFree( srad );
-		}
-		if( !( c->c_Flags & CHANNELF_NAMESLIST ) ) {
-			bufferstart	= &smp->smp_MessageBuffer[ strlen( smp->smp_MessageBuffer ) ];
-			sprintf( bufferstart,
-				"[%s] %s %s:", LGS( MSG_MUICLASS_NETWORK_NAMES ),
-							LGS( MSG_MUICLASS_NETWORK_USERSINCHANNEL ),
-							smp->smp_Channel
-							);
-
-			if( ( cle = (APTR) DoMethod( obj, MM_NETWORK_CHATLOGENTRYADD, s, smp->smp_Channel, PEN_LOGNOTICE, smp->smp_MessageBuffer ) ) ) {
-				DoMethod( _app(obj), MM_APPLICATION_MESSAGERECEIVED, cle );
-			}
-			c->c_Flags |= CHANNELF_NAMESLIST; /* make sure header is only shown once */
-		}
-
-		smp->smp_Pen = PEN_LOGNOTICE;
-		sprintf( bufferstart,
-			"[%s] %s", LGS( MSG_MUICLASS_NETWORK_NAMES ),
-					smp->smp_Message
-			);
-		
-		return( 0 );
-	}
-	return( IRCCMD_RESULTF_IGNOREMESSAGE );
-}
-/* \\\ */
-/* /// IRCCMD_EndOfNames()
-**
-*/
-
-/*************************************************************************/
-
-static ULONG IRCCMD_EndOfNames( Object *obj, struct Server *s, struct ServerMessageParse *smp )
-{
-struct Channel *c;
-
-	if( ( c = (APTR) DoMethod( obj, MM_NETWORK_SERVERFINDCHANNEL, s, smp->smp_Channel ) ) ) {
-		c->c_Flags &= ~CHANNELF_NAMESLIST; /* we are done */
-	}
-
-	return( IRCCMD_RESULTF_IGNOREMESSAGE );
-}
-/* \\\ */
-/* /// IRCCMD_MOTDStart()
-**
-*/
-
-/*************************************************************************/
-
-static ULONG IRCCMD_MOTDStart( Object *obj, struct Server *s, struct ServerMessageParse *smp )
-{
-struct Channel *c;
-
-	if( ( c = (APTR) DoMethod( obj, MM_NETWORK_SERVERFINDCHANNEL, s, NULL ) ) ) {
-		c->c_Flags |= CHANNELF_MESSAGEOFTHEDAY;
-
-		smp->smp_Pen = PEN_LOGNOTICE;
-		sprintf( &smp->smp_MessageBuffer[ strlen( smp->smp_MessageBuffer ) ],
-			"[%s] %s", LGS( MSG_MUICLASS_NETWORK_SERVER ),
-								smp->smp_Message
-			);
-		return( 0 );
-	}
-	return( IRCCMD_RESULTF_IGNOREMESSAGE );
-}
-/* \\\ */
-/* /// IRCCMD_MOTD()
-**
-*/
-
-/*************************************************************************/
-
-static ULONG IRCCMD_MOTD( Object *obj, struct Server *s, struct ServerMessageParse *smp )
-{
-struct Channel *c;
-
-	if( ( c = (APTR) DoMethod( obj, MM_NETWORK_SERVERFINDCHANNEL, s, NULL ) ) ) {
-		if( ( c->c_Flags & CHANNELF_MESSAGEOFTHEDAY ) ) {
-			smp->smp_Pen = PEN_LOGNOTICE;
-			sprintf( &smp->smp_MessageBuffer[ strlen( smp->smp_MessageBuffer ) ],
-				"[%s] %s", LGS( MSG_MUICLASS_NETWORK_SERVER ),
-									smp->smp_Message
-				);
-				return( 0 );
-		}
-	}
-	return( IRCCMD_RESULTF_IGNOREMESSAGE );
-}
-/* \\\ */
-/* /// IRCCMD_MOTDEnd()
-**
-*/
-
-/*************************************************************************/
-
-static ULONG IRCCMD_MOTDEnd( Object *obj, struct Server *s, struct ServerMessageParse *smp )
-{
-struct Channel *c;
-
-	if( ( c = (APTR) DoMethod( obj, MM_NETWORK_SERVERFINDCHANNEL, s, NULL ) ) ) {
-		c->c_Flags &= ~CHANNELF_MESSAGEOFTHEDAY;
-	}
-	return( IRCCMD_RESULTF_IGNOREMESSAGE );
-}
-/* \\\ */
-/* /// IRCCMD_ChannelModeIs()
-**
-*/
-
-/*************************************************************************/
-
-static ULONG IRCCMD_ChannelModeIs( Object *obj, struct Server *s, struct ServerMessageParse *smp )
-{
-
-	debug("channel mode is '%s'\n",smp->smp_StringStorage );
-	smp->smp_Pen = PEN_LOGMODE;
-	sprintf( &smp->smp_MessageBuffer[ strlen( smp->smp_MessageBuffer ) ],
-		"[%s] %s",  LGS( MSG_MUICLASS_NETWORK_SERVER ),
-							smp->smp_StringStorage );
-
-	return( 0 );
-}
-/* \\\ */
+#define COMMAND_COMPOSEBUFFER_SIZEOF 0x1000
 
 /*************************************************************************/
 
@@ -631,7 +187,6 @@ ULONG i;
 }
 /* \\\ */
 
-#define COMMAND_COMPOSEBUFFER_SIZEOF 0x1000
 
 /* /// MM_ServerLogin()
 **
@@ -1272,8 +827,9 @@ ULONG i;
 								break;
 							case 'D': /* 3412341244  */
 								{
-								time_t rawtime = atoi(args);
+								time_t rawtime;
 								struct tm *timeinfo;
+								StrToLong( (CONST_STRPTR) args, &rawtime );
 								timeinfo = localtime(&rawtime);
 								smp->smp_Date = dst;
 								strcpy( dst, asctime(timeinfo) );
@@ -1419,6 +975,7 @@ LONG waitsignals = *((ULONG*) msg->SignalMask );
 	mccdata->mcc_ReadFDS  = mccdata->mcc_ReadMaster;
 	mccdata->mcc_WriteFDS = mccdata->mcc_WriteMaster;
 
+	debug("%08lx %08lx\n", msg->SignalMask, *msg->SignalMask );
 	selectresult  = WaitSelect( mccdata->mcc_FDMax + 1, &mccdata->mcc_ReadFDS, &mccdata->mcc_WriteFDS, NULL, NULL, msg->SignalMask );
 
 	if( selectresult > 0 ) {
@@ -1483,7 +1040,7 @@ LONG waitsignals = *((ULONG*) msg->SignalMask );
 		}
 
 	} else {
-//		  debug("wait select failed -> using normal wait to keep application alive\n");
+		debug("wait select failed -> using normal wait to keep application alive\n");
 		*((ULONG*) msg->SignalMask ) = Wait( waitsignals );
 	}
 	return( selectresult );

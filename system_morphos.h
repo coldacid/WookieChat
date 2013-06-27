@@ -20,6 +20,15 @@
 /*************************************************************************/
 
 #include <exec/types.h>
+#include <arpa/inet.h>
+#include <clib/alib_protos.h>
+#include <clib/macros.h>
+#include <devices/timer.h>
+#include <netdb.h>
+#include <sys/filio.h>
+#include <netinet/in.h>
+#include <string.h>
+#include <sys/socket.h>
 
 #include "debug.h"
 #include "memorytracking.h"

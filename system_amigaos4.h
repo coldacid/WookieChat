@@ -20,6 +20,19 @@
 /*************************************************************************/
 
 #include <exec/types.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <sys/filio.h>
+#include <arpa/inet.h>
+#include <proto/bsdsocket.h>
+#include "gg:netinclude/sys/types.h"
+#include "gg:netinclude/netdb.h"
+#include "gg:netinclude/sys/filio.h"
+#include "gg:netinclude/sys/ioctl.h"
+#include "gg:netinclude/sys/socket.h"
+#include "gg:netinclude/bsdsocket/socketbasetags.h"
+#include "gg:netinclude/clib/socket_protos.h"
+#include "os4.h"
 
 #include "debug.h"
 #include "memorytracking.h"
