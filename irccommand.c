@@ -8,7 +8,7 @@
     for the specific language governing rights and limitations under the License.
 */
 
-#define NODEBUG
+//#define NODEBUG
 
 /*
 ** irccommand.c
@@ -181,6 +181,29 @@ static ULONG IRCCMD_Quit( Object *obj, struct Server *s, struct ServerMessagePar
 	return( 0 );
 }
 /* \\\ */
+/* /// IRCCMD_ChannelWebSiteIs()
+**
+*/
+
+/*************************************************************************/
+
+static ULONG IRCCMD_ChannelWebSiteIs( Object *obj, struct Server *s, struct ServerMessageParse *smp )
+{
+struct Channel *c;
+
+	c = (APTR) DoMethod( obj, MM_NETWORK_SERVERFINDCHANNEL, s, smp->smp_Channel );
+
+	smp->smp_Pen = PEN_LOGINFO;
+	sprintf( &smp->smp_MessageBuffer[ strlen( smp->smp_MessageBuffer ) ], (char *)
+						LGS( MSG_MUICLASS_NETWORK_CHANNELWEBSITE_FORMAT  ),
+							LGS( MSG_MUICLASS_NETWORK_SERVER ),
+							smp->smp_Channel,
+							smp->smp_Message
+		);
+
+	return( 0 );
+}
+/* \\\ */
 /* /// IRCCMD_TopicNotSet()
 **
 */
@@ -190,7 +213,7 @@ static ULONG IRCCMD_Quit( Object *obj, struct Server *s, struct ServerMessagePar
 static ULONG IRCCMD_TopicNotSet( Object *obj, struct Server *s, struct ServerMessageParse *smp )
 {
 struct Channel *c;
-char *msg = (char *) LGS( MSG_MUICLASS_NETWORK_TOPICNOTSET );
+char *msg = (char*) LGS( MSG_MUICLASS_NETWORK_TOPICNOTSET );
 
 	if( ( c = (APTR) DoMethod( obj, MM_NETWORK_SERVERFINDCHANNEL, s, smp->smp_Channel ) ) ) {
 		if( c->c_Topic ) {
@@ -203,10 +226,12 @@ char *msg = (char *) LGS( MSG_MUICLASS_NETWORK_TOPICNOTSET );
 	}
 
 	smp->smp_Pen = PEN_LOGTOPIC;
-	sprintf( &smp->smp_MessageBuffer[ strlen( smp->smp_MessageBuffer ) ],
-		"[%s] %s", LGS( MSG_MUICLASS_NETWORK_TOPIC ),
-					msg
+	sprintf( &smp->smp_MessageBuffer[ strlen( smp->smp_MessageBuffer ) ], (char*)
+						LGS( MSG_MUICLASS_NETWORK_TOPICNOTSET_FORMAT ),
+							LGS( MSG_MUICLASS_NETWORK_TOPIC ),
+							msg
 		);
+
 
 	return( 0 );
 }
@@ -232,8 +257,9 @@ struct Channel *c;
 	}
 
 	smp->smp_Pen = PEN_LOGTOPIC;
-	sprintf( &smp->smp_MessageBuffer[ strlen( smp->smp_MessageBuffer ) ],
-		"[%s] %s", LGS( MSG_MUICLASS_NETWORK_TOPIC ),
+	sprintf( &smp->smp_MessageBuffer[ strlen( smp->smp_MessageBuffer ) ], (char*)
+						LGS( MSG_MUICLASS_NETWORK_TOPIC_FORMAT ),
+							LGS( MSG_MUICLASS_NETWORK_TOPIC ),
 							smp->smp_Message
 		);
 
@@ -249,13 +275,12 @@ struct Channel *c;
 static ULONG IRCCMD_TopicSetBy( Object *obj, struct Server *s, struct ServerMessageParse *smp )
 {
 	smp->smp_Pen = PEN_LOGTOPIC;
-	sprintf( &smp->smp_MessageBuffer[ strlen( smp->smp_MessageBuffer ) ],
-		"[%s] %s %s!%s@%s %s %s", LGS( MSG_MUICLASS_NETWORK_TOPIC ),
-							LGS( MSG_MUICLASS_NETWORK_TOPICSETBY ),
+	sprintf( &smp->smp_MessageBuffer[ strlen( smp->smp_MessageBuffer ) ], (char *)
+						LGS( MSG_MUICLASS_NETWORK_TOPICSETBY_FORMAT ),
+							LGS( MSG_MUICLASS_NETWORK_TOPIC ),
 							smp->smp_FromNick,
 							smp->smp_FromUserID,
 							smp->smp_FromHost,
-							LGS( MSG_MUICLASS_NETWORK_TOPICSETONDATE ),
 							smp->smp_Date
 		);
 
@@ -422,6 +447,7 @@ struct IRCCommands TAB_IRCCOMMANDS[] =
 	{ "JOIN",       "C",     IRCCMD_Join                            },
 	{ "PART",       "C",     IRCCMD_Part                            },
 	{ "QUIT",       "",      IRCCMD_Quit                            },
+	{ "328",        "NC",    IRCCMD_ChannelWebSiteIs          },
 	{ "331",        "NC",    IRCCMD_TopicNotSet               },
 	{ "332",        "NC",    IRCCMD_Topic                     },
 	{ "333",        "NCFD",  IRCCMD_TopicSetBy                },

@@ -1872,21 +1872,29 @@ MSG_MUICLASS_NETWORK_SERVER
 Server
 ; Server
 ;
-MSG_MUICLASS_NETWORK_TOPICSETBY
-von\x20
-; set by\x20
+MSG_MUICLASS_NETWORK_TOPIC_FORMAT
+[%s] Das Thema ist %s
+; [%s] Topic is %s
 ;
-MSG_MUICLASS_NETWORK_TOPICSETONDATE
-\x20am\x20
-; \x20on\x20
+MSG_MUICLASS_NETWORK_TOPICSETBY_FORMAT
+[%s] Das Thema wurde von %s!%s@%s am %s gesetzt.
+; [%s] Topic set by %s!%s@%s on %s.
+;
+MSG_MUICLASS_NETWORK_TOPICNOTSET_FORMAT
+[%s] %s
+; [%s] %s
 ;
 MSG_MUICLASS_NETWORK_TOPICNOTSET
-wurde nicht gesetzt!
-; not set!
+Topic not set! 
+; Topic not set! 
 ;
 MSG_MUICLASS_NETWORK_USERSINCHANNEL
 Anwesende im Kanal
 ; Users in channel
+;
+MSG_MUICLASS_NETWORK_CHANNELWEBSITE_FORMAT
+[%s] Die Webseites von %s ist '%s'.
+; [%s] Website of %s is '%s'.
 ;
 ; MUICLASS_QUICKSETUP
 ;

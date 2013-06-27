@@ -5441,41 +5441,53 @@ Server
 Server
 Server
 ;
-MSG_MUICLASS_NETWORK_TOPICSETBY
-set by\x20
-von\x20
-establecida por\x20
-entré par\x20
-ìðÞêå áðü ôïí\x20
-di\x20
-beállította:\x20
-satt av\x20
-ustawiony przez\x20
-satt av\x20
+MSG_MUICLASS_NETWORK_TOPIC_FORMAT
+[%s] Topic is %s
+[%s] Das Thema ist %s
+[%s] Topic is %s
+[%s] Topic is %s
+[%s] Topic is %s
+[%s] Topic is %s
+[%s] Topic is %s
+[%s] Topic is %s
+[%s] Topic is %s
+[%s] Topic is %s
 ;
-MSG_MUICLASS_NETWORK_TOPICSETONDATE
-\x20on\x20
-\x20am\x20
-\x20el\x20
-\x20le\x20
-\x20óôéò\x20
-\x20al\x20
-\x20ekkor:\x20
-\x20på\x20
-\x20dnia\x20
-\x20den\x20
+MSG_MUICLASS_NETWORK_TOPICSETBY_FORMAT
+[%s] Topic set by %s!%s@%s on %s.
+[%s] Das Thema wurde von %s!%s@%s am %s gesetzt.
+[%s] Topic set by %s!%s@%s on %s.
+[%s] Topic set by %s!%s@%s on %s.
+[%s] Topic set by %s!%s@%s on %s.
+[%s] Topic set by %s!%s@%s on %s.
+[%s] Topic set by %s!%s@%s on %s.
+[%s] Topic set by %s!%s@%s on %s.
+[%s] Topic set by %s!%s@%s on %s.
+[%s] Topic set by %s!%s@%s on %s.
+;
+MSG_MUICLASS_NETWORK_TOPICNOTSET_FORMAT
+[%s] %s
+[%s] %s
+[%s] %s
+[%s] %s
+[%s] %s
+[%s] %s
+[%s] %s
+[%s] %s
+[%s] %s
+[%s] %s
 ;
 MSG_MUICLASS_NETWORK_TOPICNOTSET
-not set!
-wurde nicht gesetzt!
-not set!
-not set!
-not set!
-not set!
-not set!
-not set!
-not set!
-not set!
+Topic not set! 
+Topic not set! 
+Topic not set! 
+Topic not set! 
+Topic not set! 
+Topic not set! 
+Topic not set! 
+Topic not set! 
+Topic not set! 
+Topic not set! 
 ;
 MSG_MUICLASS_NETWORK_USERSINCHANNEL
 Users in channel
@@ -5488,6 +5500,18 @@ Csatorna felhasználói
 Brukere i kanal
 U¿ytkownicy na kanale
 Användare i kanalen
+;
+MSG_MUICLASS_NETWORK_CHANNELWEBSITE_FORMAT
+[%s] Website of %s is '%s'.
+[%s] Die Webseites von %s ist '%s'.
+[%s] Website of %s is '%s'.
+[%s] Website of %s is '%s'.
+[%s] Website of %s is '%s'.
+[%s] Website of %s is '%s'.
+[%s] Website of %s is '%s'.
+[%s] Website of %s is '%s'.
+[%s] Website of %s is '%s'.
+[%s] Website of %s is '%s'.
 ;
 ; MUICLASS_QUICKSETUP
 ;
