@@ -12,6 +12,8 @@
 ** wookiechat.c
 */
 
+#define NODEBUG
+
 /*************************************************************************/
 
 #include <proto/muimaster.h>

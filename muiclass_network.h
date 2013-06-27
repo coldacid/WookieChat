@@ -52,6 +52,7 @@ MM_NETWORK_SERVERAUTOJOIN,
 
 MM_NETWORK_SERVERMESSAGERECEIVED,
 MM_NETWORK_SERVERMESSAGESEND,
+MM_NETWORK_SERVERMESSAGESENDPRIVMSG,
 MM_NETWORK_SERVERMESSAGESENDPROC,
 MM_NETWORK_SERVERMESSAGEPROCESS,
 MM_NETWORK_SERVERMESSAGEPARSEBEGIN,
@@ -94,6 +95,7 @@ struct MP_NETWORK_SERVERAUTOJOIN          { ULONG MethodID; struct Server *Serve
 
 struct MP_NETWORK_SERVERMESSAGERECEIVED   { ULONG MethodID; struct Server *Server; char *Message; };
 struct MP_NETWORK_SERVERMESSAGESEND       { ULONG MethodID; struct Server *Server; char *Message; };
+struct MP_NETWORK_SERVERMESSAGESENDPRIVMSG{ ULONG MethodID; struct Server *Server; struct Channel *Channel; char *Message; };
 struct MP_NETWORK_SERVERMESSAGEPARSEBEGIN { ULONG MethodID; struct Server *Server; char *Message; };
 struct MP_NETWORK_SERVERMESSAGEPARSEEND   { ULONG MethodID; struct ServerMessageParse *ServerMessageParse; };
 struct MP_NETWORK_SERVERMESSAGEPROCESS    { ULONG MethodID; struct Server *Server; struct ServerMessageParse *ServerMessageParse; };
@@ -133,6 +135,7 @@ struct Server {
 	ULONG              s_Flags;
 	ULONG              s_State; /* this is the current state */
 	ULONG              s_Retries;
+	char               s_CurrentNick[ NICKENTRY_NICK_SIZEOF + 2 ];
 	char               s_Buffer[ SERVERBUFFER_SIZEOF + 1 ];
 	LONG 			   s_BufferFilled;
 	//struct sockaddr_in s_ServerSocket;

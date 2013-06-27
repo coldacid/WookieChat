@@ -37,6 +37,7 @@
 #include "muiclass_settingsgeneral.h"
 #include "muiclass_windowsettings.h"
 #include "muiclass_messageinput.h"
+#include "muiclass_chatchannellist.h"
 #include "muiclass_network.h"
 
 /*************************************************************************/
@@ -48,7 +49,9 @@
 enum
 {
 WID_SETTINGS = 0,
-GID_USERLIST,
+GID_NETWORK,
+GID_CHATUSERLIST,
+GID_CHATCHANNELLIST,
 GID_LAST
 };
 
@@ -180,6 +183,23 @@ struct mccdata *mccdata = INST_DATA( cl, obj );
 			case IDCMP_RAWKEY:
 				{
 					switch( msg->imsg->Code ) {
+						case RAWKEY_RETURN:
+							{
+							struct ChatChannel *cc;
+							struct Server *s = NULL;
+
+								cc = NULL;
+								DoMethod( mccdata->mcc_ClassObjects[ GID_CHATCHANNELLIST ], MUIM_NList_GetEntry, MUIV_NList_GetEntry_Active, &cc );
+								if( cc ) {
+									/* pointer magic */
+									s = (APTR) ( ( (IPTR) List_GetListFromNode( cc->cc_Channel ) ) - (IPTR) offsetof( struct Server, s_ChannelList ) );
+								}
+								DoMethod( mccdata->mcc_ClassObjects[ GID_NETWORK ], MM_NETWORK_SERVERMESSAGESENDPRIVMSG, s, cc->cc_Channel, MUIGetVar( obj, MUIA_String_Contents ) );
+
+								SetAttrs( obj, MUIA_String_Contents, "", TAG_DONE );
+								SetAttrs( _win(obj), MUIA_Window_ActiveObject, obj, TAG_DONE );
+							}
+							break;
 						default:
 							if( !( msg->imsg->Code & IECODE_UP_PREFIX ) ) { /* tab release must not kill tab handling */
 								mccdata->mcc_NickStart = 0;
@@ -189,7 +209,7 @@ struct mccdata *mccdata = INST_DATA( cl, obj );
 							/* get current string */
 							str	= (char *) MUIGetVar( obj, MUIA_String_Contents );
 							pos	=          MUIGetVar( obj, MUIA_String_BufferPos );
-							max	= MUIGetVar( mccdata->mcc_ClassObjects[ GID_USERLIST ], MUIA_NList_Entries );
+							max	= MUIGetVar( mccdata->mcc_ClassObjects[ GID_CHATUSERLIST ], MUIA_NList_Entries );
 
 							if( pos ) {
 								struct ChatNick *cn;
@@ -218,7 +238,7 @@ struct mccdata *mccdata = INST_DATA( cl, obj );
 								if( mccdata->mcc_NickStart ) {
 									do{
 										cn = NULL;
-										DoMethod( mccdata->mcc_ClassObjects[ GID_USERLIST ], MUIM_NList_GetEntry, mccdata->mcc_NickStart - 1, &cn );
+										DoMethod( mccdata->mcc_ClassObjects[ GID_CHATUSERLIST ], MUIM_NList_GetEntry, mccdata->mcc_NickStart - 1, &cn );
 										if( cn ) {
 											tmp = cn->cn_ChatNickEntry->cne_Nick;
 											if( ( *tmp == '@' ) || ( *tmp == '+' ) || ( *tmp == '%' ) ) {
@@ -351,8 +371,14 @@ NTIP struct TagItem *tstate;
 			case MA_MESSAGEINPUT_OBJECTSETTINGS:
 				mccdata->mcc_ClassObjects[ WID_SETTINGS ] = (Object *) tidata;
 				break;
-			case MA_MESSAGEINPUT_OBJECTUSERLIST:
-				mccdata->mcc_ClassObjects[ GID_USERLIST ] = (Object *) tidata;
+			case MA_MESSAGEINPUT_OBJECTNETWORK:
+				mccdata->mcc_ClassObjects[ GID_NETWORK ] = (Object *) tidata;
+				break;
+			case MA_MESSAGEINPUT_OBJECTCHATUSERLIST:
+				mccdata->mcc_ClassObjects[ GID_CHATUSERLIST ] = (Object *) tidata;
+				break;
+			case MA_MESSAGEINPUT_OBJECTCHATCHANNELLIST:
+				mccdata->mcc_ClassObjects[ GID_CHATCHANNELLIST ] = (Object *) tidata;
 				break;
 		}
     }

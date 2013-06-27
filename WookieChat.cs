@@ -5441,6 +5441,18 @@ Server
 Server
 Server
 ;
+MSG_MUICLASS_NETWORK_CTCP
+CTCP
+CTCP
+CTCP
+CTCP
+CTCP
+CTCP
+CTCP
+CTCP
+CTCP
+CTCP
+;
 MSG_MUICLASS_NETWORK_TOPIC_FORMAT
 [%s] Topic is %s
 [%s] Das Thema ist %s
@@ -5477,17 +5489,29 @@ MSG_MUICLASS_NETWORK_TOPICNOTSET_FORMAT
 [%s] %s
 [%s] %s
 ;
+MSG_MUICLASS_NETWORK_CTCPPING_FORMAT
+[%s] CTCP PING from %s.
+[%s] CTCP PING von %s.
+[%s] CTCP PING from %s.
+[%s] CTCP PING from %s.
+[%s] CTCP PING from %s.
+[%s] CTCP PING from %s.
+[%s] CTCP PING from %s.
+[%s] CTCP PING from %s.
+[%s] CTCP PING from %s.
+[%s] CTCP PING from %s.
+;
 MSG_MUICLASS_NETWORK_TOPICNOTSET
-Topic not set! 
-Topic not set! 
-Topic not set! 
-Topic not set! 
-Topic not set! 
-Topic not set! 
-Topic not set! 
-Topic not set! 
-Topic not set! 
-Topic not set! 
+Topic not set!
+Topic not set!
+Topic not set!
+Topic not set!
+Topic not set!
+Topic not set!
+Topic not set!
+Topic not set!
+Topic not set!
+Topic not set!
 ;
 MSG_MUICLASS_NETWORK_USERSINCHANNEL
 Users in channel
@@ -5512,6 +5536,18 @@ MSG_MUICLASS_NETWORK_CHANNELWEBSITE_FORMAT
 [%s] Website of %s is '%s'.
 [%s] Website of %s is '%s'.
 [%s] Website of %s is '%s'.
+;
+MSG_MUICLASS_NETWORK_CTCPVERSION_FORMAT
+[%s] CTCP VERSION from '%s'.
+[%s] CTCP VERSION von '%s'.
+[%s] CTCP VERSION from '%s'.
+[%s] CTCP VERSION from '%s'.
+[%s] CTCP VERSION from '%s'.
+[%s] CTCP VERSION from '%s'.
+[%s] CTCP VERSION from '%s'.
+[%s] CTCP VERSION from '%s'.
+[%s] CTCP VERSION from '%s'.
+[%s] CTCP VERSION from '%s'.
 ;
 ; MUICLASS_QUICKSETUP
 ;

@@ -19,7 +19,7 @@
 
 #define VERSION  3
 #define REVISION 0
-#define DAY      05
+#define DAY      27
 #define MONTH    06
 #define YEAR     2013
 

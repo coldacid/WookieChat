@@ -257,11 +257,11 @@ Object *winobj;
 
 	DoMethod( mccdata->mcc_ClassObjects[ GID_CHATCHANNELLIST ], MUIM_Notify, MUIA_NList_Active, MUIV_EveryTime, obj, 1, MM_WINDOWCHAT_CHANNELCHANGE );
 
-	DoMethod( mccdata->mcc_ClassObjects[ GID_CHATMESSAGE ], MUIM_Notify, MUIA_String_Acknowledge, MUIV_EveryTime, obj, 1, MM_WINDOWCHAT_MESSAGEENTERED );
-
 	SetAttrs( mccdata->mcc_ClassObjects[ GID_CHATMESSAGE ],
-					MA_MESSAGEINPUT_OBJECTUSERLIST, mccdata->mcc_ClassObjects[ GID_CHATUSERLIST ],
-					MA_MESSAGEINPUT_OBJECTSETTINGS, mccdata->mcc_ClassObjects[ WID_SETTINGS     ],
+					MA_MESSAGEINPUT_OBJECTCHATUSERLIST   , mccdata->mcc_ClassObjects[ GID_CHATUSERLIST ],
+					MA_MESSAGEINPUT_OBJECTCHATCHANNELLIST, mccdata->mcc_ClassObjects[ GID_CHATCHANNELLIST ],
+					MA_MESSAGEINPUT_OBJECTNETWORK        , mccdata->mcc_ClassObjects[ GID_NETWORK      ],
+					MA_MESSAGEINPUT_OBJECTSETTINGS       , mccdata->mcc_ClassObjects[ WID_SETTINGS     ],
 					TAG_DONE );
 
 
@@ -645,37 +645,6 @@ struct ChatLogEntry *cle = msg->ChatLogEntry;
 	return( 0 );
 }
 /* \\\ */
-/* /// MM_MessageEntered()
-**
-*/
-
-/*************************************************************************/
-
-static ULONG MM_MessageEntered( struct IClass *cl, Object *obj, struct MP_WINDOWCHAT_MESSAGEENTERED *msg )
-{
-struct mccdata *mccdata = INST_DATA( cl, obj );
-struct ChatChannel *cc;
-struct Server *s;
-
-	debug( "%s (%ld) %s - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
-
-	cc = NULL;
-	DoMethod( mccdata->mcc_ClassObjects[ GID_CHATCHANNELLIST ], MUIM_NList_GetEntry, MUIV_NList_GetEntry_Active, &cc );
-	if( cc ) {
-		/* pointer magic */
-		s = (APTR) ( ( (IPTR) List_GetListFromNode( cc->cc_Channel ) ) - (IPTR) offsetof( struct Server, s_ChannelList ) );
-		strcpy( mccdata->mcc_CommandBuffer, (char*) "PRIVMSG " );
-		strcat( mccdata->mcc_CommandBuffer, cc->cc_Channel->c_Name );
-		strcat( mccdata->mcc_CommandBuffer, (char*) " :" );
-		strcat( mccdata->mcc_CommandBuffer, (char *) MUIGetVar( mccdata->mcc_ClassObjects[ GID_CHATMESSAGE ], MUIA_String_Contents ) );
-		DoMethod( mccdata->mcc_ClassObjects[ GID_NETWORK ], MM_NETWORK_SERVERMESSAGESEND, s, mccdata->mcc_CommandBuffer );
-		/* geit FIXME: This should be done in subclass of string field, which also keeps command history */
-		SetAttrs( mccdata->mcc_ClassObjects[ GID_CHATMESSAGE ], MUIA_String_Contents, "", TAG_DONE );
-		SetAttrs( obj, MUIA_Window_ActiveObject, mccdata->mcc_ClassObjects[ GID_CHATMESSAGE ], TAG_DONE );
-	}
-	return( 0 );
-}
-/* \\\ */
 
 /*
 ** Dispatcher, init and dispose
@@ -702,7 +671,6 @@ DISPATCHER(MCC_WindowChat_Dispatcher)
 		case MM_WINDOWCHAT_MENUSELECT           : return( MM_MenuSelect          ( cl, obj, (APTR) msg ) );
 		case MM_WINDOWCHAT_VISUALCHANGE         : return( MM_VisualChange        ( cl, obj, (APTR) msg ) );
 
-		case MM_WINDOWCHAT_MESSAGEENTERED       : return( MM_MessageEntered      ( cl, obj, (APTR) msg ) );
 		case MM_WINDOWCHAT_MESSAGERECEIVED      : return( MM_MessageReceived     ( cl, obj, (APTR) msg ) );
 		case MM_WINDOWCHAT_CHANNELADD           : return( MM_ChannelAdd          ( cl, obj, (APTR) msg ) );
 		case MM_WINDOWCHAT_CHANNELREMOVE        : return( MM_ChannelRemove       ( cl, obj, (APTR) msg ) );

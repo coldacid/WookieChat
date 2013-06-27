@@ -47,12 +47,58 @@
 
 static ULONG IRCCMD_PrivMsg( Object *obj, struct Server *s, struct ServerMessageParse *smp )
 {
-	if( strstr( smp->smp_Message, "\001ACTION" ) && smp->smp_Message[ strlen( smp->smp_Message ) - 1 ] == '\001' ) {
-		smp->smp_Pen = PEN_LOGACTION;
+	if( *smp->smp_Message == 1 ) {
+		char *newmsg;
+		char *msg = &smp->smp_Message[ strlen( smp->smp_Message ) - 1 ];
 
-		sprintf( &smp->smp_MessageBuffer[ strlen( smp->smp_MessageBuffer ) ],
-				"* %s%s", smp->smp_FromNick, &smp->smp_Message[ strlen( "\001ACTION" ) ]
-			);
+		if( *msg == '\001' ) {
+			*msg = 0x00; /* terminate */
+
+			/* set argument string, if available */
+			if( !( msg = strchr( &smp->smp_Message[ 1 ], 0x20 ) ) ) {
+				msg = STR_NUL;
+			}
+
+			if( strstr( &smp->smp_Message[1], "VERSION" ) ) {
+				smp->smp_Pen = PEN_LOGCTCP;
+				sprintf( &smp->smp_MessageBuffer[ strlen( smp->smp_MessageBuffer ) ], (char *)
+									LGS( MSG_MUICLASS_NETWORK_CTCPVERSION_FORMAT ),
+										LGS( MSG_MUICLASS_NETWORK_CTCP ),
+										smp->smp_FromNick
+								);
+				/* send answer */
+				if( ( newmsg = AllocVec( strlen( smp->smp_FromNick ) + strlen( VERSION_CTCP ) + 64, MEMF_ANY ) ) ) {
+					sprintf( newmsg, "NOTICE %s :\001VERSION %s \001\r\n", smp->smp_FromNick, VERSION_CTCP );
+					DoMethod( obj, MM_NETWORK_SERVERMESSAGESEND, s, newmsg );
+					FreeVec( newmsg );
+				}
+			} else {
+				if( strstr( &smp->smp_Message[1], "ACTION" ) ) {
+					smp->smp_Pen = PEN_LOGACTION;
+
+					sprintf( &smp->smp_MessageBuffer[ strlen( smp->smp_MessageBuffer ) ],
+									"* %s%s", smp->smp_FromNick, &smp->smp_Message[ 1 + strlen( "ACTION" ) ]
+								);
+				} else {
+					if( strstr( &smp->smp_Message[1], "PING" ) ) {
+						smp->smp_Pen = PEN_LOGCTCP;
+
+						sprintf( &smp->smp_MessageBuffer[ strlen( smp->smp_MessageBuffer ) ], (char *)
+										LGS( MSG_MUICLASS_NETWORK_CTCPPING_FORMAT ),
+											LGS( MSG_MUICLASS_NETWORK_CTCP ),
+											smp->smp_FromNick
+									);
+						/* send answer */
+						if( ( newmsg = AllocVec( strlen( smp->smp_FromNick ) + strlen( smp->smp_Channel ) + strlen( msg ) + 64, MEMF_ANY ) ) ) {
+							sprintf( newmsg, ":%s NOTICE %s :\001PONG%s\001\r\n", smp->smp_Channel, smp->smp_FromNick, msg );
+							DoMethod( obj, MM_NETWORK_SERVERMESSAGESEND, s, newmsg );
+							FreeVec( newmsg );
+						}
+
+					}
+				}
+			}
+		}
 	} else {
 		smp->smp_Pen = PEN_LOGPRIVMSG;
 		sprintf( &smp->smp_MessageBuffer[ strlen( smp->smp_MessageBuffer ) ],
@@ -89,8 +135,9 @@ static ULONG IRCCMD_Notice( Object *obj, struct Server *s, struct ServerMessageP
 
 static ULONG IRCCMD_Ping( Object *obj, struct Server *s, struct ServerMessageParse *smp )
 {
-	DoMethod( obj, MM_NETWORK_SERVERMESSAGESEND, s, "PONG" );
-
+	smp->smp_Message[1] = 'O';
+	DoMethod( obj, MM_NETWORK_SERVERMESSAGESEND, s, smp->smp_Message );
+debug("sending pong\n");
 	return( IRCCMD_RESULTF_IGNOREMESSAGE );
 }
 /* \\\ */

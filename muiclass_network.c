@@ -42,9 +42,6 @@
 
 /*************************************************************************/
 
-static char *STR_NUL = "";
-
-
 enum{
 WID_SETTINGS = 0,
 GID_AUDIO,
@@ -248,7 +245,7 @@ char *buffer;
 			if( !( c->c_Flags & CHANNELF_SERVER ) ) { /* server tab is no real channel */
 				sprintf( buffer, "JOIN %s", c->c_Name );
 				if( c->c_Password[0] ) {
-					strcat( buffer, "\n" );
+					strcat( buffer, " " );
 					strcat( buffer, c->c_Password );
 				}
 				DoMethod( obj, MM_NETWORK_SERVERMESSAGESEND, s, buffer );
@@ -635,17 +632,43 @@ struct ChatLogEntry *cle;
 	return( 0 );
 }
 /* \\\ */
-/* /// MM_ServerMessageSend()
-**
-*/
-
-/*************************************************************************/
 
 struct SendNode {
 	struct SendNode *sn_Succ;
 	struct SendNode *sn_Pred;
 	char             sn_Message[0];
 };
+
+/* /// MM_ServerMessageSendPrivMsg()
+**
+*/
+
+/*************************************************************************/
+
+static ULONG MM_ServerMessageSendPrivMsg( struct IClass *cl, Object *obj, struct MP_NETWORK_SERVERMESSAGESENDPRIVMSG *msg )
+{
+struct SendNode *sn;
+
+	debug( "%s (%ld) %s - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
+
+	if( ( sn = AllocVec( sizeof( struct SendNode ) + strlen( msg->Message ) + strlen( "PRIVMSG :" ) + strlen( msg->Channel->c_Name ) + 3, MEMF_ANY ) )) {
+		strcpy( sn->sn_Message, (char *) "PRIVMSG " );
+		strcat( sn->sn_Message, msg->Channel->c_Name );
+		strcat( sn->sn_Message, (char *) " :" );
+		strcat( sn->sn_Message, (char *) msg->Message );
+		strcat( sn->sn_Message, "\r\n" );
+		AddTail( &msg->Server->s_SendList, (struct Node *) sn );
+		/* local echo */
+		DoMethod( obj, MM_NETWORK_SERVERMESSAGERECEIVED, msg->Server, sn->sn_Message );
+	}
+	return( 0 );
+}
+/* \\\ */
+/* /// MM_ServerMessageSend()
+**
+*/
+
+/*************************************************************************/
 
 static ULONG MM_ServerMessageSend( struct IClass *cl, Object *obj, struct MP_NETWORK_SERVERMESSAGESEND *msg )
 {
@@ -848,7 +871,7 @@ ULONG i;
 			VPrintf( (CONST_STRPTR) "!! Command is not in command table !!\n", &smp->smp_Command );
 		}
 	}
-#if 0
+#if 1
 	debug("# From:      '%s'\n", smp->smp_From );
 	debug("# Command:   '%s'\n", smp->smp_Command );
 	debug("# Args:      '%s'\n", smp->smp_Arguments );
@@ -1263,43 +1286,44 @@ DISPATCHER(MCC_Network_Dispatcher)
 {
     switch (msg->MethodID)
     {
-		case OM_NEW                             : return( OM_New                    ( cl, obj, (APTR) msg ) );
-		case OM_DISPOSE                         : return( OM_Dispose                ( cl, obj, (APTR) msg ) );
+		case OM_NEW                             : return( OM_New                       ( cl, obj, (APTR) msg ) );
+		case OM_DISPOSE                         : return( OM_Dispose                   ( cl, obj, (APTR) msg ) );
 
-		case OM_SET                             : return( OM_Set                    ( cl, obj, (APTR) msg ) );
-		case MM_NETWORK_WAITSELECT              : return( MM_WaitSelect             ( cl, obj, (APTR) msg ) );
-		case MM_NETWORK_SERVERMESSAGERECEIVED   : return( MM_ServerMessageReceived  ( cl, obj, (APTR) msg ) );
-		case MM_NETWORK_SERVERMESSAGESEND       : return( MM_ServerMessageSend      ( cl, obj, (APTR) msg ) );
-		case MM_NETWORK_SERVERMESSAGESENDPROC   : return( MM_ServerMessageSendProc  ( cl, obj, (APTR) msg ) );
-		case MM_NETWORK_SERVERMESSAGEPARSEBEGIN : return( MM_ServerMessageParseBegin( cl, obj, (APTR) msg ) );
-		case MM_NETWORK_SERVERMESSAGEPARSEEND   : return( MM_ServerMessageParseEnd  ( cl, obj, (APTR) msg ) );
-		case MM_NETWORK_SERVERMESSAGEPROCESS    : return( MM_ServerMessageProcess   ( cl, obj, (APTR) msg ) );
+		case OM_SET                             : return( OM_Set                       ( cl, obj, (APTR) msg ) );
+		case MM_NETWORK_WAITSELECT              : return( MM_WaitSelect                ( cl, obj, (APTR) msg ) );
+		case MM_NETWORK_SERVERMESSAGERECEIVED   : return( MM_ServerMessageReceived     ( cl, obj, (APTR) msg ) );
+		case MM_NETWORK_SERVERMESSAGESEND       : return( MM_ServerMessageSend         ( cl, obj, (APTR) msg ) );
+		case MM_NETWORK_SERVERMESSAGESENDPRIVMSG: return( MM_ServerMessageSendPrivMsg  ( cl, obj, (APTR) msg ) );
+		case MM_NETWORK_SERVERMESSAGESENDPROC   : return( MM_ServerMessageSendProc     ( cl, obj, (APTR) msg ) );
+		case MM_NETWORK_SERVERMESSAGEPARSEBEGIN : return( MM_ServerMessageParseBegin   ( cl, obj, (APTR) msg ) );
+		case MM_NETWORK_SERVERMESSAGEPARSEEND   : return( MM_ServerMessageParseEnd     ( cl, obj, (APTR) msg ) );
+		case MM_NETWORK_SERVERMESSAGEPROCESS    : return( MM_ServerMessageProcess      ( cl, obj, (APTR) msg ) );
 
-		case MM_NETWORK_SERVERSOCKETINIT        : return( MM_ServerSocketInit       ( cl, obj, (APTR) msg ) );
-		case MM_NETWORK_SERVERSOCKETCLOSE       : return( MM_ServerSocketClose      ( cl, obj, (APTR) msg ) );
+		case MM_NETWORK_SERVERSOCKETINIT        : return( MM_ServerSocketInit          ( cl, obj, (APTR) msg ) );
+		case MM_NETWORK_SERVERSOCKETCLOSE       : return( MM_ServerSocketClose         ( cl, obj, (APTR) msg ) );
 
-		case MM_NETWORK_SERVERFIND              : return( MM_ServerFind             ( cl, obj, (APTR) msg ) );
-		case MM_NETWORK_SERVERALLOC             : return( MM_ServerAlloc            ( cl, obj, (APTR) msg ) );
-		case MM_NETWORK_SERVERFREE              : return( MM_ServerFree             ( cl, obj, (APTR) msg ) );
-		case MM_NETWORK_SERVERFINDCHANNEL       : return( MM_ServerFindChannel      ( cl, obj, (APTR) msg ) );
-		case MM_NETWORK_SERVERCONNECT           : return( MM_ServerConnect          ( cl, obj, (APTR) msg ) );
-		case MM_NETWORK_SERVERDISCONNECT        : return( MM_ServerDisconnect       ( cl, obj, (APTR) msg ) );
-		case MM_NETWORK_SERVERCONNECTAUTO       : return( MM_ServerConnectAuto      ( cl, obj, (APTR) msg ) );
-		case MM_NETWORK_SERVERLOGIN             : return( MM_ServerLogin            ( cl, obj, (APTR) msg ) );
-		case MM_NETWORK_SERVERAUTOJOIN          : return( MM_ServerAutoJoin         ( cl, obj, (APTR) msg ) );
+		case MM_NETWORK_SERVERFIND              : return( MM_ServerFind                ( cl, obj, (APTR) msg ) );
+		case MM_NETWORK_SERVERALLOC             : return( MM_ServerAlloc               ( cl, obj, (APTR) msg ) );
+		case MM_NETWORK_SERVERFREE              : return( MM_ServerFree                ( cl, obj, (APTR) msg ) );
+		case MM_NETWORK_SERVERFINDCHANNEL       : return( MM_ServerFindChannel         ( cl, obj, (APTR) msg ) );
+		case MM_NETWORK_SERVERCONNECT           : return( MM_ServerConnect             ( cl, obj, (APTR) msg ) );
+		case MM_NETWORK_SERVERDISCONNECT        : return( MM_ServerDisconnect          ( cl, obj, (APTR) msg ) );
+		case MM_NETWORK_SERVERCONNECTAUTO       : return( MM_ServerConnectAuto         ( cl, obj, (APTR) msg ) );
+		case MM_NETWORK_SERVERLOGIN             : return( MM_ServerLogin               ( cl, obj, (APTR) msg ) );
+		case MM_NETWORK_SERVERAUTOJOIN          : return( MM_ServerAutoJoin            ( cl, obj, (APTR) msg ) );
 
-		case MM_NETWORK_SERVERRECEIVEDATA       : return( MM_ServerReceiveData      ( cl, obj, (APTR) msg ) );
-		case MM_NETWORK_SERVERSENDDATA          : return( MM_ServerSendData         ( cl, obj, (APTR) msg ) );
+		case MM_NETWORK_SERVERRECEIVEDATA       : return( MM_ServerReceiveData         ( cl, obj, (APTR) msg ) );
+		case MM_NETWORK_SERVERSENDDATA          : return( MM_ServerSendData            ( cl, obj, (APTR) msg ) );
 
-		case MM_NETWORK_CHANNELFIND             : return( MM_ChannelFind            ( cl, obj, (APTR) msg ) );
-		case MM_NETWORK_CHANNELALLOC            : return( MM_ChannelAlloc           ( cl, obj, (APTR) msg ) );
-		case MM_NETWORK_CHANNELFREE             : return( MM_ChannelFree            ( cl, obj, (APTR) msg ) );
+		case MM_NETWORK_CHANNELFIND             : return( MM_ChannelFind               ( cl, obj, (APTR) msg ) );
+		case MM_NETWORK_CHANNELALLOC            : return( MM_ChannelAlloc                 ( cl, obj, (APTR) msg ) );
+		case MM_NETWORK_CHANNELFREE             : return( MM_ChannelFree               ( cl, obj, (APTR) msg ) );
 
-		case MM_NETWORK_CHATLOGENTRYFREE        : return( MM_ChatLogEntryFree       ( cl, obj, (APTR) msg ) );
-		case MM_NETWORK_CHATLOGENTRYADD         : return( MM_ChatLogEntryAdd        ( cl, obj, (APTR) msg ) );
+		case MM_NETWORK_CHATLOGENTRYFREE        : return( MM_ChatLogEntryFree          ( cl, obj, (APTR) msg ) );
+		case MM_NETWORK_CHATLOGENTRYADD         : return( MM_ChatLogEntryAdd           ( cl, obj, (APTR) msg ) );
 
-		case MM_NETWORK_CHATNICKENTRYALLOC      : return( MM_ChatNickEntryAlloc     ( cl, obj, (APTR) msg ) );
-		case MM_NETWORK_CHATNICKENTRYFREE       : return( MM_ChatNickEntryFree      ( cl, obj, (APTR) msg ) );
+		case MM_NETWORK_CHATNICKENTRYALLOC      : return( MM_ChatNickEntryAlloc        ( cl, obj, (APTR) msg ) );
+		case MM_NETWORK_CHATNICKENTRYFREE       : return( MM_ChatNickEntryFree         ( cl, obj, (APTR) msg ) );
 
     }
 	return( DoSuperMethodA( cl, obj, msg ) );
