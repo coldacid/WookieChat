@@ -39,7 +39,6 @@ MM_NETWORK_ =  0xFED00b00,
 MM_NETWORK_SERVERFIND,
 MM_NETWORK_SERVERALLOC,
 MM_NETWORK_SERVERFREE,
-MM_NETWORK_SERVERFINDCHANNEL,
 
 MM_NETWORK_SERVERSOCKETINIT,
 MM_NETWORK_SERVERSOCKETCLOSE,
@@ -51,8 +50,7 @@ MM_NETWORK_SERVERLOGIN,
 MM_NETWORK_SERVERAUTOJOIN,
 
 MM_NETWORK_SERVERMESSAGERECEIVED,
-MM_NETWORK_SERVERMESSAGESEND,
-MM_NETWORK_SERVERMESSAGESENDPRIVMSG,
+MM_NETWORK_SERVERMESSAGESENDMSG,
 MM_NETWORK_SERVERMESSAGESENDPROC,
 MM_NETWORK_SERVERMESSAGEPROCESS,
 MM_NETWORK_SERVERMESSAGEPARSEBEGIN,
@@ -81,7 +79,6 @@ MA_NETWORK_OBJECTAUDIO,
 struct MP_NETWORK_SERVERFIND              { ULONG MethodID; struct ServerEntry *ServerEntry; };
 struct MP_NETWORK_SERVERALLOC             { ULONG MethodID; struct ServerEntry *ServerEntry; };
 struct MP_NETWORK_SERVERFREE              { ULONG MethodID; struct Server *Server; };
-struct MP_NETWORK_SERVERFINDCHANNEL       { ULONG MethodID; struct Server *Server; char *ChannelName; };
 
 struct MP_NETWORK_SERVERCONNECTAUTO       { ULONG MethodID; };
 struct MP_NETWORK_SERVERSOCKETINIT        { ULONG MethodID; struct Server *Server; };
@@ -94,8 +91,7 @@ struct MP_NETWORK_SERVERLOGIN             { ULONG MethodID; struct Server *Serve
 struct MP_NETWORK_SERVERAUTOJOIN          { ULONG MethodID; struct Server *Server; };
 
 struct MP_NETWORK_SERVERMESSAGERECEIVED   { ULONG MethodID; struct Server *Server; char *Message; };
-struct MP_NETWORK_SERVERMESSAGESEND       { ULONG MethodID; struct Server *Server; char *Message; };
-struct MP_NETWORK_SERVERMESSAGESENDPRIVMSG{ ULONG MethodID; struct Server *Server; struct Channel *Channel; char *Message; };
+struct MP_NETWORK_SERVERMESSAGESENDMSG    { ULONG MethodID; struct Server *Server; struct Channel *Channel; char *Message; };
 struct MP_NETWORK_SERVERMESSAGEPARSEBEGIN { ULONG MethodID; struct Server *Server; char *Message; };
 struct MP_NETWORK_SERVERMESSAGEPARSEEND   { ULONG MethodID; struct ServerMessageParse *ServerMessageParse; };
 struct MP_NETWORK_SERVERMESSAGEPROCESS    { ULONG MethodID; struct Server *Server; struct ServerMessageParse *ServerMessageParse; };

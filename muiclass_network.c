@@ -183,8 +183,6 @@ ULONG i;
 	return( 0 );
 }
 /* \\\ */
-
-
 /* /// MM_ServerLogin()
 **
 */
@@ -203,23 +201,19 @@ ULONG i;
 
 	if( ( buffer = AllocVec( COMMAND_COMPOSEBUFFER_SIZEOF, MEMF_ANY ) ) ) {
 
-		n = (APTR) &s->s_NickList.lh_Head;
-		for( i = 0 ; i <= s->s_Retries ; i++ ) {
-			n = n->n_Succ;
-			if( !n->n_Succ ) {
-				n = (APTR) s->s_NickList.lh_Head;
-			}
-		}
+		n = (APTR) s->s_NickList.lh_Head;
 		if( n->n_Succ ) {
-			sprintf( buffer, "NICK %s", n->n_Name );
+			sprintf( buffer, "/NICK %s", n->n_Name );
+			strcpy( s->s_CurrentNick, n->n_Name );
 		} else {
-			sprintf( buffer, "NICK User_%ld", &i );
+			sprintf( buffer, "/NICK User_%ld", &i );
+			sprintf( s->s_CurrentNick, "User_%ld", &i );
 		}
-		DoMethod( obj, MM_NETWORK_SERVERMESSAGESEND, s, buffer );
+		DoMethod( obj, MM_NETWORK_SERVERMESSAGESENDMSG, s, NULL, buffer );
 
 		/* user */
-		sprintf( buffer, "USER %s 8 * : " APPLICATIONNAME, LRC(OID_SVR_USERNAME) );
-		DoMethod( obj, MM_NETWORK_SERVERMESSAGESEND, s, buffer );
+		sprintf( buffer, "/USER %s 8 * : " APPLICATIONNAME, LRC(OID_SVR_USERNAME) );
+		DoMethod( obj, MM_NETWORK_SERVERMESSAGESENDMSG, s, NULL, buffer );
 
 		FreeVec( buffer );
 	}
@@ -243,12 +237,12 @@ char *buffer;
 	if( ( buffer = AllocVec( COMMAND_COMPOSEBUFFER_SIZEOF, MEMF_ANY ) ) ) {
 		for( c = (APTR) s->s_ChannelList.lh_Head ; c->c_Succ ; c = c->c_Succ ) {
 			if( !( c->c_Flags & CHANNELF_SERVER ) ) { /* server tab is no real channel */
-				sprintf( buffer, "JOIN %s", c->c_Name );
+				sprintf( buffer, "/JOIN %s", c->c_Name );
 				if( c->c_Password[0] ) {
 					strcat( buffer, " " );
 					strcat( buffer, c->c_Password );
 				}
-				DoMethod( obj, MM_NETWORK_SERVERMESSAGESEND, s, buffer );
+				DoMethod( obj, MM_NETWORK_SERVERMESSAGESENDMSG, s, NULL, buffer );
 			}
 		}
 		FreeVec( buffer );
@@ -388,32 +382,6 @@ struct Channel      *c;
 	/* free structure */
 	FreeVec( s );
 
-	return( 0 );
-}
-/* \\\ */
-/* /// MM_ServerFindChannel()
-**
-*/
-
-/*************************************************************************/
-
-static ULONG MM_ServerFindChannel( struct IClass *cl, Object *obj, struct MP_NETWORK_SERVERFINDCHANNEL *msg )
-{
-struct Channel *c;
-
-	debug( "%s (%ld) %s - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
-
-	for( c = (APTR) msg->Server->s_ChannelList.lh_Head ; c->c_Succ ; c = c->c_Succ ) {
-		if( msg->ChannelName ) {
-			if( !Stricmp( (CONST_STRPTR) c->c_Name, (CONST_STRPTR) msg->ChannelName ) ) {
-				return( (IPTR) c );
-			}
-		} else { /* no channel specified, to we search for a server channel */
-			if( c->c_Flags & CHANNELF_SERVER ) {
-				return( (IPTR) c );
-			}
-		}
-	}
 	return( 0 );
 }
 /* \\\ */
@@ -561,7 +529,7 @@ ULONG result;
 				connect( s->s_ServerSocket, (struct sockaddr*) &addr, sizeof( struct sockaddr ) );
 				s->s_State = SVRSTATE_CONNECTED;
 
-				DoMethod( obj, MM_NETWORK_SERVERMESSAGESEND, s, "HELLO" );
+				DoMethod( obj, MM_NETWORK_SERVERMESSAGESENDMSG, s, NULL, "/HELLO" );
 
 				result = MSG_ERROR_NOERROR;
 				return( result );
@@ -639,49 +607,32 @@ struct SendNode {
 	char             sn_Message[0];
 };
 
-/* /// MM_ServerMessageSendPrivMsg()
+/* /// MM_ServerMessageSendMsg()
 **
 */
 
 /*************************************************************************/
 
-static ULONG MM_ServerMessageSendPrivMsg( struct IClass *cl, Object *obj, struct MP_NETWORK_SERVERMESSAGESENDPRIVMSG *msg )
+static ULONG MM_ServerMessageSendMsg( struct IClass *cl, Object *obj, struct MP_NETWORK_SERVERMESSAGESENDMSG *msg )
 {
 struct SendNode *sn;
 
 	debug( "%s (%ld) %s - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
-	if( ( sn = AllocVec( sizeof( struct SendNode ) + strlen( msg->Message ) + strlen( "PRIVMSG :" ) + strlen( msg->Channel->c_Name ) + 3, MEMF_ANY ) )) {
-		strcpy( sn->sn_Message, (char *) "PRIVMSG " );
-		strcat( sn->sn_Message, msg->Channel->c_Name );
-		strcat( sn->sn_Message, (char *) " :" );
-		strcat( sn->sn_Message, (char *) msg->Message );
-		strcat( sn->sn_Message, "\r\n" );
+	if( ( sn = AllocVec( sizeof( struct SendNode ) + strlen( msg->Message ) + strlen( "PRIVMSG :" ) + strlen( msg->Channel->c_Name ) + 64, MEMF_ANY|MEMF_CLEAR ) )) {
+		if( *msg->Message != '/' ) {
+			strcpy( sn->sn_Message, (char *) "PRIVMSG " );
+			strcat( sn->sn_Message, msg->Channel->c_Name );
+			strcat( sn->sn_Message, (char *) " :" );
+			strcat( sn->sn_Message, (char *) msg->Message );
+			strcat( sn->sn_Message, "\r\n" );
+			/* local echo */
+			DoMethod( obj, MM_NETWORK_SERVERMESSAGERECEIVED, msg->Server, sn->sn_Message );
+		} else {
+			strcpy( sn->sn_Message, (char *) &msg->Message[1] );
+			strcat( sn->sn_Message, "\r\n" );
+		}
 		AddTail( &msg->Server->s_SendList, (struct Node *) sn );
-		/* local echo */
-		DoMethod( obj, MM_NETWORK_SERVERMESSAGERECEIVED, msg->Server, sn->sn_Message );
-	}
-	return( 0 );
-}
-/* \\\ */
-/* /// MM_ServerMessageSend()
-**
-*/
-
-/*************************************************************************/
-
-static ULONG MM_ServerMessageSend( struct IClass *cl, Object *obj, struct MP_NETWORK_SERVERMESSAGESEND *msg )
-{
-struct SendNode *sn;
-
-	debug( "%s (%ld) %s - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
-
-	if( ( sn = AllocVec( sizeof( struct SendNode ) + strlen( msg->Message ) + 3, MEMF_ANY ) )) {
-		strcpy( sn->sn_Message, msg->Message );
-		strcat( sn->sn_Message, "\r\n" );
-		AddTail( &msg->Server->s_SendList, (struct Node *) sn );
-		/* local echo */
-		DoMethod( obj, MM_NETWORK_SERVERMESSAGERECEIVED, msg->Server, sn->sn_Message );
 	}
 	return( 0 );
 }
@@ -1084,8 +1035,15 @@ struct Channel      *c;
 	debug( "%s (%ld) %s - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	for( c = (APTR) s->s_ChannelList.lh_Head ; c->c_Succ ; c = c->c_Succ ) {
-		if( !Stricmp( (CONST_STRPTR) c->c_Name, (CONST_STRPTR) msg->Name ) ) {
-			return( (IPTR) c );
+		if( msg->Name ) {
+			if( !Stricmp( (CONST_STRPTR) c->c_Name, (CONST_STRPTR) msg->Name ) ) {
+				debug("found '%s'\n", c->c_Name );
+				return( (IPTR) c );
+			}
+		} else { /* no channel specified, to we search for a server channel */
+			if( c->c_Flags & CHANNELF_SERVER ) {
+				return( (IPTR) c );
+			}
 		}
 	}
 	return( 0 );
@@ -1100,12 +1058,12 @@ struct Channel      *c;
 static ULONG MM_ChannelAlloc( struct IClass *cl, Object *obj, struct MP_NETWORK_CHANNELALLOC *msg )
 {
 struct Server   *s = msg->Server;
-struct Channel      *c;
+struct Channel      *c = NULL;
 
 	debug( "%s (%ld) %s - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	if( !( msg->Name ) || !(msg->Name[0]) || !( c = (APTR) DoMethod( obj, MM_NETWORK_CHANNELFIND, s, msg->Name ) ) ) {
-		if( (msg->Name[0] ) ) {
+		if( ( msg->Name[0] ) ) {
 			if( ( c = AllocVec( sizeof( struct Channel ), MEMF_ANY|MEMF_CLEAR ) ) ) {
 				NEWLIST( &c->c_ChatLogList );
 				NEWLIST( &c->c_ChatNickList );
@@ -1191,7 +1149,7 @@ struct ChatLogEntry *cle = NULL;
 /*
 ** find output channel
 */
-		c = (APTR) DoMethod( obj, MM_NETWORK_SERVERFINDCHANNEL, s, msg->Channel );
+		c = (APTR) DoMethod( obj, MM_NETWORK_CHANNELFIND, s, msg->Channel );
 		if( !c->c_Succ ) {
 			/* channel not found, so use server tab */
 			for( c = (APTR) s->s_ChannelList.lh_Head ; c->c_Succ ; c = c->c_Succ ) {
@@ -1292,8 +1250,7 @@ DISPATCHER(MCC_Network_Dispatcher)
 		case OM_SET                             : return( OM_Set                       ( cl, obj, (APTR) msg ) );
 		case MM_NETWORK_WAITSELECT              : return( MM_WaitSelect                ( cl, obj, (APTR) msg ) );
 		case MM_NETWORK_SERVERMESSAGERECEIVED   : return( MM_ServerMessageReceived     ( cl, obj, (APTR) msg ) );
-		case MM_NETWORK_SERVERMESSAGESEND       : return( MM_ServerMessageSend         ( cl, obj, (APTR) msg ) );
-		case MM_NETWORK_SERVERMESSAGESENDPRIVMSG: return( MM_ServerMessageSendPrivMsg  ( cl, obj, (APTR) msg ) );
+		case MM_NETWORK_SERVERMESSAGESENDMSG    : return( MM_ServerMessageSendMsg      ( cl, obj, (APTR) msg ) );
 		case MM_NETWORK_SERVERMESSAGESENDPROC   : return( MM_ServerMessageSendProc     ( cl, obj, (APTR) msg ) );
 		case MM_NETWORK_SERVERMESSAGEPARSEBEGIN : return( MM_ServerMessageParseBegin   ( cl, obj, (APTR) msg ) );
 		case MM_NETWORK_SERVERMESSAGEPARSEEND   : return( MM_ServerMessageParseEnd     ( cl, obj, (APTR) msg ) );
@@ -1305,7 +1262,6 @@ DISPATCHER(MCC_Network_Dispatcher)
 		case MM_NETWORK_SERVERFIND              : return( MM_ServerFind                ( cl, obj, (APTR) msg ) );
 		case MM_NETWORK_SERVERALLOC             : return( MM_ServerAlloc               ( cl, obj, (APTR) msg ) );
 		case MM_NETWORK_SERVERFREE              : return( MM_ServerFree                ( cl, obj, (APTR) msg ) );
-		case MM_NETWORK_SERVERFINDCHANNEL       : return( MM_ServerFindChannel         ( cl, obj, (APTR) msg ) );
 		case MM_NETWORK_SERVERCONNECT           : return( MM_ServerConnect             ( cl, obj, (APTR) msg ) );
 		case MM_NETWORK_SERVERDISCONNECT        : return( MM_ServerDisconnect          ( cl, obj, (APTR) msg ) );
 		case MM_NETWORK_SERVERCONNECTAUTO       : return( MM_ServerConnectAuto         ( cl, obj, (APTR) msg ) );

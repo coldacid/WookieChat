@@ -68,8 +68,8 @@ static ULONG IRCCMD_PrivMsg( Object *obj, struct Server *s, struct ServerMessage
 								);
 				/* send answer */
 				if( ( newmsg = AllocVec( strlen( smp->smp_FromNick ) + strlen( VERSION_CTCP ) + 64, MEMF_ANY ) ) ) {
-					sprintf( newmsg, "NOTICE %s :\001VERSION %s \001\r\n", smp->smp_FromNick, VERSION_CTCP );
-					DoMethod( obj, MM_NETWORK_SERVERMESSAGESEND, s, newmsg );
+					sprintf( newmsg, "/NOTICE %s :\001VERSION %s \001\r\n", smp->smp_FromNick, VERSION_CTCP );
+					DoMethod( obj, MM_NETWORK_SERVERMESSAGESENDMSG, s, NULL, newmsg );
 					FreeVec( newmsg );
 				}
 			} else {
@@ -90,8 +90,8 @@ static ULONG IRCCMD_PrivMsg( Object *obj, struct Server *s, struct ServerMessage
 									);
 						/* send answer */
 						if( ( newmsg = AllocVec( strlen( smp->smp_FromNick ) + strlen( smp->smp_Channel ) + strlen( msg ) + 64, MEMF_ANY ) ) ) {
-							sprintf( newmsg, ":%s NOTICE %s :\001PONG%s\001\r\n", smp->smp_Channel, smp->smp_FromNick, msg );
-							DoMethod( obj, MM_NETWORK_SERVERMESSAGESEND, s, newmsg );
+							sprintf( newmsg, "/NOTICE %s :\001PONG%s\001\r\n", smp->smp_FromNick, msg );
+							DoMethod( obj, MM_NETWORK_SERVERMESSAGESENDMSG, s, NULL, newmsg );
 							FreeVec( newmsg );
 						}
 
@@ -136,7 +136,8 @@ static ULONG IRCCMD_Notice( Object *obj, struct Server *s, struct ServerMessageP
 static ULONG IRCCMD_Ping( Object *obj, struct Server *s, struct ServerMessageParse *smp )
 {
 	smp->smp_Message[1] = 'O';
-	DoMethod( obj, MM_NETWORK_SERVERMESSAGESEND, s, smp->smp_Message );
+
+	DoMethod( obj, MM_NETWORK_SERVERMESSAGESENDMSG, s, smp->smp_FromNick, smp->smp_Message );
 debug("sending pong\n");
 	return( IRCCMD_RESULTF_IGNOREMESSAGE );
 }
@@ -166,7 +167,9 @@ static ULONG IRCCMD_Join( Object *obj, struct Server *s, struct ServerMessagePar
 {
 struct Channel *c;
 
-	if( ( c = (APTR) DoMethod( obj, MM_NETWORK_SERVERFINDCHANNEL, s, smp->smp_Channel ) ) ) {
+	debug("join %s\n",smp->smp_Channel );
+	/* MM_NETWORK_CHANNELALLOC takes care that there are no dupe channels */
+	if( ( c = (APTR) DoMethod( obj, MM_NETWORK_CHANNELALLOC, s, smp->smp_Channel ) ) ) {
 		DoMethod( _app(obj), MM_APPLICATION_CHANNELADD, c );
 	}
 
@@ -192,7 +195,7 @@ static ULONG IRCCMD_Part( Object *obj, struct Server *s, struct ServerMessagePar
 {
 struct Channel *c;
 
-	if( ( c = (APTR) DoMethod( obj, MM_NETWORK_SERVERFINDCHANNEL, s, smp->smp_Channel ) ) ) {
+	if( ( c = (APTR) DoMethod( obj, MM_NETWORK_CHANNELFIND, s, smp->smp_Channel ) ) ) {
 		DoMethod( _app(obj), MM_APPLICATION_CHANNELREMOVE, c );
 	}
 
@@ -238,7 +241,7 @@ static ULONG IRCCMD_ChannelWebSiteIs( Object *obj, struct Server *s, struct Serv
 {
 struct Channel *c;
 
-	c = (APTR) DoMethod( obj, MM_NETWORK_SERVERFINDCHANNEL, s, smp->smp_Channel );
+	c = (APTR) DoMethod( obj, MM_NETWORK_CHANNELFIND, s, smp->smp_Channel );
 
 	smp->smp_Pen = PEN_LOGINFO;
 	sprintf( &smp->smp_MessageBuffer[ strlen( smp->smp_MessageBuffer ) ], (char *)
@@ -262,7 +265,7 @@ static ULONG IRCCMD_TopicNotSet( Object *obj, struct Server *s, struct ServerMes
 struct Channel *c;
 char *msg = (char*) LGS( MSG_MUICLASS_NETWORK_TOPICNOTSET );
 
-	if( ( c = (APTR) DoMethod( obj, MM_NETWORK_SERVERFINDCHANNEL, s, smp->smp_Channel ) ) ) {
+	if( ( c = (APTR) DoMethod( obj, MM_NETWORK_CHANNELFIND, s, smp->smp_Channel ) ) ) {
 		if( c->c_Topic ) {
 			FreeVec( c->c_Topic );
 		}
@@ -293,7 +296,7 @@ static ULONG IRCCMD_Topic( Object *obj, struct Server *s, struct ServerMessagePa
 {
 struct Channel *c;
 
-	if( ( c = (APTR) DoMethod( obj, MM_NETWORK_SERVERFINDCHANNEL, s, smp->smp_Channel ) ) ) {
+	if( ( c = (APTR) DoMethod( obj, MM_NETWORK_CHANNELFIND, s, smp->smp_Channel ) ) ) {
 		if( c->c_Topic ) {
 			FreeVec( c->c_Topic );
 		}
@@ -348,7 +351,7 @@ struct ChannelNickEntry *cne;
 struct ChatLogEntry *cle;
 char *nick, *bufferstart;
 
-	if( ( c = (APTR) DoMethod( obj, MM_NETWORK_SERVERFINDCHANNEL, s, smp->smp_Channel ) ) ) {
+	if( ( c = (APTR) DoMethod( obj, MM_NETWORK_CHANNELFIND, s, smp->smp_Channel ) ) ) {
 		if( ( srad = SimpleReadArgsParse( "NICK/M/A", smp->smp_Message ) ) ) {
 			char **array = (APTR) srad->srad_ArgArray[0];
 			while( ( nick = *array++ ) ) {
@@ -393,7 +396,7 @@ static ULONG IRCCMD_EndOfNames( Object *obj, struct Server *s, struct ServerMess
 {
 struct Channel *c;
 
-	if( ( c = (APTR) DoMethod( obj, MM_NETWORK_SERVERFINDCHANNEL, s, smp->smp_Channel ) ) ) {
+	if( ( c = (APTR) DoMethod( obj, MM_NETWORK_CHANNELFIND, s, smp->smp_Channel ) ) ) {
 		c->c_Flags &= ~CHANNELF_NAMESLIST; /* we are done */
 	}
 
@@ -410,7 +413,7 @@ static ULONG IRCCMD_MOTDStart( Object *obj, struct Server *s, struct ServerMessa
 {
 struct Channel *c;
 
-	if( ( c = (APTR) DoMethod( obj, MM_NETWORK_SERVERFINDCHANNEL, s, NULL ) ) ) {
+	if( ( c = (APTR) DoMethod( obj, MM_NETWORK_CHANNELFIND, s, NULL ) ) ) {
 		c->c_Flags |= CHANNELF_MESSAGEOFTHEDAY;
 
 		smp->smp_Pen = PEN_LOGNOTICE;
@@ -433,7 +436,7 @@ static ULONG IRCCMD_MOTD( Object *obj, struct Server *s, struct ServerMessagePar
 {
 struct Channel *c;
 
-	if( ( c = (APTR) DoMethod( obj, MM_NETWORK_SERVERFINDCHANNEL, s, NULL ) ) ) {
+	if( ( c = (APTR) DoMethod( obj, MM_NETWORK_CHANNELFIND, s, NULL ) ) ) {
 		if( ( c->c_Flags & CHANNELF_MESSAGEOFTHEDAY ) ) {
 			smp->smp_Pen = PEN_LOGNOTICE;
 			sprintf( &smp->smp_MessageBuffer[ strlen( smp->smp_MessageBuffer ) ],
@@ -456,7 +459,7 @@ static ULONG IRCCMD_MOTDEnd( Object *obj, struct Server *s, struct ServerMessage
 {
 struct Channel *c;
 
-	if( ( c = (APTR) DoMethod( obj, MM_NETWORK_SERVERFINDCHANNEL, s, NULL ) ) ) {
+	if( ( c = (APTR) DoMethod( obj, MM_NETWORK_CHANNELFIND, s, NULL ) ) ) {
 		c->c_Flags &= ~CHANNELF_MESSAGEOFTHEDAY;
 	}
 	return( IRCCMD_RESULTF_IGNOREMESSAGE );
@@ -504,6 +507,7 @@ struct IRCCommands TAB_IRCCOMMANDS[] =
 	{ "372",        "NC",    IRCCMD_MOTD                      },
 	{ "376",        "NC",    IRCCMD_MOTDEnd                   },
 	{ "324",        "NC",    IRCCMD_ChannelModeIs             },
+//	  { "433",        "NC",    IRCCMD_ErrNickInUse              },
 	{ NULL, NULL, NULL },
 };
 /* \\\ */

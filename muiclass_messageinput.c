@@ -194,7 +194,7 @@ struct mccdata *mccdata = INST_DATA( cl, obj );
 									/* pointer magic */
 									s = (APTR) ( ( (IPTR) List_GetListFromNode( cc->cc_Channel ) ) - (IPTR) offsetof( struct Server, s_ChannelList ) );
 								}
-								DoMethod( mccdata->mcc_ClassObjects[ GID_NETWORK ], MM_NETWORK_SERVERMESSAGESENDPRIVMSG, s, cc->cc_Channel, MUIGetVar( obj, MUIA_String_Contents ) );
+								DoMethod( mccdata->mcc_ClassObjects[ GID_NETWORK ], MM_NETWORK_SERVERMESSAGESENDMSG, s, cc->cc_Channel, MUIGetVar( obj, MUIA_String_Contents ) );
 
 								SetAttrs( obj, MUIA_String_Contents, "", TAG_DONE );
 								SetAttrs( _win(obj), MUIA_Window_ActiveObject, obj, TAG_DONE );
