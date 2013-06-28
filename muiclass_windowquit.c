@@ -87,6 +87,9 @@ Object *objs[ GID_LAST ];
 
 		CopyMem( &objs[0], &mccdata->mcc_ClassObjects[0], sizeof( mccdata->mcc_ClassObjects));
 
+		DoMethod( mccdata->mcc_ClassObjects[ GID_CANCEL ], MUIM_Notify, MUIA_Pressed, FALSE, obj, 3, MUIM_Set, MUIA_Window_Open, FALSE );
+		DoMethod( mccdata->mcc_ClassObjects[ GID_OK     ], MUIM_Notify, MUIA_Pressed, FALSE, MUIV_Notify_Application, 2, MUIM_Application_ReturnID, MUIV_Application_ReturnID_Quit );
+
 		return( (ULONG) obj );
     }
 	return( (ULONG) NULL );
@@ -122,26 +125,6 @@ static ULONG OM_Get(struct IClass *cl, Object *obj, struct opGet *msg )
 }
 /* \\\ */
 
-/* /// OM_Setup()
-**
-*/
-
-/*************************************************************************/
-
-static ULONG OM_Setup( struct IClass *cl, Object *obj, Msg *msg )
-{
-struct mccdata *mccdata = INST_DATA( cl, obj );
-
-	debug( "%s (%ld) %s - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
-
-	DoMethod( mccdata->mcc_ClassObjects[ GID_CANCEL ], MUIM_Notify, MUIA_Pressed, FALSE, obj, 3, MUIM_Set, MUIA_Window_Open, FALSE );
-	DoMethod( mccdata->mcc_ClassObjects[ GID_OK     ], MUIM_Notify, MUIA_Pressed, FALSE, _app(obj), 3, MUIM_Set, MUIA_Window_Open, FALSE );
-	DoMethod( mccdata->mcc_ClassObjects[ GID_OK     ], MUIM_Notify, MUIA_Pressed, FALSE, _app(obj), 2, MUIM_Application_ReturnID, MUIV_Application_ReturnID_Quit );
-
-	return( DoSuperMethodA( cl, obj,(Msg) msg ) );
-}
-/* \\\ */
-
 /*
 ** Dispatcher, init and dispose
 */
@@ -159,7 +142,6 @@ DISPATCHER(MCC_WindowQuit_Dispatcher)
 		case OM_NEW                          : return( OM_New      ( cl, obj, (APTR) msg ) );
 		case OM_DISPOSE                      : return( OM_Dispose  ( cl, obj, (APTR) msg ) );
 		case OM_GET                          : return( OM_Get      ( cl, obj, (APTR) msg ) );
-		case MUIM_Window_Setup               : return( OM_Setup    ( cl, obj, (APTR) msg ) );
     }
 	return( DoSuperMethodA( cl, obj, msg ) );
 

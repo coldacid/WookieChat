@@ -12,7 +12,7 @@
 ** muiclass_windowchat.c
 */
 
-#define NODEBUG
+//#define NODEBUG
 
 #include <libraries/mui.h>
 #include <libraries/gadtools.h>
@@ -257,13 +257,14 @@ Object *winobj;
 
 	DoMethod( mccdata->mcc_ClassObjects[ GID_CHATCHANNELLIST ], MUIM_Notify, MUIA_NList_Active, MUIV_EveryTime, obj, 1, MM_WINDOWCHAT_CHANNELCHANGE );
 
+	DoMethod( mccdata->mcc_ClassObjects[ GID_CLOSETAB ], MUIM_Notify, MUIA_Pressed, FALSE, obj, 1, MM_WINDOWCHAT_CHANNELPART );
+
 	SetAttrs( mccdata->mcc_ClassObjects[ GID_CHATMESSAGE ],
 					MA_MESSAGEINPUT_OBJECTCHATUSERLIST   , mccdata->mcc_ClassObjects[ GID_CHATUSERLIST ],
 					MA_MESSAGEINPUT_OBJECTCHATCHANNELLIST, mccdata->mcc_ClassObjects[ GID_CHATCHANNELLIST ],
 					MA_MESSAGEINPUT_OBJECTNETWORK        , mccdata->mcc_ClassObjects[ GID_NETWORK      ],
 					MA_MESSAGEINPUT_OBJECTSETTINGS       , mccdata->mcc_ClassObjects[ WID_SETTINGS     ],
 					TAG_DONE );
-
 
 	return( DoSuperMethodA( cl, obj,(Msg) msg ) );
 }
@@ -306,7 +307,6 @@ struct TagItem *tstate;
 }
 /* \\\ */
 
-
 /* /// MM_MenuSelect()
 **
 */
@@ -323,6 +323,9 @@ Object *tmpobj;
 	switch( msg->MenuID ) {
 
 /* project menu */
+		case MID_TABCLOSE:
+			DoMethod( obj, MM_WINDOWCHAT_CHANNELPART );
+			break;
 		case MID_ABOUT:
 			tmpobj = (Object *) MUIGetVar( _app(obj), MA_APPLICATION_OBJECTWINDOWABOUT );
 			SetAttrs( tmpobj, MUIA_Window_Open, TRUE, TAG_DONE );
@@ -365,6 +368,7 @@ static ULONG MM_VisualChange( struct IClass *cl, Object *obj, Msg *msg )
 struct mccdata *mccdata = INST_DATA( cl, obj );
 
 	debug( "%s (%ld) %s - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
+
 /* first update colors of all classes involved */
 	DoMethod( mccdata->mcc_ClassObjects[ GID_CHATLOG         ], MM_CHATLOG_PENSUPDATE         );
 	DoMethod( mccdata->mcc_ClassObjects[ GID_CHATUSERLIST    ], MM_CHATUSERLIST_PENSUPDATE    );
@@ -377,6 +381,35 @@ struct mccdata *mccdata = INST_DATA( cl, obj );
 }
 /* \\\ */
 
+/* /// MM_ChannelPart()
+**
+*/
+
+/*************************************************************************/
+
+static ULONG MM_ChannelPart( struct IClass *cl, Object *obj, Msg *msg )
+{
+struct mccdata *mccdata = INST_DATA( cl, obj );
+struct Server *s = NULL;
+struct ChatChannel *cc;
+#define PART_BUFFER 0x100
+char partbuffer[ PART_BUFFER ];
+
+	debug( "%s (%ld) %s - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
+
+	cc = NULL;
+	DoMethod( mccdata->mcc_ClassObjects[ GID_CHATCHANNELLIST ], MUIM_NList_GetEntry, MUIV_NList_GetEntry_Active, &cc );
+	if( cc ) {
+		/* pointer magic */
+		s = (APTR) ( ( (IPTR) List_GetListFromNode( cc->cc_Channel ) ) - (IPTR) offsetof( struct Server, s_ChannelList ) );
+		strcpy( partbuffer, "/PART " );
+		strcat( partbuffer, cc->cc_Channel->c_Name );
+
+		DoMethod( mccdata->mcc_ClassObjects[ GID_NETWORK ], MM_NETWORK_SERVERMESSAGESENDMSG, s, cc->cc_Channel, partbuffer );
+	}
+	return( 0 );
+}
+/* \\\ */
 /* /// MM_ChannelAdd()
 **
 */
@@ -480,6 +513,8 @@ struct Channel         *c;
 
 		}
 	}
+	DoMethod( obj, MUIA_Window_ActiveObject, mccdata->mcc_ClassObjects[ GID_CHATMESSAGE  ], TAG_DONE );
+
 	return( 0 );
 }
 /* \\\ */
@@ -672,6 +707,7 @@ DISPATCHER(MCC_WindowChat_Dispatcher)
 		case MM_WINDOWCHAT_VISUALCHANGE         : return( MM_VisualChange        ( cl, obj, (APTR) msg ) );
 
 		case MM_WINDOWCHAT_MESSAGERECEIVED      : return( MM_MessageReceived     ( cl, obj, (APTR) msg ) );
+		case MM_WINDOWCHAT_CHANNELPART          : return( MM_ChannelPart         ( cl, obj, (APTR) msg ) );
 		case MM_WINDOWCHAT_CHANNELADD           : return( MM_ChannelAdd          ( cl, obj, (APTR) msg ) );
 		case MM_WINDOWCHAT_CHANNELREMOVE        : return( MM_ChannelRemove       ( cl, obj, (APTR) msg ) );
 		case MM_WINDOWCHAT_CHANNELCHANGE        : return( MM_ChannelChange       ( cl, obj, (APTR) msg ) );

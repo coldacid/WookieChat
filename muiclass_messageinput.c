@@ -97,7 +97,8 @@ static ULONG OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
 
 		NEWLIST( &mccdata->mcc_HistoryList );
 
-		DoMethod( obj, MUIM_Notify, MUIA_String_Acknowledge, MUIV_EveryTime, obj, 2, MM_MESSAGEINPUT_ADD, NULL );
+		DoMethod( obj, MUIM_Notify, MUIA_String_Acknowledge, MUIV_EveryTime, MUIV_Notify_Window, 3, MUIM_Set, MUIA_Window_ActiveObject, obj );
+
 	}
 	return( (IPTR) obj );
 }
@@ -141,6 +142,8 @@ ULONG rc;
 		mccdata->mcc_EventHandlerNode.ehn_Object = obj;
 		mccdata->mcc_EventHandlerNode.ehn_Class  = cl;
 		DoMethod( obj, MUIM_Window_AddEventHandler, &mccdata->mcc_EventHandlerNode );
+
+
 	}
 	return( rc );
 }
@@ -187,6 +190,7 @@ struct mccdata *mccdata = INST_DATA( cl, obj );
 							{
 							struct ChatChannel *cc;
 							struct Server *s = NULL;
+							char *contents;
 
 								cc = NULL;
 								DoMethod( mccdata->mcc_ClassObjects[ GID_CHATCHANNELLIST ], MUIM_NList_GetEntry, MUIV_NList_GetEntry_Active, &cc );
@@ -194,10 +198,12 @@ struct mccdata *mccdata = INST_DATA( cl, obj );
 									/* pointer magic */
 									s = (APTR) ( ( (IPTR) List_GetListFromNode( cc->cc_Channel ) ) - (IPTR) offsetof( struct Server, s_ChannelList ) );
 								}
+								contents = (char*) MUIGetVar( obj, MUIA_String_Contents );
 								DoMethod( mccdata->mcc_ClassObjects[ GID_NETWORK ], MM_NETWORK_SERVERMESSAGESENDMSG, s, cc->cc_Channel, MUIGetVar( obj, MUIA_String_Contents ) );
+								DoMethod( obj, MM_MESSAGEINPUT_ADD, contents );
 
 								SetAttrs( obj, MUIA_String_Contents, "", TAG_DONE );
-								SetAttrs( _win(obj), MUIA_Window_ActiveObject, obj, TAG_DONE );
+								//SetAttrs( _win(obj), MUIA_Window_ActiveObject, obj, TAG_DONE );
 							}
 							break;
 						default:

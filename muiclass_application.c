@@ -506,7 +506,6 @@ static ULONG MM_ChannelNickRemove( struct IClass *cl, Object *obj, struct MP_APP
 
 static ULONG MM_VisualChange( struct IClass *cl, Object *obj, Msg *msg )
 {
-
 	FORCHILD( obj, MUIA_Application_WindowList ) {
 		if( MUIGetVar( child, MA_APPLICATION_CLASSID ) == CLASSID_WINDOWCHAT ) {
 			DoMethod( child, MM_WINDOWCHAT_VISUALCHANGE );

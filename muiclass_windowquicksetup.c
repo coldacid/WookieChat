@@ -111,32 +111,17 @@ Object *objs[ GID_LAST ];
 		SetAttrs( objs[ GID_REALNAME         ], MUIA_String_Reject, "/\?,:", TAG_DONE );
 		SetAttrs( objs[ GID_USERNAME         ], MUIA_String_Reject, " /\?,:", TAG_DONE );
 
+		DoMethod( obj                                      , MUIM_Notify, MUIA_Window_CloseRequest, TRUE , MUIV_Notify_Application, 2, MUIM_Application_ReturnID, MUIV_Application_ReturnID_Quit );
+		DoMethod( mccdata->mcc_ClassObjects[ GID_QUIT     ], MUIM_Notify, MUIA_Pressed            , FALSE, MUIV_Notify_Application, 2, MUIM_Application_ReturnID, MUIV_Application_ReturnID_Quit );
+		DoMethod( mccdata->mcc_ClassObjects[ GID_CONTINUE ], MUIM_Notify, MUIA_Pressed            , FALSE, obj, 1, MM_WINDOWQUICKSETUP_CONTINUE );
+
+		DoMethod( mccdata->mcc_ClassObjects[ GID_REALNAME ], MUIM_Notify, MUIA_String_Contents, MUIV_EveryTime, obj, 1, MM_WINDOWQUICKSETUP_DISENABLE );
+		DoMethod( mccdata->mcc_ClassObjects[ GID_USERNAME ], MUIM_Notify, MUIA_String_Contents, MUIV_EveryTime, obj, 1, MM_WINDOWQUICKSETUP_DISENABLE );
+		DoMethod( mccdata->mcc_ClassObjects[ GID_NICKNAME ], MUIM_Notify, MUIA_String_Contents, MUIV_EveryTime, obj, 1, MM_WINDOWQUICKSETUP_DISENABLE );
+
 		return( (ULONG) obj );
     }
 	return( (ULONG) NULL );
-}
-/* \\\ */
-/* /// OM_Setup()
-**
-*/
-
-/*************************************************************************/
-
-static ULONG OM_Setup( struct IClass *cl, Object *obj, Msg msg )
-{
-struct mccdata *mccdata = INST_DATA( cl, obj );
-
-	debug( "%s (%ld) %s - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
-
-	DoMethod( obj                                      , MUIM_Notify, MUIA_Window_CloseRequest, TRUE , _app(obj), 2, MUIM_Application_ReturnID, MUIV_Application_ReturnID_Quit );
-	DoMethod( mccdata->mcc_ClassObjects[ GID_QUIT     ], MUIM_Notify, MUIA_Pressed            , FALSE, _app(obj), 2, MUIM_Application_ReturnID, MUIV_Application_ReturnID_Quit );
-	DoMethod( mccdata->mcc_ClassObjects[ GID_CONTINUE ], MUIM_Notify, MUIA_Pressed            , FALSE, obj, 1, MM_WINDOWQUICKSETUP_CONTINUE );
-
-	DoMethod( mccdata->mcc_ClassObjects[ GID_REALNAME ], MUIM_Notify, MUIA_String_Contents, MUIV_EveryTime, obj, 1, MM_WINDOWQUICKSETUP_DISENABLE );
-	DoMethod( mccdata->mcc_ClassObjects[ GID_USERNAME ], MUIM_Notify, MUIA_String_Contents, MUIV_EveryTime, obj, 1, MM_WINDOWQUICKSETUP_DISENABLE );
-	DoMethod( mccdata->mcc_ClassObjects[ GID_NICKNAME ], MUIM_Notify, MUIA_String_Contents, MUIV_EveryTime, obj, 1, MM_WINDOWQUICKSETUP_DISENABLE );
-
-	return( DoSuperMethodA( cl, obj, msg ) );
 }
 /* \\\ */
 /* /// OM_Get()
@@ -332,7 +317,6 @@ DISPATCHER(MCC_WindowQuickSetup_Dispatcher)
 {
 	switch( msg->MethodID ) {
 		case OM_NEW                             : return( OM_New             ( cl, obj, (APTR) msg ) );
-		case MUIM_Window_Setup                  : return( OM_Setup           ( cl, obj, (APTR) msg ) );
 		case OM_GET                             : return( OM_Get             ( cl, obj, (APTR) msg ) );
 
 		case MM_WINDOWQUICKSETUP_CHECKSETTINGS  : return( MM_CheckSettings   ( cl, obj, (APTR) msg ) );
