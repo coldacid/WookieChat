@@ -513,7 +513,7 @@ struct Channel         *c;
 
 		}
 	}
-	DoMethod( obj, MUIA_Window_ActiveObject, mccdata->mcc_ClassObjects[ GID_CHATMESSAGE  ], TAG_DONE );
+	SetAttrs( obj, MUIA_Window_ActiveObject, mccdata->mcc_ClassObjects[ GID_CHATMESSAGE  ], TAG_DONE );
 
 	return( 0 );
 }
