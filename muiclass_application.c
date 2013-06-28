@@ -285,7 +285,11 @@ static ULONG MM_WindowChatNew( struct IClass *cl UNUSED, Object *obj, Msg *msg )
 struct mccdata *mccdata = INST_DATA( cl, obj );
 Object *win;
 
-	if( ( win = WindowChatObject, MA_WINDOWCHAT_OBJECTNETWORK, mccdata->mcc_ClassObjects[ GID_NETWORK ], End ) ) {
+	if( ( win = WindowChatObject,
+			MA_WINDOWCHAT_OBJECTNETWORK , mccdata->mcc_ClassObjects[ GID_NETWORK  ],
+			MA_WINDOWCHAT_OBJECTSETTINGS, mccdata->mcc_ClassObjects[ WID_SETTINGS ],
+			MA_WINDOWCHAT_OBJECTQUIT    , mccdata->mcc_ClassObjects[ WID_QUIT     ],
+			End ) ) {
 		DoMethod( obj, OM_ADDMEMBER, win );
 		if( win ) {
 			DoMethod( obj, MM_APPLICATION_CHATSETACTIVE, win );

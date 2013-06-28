@@ -52,6 +52,7 @@ enum
 GID_MENUSTRIP = 0,
 GID_NETWORK,
 WID_SETTINGS,
+WID_QUIT,
 MID_SELECTSERVER,
 MID_TABNEW,
 MID_TABNEWGLOBAL,
@@ -213,6 +214,21 @@ Object *objs[ GID_LAST ];
 		sprintf( &mccdata->mcc_WindowTitle[0], (const char *) LGS( MSG_MUICLASS_WINDOWCHAT_TITLE ), VERSION, REVISION );
 		SetAttrs( obj, MUIA_Window_Title, mccdata->mcc_WindowTitle, TAG_DONE );
 
+		DoMethod( mccdata->mcc_ClassObjects[ GID_CHATCHANNELLIST ], MUIM_Notify, MUIA_NList_Active       , MUIV_EveryTime, obj, 1, MM_WINDOWCHAT_CHANNELCHANGE );
+
+		DoMethod( mccdata->mcc_ClassObjects[ GID_CLOSETAB        ], MUIM_Notify, MUIA_Pressed            , FALSE         , obj, 1, MM_WINDOWCHAT_CHANNELPART );
+
+		DoMethod( obj                                             , MUIM_Notify, MUIA_Window_CloseRequest, TRUE          , mccdata->mcc_ClassObjects[ WID_QUIT ], 3, MUIM_Set, MUIA_Window_Open, TRUE );
+
+		SetAttrs( mccdata->mcc_ClassObjects[ GID_CHATMESSAGE ],
+					MA_MESSAGEINPUT_OBJECTCHATUSERLIST   , mccdata->mcc_ClassObjects[ GID_CHATUSERLIST ],
+					MA_MESSAGEINPUT_OBJECTCHATCHANNELLIST, mccdata->mcc_ClassObjects[ GID_CHATCHANNELLIST ],
+					MA_MESSAGEINPUT_OBJECTNETWORK        , mccdata->mcc_ClassObjects[ GID_NETWORK      ],
+					MA_MESSAGEINPUT_OBJECTSETTINGS       , mccdata->mcc_ClassObjects[ WID_SETTINGS     ],
+					TAG_DONE );
+
+
+
 		for( i = FIRSTMENU_ITEM ; i <= LASTMENU_ITEM ; i++ ) {
 			DoMethod( mccdata->mcc_ClassObjects[ i ], MUIM_Notify, MUIA_Menuitem_Trigger, MUIV_EveryTime, obj, 2, MM_WINDOWCHAT_MENUSELECT, i );
 		}
@@ -235,38 +251,6 @@ static ULONG OM_Dispose( struct IClass *cl, Object *obj, Msg msg )
 	debug( "%s (%ld) %s - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	return( DoSuperMethodA( cl, obj, msg ) );
-}
-/* \\\ */
-/* /// OM_Setup()
-**
-*/
-
-/*************************************************************************/
-
-static ULONG OM_Setup( struct IClass *cl, Object *obj, Msg *msg )
-{
-struct mccdata *mccdata = INST_DATA( cl, obj );
-Object *winobj;
-
-	debug( "%s (%ld) %s - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
-
-	mccdata->mcc_ClassObjects[ WID_SETTINGS ] = (Object *) MUIGetVar( _app(obj), MA_APPLICATION_OBJECTWINDOWSETTINGS );
-
-	winobj = (Object *) MUIGetVar( _app(obj), MA_APPLICATION_OBJECTWINDOWQUIT );
-	DoMethod( obj, MUIM_Notify, MUIA_Window_CloseRequest, TRUE, winobj, 3, MUIM_Set, MUIA_Window_Open, TRUE );
-
-	DoMethod( mccdata->mcc_ClassObjects[ GID_CHATCHANNELLIST ], MUIM_Notify, MUIA_NList_Active, MUIV_EveryTime, obj, 1, MM_WINDOWCHAT_CHANNELCHANGE );
-
-	DoMethod( mccdata->mcc_ClassObjects[ GID_CLOSETAB ], MUIM_Notify, MUIA_Pressed, FALSE, obj, 1, MM_WINDOWCHAT_CHANNELPART );
-
-	SetAttrs( mccdata->mcc_ClassObjects[ GID_CHATMESSAGE ],
-					MA_MESSAGEINPUT_OBJECTCHATUSERLIST   , mccdata->mcc_ClassObjects[ GID_CHATUSERLIST ],
-					MA_MESSAGEINPUT_OBJECTCHATCHANNELLIST, mccdata->mcc_ClassObjects[ GID_CHATCHANNELLIST ],
-					MA_MESSAGEINPUT_OBJECTNETWORK        , mccdata->mcc_ClassObjects[ GID_NETWORK      ],
-					MA_MESSAGEINPUT_OBJECTSETTINGS       , mccdata->mcc_ClassObjects[ WID_SETTINGS     ],
-					TAG_DONE );
-
-	return( DoSuperMethodA( cl, obj,(Msg) msg ) );
 }
 /* \\\ */
 /* /// OM_Get()
@@ -298,8 +282,14 @@ struct TagItem *tstate;
 	for( tstate = msg->ops_AttrList ; ( tag = NextTagItem( &tstate ) ) ; ) {
 		ULONG tidata = tag->ti_Data;
         switch( tag->ti_Tag ) {
+			case MA_WINDOWCHAT_OBJECTSETTINGS:
+				mccdata->mcc_ClassObjects[ WID_SETTINGS ] = (APTR) tidata;
+				break;
 			case MA_WINDOWCHAT_OBJECTNETWORK:
 				mccdata->mcc_ClassObjects[ GID_NETWORK ] = (APTR) tidata;
+				break;
+			case MA_WINDOWCHAT_OBJECTQUIT:
+				mccdata->mcc_ClassObjects[ WID_QUIT    ] = (APTR) tidata;
 				break;
 		}
     }
@@ -697,8 +687,6 @@ DISPATCHER(MCC_WindowChat_Dispatcher)
     {
 		case OM_NEW                             : return( OM_New                 ( cl, obj, (APTR) msg ) );
 		case OM_DISPOSE                         : return( OM_Dispose             ( cl, obj, (APTR) msg ) );
-
-		case MUIM_Window_Setup                  : return( OM_Setup               ( cl, obj, (APTR) msg ) );
 
 		case OM_GET                             : return( OM_Get                 ( cl, obj, (APTR) msg ) );
 		case OM_SET                             : return( OM_Set                 ( cl, obj, (APTR) msg ) );

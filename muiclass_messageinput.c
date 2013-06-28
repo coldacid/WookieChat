@@ -197,13 +197,13 @@ struct mccdata *mccdata = INST_DATA( cl, obj );
 								if( cc ) {
 									/* pointer magic */
 									s = (APTR) ( ( (IPTR) List_GetListFromNode( cc->cc_Channel ) ) - (IPTR) offsetof( struct Server, s_ChannelList ) );
-								}
-								contents = (char*) MUIGetVar( obj, MUIA_String_Contents );
-								DoMethod( mccdata->mcc_ClassObjects[ GID_NETWORK ], MM_NETWORK_SERVERMESSAGESENDMSG, s, cc->cc_Channel, MUIGetVar( obj, MUIA_String_Contents ) );
-								DoMethod( obj, MM_MESSAGEINPUT_ADD, contents );
 
-								SetAttrs( obj, MUIA_String_Contents, "", TAG_DONE );
-								//SetAttrs( _win(obj), MUIA_Window_ActiveObject, obj, TAG_DONE );
+									contents = (char*) MUIGetVar( obj, MUIA_String_Contents );
+									DoMethod( mccdata->mcc_ClassObjects[ GID_NETWORK ], MM_NETWORK_SERVERMESSAGESENDMSG, s, cc->cc_Channel, MUIGetVar( obj, MUIA_String_Contents ) );
+									DoMethod( obj, MM_MESSAGEINPUT_ADD, contents );
+
+									SetAttrs( obj, MUIA_String_Contents, "", TAG_DONE );
+								}
 							}
 							break;
 						default:
