@@ -29,7 +29,9 @@
 #include <proto/exec.h> /* required for patching */
 
 #ifndef offsetof
-#define offsetof(type, member)  __builtin_offsetof(type, member)
+ #ifdef __builtin_offsetof
+  #define offsetof(type, member)  __builtin_offsetof(type, member)
+ #endif
 #endif
 
 extern void *memorypool;
@@ -111,6 +113,15 @@ void  MemoryDeletePool( APTR poolheader );
 void *MemoryAllocVecPooled( APTR poolheader, ULONG size, char *funcname );
 void  MemoryFreeVecPooled ( APTR poolheader, APTR memory, char *funcname );
 
+/*
+** Macros for direct usage
+*/
+
+#define Memory_AllocPooled(pool,size)   MemoryAllocVecPooled(pool,size, (char*) __func__)
+#define Memory_FreePooled(pool,memory)  MemoryFreeVecPooled(pool,memory, (char*) __func__)
+#define Memory_CreatePool  MemoryCreatePool
+#define Memory_DeletePool  MemoryDeletePool
+
 #else /* ENABLE_MEMORYTRACKING == 0 */
 
 /*************************************************************************/
@@ -136,9 +147,17 @@ void  MemoryFreeVecPooled( APTR poolheader, APTR memory );
  #define AllocVec(ms,requirements)  AllocVecPooled( memorypool, ms )
  #undef  FreeVec
  #define FreeVec(mb)                MemoryFreeVecPooled( memorypool, (APTR) mb )
-#endif  /* MEMORYPROTECTION_CODE */
 
+ #define Memory_AllocPooled(pool,size)   MemoryAllocVecPooled(pool,size)
+ #define Memory_FreePooled(pool,memory)  MemoryFreeVecPooled(pool,memory)
+ #define Memory_CreatePool  MemoryCreatePool
+ #define Memory_DeletePool  MemoryDeletePool
+
+#endif  /* MEMORYPROTECTION_CODE */
 #endif /* ENABLE_MEMORYTRACKING */
+
+
+
 
 /*************************************************************************/
 

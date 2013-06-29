@@ -28,13 +28,16 @@
 #include <exec/types.h>
 #include <exec/semaphores.h>
 #include <exec/lists.h>
+#include <libraries/iffparse.h>  /* MAKE_ID definition */
 
 #include <proto/exec.h>
+
+#include <stddef.h>
 
 #define MEMORYPROTECTION_CODE /* avoid patching this code */
 
 #include "memorytracking.h"
-#include "system.h"
+#include "debug.h"
 
 /*************************************************************************/
 
@@ -49,7 +52,7 @@ static struct MemoryTracking mt;
 void *MemoryCreatePool( ULONG memflags, ULONG puddlesize, ULONG threshsize )
 {
 void *pool;
-struct PoolHeader *ph;
+struct PoolHeader *ph = NULL;
 
 /* if this is the first pool, we need to init the semaphores */
 
@@ -164,7 +167,7 @@ ULONG i;
 		AddTail( &((struct PoolHeader *) ph)->ph_MemoryList, (struct Node *) pm );
 		ReleaseSemaphore( &mt.mt_MemorySemaphore );
 
-		pm = (APTR) ((IPTR) pm) + PM_PRESIZE;
+		pm = (APTR) ( ((IPTR) pm) + PM_PRESIZE );
 	}
 	return( pm );
 }
@@ -185,18 +188,23 @@ ULONG i, size;
 		if( pm->pm_MemoryID != ID_POOL ) {
 			debug("\n\n%78m*\nMemoryFreePooled:\n\n"
 				"  Tried to free unkown memory as pooled: %08lx! (Size: unknown)"
+				"  Freeing attempted by '%s()'\n"
 				"\n%40lh\n\n%78m*\n",
-			memory,
-			memory );
+				memory,
+				funcname,
+				memory );
 			return; /* we do not free, as this would probably cause a big crash */
 		}
 /* now check if the PoolHeader is correct */
 		if( pm->pm_PoolHeader != poolheader ) {
 			debug("\n\n%78m*\nMemoryFreePooled:\n\n"
 				"  PoolHeader wrong for memory block: %08lx!\n"
+				"  Freeing attempted by '%s()'\n"
 				"  Contents: %08lx (Size: %08lx)\n"
 				"%128lh\n\n%78m*\n",
-				memory, memory, pm->pm_AllocSize, memory );
+				memory,
+				funcname,
+				memory, pm->pm_AllocSize, memory );
 
 			poolheader = pm->pm_PoolHeader;
 		}
@@ -215,7 +223,8 @@ ULONG i, size;
 			Remove( (struct Node *) pm );
         } else {
 			debug("\n\n%78m*\nMemoryFreePooled:\n\n"
-				"  Tried to free node twice: %08lx!\n%78m*\n",
+				"  '%s()' tried to free node twice: %08lx!\n%78m*\n",
+				funcname,
 				memory );
 			ReleaseSemaphore( &mt.mt_MemorySemaphore );
             return;
@@ -231,11 +240,13 @@ ULONG i, size;
 			if( *wall++ != pm->pm_WallType ) {
 				debug("\n\n%78m*\nMemoryFreePooled:\n\n"
 					  "	 Wall Hit: Memory: %08lx caused lower wall hit at offset %ld!\n\n"
+					  "  Freeing attempted by: '%s()'\n"
 					  "  Allocated by: '%s()'\n"
 					  "  Contents: %08lx (Size: %08lx)\n\n"
 					  "%256lh\n"
 					  "Wall: %08lx - 128 (Wallsize: %ld)\n%256lh\n\n%78m*\n",
 						memory, i,
+						funcname,
 						pm->pm_FunctionName,
 						memory, pm->pm_AllocSize,
 						memory,
@@ -250,11 +261,13 @@ ULONG i, size;
 			if( *wall++ != pm->pm_WallType ) {
 				debug("\n\n%78m*\nMemoryFreePooled:\n\n"
 					  "	 Wall Hit: Memory: %08lx caused upper wall hit at offset %ld!\n\n"
+					  "  Freeing attempted by: '%s()'\n"
 					  "  Allocated by: '%s()'\n"
 					  "  Contents: %08lx (Size: %08lx)\n\n"
 					  "%256lh\n"
 					  "Wall: %08lx - 128 (Wallsize: %ld)\n%256lh\n\n%78m*\n",
 						memory, i,
+						funcname,
 						pm->pm_FunctionName,
 						memory, pm->pm_AllocSize,
 						memory,
@@ -297,3 +310,4 @@ void MemoryFreeVecPooled( APTR poolheader, APTR memory )
 /* \\\ */
 
 #endif /* ENABLE_MEMORYTRACKING */
+
