@@ -135,7 +135,7 @@ static ULONG OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
 {
 Object *objs[ GID_LAST ];
 
-	debug( "%s (%ld) %s - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	if( (obj = (Object *) DoSuperNew( cl, obj,
 				MUIA_Group_Horiz, TRUE,
@@ -243,7 +243,7 @@ static ULONG OM_Dispose( struct IClass *cl, Object *obj, Msg msg )
 {
 //struct mccdata *mccdata = INST_DATA( cl, obj );
 
-	debug( "%s (%ld) %s - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	return( DoSuperMethodA( cl, obj, msg ) );
 }
@@ -260,7 +260,7 @@ static ULONG OM_Import( struct IClass *cl, Object *obj, struct MUIP_Import *msg 
 struct mccdata *mccdata = INST_DATA( cl, obj );
 ULONG i;
 
-	debug( "%s (%ld) %s - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	for( i = 0 ; TAB_CONFIGITEMS[ i ].GadgetID != -1 ; i++ ) {
 		if( TAB_CONFIGITEMS[ i ].Attr == MUIA_Pendisplay_Spec ) {
@@ -281,7 +281,7 @@ static ULONG OM_Export( struct IClass *cl, Object *obj, struct MUIP_Import *msg 
 struct mccdata *mccdata = INST_DATA( cl, obj );
 ULONG i;
 
-	debug( "%s (%ld) %s - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	for( i = 0 ; TAB_CONFIGITEMS[ i ].GadgetID != -1 ; i++ ) {
 		if( TAB_CONFIGITEMS[ i ].Attr == MUIA_Pendisplay_Spec ) {
@@ -307,7 +307,7 @@ static ULONG MM_ResetToDefaults( struct IClass *cl, Object *obj, Msg *msg )
 struct mccdata *mccdata = INST_DATA( cl, obj );
 ULONG i;
 
-	debug( "%s (%ld) %s - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	for( i = 0 ; TAB_CONFIGITEMS[ i ].GadgetID != -1 ; i++ ) {
 		SetAttrs( mccdata->mcc_ClassObjects[ TAB_CONFIGITEMS[ i ].GadgetID ],
@@ -329,7 +329,7 @@ static ULONG MM_ReadConfig( struct IClass *cl, Object *obj, struct MP_SETTINGSCO
 struct mccdata *mccdata = INST_DATA( cl, obj );
 ULONG i;
 
-	debug( "%s (%ld) %s - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	for( i = 0 ; TAB_CONFIGITEMS[ i ].GadgetID != -1 ; i++ ) {
 		if( TAB_CONFIGITEMS[ i ].ObjectID == msg->ObjectID ) {
@@ -349,7 +349,7 @@ static ULONG MM_ContextMenuSelect( struct IClass *cl, Object *obj, struct  MUIP_
 {
 struct FileRequester *filerequester;
 
-	debug( "%s (%ld) %s - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	if( msg->item ) {
 		switch( MUIGetVar( msg->item, MUIA_UserData ) ) {
@@ -419,7 +419,7 @@ BPTR handle;
 ULONG i;
 char *str;
 
-	debug( "%s (%ld) %s - Class: 0x%08lxx Object: 0x%08lxx \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s() - Class: 0x%08lxx Object: 0x%08lxx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	if( ( handle = Open( (_ub_cs) msg->Name, MODE_NEWFILE ) ) ) {
 		for( i = 0 ; TAB_CONFIGITEMS[ i ].GadgetID != -1 ; i++ ) {
@@ -445,7 +445,7 @@ BPTR handle;
 ULONG i, length;
 char *linebuffer;
 
-	debug( "%s (%ld) %s - Class: 0x%08lxx Object: 0x%08lxx \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s() - Class: 0x%08lxx Object: 0x%08lxx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	if( ( linebuffer = AllocVec( LINEBUFFER_SIZEOF, MEMF_ANY ) ) ) {
 		if( ( handle = Open( (_ub_cs) msg->Name, MODE_OLDFILE ) ) ) {

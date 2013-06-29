@@ -187,7 +187,7 @@ static ULONG OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
 {
 Object *objs[ GID_LAST ];
 
-	debug( "%s (%ld) %s - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	if( (obj = (Object *)DoSuperNew( cl, obj,
 			MUIA_Window_Title            , LGS( MSG_MUICLASS_WINDOWDCCINCOMING_TITLE ),
@@ -253,7 +253,7 @@ static ULONG MM_Add( struct IClass *cl, Object *obj, Msg *msg UNUSED )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 
-	debug( "%s (%ld) %s - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	//DoMethod( mccdata->mcc_ClassObjects[ GID_LIST ], MUIM_NList_InsertSingle, &ignore, MUIV_NList_Insert_Bottom );
 	//SetAttrs( mccdata->mcc_ClassObjects[ GID_LIST ], MUIA_NList_Active, MUIV_NList_Active_Bottom, TAG_DONE );
@@ -274,7 +274,7 @@ struct mccdata *mccdata = INST_DATA( cl, obj );
 STRPTR path = MUIGetVar( mccdata->mcc_ClassObjects[ GID_PATH ], MUIA_String_Contents );
 struct dcc_entry *find = NULL;
 
-	debug( "%s (%ld) %s - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	DoMethod( mccdata->mcc_ClassObjects[ GID_LIST ], MUIM_NList_GetEntry, MUIV_NList_GetEntry_Active, &find );
     LONG a = 0;

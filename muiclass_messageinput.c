@@ -89,7 +89,7 @@ struct History {
 
 static ULONG OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
 {
-	debug( "%s (%ld) %s - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	if( (obj = DoSuperNew( cl, obj, TAG_DONE ) ) ) {
 
@@ -114,7 +114,7 @@ static ULONG OM_Dispose( struct IClass *cl, Object *obj, Msg msg )
 struct mccdata *mccdata = INST_DATA( cl, obj );
 struct History *history;
 
-	debug( "%s (%ld) %s - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	while( ( history = (APTR) ( mccdata->mcc_HistoryList.lh_Head ) )->h_Succ ) {
 		DoMethod( obj, MM_MESSAGEINPUT_REMOVE, history );
@@ -134,7 +134,7 @@ static ULONG OM_Setup( struct IClass *cl, Object *obj, Msg msg )
 struct mccdata *mccdata = INST_DATA( cl, obj );
 ULONG rc;
 
-	debug( "%s (%ld) %s - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	if( ( rc = DoSuperMethodA( cl, obj, msg ) ) ) {
 
@@ -159,7 +159,7 @@ static ULONG OM_Cleanup( struct IClass *cl, Object *obj, Msg msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 
-	debug( "%s (%ld) %s - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	DoMethod( obj, MUIM_Window_RemEventHandler, &mccdata->mcc_EventHandlerNode );
 
@@ -176,7 +176,7 @@ static ULONG OM_HandleEvent( struct IClass *cl, Object *obj, struct MUIP_HandleE
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 
-	debug( "%s (%ld) %s - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	if( msg->imsg ) {
 		struct History *history;
@@ -404,7 +404,7 @@ struct mccdata *mccdata = INST_DATA( cl, obj );
 struct History *history = msg->First;
 ULONG length;
 
-	debug( "%s (%ld) %s - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	if( !IsListEmpty( &mccdata->mcc_HistoryList ) ) {
 		if( ( length = msg->Length ) ) {
@@ -459,7 +459,7 @@ struct History *history;
 char *str;
 ULONG len;
 
-	debug( "%s (%ld) %s - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	if( !( str = msg->Message ) ) {
 		str = (char*) MUIGetVar( obj, MUIA_String_Contents );
@@ -489,7 +489,7 @@ static ULONG MM_Remove( struct IClass *cl, Object *obj, struct MP_MESSAGEINPUT_R
 {
 struct History *history;
 
-	debug( "%s (%ld) %s - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
+	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	if( ( history = msg->History ) ) {
 		if( history->h_Succ ) {

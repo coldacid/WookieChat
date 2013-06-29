@@ -12,7 +12,7 @@
 ** wookiechat.c
 */
 
-#define NODEBUG
+//#define NODEBUG
 
 /*************************************************************************/
 
@@ -50,7 +50,7 @@ struct Device_Timer dt;
 
 	SysBase = (APTR) (*((struct ExecBase **) 4 ) );
 
-	debug( "\n\n%78m*\n%s (%ld) %s - WookieChat - Transmission begins...\n", __FILE__, __LINE__, __func__ );
+	debug( "\n\n%78m*\n%s (%ld) %s() - WookieChat - Transmission begins...\n", __FILE__, __LINE__, __func__ );
 
 	memset( &dt, 0, sizeof( dt ) );
 
@@ -69,10 +69,7 @@ struct Device_Timer dt;
 
 					while( DoMethod( application, MUIM_Application_NewInput, (IPTR) &waitsignals ) != MUIV_Application_ReturnID_Quit )
 					{
-						//if( !waitsignals ) {
-						//	  continue;
-						//}
-						waitsignals = ( waitsignals | dt.SignalMask | SIGBREAKF_CTRL_C );
+						waitsignals = ( waitsignals | dt.SignalMask | SIGBREAKF_CTRL_C | SIGBREAKF_CTRL_D );
 						DoMethod( networkobj, MM_NETWORK_WAITSELECT, &waitsignals );
 
 						if( waitsignals & SIGBREAKF_CTRL_C ) break;
@@ -99,7 +96,7 @@ struct Device_Timer dt;
 	Libraries_Close();
 	WBMessage_Reply(); /* release wbmessage */
 
-	debug( "%s (%ld) %s - WookieChat - End of Transmission\n", __FILE__, __LINE__, __func__ );
+	debug( "%s (%ld) %s() - WookieChat - End of Transmission\n", __FILE__, __LINE__, __func__ );
 
 	return( result );
 }
