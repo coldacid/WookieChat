@@ -1176,13 +1176,13 @@ MSG_MUICLASS_SETTINGSGUI_TIMEFORMAT_HELP
 Anzeigeformat der Uhrzeit. %h für Stunden, %m für Minuten und %s für Sekunden. Das ist nützlich, um zu sehen, wann ein Ereignis stattfand.(wie Login/logout, oder sprechen).
 ; Display format of timestamps! use these codes: %h for the hour, %m for the minute, and %s for the second. This is useful to see what time an event happened (such as a user joining, or speaking).
 ;
-MSG_MUICLASS_SETTINGSGUI_CHANNELVIEWTIMEWIDTH_GAD
-und der Breite von
-; and a width of
+MSG_MUICLASS_SETTINGSGUI_SHOWJOINPART_GAD
+Zeige JOIN/PART Nachrichten
+; S_how JOIN/PART messages
 ;
-MSG_MUICLASS_SETTINGSGUI_CHANNELVIEWTIMEWIDTH_HELP
-/
-; /
+MSG_MUICLASS_SETTINGSGUI_SHOWJOINPART_HELP
+Anzeigeformat der Uhrzeit. %h für Stunden, %m für Minuten und %s für Sekunden. Das ist nützlich, um zu sehen, wann ein Ereignis stattfand.(wie Login/logout, oder sprechen).
+; Display format of timestamps! use these codes: %h for the hour, %m for the minute, and %s for the second. This is useful to see what time an event happened (such as a user joining, or speaking).
 ;
 MSG_MUICLASS_SETTINGSGUI_CHANNELVIEWNICKWIDTH_GAD
 Nickbreite:

@@ -1176,13 +1176,13 @@ MSG_MUICLASS_SETTINGSGUI_TIMEFORMAT_HELP
 Modifiera tidstämplingen. Använd %h för timmar, %m för minuter, och %s för sekunder. Användbart för att se när något hände (såsom när en användare kom in, eller talade).
 ; Display format of timestamps! use these codes: %h for the hour, %m for the minute, and %s for the second. This is useful to see what time an event happened (such as a user joining, or speaking).
 ;
-MSG_MUICLASS_SETTINGSGUI_CHANNELVIEWTIMEWIDTH_GAD
-and a width of
-; and a width of
+MSG_MUICLASS_SETTINGSGUI_SHOWJOINPART_GAD
+S_how JOIN/PART messages
+; S_how JOIN/PART messages
 ;
-MSG_MUICLASS_SETTINGSGUI_CHANNELVIEWTIMEWIDTH_HELP
-/
-; /
+MSG_MUICLASS_SETTINGSGUI_SHOWJOINPART_HELP
+Modifiera tidstämplingen. Använd %h för timmar, %m för minuter, och %s för sekunder. Användbart för att se när något hände (såsom när en användare kom in, eller talade).
+; Display format of timestamps! use these codes: %h for the hour, %m for the minute, and %s for the second. This is useful to see what time an event happened (such as a user joining, or speaking).
 ;
 MSG_MUICLASS_SETTINGSGUI_CHANNELVIEWNICKWIDTH_GAD
 Nick width:

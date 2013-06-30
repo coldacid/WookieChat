@@ -3441,29 +3441,33 @@ Spersonalizuj swoje oznaczenia czasowe! UΏyj %h dla godzin, %m - minut i %s - se
 powiedzia³).
 Modifiera tidstδmplingen. Anvδnd %h fφr timmar, %m fφr minuter, och %s fφr sekunder. Anvδndbart fφr att se nδr nεgot hδnde (sεsom nδr en anvδndare kom in, eller talade).
 ;
-MSG_MUICLASS_SETTINGSGUI_CHANNELVIEWTIMEWIDTH_GAD
-and a width of
-und der Breite von
-and a width of
-and a width of
-and a width of
-and a width of
-and a width of
-and a width of
-and a width of
-and a width of
+MSG_MUICLASS_SETTINGSGUI_SHOWJOINPART_GAD
+S_how JOIN/PART messages
+Zeige JOIN/PART Nachrichten
+S_how JOIN/PART messages
+S_how JOIN/PART messages
+S_how JOIN/PART messages
+S_how JOIN/PART messages
+S_how JOIN/PART messages
+S_how JOIN/PART messages
+S_how JOIN/PART messages
+S_how JOIN/PART messages
 ;
-MSG_MUICLASS_SETTINGSGUI_CHANNELVIEWTIMEWIDTH_HELP
-/
-/
-/
-/
-/
-/
-/
-/
-/
-/
+MSG_MUICLASS_SETTINGSGUI_SHOWJOINPART_HELP
+Display format of timestamps! use these codes: %h for the hour, %m for the minute, and %s for the second. This is useful to see what time an event happened (such as a user joining, or speaking).
+Anzeigeformat der Uhrzeit. %h fόr Stunden, %m fόr Minuten und %s fόr Sekunden. Das ist nόtzlich, um zu sehen, wann ein Ereignis stattfand.(wie Login/logout, oder sprechen).
+Configurar el formato de la hora.\nΪtil para saber cuando pasσ un evento\n(acceder a un canal, hablar,...).\n\033b%h\033n - hora; \033b%m\033n - minutos; \033b%s\033n - segundos.
+Personnalisez l'horodatage. Utilisez ces codes %h pour l'heure, %m pour les minutes et %s pour les secondes. C'est utile pour retrouver ΰ quelle heure un ιvθnement est survenu (comme l'arrivιe d'un \
+utilisateur ou une annonce).
+Αλλάξτε την εμφάνιση των ενδείξεων χρόνου! Χρησιμοποιήστε το %h για την ώρα, το %m για τα λεπτά και το %s για τα δευτερόλεπτα. Χρήσιμο, για να παρακολουθείτε πότε έγινε ένα συμβάν, όπως πότε μπήκε \
+στο κανάλι κάποιος χρήστης ή πότε είπε κάτι.
+Customizza il formato della data e dell'ora! Utilizza %h per l'ora, %m per i minuti e %%s per i secondi. Γ utile per vedere quando Γ¨ avvenuto un evento (p.es. l'accesso od un messaggio di un \
+utente).
+Idυlenyomat alakja! Hasznαld σrαhoz a %h, perchez a %m ιs mαsodperchez a %s jelzυt. Hasznos, ha lαthatσ az esemιnyek idυpontja (egy felhasznαlσ mikor csatlakozott, beszιlt).
+Lag ditt eget tidsstempel! Bruk %h for timer, %m for minutter og %s for sekunder. Dette anvendes for ε se tidspunktet for en spesiell hendelse (som f.eks. en bruker som entret eller snakket).
+Spersonalizuj swoje oznaczenia czasowe! UΏyj %h dla godzin, %m - minut i %s - sekund. Jest to uΏyteczne, je¶li chcesz wiedzieζ kiedy co¶ siκ wydarzy³o (np. uΏytkownik siκ do³±czy³ lub co¶ \
+powiedzia³).
+Modifiera tidstδmplingen. Anvδnd %h fφr timmar, %m fφr minuter, och %s fφr sekunder. Anvδndbart fφr att se nδr nεgot hδnde (sεsom nδr en anvδndare kom in, eller talade).
 ;
 MSG_MUICLASS_SETTINGSGUI_CHANNELVIEWNICKWIDTH_GAD
 Nick width:

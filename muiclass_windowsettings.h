@@ -120,6 +120,7 @@ SETTINGS_LAST,
 */
 
 #define GRC(a) GlobalReadConfig(a)
+#define GRCO(o,a) GlobalReadConfigObj(o,a)
 
 #define LocalReadConfig(a) DoMethod( mccdata->mcc_ClassObjects[ WID_SETTINGS ], MM_WINDOWSETTINGS_READCONFIG, a )
 #define LRC(a) LocalReadConfig(a)
@@ -168,7 +169,7 @@ OID_GUI_SMILIES,
 OID_GUI_SMILIESTHEME,
 OID_GUI_TIMESHOW,
 OID_GUI_TIMEFORMAT,
-OID_GUI_CHANNELVIEWTIMEWIDTH,
+OID_GUI_SHOWJOINPART,
 OID_GUI_CHANNELVIEWNICKWIDTH,
 OID_GUI_CHANNELVIEWSPACING,
 /* logging settings */
@@ -230,6 +231,7 @@ OID_URL_LIST = 0x5000,
 ULONG   MCC_WindowSettings_InitClass( void );
 void    MCC_WindowSettings_DisposeClass( void );
 ULONG   GlobalReadConfig( ULONG objectid );
+ULONG   GlobalReadConfigObj( Object *obj, ULONG objectid );
 
 /*************************************************************************/
 

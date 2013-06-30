@@ -95,6 +95,23 @@ ULONG result = 0;
 	return( (ULONG) result );
 }
 /* \\\ */
+/* /// GlobalReadConfigObj()
+**
+*/
+
+/*************************************************************************/
+
+ULONG GlobalReadConfigObj( Object *obj, ULONG objectid )
+{
+Object *settobj;
+ULONG result = 0;
+
+	if( ( settobj = (Object *) MUIGetVar( _app( obj ), MA_APPLICATION_OBJECTWINDOWSETTINGS ) ) ) {
+		result = DoMethod( settobj, MM_WINDOWSETTINGS_READCONFIG, objectid );
+	}
+	return( (ULONG) result );
+}
+/* \\\ */
 
 /*************************************************************************/
 
