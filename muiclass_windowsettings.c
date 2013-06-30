@@ -170,16 +170,9 @@ ULONG i;
 		DoMethod( obj                                      , MUIM_Notify, MUIA_Window_CloseRequest, TRUE          , obj                    , 2, MUIM_Application_Load, MUIV_Application_Load_ENV    );
 		DoMethod( mccdata->mcc_ClassObjects[ GID_PAGELIST ], MUIM_Notify, MUIA_NList_Active       , MUIV_EveryTime, mccdata->mcc_ClassObjects[ GID_PAGEGROUP ], 3, MUIM_Set, MUIA_Group_ActivePage, MUIV_TriggerValue );
 
-		DoMethod( mccdata->mcc_ClassObjects[ GID_SAVE     ], MUIM_Notify, MUIA_Pressed            , FALSE         , obj                    , 3, MUIM_Set, MUIA_Window_Open     , FALSE );
-		DoMethod( mccdata->mcc_ClassObjects[ GID_SAVE     ], MUIM_Notify, MUIA_Pressed            , FALSE         , MUIV_Notify_Application, 2, MUIM_Application_Save, MUIV_Application_Save_ENVARC );
-		DoMethod( mccdata->mcc_ClassObjects[ GID_SAVE     ], MUIM_Notify, MUIA_Pressed            , FALSE         , MUIV_Notify_Application, 2, MUIM_Application_Save, MUIV_Application_Save_ENV    );
-		DoMethod( mccdata->mcc_ClassObjects[ GID_SAVE     ], MUIM_Notify, MUIA_Pressed            , FALSE         , MUIV_Notify_Application, 1, MM_APPLICATION_VISUALCHANGE );
-		DoMethod( mccdata->mcc_ClassObjects[ GID_USE      ], MUIM_Notify, MUIA_Pressed            , FALSE         , obj                    , 3, MUIM_Set, MUIA_Window_Open     , FALSE );
-		DoMethod( mccdata->mcc_ClassObjects[ GID_USE      ], MUIM_Notify, MUIA_Pressed            , FALSE         , MUIV_Notify_Application, 2, MUIM_Application_Save, MUIV_Application_Save_ENV    );
-		DoMethod( mccdata->mcc_ClassObjects[ GID_USE      ], MUIM_Notify, MUIA_Pressed            , FALSE         , MUIV_Notify_Application, 1, MM_APPLICATION_VISUALCHANGE );
-		DoMethod( mccdata->mcc_ClassObjects[ GID_CANCEL   ], MUIM_Notify, MUIA_Pressed            , FALSE         , obj                    , 3, MUIM_Set, MUIA_Window_Open     , FALSE );
-		DoMethod( mccdata->mcc_ClassObjects[ GID_CANCEL   ], MUIM_Notify, MUIA_Pressed            , FALSE         , MUIV_Notify_Application, 2, MUIM_Application_Load, MUIV_Application_Load_ENV    );
-		DoMethod( mccdata->mcc_ClassObjects[ GID_CANCEL   ], MUIM_Notify, MUIA_Pressed            , FALSE         , MUIV_Notify_Application, 1, MM_APPLICATION_VISUALCHANGE );
+		DoMethod( mccdata->mcc_ClassObjects[ GID_SAVE     ], MUIM_Notify, MUIA_Pressed            , FALSE         , obj                    , 1, MM_WINDOWSETTINGS_SAVE   );
+		DoMethod( mccdata->mcc_ClassObjects[ GID_USE      ], MUIM_Notify, MUIA_Pressed            , FALSE         , obj                    , 1, MM_WINDOWSETTINGS_USE    );
+		DoMethod( mccdata->mcc_ClassObjects[ GID_CANCEL   ], MUIM_Notify, MUIA_Pressed            , FALSE         , obj                    , 1, MM_WINDOWSETTINGS_CANCEL );
 
 		SetAttrs( objs[ GID_PAGELIST ], MUIA_NList_Active, SETTINGS_SERVER, TAG_DONE );
 
@@ -284,6 +277,62 @@ struct mccdata *mccdata = INST_DATA( cl, obj );
 }
 /* \\\ */
 
+/* /// MM_Save()
+**
+*/
+
+/*************************************************************************/
+
+static ULONG MM_Save( struct IClass *cl, Object *obj, Msg *msg )
+{
+
+	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
+
+	SetAttrs( obj, MUIA_Window_Open, FALSE, TAG_DONE );
+	DoMethod( _app(obj), MUIM_Application_Save, MUIV_Application_Save_ENVARC );
+	DoMethod( _app(obj), MUIM_Application_Save, MUIV_Application_Save_ENV    );
+	DoMethod( _app(obj), MM_APPLICATION_VISUALCHANGE );
+
+	return( 0 );
+}
+/* \\\ */
+/* /// MM_Use()
+**
+*/
+
+/*************************************************************************/
+
+static ULONG MM_Use( struct IClass *cl, Object *obj, Msg *msg )
+{
+
+	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
+
+	SetAttrs( obj, MUIA_Window_Open, FALSE, TAG_DONE );
+	DoMethod( _app(obj), MUIM_Application_Save, MUIV_Application_Save_ENV    );
+	DoMethod( _app(obj), MM_APPLICATION_VISUALCHANGE );
+
+	return( 0 );
+}
+/* \\\ */
+/* /// MM_Cancel()
+**
+*/
+
+/*************************************************************************/
+
+static ULONG MM_Cancel( struct IClass *cl, Object *obj, Msg *msg )
+{
+
+	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
+
+	SetAttrs( obj, MUIA_Window_Open, FALSE, TAG_DONE );
+	DoMethod( _app(obj), MUIM_Application_Load, MUIV_Application_Save_ENV    );
+	DoMethod( _app(obj), MM_APPLICATION_VISUALCHANGE );
+
+	return( 0 );
+}
+/* \\\ */
+
 /*
 ** Dispatcher, init and dispose
 */
@@ -301,6 +350,10 @@ DISPATCHER(MCC_WindowSettings_Dispatcher)
 		case OM_NEW                             : return( OM_New         ( cl, obj, (APTR) msg ) );
 		case OM_SET                             : return( OM_Set         ( cl, obj, (APTR) msg ) );
 		case OM_GET                             : return( OM_Get         ( cl, obj, (APTR) msg ) );
+
+		case MM_WINDOWSETTINGS_SAVE             : return( MM_Save        ( cl, obj, (APTR) msg ) );
+		case MM_WINDOWSETTINGS_USE              : return( MM_Use         ( cl, obj, (APTR) msg ) );
+		case MM_WINDOWSETTINGS_CANCEL           : return( MM_Cancel      ( cl, obj, (APTR) msg ) );
 
 		case MM_WINDOWSETTINGS_READCONFIG       : return( MM_ReadConfig  ( cl, obj, (APTR) msg ) );
 		case MM_WINDOWSETTINGS_WRITECONFIG      : return( MM_WriteConfig ( cl, obj, (APTR) msg ) );

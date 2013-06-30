@@ -170,6 +170,7 @@ IPTR visible, top, total;
 	}
 	return( 0 );
 }
+/* \\\ */
 /* /// MM_PensObtain()
 **
 */
