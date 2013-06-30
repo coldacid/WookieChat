@@ -12,7 +12,7 @@
 ** muiclass_windowchat.c
 */
 
-//#define NODEBUG
+#define NODEBUG
 
 #include <libraries/mui.h>
 #include <libraries/gadtools.h>

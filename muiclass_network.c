@@ -622,7 +622,7 @@ struct SendNode *sn;
 	if( ( sn = AllocVec( sizeof( struct SendNode ) + strlen( msg->Message ) + strlen( "PRIVMSG :" ) + strlen( msg->Channel->c_Name ) + 64, MEMF_ANY|MEMF_CLEAR ) )) {
 		if( *msg->Message != '/' ) {
 			strcpy( sn->sn_Message, (char *) "PRIVMSG " );
-			strcat( sn->sn_Message, msg->Channel->c_Name );
+			strcat( sn->sn_Message, msg->Channel ? msg->Channel->c_Name : "" );
 			strcat( sn->sn_Message, (char *) " :" );
 			strcat( sn->sn_Message, (char *) msg->Message );
 			strcat( sn->sn_Message, "\r\n" );

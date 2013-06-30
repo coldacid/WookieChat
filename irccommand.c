@@ -39,6 +39,30 @@
 
 /*************************************************************************/
 
+/* /// Dump_SMP()
+**
+** allow to easy check on what a commands get for input
+*/
+
+/*************************************************************************/
+
+static void Dump_SMP( struct ServerMessageParse *smp)
+{
+
+	debug("# From:      '%s'\n", smp->smp_From );
+	debug("# Command:   '%s'\n", smp->smp_Command );
+	debug("# Args:      '%s'\n", smp->smp_Arguments );
+	debug("# Message:   '%s'\n", smp->smp_Message );
+
+	debug("# Channel:   '%s'\n", smp->smp_Channel );
+	debug("# Nick:      '%s'\n", smp->smp_Nick  );
+	debug("# Flags:     '%s'\n", smp->smp_Flags );
+	debug("# FromNick:  '%s'\n", smp->smp_FromNick  );
+	debug("# FromUserID:'%s'\n", smp->smp_FromUserID );
+	debug("# FromHost:  '%s'\n\n----------------------------\n", smp->smp_FromHost  );
+}
+/* \\\ */
+
 /* /// IRCCMD_PrivMsg()
 **
 */
@@ -135,10 +159,13 @@ static ULONG IRCCMD_Notice( Object *obj, struct Server *s, struct ServerMessageP
 
 static ULONG IRCCMD_Ping( Object *obj, struct Server *s, struct ServerMessageParse *smp )
 {
-	smp->smp_Message[1] = 'O';
+char *buffer;
 
-	DoMethod( obj, MM_NETWORK_SERVERMESSAGESENDMSG, s, smp->smp_FromNick, smp->smp_Message );
-debug("sending pong\n");
+	if( ( buffer = AllocVec( strlen( smp->smp_Message ) + strlen( smp->smp_Arguments ) + 64, MEMF_ANY ) ) ) {
+		sprintf( buffer, "/PONG %s :%s", smp->smp_Message, smp->smp_Arguments );
+		DoMethod( obj, MM_NETWORK_SERVERMESSAGESENDMSG, s, NULL, buffer );
+		FreeVec( buffer );
+	}
 	return( IRCCMD_RESULTF_IGNOREMESSAGE );
 }
 /* \\\ */
