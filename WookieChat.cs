@@ -1582,6 +1582,18 @@ Export...
 Export...
 Export...
 ;
+MSG_MUICLASS_SETTINGSCOLOR_RESETTODEFAULTS_CMENU
+Reset to Defaults
+Auf Vorgaben zurücksetzen
+Reset to Defaults
+Reset to Defaults
+Reset to Defaults
+Reset to Defaults
+Reset to Defaults
+Reset to Defaults
+Reset to Defaults
+Reset to Defaults
+;
 MSG_MUICLASS_SETTINGSCOLOR_IMPORT_ASLTITLE
 Import Colors from file...
 Farben aus Datei importieren ...

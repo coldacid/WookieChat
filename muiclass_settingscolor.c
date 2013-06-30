@@ -73,6 +73,7 @@ GID_LAST,
 /* these need no storage, so defined after GID_LAST */
 GID_CMENU_IMPORTASTEXT,
 GID_CMENU_EXPORTASTEXT,
+GID_CMENU_RESETTODEFAULTS,
 };
 
 /*
@@ -95,7 +96,7 @@ static struct ConfigItem TAB_CONFIGITEMS[] = {
 	{ GID_USERLISTBACKGROUND   , OID_SETTINGSCOLOR + PEN_USERLISTBACKGROUND   , MUIA_Pendisplay_Spec, (LONG) "r1D451D45,2B5D2B5D,8D798D79" },
 	{ GID_USERLISTTEXT         , OID_SETTINGSCOLOR + PEN_USERLISTTEXT         , MUIA_Pendisplay_Spec, (LONG) "r01010101,07070707,01010101" },
 	{ GID_LOGLISTBACKGROUND    , OID_SETTINGSCOLOR + PEN_LOGLISTBACKGROUND    , MUIA_Pendisplay_Spec, (LONG) "r1D451D45,2B5D2B5D,8D798D79" },
-	{ GID_LOGPRIVMSG           , OID_SETTINGSCOLOR + PEN_LOGPRIVMSG           , MUIA_Pendisplay_Spec, (LONG) "r01010101,07070707,01010101" },
+	{ GID_LOGPRIVMSG           , OID_SETTINGSCOLOR + PEN_LOGPRIVMSG           , MUIA_Pendisplay_Spec, (LONG) "rb7b7b7b7,b7b7b7b7,b7b7b7b7" },
 	{ GID_LOGJOIN              , OID_SETTINGSCOLOR + PEN_LOGJOIN              , MUIA_Pendisplay_Spec, (LONG) "r61E061E0,FFFFFFFF,8CDC8CDC" },
 	{ GID_LOGPART              , OID_SETTINGSCOLOR + PEN_LOGPART              , MUIA_Pendisplay_Spec, (LONG) "r209C209C,A1AFA1AF,1A271A27" },
 	{ GID_LOGQUIT              , OID_SETTINGSCOLOR + PEN_LOGQUIT              , MUIA_Pendisplay_Spec, (LONG) "r209C209C,A1AFA1AF,1A271A27" },
@@ -144,6 +145,7 @@ Object *objs[ GID_LAST ];
 							Child, MenuObject, MUIA_Menu_Title, LGS( MSG_MUICLASS_SETTINGSCOLOR_IMPORTCOLORS_CMENU ),
 								Child, MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MUICLASS_SETTINGSCOLOR_IMPORT_CMENU ), MUIA_UserData, GID_CMENU_IMPORTASTEXT, End,
 								Child, MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MUICLASS_SETTINGSCOLOR_EXPORT_CMENU ), MUIA_UserData, GID_CMENU_EXPORTASTEXT, End,
+								Child, MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MUICLASS_SETTINGSCOLOR_RESETTODEFAULTS_CMENU ), MUIA_UserData, GID_CMENU_RESETTODEFAULTS, End,
 							End,
 						End,
 				Child, HVSpace,
@@ -401,6 +403,9 @@ struct FileRequester *filerequester;
 					FreeAslRequest(filerequester);
 					SetAttrs( _app(obj), MUIA_Application_Sleep, FALSE, TAG_DONE );
 				}
+				break;
+			case GID_CMENU_RESETTODEFAULTS:
+				DoMethod( obj, MM_SETTINGSCOLOR_RESETTODEFAULTS );
 				break;
 		}
 	}
