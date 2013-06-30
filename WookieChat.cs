@@ -395,16 +395,16 @@ Obecny limit u¿ytkowników.
 Nuvarande max användarantal.
 ;
 MSG_MUICLASS_WINDOWCHAT_NICKLIST_HELP
-Graphical Usermodes Key:\nGreen = Channel Operators or @\nBlue = HalfOps or \% \nYellow = Voiced Users or +
-Grafische Nutzermodi:\nGrün = KanalOperator oder @\nBlau = HalbOperator oder %\nGelb = Sprachberechtigte Nutzer oder +
-Colores según el tipo de usuario:\nVerde = operadores (@)\nAzul = medio-operadores (%)\nAmarillo = con voz (+)
-Codes des modes utilisateurs graphiques :\nVert = Opérateur du canal ou @\nBleu = Demi-Opérateur ou \% \nJaune = Voice ou +
-Graphical Usermodes Key:\nGreen = Channel Operators or @\nBlue = HalfOps or \% \nYellow = Voiced Users or +
-Pulsante modalitÃ  di utilizzo grafico utente:\nVerde = Operatori canale o @\nBlu = MezziOperatori o \% \nGiallo = Voiced Users o +
-Grafikus felhasználótípus kulcs:\nZöld = Csatorna Operátor vagy @\nKék = HalfOp vagy \% \nSárga = Voice felhasználó vagy +
-Grafisk brukermodus nøkkel:\nGrønn = kanal-oper eller @\nBlå = halvoper eller \% \nGul = voice-brukere eller +
-Graficzne tryby u¿ytkowników - podpowied¼:\nzielony = operator kana³u lub @\nniebieski = pó³operator kana³u lub \%\n¿ó³ty = u¿ytkownik z przyznanym g³osem lub +
-Färgnyckel för grafiska användarlägen:\nGrön = Operator eller @\nBlå = HalfOp eller \% \nGul = Användare med röst eller +
+Usermode Information:\n@, Green  = Channel Operators\n%, Blue   = HalfOps\n+, Yellow  = Voiced Users
+Nutzermodusinformation:\n@, Grün = KanalOperator\n%, Blau = HalbOperator\n+, Gelb = Sprachberechtigte Nutzer
+Usermodes Information:\n@, Green  = Channel Operators\n%, Blue   = HalfOps\n+, Yellow  = Voiced Users
+Usermodes Information:\n@, Green  = Channel Operators\n%, Blue   = HalfOps\n+, Yellow  = Voiced Users
+Usermodes Information:\n@, Green  = Channel Operators\n%, Blue   = HalfOps\n+, Yellow  = Voiced Users
+Usermodes Information:\n@, Green  = Channel Operators\n%, Blue   = HalfOps\n+, Yellow  = Voiced Users
+Usermodes Information:\n@, Green  = Channel Operators\n%, Blue   = HalfOps\n+, Yellow  = Voiced Users
+Usermodes Information:\n@, Green  = Channel Operators\n%, Blue   = HalfOps\n+, Yellow  = Voiced Users
+Usermodes Information:\n@, Green  = Channel Operators\n%, Blue   = HalfOps\n+, Yellow  = Voiced Users
+Usermodes Information:\n@, Green  = Channel Operators\n%, Blue   = HalfOps\n+, Yellow  = Voiced Users
 ;
 MSG_MUICLASS_WINDOWCHAT_MESSAGE_HELP
 Type your message here!

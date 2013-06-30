@@ -136,8 +136,8 @@ Limite d'utilisateurs actuelle.
 ; Current user limit.
 ;
 MSG_MUICLASS_WINDOWCHAT_NICKLIST_HELP
-Codes des modes utilisateurs graphiques :\nVert = Opérateur du canal ou @\nBleu = Demi-Opérateur ou \% \nJaune = Voice ou +
-; Graphical Usermodes Key:\nGreen = Channel Operators or @\nBlue = HalfOps or \% \nYellow = Voiced Users or +
+Usermodes Information:\n@, Green  = Channel Operators\n%, Blue   = HalfOps\n+, Yellow  = Voiced Users
+; Usermode Information:\n@, Green  = Channel Operators\n%, Blue   = HalfOps\n+, Yellow  = Voiced Users
 ;
 MSG_MUICLASS_WINDOWCHAT_MESSAGE_HELP
 Type your message here!

@@ -136,8 +136,8 @@ Nuvarande max användarantal.
 ; Current user limit.
 ;
 MSG_MUICLASS_WINDOWCHAT_NICKLIST_HELP
-Färgnyckel för grafiska användarlägen:\nGrön = Operator eller @\nBlå = HalfOp eller \% \nGul = Användare med röst eller +
-; Graphical Usermodes Key:\nGreen = Channel Operators or @\nBlue = HalfOps or \% \nYellow = Voiced Users or +
+Usermodes Information:\n@, Green  = Channel Operators\n%, Blue   = HalfOps\n+, Yellow  = Voiced Users
+; Usermode Information:\n@, Green  = Channel Operators\n%, Blue   = HalfOps\n+, Yellow  = Voiced Users
 ;
 MSG_MUICLASS_WINDOWCHAT_MESSAGE_HELP
 Type your message here!
