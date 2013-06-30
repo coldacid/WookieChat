@@ -65,20 +65,19 @@ struct Device_Timer dt;
 				DeviceTimer_SendRequest( &dt );
 				if( !( result = MUIClass_Open() ) ) { /* init our mui classes */
 					Object *networkobj = (APTR) MUIGetVar( application, MA_APPLICATION_OBJECTNETWORK );
-					IPTR waitsignals = ( waitsignals | dt.SignalMask | SIGBREAKF_CTRL_C ) ;
+					IPTR waitsignals;
 
 					while( DoMethod( application, MUIM_Application_NewInput, (IPTR) &waitsignals ) != MUIV_Application_ReturnID_Quit )
 					{
 						waitsignals = ( waitsignals | dt.SignalMask | SIGBREAKF_CTRL_C | SIGBREAKF_CTRL_D );
-						DoMethod( networkobj, MM_NETWORK_WAITSELECT, &waitsignals );
 
+						DoMethod( networkobj, MM_NETWORK_WAITSELECT, &waitsignals );
 						if( waitsignals & SIGBREAKF_CTRL_C ) break;
 						if( waitsignals & SIGBREAKF_CTRL_D ) break;
 
-						if( CheckIO( &(&dt)->IORequest->tr_node ) ) {
-							debug("timer\n");
+						if( ( waitsignals & dt.SignalMask ) ) {
 							DoMethod( networkobj, MM_NETWORK_SERVERMESSAGESENDPROC );
-							//DeviceTimer_SendRequest( &dt );
+							DeviceTimer_SendRequest( &dt );
 						}
 					}
 				}

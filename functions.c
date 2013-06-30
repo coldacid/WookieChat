@@ -555,8 +555,8 @@ void DeviceTimer_SendRequest( struct Device_Timer *dt )
 	}
 	dt->IORequest->tr_node.io_Command = TR_ADDREQUEST;
 
-	dt->IORequest->tr_time.tv_secs    = 1;
-	dt->IORequest->tr_time.tv_micro   = 0;
+	dt->IORequest->tr_time.tv_secs    = 0;
+	dt->IORequest->tr_time.tv_micro   = 500000; /* 1/2 second */
 
 	SendIO( &dt->IORequest->tr_node );
 }

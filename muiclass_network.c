@@ -949,10 +949,9 @@ LONG waitsignals = *((ULONG*) msg->SignalMask );
 	mccdata->mcc_ReadFDS  = mccdata->mcc_ReadMaster;
 	mccdata->mcc_WriteFDS = mccdata->mcc_WriteMaster;
 
-	debug("%08lx %08lx\n", msg->SignalMask, *msg->SignalMask );
 	selectresult  = WaitSelect( mccdata->mcc_FDMax + 1, &mccdata->mcc_ReadFDS, NULL, NULL, NULL, msg->SignalMask );
 
-	if( selectresult > 0 ) {
+	if( selectresult >= 0 ) {
 		struct Server *s;
 		LONG fd;
 
@@ -1014,7 +1013,8 @@ LONG waitsignals = *((ULONG*) msg->SignalMask );
 		}
 
 	} else {
-		debug("wait select failed -> using normal wait to keep application alive\n");
+//		  debug("wait select failed -> using normal wait %08lx to keep application alive\n", waitsignals );
+
 		*((ULONG*) msg->SignalMask ) = Wait( waitsignals );
 	}
 	return( selectresult );
