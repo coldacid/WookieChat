@@ -496,6 +496,8 @@ struct Channel         *c;
 			for( node = (APTR) c->c_ChatLogList.lh_Head ; node->ln_Succ ; node = node->ln_Succ ) {
 				DoMethod( mccdata->mcc_ClassObjects[ GID_CHATLOG ], MUIM_NList_InsertSingleWrap, node, MUIV_NList_Insert_Bottom, WRAPCOL0, ALIGN_LEFT );
 			}
+			DoMethod( mccdata->mcc_ClassObjects[ GID_CHATLOG ], MM_CHATLOG_SHOWLASTLINE, TRUE );
+
 			for( node = (APTR) c->c_ChatNickList.lh_Head ; node->ln_Succ ; node = node->ln_Succ ) {
 				DoMethod( mccdata->mcc_ClassObjects[ GID_CHATUSERLIST ], MUIM_NList_InsertSingle, node, MUIV_NList_Insert_Bottom );
 			}
@@ -619,6 +621,8 @@ struct ChatLogEntry *cle = msg->ChatLogEntry;
 		if( cc->cc_Channel == c ) {
 		/* yes, so add to log */
 			DoMethod( mccdata->mcc_ClassObjects[ GID_CHATLOG ], MUIM_NList_InsertSingleWrap, cle, MUIV_NList_Insert_Bottom, WRAPCOL0, ALIGN_LEFT );
+			DoMethod( mccdata->mcc_ClassObjects[ GID_CHATLOG ], MM_CHATLOG_SHOWLASTLINE, FALSE );
+			/* now update the chat channel list */
 			cc->cc_Pen = PEN_CHANNELLISTTEXT;
 			DoMethod( mccdata->mcc_ClassObjects[ GID_CHATCHANNELLIST ], MUIM_NList_Redraw, MUIV_NList_Redraw_Active, cc );
 		} else { /* it is not, so handle color */

@@ -142,7 +142,34 @@ struct ChatLogEntry *cle;
 	return( 0 );
 }
 /* \\\ */
+/* /// MM_ShowLastLine()
+**
+*/
 
+/*************************************************************************/
+
+static ULONG MM_ShowLastLine( struct IClass *cl, Object *obj, struct MP_CHATLOG_SHOWLASTLINE *msg )
+{
+IPTR visible, top, total;
+
+	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
+
+	/* this magic code checks if the last line was shown before adding our entry, if
+	** yes we move it down to make the new line visible, if not, we leave the list
+	** position as the user may wants to read something up there
+	**
+	** The second to last line cannot be fixuated, but that shouldn t be a problem
+	*/
+
+	visible = MUIGetVar( obj, MUIA_NList_Visible );
+	top     = MUIGetVar( obj, MUIA_NList_First   );
+	total   = MUIGetVar( obj, MUIA_NList_Entries );
+
+	if( msg->Force || ( ( top + visible ) >= total - 1 ) ) {
+		SetAttrs( obj, MUIA_NList_First, total - visible, TAG_DONE );
+	}
+	return( 0 );
+}
 /* /// MM_PensObtain()
 **
 */
@@ -223,13 +250,14 @@ static ULONG MM_PensUpdate( struct IClass *cl, Object *obj, Msg *msg )
 DISPATCHER(MCC_ChatLog_Dispatcher)
 {
 	switch ( msg->MethodID ) {
-		case OM_NEW                          : return( OM_New        ( cl, obj, (APTR) msg ) );
-		case MUIM_Setup                      : return( OM_Setup      ( cl, obj, (APTR) msg ) );
-		case MUIM_Cleanup                    : return( OM_Cleanup    ( cl, obj, (APTR) msg ) );
-		case MUIM_NList_Display              : return( OM_Display    ( cl, obj, (APTR) msg ) );
-		case MM_CHATLOG_PENSOBTAIN           : return( MM_PensObtain ( cl, obj, (APTR) msg ) );
-		case MM_CHATLOG_PENSRELEASE          : return( MM_PensRelease( cl, obj, (APTR) msg ) );
-		case MM_CHATLOG_PENSUPDATE           : return( MM_PensUpdate ( cl, obj, (APTR) msg ) );
+		case OM_NEW                          : return( OM_New          ( cl, obj, (APTR) msg ) );
+		case MUIM_Setup                      : return( OM_Setup        ( cl, obj, (APTR) msg ) );
+		case MUIM_Cleanup                    : return( OM_Cleanup      ( cl, obj, (APTR) msg ) );
+		case MUIM_NList_Display              : return( OM_Display      ( cl, obj, (APTR) msg ) );
+		case MM_CHATLOG_SHOWLASTLINE         : return( MM_ShowLastLine ( cl, obj, (APTR) msg ) );
+		case MM_CHATLOG_PENSOBTAIN           : return( MM_PensObtain   ( cl, obj, (APTR) msg ) );
+		case MM_CHATLOG_PENSRELEASE          : return( MM_PensRelease  ( cl, obj, (APTR) msg ) );
+		case MM_CHATLOG_PENSUPDATE           : return( MM_PensUpdate   ( cl, obj, (APTR) msg ) );
     }
 	return( DoSuperMethodA( cl, obj, msg ) );
 

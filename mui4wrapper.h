@@ -81,6 +81,12 @@
 #undef  MUIA_NList_Entries
 #define MUIA_NList_Entries MUIA_List_Entries
 
+#undef  MUIA_NList_Visible
+#define MUIA_NList_Visible MUIA_List_Visible
+
+#undef  MUIA_NList_First
+#define MUIA_NList_First MUIA_List_First
+
 #undef  MUIM_NList_Display
 #define	MUIM_NList_Display MUIM_List_Display
 struct  MUIP_NList_Display            { ULONG MethodID; APTR entry; STRPTR *strings; };

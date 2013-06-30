@@ -25,11 +25,14 @@
 
 enum {
 MM_CHATLOG_ =  0xFED00700,
+MM_CHATLOG_SHOWLASTLINE,
 MM_CHATLOG_PENSOBTAIN,
 MM_CHATLOG_PENSRELEASE,
 MM_CHATLOG_PENSUPDATE,
 /* Attributes */
 };
+
+struct MP_CHATLOG_SHOWLASTLINE { ULONG MethodID; ULONG Force; };
 
 /*************************************************************************/
 
