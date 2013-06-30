@@ -91,7 +91,7 @@ static ULONG OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
 {
 	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
-	if( (obj = DoSuperNew( cl, obj, TAG_DONE ) ) ) {
+	if( (obj = DoSuperNew( cl, obj, TAG_MORE, msg->ops_AttrList ) ) ) {
 
 		struct mccdata *mccdata = INST_DATA( cl, obj );
 
@@ -182,6 +182,7 @@ struct mccdata *mccdata = INST_DATA( cl, obj );
 		struct History *history;
 		char *str;
 		ULONG pos, max;
+
 		switch( msg->imsg->Class ) {
 			case IDCMP_RAWKEY:
 				{
@@ -197,7 +198,6 @@ struct mccdata *mccdata = INST_DATA( cl, obj );
 								if( cc ) {
 									/* pointer magic */
 									s = (APTR) ( ( (IPTR) List_GetListFromNode( cc->cc_Channel ) ) - (IPTR) offsetof( struct Server, s_ChannelList ) );
-
 									contents = (char*) MUIGetVar( obj, MUIA_String_Contents );
 									DoMethod( mccdata->mcc_ClassObjects[ GID_NETWORK ], MM_NETWORK_SERVERMESSAGESENDMSG, s, cc->cc_Channel, MUIGetVar( obj, MUIA_String_Contents ) );
 									DoMethod( obj, MM_MESSAGEINPUT_ADD, contents );
