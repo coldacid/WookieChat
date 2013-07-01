@@ -715,8 +715,11 @@ ULONG i;
 	if( ( smp = AllocVec( sizeof( struct ServerMessageParse ) + strlen( msg->Message ) + 1, MEMF_ANY|MEMF_CLEAR ) ) ) {
 		smp->smp_Pen = PEN_LOGPRIVMSG;
 		strcpy( smp->smp_Data, msg->Message );
+		while( ( ( chr = smp->smp_Data[ strlen( smp->smp_Data ) - 1 ] ) == '\r' ) || ( chr == '\n' ) ) {
+			smp->smp_Data[ strlen( smp->smp_Data ) - 1 ] = 0x00;
+		}
 		dst = smp->smp_StringStorage;
-		strcpy( dst, msg->Message );
+		strcpy( dst, smp->smp_Data );
 		dst = &dst[ strlen( dst ) + 1 ];
 
 		/* dump to shell */

@@ -166,7 +166,7 @@ IPTR visible, top, total;
 	total   = MUIGetVar( obj, MUIA_NList_Entries );
 
 	if( msg->Force || ( ( top + visible ) >= total - 1 ) ) {
-		SetAttrs( obj, MUIA_NList_First, total - visible, TAG_DONE );
+		SetAttrs( obj, MUIA_NList_First, total - visible + 1, TAG_DONE );
 	}
 	return( 0 );
 }
