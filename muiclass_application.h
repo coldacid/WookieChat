@@ -40,6 +40,7 @@ MM_APPLICATION_CHANNELNICKADD,
 MM_APPLICATION_CHANNELNICKREMOVE,
 
 MM_APPLICATION_VISUALCHANGE,
+
 /* Attributes */
 MA_APPLICATION_CLASSID,
 MA_APPLICATION_OBJECTNETWORK,
@@ -57,11 +58,12 @@ struct MP_APPLICATION_CHATSETACTIVE     { ULONG MethodID; Object *Window; };
 struct MP_APPLICATION_CHATREMOVE        { ULONG MethodID; Object *Window; };
 struct MP_APPLICATION_CHATFINDACTIVE    { ULONG MethodID; };
 
-struct MP_APPLICATION_MESSAGERECEIVED   { ULONG MethodID; struct ChatLogEntry *ChatLogEntry; };
+struct MP_APPLICATION_MESSAGERECEIVED   { ULONG MethodID; struct Server *Server;  char *ChannelName; ULONG Pen; char *Message; };
 struct MP_APPLICATION_CHANNELADD        { ULONG MethodID; struct Channel *Channel; };
 struct MP_APPLICATION_CHANNELREMOVE     { ULONG MethodID; struct Channel *Channel; };
 struct MP_APPLICATION_CHANNELNICKADD    { ULONG MethodID; struct Channel *Channel; struct ChatNickEntry *ChatNickEntry; };
 struct MP_APPLICATION_CHANNELNICKREMOVE { ULONG MethodID; struct Channel *Channel; struct ChatNickEntry *ChatNickEntry; };
+
 
 /*
 ** some defines

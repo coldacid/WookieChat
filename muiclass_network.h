@@ -65,15 +65,13 @@ MM_NETWORK_CHANNELFIND,
 MM_NETWORK_CHANNELALLOC,
 MM_NETWORK_CHANNELFREE,
 
-MM_NETWORK_CHATLOGENTRYFREE,
-MM_NETWORK_CHATLOGENTRYADD,
-
 MM_NETWORK_CHATNICKENTRYALLOC,
 MM_NETWORK_CHATNICKENTRYFREE,
 
 /* Attributes */
 MA_NETWORK_OBJECTSETTINGS,
 MA_NETWORK_OBJECTAUDIO,
+MA_NETWORK_OBJECTCHATLOG,
 };
 
 struct MP_NETWORK_SERVERFIND              { ULONG MethodID; struct ServerEntry *ServerEntry; };
@@ -104,9 +102,6 @@ struct MP_NETWORK_WAITSELECT              { ULONG MethodID; ULONG *SignalMask; }
 struct MP_NETWORK_CHANNELFIND             { ULONG MethodID; struct Server *Server; char *Name; };
 struct MP_NETWORK_CHANNELALLOC            { ULONG MethodID; struct Server *Server; char *Name; };
 struct MP_NETWORK_CHANNELFREE             { ULONG MethodID; struct Server *Server; struct Channel *Channel; };
-
-struct MP_NETWORK_CHATLOGENTRYADD         { ULONG MethodID; struct Server *Server; struct Channel *Channel; ULONG Pen; char *Message; };
-struct MP_NETWORK_CHATLOGENTRYFREE        { ULONG MethodID; struct ChatLogEntry *ChatLogEntry; };
 
 struct MP_NETWORK_CHATNICKENTRYALLOC      { ULONG MethodID; struct Channel *Channel; char *NickName; };
 struct MP_NETWORK_CHATNICKENTRYFREE       { ULONG MethodID; struct Channel *Channel; struct ChatNickEntry *ChatNickEntry; };
@@ -152,15 +147,17 @@ struct Channel {
 	struct Channel    *c_Pred;
 	struct List        c_ChatLogList;
 	struct List        c_ChatNickList;
+	BPTR               c_ChatLogFile;
 	char              *c_Topic;
 	ULONG              c_Flags;
 	char               c_Name[ CHANNELENTRY_CHANNEL_SIZEOF        + 2 ];
 	char               c_Password[ CHANNELENTRY_PASSWORD_SIZEOF   + 2 ];
 };
 
-#define CHANNELF_SERVER          1     /* this is the servers channel */
+#define CHANNELF_SERVER          1  /* this is the servers channel */
 #define CHANNELF_NAMESLIST       2  /* set after first NAMES command and cleared on last */
 #define CHANNELF_MESSAGEOFTHEDAY 4  /* set after MOTD START arrives and clears on MOTD END */
+#define CHANNELF_PUBLIC          8  /* set for public channel, clr for private */
 
 struct Nick {
 	struct Nick       *n_Succ;
@@ -169,20 +166,12 @@ struct Nick {
 	char               n_Password[ NICKENTRY_NICK_SIZEOF   + 2 ];
 };
 
-struct ChatLogEntry {
-	struct ChatLogEntry *cle_Succ;
-	struct ChatLogEntry *cle_Pred;
-	ULONG                cle_Pen;
-	char                 cle_PreParse[16]; /* used by display method */
-	char                 cle_Message[1];
-};
-
-
 struct ChatNickEntry {
 	struct ChatNickEntry *cne_Succ;
 	struct ChatNickEntry *cne_Pred;
 	char                  cne_Nick[1];
 };
+
 enum{
 SVRSTATE_NOTCONNECTED = 0,
 SVRSTATE_PRECONNECTED,

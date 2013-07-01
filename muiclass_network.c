@@ -45,6 +45,7 @@
 enum{
 WID_SETTINGS = 0,
 GID_AUDIO,
+GID_CHATLOG,
 GID_LAST
 };
 
@@ -138,6 +139,9 @@ struct TagItem *tstate;
 				break;
 			case MA_NETWORK_OBJECTAUDIO:
 				mccdata->mcc_ClassObjects[ GID_AUDIO    ] = (APTR) tidata;
+				break;
+			case MA_NETWORK_OBJECTCHATLOG:
+				mccdata->mcc_ClassObjects[ GID_CHATLOG  ] = (APTR) tidata;
 				break;
 		}
     }
@@ -578,7 +582,6 @@ static ULONG MM_ServerMessageReceived( struct IClass *cl, Object *obj, struct MP
 //struct mccdata *mccdata = INST_DATA( cl, obj );
 struct Server  *s = msg->Server;
 struct ServerMessageParse *smp;
-struct ChatLogEntry *cle;
 
 	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
@@ -591,9 +594,7 @@ struct ChatLogEntry *cle;
 			/* insert URL grabber stuff here */
 
 			/* finaly distribute message to all chat windows hosting the related channel */
-			if( ( cle = (APTR) DoMethod( obj, MM_NETWORK_CHATLOGENTRYADD, s, smp->smp_Channel, smp->smp_Pen, smp->smp_MessageBuffer ) ) ) {
-				DoMethod( _app(obj), MM_APPLICATION_MESSAGERECEIVED, cle );
-			}
+			DoMethod( _app(obj), MM_APPLICATION_MESSAGERECEIVED, s, smp->smp_Channel, smp->smp_Pen, smp->smp_MessageBuffer );
 		}
 		DoMethod( obj, MM_NETWORK_SERVERMESSAGEPARSEEND, smp );
 	}
@@ -1088,6 +1089,7 @@ struct Channel      *c = NULL;
 
 static ULONG MM_ChannelFree( struct IClass *cl, Object *obj, struct MP_NETWORK_CHANNELFREE *msg )
 {
+struct mccdata *mccdata = INST_DATA( cl, obj );
 struct Channel      *c  = msg->Channel;
 struct Node *node;
 
@@ -1097,7 +1099,7 @@ struct Node *node;
 		DoMethod( _app(obj), MM_APPLICATION_CHANNELREMOVE, c );
 		/* remove all chat log entries */
 		while( ( node = (APTR) c->c_ChatLogList.lh_Head )->ln_Succ ) {
-			DoMethod( obj, MM_NETWORK_CHATLOGENTRYFREE, node );
+			DoMethod( mccdata->mcc_ClassObjects[ GID_CHATLOG ], MM_CHATLOG_ENTRYFREE, node );
 		}
 		while( ( node = (APTR) c->c_ChatNickList.lh_Head )->ln_Succ ) {
 			DoMethod( obj, MM_NETWORK_CHATNICKENTRYFREE, c, node );
@@ -1110,74 +1112,6 @@ struct Node *node;
 		FreeVec( c );
 	}
 	return( 0 );
-}
-/* \\\ */
-
-/* /// MM_ChatLogEntryFree()
-**
-*/
-
-/*************************************************************************/
-
-static ULONG MM_ChatLogEntryFree( struct IClass *cl, Object *obj, struct MP_NETWORK_CHATLOGENTRYFREE *msg )
-{
-struct ChatLogEntry *cle;
-
-	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
-
-	if( ( cle = msg->ChatLogEntry ) ) {
-		if( cle->cle_Succ && cle->cle_Pred ) {
-			Remove( ( struct Node *) cle );
-		}
-		FreeVec( cle );
-	}
-	return( 0 );
-}
-/* \\\ */
-/* /// MM_ChatLogEntryAdd()
-**
-** Depending on user settings and the given chat log entry, this function
-** finds the desired channel and links the log entry to it.
-*/
-
-static ULONG MM_ChatLogEntryAdd( struct IClass *cl, Object *obj, struct MP_NETWORK_CHATLOGENTRYADD *msg )
-{
-struct Server  *s;
-struct Channel *c;
-struct ChatLogEntry *cle = NULL;
-
-	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
-
-	if( ( s = msg->Server ) ) {
-/*
-** find output channel
-*/
-		c = (APTR) DoMethod( obj, MM_NETWORK_CHANNELFIND, s, msg->Channel );
-		if( !c->c_Succ ) {
-			/* channel not found, so use server tab */
-			for( c = (APTR) s->s_ChannelList.lh_Head ; c->c_Succ ; c = c->c_Succ ) {
-				if( c->c_Flags & CHANNELF_SERVER ) {
-					break;
-				}
-			}
-		}
-		if( !c->c_Succ ) { /* still no channel, then use the first we find */
-			for( c = (APTR) s->s_ChannelList.lh_Head ; c->c_Succ ; ) {
-				break;
-			}
-		}
-/*
-** add to channel
-*/
-		if( c->c_Succ ) { /* no channel no output */
-			if( ( cle = AllocVec( sizeof( struct ChatLogEntry ) + strlen( msg->Message ) + 1, MEMF_ANY ) ) ) {
-				cle->cle_Pen = msg->Pen;
-				strcpy( cle->cle_Message, msg->Message );
-				AddTail( &c->c_ChatLogList, (struct Node *) cle );
-			}
-		}
-	}
-	return( (IPTR) cle );
 }
 /* \\\ */
 
@@ -1277,9 +1211,6 @@ DISPATCHER(MCC_Network_Dispatcher)
 		case MM_NETWORK_CHANNELFIND             : return( MM_ChannelFind               ( cl, obj, (APTR) msg ) );
 		case MM_NETWORK_CHANNELALLOC            : return( MM_ChannelAlloc                 ( cl, obj, (APTR) msg ) );
 		case MM_NETWORK_CHANNELFREE             : return( MM_ChannelFree               ( cl, obj, (APTR) msg ) );
-
-		case MM_NETWORK_CHATLOGENTRYFREE        : return( MM_ChatLogEntryFree          ( cl, obj, (APTR) msg ) );
-		case MM_NETWORK_CHATLOGENTRYADD         : return( MM_ChatLogEntryAdd           ( cl, obj, (APTR) msg ) );
 
 		case MM_NETWORK_CHATNICKENTRYALLOC      : return( MM_ChatNickEntryAlloc        ( cl, obj, (APTR) msg ) );
 		case MM_NETWORK_CHATNICKENTRYFREE       : return( MM_ChatNickEntryFree         ( cl, obj, (APTR) msg ) );

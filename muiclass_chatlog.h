@@ -26,13 +26,25 @@
 enum {
 MM_CHATLOG_ =  0xFED00700,
 MM_CHATLOG_SHOWLASTLINE,
+
 MM_CHATLOG_PENSOBTAIN,
 MM_CHATLOG_PENSRELEASE,
 MM_CHATLOG_PENSUPDATE,
+
+MM_CHATLOG_OPEN,
+MM_CHATLOG_CLOSE,
+MM_CHATLOG_ENTRYALLOC,
+MM_CHATLOG_ENTRYFREE,
+
 /* Attributes */
 };
 
 struct MP_CHATLOG_SHOWLASTLINE { ULONG MethodID; ULONG Force; };
+
+struct MP_CHATLOG_OPEN       { ULONG MethodID; struct Server *Server; struct Channel *Channel; };
+struct MP_CHATLOG_CLOSE      { ULONG MethodID; struct Channel *Channel; };
+struct MP_CHATLOG_ENTRYALLOC { ULONG MethodID; struct Channel *Channel; ULONG Pen; char *Message;  };
+struct MP_CHATLOG_ENTRYFREE  { ULONG MethodID; struct ChatLogEntry *ChatLogEntry; };
 
 /*************************************************************************/
 
@@ -42,6 +54,15 @@ struct MP_CHATLOG_SHOWLASTLINE { ULONG MethodID; ULONG Force; };
 
 ULONG   MCC_ChatLog_InitClass( void );
 void    MCC_ChatLog_DisposeClass( void );
+
+/*************************************************************************/
+
+struct ChatLogEntry {
+	struct ChatLogEntry *cle_Succ;
+	struct ChatLogEntry *cle_Pred;
+	ULONG                cle_Pen;
+	char                 cle_Message[1];
+};
 
 /*************************************************************************/
 

@@ -24,6 +24,7 @@
 #include <proto/icon.h>
 #include <SDI_hook.h>
 #include <string.h>
+#include <stdio.h>
 
 #include "system.h"
 #include "locale.h"
@@ -32,6 +33,7 @@
 #include "muiclass_audio.h"
 #include "muiclass_application.h"
 #include "muiclass_network.h"
+#include "muiclass_chatlog.h"
 #include "muiclass_windowchat.h"
 #include "muiclass_windowquit.h"
 #include "muiclass_windowquicksetup.h"
@@ -64,6 +66,7 @@ WID_URLGRABBER,
 WID_QUICKSETUP,
 GID_AUDIO,
 GID_NETWORK,
+GID_CHATLOG,
 GID_LAST
 };
 
@@ -123,6 +126,7 @@ Object *objs[ GID_LAST ];
 								WindowContents, VGroup,
 									Child   , objs[ GID_AUDIO   ] = AudioObject , End,
 									Child   , objs[ GID_NETWORK ] = NetworkObject , End,
+									Child   , objs[ GID_CHATLOG ] = ChatLogObject , End,
 								End,
 					End,
 				TAG_DONE ) ) ) {
@@ -131,7 +135,7 @@ Object *objs[ GID_LAST ];
 
 		CopyMem( &objs[0], &mccdata->mcc_ClassObjects[0], sizeof( mccdata->mcc_ClassObjects));
 
-		SetAttrs( objs[ GID_NETWORK ], MA_NETWORK_OBJECTSETTINGS, objs[ WID_SETTINGS ], MA_NETWORK_OBJECTAUDIO, objs[ GID_AUDIO    ], TAG_DONE );
+		SetAttrs( objs[ GID_NETWORK ], MA_NETWORK_OBJECTSETTINGS, objs[ WID_SETTINGS ], MA_NETWORK_OBJECTAUDIO, objs[ GID_AUDIO    ], MA_NETWORK_OBJECTCHATLOG, objs[ GID_CHATLOG ], TAG_DONE );
 		SetAttrs( objs[ GID_AUDIO   ], MA_AUDIO_OBJECTSETTINGS  , objs[ WID_SETTINGS ], TAG_DONE );
 
 		/* load settings */
@@ -390,14 +394,41 @@ ULONG i;
 
 static ULONG MM_MessageReceived( struct IClass *cl, Object *obj, struct MP_APPLICATION_MESSAGERECEIVED *msg )
 {
+struct mccdata *mccdata = INST_DATA( cl, obj );
+struct Server  *s;
 
 	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
-	FORCHILD( obj, MUIA_Application_WindowList ) {
-		if( MUIGetVar( child, MA_APPLICATION_CLASSID ) == CLASSID_WINDOWCHAT ) {
-			DoMethod( child, MM_WINDOWCHAT_MESSAGERECEIVED, msg->ChatLogEntry );
+	if( ( s = msg->Server ) ) {
+		struct Channel *c;
+
+/*
+** find output channel
+*/
+		c = (APTR) DoMethod( mccdata->mcc_ClassObjects[ GID_NETWORK ], MM_NETWORK_CHANNELFIND, s, msg->ChannelName );
+		if( !c->c_Succ ) {
+			/* channel not found, so use server tab */
+			for( c = (APTR) s->s_ChannelList.lh_Head ; c->c_Succ ; c = c->c_Succ ) {
+				if( c->c_Flags & CHANNELF_SERVER ) {
+					break;
+				}
+			}
 		}
-	} NEXTCHILD
+		if( !c->c_Succ ) { /* still no channel, then use the first we find */
+			for( c = (APTR) s->s_ChannelList.lh_Head ; c->c_Succ ; ) {
+				break;
+			}
+		}
+		if( c->c_Succ ) {
+			struct ChatLogEntry *cle;
+			cle = (APTR) DoMethod( mccdata->mcc_ClassObjects[ GID_CHATLOG ], MM_CHATLOG_ENTRYALLOC, c, msg->Pen, msg->Message );
+			FORCHILD( obj, MUIA_Application_WindowList ) {
+				if( MUIGetVar( child, MA_APPLICATION_CLASSID ) == CLASSID_WINDOWCHAT ) {
+					DoMethod( child, MM_WINDOWCHAT_MESSAGERECEIVED, cle );
+				}
+			} NEXTCHILD
+		}
+	}
 	return( 0 );
 }
 /* \\\ */
@@ -438,6 +469,7 @@ Object *windowchat;
 static ULONG MM_ChannelRemove( struct IClass *cl, Object *obj, struct MP_APPLICATION_CHANNELREMOVE *msg )
 {
 
+//	  DoMethod(
 	FORCHILD( obj, MUIA_Application_WindowList ) {
 		if( MUIGetVar( child, MA_APPLICATION_CLASSID ) == CLASSID_WINDOWCHAT ) {
 			DoMethod( child, MM_WINDOWCHAT_CHANNELREMOVE, msg->Channel );
@@ -501,6 +533,7 @@ static ULONG MM_ChannelNickRemove( struct IClass *cl, Object *obj, struct MP_APP
 	return( 0 );
 }
 /* \\\ */
+
 /* /// MM_VisualChange()
 **
 ** We distribute this method to all chat windows.
@@ -559,6 +592,8 @@ DISPATCHER(MCC_Application_Dispatcher)
 		case MM_APPLICATION_CHANNELNICKREMOVE   : return( MM_ChannelNickRemove   ( cl, obj, (APTR) msg ) );
 
 		case MM_APPLICATION_VISUALCHANGE        : return( MM_VisualChange        ( cl, obj, (APTR) msg ) );
+
+
     }
 	return( DoSuperMethodA( cl, obj, msg ) );
 

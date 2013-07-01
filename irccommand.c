@@ -390,7 +390,6 @@ static ULONG IRCCMD_NameReply( Object *obj, struct Server *s, struct ServerMessa
 struct SimpleReadArgsData *srad;
 struct Channel *c;
 struct ChannelNickEntry *cne;
-struct ChatLogEntry *cle;
 char *nick, *bufferstart;
 
 	if( ( c = (APTR) DoMethod( obj, MM_NETWORK_CHANNELFIND, s, smp->smp_Channel ) ) ) {
@@ -411,9 +410,7 @@ char *nick, *bufferstart;
 							smp->smp_Channel
 							);
 
-			if( ( cle = (APTR) DoMethod( obj, MM_NETWORK_CHATLOGENTRYADD, s, smp->smp_Channel, PEN_LOGNOTICE, smp->smp_MessageBuffer ) ) ) {
-				DoMethod( _app(obj), MM_APPLICATION_MESSAGERECEIVED, cle );
-			}
+			DoMethod( _app(obj), MM_APPLICATION_MESSAGERECEIVED, s, smp->smp_Channel, PEN_LOGNOTICE, smp->smp_MessageBuffer );
 			c->c_Flags |= CHANNELF_NAMESLIST; /* make sure header is only shown once */
 		}
 

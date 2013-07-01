@@ -20,6 +20,7 @@
 #include <proto/intuition.h>
 #include <proto/utility.h>
 #include <proto/exec.h>
+#include <proto/dos.h>
 #include <SDI_hook.h>
 
 #include <string.h>
@@ -171,6 +172,7 @@ IPTR visible, top, total;
 	return( 0 );
 }
 /* \\\ */
+
 /* /// MM_PensObtain()
 **
 */
@@ -238,6 +240,132 @@ static ULONG MM_PensUpdate( struct IClass *cl, Object *obj, Msg *msg )
 }
 /* \\\ */
 
+/* /// MM_Open()
+**
+*/
+
+/*************************************************************************/
+
+static ULONG MM_Open( struct IClass *cl, Object *obj, struct MP_CHATLOG_OPEN *msg )
+{
+struct mccdata *mccdata = INST_DATA( cl, obj );
+struct Channel *c;
+struct Server  *s;
+
+	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
+
+	if( ( c = msg->Channel ) && ( s = msg->Server ) ) {
+		if( ( LRC( OID_LOG_ACTIVEPUBLIC  ) &&  ( c->c_Flags & CHANNELF_PUBLIC ) ) ||
+			( LRC( OID_LOG_ACTIVEPRIVATE ) && !( c->c_Flags & CHANNELF_PUBLIC ) ) ){
+
+			struct ChatLogEntry *cle;
+			#define FILENAME_SIZEOF 0x200
+			char filename[ FILENAME_SIZEOF ];
+			#define BUFFER_SIZEOF 0x1000
+			char *buffer;
+			long len, line;
+
+			sprintf( filename, "%s_%s_cur", s->s_Name, c->c_Name );
+
+			if( c->c_ChatLogFile ) {
+				Close( c->c_ChatLogFile );
+			}
+			line = 0;
+			if( ( c->c_ChatLogFile = Open( (_ub_cs) filename, MODE_READWRITE ) ) ) {
+				if( ( buffer = AllocVec( BUFFER_SIZEOF, MEMF_ANY ) ) ) {
+					while( FGets( c->c_ChatLogFile, (STRPTR) buffer, BUFFER_SIZEOF - 1 ) ) {
+						while( ( len = strlen( buffer ) ) > 0 ) {
+							len--;
+							if( ( buffer[ len ] == '\n' ) || ( buffer[ len ] == '\r' ) ) {
+								buffer[ len ] = 0x00;
+							} else {
+								break;
+							}
+							DoMethod( obj, MM_CHATLOG_ENTRYALLOC, c, 0, buffer );
+							line++; /* we load all lines */
+							if( line > GRC( OID_LOG_RECOVERPUBLIC ) ) {
+								if( ( cle = (APTR) c->c_ChatLogList.lh_Head )->cle_Succ ) {
+									/* but keep only a limited number */
+									DoMethod( obj, MM_CHATLOG_ENTRYFREE, cle );
+								}
+							}
+						}
+					}
+					FreeVec( buffer );
+				}
+				/* no close here, as we continue logging */
+			}
+		}
+	}
+	return( 0 );
+}
+/* \\\ */
+/* /// MM_Close()
+**
+*/
+
+/*************************************************************************/
+
+static ULONG MM_Close( struct IClass *cl, Object *obj, struct MP_CHATLOG_CLOSE *msg )
+{
+struct Channel *c;
+
+	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
+
+	if( ( c = msg->Channel ) ) {
+		if( c->c_ChatLogFile ) {
+			Close( c->c_ChatLogFile );
+		}
+	}
+
+	return( 0 );
+}
+/* \\\ */
+/* /// MM_EntryAlloc()
+**
+*/
+
+/*************************************************************************/
+
+static ULONG MM_EntryAlloc( struct IClass *cl, Object *obj, struct MP_CHATLOG_ENTRYALLOC *msg )
+{
+struct Channel *c;
+struct ChatLogEntry *cle = NULL;
+
+	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
+
+	if( ( c = msg->Channel ) && c->c_Succ ) {
+		if( ( cle = AllocVec( sizeof( struct ChatLogEntry ) + strlen( msg->Message ) + 1, MEMF_ANY ) ) ) {
+			cle->cle_Pen = msg->Pen;
+			strcpy( cle->cle_Message, msg->Message );
+			AddTail( &c->c_ChatLogList, (struct Node *) cle );
+		}
+	}
+	return( (IPTR) cle );
+}
+/* \\\ */
+/* /// MM_EntryFree()
+**
+*/
+
+/*************************************************************************/
+
+static ULONG MM_EntryFree( struct IClass *cl, Object *obj, struct MP_CHATLOG_ENTRYFREE *msg )
+{
+struct ChatLogEntry *cle;
+
+	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
+
+	if( ( cle = msg->ChatLogEntry ) ) {
+		if( cle->cle_Succ && cle->cle_Pred ) {
+			Remove( ( struct Node *) cle );
+		}
+		FreeVec( cle );
+	}
+	return( 0 );
+}
+/* \\\ */
+
 /*
 ** Dispatcher, init and dispose
 */
@@ -256,9 +384,16 @@ DISPATCHER(MCC_ChatLog_Dispatcher)
 		case MUIM_Cleanup                    : return( OM_Cleanup      ( cl, obj, (APTR) msg ) );
 		case MUIM_NList_Display              : return( OM_Display      ( cl, obj, (APTR) msg ) );
 		case MM_CHATLOG_SHOWLASTLINE         : return( MM_ShowLastLine ( cl, obj, (APTR) msg ) );
+
 		case MM_CHATLOG_PENSOBTAIN           : return( MM_PensObtain   ( cl, obj, (APTR) msg ) );
 		case MM_CHATLOG_PENSRELEASE          : return( MM_PensRelease  ( cl, obj, (APTR) msg ) );
 		case MM_CHATLOG_PENSUPDATE           : return( MM_PensUpdate   ( cl, obj, (APTR) msg ) );
+
+		case MM_CHATLOG_OPEN                 : return( MM_Open         ( cl, obj, (APTR) msg ) );
+		case MM_CHATLOG_CLOSE                : return( MM_Close        ( cl, obj, (APTR) msg ) );
+		case MM_CHATLOG_ENTRYALLOC           : return( MM_EntryAlloc   ( cl, obj, (APTR) msg ) );
+		case MM_CHATLOG_ENTRYFREE            : return( MM_EntryFree    ( cl, obj, (APTR) msg ) );
+
     }
 	return( DoSuperMethodA( cl, obj, msg ) );
 
