@@ -126,7 +126,8 @@ static ULONG IRCCMD_PrivMsg( Object *obj, struct Server *s, struct ServerMessage
 	} else {
 		smp->smp_Pen = PEN_LOGPRIVMSG;
 		sprintf( &smp->smp_MessageBuffer[ strlen( smp->smp_MessageBuffer ) ],
-				"<%s> %s", smp->smp_FromNick, smp->smp_Message
+				GRCO( obj, OID_GUI_NICKLISTREMCHARS ) ? "%s %s" : "<%s> %s",
+				smp->smp_FromNick, smp->smp_Message
 			);
 	}
 
