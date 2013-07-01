@@ -3883,6 +3883,30 @@ MSG_MUICLASS_SETTINGSLOG_PRIVATE_HELP
 /
 /
 ;
+MSG_MUICLASS_SETTINGSLOG_PATH_GAD
+Path:
+Pfad:
+Path:
+Path:
+Path:
+Path:
+Path:
+Path:
+Path:
+Path:
+;
+MSG_MUICLASS_SETTINGSLOG_PATH_HELP
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+;
 MSG_MUICLASS_SETTINGSLOG_LINESTORECOVERFROMLOG_INFO
 Lines to be recovered from log...
 Zeilen die aus dem Mittschnitt wiederhergestellt werden...
@@ -3991,6 +4015,17 @@ MSG_MUICLASS_SETTINGSLOG_LOGSPLITLIMIT_HELP
 /
 /
 ;
+MSG_MUICLASS_SETTINGSLOG_NEWLOGOPENEDAT_INFO
+New log for %s opened at %s\n
+Neues Log für '%s' wurde geöffnet um %s\n
+New log for %s opened at %s\n
+New log for %s opened at %s\n
+New log for %s opened at %s\n
+New log for %s opened at %s\n
+New log for %s opened at %s\n
+New log for %s opened at %s\n
+New log for %s opened at %s\n
+New log for %s opened at %s\n
 ;
 ; MUICLASS_SETTINGSALIAS
 ;

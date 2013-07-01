@@ -193,17 +193,18 @@ static STRPTR TAB_GROUP_HIGHLIGHTMODES[ MSG_PG_ADDITIONAL - MSG_PG_CONNECTIONS +
 
 		CopyMem( &objs[0], &mccdata->mcc_ClassObjects[0], sizeof( mccdata->mcc_ClassObjects));
 		
-		SetAttrs( objs[ GID_SERVERADDRESS    ], MUIA_String_Reject, " /\?,:", TAG_DONE );
-		SetAttrs( objs[ GID_SERVERPASSWORD   ], MUIA_String_Reject, " /\?,:", TAG_DONE );
-		SetAttrs( objs[ GID_SERVERCHARSET    ], MUIA_String_Reject, " /\?,:", TAG_DONE );
-		SetAttrs( objs[ GID_NICKNAME         ], MUIA_String_Reject, " /\?,:", TAG_DONE );
-		SetAttrs( objs[ GID_NICKPASSWORD     ], MUIA_String_Reject, " /\?,:", TAG_DONE );
-		SetAttrs( objs[ GID_CHANNELNAME      ], MUIA_String_Reject, " /\?,:\x7", TAG_DONE );
-		SetAttrs( objs[ GID_CHANNELPASSWORD  ], MUIA_String_Reject, " /\?,:", TAG_DONE );
+		SetAttrs( objs[ GID_SERVERNAME       ], MUIA_String_Reject, " /\\#?,:", TAG_DONE );
+		SetAttrs( objs[ GID_SERVERADDRESS    ], MUIA_String_Reject, " /\\?,:", TAG_DONE );
+		SetAttrs( objs[ GID_SERVERPASSWORD   ], MUIA_String_Reject, " /\\?,:", TAG_DONE );
+		SetAttrs( objs[ GID_SERVERCHARSET    ], MUIA_String_Reject, " /\\?,:", TAG_DONE );
+		SetAttrs( objs[ GID_NICKNAME         ], MUIA_String_Reject, " /\\?,:", TAG_DONE );
+		SetAttrs( objs[ GID_NICKPASSWORD     ], MUIA_String_Reject, " /\\?,:", TAG_DONE );
+		SetAttrs( objs[ GID_CHANNELNAME      ], MUIA_String_Reject, " /\\?,:\x7", TAG_DONE );
+		SetAttrs( objs[ GID_CHANNELPASSWORD  ], MUIA_String_Reject, " /\\?,:", TAG_DONE );
 		SetAttrs( objs[ GID_SERVERLIST       ] , MA_SERVERLIST_NICKLISTOBJ, objs[ GID_NICKLIST ], MA_SERVERLIST_CHANNELLISTOBJ, objs[ GID_CHANNELLIST ], TAG_DONE );
 
-		SetAttrs( objs[ GID_REALNAME         ], MUIA_String_Reject, "/\?,:", TAG_DONE );
-		SetAttrs( objs[ GID_USERNAME         ], MUIA_String_Reject, " /\?,:", TAG_DONE );
+		SetAttrs( objs[ GID_REALNAME         ], MUIA_String_Reject, "/\\?,:", TAG_DONE );
+		SetAttrs( objs[ GID_USERNAME         ], MUIA_String_Reject, " /\\?,:", TAG_DONE );
 
 
 		DoMethod( obj, MUIM_Notify, MUIA_Window_CloseRequest, TRUE, obj, 3, MUIM_Set, MUIA_Window_Open, FALSE );

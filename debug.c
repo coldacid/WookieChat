@@ -902,7 +902,7 @@ struct MsgPort *MessagePort;
 	if( secs ) {
 		if( ( MessagePort = CreateMsgPort() ) ) {
 			if( ( IORequest = CreateIORequest( MessagePort, sizeof( struct timerequest ) ) ) ) {
-				if( !OpenDevice( (CONST_STRPTR) "timer.device", UNIT_MICROHZ, IORequest, 0L ) ) {
+				if( !OpenDevice( (APTR) "timer.device", UNIT_MICROHZ, IORequest, 0L ) ) {
 				   IORequest->io_Message.mn_Node.ln_Type = NT_REPLYMSG;
 
 					((struct timerequest *)IORequest )->tr_node.io_Message.mn_Node.ln_Type = NT_MESSAGE;
@@ -937,7 +937,7 @@ struct Library *DOSBase;
 struct DateStamp ds;
 
 	value = flags + count;
-	if( ( DOSBase = OpenLibrary( (CONST_STRPTR) "dos.library", 30 ) ) ) {
+	if( ( DOSBase = OpenLibrary( (APTR) "dos.library", 30 ) ) ) {
 		DateStamp( &ds );
 		CloseLibrary( DOSBase );
 	}

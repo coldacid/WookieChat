@@ -22,6 +22,8 @@
 
 #define MSG_ERROR_NOERROR 0
 
+extern struct Locale  *locale_locale;
+
 /*
 ** Prototypes
 */

@@ -177,9 +177,9 @@ struct AliasEntry *ae;
 			ae = NULL;
 			DoMethod( obj, MUIM_NList_GetEntry, i, &ae );
 			if( ae ) {
-				FPuts( handle, (CONST_STRPTR) ae->ae_Alias );
-				FPuts( handle, (CONST_STRPTR) " " );
-				FPuts( handle, (CONST_STRPTR) ae->ae_Text );
+				FPuts( handle, (_ub_cs) ae->ae_Alias );
+				FPuts( handle, (_ub_cs) " " );
+				FPuts( handle, (_ub_cs) ae->ae_Text );
 				FPutC( handle,        '\n'  );
 			} else {
 	            break;

@@ -100,7 +100,7 @@ struct MP_NETWORK_SERVERSENDDATA          { ULONG MethodID; struct Server *Serve
 struct MP_NETWORK_WAITSELECT              { ULONG MethodID; ULONG *SignalMask; };
 
 struct MP_NETWORK_CHANNELFIND             { ULONG MethodID; struct Server *Server; char *Name; };
-struct MP_NETWORK_CHANNELALLOC            { ULONG MethodID; struct Server *Server; char *Name; };
+struct MP_NETWORK_CHANNELALLOC            { ULONG MethodID; struct Server *Server; char *Name; ULONG Flags; };
 struct MP_NETWORK_CHANNELFREE             { ULONG MethodID; struct Server *Server; struct Channel *Channel; };
 
 struct MP_NETWORK_CHATNICKENTRYALLOC      { ULONG MethodID; struct Channel *Channel; char *NickName; };

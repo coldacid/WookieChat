@@ -250,7 +250,7 @@ struct mccdata *mccdata = INST_DATA( cl, obj );
 											if( ( *tmp == '@' ) || ( *tmp == '+' ) || ( *tmp == '%' ) ) {
 												tmp++;
 											}
-											if( !Strnicmp( (CONST_STRPTR) tmp, (CONST_STRPTR) mccdata->mcc_NickBuffer, mccdata->mcc_NickLength ) ) {
+											if( !Strnicmp( (_ub_cs) tmp, (_ub_cs) mccdata->mcc_NickBuffer, mccdata->mcc_NickLength ) ) {
 												strcpy( mccdata->mcc_ComposeBuffer, mccdata->mcc_NickPreBuffer );
 												strcat( mccdata->mcc_ComposeBuffer, tmp );
 												switch( LRC( OID_GEN_NICKCOMPLETITION ) ) {
@@ -414,7 +414,7 @@ ULONG length;
 				}
 				for( history = (APTR) history->h_Succ ; history->h_Succ ; history = history->h_Succ ) {
 //					  debug("#1 compare '%s' '%s' (%ld)\n", history->h_Message, msg->Message, length );
-					if( !Strnicmp( (CONST_STRPTR) history->h_Message, (CONST_STRPTR) msg->Message, length ) ) {
+					if( !Strnicmp( (_ub_cs) history->h_Message, (_ub_cs) msg->Message, length ) ) {
 						if( msg->Mode == MV_MESSAGEINPUT_MODE_EXACT ) {
 							if( strlen( history->h_Message ) != length ) {
 								continue;
@@ -430,7 +430,7 @@ ULONG length;
 				}
 				for( history = (APTR) history->h_Pred ; history->h_Pred ; history = history->h_Pred ) {
 //					  debug("#2 compare '%s' '%s' (%ld)\n", history->h_Message, msg->Message, length );
-					if( !Strnicmp( (CONST_STRPTR) history->h_Message, (CONST_STRPTR) msg->Message, length ) ) {
+					if( !Strnicmp( (_ub_cs) history->h_Message, (_ub_cs) msg->Message, length ) ) {
 						if( msg->Mode == MV_MESSAGEINPUT_MODE_EXACT ) {
 							if( strlen( history->h_Message ) != length ) {
 								continue;

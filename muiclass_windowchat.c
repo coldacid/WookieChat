@@ -476,6 +476,7 @@ ULONG i;
 static ULONG MM_ChannelChange( struct IClass *cl, Object *obj, struct MP_WINDOWCHAT_CHANNELCHANGE *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
+struct ChatLogEntry    *cle;
 struct ChatChannel     *cc;
 struct Channel         *c;
 
@@ -493,8 +494,14 @@ struct Channel         *c;
 			DoMethod( mccdata->mcc_ClassObjects[ GID_CHATCHANNELLIST ], MUIM_NList_Redraw, MUIV_NList_Redraw_Active, cc );
 
 			DoMethod( obj, MM_WINDOWCHAT_CHANNELCHANGETOPIC, c );
-			for( node = (APTR) c->c_ChatLogList.lh_Head ; node->ln_Succ ; node = node->ln_Succ ) {
-				DoMethod( mccdata->mcc_ClassObjects[ GID_CHATLOG ], MUIM_NList_InsertSingleWrap, node, MUIV_NList_Insert_Bottom, WRAPCOL0, ALIGN_LEFT );
+
+			for( cle = (APTR) c->c_ChatLogList.lh_Head ; cle->cle_Succ ; cle = cle->cle_Succ ) {
+				if( !LRC( OID_GUI_SHOWJOINPART ) ) {
+					if( ( cle->cle_Pen == PEN_LOGJOIN ) || ( cle->cle_Pen == PEN_LOGPART ) || ( cle->cle_Pen == PEN_LOGQUIT ) ) {
+						continue; /* do not show */
+					}
+				}
+				DoMethod( mccdata->mcc_ClassObjects[ GID_CHATLOG ], MUIM_NList_InsertSingleWrap, cle, MUIV_NList_Insert_Bottom, WRAPCOL0, ALIGN_LEFT );
 			}
 			DoMethod( mccdata->mcc_ClassObjects[ GID_CHATLOG ], MM_CHATLOG_SHOWLASTLINE, TRUE );
 

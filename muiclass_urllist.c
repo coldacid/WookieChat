@@ -202,7 +202,7 @@ struct URLEntry *ue;
 			ue = NULL;
 			DoMethod( obj, MUIM_NList_GetEntry, i, &ue );
 			if( ue ) {
-				FPuts( handle, (CONST_STRPTR) ue->ue_URL );
+				FPuts( handle, (_ub_cs) ue->ue_URL );
 				FPutC( handle,        '\n'  );
 			} else {
 	            break;

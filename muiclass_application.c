@@ -204,7 +204,7 @@ struct mccdata *mccdata = INST_DATA( cl, obj );
 
 	if( !wbmessage ) {
 		struct RDArgs *readargs;
-		if( !( readargs = ReadArgs( (CONST_STRPTR) READARGS_TEMPLATE, (LONG*) mccdata->mcc_ReadargsArray, NULL ) ) ) {
+		if( !( readargs = ReadArgs( (_ub_cs) READARGS_TEMPLATE, (LONG*) mccdata->mcc_ReadargsArray, NULL ) ) ) {
 			Dos_ShowFailure();
 		} else {
 			/* insert arg handling */
@@ -412,11 +412,6 @@ struct Server  *s;
 				if( c->c_Flags & CHANNELF_SERVER ) {
 					break;
 				}
-			}
-		}
-		if( !c->c_Succ ) { /* still no channel, then use the first we find */
-			for( c = (APTR) s->s_ChannelList.lh_Head ; c->c_Succ ; ) {
-				break;
 			}
 		}
 		if( c->c_Succ ) {

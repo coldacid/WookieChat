@@ -46,6 +46,7 @@ GID_RECOVERPUBLIC,
 GID_RECOVERPRIVATE,
 GID_SPLIT,
 GID_SPLITLIMIT,
+GID_PATH,
 GID_LAST
 };
 
@@ -67,8 +68,11 @@ static struct ConfigItem TAB_CONFIGITEMS[] = {
 	{ GID_RECOVERPRIVATE    , OID_LOG_RECOVERPRIVATE   , MUIA_String_Integer,  (LONG) 40   },
 	{ GID_SPLIT             , OID_LOG_SPLIT            , MUIA_Selected      ,  (LONG) 1    },
 	{ GID_SPLITLIMIT        , OID_LOG_SPLITLIMIT       , MUIA_String_Integer,  (LONG) 1024 },
+	{ GID_PATH              , OID_LOG_PATH             , MUIA_String_Contents, (LONG) DEFAULT_LOGPATH },
 	{ -1,0,0,0 },
 };
+
+#define PATH_SIZEOF 0x200
 
 /*
 ** data used by this class
@@ -108,9 +112,14 @@ Object *objs[ GID_LAST ];
 					Child, MUICreateLabelLeft( MSG_MUICLASS_SETTINGSLOG_PRIVATE_GAD ),
 					Child, HVSpace,
 				End,
+				Child, HGroup,
+				Child, MUICreateLabelLeft( MSG_MUICLASS_SETTINGSLOG_PATH_GAD ),
+				Child, MUICreatePopASL( MSG_MUICLASS_SETTINGSLOG_PATH_GAD, PATH_SIZEOF, MUII_PopDrawer, &objs[ GID_PATH ], TAG_DONE ),
+				End,
 
 				Child, VSpace(5),
 				Child, MUICreateLabelLeft( MSG_MUICLASS_SETTINGSLOG_LINESTORECOVERFROMLOG_INFO ),
+				
 				Child, HGroup,
 					Child, MUICreateLabelLeft( MSG_MUICLASS_SETTINGSLOG_LINESTORECOVERPUBLIC_GAD ),
 					Child, objs[ GID_RECOVERPUBLIC  ] = MUICreateInteger( MSG_MUICLASS_SETTINGSLOG_LINESTORECOVERPUBLIC_GAD, 6 ),

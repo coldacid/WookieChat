@@ -60,7 +60,7 @@ ULONG ShowRequester( ULONG message, ULONG gadgets, IPTR *args )
 				while( ( tmp = strchr( str, '\n' ) ) ) {
 					*tmp = 0x20; /* replace \n by space */
 				}
-				VPrintf( (CONST_STRPTR) str, args );
+				VPrintf( (_ub_cs) str, args );
 				FreeVec( str );
 			}
 		}
@@ -230,7 +230,7 @@ ULONG i = 0;
 
 void Dos_ShowFailure( void )
 {
-	PrintFault( IoErr(), (CONST_STRPTR) APPLICATIONNAME );
+	PrintFault( IoErr(), (_ub_cs) APPLICATIONNAME );
 }
 /* \\\ */
 /* /// Dos_GetSizeHandle()
@@ -331,13 +331,13 @@ STRPTR toolstring;
 
 	if( o ) {
 #if defined(__MORPHOS__)
-		if( ( toolstring = (STRPTR) FindToolType( (CONST STRPTR *) o->do_ToolTypes, (CONST STRPTR) tooltype ) ) ) {
+		if( ( toolstring = (_ub_cs) FindToolType( (CONST STRPTR *) o->do_ToolTypes, (CONST STRPTR) tooltype ) ) ) {
 #elif defined( __amigaos4__)
-		if( ( toolstring = (STRPTR) FindToolType( (STRPTR *) o->do_ToolTypes, (CONST_STRPTR) tooltype ) ) ) {
+		if( ( toolstring = (_ub_cs) FindToolType( (STRPTR *) o->do_ToolTypes, (_ub_cs) tooltype ) ) ) {
 #else
-		if( ( toolstring = (STRPTR) FindToolType( (const STRPTR *) o->do_ToolTypes, (const STRPTR) tooltype ) ) ) {
+		if( ( toolstring = (_ub_cs) FindToolType( (const STRPTR *) o->do_ToolTypes, (const STRPTR) tooltype ) ) ) {
 #endif
-			return( ( (!Stricmp( toolstring, (STRPTR) "YES" ) ) || ( !Stricmp( toolstring, (STRPTR) "ON" ) ) || (!Stricmp( toolstring, (STRPTR) "TRUE" ) ) ) ? TRUE : FALSE );
+			return( ( (!Stricmp( toolstring, (_ub_cs) "YES" ) ) || ( !Stricmp( toolstring, (STRPTR) "ON" ) ) || (!Stricmp( toolstring, (STRPTR) "TRUE" ) ) ) ? TRUE : FALSE );
 		}
 	}
 	return( defvalue );
@@ -358,7 +358,7 @@ LONG value;
 #if defined(__MORPHOS__)
 		if( ( toolstring = (STRPTR) FindToolType( (CONST STRPTR *) o->do_ToolTypes, (CONST STRPTR) tooltype ) ) ) {
 #elif defined( __amigaos4__)
-		if( ( toolstring = (STRPTR) FindToolType( (STRPTR *) o->do_ToolTypes, (CONST_STRPTR) tooltype ) ) ) {
+		if( ( toolstring = (STRPTR) FindToolType( (STRPTR *) o->do_ToolTypes, (_ub_cs) tooltype ) ) ) {
 #else
 		if( ( toolstring = (STRPTR) FindToolType( (const STRPTR *) o->do_ToolTypes, (const STRPTR) tooltype ) ) ) {
 #endif
@@ -385,7 +385,7 @@ STRPTR result = NULL;
 #if defined(__MORPHOS__)
 		result =  (STRPTR) FindToolType( (CONST STRPTR *) o->do_ToolTypes, (CONST STRPTR) tooltype );
 #elif defined( __amigaos4__)
-		result =  (STRPTR) FindToolType( (STRPTR *) o->do_ToolTypes, (CONST_STRPTR) tooltype );
+		result =  (STRPTR) FindToolType( (STRPTR *) o->do_ToolTypes, (_ub_cs) tooltype );
 #else
 		result =  (STRPTR) FindToolType( (const STRPTR *) o->do_ToolTypes, (const STRPTR) tooltype );
 #endif
@@ -471,7 +471,7 @@ ULONG length;
 				srad->srad_rda->RDA_Source.CS_Length = length;
 				srad->srad_rda->RDA_Source.CS_CurChr = 0;
 				srad->srad_rda->RDA_Source.CS_Buffer = (STRPTR) &srad->srad_Buffer[ 0 ];
-				if( ( srad->srad_rd = ReadArgs( (CONST_STRPTR) templatestring, (LONG*) &srad->srad_ArgArray[ 0 ], srad->srad_rda ) ) ) {
+				if( ( srad->srad_rd = ReadArgs( (_ub_cs) templatestring, (LONG*) &srad->srad_ArgArray[ 0 ], srad->srad_rda ) ) ) {
 					return( srad );
 				}
 			}
@@ -523,7 +523,7 @@ ULONG result;
 		result = MSG_ERROR_UNABLETOCREATEIOREQUEST;
 		if( ( dt->IORequest = CreateIORequest( dt->MsgPort, sizeof( struct timerequest ) ) ) ) {
 			result = MSG_ERROR_UNABLETOOPENTIMERDEVICE;
-			if( !OpenDevice( (CONST_STRPTR) "timer.device", UNIT_MICROHZ, (struct IORequest *) dt->IORequest, 0L ) ) {
+			if( !OpenDevice( (_ub_cs) "timer.device", UNIT_MICROHZ, (struct IORequest *) dt->IORequest, 0L ) ) {
 
 				TimerBase = (APTR) dt->IORequest->tr_node.io_Device;
 

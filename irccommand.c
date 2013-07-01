@@ -195,26 +195,22 @@ static ULONG IRCCMD_Join( Object *obj, struct Server *s, struct ServerMessagePar
 struct Channel *c;
 
 	/* if it is our nick, then add channel */
-	if( !Stricmp( (CONST_STRPTR) smp->smp_FromNick, (CONST_STRPTR) s->s_CurrentNick ) ) {
+	if( !Stricmp( (_ub_cs) smp->smp_FromNick, (_ub_cs) s->s_CurrentNick ) ) {
 		/* MM_NETWORK_CHANNELALLOC takes care that there are no dupe channels */
-		if( ( c = (APTR) DoMethod( obj, MM_NETWORK_CHANNELALLOC, s, smp->smp_Channel ) ) ) {
+		if( ( c = (APTR) DoMethod( obj, MM_NETWORK_CHANNELALLOC, s, smp->smp_Channel, 0 ) ) ) {
 			DoMethod( _app(obj), MM_APPLICATION_CHANNELADD, c );
 		}
 	}
 
-	if( GRCO( obj, OID_GUI_SHOWJOINPART ) ) {
-		smp->smp_Pen = PEN_LOGJOIN;
-		sprintf( &smp->smp_MessageBuffer[ strlen( smp->smp_MessageBuffer ) ],
-			"[%s] %s (%s@%s) %s",  LGS( MSG_MUICLASS_NETWORK_JOIN ),
-								smp->smp_FromNick,
-								smp->smp_FromUserID,
-								smp->smp_FromHost,
-								smp->smp_Message
-			);
-		return( 0 );
-	} else {
-		return( IRCCMD_RESULTF_IGNOREMESSAGE );
-	}
+	smp->smp_Pen = PEN_LOGJOIN;
+	sprintf( &smp->smp_MessageBuffer[ strlen( smp->smp_MessageBuffer ) ],
+		"[%s] %s (%s@%s) %s",  LGS( MSG_MUICLASS_NETWORK_JOIN ),
+							smp->smp_FromNick,
+							smp->smp_FromUserID,
+							smp->smp_FromHost,
+							smp->smp_Message
+		);
+	return( 0 );
 }
 /* \\\ */
 /* /// IRCCMD_Part()
@@ -228,25 +224,21 @@ static ULONG IRCCMD_Part( Object *obj, struct Server *s, struct ServerMessagePar
 struct Channel *c;
 
 	/* if it is our nick, then remove channel */
-	if( !Stricmp( (CONST_STRPTR) smp->smp_FromNick, (CONST_STRPTR) s->s_CurrentNick ) ) {
+	if( !Stricmp( (_ub_cs) smp->smp_FromNick, (_ub_cs) s->s_CurrentNick ) ) {
 		if( ( c = (APTR) DoMethod( obj, MM_NETWORK_CHANNELFIND, s, smp->smp_Channel ) ) ) {
 			DoMethod( _app(obj), MM_APPLICATION_CHANNELREMOVE, c );
 		}
 	}
 
-	if( GRCO( obj, OID_GUI_SHOWJOINPART ) ) {
-		smp->smp_Pen = PEN_LOGPART;
-		sprintf( &smp->smp_MessageBuffer[ strlen( smp->smp_MessageBuffer ) ],
-			"[%s] %s (%s@%s) %s",  LGS( MSG_MUICLASS_NETWORK_PART ),
-								smp->smp_FromNick,
-								smp->smp_FromUserID,
-								smp->smp_FromHost,
-								smp->smp_Message
+	smp->smp_Pen = PEN_LOGPART;
+	sprintf( &smp->smp_MessageBuffer[ strlen( smp->smp_MessageBuffer ) ],
+		"[%s] %s (%s@%s) %s",  LGS( MSG_MUICLASS_NETWORK_PART ),
+							smp->smp_FromNick,
+							smp->smp_FromUserID,
+							smp->smp_FromHost,
+							smp->smp_Message
 			);
-		return( 0 );
-	} else {
-		return( IRCCMD_RESULTF_IGNOREMESSAGE );
-	}
+	return( 0 );
 }
 /* \\\ */
 /* /// IRCCMD_Quit()
@@ -257,20 +249,16 @@ struct Channel *c;
 
 static ULONG IRCCMD_Quit( Object *obj, struct Server *s, struct ServerMessageParse *smp )
 {
-	if( GRCO( obj, OID_GUI_SHOWJOINPART ) ) {
-		smp->smp_Pen = PEN_LOGQUIT;
-		sprintf( &smp->smp_MessageBuffer[ strlen( smp->smp_MessageBuffer ) ],
-			"[%s] %s (%s@%s) %s",  LGS( MSG_MUICLASS_NETWORK_QUIT ),
-								smp->smp_FromNick,
-								smp->smp_FromUserID,
-								smp->smp_FromHost,
-								smp->smp_Message
-			);
+	smp->smp_Pen = PEN_LOGQUIT;
+	sprintf( &smp->smp_MessageBuffer[ strlen( smp->smp_MessageBuffer ) ],
+		"[%s] %s (%s@%s) %s",  LGS( MSG_MUICLASS_NETWORK_QUIT ),
+							smp->smp_FromNick,
+							smp->smp_FromUserID,
+							smp->smp_FromHost,
+							smp->smp_Message
+		);
 
-		return( 0 );
-	} else {
-		return( IRCCMD_RESULTF_IGNOREMESSAGE );
-	}
+	return( 0 );
 }
 /* \\\ */
 /* /// IRCCMD_ChannelWebSiteIs()

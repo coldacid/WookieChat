@@ -270,7 +270,7 @@ struct Server *s;
 
 	for( s = (APTR) mccdata->mcc_ServerList.lh_Head ; s->s_Succ ; s = s->s_Succ ) {
 		if( s->s_Port == se->se_Port ) { /* different port -> different server */
-			if( !Stricmp( (CONST_STRPTR) s->s_Address, (CONST_STRPTR) se->se_Address ) ) {
+			if( !Stricmp( (_ub_cs) s->s_Address, (_ub_cs) se->se_Address ) ) {
 				return( (IPTR) s );
 			}
 		}
@@ -323,13 +323,12 @@ struct ChannelEntry *ce;
 				s->s_State = SVRSTATE_NOTCONNECTED;
 
 				/* add a server channel */
-				if( ( c = (APTR) DoMethod( obj, MM_NETWORK_CHANNELALLOC, s, s->s_Name ) ) ) {
-					c->c_Flags      |= CHANNELF_SERVER;
+				if( ( c = (APTR) DoMethod( obj, MM_NETWORK_CHANNELALLOC, s, s->s_Name, CHANNELF_SERVER ) ) ) {
 					DoMethod( _app(obj), MM_APPLICATION_CHANNELADD, c );
 				}
 
 				for( ce = (APTR) se->se_ChannelList.lh_Head ; ce->ce_Succ ; ce = ce->ce_Succ ) {
-					if( ( c = (APTR) DoMethod( obj, MM_NETWORK_CHANNELALLOC, s, ce->ce_Name ) ) ) {
+					if( ( c = (APTR) DoMethod( obj, MM_NETWORK_CHANNELALLOC, s, ce->ce_Name, 0 ) ) ) {
 						strcpy( c->c_Password, ce->ce_Password );
 					}
 				}
@@ -724,8 +723,8 @@ ULONG i;
 		dst = &dst[ strlen( dst ) + 1 ];
 
 		/* dump to shell */
-		VPrintf( (CONST_STRPTR) msg->Message, (CONST APTR) smp );
-		VPrintf( (CONST_STRPTR) "\n", (CONST APTR) smp );
+		VPrintf( (_ub_cs) msg->Message, (CONST APTR) smp );
+		VPrintf( (_ub_cs) "\n", (CONST APTR) smp );
 //		  debug("%128lh\n", msg->Message );
 		DateStamp( &smp->smp_DateStamp );
 
@@ -777,7 +776,7 @@ ULONG i;
 		dst = SMP_SplitNickUserHost( smp, smp->smp_From, dst );
 
 		for( i = 0 ; TAB_IRCCOMMANDS[ i ].CMD_Name ; i++ ) {
-			if( !Stricmp( (CONST_STRPTR) TAB_IRCCOMMANDS[ i ].CMD_Name, (CONST_STRPTR) smp->smp_Command ) ) {
+			if( !Stricmp( (_ub_cs) TAB_IRCCOMMANDS[ i ].CMD_Name, (_ub_cs) smp->smp_Command ) ) {
 				pattern	= TAB_IRCCOMMANDS[ i ].CMD_ArgPattern;
 				args    = smp->smp_Arguments;
 				if( pattern && pattern[0] && args && args[0] ) {
@@ -807,7 +806,7 @@ ULONG i;
 								{
 								time_t rawtime;
 								struct tm *timeinfo;
-								StrToLong( (CONST_STRPTR) args, &rawtime );
+								StrToLong( (_ub_cs) args, &rawtime );
 								timeinfo = localtime(&rawtime);
 								smp->smp_Date = dst;
 								strcpy( dst, asctime(timeinfo) );
@@ -823,7 +822,7 @@ ULONG i;
 			}
 		}
 		if( !TAB_IRCCOMMANDS[ i ].CMD_Name ) {
-			VPrintf( (CONST_STRPTR) "!! Command is not in command table !!\n", &smp->smp_Command );
+			VPrintf( (_ub_cs) "!! Command is not in command table !!\n", &smp->smp_Command );
 		}
 	}
 #if 1
@@ -872,7 +871,7 @@ ULONG result = 0, i;
 
 	if( smp->smp_Command && smp->smp_Command[0] ) {
 		for( i = 0 ; TAB_IRCCOMMANDS[i].CMD_Name ; i++ ) {
-			if( !Stricmp( (CONST_STRPTR) smp->smp_Command, (CONST_STRPTR) TAB_IRCCOMMANDS[i].CMD_Name ) ) {
+			if( !Stricmp( (_ub_cs) smp->smp_Command, (_ub_cs) TAB_IRCCOMMANDS[i].CMD_Name ) ) {
 				result = TAB_IRCCOMMANDS[i].CMD_Function( obj, msg->Server, smp );
 				break;
 			}
@@ -1040,7 +1039,7 @@ struct Channel      *c;
 
 	for( c = (APTR) s->s_ChannelList.lh_Head ; c->c_Succ ; c = c->c_Succ ) {
 		if( msg->Name ) {
-			if( !Stricmp( (CONST_STRPTR) c->c_Name, (CONST_STRPTR) msg->Name ) ) {
+			if( !Stricmp( (_ub_cs) c->c_Name, (_ub_cs) msg->Name ) ) {
 				debug("found '%s'\n", c->c_Name );
 				return( (IPTR) c );
 			}
@@ -1070,6 +1069,7 @@ struct Channel      *c = NULL;
 	if( !( msg->Name ) || !(msg->Name[0]) || !( c = (APTR) DoMethod( obj, MM_NETWORK_CHANNELFIND, s, msg->Name ) ) ) {
 		if( ( msg->Name[0] ) ) {
 			if( ( c = AllocVec( sizeof( struct Channel ), MEMF_ANY|MEMF_CLEAR ) ) ) {
+				c->c_Flags = msg->Flags;
 				NEWLIST( &c->c_ChatLogList );
 				NEWLIST( &c->c_ChatNickList );
 				AddTail( &s->s_ChannelList, (struct Node *) c );
@@ -1133,7 +1133,7 @@ struct Channel *c;
 
 	if( ( c = msg->Channel ) ) {
 		for( cne = (APTR) c->c_ChatNickList.lh_Head ; cne->cne_Succ ; cne = cne->cne_Succ ) {
-			if( !Stricmp( (CONST_STRPTR) cne->cne_Nick, (CONST_STRPTR) msg->NickName ) ) {
+			if( !Stricmp( (_ub_cs) cne->cne_Nick, (_ub_cs) msg->NickName ) ) {
 				return( (IPTR) cne ); /* no dupes */
 			}
 		}

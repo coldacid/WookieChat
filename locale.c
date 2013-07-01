@@ -24,7 +24,7 @@
 #include "functions.h"
 
 static struct Catalog *locale_catalog = NULL;
-static struct Locale  *locale_locale;
+struct Locale  *locale_locale;
 
 /*************************************************************************/
 

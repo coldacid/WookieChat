@@ -31,6 +31,8 @@ MM_CHATLOG_PENSOBTAIN,
 MM_CHATLOG_PENSRELEASE,
 MM_CHATLOG_PENSUPDATE,
 
+MM_CHATLOG_COMPOSELOGNAME,
+MM_CHATLOG_OPENNEWFILE,
 MM_CHATLOG_OPEN,
 MM_CHATLOG_CLOSE,
 MM_CHATLOG_WRITE,
@@ -42,6 +44,8 @@ MM_CHATLOG_ENTRYFREE,
 
 struct MP_CHATLOG_SHOWLASTLINE { ULONG MethodID; ULONG Force; };
 
+struct MP_CHATLOG_COMPOSELOGNAME { ULONG MethodID; struct Server *Server; struct Channel *Channel; };
+struct MP_CHATLOG_OPENNEWFILE    { ULONG MethodID; struct Server *Server; struct Channel *Channel; };
 struct MP_CHATLOG_OPEN           { ULONG MethodID; struct Server *Server; struct Channel *Channel; };
 struct MP_CHATLOG_CLOSE          { ULONG MethodID; struct Channel *Channel; };
 struct MP_CHATLOG_WRITE          { ULONG MethodID; struct Channel *Channel; struct ChatLogEntry *ChatLogEntry; };

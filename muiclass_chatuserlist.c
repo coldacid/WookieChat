@@ -200,7 +200,7 @@ STRPTR nick2 = (STRPTR) ((struct ChatNick *) msg->entry2)->cn_ChatNickEntry->cne
 
 	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
-	return( Stricmp( (CONST_STRPTR) nick1, (CONST_STRPTR) nick2 ) );
+	return( Stricmp( (_ub_cs) nick1, (_ub_cs) nick2 ) );
 }
 /* \\\ */
 

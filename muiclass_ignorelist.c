@@ -201,10 +201,10 @@ struct IgnoreEntry *ie;
 			ie = NULL;
 			DoMethod( obj, MUIM_NList_GetEntry, i, &ie );
 			if( ie ) {
-				FPuts( handle, (CONST_STRPTR)     ie->ie_Pattern );
-				FPuts( handle, (CONST_STRPTR) ( ( ie->ie_Flags & IGNOREENTRYF_TEXT ) ? " TEXT" : "" ) );
-				FPuts( handle, (CONST_STRPTR) ( ( ie->ie_Flags & IGNOREENTRYF_CTCP ) ? " CTCP" : "" ) );
-				FPuts( handle, (CONST_STRPTR) ( ( ie->ie_Flags & IGNOREENTRYF_DCC  ) ? " DCC"  : "" ) );
+				FPuts( handle, (_ub_cs)     ie->ie_Pattern );
+				FPuts( handle, (_ub_cs) ( ( ie->ie_Flags & IGNOREENTRYF_TEXT ) ? " TEXT" : "" ) );
+				FPuts( handle, (_ub_cs) ( ( ie->ie_Flags & IGNOREENTRYF_CTCP ) ? " CTCP" : "" ) );
+				FPuts( handle, (_ub_cs) ( ( ie->ie_Flags & IGNOREENTRYF_DCC  ) ? " DCC"  : "" ) );
 				FPutC( handle,        '\n'  );
 			} else {
 	            break;
