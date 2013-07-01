@@ -76,18 +76,18 @@ struct PoolHeader {
 ** pool header structure
 */
 
-#pragma pack(4) /* we need alignment of 4 for compatibly */
+#pragma pack(1) /* we need alignment of 4 for compatibly */
 struct PoolMemory {
 	struct PoolMemory *pm_Succ;
 	struct PoolMemory *pm_Pred;
 	struct PoolHeader *pm_PoolHeader;
-	IPTR               pm_MemoryID;     /* ID to identify this structure */
 	IPTR               pm_CheckSum;     /* pointer on PMID avoids  */
+	IPTR               pm_MemoryID;     /* ID to identify this structure */
 	ULONG              pm_AllocSize;    /* size requested by application */
 	ULONG              pm_RealSize;     /* size incl. walls */
 	char               pm_FunctionName[ PM_FUNCNAME_SIZEOF ];
 	BYTE               pm_WallType;     /* random wall value */
-	BYTE               pm_RESERVED[3];  /* pad bytes */
+	BYTE               pm_RESERVED[1];  /* pad bytes */
 	BYTE               pm_WallLower[ PM_WALLSIZE ];
 };
 #pragma pack() /* we need alignment of 4 for compatibly */

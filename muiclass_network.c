@@ -1061,6 +1061,7 @@ struct Channel      *c;
 
 static ULONG MM_ChannelAlloc( struct IClass *cl, Object *obj, struct MP_NETWORK_CHANNELALLOC *msg )
 {
+struct mccdata *mccdata = INST_DATA( cl, obj );
 struct Server   *s = msg->Server;
 struct Channel      *c = NULL;
 
@@ -1075,6 +1076,7 @@ struct Channel      *c = NULL;
 				if( msg->Name ) {
 					strcpy( c->c_Name, msg->Name );
 				}
+				DoMethod( mccdata->mcc_ClassObjects[ GID_CHATLOG ], MM_CHATLOG_OPEN, s, c );
 			}
 		}
 	}
@@ -1097,6 +1099,7 @@ struct Node *node;
 
 	if( c ) {
 		DoMethod( _app(obj), MM_APPLICATION_CHANNELREMOVE, c );
+		DoMethod( mccdata->mcc_ClassObjects[ GID_CHATLOG ], MM_CHATLOG_CLOSE, c );
 		/* remove all chat log entries */
 		while( ( node = (APTR) c->c_ChatLogList.lh_Head )->ln_Succ ) {
 			DoMethod( mccdata->mcc_ClassObjects[ GID_CHATLOG ], MM_CHATLOG_ENTRYFREE, node );

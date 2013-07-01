@@ -233,6 +233,31 @@ void Dos_ShowFailure( void )
 	PrintFault( IoErr(), (CONST_STRPTR) APPLICATIONNAME );
 }
 /* \\\ */
+/* /// Dos_GetSizeHandle()
+**
+*/
+
+/*************************************************************************/
+
+ULONG Dos_GetSizeHandle( BPTR handle )
+{
+struct FileInfoBlock *fib;
+ULONG length;
+BPTR lock;
+
+	length = 0;
+	if( ( fib = AllocVec( sizeof( struct FileInfoBlock ), MEMF_ANY ) ) ) {
+		if( ( lock = DupLockFromFH( handle ) ) ) {
+			if( Examine( lock, fib ) ) {
+				length = fib->fib_Size;
+			}
+			UnLock( lock );
+		}
+		FreeVec( fib );
+	}
+	return( length );
+}
+/* \\\ */
 
 /*
 ** Icon

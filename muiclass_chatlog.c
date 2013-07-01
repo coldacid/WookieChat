@@ -28,6 +28,7 @@
 
 #include "system.h"
 #include "locale.h"
+#include "functions.h"
 #include "muiclass.h"
 #include "muiclass_application.h"
 #include "muiclass_windowsettings.h"
@@ -73,16 +74,15 @@ struct mccdata
 
 static ULONG OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
 {
-Object *objs[ GID_LAST ];
+//Object *objs[ GID_LAST ];
 
 	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
-	if( (obj = (Object *)DoSuperNew( cl, obj,
-		TAG_DONE ) ) ) {
+	if( (obj = (Object *)DoSuperNew( cl, obj, TAG_DONE ) ) ) {
 
-		struct mccdata *mccdata = INST_DATA( cl, obj );
+//		  struct mccdata *mccdata = INST_DATA( cl, obj );
 
-		CopyMem( &objs[0], &mccdata->mcc_ClassObjects[0], sizeof( mccdata->mcc_ClassObjects));
+//		  CopyMem( &objs[0], &mccdata->mcc_ClassObjects[0], sizeof( mccdata->mcc_ClassObjects));
 
 		return( (ULONG) obj );
     }
@@ -254,6 +254,11 @@ struct Server  *s;
 
 	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
+	if( !mccdata->mcc_ClassObjects[ WID_SETTINGS ] ) {
+		mccdata->mcc_ClassObjects[ WID_SETTINGS ] = (Object*) MUIGetVar( _app(obj), MA_APPLICATION_OBJECTWINDOWSETTINGS );
+	}
+
+
 	if( ( c = msg->Channel ) && ( s = msg->Server ) ) {
 		if( ( LRC( OID_LOG_ACTIVEPUBLIC  ) &&  ( c->c_Flags & CHANNELF_PUBLIC ) ) ||
 			( LRC( OID_LOG_ACTIVEPRIVATE ) && !( c->c_Flags & CHANNELF_PUBLIC ) ) ){
@@ -263,17 +268,19 @@ struct Server  *s;
 			char filename[ FILENAME_SIZEOF ];
 			#define BUFFER_SIZEOF 0x1000
 			char *buffer;
-			long len, line;
+			long len, line, maxline;
 
-			sprintf( filename, "%s_%s_cur", s->s_Name, c->c_Name );
+			sprintf( filename, "ram:%s_%s_cur", s->s_Name, c->c_Name );
 
-			if( c->c_ChatLogFile ) {
-				Close( c->c_ChatLogFile );
-			}
+			DoMethod( obj, MM_CHATLOG_CLOSE, c );
+
 			line = 0;
+			maxline = ( c->c_Flags & CHANNELF_PUBLIC ) ? LRC( OID_LOG_RECOVERPUBLIC ) : LRC( OID_LOG_RECOVERPRIVATE );
+
 			if( ( c->c_ChatLogFile = Open( (_ub_cs) filename, MODE_READWRITE ) ) ) {
-				if( ( buffer = AllocVec( BUFFER_SIZEOF, MEMF_ANY ) ) ) {
+				if( ( buffer = AllocVec( BUFFER_SIZEOF, MEMF_ANY|MEMF_CLEAR ) ) ) {
 					while( FGets( c->c_ChatLogFile, (STRPTR) buffer, BUFFER_SIZEOF - 1 ) ) {
+						VPrintf("line is '%s'\n", &buffer );
 						while( ( len = strlen( buffer ) ) > 0 ) {
 							len--;
 							if( ( buffer[ len ] == '\n' ) || ( buffer[ len ] == '\r' ) ) {
@@ -281,9 +288,9 @@ struct Server  *s;
 							} else {
 								break;
 							}
-							DoMethod( obj, MM_CHATLOG_ENTRYALLOC, c, 0, buffer );
+							DoMethod( obj, MM_CHATLOG_ENTRYALLOC, c, PEN_LOGINFO, buffer );
 							line++; /* we load all lines */
-							if( line > GRC( OID_LOG_RECOVERPUBLIC ) ) {
+							if( line > maxline ) {
 								if( ( cle = (APTR) c->c_ChatLogList.lh_Head )->cle_Succ ) {
 									/* but keep only a limited number */
 									DoMethod( obj, MM_CHATLOG_ENTRYFREE, cle );
@@ -295,8 +302,11 @@ struct Server  *s;
 				}
 				/* no close here, as we continue logging */
 			}
+		} else {
+			DoMethod( obj, MM_CHATLOG_CLOSE, c );
 		}
 	}
+	debug( "%s (%ld) %s() - Done\n", __FILE__, __LINE__, __func__ );
 	return( 0 );
 }
 /* \\\ */
@@ -315,9 +325,45 @@ struct Channel *c;
 	if( ( c = msg->Channel ) ) {
 		if( c->c_ChatLogFile ) {
 			Close( c->c_ChatLogFile );
+			c->c_ChatLogFile = NULL;
 		}
 	}
 
+	return( 0 );
+}
+/* \\\ */
+/* /// MM_Write()
+**
+*/
+
+/*************************************************************************/
+
+static ULONG MM_Write( struct IClass *cl, Object *obj, struct MP_CHATLOG_WRITE *msg )
+{
+struct mccdata *mccdata = INST_DATA( cl, obj );
+struct Channel *c;
+struct ChatLogEntry *cle;
+
+//	  debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
+
+	if( ( c = msg->Channel ) && ( cle = msg->ChatLogEntry ) ) {
+		if( c->c_ChatLogFile ) {
+			ULONG length;
+
+			FPuts( c->c_ChatLogFile, (CONST_STRPTR) cle->cle_Message );
+			FPuts( c->c_ChatLogFile, (CONST_STRPTR) "\n" );
+
+			/* check size limit */
+			if( LRC( OID_LOG_SPLIT ) ) { /* splitting enabled ? */
+				if( ( length = Dos_GetSizeHandle( c->c_ChatLogFile ) ) ) {
+					length = length	/ ( 1024 * 1024 );
+					if( length > LRC( OID_LOG_SPLITLIMIT ) ) { /* limit reached? */
+						debug("%s (%ld) %s() - Splitting log\n", __FILE__, __LINE__, __func__ );
+					}
+				}
+			}
+		}
+	}
 	return( 0 );
 }
 /* \\\ */
@@ -332,7 +378,7 @@ static ULONG MM_EntryAlloc( struct IClass *cl, Object *obj, struct MP_CHATLOG_EN
 struct Channel *c;
 struct ChatLogEntry *cle = NULL;
 
-	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
+//	  debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	if( ( c = msg->Channel ) && c->c_Succ ) {
 		if( ( cle = AllocVec( sizeof( struct ChatLogEntry ) + strlen( msg->Message ) + 1, MEMF_ANY ) ) ) {
@@ -354,7 +400,7 @@ static ULONG MM_EntryFree( struct IClass *cl, Object *obj, struct MP_CHATLOG_ENT
 {
 struct ChatLogEntry *cle;
 
-	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
+//	  debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	if( ( cle = msg->ChatLogEntry ) ) {
 		if( cle->cle_Succ && cle->cle_Pred ) {
@@ -391,6 +437,7 @@ DISPATCHER(MCC_ChatLog_Dispatcher)
 
 		case MM_CHATLOG_OPEN                 : return( MM_Open         ( cl, obj, (APTR) msg ) );
 		case MM_CHATLOG_CLOSE                : return( MM_Close        ( cl, obj, (APTR) msg ) );
+		case MM_CHATLOG_WRITE                : return( MM_Write        ( cl, obj, (APTR) msg ) );
 		case MM_CHATLOG_ENTRYALLOC           : return( MM_EntryAlloc   ( cl, obj, (APTR) msg ) );
 		case MM_CHATLOG_ENTRYFREE            : return( MM_EntryFree    ( cl, obj, (APTR) msg ) );
 

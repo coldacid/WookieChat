@@ -75,7 +75,8 @@ void Libraries_Close( void );
 ** DOS Functions
 */
 
-void Dos_ShowFailure( void );
+void  Dos_ShowFailure( void );
+ULONG Dos_GetSizeHandle( BPTR handle );
 
 /*************************************************************************/
 

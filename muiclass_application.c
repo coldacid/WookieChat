@@ -422,6 +422,8 @@ struct Server  *s;
 		if( c->c_Succ ) {
 			struct ChatLogEntry *cle;
 			cle = (APTR) DoMethod( mccdata->mcc_ClassObjects[ GID_CHATLOG ], MM_CHATLOG_ENTRYALLOC, c, msg->Pen, msg->Message );
+			DoMethod( mccdata->mcc_ClassObjects[ GID_CHATLOG ], MM_CHATLOG_WRITE, c, cle );
+
 			FORCHILD( obj, MUIA_Application_WindowList ) {
 				if( MUIGetVar( child, MA_APPLICATION_CLASSID ) == CLASSID_WINDOWCHAT ) {
 					DoMethod( child, MM_WINDOWCHAT_MESSAGERECEIVED, cle );
