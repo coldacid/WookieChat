@@ -414,6 +414,12 @@ ULONG i;
 
 	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
+	if( !LRC( OID_GUI_TABSERVER ) ) { /* only add server channel if user allows it */
+		if( msg->Channel->c_Flags & CHANNELF_SERVER ) {
+			return( 0 );
+		}
+	}
+
 	/* only add, if not already in list */
 	for( i = 0 ;  ; i++ ) {
 		cc = NULL;
@@ -623,58 +629,55 @@ struct ChatLogEntry *cle = msg->ChatLogEntry;
 
 	cc = NULL;
 	DoMethod( mccdata->mcc_ClassObjects[ GID_CHATCHANNELLIST ], MUIM_NList_GetEntry, MUIV_NList_GetEntry_Active, &cc );
-	if( cc ) {
-
-		if( cc->cc_Channel == c ) {
-		/* yes, so add to log */
-			DoMethod( mccdata->mcc_ClassObjects[ GID_CHATLOG ], MUIM_NList_InsertSingleWrap, cle, MUIV_NList_Insert_Bottom, WRAPCOL0, ALIGN_LEFT );
-			DoMethod( mccdata->mcc_ClassObjects[ GID_CHATLOG ], MM_CHATLOG_SHOWLASTLINE, FALSE );
-			/* now update the chat channel list */
-			cc->cc_Pen = PEN_CHANNELLISTTEXT;
-			DoMethod( mccdata->mcc_ClassObjects[ GID_CHATCHANNELLIST ], MUIM_NList_Redraw, MUIV_NList_Redraw_Active, cc );
-		} else { /* it is not, so handle color */
-			ULONG i;
-			for( i = 0 ; ; i++ ) {
-				cc = NULL;
-				DoMethod( mccdata->mcc_ClassObjects[ GID_CHATCHANNELLIST ], MUIM_NList_GetEntry, i, &cc );
-				if( cc ) {
-					if( cc->cc_Channel == c ) { /* is this our channel to update */
-						switch( cle->cle_Pen ) {
-							case PEN_LOGPRIVMSG:
-							case PEN_LOGACTION:
-							case PEN_LOGHIGHLIGHT:
-								cc->cc_Pen = PEN_CHANNELLISTHIGHLIGHT;
-								break;
-							default: /* no change */
-							case PEN_LOGOWNTEXT:
-								break;
-							case PEN_LOGJOIN:
-							case PEN_LOGPART:
-							case PEN_LOGQUIT:
-							case PEN_LOGKICK:
-							case PEN_LOGNICKCHANGE:
-								if( cc->cc_Pen < PEN_CHANNELLISTUSER ) {
-									cc->cc_Pen = PEN_CHANNELLISTUSER;
-								}
-								break;
-							case PEN_LOGMODE:
-							case PEN_LOGCTCP:
-							case PEN_LOGINFO:
-							case PEN_LOGNOTICE:
-							case PEN_LOGINVITE:
-							case PEN_LOGTOPIC:
-							case PEN_LOGWALLOPS:
-								if( cc->cc_Pen < PEN_CHANNELLISTSERVER ) {
-									cc->cc_Pen = PEN_CHANNELLISTSERVER;
-								}
-								break;
-						}
-						DoMethod( mccdata->mcc_ClassObjects[ GID_CHATCHANNELLIST ], MUIM_NList_Redraw, i, cc );
-						break;
+	if( cc && cc->cc_Channel == c ) {
+	/* yes, so add to log */
+		DoMethod( mccdata->mcc_ClassObjects[ GID_CHATLOG ], MUIM_NList_InsertSingleWrap, cle, MUIV_NList_Insert_Bottom, WRAPCOL0, ALIGN_LEFT );
+		DoMethod( mccdata->mcc_ClassObjects[ GID_CHATLOG ], MM_CHATLOG_SHOWLASTLINE, FALSE );
+		/* now update the chat channel list */
+		cc->cc_Pen = PEN_CHANNELLISTTEXT;
+		DoMethod( mccdata->mcc_ClassObjects[ GID_CHATCHANNELLIST ], MUIM_NList_Redraw, MUIV_NList_Redraw_Active, cc );
+	} else { /* it is not, so handle color */
+		ULONG i;
+		for( i = 0 ; ; i++ ) {
+			cc = NULL;
+			DoMethod( mccdata->mcc_ClassObjects[ GID_CHATCHANNELLIST ], MUIM_NList_GetEntry, i, &cc );
+			if( cc ) {
+				if( cc->cc_Channel == c ) { /* is this our channel to update */
+					switch( cle->cle_Pen ) {
+						case PEN_LOGHIGHLIGHT:
+							cc->cc_Pen = PEN_CHANNELLISTHIGHLIGHT;
+							break;
+						default: /* no change */
+						case PEN_LOGOWNTEXT:
+							break;
+						case PEN_LOGPRIVMSG:
+						case PEN_LOGACTION:
+						case PEN_LOGJOIN:
+						case PEN_LOGPART:
+						case PEN_LOGQUIT:
+						case PEN_LOGKICK:
+						case PEN_LOGNICKCHANGE:
+							if( cc->cc_Pen < PEN_CHANNELLISTUSER ) {
+								cc->cc_Pen = PEN_CHANNELLISTUSER;
+							}
+							break;
+						case PEN_LOGMODE:
+						case PEN_LOGCTCP:
+						case PEN_LOGINFO:
+						case PEN_LOGNOTICE:
+						case PEN_LOGINVITE:
+						case PEN_LOGTOPIC:
+						case PEN_LOGWALLOPS:
+							if( cc->cc_Pen < PEN_CHANNELLISTSERVER ) {
+								cc->cc_Pen = PEN_CHANNELLISTSERVER;
+							}
+							break;
 					}
-				} else {
+					DoMethod( mccdata->mcc_ClassObjects[ GID_CHATCHANNELLIST ], MUIM_NList_Redraw, i, cc );
 					break;
 				}
+			} else {
+				break;
 			}
 		}
 	}

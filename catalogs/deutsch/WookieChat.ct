@@ -1088,22 +1088,6 @@ MSG_MUICLASS_SETTINGSGUI_NICKLIST_INFO
 Nick list...
 ; Nick list...
 ;
-MSG_MUICLASS_SETTINGSGUI_NICKLISTWIDTH_GAD
-Breite:
-; Width:
-;
-MSG_MUICLASS_SETTINGSGUI_NICKLISTWIDTH_HELP
-/
-; /
-;
-MSG_MUICLASS_SETTINGSGUI_NICKLISTHEIGHT_GAD
-Höhe:
-; Height:
-;
-MSG_MUICLASS_SETTINGSGUI_NICKLISTHEIGHT_HELP
-/
-; /
-;
 MSG_MUICLASS_SETTINGSGUI_NICKLISTGFXINFO_GAD
 mit grafischen Zusatz.
 ; with graphical info.
@@ -1183,14 +1167,6 @@ Zeige JOIN/PART Nachrichten
 MSG_MUICLASS_SETTINGSGUI_SHOWJOINPART_HELP
 Anzeigeformat der Uhrzeit. %h für Stunden, %m für Minuten und %s für Sekunden. Das ist nützlich, um zu sehen, wann ein Ereignis stattfand.(wie Login/logout, oder sprechen).
 ; Display format of timestamps! use these codes: %h for the hour, %m for the minute, and %s for the second. This is useful to see what time an event happened (such as a user joining, or speaking).
-;
-MSG_MUICLASS_SETTINGSGUI_CHANNELVIEWNICKWIDTH_GAD
-Nickbreite:
-; Nick width:
-;
-MSG_MUICLASS_SETTINGSGUI_CHANNELVIEWNICKWIDTH_HELP
-/
-; /
 ;
 MSG_MUICLASS_SETTINGSGUI_CHANNELVIEWSPACING_GAD
 Spaltenabstand:

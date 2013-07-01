@@ -3173,54 +3173,6 @@ Nick list...
 Nick list...
 Nick list...
 ;
-MSG_MUICLASS_SETTINGSGUI_NICKLISTWIDTH_GAD
-Width:
-Breite:
-Width:
-Width:
-Width:
-Width:
-Width:
-Width:
-Width:
-Width:
-;
-MSG_MUICLASS_SETTINGSGUI_NICKLISTWIDTH_HELP
-/
-/
-/
-/
-/
-/
-/
-/
-/
-/
-;
-MSG_MUICLASS_SETTINGSGUI_NICKLISTHEIGHT_GAD
-Height:
-Höhe:
-Width:
-Width:
-Width:
-Width:
-Width:
-Width:
-Width:
-Width:
-;
-MSG_MUICLASS_SETTINGSGUI_NICKLISTHEIGHT_HELP
-/
-/
-/
-/
-/
-/
-/
-/
-/
-/
-;
 MSG_MUICLASS_SETTINGSGUI_NICKLISTGFXINFO_GAD
 with graphical info.
 mit grafischen Zusatz.
@@ -3468,30 +3420,6 @@ Lag ditt eget tidsstempel! Bruk %h for timer, %m for minutter og %s for sekunder
 Spersonalizuj swoje oznaczenia czasowe! U¿yj %h dla godzin, %m - minut i %s - sekund. Jest to u¿yteczne, je¶li chcesz wiedzieæ kiedy co¶ siê wydarzy³o (np. u¿ytkownik siê do³±czy³ lub co¶ \
 powiedzia³).
 Modifiera tidstämplingen. Använd %h för timmar, %m för minuter, och %s för sekunder. Användbart för att se när något hände (såsom när en användare kom in, eller talade).
-;
-MSG_MUICLASS_SETTINGSGUI_CHANNELVIEWNICKWIDTH_GAD
-Nick width:
-Nickbreite:
-Nick width:
-Nick width:
-Nick width:
-Nick width:
-Nick width:
-Nick width:
-Nick width:
-Nick width:
-;
-MSG_MUICLASS_SETTINGSGUI_CHANNELVIEWNICKWIDTH_HELP
-/
-/
-/
-/
-/
-/
-/
-/
-/
-/
 ;
 MSG_MUICLASS_SETTINGSGUI_CHANNELVIEWSPACING_GAD
 Tab spacing:

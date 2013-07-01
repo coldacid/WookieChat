@@ -1088,22 +1088,6 @@ MSG_MUICLASS_SETTINGSGUI_NICKLIST_INFO
 Nick list...
 ; Nick list...
 ;
-MSG_MUICLASS_SETTINGSGUI_NICKLISTWIDTH_GAD
-Width:
-; Width:
-;
-MSG_MUICLASS_SETTINGSGUI_NICKLISTWIDTH_HELP
-/
-; /
-;
-MSG_MUICLASS_SETTINGSGUI_NICKLISTHEIGHT_GAD
-Width:
-; Height:
-;
-MSG_MUICLASS_SETTINGSGUI_NICKLISTHEIGHT_HELP
-/
-; /
-;
 MSG_MUICLASS_SETTINGSGUI_NICKLISTGFXINFO_GAD
 with graphical info.
 ; with graphical info.
@@ -1183,14 +1167,6 @@ S_how JOIN/PART messages
 MSG_MUICLASS_SETTINGSGUI_SHOWJOINPART_HELP
 Spersonalizuj swoje oznaczenia czasowe! U¿yj %h dla godzin, %m - minut i %s - sekund. Jest to u¿yteczne, je¶li chcesz wiedzieæ kiedy co¶ siê wydarzy³o (np. u¿ytkownik siê do³±czy³ lub co¶ powiedzia³).
 ; Display format of timestamps! use these codes: %h for the hour, %m for the minute, and %s for the second. This is useful to see what time an event happened (such as a user joining, or speaking).
-;
-MSG_MUICLASS_SETTINGSGUI_CHANNELVIEWNICKWIDTH_GAD
-Nick width:
-; Nick width:
-;
-MSG_MUICLASS_SETTINGSGUI_CHANNELVIEWNICKWIDTH_HELP
-/
-; /
 ;
 MSG_MUICLASS_SETTINGSGUI_CHANNELVIEWSPACING_GAD
 Tab spacing:
