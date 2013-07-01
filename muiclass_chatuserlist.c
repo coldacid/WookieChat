@@ -51,6 +51,7 @@ GID_LAST
 */
 
 #define DISPLAYBUFFER_SIZEOF 0x100
+#define IMAGEBUFFER_SIZEOF   0x100
 
 struct mccdata
 {
@@ -58,6 +59,7 @@ struct mccdata
 	LONG                   mcc_MUIPen[ PEN_NUMBEROF ];
 	LONG                   mcc_Pen[ PEN_NUMBEROF ];
 	ULONG                  mcc_PenRGB[ PEN_NUMBEROF ];
+	char                   mcc_ImageBuffer[ IMAGEBUFFER_SIZEOF ];
 	char                   mcc_DisplayBuffer[ DISPLAYBUFFER_SIZEOF ];
 };
 
@@ -68,12 +70,12 @@ struct mccdata
 
 /*************************************************************************/
 
-static ULONG OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
+static IPTR OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
 {
 
 	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
-	return( (IPTR) DoSuperNew( cl, obj, TAG_DONE ) );
+	return( (IPTR) DoSuperNew( cl, obj, MUIA_NList_Format, ",", TAG_DONE ) );
 }
 /* \\\ */
 /* /// OM_Setup()
@@ -123,32 +125,36 @@ static ULONG OM_Display( struct IClass *cl, Object *obj, struct MUIP_NList_Displ
 struct mccdata *mccdata = INST_DATA( cl, obj );
 char *nick   =  ((struct ChatNick *) msg->entry)->cn_ChatNickEntry->cne_Nick;
 char *status = NULL;
+char statusstr[2];
 
-	*msg->strings = (STRPTR) mccdata->mcc_DisplayBuffer;
-
-	if( ( LRC( OID_GUI_NICKLISTGFXINFO ) ) ) {
-		switch( *nick++ ) {
-			case '@':
-				status = "ops";
-				break;
-			case '%':
-				status = "half_ops";
-				break;
-			case '+':
-				status = "voice";
-				break;
-			default:
-				break;
-		}
-		if( status ) {
-			sprintf( mccdata->mcc_DisplayBuffer, "\033I[5:PROGDIR:smilies/nicklist/%s] \033P[%ld]%s", status, mccdata->mcc_Pen[ PEN_USERLISTTEXT ], nick );
-		} else {
+	statusstr[1] = '\0';
+	switch( ( statusstr[0] = *nick++ ) ) {
+		case '@':
+			status = "ops";
+			break;
+		case '%':
+			status = "half_ops";
+			break;
+		case '+':
+			status = "voice";
+			break;
+		default:
 			nick--;
-			sprintf( mccdata->mcc_DisplayBuffer, "    \033P[%ld]%s", mccdata->mcc_Pen[ PEN_USERLISTTEXT ], nick );
-		}
-	} else {
-		sprintf( mccdata->mcc_DisplayBuffer, "\033P[%ld]%s", mccdata->mcc_Pen[ PEN_USERLISTTEXT ], nick );
+			statusstr[0] = '\0';
+			break;
 	}
+	mccdata->mcc_ImageBuffer[0] = '\0';
+	if( status ) {
+		if( ( LRC( OID_GUI_NICKLISTGFXINFO ) ) ) {
+			sprintf( mccdata->mcc_ImageBuffer, "\033I[5:PROGDIR:smilies/nicklist/%s]", status );
+		} else {
+			sprintf( mccdata->mcc_ImageBuffer, "\033P[%ld]%s", mccdata->mcc_Pen[ PEN_USERLISTTEXT ], statusstr );
+		}
+	}
+	sprintf( mccdata->mcc_DisplayBuffer, "\033P[%ld]%s", mccdata->mcc_Pen[ PEN_USERLISTTEXT ], nick );
+	msg->strings[0] = (STRPTR) mccdata->mcc_ImageBuffer;
+	msg->strings[1] = (STRPTR) mccdata->mcc_DisplayBuffer;
+
 	return( 0 );
 }
 /* \\\ */
