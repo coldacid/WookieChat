@@ -128,6 +128,12 @@ struct  MUIP_NList_Sort            { ULONG MethodID; };
 #undef  MUIA_NList_Title
 #define MUIA_NList_Title MUIA_List_Title
 
+#undef  MUIM_NList_TestPos
+#define MUIM_NList_TestPos MUIM_List_TestPos
+
+#undef  MUI_NList_TestPos_Result
+#define MUI_NList_TestPos_Result MUI_List_TestPos_Result
+
 #undef  MUIM_NList_Clear
 #define MUIM_NList_Clear MUIM_List_Clear
 

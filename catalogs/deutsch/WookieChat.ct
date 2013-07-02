@@ -135,10 +135,6 @@ MSG_MUICLASS_WINDOWCHAT_MODELIMIT_HELP
 Gegenwärtiges Benutzerlimit.
 ; Current user limit.
 ;
-MSG_MUICLASS_WINDOWCHAT_NICKLIST_HELP
-Nutzermodusinformation:\n@, Grün = KanalOperator\n%, Blau = HalbOperator\n+, Gelb = Sprachberechtigte Nutzer
-; Usermode Information:\n@, Green  = Channel Operators\n%, Blue   = HalfOps\n+, Yellow  = Voiced Users
-;
 MSG_MUICLASS_WINDOWCHAT_MESSAGE_HELP
 Geben sie ihre Nachricht oder ihr Kommando hier ein!
 ; Type your message here!
@@ -1984,4 +1980,78 @@ _Beenden
 MSG_MUICLASS_WINDOWQUICKSETUP_QUIT_HELP
 /
 ; /
+;
+; MUICLASS_CHATUSERLIST
+;
+MSG_MUICLASS_CHATUSERLIST_HELP
+Nutzermodusinformation:\n@, Grün = KanalOperator\n%, Blau = HalbOperator\n+, Gelb = Sprachberechtigte Nutzer
+; Usermode Information:\n@, Green  = Channel Operators\n%, Blue   = HalfOps\n+, Yellow  = Voiced Users
+;
+MSG_MUICLASS_CHATUSERLIST_CMENU
+Nutzerlistenoptionen
+; User List Options
+;
+MSG_MUICLASS_CHATUSERLIST_WHOIS_CMENU
+WhoIs
+; WhoIs
+;
+MSG_MUICLASS_CHATUSERLIST_OPENQUERY_CMENU
+Open Query
+; Open Query
+;
+MSG_MUICLASS_CHATUSERLIST_OPENGLOBALQUERY_CMENU
+Open Global Query
+; Open Global Query
+;
+MSG_MUICLASS_CHATUSERLIST_CTCP_CMENU
+CTCP
+; CTCP
+;
+MSG_MUICLASS_CHATUSERLIST_CTCPPING_CMENU
+Ping
+; Ping
+;
+MSG_MUICLASS_CHATUSERLIST_CTCPVERSION_CMENU
+Version
+; Version
+;
+MSG_MUICLASS_CHATUSERLIST_CTCPTIME_CMENU
+Zeit
+; Time
+;
+MSG_MUICLASS_CHATUSERLIST_CONTROL_CMENU
+Kontrolle
+; Control
+;
+MSG_MUICLASS_CHATUSERLIST_CONTROLOP_CMENU
+Op
+; Op
+;
+MSG_MUICLASS_CHATUSERLIST_CONTROLDEOP_CMENU
+DeOp
+; DeOp
+;
+MSG_MUICLASS_CHATUSERLIST_CONTROLHALFOP_CMENU
+HalfOp
+; HalfOp
+;
+MSG_MUICLASS_CHATUSERLIST_CONTROLDEHALFOP_CMENU
+DeHalfOp
+; DeHalfOp
+;
+MSG_MUICLASS_CHATUSERLIST_CONTROLVOICE_CMENU
+Voice
+; Voice
+;
+MSG_MUICLASS_CHATUSERLIST_CONTROLDEVOICE_CMENU
+DeVoice
+; DeVoice
+;
+MSG_MUICLASS_CHATUSERLIST_CONTROLKICK_CMENU
+Rauswerfen
+; Kick
+;
+MSG_MUICLASS_CHATUSERLIST_CONTROLBAN_CMENU
+Verbannen
+; Ban
 ;

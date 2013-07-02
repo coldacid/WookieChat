@@ -190,7 +190,7 @@ Object *objs[ GID_LAST ];
 						Child, HGroup,
 							Child, NListviewObject, MUIA_NListview_NList, objs[ GID_CHATLOG ] = ChatLogObject, End, End,
 							Child, VGroup, MUIA_HorizWeight, 20,
-								Child, NListviewObject, MUIA_NListview_NList, objs[ GID_CHATUSERLIST      ] = ChatUserListObject, End, MUIA_ShortHelp, LGS( MSG_MUICLASS_WINDOWCHAT_NICKLIST_HELP ), End,
+								Child, NListviewObject, MUIA_NListview_NList, objs[ GID_CHATUSERLIST      ] = ChatUserListObject, End, End,
 								Child, NListviewObject, MUIA_NListview_NList, objs[ GID_CHATCHANNELLIST   ] = ChatChannelListObject, End, End,
 							End,
 						 End,
@@ -223,6 +223,12 @@ Object *objs[ GID_LAST ];
 					MA_MESSAGEINPUT_OBJECTCHATCHANNELLIST, mccdata->mcc_ClassObjects[ GID_CHATCHANNELLIST ],
 					MA_MESSAGEINPUT_OBJECTNETWORK        , mccdata->mcc_ClassObjects[ GID_NETWORK      ],
 					MA_MESSAGEINPUT_OBJECTSETTINGS       , mccdata->mcc_ClassObjects[ WID_SETTINGS     ],
+					TAG_DONE );
+
+		SetAttrs( mccdata->mcc_ClassObjects[ GID_CHATUSERLIST ],
+					MA_CHATUSERLIST_OBJECTCHATCHANNELLIST, mccdata->mcc_ClassObjects[ GID_CHATCHANNELLIST ],
+					MA_CHATUSERLIST_OBJECTNETWORK        , mccdata->mcc_ClassObjects[ GID_NETWORK      ],
+					MA_CHATUSERLIST_OBJECTSETTINGS       , mccdata->mcc_ClassObjects[ WID_SETTINGS     ],
 					TAG_DONE );
 
 

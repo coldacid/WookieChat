@@ -46,9 +46,8 @@ static ULONG OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
 
 	return( (ULONG) (obj = (Object *) DoSuperNew( cl, obj,
 													MUIA_NList_Title         , TRUE,
-													MUIA_CycleChain          , 1,
 													MUIA_NList_Format        , "BAR,",
-													MUIA_ObjectID, 4545454,
+													MUIA_CycleChain          , 1,
 													TAG_DONE ) ) );
 }
 /* \\\ */

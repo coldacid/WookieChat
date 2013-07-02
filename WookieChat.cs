@@ -394,18 +394,6 @@ Aktuell grense på brukere.
 Obecny limit u¿ytkowników.
 Nuvarande max användarantal.
 ;
-MSG_MUICLASS_WINDOWCHAT_NICKLIST_HELP
-Usermode Information:\n@, Green  = Channel Operators\n%, Blue   = HalfOps\n+, Yellow  = Voiced Users
-Nutzermodusinformation:\n@, Grün = KanalOperator\n%, Blau = HalbOperator\n+, Gelb = Sprachberechtigte Nutzer
-Usermodes Information:\n@, Green  = Channel Operators\n%, Blue   = HalfOps\n+, Yellow  = Voiced Users
-Usermodes Information:\n@, Green  = Channel Operators\n%, Blue   = HalfOps\n+, Yellow  = Voiced Users
-Usermodes Information:\n@, Green  = Channel Operators\n%, Blue   = HalfOps\n+, Yellow  = Voiced Users
-Usermodes Information:\n@, Green  = Channel Operators\n%, Blue   = HalfOps\n+, Yellow  = Voiced Users
-Usermodes Information:\n@, Green  = Channel Operators\n%, Blue   = HalfOps\n+, Yellow  = Voiced Users
-Usermodes Information:\n@, Green  = Channel Operators\n%, Blue   = HalfOps\n+, Yellow  = Voiced Users
-Usermodes Information:\n@, Green  = Channel Operators\n%, Blue   = HalfOps\n+, Yellow  = Voiced Users
-Usermodes Information:\n@, Green  = Channel Operators\n%, Blue   = HalfOps\n+, Yellow  = Voiced Users
-;
 MSG_MUICLASS_WINDOWCHAT_MESSAGE_HELP
 Type your message here!
 Geben sie ihre Nachricht oder ihr Kommando hier ein!
@@ -5782,4 +5770,222 @@ MSG_MUICLASS_WINDOWQUICKSETUP_QUIT_HELP
 /
 /
 ;
-
+; MUICLASS_CHATUSERLIST
+;
+MSG_MUICLASS_CHATUSERLIST_HELP
+Usermode Information:\n@, Green  = Channel Operators\n%, Blue   = HalfOps\n+, Yellow  = Voiced Users
+Nutzermodusinformation:\n@, Grün = KanalOperator\n%, Blau = HalbOperator\n+, Gelb = Sprachberechtigte Nutzer
+Usermodes Information:\n@, Green  = Channel Operators\n%, Blue   = HalfOps\n+, Yellow  = Voiced Users
+Usermodes Information:\n@, Green  = Channel Operators\n%, Blue   = HalfOps\n+, Yellow  = Voiced Users
+Usermodes Information:\n@, Green  = Channel Operators\n%, Blue   = HalfOps\n+, Yellow  = Voiced Users
+Usermodes Information:\n@, Green  = Channel Operators\n%, Blue   = HalfOps\n+, Yellow  = Voiced Users
+Usermodes Information:\n@, Green  = Channel Operators\n%, Blue   = HalfOps\n+, Yellow  = Voiced Users
+Usermodes Information:\n@, Green  = Channel Operators\n%, Blue   = HalfOps\n+, Yellow  = Voiced Users
+Usermodes Information:\n@, Green  = Channel Operators\n%, Blue   = HalfOps\n+, Yellow  = Voiced Users
+Usermodes Information:\n@, Green  = Channel Operators\n%, Blue   = HalfOps\n+, Yellow  = Voiced Users
+;
+MSG_MUICLASS_CHATUSERLIST_CMENU
+User List Options
+Nutzerlistenoptionen
+User List Options
+User List Options
+User List Options
+User List Options
+User List Options
+User List Options
+User List Options
+User List Options
+;
+MSG_MUICLASS_CHATUSERLIST_WHOIS_CMENU
+WhoIs
+WhoIs
+WhoIs
+WhoIs
+WhoIs
+WhoIs
+WhoIs
+WhoIs
+WhoIs
+WhoIs
+;
+MSG_MUICLASS_CHATUSERLIST_OPENQUERY_CMENU
+Open Query
+Open Query
+Open Query
+Open Query
+Open Query
+Open Query
+Open Query
+Open Query
+Open Query
+Open Query
+;
+MSG_MUICLASS_CHATUSERLIST_OPENGLOBALQUERY_CMENU
+Open Global Query
+Open Global Query
+Open Global Query
+Open Global Query
+Open Global Query
+Open Global Query
+Open Global Query
+Open Global Query
+Open Global Query
+Open Global Query
+;
+MSG_MUICLASS_CHATUSERLIST_CTCP_CMENU
+CTCP
+CTCP
+CTCP
+CTCP
+CTCP
+CTCP
+CTCP
+CTCP
+CTCP
+CTCP
+;
+MSG_MUICLASS_CHATUSERLIST_CTCPPING_CMENU
+Ping
+Ping
+Ping
+Ping
+Ping
+Ping
+Ping
+Ping
+Ping
+Ping
+;
+MSG_MUICLASS_CHATUSERLIST_CTCPVERSION_CMENU
+Version
+Version
+Version
+Version
+Version
+Version
+Version
+Version
+Version
+Version
+;
+MSG_MUICLASS_CHATUSERLIST_CTCPTIME_CMENU
+Time
+Zeit
+Time
+Time
+Time
+Time
+Time
+Time
+Time
+Time
+;
+MSG_MUICLASS_CHATUSERLIST_CONTROL_CMENU
+Control
+Kontrolle
+Control
+Control
+Control
+Control
+Control
+Control
+Control
+Control
+;
+MSG_MUICLASS_CHATUSERLIST_CONTROLOP_CMENU
+Op
+Op
+Op
+Op
+Op
+Op
+Op
+Op
+Op
+Op
+;
+MSG_MUICLASS_CHATUSERLIST_CONTROLDEOP_CMENU
+DeOp
+DeOp
+DeOp
+DeOp
+DeOp
+DeOp
+DeOp
+DeOp
+DeOp
+DeOp
+;
+MSG_MUICLASS_CHATUSERLIST_CONTROLHALFOP_CMENU
+HalfOp
+HalfOp
+HalfOp
+HalfOp
+HalfOp
+HalfOp
+HalfOp
+HalfOp
+HalfOp
+HalfOp
+;
+MSG_MUICLASS_CHATUSERLIST_CONTROLDEHALFOP_CMENU
+DeHalfOp
+DeHalfOp
+DeHalfOp
+DeHalfOp
+DeHalfOp
+DeHalfOp
+DeHalfOp
+DeHalfOp
+DeHalfOp
+DeHalfOp
+;
+MSG_MUICLASS_CHATUSERLIST_CONTROLVOICE_CMENU
+Voice
+Voice
+Voice
+Voice
+Voice
+Voice
+Voice
+Voice
+Voice
+Voice
+;
+MSG_MUICLASS_CHATUSERLIST_CONTROLDEVOICE_CMENU
+DeVoice
+DeVoice
+DeVoice
+DeVoice
+DeVoice
+DeVoice
+DeVoice
+DeVoice
+DeVoice
+DeVoice
+;
+MSG_MUICLASS_CHATUSERLIST_CONTROLKICK_CMENU
+Kick
+Rauswerfen
+Kick
+Kick
+Kick
+Kick
+Kick
+Kick
+Kick
+Kick
+;
+MSG_MUICLASS_CHATUSERLIST_CONTROLBAN_CMENU
+Ban
+Verbannen
+Ban
+Ban
+Ban
+Ban
+Ban
+Ban
+Ban
+Ban
+;
+ 

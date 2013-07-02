@@ -27,10 +27,12 @@
 
 #include "system.h"
 #include "locale.h"
+#include "functions.h"
 #include "muiclass.h"
 #include "muiclass_application.h"
 #include "muiclass_network.h"
 #include "muiclass_chatuserlist.h"
+#include "muiclass_chatchannellist.h"
 #include "muiclass_windowsettings.h"
 #include "muiclass_settingscolor.h"
 
@@ -42,8 +44,26 @@
 
 enum
 {
-WID_SETTINGS = 0,
-GID_LAST
+MID_CONTEXTMENU = 0,
+WID_SETTINGS,
+GID_CHATCHANNELLIST,
+GID_NETWORK,
+GID_LAST,
+/* these need no storage, so defined after GID_LAST */
+GID_CMENU_WHOIS,
+GID_CMENU_OPENQUERY,
+GID_CMENU_OPENGLOBALQUERY,
+GID_CMENU_CTCPPING,
+GID_CMENU_CTCPVERSION,
+GID_CMENU_CTCPTIME,
+GID_CMENU_CONTROLOP,
+GID_CMENU_CONTROLDEOP,
+GID_CMENU_CONTROLHALFOP,
+GID_CMENU_CONTROLDEHALFOP,
+GID_CMENU_CONTROLVOICE,
+GID_CMENU_CONTROLDEVOICE,
+GID_CMENU_CONTROLKICK,
+GID_CMENU_CONTROLBAN,
 };
 
 /*
@@ -52,7 +72,7 @@ GID_LAST
 
 #define DISPLAYBUFFER_SIZEOF 0x100
 #define IMAGEBUFFER_SIZEOF   0x100
-
+#define COMPOSEBUFFER_SIZEOF 0x100
 struct mccdata
 {
 	Object                *mcc_ClassObjects[ GID_LAST ];
@@ -61,6 +81,8 @@ struct mccdata
 	ULONG                  mcc_PenRGB[ PEN_NUMBEROF ];
 	char                   mcc_ImageBuffer[ IMAGEBUFFER_SIZEOF ];
 	char                   mcc_DisplayBuffer[ DISPLAYBUFFER_SIZEOF ];
+	struct ChatNick       *mcc_SelectedContextEntry;
+	char                   mcc_ComposeBuffer[ COMPOSEBUFFER_SIZEOF ];
 };
 
 
@@ -75,9 +97,58 @@ static IPTR OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
 
 	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
-	return( (IPTR) DoSuperNew( cl, obj, MUIA_NList_Format, ",", TAG_DONE ) );
+	return( (IPTR) DoSuperNew( cl, obj, MUIA_NList_Format, ",",
+				MUIA_ShortHelp    , LGS( MSG_MUICLASS_CHATUSERLIST_HELP ),
+				MUIA_ContextMenu  , 1,
+
+#if 0
+				MUIA_ContextMenu,
+						MenustripObject,
+							Child, MenuObject, MUIA_Menu_Title, LGS( MSG_MUICLASS_CHATUSERLIST_CMENU ),
+								Child, MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MUICLASS_CHATUSERLIST_WHOIS_CMENU ), MUIA_UserData, GID_CMENU_WHOIS, End,
+								Child, MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MUICLASS_CHATUSERLIST_OPENQUERY_CMENU ), MUIA_UserData, GID_CMENU_OPENQUERY, End,
+								Child, MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MUICLASS_CHATUSERLIST_OPENGLOBALQUERY_CMENU ), MUIA_UserData, GID_CMENU_OPENGLOBALQUERY, End,
+								Child, MenuObject, MUIA_Menu_Title, LGS( MSG_MUICLASS_CHATUSERLIST_CTCP_CMENU ),
+									Child, MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MUICLASS_CHATUSERLIST_CTCPPING_CMENU ), MUIA_UserData, GID_CMENU_CTCPPING, End,
+									Child, MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MUICLASS_CHATUSERLIST_CTCPVERSION_CMENU ), MUIA_UserData, GID_CMENU_CTCPVERSION, End,
+									Child, MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MUICLASS_CHATUSERLIST_CTCPTIME_CMENU ), MUIA_UserData, GID_CMENU_CTCPTIME, End,
+								End,
+								Child, MenuObject, MUIA_Menu_Title, LGS( MSG_MUICLASS_CHATUSERLIST_CONTROL_CMENU ),
+									Child, MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MUICLASS_CHATUSERLIST_CONTROLOP_CMENU ), MUIA_UserData, GID_CMENU_CONTROLOP, End,
+									Child, MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MUICLASS_CHATUSERLIST_CONTROLDEOP_CMENU ), MUIA_UserData, GID_CMENU_CONTROLDEOP, End,
+									Child, MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MUICLASS_CHATUSERLIST_CONTROLHALFOP_CMENU ), MUIA_UserData, GID_CMENU_CONTROLHALFOP, End,
+									Child, MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MUICLASS_CHATUSERLIST_CONTROLDEHALFOP_CMENU ), MUIA_UserData, GID_CMENU_CONTROLDEHALFOP, End,
+									Child, MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MUICLASS_CHATUSERLIST_CONTROLVOICE_CMENU ), MUIA_UserData, GID_CMENU_CONTROLVOICE, End,
+									Child, MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MUICLASS_CHATUSERLIST_CONTROLDEVOICE_CMENU ), MUIA_UserData, GID_CMENU_CONTROLDEVOICE, End,
+									Child, MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MUICLASS_CHATUSERLIST_CONTROLKICK_CMENU ), MUIA_UserData, GID_CMENU_CONTROLKICK, End,
+									Child, MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MUICLASS_CHATUSERLIST_CONTROLBAN_CMENU ), MUIA_UserData, GID_CMENU_CONTROLBAN, End,
+								End,
+							End,
+						End,
+#endif
+		TAG_DONE ) );
 }
 /* \\\ */
+/* /// OM_Dispose()
+**
+*/
+
+/*************************************************************************/
+
+static ULONG OM_Dispose( struct IClass *cl, Object *obj, Msg *msg )
+{
+struct mccdata *mccdata = INST_DATA( cl, obj );
+
+	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
+
+	if( mccdata->mcc_ClassObjects[ MID_CONTEXTMENU ] ) {
+		MUI_DisposeObject( mccdata->mcc_ClassObjects[ MID_CONTEXTMENU ] );
+	}
+
+	return( DoSuperMethodA( cl, obj,(Msg) msg ) );
+}
+/* \\\ */
+
 /* /// OM_Setup()
 **
 */
@@ -86,11 +157,8 @@ static IPTR OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
 
 static ULONG OM_Setup( struct IClass *cl, Object *obj, Msg *msg )
 {
-struct mccdata *mccdata = INST_DATA( cl, obj );
 
 	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
-
-	mccdata->mcc_ClassObjects[ WID_SETTINGS ] = (Object*) MUIGetVar( _app(obj), MA_APPLICATION_OBJECTWINDOWSETTINGS );
 
 	DoMethod( obj, MM_CHATUSERLIST_PENSOBTAIN  );
 
@@ -111,6 +179,160 @@ static ULONG OM_Cleanup( struct IClass *cl, Object *obj, Msg *msg )
 	DoMethod( obj, MM_CHATUSERLIST_PENSRELEASE );
 
 	return( DoSuperMethodA( cl, obj,(Msg) msg ) );
+}
+/* \\\ */
+/* /// OM_Set()
+**
+*/
+
+/*************************************************************************/
+
+static ULONG OM_Set( struct IClass *cl, Object *obj, struct opSet *msg )
+{
+struct mccdata *mccdata = INST_DATA( cl, obj );
+struct TagItem *tag;
+struct TagItem *tstate;
+
+	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
+
+	for( tstate = msg->ops_AttrList ; ( tag = NextTagItem( &tstate ) ) ; ) {
+		ULONG tidata = tag->ti_Data;
+        switch( tag->ti_Tag ) {
+			case MA_CHATUSERLIST_OBJECTCHATCHANNELLIST:
+				mccdata->mcc_ClassObjects[ GID_CHATCHANNELLIST ] = (APTR) tidata;
+				break;
+			case MA_CHATUSERLIST_OBJECTNETWORK:
+				mccdata->mcc_ClassObjects[ GID_NETWORK ] = (APTR) tidata;
+				break;
+			case MA_CHATUSERLIST_OBJECTSETTINGS:
+				mccdata->mcc_ClassObjects[ WID_SETTINGS ] = (APTR) tidata;
+				break;
+		}
+    }
+	return( DoSuperMethodA( cl, obj,(Msg) msg ) );
+}
+/* \\\ */
+
+/* /// MM_ContextMenuBuild()
+**
+*/
+
+/*************************************************************************/
+
+static ULONG MM_ContextMenuBuild( struct IClass *cl, Object *obj, struct MUIP_ContextMenuBuild *msg UNUSED )
+{
+struct mccdata *mccdata = INST_DATA( cl, obj );
+struct MUI_NList_TestPos_Result res;
+
+	if( mccdata->mcc_ClassObjects[ MID_CONTEXTMENU ] ) {
+		MUI_DisposeObject( mccdata->mcc_ClassObjects[ MID_CONTEXTMENU ] );
+		mccdata->mcc_ClassObjects[ MID_CONTEXTMENU ] = NULL;
+	}
+	mccdata->mcc_SelectedContextEntry = NULL;
+	DoMethod( obj, MUIM_NList_TestPos, msg->mx, msg->my, &res );
+	if( res.entry != -1 ) {
+		DoMethod( obj, MUIM_NList_GetEntry, res.entry, &mccdata->mcc_SelectedContextEntry );
+		if( mccdata->mcc_SelectedContextEntry ) { /* paranoia */
+
+/* now build the tree */
+			if( ( mccdata->mcc_ClassObjects[ MID_CONTEXTMENU ] = MenustripObject,
+							Child, MenuObject, MUIA_Menu_Title, LGS( MSG_MUICLASS_CHATUSERLIST_CMENU ),
+								Child, MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MUICLASS_CHATUSERLIST_WHOIS_CMENU ), MUIA_UserData, GID_CMENU_WHOIS, End,
+								Child, MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MUICLASS_CHATUSERLIST_OPENQUERY_CMENU ), MUIA_UserData, GID_CMENU_OPENQUERY, End,
+								Child, MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MUICLASS_CHATUSERLIST_OPENGLOBALQUERY_CMENU ), MUIA_UserData, GID_CMENU_OPENGLOBALQUERY, End,
+								Child, MenuObject, MUIA_Menu_Title, LGS( MSG_MUICLASS_CHATUSERLIST_CTCP_CMENU ),
+									Child, MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MUICLASS_CHATUSERLIST_CTCPPING_CMENU ), MUIA_UserData, GID_CMENU_CTCPPING, End,
+									Child, MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MUICLASS_CHATUSERLIST_CTCPVERSION_CMENU ), MUIA_UserData, GID_CMENU_CTCPVERSION, End,
+									Child, MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MUICLASS_CHATUSERLIST_CTCPTIME_CMENU ), MUIA_UserData, GID_CMENU_CTCPTIME, End,
+								End,
+								Child, MenuObject, MUIA_Menu_Title, LGS( MSG_MUICLASS_CHATUSERLIST_CONTROL_CMENU ),
+									Child, MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MUICLASS_CHATUSERLIST_CONTROLOP_CMENU ), MUIA_UserData, GID_CMENU_CONTROLOP, End,
+									Child, MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MUICLASS_CHATUSERLIST_CONTROLDEOP_CMENU ), MUIA_UserData, GID_CMENU_CONTROLDEOP, End,
+									Child, MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MUICLASS_CHATUSERLIST_CONTROLHALFOP_CMENU ), MUIA_UserData, GID_CMENU_CONTROLHALFOP, End,
+									Child, MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MUICLASS_CHATUSERLIST_CONTROLDEHALFOP_CMENU ), MUIA_UserData, GID_CMENU_CONTROLDEHALFOP, End,
+									Child, MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MUICLASS_CHATUSERLIST_CONTROLVOICE_CMENU ), MUIA_UserData, GID_CMENU_CONTROLVOICE, End,
+									Child, MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MUICLASS_CHATUSERLIST_CONTROLDEVOICE_CMENU ), MUIA_UserData, GID_CMENU_CONTROLDEVOICE, End,
+									Child, MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MUICLASS_CHATUSERLIST_CONTROLKICK_CMENU ), MUIA_UserData, GID_CMENU_CONTROLKICK, End,
+									Child, MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MUICLASS_CHATUSERLIST_CONTROLBAN_CMENU ), MUIA_UserData, GID_CMENU_CONTROLBAN, End,
+								End,
+							End,
+						End ) ) {
+
+			}
+		}
+	}
+	return( (ULONG) mccdata->mcc_ClassObjects[ MID_CONTEXTMENU ] );
+}
+/* \\\ */
+/* /// MM_ContextMenuSelect()
+*/
+
+/*************************************************************************/
+
+static ULONG MM_ContextMenuSelect( struct IClass *cl, Object *obj, struct  MUIP_ContextMenuChoice *msg )
+{
+struct mccdata *mccdata = INST_DATA( cl, obj );
+struct ChatChannel   *cc;
+struct ChatNick      *cn;
+struct ChatNickEntry *cne;
+struct Channel       *c;
+struct Server        *s;
+
+	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
+
+	DoMethod( mccdata->mcc_ClassObjects[ GID_CHATCHANNELLIST ], MUIM_NList_GetEntry, MUIV_NList_GetEntry_Active, &cc );
+
+	if( cc && ( c = cc->cc_Channel ) &&  ( cn = mccdata->mcc_SelectedContextEntry ) && (cne = cn->cn_ChatNickEntry) ) { /* paranoia */
+		/* pointer magic */
+		s = (APTR) ( ( (IPTR) List_GetListFromNode( c ) ) - (IPTR) offsetof( struct Server, s_ChannelList ) );
+
+		mccdata->mcc_ComposeBuffer[0] = '\0'; /* send detection marker */
+		if( msg->item ) {
+			switch( MUIGetVar( msg->item, MUIA_UserData ) ) {
+				case GID_CMENU_WHOIS:
+					sprintf( mccdata->mcc_ComposeBuffer, "/WHOIS %s", cne->cne_Nick );
+					break;
+				case GID_CMENU_CTCPPING:
+					sprintf( mccdata->mcc_ComposeBuffer, "/PRIVMSG %s :\001PING\001", cne->cne_Nick );
+					break;
+				case GID_CMENU_CTCPVERSION:
+					sprintf( mccdata->mcc_ComposeBuffer, "/PRIVMSG %s :\001VERSION\001", cne->cne_Nick );
+					break;
+				case GID_CMENU_CTCPTIME:
+					sprintf( mccdata->mcc_ComposeBuffer, "/PRIVMSG %s :\001TIME\001", cne->cne_Nick );
+					break;
+				case GID_CMENU_CONTROLOP:
+					sprintf( mccdata->mcc_ComposeBuffer, "/MODE %s +o %s", c->c_Name, cne->cne_Nick );
+					break;
+				case GID_CMENU_CONTROLDEOP:
+					sprintf( mccdata->mcc_ComposeBuffer, "/MODE %s -o %s", c->c_Name, cne->cne_Nick );
+					break;
+				case GID_CMENU_CONTROLHALFOP:
+					sprintf( mccdata->mcc_ComposeBuffer, "/MODE %s +h %s", c->c_Name, cne->cne_Nick );
+					break;
+				case GID_CMENU_CONTROLDEHALFOP:
+					sprintf( mccdata->mcc_ComposeBuffer, "/MODE %s -h %s", c->c_Name, cne->cne_Nick );
+					break;
+				case GID_CMENU_CONTROLVOICE:
+					sprintf( mccdata->mcc_ComposeBuffer, "/MODE %s +v %s", c->c_Name, cne->cne_Nick );
+					break;
+				case GID_CMENU_CONTROLDEVOICE:
+					sprintf( mccdata->mcc_ComposeBuffer, "/MODE %s -v %s", c->c_Name, cne->cne_Nick );
+					break;
+				case GID_CMENU_CONTROLBAN:
+					sprintf( mccdata->mcc_ComposeBuffer, "/MODE %s +b %s", c->c_Name, cne->cne_Nick );
+					break;
+				case GID_CMENU_CONTROLKICK:
+					sprintf( mccdata->mcc_ComposeBuffer, "/KICK %s %s :%s", c->c_Name, cne->cne_Nick, LRC( OID_GEN_MSGKICK ) );
+					break;
+			}
+		}
+		/* send command if needed */
+		if( mccdata->mcc_ComposeBuffer[0] ) {
+			DoMethod( mccdata->mcc_ClassObjects[ GID_NETWORK ], MM_NETWORK_SERVERMESSAGESENDMSG, s, NULL, mccdata->mcc_ComposeBuffer );
+		}
+	}
+	return( 0 );
 }
 /* \\\ */
 
@@ -291,16 +513,22 @@ DISPATCHER(MCC_ChatUserList_Dispatcher)
 {
     switch (msg->MethodID)
     {
-		case OM_NEW                      : return( OM_New       ( cl, obj, (APTR) msg ) );
-		case MUIM_Setup                  : return( OM_Setup      ( cl, obj, (APTR) msg ) );
-		case MUIM_Cleanup                : return( OM_Cleanup    ( cl, obj, (APTR) msg ) );
-		case MUIM_NList_Display          : return( OM_Display   ( cl, obj, (APTR) msg ) );
-		case MUIM_NList_Destruct         : return( OM_Destruct  ( cl, obj, (APTR) msg ) );
-		case MUIM_NList_Construct        : return( OM_Construct ( cl, obj, (APTR) msg ) );
-		case MUIM_NList_Compare          : return( OM_Compare   ( cl, obj, (APTR) msg ) );
-		case MM_CHATUSERLIST_PENSOBTAIN  : return( MM_PensObtain ( cl, obj, (APTR) msg ) );
-		case MM_CHATUSERLIST_PENSRELEASE : return( MM_PensRelease( cl, obj, (APTR) msg ) );
-		case MM_CHATUSERLIST_PENSUPDATE  : return( MM_PensUpdate ( cl, obj, (APTR) msg ) );
+		case OM_NEW                      : return( OM_New                ( cl, obj, (APTR) msg ) );
+		case OM_DISPOSE                  : return( OM_Dispose            ( cl, obj, (APTR) msg ) );
+		case OM_SET                      : return( OM_Set                ( cl, obj, (APTR) msg ) );
+		case MUIM_Setup                  : return( OM_Setup              ( cl, obj, (APTR) msg ) );
+		case MUIM_Cleanup                : return( OM_Cleanup            ( cl, obj, (APTR) msg ) );
+		case MUIM_ContextMenuChoice      : return( MM_ContextMenuSelect  ( cl, obj, (APTR) msg ) );
+		case MUIM_ContextMenuBuild       : return( MM_ContextMenuBuild   ( cl, obj, (APTR) msg ) );
+
+		case MUIM_NList_Display          : return( OM_Display            ( cl, obj, (APTR) msg ) );
+		case MUIM_NList_Destruct         : return( OM_Destruct           ( cl, obj, (APTR) msg ) );
+		case MUIM_NList_Construct        : return( OM_Construct          ( cl, obj, (APTR) msg ) );
+		case MUIM_NList_Compare          : return( OM_Compare            ( cl, obj, (APTR) msg ) );
+
+		case MM_CHATUSERLIST_PENSOBTAIN  : return( MM_PensObtain         ( cl, obj, (APTR) msg ) );
+		case MM_CHATUSERLIST_PENSRELEASE : return( MM_PensRelease        ( cl, obj, (APTR) msg ) );
+		case MM_CHATUSERLIST_PENSUPDATE  : return( MM_PensUpdate         ( cl, obj, (APTR) msg ) );
     }
 	return( DoSuperMethodA( cl, obj, msg ) );
 
