@@ -107,37 +107,13 @@ Type your message here!
 ;---------------------------------------------------------
 ; MAIN WINDOW MENU
 ;
-MSG_MENU_PROJECT_TITLE (//)
-Project
+MSG_MENU_WINDOWCHAT_PROJECT_TITLE (//)
+WookieChat
 ;
-MSG_MENU_SELECTSERVER_ITEM (//)
-Select server...
-;
-MSG_MENU_SELECTSERVER_KEY (//)
-S
-;
-MSG_MENU_NEWSERVERTAB_ITEM (//)
-New server tab
-;
-MSG_MENU_NEWSERVERTAB_KEY (//)
-T
-;
-MSG_MENU_NEWGLOBALQUERYTAB_ITEM (//)
-Open global query tab
-;
-MSG_MENU_NEWGLOBALQUERYTAB_KEY (//)
-G
-;
-MSG_MENU_CLOSESERVERTAB_ITEM (//)
-Close current tab
-;
-MSG_MENU_CLOSESERVERTAB_KEY (//)
-Z
-;
-MSG_MENU_HIDE_ITEM (//)
+MSG_MENU_WINDOWCHAT_HIDE_ITEM (//)
 Hide
 ;
-MSG_MENU_HIDE_KEY (//)
+MSG_MENU_WINDOWCHAT_HIDE_KEY (//)
 H
 ;
 MSG_MENU_HISTORYCLEAR_ITEM (//)
@@ -188,20 +164,11 @@ Settings
 MSG_MENU_SETTINGSMAIN_ITEM (//)
 WookieChat...
 ;
-MSG_MENU_SETTINGSCOLOR_ITEM (//)
-Color settings...
-;
 MSG_MENU_SETTINGSMUI_ITEM (//)
-MUI settings...
-;
-MSG_MENU_COLUMNMARKINGCLIPBOARD_ITEM (//)
-Column-marking Clipboard
+MUI...
 ;
 MSG_MENU_MUTEALLSOUNDS_ITEM (//)
 Mute all sounds
-;
-MSG_MENU_SETTINGSSAVE_ITEM (//)
-Save settings
 ;
 MSG_MENU_WINDOWS_TITLE (//)
 Windows

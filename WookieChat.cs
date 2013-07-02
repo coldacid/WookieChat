@@ -409,115 +409,19 @@ Type your message here!
 ;---------------------------------------------------------
 ; MAIN WINDOW MENU
 ;
-MSG_MENU_PROJECT_TITLE
-Project
-Project
-Project
-Project
-Project
-Project
-Project
-Project
-Project
-Project
+MSG_MENU_WINDOWCHAT_PROJECT_TITLE
+WookieChat
+WookieChat
+WookieChat
+WookieChat
+WookieChat
+WookieChat
+WookieChat
+WookieChat
+WookieChat
+WookieChat
 ;
-MSG_MENU_SELECTSERVER_ITEM
-Select server...
-Server auswählen ...
-Elegir servidor...
-Choisir un serveur...
-ÅğéëïãŞ äéáêïìéóôŞ...
-Scegli server...
-Kiszolgáló választása ...
-Velg server...
-Wybierz serwer...
-Välj server ...
-;
-MSG_MENU_SELECTSERVER_KEY
-S
-S
-S
-S
-S
-S
-S
-S
-S
-S
-;
-MSG_MENU_NEWSERVERTAB_ITEM
-New server tab
-Neuen Server Tab öffnen
-Nueva pestaña
-Nouvel onglet serveur
-Íİá êáñôİëá äéáêïìéóôŞ
-Apri un Tab "server"
-Új kiszolgáló panel
-Ny servertab
-Nowa zak³adka serwera
-Ny serverflik
-;
-MSG_MENU_NEWSERVERTAB_KEY
-T
-T
-T
-T
-T
-T
-T
-T
-T
-T
-;
-MSG_MENU_NEWGLOBALQUERYTAB_ITEM
-Open global query tab
-Globalen Tab öffnen
-Abrir pestaña global
-Ouvrir onglet de requête global
-¶íïéãìá ãåíéêŞò êáñôİëáò
-Apri un tab "globale"
-Globális panel megnyitása
-Åpne global spørretab
-Otwórz globaln± zak³adkê rozmów
-Öppna flik för global förfrågan
-;
-MSG_MENU_NEWGLOBALQUERYTAB_KEY
-G
-G
-G
-G
-G
-G
-G
-G
-G
-G
-;
-MSG_MENU_CLOSESERVERTAB_ITEM
-Close current tab
-Aktiven Tab schliessen
-Cerrar pestaña actual
-Fermer l'onglet actif
-Êëåßóéìï êáñôİëáò
-Chiudi questo Tab
-Jelenlegi panel bezárása
-Lukk aktiv tab
-Zamknij aktualn± zak³adkê
-Stäng gällande flik
-;
-MSG_MENU_CLOSESERVERTAB_KEY
-Z
-Z
-Z
-Z
-Z
-Z
-Z
-Z
-Z
-Z
-;
-MSG_MENU_HIDE_ITEM
+MSG_MENU_WINDOWCHAT_HIDE_ITEM
 Hide
 Verbergen
 Iconificar
@@ -529,7 +433,7 @@ Gjem
 Ikonifikuj
 Göm
 ;
-MSG_MENU_HIDE_KEY
+MSG_MENU_WINDOWCHAT_HIDE_KEY
 H
 H
 H
@@ -733,41 +637,17 @@ WookieChat...
 WookieChat...
 WookieChat...
 ;
-MSG_MENU_SETTINGSCOLOR_ITEM
-Color settings...
-Farbeinstellungen ...
-Colores...
-Réglages des couleurs...
-×ñùìáôéêİò ñõèìßóåéò...
-Impostazione colori...
-Szín beállítások...
-Fargeinnstillinger...
-Ustawienia kolorów...
-Färginställningar ...
-;
 MSG_MENU_SETTINGSMUI_ITEM
-MUI settings...
-MUI Einstellungen ...
-Ajustes MUI...
-Réglages MUI...
-Ñõèìßóåéò MUI...
-Impostazioni MUI...
-MUI beállítások...
-MUI-innstillinger...
-Ustawienia MUI...
-MUI-inställningar ...
-;
-MSG_MENU_COLUMNMARKINGCLIPBOARD_ITEM
-Column-marking Clipboard
-Spaltenmarkierung Zwischenspeicher
-Marcar/Copiar por columnas
-Presse-papiers multi colonne
-Column-marking Clipboard
-Clipboard marcante a colonna
-Kijelölés vágólapra
-Kolonne-markerende utklippstavle
-Kopiuj do schowka zaznaczane kolumny
-Urklippshanterare med kolumnmarkering
+MUI...
+MUI ...
+MUI...
+MUI...
+MUI...
+MUI...
+MUI...
+MUI...
+MUI...
+MUI...
 ;
 MSG_MENU_MUTEALLSOUNDS_ITEM
 Mute all sounds
@@ -780,18 +660,6 @@ Mute all sounds
 Mute all sounds
 Mute all sounds
 Mute all sounds
-;
-MSG_MENU_SETTINGSSAVE_ITEM
-Save settings
-Einstellungen speichern
-Guardar ajustes
-Enregistrer les réglages
-ÁğïèŞêåõóç ñõèìßóåùí
-Salva impostazioni
-Beállítások mentése
-Lagre innstillinger
-Zapisz ustawienia
-Spara inställningar
 ;
 MSG_MENU_WINDOWS_TITLE
 Windows

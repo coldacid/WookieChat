@@ -80,6 +80,7 @@ struct mccdata
 	struct DiskObject     *mcc_DiskObject;
 	IPTR                   mcc_ReadargsArray[ READARGS_LAST ];
 	Object                *mcc_LastActiveChat[ LASTACTIVE_MAX ];
+	ULONG                  mcc_InstanceCount; /* used to give each chat window a unique ObjectID */
 };
 
 
@@ -298,7 +299,8 @@ Object *win;
 		if( win ) {
 			DoMethod( obj, MM_APPLICATION_CHATSETACTIVE, win );
 			DoMethod( win, MUIM_Notify, MUIA_Window_Activate, TRUE, obj, 2, MM_APPLICATION_CHATSETACTIVE, win );
-			SetAttrs( win, MUIA_Window_Open, TRUE, TAG_DONE );
+			SetAttrs( win, MUIA_Window_Open, TRUE, MUIA_ObjectID, OID_WINDOWCHAT + mccdata->mcc_InstanceCount, TAG_DONE );
+			mccdata->mcc_InstanceCount++;
 		}
 	}
 	return( (ULONG) win );

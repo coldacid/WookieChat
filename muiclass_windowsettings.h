@@ -220,10 +220,16 @@ so one can add more colors if needed */
 OID_COL_OTHERDATA = 1100,
 /* alias settings */
 OID_ALI_LIST = 0x1000,
+/* button settings */
 OID_BUT_LIST = 0x2000,
+/* event settings */
 OID_EVT_LIST = 0x3000,
+/* ignore settings */
 OID_IGN_LIST = 0x4000,
+/* url settings */
 OID_URL_LIST = 0x5000,
+/* window chat settings */
+OID_WINDOWCHAT = 0x6000,
 };
 
 /*************************************************************************/

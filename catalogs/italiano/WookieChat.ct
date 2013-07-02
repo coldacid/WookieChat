@@ -142,47 +142,15 @@ Type your message here!
 ;---------------------------------------------------------
 ; MAIN WINDOW MENU
 ;
-MSG_MENU_PROJECT_TITLE
-Project
-; Project
+MSG_MENU_WINDOWCHAT_PROJECT_TITLE
+WookieChat
+; WookieChat
 ;
-MSG_MENU_SELECTSERVER_ITEM
-Scegli server...
-; Select server...
-;
-MSG_MENU_SELECTSERVER_KEY
-S
-; S
-;
-MSG_MENU_NEWSERVERTAB_ITEM
-Apri un Tab "server"
-; New server tab
-;
-MSG_MENU_NEWSERVERTAB_KEY
-T
-; T
-;
-MSG_MENU_NEWGLOBALQUERYTAB_ITEM
-Apri un tab "globale"
-; Open global query tab
-;
-MSG_MENU_NEWGLOBALQUERYTAB_KEY
-G
-; G
-;
-MSG_MENU_CLOSESERVERTAB_ITEM
-Chiudi questo Tab
-; Close current tab
-;
-MSG_MENU_CLOSESERVERTAB_KEY
-Z
-; Z
-;
-MSG_MENU_HIDE_ITEM
+MSG_MENU_WINDOWCHAT_HIDE_ITEM
 Nascondi
 ; Hide
 ;
-MSG_MENU_HIDE_KEY
+MSG_MENU_WINDOWCHAT_HIDE_KEY
 H
 ; H
 ;
@@ -250,25 +218,13 @@ MSG_MENU_SETTINGSMAIN_ITEM
 WookieChat...
 ; WookieChat...
 ;
-MSG_MENU_SETTINGSCOLOR_ITEM
-Impostazione colori...
-; Color settings...
-;
 MSG_MENU_SETTINGSMUI_ITEM
-Impostazioni MUI...
-; MUI settings...
-;
-MSG_MENU_COLUMNMARKINGCLIPBOARD_ITEM
-Clipboard marcante a colonna
-; Column-marking Clipboard
+MUI...
+; MUI...
 ;
 MSG_MENU_MUTEALLSOUNDS_ITEM
 Mute all sounds
 ; Mute all sounds
-;
-MSG_MENU_SETTINGSSAVE_ITEM
-Salva impostazioni
-; Save settings
 ;
 MSG_MENU_WINDOWS_TITLE
 Finestre

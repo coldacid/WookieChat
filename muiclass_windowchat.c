@@ -53,10 +53,6 @@ GID_MENUSTRIP = 0,
 GID_NETWORK,
 WID_SETTINGS,
 WID_QUIT,
-MID_SELECTSERVER,
-MID_TABNEW,
-MID_TABNEWGLOBAL,
-MID_TABCLOSE,
 MID_HIDE,
 MID_HISTORYCLEAR,
 MID_HISTORYCLEARALL,
@@ -68,9 +64,7 @@ MID_COPY,
 MID_PASTE,
 MID_SETTINGS,
 MID_SETTINGSMUI,
-MID_CLIPBOARD,
 MID_MUTESOUND,
-MID_SETTINGSSAVE,
 MID_DCCINCOMING,
 MID_DCCOUTGOIING,
 MID_URLGRABBER,
@@ -101,7 +95,7 @@ GID_LAST
 #define USERLIMIT_SIZEOF    40
 #define MESSAGE_SIZEOF      490
 
-#define FIRSTMENU_ITEM MID_SELECTSERVER	
+#define FIRSTMENU_ITEM MID_HIDE
 #define LASTMENU_ITEM MID_IGNORELIST
  
 /*
@@ -134,13 +128,8 @@ Object *objs[ GID_LAST ];
 			MUIA_Window_Title            , LGS( MSG_MUICLASS_WINDOWCHAT_TITLE ),
 			MUIA_Window_ID               , MAKE_ID('C','H','A','T'),
 			MUIA_Window_Menustrip, MenustripObject,
-								Child, MenuObject, MUIA_Menu_Title, LGS( MSG_MENU_PROJECT_TITLE ),
-								Child, objs[ MID_SELECTSERVER       ] = MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MENU_SELECTSERVER_ITEM ), MUIA_Menuitem_Shortcut, LGS( MSG_MENU_SELECTSERVER_KEY ), End,
-								Child, objs[ MID_TABNEW             ] = MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MENU_NEWSERVERTAB_ITEM ), MUIA_Menuitem_Shortcut, LGS( MSG_MENU_NEWSERVERTAB_KEY ), End,
-								Child, objs[ MID_TABNEWGLOBAL       ] = MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MENU_NEWGLOBALQUERYTAB_ITEM ), MUIA_Menuitem_Shortcut, LGS( MSG_MENU_NEWGLOBALQUERYTAB_KEY ), End,
-								Child, objs[ MID_TABCLOSE           ] = MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MENU_CLOSESERVERTAB_ITEM ), MUIA_Menuitem_Shortcut, LGS( MSG_MENU_CLOSESERVERTAB_KEY ), End,
-								Child, MUI_MakeObject(MUIO_Menuitem, NM_BARLABEL, 0, 0, 0),
-								Child, objs[ MID_HIDE               ] = MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MENU_HIDE_ITEM ), MUIA_Menuitem_Shortcut, LGS( MSG_MENU_HIDE_KEY ), End,
+								Child, MenuObject, MUIA_Menu_Title, LGS( MSG_MENU_WINDOWCHAT_PROJECT_TITLE ),
+								Child, objs[ MID_HIDE               ] = MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MENU_WINDOWCHAT_HIDE_ITEM ), MUIA_Menuitem_Shortcut, LGS( MSG_MENU_WINDOWCHAT_HIDE_KEY ), End,
 								Child, MUI_MakeObject(MUIO_Menuitem, NM_BARLABEL, 0, 0, 0),
 								Child, objs[ MID_HISTORYCLEAR       ] = MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MENU_HISTORYCLEAR_ITEM ), End,
 								Child, objs[ MID_HISTORYCLEARALL    ] = MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MENU_HISTORYCLEARALL_ITEM ), End,
@@ -157,9 +146,7 @@ Object *objs[ GID_LAST ];
 							Child, MenuObject, MUIA_Menu_Title, LGS( MSG_MENU_SETTINGS_TITLE ),
 								Child, objs[ MID_SETTINGS           ] = MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MENU_SETTINGSMAIN_ITEM ), End,
 								Child, objs[ MID_SETTINGSMUI        ] = MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MENU_SETTINGSMUI_ITEM ), End,
-								Child, objs[ MID_CLIPBOARD          ] = MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MENU_COLUMNMARKINGCLIPBOARD_ITEM ), MUIA_Menuitem_Checkit, TRUE, MUIA_Menuitem_Toggle, TRUE, End,
 								Child, objs[ MID_MUTESOUND          ] = MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MENU_MUTEALLSOUNDS_ITEM ), MUIA_Menuitem_Checkit, TRUE, MUIA_Menuitem_Toggle, TRUE, End,
-								Child, objs[ MID_SETTINGSSAVE       ] = MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MENU_SETTINGSSAVE_ITEM ), End,
 							End,
 							Child, MenuObject, MUIA_Menu_Title, LGS( MSG_MENU_WINDOWS_TITLE ),
 								Child, objs[ MID_DCCINCOMING        ] = MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MENU_DCCINCOMING_ITEM ), MUIA_Menuitem_Shortcut, LGS( MSG_MENU_DCCINCOMING_KEY ), End,
@@ -317,9 +304,6 @@ Object *tmpobj;
 	switch( msg->MenuID ) {
 
 /* project menu */
-		case MID_TABCLOSE:
-			DoMethod( obj, MM_WINDOWCHAT_CHANNELPART );
-			break;
 		case MID_ABOUT:
 			tmpobj = (Object *) MUIGetVar( _app(obj), MA_APPLICATION_OBJECTWINDOWABOUT );
 			SetAttrs( tmpobj, MUIA_Window_Open, TRUE, TAG_DONE );
@@ -338,6 +322,7 @@ Object *tmpobj;
 
 /* window menu */
 		case MID_SETTINGSMUI:
+			DoMethod( _app( obj ), MUIM_Application_OpenConfigWindow, 0, NULL );
 			break;
 		case MID_IGNORELIST:
 			tmpobj = (Object *) MUIGetVar( _app(obj), MA_APPLICATION_OBJECTWINDOWIGNORELIST );

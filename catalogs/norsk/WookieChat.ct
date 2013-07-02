@@ -142,47 +142,15 @@ MSG_PREFS_GENERAL_GROUPTITLE
 ;---------------------------------------------------------
 ; MAIN WINDOW MENU
 ;
-MSG_MENU_PROJECT_TITLE
-Project
-; Project
+MSG_MENU_WINDOWCHAT_PROJECT_TITLE
+WookieChat
+; WookieChat
 ;
-MSG_MENU_SELECTSERVER_ITEM
-Velg server...
-; Select server...
-;
-MSG_MENU_SELECTSERVER_KEY
-S
-; S
-;
-MSG_MENU_NEWSERVERTAB_ITEM
-Ny servertab
-; New server tab
-;
-MSG_MENU_NEWSERVERTAB_KEY
-T
-; T
-;
-MSG_MENU_NEWGLOBALQUERYTAB_ITEM
-Åpne global spørretab
-; Open global query tab
-;
-MSG_MENU_NEWGLOBALQUERYTAB_KEY
-G
-; G
-;
-MSG_MENU_CLOSESERVERTAB_ITEM
-Lukk aktiv tab
-; Close current tab
-;
-MSG_MENU_CLOSESERVERTAB_KEY
-Z
-; Z
-;
-MSG_MENU_HIDE_ITEM
+MSG_MENU_WINDOWCHAT_HIDE_ITEM
 Gjem
 ; Hide
 ;
-MSG_MENU_HIDE_KEY
+MSG_MENU_WINDOWCHAT_HIDE_KEY
 H
 ; H
 ;
@@ -250,25 +218,13 @@ MSG_MENU_SETTINGSMAIN_ITEM
 WookieChat...
 ; WookieChat...
 ;
-MSG_MENU_SETTINGSCOLOR_ITEM
-Fargeinnstillinger...
-; Color settings...
-;
 MSG_MENU_SETTINGSMUI_ITEM
-MUI-innstillinger...
-; MUI settings...
-;
-MSG_MENU_COLUMNMARKINGCLIPBOARD_ITEM
-Kolonne-markerende utklippstavle
-; Column-marking Clipboard
+MUI...
+; MUI...
 ;
 MSG_MENU_MUTEALLSOUNDS_ITEM
 Mute all sounds
 ; Mute all sounds
-;
-MSG_MENU_SETTINGSSAVE_ITEM
-Lagre innstillinger
-; Save settings
 ;
 MSG_MENU_WINDOWS_TITLE
 Vindu
