@@ -34,6 +34,9 @@
 
 /*************************************************************************/
 
+#define TIMEFORMAT_SIZEOF 0x10
+#define CHANNELVIEWSPACING_MAX    100
+
 /*
 ** gadgets used by this class
 */
@@ -50,7 +53,9 @@ GID_TIMESHOW,
 GID_TIMEFORMAT,
 GID_SHOWJOINPART,
 GID_CHANNELVIEWSPACING,
-GID_LAST
+GID_LAST,
+/* these need no storage, so defined after GID_LAST */
+GID_CMENU_RESETTODEFAULTS 
 };
 
 /*
@@ -95,11 +100,6 @@ struct mccdata
 */
 
 /*************************************************************************/
-#define TIMEFORMAT_SIZEOF 0x10
-#define NICKLISTWIDTH_MAX 0x2000
-#define NICKLISTHEIGHT_MAX 0x2000
-#define CHANNELVIEWNICKWIDTH_MAX  300
-#define CHANNELVIEWSPACING_MAX    100
 
 static ULONG OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
 {
@@ -108,7 +108,14 @@ static STRPTR TAB_CYCLE_SMILIES[ MSG_CY_BLACK - MSG_CY_TRANSPARENT + 2 ];
 
 	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
-	if( (obj = (Object *) DoSuperNew( cl, obj, MUIA_Group_Horiz, TRUE,
+	if( (obj = (Object *) DoSuperNew( cl, obj,
+					MUIA_Group_Horiz, TRUE,
+					MUIA_ContextMenu,
+							MenustripObject,
+								Child, MenuObject, MUIA_Menu_Title, LGS( MSG_MUICLASS_SETTINGSGUI_GUI_CMENU ),
+									Child, MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MUICLASS_SETTINGSGUI_RESETTODEFAULTS_CMENU ), MUIA_UserData, GID_CMENU_RESETTODEFAULTS, End,
+								End,
+							End,
 					Child, HVSpace,
 					Child, VGroup,
 						Child, HVSpace,
@@ -192,6 +199,27 @@ static STRPTR TAB_CYCLE_SMILIES[ MSG_CY_BLACK - MSG_CY_TRANSPARENT + 2 ];
 	return( (ULONG) NULL );
 }
 /* \\\ */
+/* /// MM_ContextMenuSelect()
+*/
+
+/*************************************************************************/
+
+static ULONG MM_ContextMenuSelect( struct IClass *cl, Object *obj, struct  MUIP_ContextMenuChoice *msg )
+{
+
+	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
+
+	if( msg->item ) {
+		switch( MUIGetVar( msg->item, MUIA_UserData ) ) {
+			case GID_CMENU_RESETTODEFAULTS:
+				DoMethod( obj, MM_SETTINGSGUI_RESETTODEFAULTS );
+				break;
+		}
+	}
+	return( 0 );
+}
+/* \\\ */
+
 /* /// MM_ResetToDefaults()
 **
 */
@@ -245,9 +273,12 @@ DISPATCHER(MCC_SettingsGUI_Dispatcher)
 {
     switch (msg->MethodID)
     {
-		case OM_NEW                              : return( OM_New                     ( cl, obj, (APTR) msg ) );
+		case OM_NEW                             : return( OM_New                     ( cl, obj, (APTR) msg ) );
+		case MUIM_ContextMenuChoice             : return( MM_ContextMenuSelect       ( cl, obj, (APTR) msg ) );
+
 		case MM_SETTINGSGUI_RESETTODEFAULTS     : return( MM_ResetToDefaults         ( cl, obj, (APTR) msg ) );
 		case MM_SETTINGSGUI_READCONFIG          : return( MM_ReadConfig              ( cl, obj, (APTR) msg ) );
+
 	}
 	return( DoSuperMethodA( cl, obj, msg ) );
 

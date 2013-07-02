@@ -262,10 +262,6 @@ MSG_MENU_SETTINGSMUI_ITEM
 MUI Einstellungen ...
 ; MUI settings...
 ;
-MSG_MENU_MULTICOLUMNCHATDISPLAY_ITEM
-Extra Spalte für Anzeige
-; Multi-column chat display
-;
 MSG_MENU_COLUMNMARKINGCLIPBOARD_ITEM
 Spaltenmarkierung Zwischenspeicher
 ; Column-marking Clipboard
@@ -529,11 +525,11 @@ Vergangene Zeit
 ;
 ; MUICLASS_SETTINGSCOLOR
 ;
-MSG_MUICLASS_SETTINGSCOLOR_TITLE
+____MSG_MUICLASS_SETTINGSCOLOR_TITLE
 Farbeinstellungen ...
 ; Color settings...
 ;
-MSG_MUICLASS_SETTINGSCOLOR_IMPORTCOLORS_CMENU
+MSG_MUICLASS_SETTINGSCOLOR_COLORS_CMENU
 Farbeinstellungen ...
 ; Color settings...
 ;
@@ -869,6 +865,14 @@ Restore settings to last used state.
 ;
 ; MUICLASS_SETTINGSGENERAL
 ;
+MSG_MUICLASS_SETTINGSGENERAL_GENERAL_CMENU
+Allgemeine Einstellungen ...
+; General settings...
+;
+MSG_MUICLASS_SETTINGSGENERAL_RESETTODEFAULTS_CMENU
+Auf Vorgaben zurücksetzen
+; Reset to Defaults
+;
 MSG_MUICLASS_SETTINGSGENERAL_MESSAGEWHEN_INFO
 Nachricht bei ...
 ; Message at...
@@ -985,6 +989,14 @@ MSG_MUICLASS_SETTINGSGENERAL_HIGHLIGHT_HELP
 ;
 ; MUICLASS_SETTINGSSOUND
 ;
+MSG_MUICLASS_SETTINGSSOUND_SOUND_CMENU
+Klänge ...
+; Sound settings...
+;
+MSG_MUICLASS_SETTINGSSOUND_RESETTODEFAULTS_CMENU
+Auf Vorgaben zurücksetzen
+; Reset to Defaults
+;
 MSG_MUICLASS_SETTINGSSOUND_ENABLED_GAD
 Tonausgabe aktiv
 ; Audio output
@@ -1063,6 +1075,14 @@ when tab is inactive
 ;
 ;
 ; MUICLASS_SETTINGSGUI
+;
+MSG_MUICLASS_SETTINGSGUI_GUI_CMENU
+Oberflächeneinstellungen ...
+; GUI settings...
+;
+MSG_MUICLASS_SETTINGSGUI_RESETTODEFAULTS_CMENU
+Auf Vorgaben zurücksetzen
+; Reset to Defaults
 ;
 MSG_MUICLASS_SETTINGSGUI_TABS_INFO
 Zeige Tabs ...
@@ -1179,6 +1199,14 @@ MSG_MUICLASS_SETTINGSGUI_CHANNELVIEWSPACING_HELP
 ;
 ; MUICLASS_SETTINGSDCC
 ;
+MSG_MUICLASS_SETTINGSDCC_DCC_CMENU
+DCC Einstellungen ...
+; DCC	settings...
+;
+MSG_MUICLASS_SETTINGSDCC_RESETTODEFAULTS_CMENU
+Auf Vorgaben zurücksetzen
+; Reset to Defaults
+;
 MSG_MUICLASS_SETTINGSDCC_GENERAL_INFO
 General DCC
 ; General DCC
@@ -1281,6 +1309,14 @@ MSG_MUICLASS_SETTINGSDCC_DCCOUTPATH_HELP
 ;
 ;
 ; MUICLASS_SETTINGSLOG
+;
+MSG_MUICLASS_SETTINGSLOG_LOG_CMENU
+Mitschnitteinstellungen ...
+; LOG settings...
+;
+MSG_MUICLASS_SETTINGSLOG_RESETTODEFAULTS_CMENU
+Auf Vorgaben zurücksetzen
+; Reset to Defaults
 ;
 MSG_MUICLASS_SETTINGSLOG_LOGACTIVEFOR_INFO
 Mitgeschneiden aktiv für...

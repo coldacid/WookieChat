@@ -47,7 +47,9 @@ GID_RECOVERPRIVATE,
 GID_SPLIT,
 GID_SPLITLIMIT,
 GID_PATH,
-GID_LAST
+GID_LAST,
+/* these need no storage, so defined after GID_LAST */
+GID_CMENU_RESETTODEFAULTS,
 };
 
 /*
@@ -97,7 +99,14 @@ Object *objs[ GID_LAST ];
 
 	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
-	if( (obj = (Object *) DoSuperNew( cl, obj, MUIA_Group_Horiz, TRUE,
+	if( (obj = (Object *) DoSuperNew( cl, obj,
+			MUIA_Group_Horiz, TRUE,
+			MUIA_ContextMenu,
+					MenustripObject,
+						Child, MenuObject, MUIA_Menu_Title, LGS( MSG_MUICLASS_SETTINGSLOG_LOG_CMENU ),
+							Child, MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MUICLASS_SETTINGSLOG_RESETTODEFAULTS_CMENU ), MUIA_UserData, GID_CMENU_RESETTODEFAULTS, End,
+						End,
+					End,
 			Child, HVSpace,
 			Child, VGroup,
 				Child, HVSpace,
@@ -160,6 +169,27 @@ Object *objs[ GID_LAST ];
 	return( (ULONG) NULL );
 }
 /* \\\ */
+/* /// MM_ContextMenuSelect()
+*/
+
+/*************************************************************************/
+
+static ULONG MM_ContextMenuSelect( struct IClass *cl, Object *obj, struct  MUIP_ContextMenuChoice *msg )
+{
+
+	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
+
+	if( msg->item ) {
+		switch( MUIGetVar( msg->item, MUIA_UserData ) ) {
+			case GID_CMENU_RESETTODEFAULTS:
+				DoMethod( obj, MM_SETTINGSLOG_RESETTODEFAULTS );
+				break;
+		}
+	}
+	return( 0 );
+}
+/* \\\ */
+
 /* /// MM_ResetToDefaults()
 **
 */
@@ -202,6 +232,7 @@ ULONG i;
 }
 /* \\\ */
 
+
 /*
 ** Dispatcher, init and dispose
 */
@@ -216,9 +247,10 @@ DISPATCHER(MCC_SettingsLog_Dispatcher)
 {
     switch (msg->MethodID)
     {
-		case OM_NEW                              : return( OM_New                     ( cl, obj, (APTR) msg ) );
-		case MM_SETTINGSLOG_RESETTODEFAULTS     : return( MM_ResetToDefaults         ( cl, obj, (APTR) msg ) );
-		case MM_SETTINGSLOG_READCONFIG          : return( MM_ReadConfig              ( cl, obj, (APTR) msg ) );
+		case OM_NEW                             : return( OM_New                   ( cl, obj, (APTR) msg ) );
+		case MUIM_ContextMenuChoice             : return( MM_ContextMenuSelect     ( cl, obj, (APTR) msg ) );
+		case MM_SETTINGSLOG_RESETTODEFAULTS     : return( MM_ResetToDefaults       ( cl, obj, (APTR) msg ) );
+		case MM_SETTINGSLOG_READCONFIG          : return( MM_ReadConfig            ( cl, obj, (APTR) msg ) );
 	}
 	return( DoSuperMethodA( cl, obj, msg ) );
 
