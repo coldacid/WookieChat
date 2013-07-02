@@ -5988,4 +5988,55 @@ Ban
 Ban
 Ban
 ;
- 
+;
+; MUICLASS_CHATCHANNELLIST
+;
+MSG_MUICLASS_CHATCHANNELLIST_HELP
+These are the channels available within this view.\nThe context menu provides additional options.
+Diese Kanäle sind in diesem Fenster verfügbar.\nÜber das Kontextmenü stehen weitere Optionen zur Verfügung.
+These are the channels available within this view.\nThe context menu provides additional options.
+These are the channels available within this view.\nThe context menu provides additional options.
+These are the channels available within this view.\nThe context menu provides additional options.
+These are the channels available within this view.\nThe context menu provides additional options.
+These are the channels available within this view.\nThe context menu provides additional options.
+These are the channels available within this view.\nThe context menu provides additional options.
+These are the channels available within this view.\nThe context menu provides additional options.
+These are the channels available within this view.\nThe context menu provides additional options.
+;
+MSG_MUICLASS_CHATCHANNELLIST_CMENU
+Channellist Options
+Kanallistenoptionen
+Channellist Options
+Channellist Options
+Channellist Options
+Channellist Options
+Channellist Options
+Channellist Options
+Channellist Options
+Channellist Options
+;
+MSG_MUICLASS_CHATCHANNELLIST_MOVETONEWWINDOW_CMENU
+Move to new window
+In neues Fenster verschieben
+Move to new window
+Move to new window
+Move to new window
+Move to new window
+Move to new window
+Move to new window
+Move to new window
+Move to new window
+;
+MSG_MUICLASS_CHATCHANNELLIST_CLONETONEWWINDOW_CMENU
+Copy to new window
+In neues Fenster kopieren
+Copy to new window
+Copy to new window
+Copy to new window
+Copy to new window
+Copy to new window
+Copy to new window
+Copy to new window
+Copy to new window
+;
+

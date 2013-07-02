@@ -50,20 +50,20 @@ GID_CHATCHANNELLIST,
 GID_NETWORK,
 GID_LAST,
 /* these need no storage, so defined after GID_LAST */
-GID_CMENU_WHOIS,
-GID_CMENU_OPENQUERY,
-GID_CMENU_OPENGLOBALQUERY,
-GID_CMENU_CTCPPING,
-GID_CMENU_CTCPVERSION,
-GID_CMENU_CTCPTIME,
-GID_CMENU_CONTROLOP,
-GID_CMENU_CONTROLDEOP,
-GID_CMENU_CONTROLHALFOP,
-GID_CMENU_CONTROLDEHALFOP,
-GID_CMENU_CONTROLVOICE,
-GID_CMENU_CONTROLDEVOICE,
-GID_CMENU_CONTROLKICK,
-GID_CMENU_CONTROLBAN,
+MID_CMENU_WHOIS,
+MID_CMENU_OPENQUERY,
+MID_CMENU_OPENGLOBALQUERY,
+MID_CMENU_CTCPPING,
+MID_CMENU_CTCPVERSION,
+MID_CMENU_CTCPTIME,
+MID_CMENU_CONTROLOP,
+MID_CMENU_CONTROLDEOP,
+MID_CMENU_CONTROLHALFOP,
+MID_CMENU_CONTROLDEHALFOP,
+MID_CMENU_CONTROLVOICE,
+MID_CMENU_CONTROLDEVOICE,
+MID_CMENU_CONTROLKICK,
+MID_CMENU_CONTROLBAN,
 };
 
 /*
@@ -100,33 +100,7 @@ static IPTR OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
 	return( (IPTR) DoSuperNew( cl, obj, MUIA_NList_Format, ",",
 				MUIA_ShortHelp    , LGS( MSG_MUICLASS_CHATUSERLIST_HELP ),
 				MUIA_ContextMenu  , 1,
-
-#if 0
-				MUIA_ContextMenu,
-						MenustripObject,
-							Child, MenuObject, MUIA_Menu_Title, LGS( MSG_MUICLASS_CHATUSERLIST_CMENU ),
-								Child, MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MUICLASS_CHATUSERLIST_WHOIS_CMENU ), MUIA_UserData, GID_CMENU_WHOIS, End,
-								Child, MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MUICLASS_CHATUSERLIST_OPENQUERY_CMENU ), MUIA_UserData, GID_CMENU_OPENQUERY, End,
-								Child, MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MUICLASS_CHATUSERLIST_OPENGLOBALQUERY_CMENU ), MUIA_UserData, GID_CMENU_OPENGLOBALQUERY, End,
-								Child, MenuObject, MUIA_Menu_Title, LGS( MSG_MUICLASS_CHATUSERLIST_CTCP_CMENU ),
-									Child, MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MUICLASS_CHATUSERLIST_CTCPPING_CMENU ), MUIA_UserData, GID_CMENU_CTCPPING, End,
-									Child, MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MUICLASS_CHATUSERLIST_CTCPVERSION_CMENU ), MUIA_UserData, GID_CMENU_CTCPVERSION, End,
-									Child, MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MUICLASS_CHATUSERLIST_CTCPTIME_CMENU ), MUIA_UserData, GID_CMENU_CTCPTIME, End,
-								End,
-								Child, MenuObject, MUIA_Menu_Title, LGS( MSG_MUICLASS_CHATUSERLIST_CONTROL_CMENU ),
-									Child, MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MUICLASS_CHATUSERLIST_CONTROLOP_CMENU ), MUIA_UserData, GID_CMENU_CONTROLOP, End,
-									Child, MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MUICLASS_CHATUSERLIST_CONTROLDEOP_CMENU ), MUIA_UserData, GID_CMENU_CONTROLDEOP, End,
-									Child, MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MUICLASS_CHATUSERLIST_CONTROLHALFOP_CMENU ), MUIA_UserData, GID_CMENU_CONTROLHALFOP, End,
-									Child, MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MUICLASS_CHATUSERLIST_CONTROLDEHALFOP_CMENU ), MUIA_UserData, GID_CMENU_CONTROLDEHALFOP, End,
-									Child, MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MUICLASS_CHATUSERLIST_CONTROLVOICE_CMENU ), MUIA_UserData, GID_CMENU_CONTROLVOICE, End,
-									Child, MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MUICLASS_CHATUSERLIST_CONTROLDEVOICE_CMENU ), MUIA_UserData, GID_CMENU_CONTROLDEVOICE, End,
-									Child, MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MUICLASS_CHATUSERLIST_CONTROLKICK_CMENU ), MUIA_UserData, GID_CMENU_CONTROLKICK, End,
-									Child, MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MUICLASS_CHATUSERLIST_CONTROLBAN_CMENU ), MUIA_UserData, GID_CMENU_CONTROLBAN, End,
-								End,
-							End,
-						End,
-#endif
-		TAG_DONE ) );
+				TAG_DONE ) );
 }
 /* \\\ */
 /* /// OM_Dispose()
@@ -237,23 +211,23 @@ struct MUI_NList_TestPos_Result res;
 /* now build the tree */
 			if( ( mccdata->mcc_ClassObjects[ MID_CONTEXTMENU ] = MenustripObject,
 							Child, MenuObject, MUIA_Menu_Title, LGS( MSG_MUICLASS_CHATUSERLIST_CMENU ),
-								Child, MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MUICLASS_CHATUSERLIST_WHOIS_CMENU ), MUIA_UserData, GID_CMENU_WHOIS, End,
-								Child, MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MUICLASS_CHATUSERLIST_OPENQUERY_CMENU ), MUIA_UserData, GID_CMENU_OPENQUERY, End,
-								Child, MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MUICLASS_CHATUSERLIST_OPENGLOBALQUERY_CMENU ), MUIA_UserData, GID_CMENU_OPENGLOBALQUERY, End,
+								Child, MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MUICLASS_CHATUSERLIST_WHOIS_CMENU ), MUIA_UserData, MID_CMENU_WHOIS, End,
+								Child, MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MUICLASS_CHATUSERLIST_OPENQUERY_CMENU ), MUIA_UserData, MID_CMENU_OPENQUERY, End,
+								Child, MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MUICLASS_CHATUSERLIST_OPENGLOBALQUERY_CMENU ), MUIA_UserData, MID_CMENU_OPENGLOBALQUERY, End,
 								Child, MenuObject, MUIA_Menu_Title, LGS( MSG_MUICLASS_CHATUSERLIST_CTCP_CMENU ),
-									Child, MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MUICLASS_CHATUSERLIST_CTCPPING_CMENU ), MUIA_UserData, GID_CMENU_CTCPPING, End,
-									Child, MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MUICLASS_CHATUSERLIST_CTCPVERSION_CMENU ), MUIA_UserData, GID_CMENU_CTCPVERSION, End,
-									Child, MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MUICLASS_CHATUSERLIST_CTCPTIME_CMENU ), MUIA_UserData, GID_CMENU_CTCPTIME, End,
+									Child, MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MUICLASS_CHATUSERLIST_CTCPPING_CMENU ), MUIA_UserData, MID_CMENU_CTCPPING, End,
+									Child, MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MUICLASS_CHATUSERLIST_CTCPVERSION_CMENU ), MUIA_UserData, MID_CMENU_CTCPVERSION, End,
+									Child, MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MUICLASS_CHATUSERLIST_CTCPTIME_CMENU ), MUIA_UserData, MID_CMENU_CTCPTIME, End,
 								End,
 								Child, MenuObject, MUIA_Menu_Title, LGS( MSG_MUICLASS_CHATUSERLIST_CONTROL_CMENU ),
-									Child, MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MUICLASS_CHATUSERLIST_CONTROLOP_CMENU ), MUIA_UserData, GID_CMENU_CONTROLOP, End,
-									Child, MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MUICLASS_CHATUSERLIST_CONTROLDEOP_CMENU ), MUIA_UserData, GID_CMENU_CONTROLDEOP, End,
-									Child, MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MUICLASS_CHATUSERLIST_CONTROLHALFOP_CMENU ), MUIA_UserData, GID_CMENU_CONTROLHALFOP, End,
-									Child, MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MUICLASS_CHATUSERLIST_CONTROLDEHALFOP_CMENU ), MUIA_UserData, GID_CMENU_CONTROLDEHALFOP, End,
-									Child, MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MUICLASS_CHATUSERLIST_CONTROLVOICE_CMENU ), MUIA_UserData, GID_CMENU_CONTROLVOICE, End,
-									Child, MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MUICLASS_CHATUSERLIST_CONTROLDEVOICE_CMENU ), MUIA_UserData, GID_CMENU_CONTROLDEVOICE, End,
-									Child, MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MUICLASS_CHATUSERLIST_CONTROLKICK_CMENU ), MUIA_UserData, GID_CMENU_CONTROLKICK, End,
-									Child, MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MUICLASS_CHATUSERLIST_CONTROLBAN_CMENU ), MUIA_UserData, GID_CMENU_CONTROLBAN, End,
+									Child, MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MUICLASS_CHATUSERLIST_CONTROLOP_CMENU ), MUIA_UserData, MID_CMENU_CONTROLOP, End,
+									Child, MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MUICLASS_CHATUSERLIST_CONTROLDEOP_CMENU ), MUIA_UserData, MID_CMENU_CONTROLDEOP, End,
+									Child, MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MUICLASS_CHATUSERLIST_CONTROLHALFOP_CMENU ), MUIA_UserData, MID_CMENU_CONTROLHALFOP, End,
+									Child, MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MUICLASS_CHATUSERLIST_CONTROLDEHALFOP_CMENU ), MUIA_UserData, MID_CMENU_CONTROLDEHALFOP, End,
+									Child, MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MUICLASS_CHATUSERLIST_CONTROLVOICE_CMENU ), MUIA_UserData, MID_CMENU_CONTROLVOICE, End,
+									Child, MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MUICLASS_CHATUSERLIST_CONTROLDEVOICE_CMENU ), MUIA_UserData, MID_CMENU_CONTROLDEVOICE, End,
+									Child, MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MUICLASS_CHATUSERLIST_CONTROLKICK_CMENU ), MUIA_UserData, MID_CMENU_CONTROLKICK, End,
+									Child, MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MUICLASS_CHATUSERLIST_CONTROLBAN_CMENU ), MUIA_UserData, MID_CMENU_CONTROLBAN, End,
 								End,
 							End,
 						End ) ) {
@@ -289,40 +263,40 @@ struct Server        *s;
 		mccdata->mcc_ComposeBuffer[0] = '\0'; /* send detection marker */
 		if( msg->item ) {
 			switch( MUIGetVar( msg->item, MUIA_UserData ) ) {
-				case GID_CMENU_WHOIS:
+				case MID_CMENU_WHOIS:
 					sprintf( mccdata->mcc_ComposeBuffer, "/WHOIS %s", cne->cne_Nick );
 					break;
-				case GID_CMENU_CTCPPING:
+				case MID_CMENU_CTCPPING:
 					sprintf( mccdata->mcc_ComposeBuffer, "/PRIVMSG %s :\001PING\001", cne->cne_Nick );
 					break;
-				case GID_CMENU_CTCPVERSION:
+				case MID_CMENU_CTCPVERSION:
 					sprintf( mccdata->mcc_ComposeBuffer, "/PRIVMSG %s :\001VERSION\001", cne->cne_Nick );
 					break;
-				case GID_CMENU_CTCPTIME:
+				case MID_CMENU_CTCPTIME:
 					sprintf( mccdata->mcc_ComposeBuffer, "/PRIVMSG %s :\001TIME\001", cne->cne_Nick );
 					break;
-				case GID_CMENU_CONTROLOP:
+				case MID_CMENU_CONTROLOP:
 					sprintf( mccdata->mcc_ComposeBuffer, "/MODE %s +o %s", c->c_Name, cne->cne_Nick );
 					break;
-				case GID_CMENU_CONTROLDEOP:
+				case MID_CMENU_CONTROLDEOP:
 					sprintf( mccdata->mcc_ComposeBuffer, "/MODE %s -o %s", c->c_Name, cne->cne_Nick );
 					break;
-				case GID_CMENU_CONTROLHALFOP:
+				case MID_CMENU_CONTROLHALFOP:
 					sprintf( mccdata->mcc_ComposeBuffer, "/MODE %s +h %s", c->c_Name, cne->cne_Nick );
 					break;
-				case GID_CMENU_CONTROLDEHALFOP:
+				case MID_CMENU_CONTROLDEHALFOP:
 					sprintf( mccdata->mcc_ComposeBuffer, "/MODE %s -h %s", c->c_Name, cne->cne_Nick );
 					break;
-				case GID_CMENU_CONTROLVOICE:
+				case MID_CMENU_CONTROLVOICE:
 					sprintf( mccdata->mcc_ComposeBuffer, "/MODE %s +v %s", c->c_Name, cne->cne_Nick );
 					break;
-				case GID_CMENU_CONTROLDEVOICE:
+				case MID_CMENU_CONTROLDEVOICE:
 					sprintf( mccdata->mcc_ComposeBuffer, "/MODE %s -v %s", c->c_Name, cne->cne_Nick );
 					break;
-				case GID_CMENU_CONTROLBAN:
+				case MID_CMENU_CONTROLBAN:
 					sprintf( mccdata->mcc_ComposeBuffer, "/MODE %s +b %s", c->c_Name, cne->cne_Nick );
 					break;
-				case GID_CMENU_CONTROLKICK:
+				case MID_CMENU_CONTROLKICK:
 					sprintf( mccdata->mcc_ComposeBuffer, "/KICK %s %s :%s", c->c_Name, cne->cne_Nick, LRC( OID_GEN_MSGKICK ) );
 					break;
 			}

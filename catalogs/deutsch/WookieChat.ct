@@ -2055,3 +2055,22 @@ MSG_MUICLASS_CHATUSERLIST_CONTROLBAN_CMENU
 Verbannen
 ; Ban
 ;
+;
+; MUICLASS_CHATCHANNELLIST
+;
+MSG_MUICLASS_CHATCHANNELLIST_HELP
+Diese Kanäle sind in diesem Fenster verfügbar.\nÜber das Kontextmenü stehen weitere Optionen zur Verfügung.
+; These are the channels available within this view.\nThe context menu provides additional options.
+;
+MSG_MUICLASS_CHATCHANNELLIST_CMENU
+Kanallistenoptionen
+; Channellist Options
+;
+MSG_MUICLASS_CHATCHANNELLIST_MOVETONEWWINDOW_CMENU
+In neues Fenster verschieben
+; Move to new window
+;
+MSG_MUICLASS_CHATCHANNELLIST_CLONETONEWWINDOW_CMENU
+In neues Fenster kopieren
+; Copy to new window
+;

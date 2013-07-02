@@ -33,6 +33,7 @@
 #include "muiclass_chatchannellist.h"
 #include "muiclass_settingscolor.h"
 #include "muiclass_windowsettings.h"
+#include "muiclass_windowchat.h"
 
 /*************************************************************************/
 
@@ -43,7 +44,11 @@
 enum
 {
 WID_SETTINGS = 0,
-GID_LAST
+MID_CONTEXTMENU,
+GID_LAST,
+/* these need no storage, so defined after GID_LAST */
+MID_CMENU_MOVETONEWWINDOW,
+MID_CMENU_CLONETONEWWINDOW,
 };
 
 /*
@@ -59,6 +64,8 @@ struct mccdata
 	LONG                   mcc_MUIPen[ PEN_NUMBEROF ];
 	ULONG                  mcc_PenRGB[ PEN_NUMBEROF ];
 	char                   mcc_DisplayBuffer[ DISPLAYBUFFER_SIZEOF ];
+	struct ChatChannel    *mcc_SelectedContextEntry;
+
 };
 
 /*************************************************************************/
@@ -74,7 +81,10 @@ static ULONG OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
 
 	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
-	return( (IPTR) DoSuperNew( cl, obj, TAG_DONE ) );
+	return( (IPTR) DoSuperNew( cl, obj,
+						MUIA_ShortHelp  , LGS( MSG_MUICLASS_CHATCHANNELLIST_HELP ),
+						MUIA_ContextMenu, 1,
+						TAG_DONE ) );
 }
 /* \\\ */
 /* /// OM_Setup()
@@ -110,6 +120,81 @@ static ULONG OM_Cleanup( struct IClass *cl, Object *obj, Msg *msg )
 	DoMethod( obj, MM_CHATCHANNELLIST_PENSRELEASE );
 
 	return( DoSuperMethodA( cl, obj,(Msg) msg ) );
+}
+/* \\\ */
+
+/* /// MM_ContextMenuBuild()
+**
+*/
+
+/*************************************************************************/
+
+static ULONG MM_ContextMenuBuild( struct IClass *cl, Object *obj, struct MUIP_ContextMenuBuild *msg UNUSED )
+{
+struct mccdata *mccdata = INST_DATA( cl, obj );
+struct MUI_NList_TestPos_Result res;
+
+	if( mccdata->mcc_ClassObjects[ MID_CONTEXTMENU ] ) {
+		MUI_DisposeObject( mccdata->mcc_ClassObjects[ MID_CONTEXTMENU ] );
+		mccdata->mcc_ClassObjects[ MID_CONTEXTMENU ] = NULL;
+	}
+	mccdata->mcc_SelectedContextEntry = NULL;
+	DoMethod( obj, MUIM_NList_TestPos, msg->mx, msg->my, &res );
+	if( res.entry != -1 ) {
+		DoMethod( obj, MUIM_NList_GetEntry, res.entry, &mccdata->mcc_SelectedContextEntry );
+		if( mccdata->mcc_SelectedContextEntry ) { /* paranoia */
+
+/* now build the tree */
+			if( ( mccdata->mcc_ClassObjects[ MID_CONTEXTMENU ] = MenustripObject,
+							Child, MenuObject, MUIA_Menu_Title, LGS( MSG_MUICLASS_CHATCHANNELLIST_CMENU ),
+								Child, MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MUICLASS_CHATCHANNELLIST_MOVETONEWWINDOW_CMENU ), MUIA_UserData, MID_CMENU_MOVETONEWWINDOW, End,
+								Child, MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MUICLASS_CHATCHANNELLIST_CLONETONEWWINDOW_CMENU ), MUIA_UserData, MID_CMENU_CLONETONEWWINDOW, End,
+							End,
+						End ) ) {
+
+			}
+		}
+	}
+	return( (ULONG) mccdata->mcc_ClassObjects[ MID_CONTEXTMENU ] );
+}
+/* \\\ */
+/* /// MM_ContextMenuSelect()
+*/
+
+/*************************************************************************/
+
+static ULONG MM_ContextMenuSelect( struct IClass *cl, Object *obj, struct  MUIP_ContextMenuChoice *msg )
+{
+struct mccdata *mccdata = INST_DATA( cl, obj );
+struct ChatChannel   *cc;
+struct Channel       *c;
+
+	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
+
+	if( ( cc = mccdata->mcc_SelectedContextEntry ) && ( c = cc->cc_Channel ) ) { /* paranoia */
+		if( msg->item ) {
+			switch( MUIGetVar( msg->item, MUIA_UserData ) ) {
+				case MID_CMENU_MOVETONEWWINDOW:
+					{ Object *windowchat;
+
+					if( ( windowchat = (APTR) DoMethod( _app(obj), MM_APPLICATION_WINDOWCHATNEW ) ) ) {
+						DoMethod( _win( obj ), MM_WINDOWCHAT_CHANNELREMOVE, c );
+						DoMethod( windowchat , MM_WINDOWCHAT_CHANNELADD, c );
+					}
+					}
+					break;
+				case MID_CMENU_CLONETONEWWINDOW:
+					{ Object *windowchat;
+
+					if( ( windowchat = (APTR) DoMethod( _app(obj), MM_APPLICATION_WINDOWCHATNEW ) ) ) {
+						DoMethod( windowchat, MM_WINDOWCHAT_CHANNELADD, c );
+					}
+					}
+					break;
+			}
+		}
+	}
+	return( 0 );
 }
 /* \\\ */
 
@@ -247,15 +332,18 @@ static ULONG MM_PensUpdate( struct IClass *cl, Object *obj, Msg *msg )
 DISPATCHER(MCC_ChatChannelList_Dispatcher)
 {
 	switch (msg->MethodID) {
-		case OM_NEW                         : return( OM_New        ( cl, obj, (APTR) msg ) );
-		case MUIM_Setup                     : return( OM_Setup      ( cl, obj, (APTR) msg ) );
-		case MUIM_Cleanup                   : return( OM_Cleanup    ( cl, obj, (APTR) msg ) );
-		case MUIM_NList_Display             : return( OM_Display    ( cl, obj, (APTR) msg ) );
-		case MUIM_NList_Destruct            : return( OM_Destruct   ( cl, obj, (APTR) msg ) );
-		case MUIM_NList_Construct           : return( OM_Construct  ( cl, obj, (APTR) msg ) );
-		case MM_CHATCHANNELLIST_PENSOBTAIN  : return( MM_PensObtain ( cl, obj, (APTR) msg ) );
-		case MM_CHATCHANNELLIST_PENSRELEASE : return( MM_PensRelease( cl, obj, (APTR) msg ) );
-		case MM_CHATCHANNELLIST_PENSUPDATE  : return( MM_PensUpdate ( cl, obj, (APTR) msg ) );
+		case OM_NEW                         : return( OM_New                ( cl, obj, (APTR) msg ) );
+		case MUIM_Setup                     : return( OM_Setup              ( cl, obj, (APTR) msg ) );
+		case MUIM_Cleanup                   : return( OM_Cleanup            ( cl, obj, (APTR) msg ) );
+		case MUIM_ContextMenuChoice         : return( MM_ContextMenuSelect  ( cl, obj, (APTR) msg ) );
+		case MUIM_ContextMenuBuild          : return( MM_ContextMenuBuild   ( cl, obj, (APTR) msg ) );
+
+		case MUIM_NList_Display             : return( OM_Display            ( cl, obj, (APTR) msg ) );
+		case MUIM_NList_Destruct            : return( OM_Destruct           ( cl, obj, (APTR) msg ) );
+		case MUIM_NList_Construct           : return( OM_Construct          ( cl, obj, (APTR) msg ) );
+		case MM_CHATCHANNELLIST_PENSOBTAIN  : return( MM_PensObtain         ( cl, obj, (APTR) msg ) );
+		case MM_CHATCHANNELLIST_PENSRELEASE : return( MM_PensRelease        ( cl, obj, (APTR) msg ) );
+		case MM_CHATCHANNELLIST_PENSUPDATE  : return( MM_PensUpdate         ( cl, obj, (APTR) msg ) );
 	}
 	return( DoSuperMethodA( cl, obj, msg ) );
 

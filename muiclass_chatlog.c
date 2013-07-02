@@ -12,7 +12,7 @@
 ** muiclass_chatlog.c
 */
 
-//#define NODEBUG
+#define NODEBUG
 
 #include <libraries/mui.h>
 #include <prefs/prefhdr.h>
