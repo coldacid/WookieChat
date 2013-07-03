@@ -109,7 +109,7 @@ static IPTR OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
 
 /*************************************************************************/
 
-static ULONG OM_Dispose( struct IClass *cl, Object *obj, Msg *msg )
+static IPTR OM_Dispose( struct IClass *cl, Object *obj, Msg *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 
@@ -129,7 +129,7 @@ struct mccdata *mccdata = INST_DATA( cl, obj );
 
 /*************************************************************************/
 
-static ULONG OM_Setup( struct IClass *cl, Object *obj, Msg *msg )
+static IPTR OM_Setup( struct IClass *cl, Object *obj, Msg *msg )
 {
 
 	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
@@ -145,7 +145,7 @@ static ULONG OM_Setup( struct IClass *cl, Object *obj, Msg *msg )
 
 /*************************************************************************/
 
-static ULONG OM_Cleanup( struct IClass *cl, Object *obj, Msg *msg )
+static IPTR OM_Cleanup( struct IClass *cl, Object *obj, Msg *msg )
 {
 
 	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
@@ -161,7 +161,7 @@ static ULONG OM_Cleanup( struct IClass *cl, Object *obj, Msg *msg )
 
 /*************************************************************************/
 
-static ULONG OM_Set( struct IClass *cl, Object *obj, struct opSet *msg )
+static IPTR OM_Set( struct IClass *cl, Object *obj, struct opSet *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 struct TagItem *tag;
@@ -193,7 +193,7 @@ struct TagItem *tstate;
 
 /*************************************************************************/
 
-static ULONG MM_ContextMenuBuild( struct IClass *cl, Object *obj, struct MUIP_ContextMenuBuild *msg UNUSED )
+static IPTR MM_ContextMenuBuild( struct IClass *cl, Object *obj, struct MUIP_ContextMenuBuild *msg UNUSED )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 struct MUI_NList_TestPos_Result res;
@@ -235,7 +235,7 @@ struct MUI_NList_TestPos_Result res;
 			}
 		}
 	}
-	return( (ULONG) mccdata->mcc_ClassObjects[ MID_CONTEXTMENU ] );
+	return( (IPTR) mccdata->mcc_ClassObjects[ MID_CONTEXTMENU ] );
 }
 /* \\\ */
 /* /// MM_ContextMenuSelect()
@@ -243,7 +243,7 @@ struct MUI_NList_TestPos_Result res;
 
 /*************************************************************************/
 
-static ULONG MM_ContextMenuSelect( struct IClass *cl, Object *obj, struct  MUIP_ContextMenuChoice *msg )
+static IPTR MM_ContextMenuSelect( struct IClass *cl, Object *obj, struct  MUIP_ContextMenuChoice *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 struct ChatChannelEntry *cce;
@@ -316,7 +316,7 @@ struct Server           *s;
 
 /*************************************************************************/
 
-static ULONG OM_Display( struct IClass *cl, Object *obj, struct MUIP_NList_Display *msg )
+static IPTR OM_Display( struct IClass *cl, Object *obj, struct MUIP_NList_Display *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 char *nick   =  ((struct ChatUserEntry *) msg->entry)->cue_ChatNickEntry->cne_Nick;
@@ -360,7 +360,7 @@ char statusstr[2];
 
 /*************************************************************************/
 
-static ULONG OM_Construct( struct IClass *cl, Object *obj, struct MUIP_NList_Construct *msg )
+static IPTR OM_Construct( struct IClass *cl, Object *obj, struct MUIP_NList_Construct *msg )
 {
 struct ChatUserEntry *cue;
 
@@ -378,7 +378,7 @@ struct ChatUserEntry *cue;
 
 /*************************************************************************/
 
-static ULONG OM_Destruct( struct IClass *cl, Object *obj, struct MUIP_NList_Destruct *msg )
+static IPTR OM_Destruct( struct IClass *cl, Object *obj, struct MUIP_NList_Destruct *msg )
 {
 
 	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
@@ -395,7 +395,7 @@ static ULONG OM_Destruct( struct IClass *cl, Object *obj, struct MUIP_NList_Dest
 
 /*************************************************************************/
 
-static ULONG OM_Compare( struct IClass *cl, Object *obj, struct MUIP_NList_Compare *msg )
+static IPTR OM_Compare( struct IClass *cl, Object *obj, struct MUIP_NList_Compare *msg )
 {
 STRPTR nick1 = (STRPTR) ((struct ChatUserEntry *) msg->entry1)->cue_ChatNickEntry->cne_Nick;
 STRPTR nick2 = (STRPTR) ((struct ChatUserEntry *) msg->entry2)->cue_ChatNickEntry->cne_Nick;
@@ -412,7 +412,7 @@ STRPTR nick2 = (STRPTR) ((struct ChatUserEntry *) msg->entry2)->cue_ChatNickEntr
 
 /*************************************************************************/
 
-static ULONG MM_PensObtain( struct IClass *cl, Object *obj, Msg *msg )
+static IPTR MM_PensObtain( struct IClass *cl, Object *obj, Msg *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 struct MUI_PenSpec *penspec;
@@ -442,7 +442,7 @@ ULONG i;
 
 /*************************************************************************/
 
-static ULONG MM_PensRelease( struct IClass *cl, Object *obj, Msg *msg )
+static IPTR MM_PensRelease( struct IClass *cl, Object *obj, Msg *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 ULONG i;
@@ -461,7 +461,7 @@ ULONG i;
 
 /*************************************************************************/
 
-static ULONG MM_PensUpdate( struct IClass *cl, Object *obj, Msg *msg )
+static IPTR MM_PensUpdate( struct IClass *cl, Object *obj, Msg *msg )
 {
 
 	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );

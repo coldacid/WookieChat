@@ -189,7 +189,7 @@ Object *objs[ GID_LAST ];
 
 	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
-	if( (obj = (Object *)DoSuperNew( cl, obj,
+	if( ( obj = (Object *) DoSuperNew( cl, obj,
 			MUIA_Window_Title            , LGS( MSG_MUICLASS_WINDOWDCCINCOMING_TITLE ),
 			MUIA_Window_ID               , MAKE_ID('D','C','C','I'),
 			MUIA_Window_NoMenus	       	 , TRUE,

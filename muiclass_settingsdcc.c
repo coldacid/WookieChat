@@ -97,7 +97,7 @@ struct mccdata
 
 /*************************************************************************/
 
-static ULONG OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
+static IPTR OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
 {
 Object *objs[ GID_LAST ];
 static STRPTR TAB_CYCLE_INWRITEMODE[ MSG_CY_CANCEL - MSG_CY_OVERWRITE + 2 ];
@@ -172,9 +172,9 @@ static STRPTR TAB_CYCLE_INWRITEMODE[ MSG_CY_CANCEL - MSG_CY_OVERWRITE + 2 ];
 
 		DoMethod( obj, MM_SETTINGSDCC_RESETTODEFAULTS );
 
-		return( (ULONG) obj );
+		return( (IPTR) obj );
     }
-	return( (ULONG) NULL );
+	return( (IPTR) NULL );
 }
 /* \\\ */
 /* /// MM_ContextMenuSelect()
@@ -182,7 +182,7 @@ static STRPTR TAB_CYCLE_INWRITEMODE[ MSG_CY_CANCEL - MSG_CY_OVERWRITE + 2 ];
 
 /*************************************************************************/
 
-static ULONG MM_ContextMenuSelect( struct IClass *cl, Object *obj, struct  MUIP_ContextMenuChoice *msg )
+static IPTR MM_ContextMenuSelect( struct IClass *cl, Object *obj, struct  MUIP_ContextMenuChoice *msg )
 {
 
 	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
@@ -203,7 +203,7 @@ static ULONG MM_ContextMenuSelect( struct IClass *cl, Object *obj, struct  MUIP_
 
 /*************************************************************************/
 
-static ULONG MM_ResetToDefaults( struct IClass *cl, Object *obj, Msg *msg )
+static IPTR MM_ResetToDefaults( struct IClass *cl, Object *obj, Msg *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 ULONG i;
@@ -220,7 +220,7 @@ ULONG i;
 
 /*************************************************************************/
 
-static ULONG MM_ReadConfig( struct IClass *cl, Object *obj, struct MP_SETTINGSDCC_READCONFIG *msg )
+static IPTR MM_ReadConfig( struct IClass *cl, Object *obj, struct MP_SETTINGSDCC_READCONFIG *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 ULONG i;

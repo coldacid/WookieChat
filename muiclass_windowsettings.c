@@ -121,14 +121,14 @@ ULONG result = 0;
 
 /*************************************************************************/
 
-static ULONG OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
+static IPTR OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
 {
 Object *objs[ GID_LAST ];
 ULONG i;
 
 	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
-	if( (obj = (Object *)DoSuperNew( cl, obj,
+	if( ( obj = (Object *) DoSuperNew( cl, obj,
 			MUIA_Window_Title            , LGS( MSG_MUICLASS_WINDOWSETTINGS_TITLE ),
 			MUIA_Window_ID               , MAKE_ID('S','E','T','T'),
 			MUIA_Window_NoMenus	       	 , TRUE,
@@ -193,9 +193,9 @@ ULONG i;
 
 		SetAttrs( objs[ GID_PAGELIST ], MUIA_NList_Active, SETTINGS_SERVER, TAG_DONE );
 
-		return( (ULONG) obj );
+		return( (IPTR) obj );
     }
-	return( (ULONG) NULL );
+	return( (IPTR) NULL );
 }
 /* \\\ */
 /* /// OM_Set()
@@ -204,7 +204,7 @@ ULONG i;
 
 /*************************************************************************/
 
-static ULONG OM_Set( struct IClass *cl, Object *obj, struct opSet *msg )
+static IPTR OM_Set( struct IClass *cl, Object *obj, struct opSet *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 struct TagItem *tag;
@@ -227,7 +227,7 @@ struct TagItem *tstate;
 
 /*************************************************************************/
 
-static ULONG OM_Get( struct IClass *cl, Object *obj, struct opGet *msg )
+static IPTR OM_Get( struct IClass *cl, Object *obj, struct opGet *msg )
 {
 struct mccdata *mccdata = INST_DATA(cl,obj);
 
@@ -245,7 +245,7 @@ struct mccdata *mccdata = INST_DATA(cl,obj);
 
 /*************************************************************************/
 
-static ULONG MM_ReadConfig( struct IClass *cl, Object *obj, struct MP_WINDOWSETTINGS_READCONFIG *msg )
+static IPTR MM_ReadConfig( struct IClass *cl, Object *obj, struct MP_WINDOWSETTINGS_READCONFIG *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 ULONG result;
@@ -272,7 +272,7 @@ ULONG result;
 			}
 		}
 	}
-	return( (ULONG) result );
+	return( (IPTR) result );
 }
 /* \\\ */
 /* /// MM_WriteConfig()
@@ -281,7 +281,7 @@ ULONG result;
 
 /*************************************************************************/
 
-static ULONG MM_WriteConfig( struct IClass *cl, Object *obj, struct MP_WINDOWSETTINGS_WRITECONFIG *msg )
+static IPTR MM_WriteConfig( struct IClass *cl, Object *obj, struct MP_WINDOWSETTINGS_WRITECONFIG *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 
@@ -300,7 +300,7 @@ struct mccdata *mccdata = INST_DATA( cl, obj );
 
 /*************************************************************************/
 
-static ULONG MM_Save( struct IClass *cl, Object *obj, Msg *msg )
+static IPTR MM_Save( struct IClass *cl, Object *obj, Msg *msg )
 {
 
 	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
@@ -319,7 +319,7 @@ static ULONG MM_Save( struct IClass *cl, Object *obj, Msg *msg )
 
 /*************************************************************************/
 
-static ULONG MM_Use( struct IClass *cl, Object *obj, Msg *msg )
+static IPTR MM_Use( struct IClass *cl, Object *obj, Msg *msg )
 {
 
 	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
@@ -337,7 +337,7 @@ static ULONG MM_Use( struct IClass *cl, Object *obj, Msg *msg )
 
 /*************************************************************************/
 
-static ULONG MM_Cancel( struct IClass *cl, Object *obj, Msg *msg )
+static IPTR MM_Cancel( struct IClass *cl, Object *obj, Msg *msg )
 {
 
 	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );

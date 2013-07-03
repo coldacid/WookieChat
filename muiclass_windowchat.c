@@ -118,13 +118,13 @@ struct mccdata
 
 /*************************************************************************/
 
-static ULONG OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
+static IPTR OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
 {
 Object *objs[ GID_LAST ];
 
 	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
-	if( (obj = (Object *)DoSuperNew( cl, obj,
+	if( ( obj = (Object *) DoSuperNew( cl, obj,
 			MUIA_Window_Title            , LGS( MSG_MUICLASS_WINDOWCHAT_TITLE ),
 			MUIA_Window_ID               , MAKE_ID('C','H','A','T'),
 			MUIA_Window_Menustrip, MenustripObject,
@@ -224,9 +224,9 @@ Object *objs[ GID_LAST ];
 			DoMethod( mccdata->mcc_ClassObjects[ i ], MUIM_Notify, MUIA_Menuitem_Trigger, MUIV_EveryTime, obj, 2, MM_WINDOWCHAT_MENUSELECT, i );
 		}
 
-		return( (ULONG) obj );
+		return( (IPTR) obj );
     }
-	return( (ULONG) NULL );
+	return( (IPTR) NULL );
 }
 /* \\\ */
 /* /// OM_Dispose()
@@ -235,7 +235,7 @@ Object *objs[ GID_LAST ];
 
 /*************************************************************************/
 
-static ULONG OM_Dispose( struct IClass *cl, Object *obj, Msg msg )
+static IPTR OM_Dispose( struct IClass *cl, Object *obj, Msg msg )
 {
 //struct mccdata *mccdata = INST_DATA( cl, obj );
 
@@ -250,7 +250,7 @@ static ULONG OM_Dispose( struct IClass *cl, Object *obj, Msg msg )
 
 /*************************************************************************/
 
-static ULONG OM_Get(struct IClass *cl, Object *obj, struct opGet *msg )
+static IPTR OM_Get(struct IClass *cl, Object *obj, struct opGet *msg )
 {
 	switch( msg->opg_AttrID ) {
 		case MA_APPLICATION_CLASSID: *msg->opg_Storage = CLASSID_WINDOWCHAT ; return( TRUE );
@@ -264,7 +264,7 @@ static ULONG OM_Get(struct IClass *cl, Object *obj, struct opGet *msg )
 
 /*************************************************************************/
 
-static ULONG OM_Set( struct IClass *cl, Object *obj, struct opSet *msg )
+static IPTR OM_Set( struct IClass *cl, Object *obj, struct opSet *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 struct TagItem *tag;
@@ -294,7 +294,7 @@ struct TagItem *tstate;
 
 /*************************************************************************/
 
-static ULONG MM_MenuSelect( struct IClass *cl, Object *obj, struct MP_WINDOWCHAT_MENUSELECT *msg )
+static IPTR MM_MenuSelect( struct IClass *cl, Object *obj, struct MP_WINDOWCHAT_MENUSELECT *msg )
 {
 //struct mccdata *mccdata = INST_DATA( cl, obj );
 Object *tmpobj;
@@ -342,7 +342,7 @@ Object *tmpobj;
 
 /*************************************************************************/
 
-static ULONG MM_VisualChange( struct IClass *cl, Object *obj, Msg *msg )
+static IPTR MM_VisualChange( struct IClass *cl, Object *obj, Msg *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 
@@ -366,7 +366,7 @@ struct mccdata *mccdata = INST_DATA( cl, obj );
 
 /*************************************************************************/
 
-static ULONG MM_ChannelPart( struct IClass *cl, Object *obj, Msg *msg )
+static IPTR MM_ChannelPart( struct IClass *cl, Object *obj, Msg *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 struct Server *s = NULL;
@@ -395,7 +395,7 @@ char partbuffer[ PART_BUFFER ];
 
 /*************************************************************************/
 
-static ULONG MM_ChannelAdd( struct IClass *cl, Object *obj, struct MP_WINDOWCHAT_CHANNELADD *msg )
+static IPTR MM_ChannelAdd( struct IClass *cl, Object *obj, struct MP_WINDOWCHAT_CHANNELADD *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 struct ChatChannelEntry *cce;
@@ -435,7 +435,7 @@ ULONG i;
 
 /*************************************************************************/
 
-static ULONG MM_ChannelRemove( struct IClass *cl, Object *obj, struct MP_WINDOWCHAT_CHANNELREMOVE *msg )
+static IPTR MM_ChannelRemove( struct IClass *cl, Object *obj, struct MP_WINDOWCHAT_CHANNELREMOVE *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 struct ChatChannelEntry *cce;
@@ -468,7 +468,7 @@ ULONG i;
 
 /*************************************************************************/
 
-static ULONG MM_ChannelChange( struct IClass *cl, Object *obj, struct MP_WINDOWCHAT_CHANNELCHANGE *msg )
+static IPTR MM_ChannelChange( struct IClass *cl, Object *obj, struct MP_WINDOWCHAT_CHANNELCHANGE *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 struct ChatLogEntry     *cle;
@@ -518,7 +518,7 @@ struct Channel          *c;
 
 /*************************************************************************/
 
-static ULONG MM_ChannelChangeTopic( struct IClass *cl, Object *obj, struct MP_WINDOWCHAT_CHANNELCHANGETOPIC *msg )
+static IPTR MM_ChannelChangeTopic( struct IClass *cl, Object *obj, struct MP_WINDOWCHAT_CHANNELCHANGETOPIC *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 struct ChatChannelEntry *cce;
@@ -546,7 +546,7 @@ struct Channel          *c;
 
 /*************************************************************************/
 
-static ULONG MM_ChannelNickAdd( struct IClass *cl, Object *obj, struct MP_WINDOWCHAT_CHANNELNICKADD *msg )
+static IPTR MM_ChannelNickAdd( struct IClass *cl, Object *obj, struct MP_WINDOWCHAT_CHANNELNICKADD *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 struct ChatChannelEntry *cce;
@@ -571,7 +571,7 @@ struct ChatChannelEntry *cce;
 
 /*************************************************************************/
 
-static ULONG MM_ChannelNickRemove( struct IClass *cl, Object *obj, struct MP_WINDOWCHAT_CHANNELNICKREMOVE *msg )
+static IPTR MM_ChannelNickRemove( struct IClass *cl, Object *obj, struct MP_WINDOWCHAT_CHANNELNICKREMOVE *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 struct ChatUserEntry *cue;
@@ -601,7 +601,7 @@ ULONG i;
 
 /*************************************************************************/
 
-static ULONG MM_MessageReceived( struct IClass *cl, Object *obj, struct MP_WINDOWCHAT_MESSAGERECEIVED *msg )
+static IPTR MM_MessageReceived( struct IClass *cl, Object *obj, struct MP_WINDOWCHAT_MESSAGERECEIVED *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 struct Channel          *c;

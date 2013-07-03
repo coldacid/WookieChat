@@ -68,13 +68,13 @@ struct mccdata
 
 /*************************************************************************/
 
-static ULONG OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
+static IPTR OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
 {
 Object *objs[ GID_LAST ];
 
 	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
-	if( (obj = (Object *)DoSuperNew( cl, obj,
+	if( ( obj = (Object *) DoSuperNew( cl, obj,
 			MUIA_Window_Title            , LGS( MSG_MUICLASS_WINDOWURLGRABBER_TITLE ),
 			MUIA_Window_ID               , MAKE_ID('U','R','L','G'),
 			MUIA_Window_NoMenus	       	 , TRUE,
@@ -103,9 +103,9 @@ Object *objs[ GID_LAST ];
 
 		DoMethod( objs[ GID_LIST      ], MM_URLLIST_IMPORTLISTASTEXT, DEFAULT_SETTINGSURL_NAME );
 
-		return( (ULONG) obj );
+		return( (IPTR) obj );
     }
-	return( (ULONG) NULL );
+	return( (IPTR) NULL );
 }
 /* \\\ */
 /* /// OM_Dispose()
@@ -114,7 +114,7 @@ Object *objs[ GID_LAST ];
 
 /*************************************************************************/
 
-static ULONG OM_Dispose( struct IClass *cl, Object *obj, Msg msg )
+static IPTR OM_Dispose( struct IClass *cl, Object *obj, Msg msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 
@@ -131,7 +131,7 @@ struct mccdata *mccdata = INST_DATA( cl, obj );
 
 /*************************************************************************/
 
-static ULONG OM_Get(struct IClass *cl, Object *obj, struct opGet *msg )
+static IPTR OM_Get(struct IClass *cl, Object *obj, struct opGet *msg )
 {
 	switch( msg->opg_AttrID ) {
 		case MA_APPLICATION_CLASSID: *msg->opg_Storage = CLASSID_WINDOWURLGRABBER ; return( TRUE );
@@ -146,7 +146,7 @@ static ULONG OM_Get(struct IClass *cl, Object *obj, struct opGet *msg )
 
 /*************************************************************************/
 
-static ULONG MM_DoubleClick( struct IClass *cl, Object *obj, Msg msg )
+static IPTR MM_DoubleClick( struct IClass *cl, Object *obj, Msg msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 char buffer[ 2* URLENTRY_URL_SIZEOF ]; /* geit FIXME: this function is using old stuff */
@@ -187,7 +187,7 @@ struct URLEntry *ue = NULL;
 
 /*************************************************************************/
 
-static ULONG MM_ExtractURL( struct IClass *cl, Object *obj, struct MP_WINDOWURLGRABBER_EXTRACTURL *msg )
+static IPTR MM_ExtractURL( struct IClass *cl, Object *obj, struct MP_WINDOWURLGRABBER_EXTRACTURL *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 LONG b, e, datalength;

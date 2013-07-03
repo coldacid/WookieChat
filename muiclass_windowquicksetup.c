@@ -69,7 +69,7 @@ struct mccdata
 
 /*************************************************************************/
 
-static ULONG OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
+static IPTR OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
 {
 Object *objs[ GID_LAST ];
 
@@ -119,9 +119,9 @@ Object *objs[ GID_LAST ];
 		DoMethod( mccdata->mcc_ClassObjects[ GID_USERNAME ], MUIM_Notify, MUIA_String_Contents, MUIV_EveryTime, obj, 1, MM_WINDOWQUICKSETUP_DISENABLE );
 		DoMethod( mccdata->mcc_ClassObjects[ GID_NICKNAME ], MUIM_Notify, MUIA_String_Contents, MUIV_EveryTime, obj, 1, MM_WINDOWQUICKSETUP_DISENABLE );
 
-		return( (ULONG) obj );
+		return( (IPTR) obj );
     }
-	return( (ULONG) NULL );
+	return( (IPTR) NULL );
 }
 /* \\\ */
 /* /// OM_Get()
@@ -130,7 +130,7 @@ Object *objs[ GID_LAST ];
 
 /*************************************************************************/
 
-static ULONG OM_Get(struct IClass *cl, Object *obj, struct opGet *msg )
+static IPTR OM_Get(struct IClass *cl, Object *obj, struct opGet *msg )
 {
 	switch( msg->opg_AttrID ) {
 		case MA_APPLICATION_CLASSID: *msg->opg_Storage = CLASSID_WINDOWQUICKSETUP ; return( TRUE );
@@ -144,7 +144,7 @@ static ULONG OM_Get(struct IClass *cl, Object *obj, struct opGet *msg )
 
 /*************************************************************************/
 
-static ULONG MM_DisEnable( struct IClass *cl, Object *obj, Msg *msg )
+static IPTR MM_DisEnable( struct IClass *cl, Object *obj, Msg *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 char *str;
@@ -173,7 +173,7 @@ ULONG count = 3;
 
 /*************************************************************************/
 
-static ULONG MM_CheckSettings( struct IClass *cl, Object *obj, Msg *msg )
+static IPTR MM_CheckSettings( struct IClass *cl, Object *obj, Msg *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 STRPTR str;
@@ -227,7 +227,7 @@ ULONG count = 3;
 
 /*************************************************************************/
 
-static ULONG MM_Continue( struct IClass *cl, Object *obj, Msg *msg )
+static IPTR MM_Continue( struct IClass *cl, Object *obj, Msg *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 char *str;

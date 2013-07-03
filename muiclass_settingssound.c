@@ -99,7 +99,7 @@ struct mccdata
 /*************************************************************************/
 #define SAMPLENAME_SIZEOF 0x200
 
-static ULONG OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
+static IPTR OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
 {
 Object *objs[ GID_LAST ];
 static STRPTR TAB_CYCLE_TABOPENMODES[ MSG_CY_WINDOWISINACTIVE - MSG_CY_NEVER + 2 ];
@@ -107,7 +107,7 @@ static STRPTR TAB_CYCLE_HIGHLIGHTMODES[ MSG_CY_TABISINACTIVE - MSG_CY_NEVER + 2 
 
 	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
-	if( (obj = (Object *) DoSuperNew( cl, obj,
+	if( ( obj = (Object *) DoSuperNew( cl, obj,
 					MUIA_Group_Horiz, TRUE,
 					MUIA_ContextMenu,
 							MenustripObject,
@@ -168,9 +168,9 @@ static STRPTR TAB_CYCLE_HIGHLIGHTMODES[ MSG_CY_TABISINACTIVE - MSG_CY_NEVER + 2 
 
 		DoMethod( obj, MM_SETTINGSSOUND_RESETTODEFAULTS );
 
-		return( (ULONG) obj );
+		return( (IPTR) obj );
     }
-	return( (ULONG) NULL );
+	return( (IPTR) NULL );
 }
 /* \\\ */
 /* /// MM_ContextMenuSelect()
@@ -178,7 +178,7 @@ static STRPTR TAB_CYCLE_HIGHLIGHTMODES[ MSG_CY_TABISINACTIVE - MSG_CY_NEVER + 2 
 
 /*************************************************************************/
 
-static ULONG MM_ContextMenuSelect( struct IClass *cl, Object *obj, struct  MUIP_ContextMenuChoice *msg )
+static IPTR MM_ContextMenuSelect( struct IClass *cl, Object *obj, struct  MUIP_ContextMenuChoice *msg )
 {
 
 	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
@@ -200,7 +200,7 @@ static ULONG MM_ContextMenuSelect( struct IClass *cl, Object *obj, struct  MUIP_
 
 /*************************************************************************/
 
-static ULONG MM_ResetToDefaults( struct IClass *cl, Object *obj, Msg *msg )
+static IPTR MM_ResetToDefaults( struct IClass *cl, Object *obj, Msg *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 ULONG i;
@@ -220,7 +220,7 @@ ULONG i;
 
 /*************************************************************************/
 
-static ULONG MM_ReadConfig( struct IClass *cl, Object *obj, struct MP_SETTINGSSOUND_READCONFIG *msg )
+static IPTR MM_ReadConfig( struct IClass *cl, Object *obj, struct MP_SETTINGSSOUND_READCONFIG *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 ULONG i;
@@ -241,7 +241,7 @@ ULONG i;
 
 /*************************************************************************/
 
-static ULONG MM_DisEnable( struct IClass *cl, Object *obj, Msg *msg )
+static IPTR MM_DisEnable( struct IClass *cl, Object *obj, Msg *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 BOOL global, tab, highlight, privmsg, ext;

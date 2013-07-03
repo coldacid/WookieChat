@@ -76,21 +76,21 @@ struct mccdata
 
 /*************************************************************************/
 
-static ULONG OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
+static IPTR OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
 {
 //Object *objs[ GID_LAST ];
 
 	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
-	if( (obj = (Object *)DoSuperNew( cl, obj, TAG_DONE ) ) ) {
+	if( ( obj = (Object *) DoSuperNew( cl, obj, TAG_DONE ) ) ) {
 
 //		  struct mccdata *mccdata = INST_DATA( cl, obj );
 
 //		  CopyMem( &objs[0], &mccdata->mcc_ClassObjects[0], sizeof( mccdata->mcc_ClassObjects));
 
-		return( (ULONG) obj );
+		return( (IPTR) obj );
     }
-	return( (ULONG) NULL );
+	return( (IPTR) NULL );
 }
 /* \\\ */
 /* /// OM_Setup()
@@ -99,7 +99,7 @@ static ULONG OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
 
 /*************************************************************************/
 
-static ULONG OM_Setup( struct IClass *cl, Object *obj, Msg *msg )
+static IPTR OM_Setup( struct IClass *cl, Object *obj, Msg *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 
@@ -118,7 +118,7 @@ struct mccdata *mccdata = INST_DATA( cl, obj );
 
 /*************************************************************************/
 
-static ULONG OM_Cleanup( struct IClass *cl, Object *obj, Msg *msg )
+static IPTR OM_Cleanup( struct IClass *cl, Object *obj, Msg *msg )
 {
 
 	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
@@ -135,7 +135,7 @@ static ULONG OM_Cleanup( struct IClass *cl, Object *obj, Msg *msg )
 
 /*************************************************************************/
 
-static ULONG OM_Display( struct IClass *cl, Object *obj, struct MUIP_NList_Display *msg )
+static IPTR OM_Display( struct IClass *cl, Object *obj, struct MUIP_NList_Display *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 struct ChatLogEntry *cle;
@@ -153,7 +153,7 @@ struct ChatLogEntry *cle;
 
 /*************************************************************************/
 
-static ULONG MM_ShowLastLine( struct IClass *cl, Object *obj, struct MP_CHATLOG_SHOWLASTLINE *msg )
+static IPTR MM_ShowLastLine( struct IClass *cl, Object *obj, struct MP_CHATLOG_SHOWLASTLINE *msg )
 {
 IPTR visible, top, total;
 
@@ -183,7 +183,7 @@ IPTR visible, top, total;
 
 /*************************************************************************/
 
-static ULONG MM_PensObtain( struct IClass *cl, Object *obj, Msg *msg )
+static IPTR MM_PensObtain( struct IClass *cl, Object *obj, Msg *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 struct MUI_PenSpec *penspec;
@@ -213,7 +213,7 @@ ULONG i;
 
 /*************************************************************************/
 
-static ULONG MM_PensRelease( struct IClass *cl, Object *obj, Msg *msg )
+static IPTR MM_PensRelease( struct IClass *cl, Object *obj, Msg *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 ULONG i;
@@ -232,7 +232,7 @@ ULONG i;
 
 /*************************************************************************/
 
-static ULONG MM_PensUpdate( struct IClass *cl, Object *obj, Msg *msg )
+static IPTR MM_PensUpdate( struct IClass *cl, Object *obj, Msg *msg )
 {
 
 	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
@@ -250,7 +250,7 @@ static ULONG MM_PensUpdate( struct IClass *cl, Object *obj, Msg *msg )
 
 /*************************************************************************/
 
-static ULONG MM_ComposeLogName( struct IClass *cl, Object *obj, struct MP_CHATLOG_COMPOSELOGNAME *msg )
+static IPTR MM_ComposeLogName( struct IClass *cl, Object *obj, struct MP_CHATLOG_COMPOSELOGNAME *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 struct Channel *c;
@@ -280,7 +280,7 @@ struct Server  *s;
 
 /*************************************************************************/
 
-static ULONG MM_OpenNewFile( struct IClass *cl, Object *obj, struct MP_CHATLOG_OPENNEWFILE *msg )
+static IPTR MM_OpenNewFile( struct IClass *cl, Object *obj, struct MP_CHATLOG_OPENNEWFILE *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 struct Channel *c;
@@ -317,7 +317,7 @@ struct DateStamp ds;
 
 /*************************************************************************/
 
-static ULONG MM_Open( struct IClass *cl, Object *obj, struct MP_CHATLOG_OPEN *msg )
+static IPTR MM_Open( struct IClass *cl, Object *obj, struct MP_CHATLOG_OPEN *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 struct Channel *c;
@@ -381,7 +381,7 @@ struct Server  *s;
 
 /*************************************************************************/
 
-static ULONG MM_Close( struct IClass *cl, Object *obj, struct MP_CHATLOG_CLOSE *msg )
+static IPTR MM_Close( struct IClass *cl, Object *obj, struct MP_CHATLOG_CLOSE *msg )
 {
 struct Channel *c;
 
@@ -403,7 +403,7 @@ struct Channel *c;
 
 /*************************************************************************/
 
-static ULONG MM_Write( struct IClass *cl, Object *obj, struct MP_CHATLOG_WRITE *msg )
+static IPTR MM_Write( struct IClass *cl, Object *obj, struct MP_CHATLOG_WRITE *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 struct Channel *c;
@@ -460,7 +460,7 @@ struct ChatLogEntry *cle;
 
 /*************************************************************************/
 
-static ULONG MM_EntryAlloc( struct IClass *cl, Object *obj, struct MP_CHATLOG_ENTRYALLOC *msg )
+static IPTR MM_EntryAlloc( struct IClass *cl, Object *obj, struct MP_CHATLOG_ENTRYALLOC *msg )
 {
 struct Channel *c;
 struct ChatLogEntry *cle = NULL;
@@ -483,7 +483,7 @@ struct ChatLogEntry *cle = NULL;
 
 /*************************************************************************/
 
-static ULONG MM_EntryFree( struct IClass *cl, Object *obj, struct MP_CHATLOG_ENTRYFREE *msg )
+static IPTR MM_EntryFree( struct IClass *cl, Object *obj, struct MP_CHATLOG_ENTRYFREE *msg )
 {
 struct ChatLogEntry *cle;
 

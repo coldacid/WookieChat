@@ -41,12 +41,12 @@
 
 /*************************************************************************/
 
-static ULONG OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
+static IPTR OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
 {
 
 	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
-	return( (ULONG) DoSuperNew( cl, obj,
+	return( (IPTR) DoSuperNew( cl, obj,
 							MUIA_NList_Title         , TRUE,
 							MUIA_CycleChain          , 1,
 							MUIA_NList_Format        , "BAR,",
@@ -60,7 +60,7 @@ static ULONG OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
 
 /*************************************************************************/
 
-static ULONG OM_Display( struct IClass *cl, Object *obj, struct MUIP_NList_Display *msg )
+static IPTR OM_Display( struct IClass *cl, Object *obj, struct MUIP_NList_Display *msg )
 {
 STRPTR *array = msg->strings;
 struct ButtonEntry *be;
@@ -81,7 +81,7 @@ struct ButtonEntry *be;
 
 /*************************************************************************/
 
-static ULONG OM_Destruct( struct IClass *cl, Object *obj, struct MUIP_NList_Destruct *msg )
+static IPTR OM_Destruct( struct IClass *cl, Object *obj, struct MUIP_NList_Destruct *msg )
 {
 	if( msg->entry ) {
 		FreeVec( msg->entry );
@@ -95,7 +95,7 @@ static ULONG OM_Destruct( struct IClass *cl, Object *obj, struct MUIP_NList_Dest
 
 /*************************************************************************/
 
-static ULONG OM_Import( struct IClass *cl, Object *obj, struct MUIP_Import *msg )
+static IPTR OM_Import( struct IClass *cl, Object *obj, struct MUIP_Import *msg )
 {
 ULONG i;
 char *text;
@@ -121,7 +121,7 @@ char *text;
 
 /*************************************************************************/
 
-static ULONG OM_Export( struct IClass *cl, Object *obj, struct MUIP_Import *msg )
+static IPTR OM_Export( struct IClass *cl, Object *obj, struct MUIP_Import *msg )
 {
 struct ButtonEntry *be;
 char buffer[ BUTTONENTRY_NAME_SIZEOF + BUTTONENTRY_COMMAND_SIZEOF + 64 ];
@@ -146,7 +146,7 @@ ULONG i;
 
 /*************************************************************************/
 
-static ULONG MM_Add( struct IClass *cl, Object *obj, struct MP_BUTTONLIST_ADD *msg )
+static IPTR MM_Add( struct IClass *cl, Object *obj, struct MP_BUTTONLIST_ADD *msg )
 {
 struct ButtonEntry *be;
 
@@ -156,7 +156,7 @@ struct ButtonEntry *be;
 		DoMethod( obj, MUIM_NList_InsertSingle, be, MUIV_NList_Insert_Bottom );
 		SetAttrs( obj, MUIA_NList_Active, MUIV_NList_Active_Bottom, TAG_DONE );
 	}
-	return( (ULONG) be );
+	return( (IPTR) be );
 }
 /* \\\ */
 

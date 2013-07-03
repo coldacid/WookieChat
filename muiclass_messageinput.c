@@ -87,7 +87,7 @@ struct History {
 
 /*************************************************************************/
 
-static ULONG OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
+static IPTR OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
 {
 	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
@@ -109,7 +109,7 @@ static ULONG OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
 
 /*************************************************************************/
 
-static ULONG OM_Dispose( struct IClass *cl, Object *obj, Msg msg )
+static IPTR OM_Dispose( struct IClass *cl, Object *obj, Msg msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 struct History *history;
@@ -129,10 +129,10 @@ struct History *history;
 
 /*************************************************************************/
 
-static ULONG OM_Setup( struct IClass *cl, Object *obj, Msg msg )
+static IPTR OM_Setup( struct IClass *cl, Object *obj, Msg msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
-ULONG rc;
+IPTR rc;
 
 	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
@@ -155,7 +155,7 @@ ULONG rc;
 
 /*************************************************************************/
 
-static ULONG OM_Cleanup( struct IClass *cl, Object *obj, Msg msg )
+static IPTR OM_Cleanup( struct IClass *cl, Object *obj, Msg msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 
@@ -172,7 +172,7 @@ struct mccdata *mccdata = INST_DATA( cl, obj );
 
 /*************************************************************************/
 
-static ULONG OM_HandleEvent( struct IClass *cl, Object *obj, struct MUIP_HandleEvent *msg )
+static IPTR OM_HandleEvent( struct IClass *cl, Object *obj, struct MUIP_HandleEvent *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 
@@ -365,7 +365,7 @@ struct mccdata *mccdata = INST_DATA( cl, obj );
 
 /*************************************************************************/
 
-static ULONG OM_Set( struct IClass *cl, Object *obj, struct opSet *msg )
+static IPTR OM_Set( struct IClass *cl, Object *obj, struct opSet *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 struct TagItem *tag;
@@ -398,7 +398,7 @@ NTIP struct TagItem *tstate;
 
 /*************************************************************************/
 
-static ULONG MM_Find( struct IClass *cl, Object *obj, struct MP_MESSAGEINPUT_FIND *msg )
+static IPTR MM_Find( struct IClass *cl, Object *obj, struct MP_MESSAGEINPUT_FIND *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 struct History *history = msg->First;
@@ -452,7 +452,7 @@ ULONG length;
 
 /*************************************************************************/
 
-static ULONG MM_Add( struct IClass *cl, Object *obj, struct MP_MESSAGEINPUT_ADD *msg )
+static IPTR MM_Add( struct IClass *cl, Object *obj, struct MP_MESSAGEINPUT_ADD *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 struct History *history;
@@ -485,7 +485,7 @@ ULONG len;
 
 /*************************************************************************/
 
-static ULONG MM_Remove( struct IClass *cl, Object *obj, struct MP_MESSAGEINPUT_REMOVE *msg )
+static IPTR MM_Remove( struct IClass *cl, Object *obj, struct MP_MESSAGEINPUT_REMOVE *msg )
 {
 struct History *history;
 

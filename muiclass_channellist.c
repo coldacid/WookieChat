@@ -39,12 +39,12 @@
 
 /*************************************************************************/
 
-static ULONG OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
+static IPTR OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
 {
 
 	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
-	return( (ULONG) (obj = (Object *) DoSuperNew( cl, obj,
+	return( (IPTR) (obj = (Object *) DoSuperNew( cl, obj,
 													MUIA_NList_Title         , TRUE,
 													MUIA_CycleChain          , 1,
 													MUIA_NList_Format        , "BAR,",
@@ -57,7 +57,7 @@ static ULONG OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
 
 /*************************************************************************/
 
-static ULONG OM_Display( struct IClass *cl, Object *obj, struct MUIP_NList_Display *msg )
+static IPTR OM_Display( struct IClass *cl, Object *obj, struct MUIP_NList_Display *msg )
 {
 STRPTR *array = msg->strings;
 struct ChannelEntry *ce;
@@ -78,7 +78,7 @@ struct ChannelEntry *ce;
 
 /*************************************************************************/
 
-static ULONG MM_Add( struct IClass *cl, Object *obj, struct MP_CHANNELLIST_ADD *msg )
+static IPTR MM_Add( struct IClass *cl, Object *obj, struct MP_CHANNELLIST_ADD *msg )
 {
 struct ChannelEntry *ce;
 
@@ -89,7 +89,7 @@ struct ChannelEntry *ce;
 			AddTail( &((struct ServerEntry *) msg->ServerEntry)->se_ChannelList, (struct Node *) ce );
 		}
 	}
-	return( (ULONG) ce );
+	return( (IPTR) ce );
 }
 /* \\\ */
 /* /// MM_Remove()
@@ -98,7 +98,7 @@ struct ChannelEntry *ce;
 
 /*************************************************************************/
 
-static ULONG MM_Remove( struct IClass *cl, Object *obj, struct MP_CHANNELLIST_REMOVE *msg )
+static IPTR MM_Remove( struct IClass *cl, Object *obj, struct MP_CHANNELLIST_REMOVE *msg )
 {
 struct ChannelEntry *ce;
 

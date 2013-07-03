@@ -39,12 +39,12 @@
 
 /*************************************************************************/
 
-static ULONG OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
+static IPTR OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
 {
 
 	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
-	return( (ULONG) (obj = (Object *) DoSuperNew( cl, obj,
+	return( (IPTR) (obj = (Object *) DoSuperNew( cl, obj,
 													MUIA_NList_Title         , TRUE,
 													MUIA_NList_Format        , "BAR,",
 													MUIA_CycleChain          , 1,
@@ -57,7 +57,7 @@ static ULONG OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
 
 /*************************************************************************/
 
-static ULONG OM_Display( struct IClass *cl, Object *obj, struct MUIP_NList_Display *msg )
+static IPTR OM_Display( struct IClass *cl, Object *obj, struct MUIP_NList_Display *msg )
 {
 STRPTR *array = msg->strings;
 struct NickEntry *ne;
@@ -79,7 +79,7 @@ struct NickEntry *ne;
 
 /*************************************************************************/
 
-static ULONG MM_Add( struct IClass *cl, Object *obj, struct MP_NICKLIST_ADD *msg )
+static IPTR MM_Add( struct IClass *cl, Object *obj, struct MP_NICKLIST_ADD *msg )
 {
 struct NickEntry *ne;
 
@@ -92,7 +92,7 @@ struct NickEntry *ne;
 			AddTail( &((struct ServerEntry *) msg->ServerEntry)->se_NickList, (struct Node *) ne );
 		}
 	}
-	return( (ULONG) ne );
+	return( (IPTR) ne );
 }
 /* \\\ */
 /* /// MM_Remove()
@@ -101,7 +101,7 @@ struct NickEntry *ne;
 
 /*************************************************************************/
 
-static ULONG MM_Remove( struct IClass *cl, Object *obj, struct MP_NICKLIST_REMOVE *msg )
+static IPTR MM_Remove( struct IClass *cl, Object *obj, struct MP_NICKLIST_REMOVE *msg )
 {
 struct NickEntry *ne;
 

@@ -60,13 +60,13 @@ struct mccdata
 
 /*************************************************************************/
 
-static ULONG OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
+static IPTR OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
 {
 Object *objs[ GID_LAST ];
 
 	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
-	if( (obj = (Object *)DoSuperNew( cl, obj,
+	if( ( obj = (Object *) DoSuperNew( cl, obj,
 			MUIA_Window_Title            , LGS( MSG_REQUESTER_TITLE ),
 			MUIA_Window_ID               , MAKE_ID('Q','U','I','T'),
 			MUIA_Window_CloseGadget      , FALSE,
@@ -90,9 +90,9 @@ Object *objs[ GID_LAST ];
 		DoMethod( mccdata->mcc_ClassObjects[ GID_CANCEL ], MUIM_Notify, MUIA_Pressed, FALSE, obj, 3, MUIM_Set, MUIA_Window_Open, FALSE );
 		DoMethod( mccdata->mcc_ClassObjects[ GID_OK     ], MUIM_Notify, MUIA_Pressed, FALSE, MUIV_Notify_Application, 2, MUIM_Application_ReturnID, MUIV_Application_ReturnID_Quit );
 
-		return( (ULONG) obj );
+		return( (IPTR) obj );
     }
-	return( (ULONG) NULL );
+	return( (IPTR) NULL );
 }
 /* \\\ */
 /* /// OM_Dispose()
@@ -101,7 +101,7 @@ Object *objs[ GID_LAST ];
 
 /*************************************************************************/
 
-static ULONG OM_Dispose( struct IClass *cl, Object *obj, Msg msg )
+static IPTR OM_Dispose( struct IClass *cl, Object *obj, Msg msg )
 {
 //struct mccdata *mccdata = INST_DATA( cl, obj );
 
@@ -116,7 +116,7 @@ static ULONG OM_Dispose( struct IClass *cl, Object *obj, Msg msg )
 
 /*************************************************************************/
 
-static ULONG OM_Get(struct IClass *cl, Object *obj, struct opGet *msg )
+static IPTR OM_Get(struct IClass *cl, Object *obj, struct opGet *msg )
 {
 	switch( msg->opg_AttrID ) {
 		case MA_APPLICATION_CLASSID: *msg->opg_Storage = CLASSID_WINDOWQUIT ; return( TRUE );

@@ -41,7 +41,7 @@
 
 /*************************************************************************/
 
-static ULONG OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
+static IPTR OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
 {
 
 	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
@@ -57,7 +57,7 @@ static ULONG OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
 			DoMethod( obj, MM_EVENTLIST_ADD, i, 0, NULL, NULL );
 		}
 	}
-	return( (ULONG) obj );
+	return( (IPTR) obj );
 }
 /* \\\ */
 /* /// OM_Display()
@@ -66,7 +66,7 @@ static ULONG OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
 
 /*************************************************************************/
 
-static ULONG OM_Display( struct IClass *cl, Object *obj, struct MUIP_NList_Display *msg )
+static IPTR OM_Display( struct IClass *cl, Object *obj, struct MUIP_NList_Display *msg )
 {
 STRPTR *array = msg->strings;
 struct EventEntry *ee;
@@ -91,7 +91,7 @@ struct EventEntry *ee;
 
 /*************************************************************************/
 
-static ULONG OM_Destruct( struct IClass *cl, Object *obj, struct MUIP_NList_Destruct *msg )
+static IPTR OM_Destruct( struct IClass *cl, Object *obj, struct MUIP_NList_Destruct *msg )
 {
 
 	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
@@ -109,7 +109,7 @@ static ULONG OM_Destruct( struct IClass *cl, Object *obj, struct MUIP_NList_Dest
 
 /*************************************************************************/
 
-static ULONG OM_Import( struct IClass *cl, Object *obj, struct MUIP_Import *msg )
+static IPTR OM_Import( struct IClass *cl, Object *obj, struct MUIP_Import *msg )
 {
 struct EventEntry *ee;
 ULONG i;
@@ -141,7 +141,7 @@ char *text;
 
 /*************************************************************************/
 
-static ULONG OM_Export( struct IClass *cl, Object *obj, struct MUIP_Import *msg )
+static IPTR OM_Export( struct IClass *cl, Object *obj, struct MUIP_Import *msg )
 {
 struct EventEntry *ee;
 char buffer[ EVENTENTRY_SCRIPT_SIZEOF + EVENTENTRY_TEXT_SIZEOF + 64 ];
@@ -168,7 +168,7 @@ ULONG i;
 
 /*************************************************************************/
 
-static ULONG MM_Add( struct IClass *cl, Object *obj, struct MP_EVENTLIST_ADD *msg )
+static IPTR MM_Add( struct IClass *cl, Object *obj, struct MP_EVENTLIST_ADD *msg )
 {
 struct EventEntry *ee;
 ULONG i, newitem = 0;
@@ -202,7 +202,7 @@ ULONG i, newitem = 0;
 			DoMethod( obj, MUIM_NList_InsertSingle, ee, MUIV_NList_Insert_Bottom );
 		}
 	}
-	return( (ULONG) ee );
+	return( (IPTR) ee );
 }
 /* \\\ */
 

@@ -66,7 +66,7 @@ struct mccdata
 
 /*************************************************************************/
 
-static ULONG OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
+static IPTR OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
 {
 Object *objs[ GID_LAST ];
 static STRPTR TAB_CYCLE_EVENTMODES[ MSG_MUICLASS_EVENTLIST_WINDOWISINACTIVE - MSG_MUICLASS_EVENTLIST_MODENEVER + 2 ];
@@ -104,9 +104,9 @@ static STRPTR TAB_CYCLE_EVENTMODES[ MSG_MUICLASS_EVENTLIST_WINDOWISINACTIVE - MS
 
 		DoMethod( obj, MM_SETTINGSEVENT_LISTTOGADGETS );
 
-		return( (ULONG) obj );
+		return( (IPTR) obj );
     }
-	return( (ULONG) NULL );
+	return( (IPTR) NULL );
 }
 /* \\\ */
 /* /// MM_DisEnable()
@@ -115,7 +115,7 @@ static STRPTR TAB_CYCLE_EVENTMODES[ MSG_MUICLASS_EVENTLIST_WINDOWISINACTIVE - MS
 
 /*************************************************************************/
 
-static ULONG MM_DisEnable( struct IClass *cl, Object *obj, Msg *msg )
+static IPTR MM_DisEnable( struct IClass *cl, Object *obj, Msg *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 LONG pos;
@@ -139,7 +139,7 @@ BOOL events = TRUE;
 
 /*************************************************************************/
 
-static ULONG MM_GadgetsToList( struct IClass *cl, Object *obj, Msg *msg UNUSED )
+static IPTR MM_GadgetsToList( struct IClass *cl, Object *obj, Msg *msg UNUSED )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 struct EventEntry *ee = NULL;
@@ -166,7 +166,7 @@ struct EventEntry *ee = NULL;
 
 /*************************************************************************/
 
-static ULONG MM_ListToGadgets( struct IClass *cl, Object *obj, Msg *msg UNUSED )
+static IPTR MM_ListToGadgets( struct IClass *cl, Object *obj, Msg *msg UNUSED )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 struct EventEntry *ee = NULL;
@@ -190,7 +190,7 @@ struct EventEntry *ee = NULL;
 
 /*************************************************************************/
 
-static ULONG MM_ReadConfig( struct IClass *cl, Object *obj, struct MP_SETTINGSEVENT_READCONFIG *msg )
+static IPTR MM_ReadConfig( struct IClass *cl, Object *obj, struct MP_SETTINGSEVENT_READCONFIG *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 
@@ -198,7 +198,7 @@ struct mccdata *mccdata = INST_DATA( cl, obj );
 
 	switch( msg->ObjectID ) {
 		case OID_EVT_LIST:
-			return( (ULONG) mccdata->mcc_ClassObjects[ GID_EVENTLIST ] );
+			return( (IPTR) mccdata->mcc_ClassObjects[ GID_EVENTLIST ] );
 		default:
 			return( 0 );
 	}

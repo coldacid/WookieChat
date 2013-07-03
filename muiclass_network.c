@@ -78,7 +78,7 @@ struct mccdata
 
 /*************************************************************************/
 
-static ULONG OM_New( struct IClass *cl, Object *obj, struct opSet *msg )
+static IPTR OM_New( struct IClass *cl, Object *obj, struct opSet *msg )
 {
 
 	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
@@ -94,7 +94,7 @@ static ULONG OM_New( struct IClass *cl, Object *obj, struct opSet *msg )
 		mccdata->mcc_FDMax = -1;
 
 	}
-	return( (ULONG) obj );
+	return( (IPTR) obj );
 }
 /* \\\ */
 /* /// OM_Dispose()
@@ -103,7 +103,7 @@ static ULONG OM_New( struct IClass *cl, Object *obj, struct opSet *msg )
 
 /*************************************************************************/
 
-static ULONG OM_Dispose( struct IClass *cl, Object *obj, Msg *msg )
+static IPTR OM_Dispose( struct IClass *cl, Object *obj, Msg *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 struct Server *s;
@@ -123,7 +123,7 @@ struct Server *s;
 
 /*************************************************************************/
 
-static ULONG OM_Set( struct IClass *cl, Object *obj, struct opSet *msg )
+static IPTR OM_Set( struct IClass *cl, Object *obj, struct opSet *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 struct TagItem *tag;
@@ -155,7 +155,7 @@ struct TagItem *tstate;
 
 /*************************************************************************/
 
-static ULONG MM_ServerConnectAuto( struct IClass *cl, Object *obj, struct MP_NETWORK_SERVERCONNECTAUTO *msg )
+static IPTR MM_ServerConnectAuto( struct IClass *cl, Object *obj, struct MP_NETWORK_SERVERCONNECTAUTO *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 struct ServerEntry *se;
@@ -193,7 +193,7 @@ ULONG i;
 
 /*************************************************************************/
 
-static ULONG MM_ServerLogin( struct IClass *cl, Object *obj, struct MP_NETWORK_SERVERLOGIN *msg )
+static IPTR MM_ServerLogin( struct IClass *cl, Object *obj, struct MP_NETWORK_SERVERLOGIN *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 struct Server *s = msg->Server;
@@ -230,7 +230,7 @@ ULONG i;
 
 /*************************************************************************/
 
-static ULONG MM_ServerAutoJoin( struct IClass *cl, Object *obj, struct MP_NETWORK_SERVERAUTOJOIN *msg )
+static IPTR MM_ServerAutoJoin( struct IClass *cl, Object *obj, struct MP_NETWORK_SERVERAUTOJOIN *msg )
 {
 struct Server  *s = msg->Server;
 struct Channel *c;
@@ -260,7 +260,7 @@ char *buffer;
 
 /*************************************************************************/
 
-static ULONG MM_ServerFind( struct IClass *cl, Object *obj, struct MP_NETWORK_SERVERFIND *msg )
+static IPTR MM_ServerFind( struct IClass *cl, Object *obj, struct MP_NETWORK_SERVERFIND *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 struct ServerEntry *se = msg->ServerEntry;
@@ -284,7 +284,7 @@ struct Server *s;
 
 /*************************************************************************/
 
-static ULONG MM_ServerAlloc( struct IClass *cl, Object *obj, struct MP_NETWORK_SERVERALLOC *msg )
+static IPTR MM_ServerAlloc( struct IClass *cl, Object *obj, struct MP_NETWORK_SERVERALLOC *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 struct Server       *s = NULL;
@@ -351,7 +351,7 @@ struct ChannelEntry *ce;
 
 /*************************************************************************/
 
-static ULONG MM_ServerFree( struct IClass *cl, Object *obj, struct MP_NETWORK_SERVERFREE *msg )
+static IPTR MM_ServerFree( struct IClass *cl, Object *obj, struct MP_NETWORK_SERVERFREE *msg )
 {
 //struct mccdata *mccdata = INST_DATA( cl, obj );
 struct Server   *s = msg->Server;
@@ -393,11 +393,11 @@ struct Channel      *c;
 **
 */
 
-static ULONG MM_ServerSocketInit( struct IClass *cl, Object *obj, struct MP_NETWORK_SERVERSOCKETINIT *msg )
+static IPTR MM_ServerSocketInit( struct IClass *cl, Object *obj, struct MP_NETWORK_SERVERSOCKETINIT *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 struct Server *s;
-ULONG result;
+IPTR result;
 
 	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
@@ -466,7 +466,7 @@ ULONG result;
 **
 */
 
-static ULONG MM_ServerSocketClose( struct IClass *cl, Object *obj, struct MP_NETWORK_SERVERSOCKETCLOSE *msg )
+static IPTR MM_ServerSocketClose( struct IClass *cl, Object *obj, struct MP_NETWORK_SERVERSOCKETCLOSE *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 struct Server *s;
@@ -498,10 +498,10 @@ struct Server *s;
 
 /*************************************************************************/
 
-static ULONG MM_ServerConnect( struct IClass *cl, Object *obj, struct MP_NETWORK_SERVERCONNECT *msg )
+static IPTR MM_ServerConnect( struct IClass *cl, Object *obj, struct MP_NETWORK_SERVERCONNECT *msg )
 {
 struct Server *s = msg->Server;
-ULONG result;
+IPTR result;
 
 	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
@@ -559,7 +559,7 @@ ULONG result;
 
 /*************************************************************************/
 
-static ULONG MM_ServerDisconnect( struct IClass *cl, Object *obj, struct MP_NETWORK_SERVERDISCONNECT *msg )
+static IPTR MM_ServerDisconnect( struct IClass *cl, Object *obj, struct MP_NETWORK_SERVERDISCONNECT *msg )
 {
 struct Server *s = msg->Server;
 
@@ -576,7 +576,7 @@ struct Server *s = msg->Server;
 **
 */
 
-static ULONG MM_ServerMessageReceived( struct IClass *cl, Object *obj, struct MP_NETWORK_SERVERMESSAGERECEIVED *msg )
+static IPTR MM_ServerMessageReceived( struct IClass *cl, Object *obj, struct MP_NETWORK_SERVERMESSAGERECEIVED *msg )
 {
 //struct mccdata *mccdata = INST_DATA( cl, obj );
 struct Server  *s = msg->Server;
@@ -613,7 +613,7 @@ struct SendNode {
 
 /*************************************************************************/
 
-static ULONG MM_ServerMessageSendMsg( struct IClass *cl, Object *obj, struct MP_NETWORK_SERVERMESSAGESENDMSG *msg )
+static IPTR MM_ServerMessageSendMsg( struct IClass *cl, Object *obj, struct MP_NETWORK_SERVERMESSAGESENDMSG *msg )
 {
 struct SendNode *sn;
 
@@ -643,7 +643,7 @@ struct SendNode *sn;
 
 /*************************************************************************/
 
-static ULONG MM_ServerMessageSendProc( struct IClass *cl, Object *obj, Msg *msg )
+static IPTR MM_ServerMessageSendProc( struct IClass *cl, Object *obj, Msg *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 struct Server   *s;
@@ -703,7 +703,7 @@ char *tmp;
 }
 /* \\\ */
 
-static ULONG MM_ServerMessageParseBegin( struct IClass *cl, Object *obj, struct MP_NETWORK_SERVERMESSAGEPARSEBEGIN *msg )
+static IPTR MM_ServerMessageParseBegin( struct IClass *cl, Object *obj, struct MP_NETWORK_SERVERMESSAGEPARSEBEGIN *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 struct ServerMessageParse *smp;
@@ -847,7 +847,7 @@ ULONG i;
 
 /*************************************************************************/
 
-static ULONG MM_ServerMessageParseEnd( struct IClass *cl, Object *obj, struct MP_NETWORK_SERVERMESSAGEPARSEEND *msg )
+static IPTR MM_ServerMessageParseEnd( struct IClass *cl, Object *obj, struct MP_NETWORK_SERVERMESSAGEPARSEEND *msg )
 {
 //	  debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
@@ -862,10 +862,10 @@ static ULONG MM_ServerMessageParseEnd( struct IClass *cl, Object *obj, struct MP
 
 /*************************************************************************/
 
-static ULONG MM_ServerMessageProcess( struct IClass *cl, Object *obj, struct MP_NETWORK_SERVERMESSAGEPROCESS *msg )
+static IPTR MM_ServerMessageProcess( struct IClass *cl, Object *obj, struct MP_NETWORK_SERVERMESSAGEPROCESS *msg )
 {
 struct ServerMessageParse *smp = msg->ServerMessageParse;
-ULONG result = 0, i;
+IPTR result = 0, i;
 
 //	  debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
@@ -891,10 +891,10 @@ ULONG result = 0, i;
 
 /*************************************************************************/
 
-static ULONG MM_ServerSendData( struct IClass *cl, Object *obj, struct MP_NETWORK_SERVERSENDDATA *msg )
+static IPTR MM_ServerSendData( struct IClass *cl, Object *obj, struct MP_NETWORK_SERVERSENDDATA *msg )
 {
 struct Server *s = msg->Server;
-ULONG result;
+IPTR result;
 
 	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
@@ -914,7 +914,7 @@ ULONG result;
 
 /*************************************************************************/
 
-static ULONG MM_ServerReceiveData( struct IClass *cl, Object *obj, struct MP_NETWORK_SERVERRECEIVEDATA *msg )
+static IPTR MM_ServerReceiveData( struct IClass *cl, Object *obj, struct MP_NETWORK_SERVERRECEIVEDATA *msg )
 {
 struct Server *s = msg->Server;
 LONG bytes;
@@ -933,7 +933,7 @@ LONG bytes;
 			DoMethod( obj, MM_NETWORK_SERVERDISCONNECT );
 		}
 	}
-	return(0);
+	return( 0 );
 }
 /* \\\ */
 
@@ -943,7 +943,7 @@ LONG bytes;
 
 /*************************************************************************/
 
-static ULONG MM_WaitSelect( struct IClass *cl, Object *obj, struct MP_NETWORK_WAITSELECT *msg )
+static IPTR MM_WaitSelect( struct IClass *cl, Object *obj, struct MP_NETWORK_WAITSELECT *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 LONG selectresult;
@@ -1020,7 +1020,7 @@ LONG waitsignals = *((ULONG*) msg->SignalMask );
 
 		*((ULONG*) msg->SignalMask ) = Wait( waitsignals );
 	}
-	return( selectresult );
+	return( (IPTR) selectresult );
 }
 /* \\\ */
 
@@ -1030,7 +1030,7 @@ LONG waitsignals = *((ULONG*) msg->SignalMask );
 
 /*************************************************************************/
 
-static ULONG MM_ChannelFind( struct IClass *cl, Object *obj, struct MP_NETWORK_CHANNELFIND *msg )
+static IPTR MM_ChannelFind( struct IClass *cl, Object *obj, struct MP_NETWORK_CHANNELFIND *msg )
 {
 struct Server   *s = msg->Server;
 struct Channel      *c;
@@ -1058,7 +1058,7 @@ struct Channel      *c;
 
 /*************************************************************************/
 
-static ULONG MM_ChannelAlloc( struct IClass *cl, Object *obj, struct MP_NETWORK_CHANNELALLOC *msg )
+static IPTR MM_ChannelAlloc( struct IClass *cl, Object *obj, struct MP_NETWORK_CHANNELALLOC *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 struct Server   *s = msg->Server;
@@ -1089,7 +1089,7 @@ struct Channel      *c = NULL;
 
 /*************************************************************************/
 
-static ULONG MM_ChannelFree( struct IClass *cl, Object *obj, struct MP_NETWORK_CHANNELFREE *msg )
+static IPTR MM_ChannelFree( struct IClass *cl, Object *obj, struct MP_NETWORK_CHANNELFREE *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 struct Channel      *c  = msg->Channel;
@@ -1124,7 +1124,7 @@ struct Node *node;
 
 /*************************************************************************/
 
-static ULONG MM_ChatNickEntryAlloc( struct IClass *cl, Object *obj, struct MP_NETWORK_CHATNICKENTRYALLOC *msg )
+static IPTR MM_ChatNickEntryAlloc( struct IClass *cl, Object *obj, struct MP_NETWORK_CHATNICKENTRYALLOC *msg )
 {
 struct ChatNickEntry *cne;
 struct Channel *c;
@@ -1153,7 +1153,7 @@ struct Channel *c;
 
 /*************************************************************************/
 
-static ULONG MM_ChatNickEntryFree( struct IClass *cl, Object *obj, struct MP_NETWORK_CHATNICKENTRYFREE *msg )
+static IPTR MM_ChatNickEntryFree( struct IClass *cl, Object *obj, struct MP_NETWORK_CHATNICKENTRYFREE *msg )
 {
 struct ChatNickEntry *cne;
 

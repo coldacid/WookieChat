@@ -107,7 +107,7 @@ struct mccdata
 
 /*************************************************************************/
 
-static ULONG OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
+static IPTR OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
 {
 Object *objs[ GID_LAST ];
 static STRPTR TAB_CYCLE_NICKCOMPLETITION[ MSG_CY_WOOKIESTYLE - MSG_CY_MIRCSTYLE + 2 ];
@@ -186,9 +186,9 @@ static STRPTR TAB_CYCLE_NICKCOMPLETITION[ MSG_CY_WOOKIESTYLE - MSG_CY_MIRCSTYLE 
 
 		DoMethod( obj, MM_SETTINGSGENERAL_RESETTODEFAULTS );
 
-		return( (ULONG) obj );
+		return( (IPTR) obj );
     }
-	return( (ULONG) NULL );
+	return( (IPTR) NULL );
 }
 /* \\\ */
 /* /// MM_ContextMenuSelect()
@@ -196,7 +196,7 @@ static STRPTR TAB_CYCLE_NICKCOMPLETITION[ MSG_CY_WOOKIESTYLE - MSG_CY_MIRCSTYLE 
 
 /*************************************************************************/
 
-static ULONG MM_ContextMenuSelect( struct IClass *cl, Object *obj, struct  MUIP_ContextMenuChoice *msg )
+static IPTR MM_ContextMenuSelect( struct IClass *cl, Object *obj, struct  MUIP_ContextMenuChoice *msg )
 {
 
 	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
@@ -218,7 +218,7 @@ static ULONG MM_ContextMenuSelect( struct IClass *cl, Object *obj, struct  MUIP_
 
 /*************************************************************************/
 
-static ULONG MM_ResetToDefaults( struct IClass *cl, Object *obj, Msg *msg )
+static IPTR MM_ResetToDefaults( struct IClass *cl, Object *obj, Msg *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 ULONG i;
@@ -235,7 +235,7 @@ ULONG i;
 
 /*************************************************************************/
 
-static ULONG MM_ReadConfig( struct IClass *cl, Object *obj, struct MP_SETTINGSGENERAL_READCONFIG *msg )
+static IPTR MM_ReadConfig( struct IClass *cl, Object *obj, struct MP_SETTINGSGENERAL_READCONFIG *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 ULONG i;
@@ -244,7 +244,7 @@ ULONG i;
 
 	for( i = 0 ; TAB_CONFIGITEMS[ i ].GadgetID != -1 ; i++ ) {
 		if( TAB_CONFIGITEMS[ i ].ObjectID == msg->ObjectID ) {
-			return( (ULONG) MUIGetVar( mccdata->mcc_ClassObjects[ TAB_CONFIGITEMS[ i ].GadgetID ], TAB_CONFIGITEMS[ i ].Attr ) );
+			return( (IPTR) MUIGetVar( mccdata->mcc_ClassObjects[ TAB_CONFIGITEMS[ i ].GadgetID ], TAB_CONFIGITEMS[ i ].Attr ) );
 		}
 	}
 	return( 0 );

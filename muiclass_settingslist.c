@@ -40,12 +40,12 @@
 
 /*************************************************************************/
 
-static ULONG OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
+static IPTR OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
 {
 
 	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 	
-	return( (ULONG) DoSuperNew( cl, obj,
+	return( (IPTR) DoSuperNew( cl, obj,
 									MUIA_Frame               , MUIV_Frame_InputList,
 									MUIA_NList_Input         , TRUE,
 									TAG_DONE ) );
@@ -57,7 +57,7 @@ static ULONG OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
 
 /*************************************************************************/
 
-static ULONG OM_Display( struct IClass *cl, Object *obj, struct MUIP_NList_Display *msg )
+static IPTR OM_Display( struct IClass *cl, Object *obj, struct MUIP_NList_Display *msg )
 {
 	*msg->strings = msg->entry;
 	return( 0 );

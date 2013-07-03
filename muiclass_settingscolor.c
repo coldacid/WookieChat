@@ -132,7 +132,7 @@ struct mccdata
 
 /*************************************************************************/
 
-static ULONG OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
+static IPTR OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
 {
 Object *objs[ GID_LAST ];
 
@@ -230,9 +230,9 @@ Object *objs[ GID_LAST ];
 
 		DoMethod( obj, MM_SETTINGSCOLOR_RESETTODEFAULTS );
 
-		return( (ULONG) obj );
+		return( (IPTR) obj );
     }
-	return( (ULONG) NULL );
+	return( (IPTR) NULL );
 }
 /* \\\ */
 /* /// MM_ContextMenuSelect()
@@ -240,7 +240,7 @@ Object *objs[ GID_LAST ];
 
 /*************************************************************************/
 
-static ULONG MM_ContextMenuSelect( struct IClass *cl, Object *obj, struct  MUIP_ContextMenuChoice *msg )
+static IPTR MM_ContextMenuSelect( struct IClass *cl, Object *obj, struct  MUIP_ContextMenuChoice *msg )
 {
 struct FileRequester *filerequester;
 
@@ -314,7 +314,7 @@ struct FileRequester *filerequester;
 
 /*************************************************************************/
 
-static ULONG OM_Import( struct IClass *cl, Object *obj, struct MUIP_Import *msg )
+static IPTR OM_Import( struct IClass *cl, Object *obj, struct MUIP_Import *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 ULONG i;
@@ -335,7 +335,7 @@ ULONG i;
 
 /*************************************************************************/
 
-static ULONG OM_Export( struct IClass *cl, Object *obj, struct MUIP_Import *msg )
+static IPTR OM_Export( struct IClass *cl, Object *obj, struct MUIP_Import *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 ULONG i;
@@ -361,7 +361,7 @@ ULONG i;
 
 /*************************************************************************/
 
-static ULONG MM_ResetToDefaults( struct IClass *cl, Object *obj, Msg *msg )
+static IPTR MM_ResetToDefaults( struct IClass *cl, Object *obj, Msg *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 ULONG i;
@@ -383,7 +383,7 @@ ULONG i;
 
 /*************************************************************************/
 
-static ULONG MM_ReadConfig( struct IClass *cl, Object *obj, struct MP_SETTINGSCOLOR_READCONFIG *msg )
+static IPTR MM_ReadConfig( struct IClass *cl, Object *obj, struct MP_SETTINGSCOLOR_READCONFIG *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 ULONG i;
@@ -404,7 +404,7 @@ ULONG i;
 
 /*************************************************************************/
 
-static ULONG MM_ExportAsText( struct IClass *cl, Object *obj, struct MP_SETTINGSCOLOR_EXPORTASTEXT *msg )
+static IPTR MM_ExportAsText( struct IClass *cl, Object *obj, struct MP_SETTINGSCOLOR_EXPORTASTEXT *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 BPTR handle;
@@ -430,7 +430,7 @@ char *str;
 
 /*************************************************************************/
 
-static ULONG MM_ImportAsText( struct IClass *cl, Object *obj, struct MP_SETTINGSCOLOR_IMPORTASTEXT *msg )
+static IPTR MM_ImportAsText( struct IClass *cl, Object *obj, struct MP_SETTINGSCOLOR_IMPORTASTEXT *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 BPTR handle;

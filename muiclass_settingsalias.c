@@ -65,7 +65,7 @@ struct mccdata
 
 /*************************************************************************/
 
-static ULONG OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
+static IPTR OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
 {
 Object *objs[ GID_LAST ];
 
@@ -101,9 +101,9 @@ Object *objs[ GID_LAST ];
 
 		DoMethod( obj, MM_SETTINGSALIAS_LISTTOGADGETS );
 
-		return( (ULONG) obj );
+		return( (IPTR) obj );
     }
-	return( (ULONG) NULL );
+	return( (IPTR) NULL );
 }
 /* \\\ */
 
@@ -113,7 +113,7 @@ Object *objs[ GID_LAST ];
 
 /*************************************************************************/
 
-static ULONG MM_DisEnable( struct IClass *cl, Object *obj, Msg *msg )
+static IPTR MM_DisEnable( struct IClass *cl, Object *obj, Msg *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 LONG pos;
@@ -139,7 +139,7 @@ BOOL disabled = TRUE;
 
 /*************************************************************************/
 
-static ULONG MM_GadgetsToList( struct IClass *cl, Object *obj, Msg *msg UNUSED )
+static IPTR MM_GadgetsToList( struct IClass *cl, Object *obj, Msg *msg UNUSED )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 struct AliasEntry *ae = NULL;
@@ -165,7 +165,7 @@ struct AliasEntry *ae = NULL;
 
 /*************************************************************************/
 
-static ULONG MM_ListToGadgets( struct IClass *cl, Object *obj, Msg *msg UNUSED )
+static IPTR MM_ListToGadgets( struct IClass *cl, Object *obj, Msg *msg UNUSED )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 struct AliasEntry *ae = NULL;
@@ -188,7 +188,7 @@ struct AliasEntry *ae = NULL;
 
 /*************************************************************************/
 
-static ULONG MM_ReadConfig( struct IClass *cl, Object *obj, struct MP_SETTINGSALIAS_READCONFIG *msg )
+static IPTR MM_ReadConfig( struct IClass *cl, Object *obj, struct MP_SETTINGSALIAS_READCONFIG *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 
@@ -196,7 +196,7 @@ struct mccdata *mccdata = INST_DATA( cl, obj );
 
 	switch( msg->ObjectID ) {
 		case OID_ALI_LIST:
-			return( (ULONG) mccdata->mcc_ClassObjects[ GID_ALIASLIST ] );
+			return( (IPTR) mccdata->mcc_ClassObjects[ GID_ALIASLIST ] );
 		default:
 			return( 0 );
 	}

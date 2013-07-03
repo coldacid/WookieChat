@@ -171,7 +171,7 @@ struct Channel *c;
 			}
 		}
 	}
-	return( (ULONG) mccdata->mcc_ClassObjects[ MID_CONTEXTMENU ] );
+	return( (IPTR) mccdata->mcc_ClassObjects[ MID_CONTEXTMENU ] );
 }
 /* \\\ */
 /* /// MM_ContextMenuSelect()

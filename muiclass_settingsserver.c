@@ -106,7 +106,7 @@ struct mccdata
 
 /*************************************************************************/
 
-static ULONG OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
+static IPTR OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
 {
 Object *objs[ GID_LAST ];
 static STRPTR TAB_GROUP_HIGHLIGHTMODES[ MSG_PG_ADDITIONAL - MSG_PG_CONNECTIONS + 2 ];
@@ -234,9 +234,9 @@ static STRPTR TAB_GROUP_HIGHLIGHTMODES[ MSG_PG_ADDITIONAL - MSG_PG_CONNECTIONS +
 		DoMethod( obj, MM_SETTINGSSERVER_RESETTODEFAULTS );
 	    DoMethod( obj, MM_SETTINGSSERVER_SERVERLISTTOGADGETS );
 
-		return( (ULONG) obj );
+		return( (IPTR) obj );
     }
-	return( (ULONG) NULL );
+	return( (IPTR) NULL );
 }
 /* \\\ */
 /* /// MM_ResetToDefaults()
@@ -245,7 +245,7 @@ static STRPTR TAB_GROUP_HIGHLIGHTMODES[ MSG_PG_ADDITIONAL - MSG_PG_CONNECTIONS +
 
 /*************************************************************************/
 
-static ULONG MM_ResetToDefaults( struct IClass *cl, Object *obj, Msg *msg )
+static IPTR MM_ResetToDefaults( struct IClass *cl, Object *obj, Msg *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 ULONG i;
@@ -263,7 +263,7 @@ ULONG i;
 
 /*************************************************************************/
 
-static ULONG MM_ReadConfig( struct IClass *cl, Object *obj, struct MP_SETTINGSSERVER_READCONFIG *msg )
+static IPTR MM_ReadConfig( struct IClass *cl, Object *obj, struct MP_SETTINGSSERVER_READCONFIG *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 ULONG i;
@@ -294,7 +294,7 @@ ULONG i;
 
 /*************************************************************************/
 
-static ULONG MM_WriteConfig( struct IClass *cl, Object *obj, struct MP_SETTINGSSERVER_WRITECONFIG *msg )
+static IPTR MM_WriteConfig( struct IClass *cl, Object *obj, struct MP_SETTINGSSERVER_WRITECONFIG *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 ULONG i;
@@ -316,7 +316,7 @@ ULONG i;
 
 /*************************************************************************/
 
-static ULONG MM_DisEnable( struct IClass *cl, Object *obj, Msg *msg )
+static IPTR MM_DisEnable( struct IClass *cl, Object *obj, Msg *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 LONG pos;
@@ -364,7 +364,7 @@ BOOL server, nick, channel;
 
 /*************************************************************************/
 
-static ULONG MM_ServerGadgetsToList( struct IClass *cl, Object *obj, Msg *msg UNUSED )
+static IPTR MM_ServerGadgetsToList( struct IClass *cl, Object *obj, Msg *msg UNUSED )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 struct ServerEntry *se = NULL;
@@ -399,7 +399,7 @@ struct ServerEntry *se = NULL;
 
 /*************************************************************************/
 
-static ULONG MM_ServerListToGadgets( struct IClass *cl, Object *obj, Msg *msg UNUSED )
+static IPTR MM_ServerListToGadgets( struct IClass *cl, Object *obj, Msg *msg UNUSED )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 struct ServerEntry *se = NULL;
@@ -427,7 +427,7 @@ struct ServerEntry *se = NULL;
 
 /*************************************************************************/
 
-static ULONG MM_NickAdd( struct IClass *cl, Object *obj, Msg *msg UNUSED )
+static IPTR MM_NickAdd( struct IClass *cl, Object *obj, Msg *msg UNUSED )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 struct ServerEntry *se = NULL;
@@ -453,7 +453,7 @@ struct NickEntry *ne;
 
 /*************************************************************************/
 
-static ULONG MM_NickRemove( struct IClass *cl, Object *obj, Msg *msg UNUSED )
+static IPTR MM_NickRemove( struct IClass *cl, Object *obj, Msg *msg UNUSED )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 LONG pos;
@@ -477,7 +477,7 @@ struct NickEntry *ne = NULL;
 
 /*************************************************************************/
 
-static ULONG MM_NickGadgetsToList( struct IClass *cl, Object *obj, Msg *msg UNUSED )
+static IPTR MM_NickGadgetsToList( struct IClass *cl, Object *obj, Msg *msg UNUSED )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 struct NickEntry *ne = NULL;
@@ -503,7 +503,7 @@ struct NickEntry *ne = NULL;
 
 /*************************************************************************/
 
-static ULONG MM_NickListToGadgets( struct IClass *cl, Object *obj, Msg *msg UNUSED )
+static IPTR MM_NickListToGadgets( struct IClass *cl, Object *obj, Msg *msg UNUSED )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 struct NickEntry *ne = NULL;
@@ -527,7 +527,7 @@ struct NickEntry *ne = NULL;
 
 /*************************************************************************/
 
-static ULONG MM_ChannelAdd( struct IClass *cl, Object *obj, Msg *msg UNUSED )
+static IPTR MM_ChannelAdd( struct IClass *cl, Object *obj, Msg *msg UNUSED )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 struct ServerEntry *se = NULL;
@@ -553,7 +553,7 @@ struct ChannelEntry *ce;
 
 /*************************************************************************/
 
-static ULONG MM_ChannelRemove( struct IClass *cl, Object *obj, Msg *msg UNUSED )
+static IPTR MM_ChannelRemove( struct IClass *cl, Object *obj, Msg *msg UNUSED )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 LONG pos;
@@ -577,7 +577,7 @@ struct ChannelEntry *ce = NULL;
 
 /*************************************************************************/
 
-static ULONG MM_ChannelGadgetsToList( struct IClass *cl, Object *obj, Msg *msg UNUSED )
+static IPTR MM_ChannelGadgetsToList( struct IClass *cl, Object *obj, Msg *msg UNUSED )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 struct ChannelEntry *ce = NULL;
@@ -603,7 +603,7 @@ struct ChannelEntry *ce = NULL;
 
 /*************************************************************************/
 
-static ULONG MM_ChannelListToGadgets( struct IClass *cl, Object *obj, Msg *msg UNUSED )
+static IPTR MM_ChannelListToGadgets( struct IClass *cl, Object *obj, Msg *msg UNUSED )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 struct ChannelEntry *ce = NULL;

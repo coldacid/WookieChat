@@ -66,7 +66,7 @@ struct mccdata
 
 /*************************************************************************/
 
-static ULONG OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
+static IPTR OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
 {
 
 	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
@@ -81,7 +81,7 @@ static ULONG OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
 		DoMethod( obj, MUIM_Notify, MUIA_NList_Active, MUIV_EveryTime, obj, 1, MM_SERVERLIST_ACTIVECHANGE );
 
 	}
-	return( (ULONG) obj );
+	return( (IPTR) obj );
 }
 /* \\\ */
 /* /// OM_Set()
@@ -90,7 +90,7 @@ static ULONG OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
 
 /*************************************************************************/
 
-static ULONG OM_Set( struct IClass *cl, Object *obj, struct opSet *msg )
+static IPTR OM_Set( struct IClass *cl, Object *obj, struct opSet *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 struct TagItem *tag;
@@ -117,7 +117,7 @@ struct TagItem *tstate;
 
 /*************************************************************************/
 
-static ULONG OM_Display( struct IClass *cl, Object *obj, struct MUIP_NList_Display *msg )
+static IPTR OM_Display( struct IClass *cl, Object *obj, struct MUIP_NList_Display *msg )
 {
 STRPTR *array = msg->strings;
 struct ServerEntry *se;
@@ -144,7 +144,7 @@ static char displayport[10];
 
 /*************************************************************************/
 
-static ULONG OM_Destruct( struct IClass *cl, Object *obj, struct MUIP_NList_Destruct *msg )
+static IPTR OM_Destruct( struct IClass *cl, Object *obj, struct MUIP_NList_Destruct *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 struct ServerEntry *se;
@@ -199,7 +199,7 @@ ULONG i;
 
 /*************************************************************************/
 
-static ULONG OM_Import( struct IClass *cl, Object *obj, struct MUIP_Import *msg )
+static IPTR OM_Import( struct IClass *cl, Object *obj, struct MUIP_Import *msg )
 {
 
 	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
@@ -217,7 +217,7 @@ static ULONG OM_Import( struct IClass *cl, Object *obj, struct MUIP_Import *msg 
 
 /*************************************************************************/
 
-static ULONG OM_Export( struct IClass *cl, Object *obj, struct MUIP_Import *msg )
+static IPTR OM_Export( struct IClass *cl, Object *obj, struct MUIP_Import *msg )
 {
 	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
@@ -233,7 +233,7 @@ static ULONG OM_Export( struct IClass *cl, Object *obj, struct MUIP_Import *msg 
 
 /*************************************************************************/
 
-static ULONG MM_Add( struct IClass *cl, Object *obj, struct MP_SERVERLIST_ADD *msg )
+static IPTR MM_Add( struct IClass *cl, Object *obj, struct MP_SERVERLIST_ADD *msg )
 {
 struct ServerEntry *se;
 
@@ -250,7 +250,7 @@ struct ServerEntry *se;
 		se->se_Flags = msg->Flags;
 		DoMethod( obj, MUIM_NList_InsertSingle, se, MUIV_NList_Insert_Bottom );
 	}
-	return( (ULONG) se );
+	return( (IPTR) se );
 }
 /* \\\ */
 /* /// MM_ActiveChange()
@@ -259,7 +259,7 @@ struct ServerEntry *se;
 
 /*************************************************************************/
 
-static ULONG MM_ActiveChange( struct IClass *cl, Object *obj, Msg *msg )
+static IPTR MM_ActiveChange( struct IClass *cl, Object *obj, Msg *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 struct ServerEntry *se;
@@ -290,7 +290,7 @@ struct NickEntry *ne;
 
 /*************************************************************************/
 
-static ULONG MM_ExportListAsText( struct IClass *cl, Object *obj, struct MP_SERVERLIST_EXPORTLISTASTEXT *msg )
+static IPTR MM_ExportListAsText( struct IClass *cl, Object *obj, struct MP_SERVERLIST_EXPORTLISTASTEXT *msg )
 {
 BPTR handle;
 ULONG i;
@@ -338,7 +338,7 @@ struct NickEntry *ne;
 
 /*************************************************************************/
 
-static ULONG MM_ImportListAsText( struct IClass *cl, Object *obj, struct MP_SERVERLIST_IMPORTLISTASTEXT *msg )
+static IPTR MM_ImportListAsText( struct IClass *cl, Object *obj, struct MP_SERVERLIST_IMPORTLISTASTEXT *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 BPTR handle;
