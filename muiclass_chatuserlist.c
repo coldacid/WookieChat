@@ -81,7 +81,7 @@ struct mccdata
 	ULONG                  mcc_PenRGB[ PEN_NUMBEROF ];
 	char                   mcc_ImageBuffer[ IMAGEBUFFER_SIZEOF ];
 	char                   mcc_DisplayBuffer[ DISPLAYBUFFER_SIZEOF ];
-	struct ChatNick       *mcc_SelectedContextEntry;
+	struct ChatUserEntry  *mcc_SelectedContextEntry;
 	char                   mcc_ComposeBuffer[ COMPOSEBUFFER_SIZEOF ];
 };
 
@@ -247,7 +247,7 @@ static ULONG MM_ContextMenuSelect( struct IClass *cl, Object *obj, struct  MUIP_
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 struct ChatChannelEntry *cce;
-struct ChatNick         *cn;
+struct ChatUserEntry    *cue;
 struct ChatNickEntry    *cne;
 struct Channel          *c;
 struct Server           *s;
@@ -256,7 +256,7 @@ struct Server           *s;
 
 	DoMethod( mccdata->mcc_ClassObjects[ GID_CHATCHANNELLIST ], MUIM_NList_GetEntry, MUIV_NList_GetEntry_Active, &cce );
 
-	if( cce && ( c = cce->cce_Channel ) &&  ( cn = mccdata->mcc_SelectedContextEntry ) && (cne = cn->cn_ChatNickEntry) ) { /* paranoia */
+	if( cce && ( c = cce->cce_Channel ) &&  ( cue = mccdata->mcc_SelectedContextEntry ) && (cne = cue->cue_ChatNickEntry) ) { /* paranoia */
 		/* pointer magic */
 		s = (APTR) ( ( (IPTR) List_GetListFromNode( c ) ) - (IPTR) offsetof( struct Server, s_ChannelList ) );
 
@@ -319,7 +319,7 @@ struct Server           *s;
 static ULONG OM_Display( struct IClass *cl, Object *obj, struct MUIP_NList_Display *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
-char *nick   =  ((struct ChatNick *) msg->entry)->cn_ChatNickEntry->cne_Nick;
+char *nick   =  ((struct ChatUserEntry *) msg->entry)->cue_ChatNickEntry->cne_Nick;
 char *status = NULL;
 char statusstr[2];
 
@@ -362,14 +362,14 @@ char statusstr[2];
 
 static ULONG OM_Construct( struct IClass *cl, Object *obj, struct MUIP_NList_Construct *msg )
 {
-struct ChatNick *cn;
+struct ChatUserEntry *cue;
 
 	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
-	if( ( cn = AllocPooled( msg->pool, sizeof( struct ChatNick ) ) ) ) {
-		cn->cn_ChatNickEntry = msg->entry;
+	if( ( cue = AllocVec( sizeof( struct ChatUserEntry ), MEMF_ANY ) ) ) {
+		cue->cue_ChatNickEntry = msg->entry;
     }
-	return( (IPTR) cn );
+	return( (IPTR) cue );
 }
 /* \\\ */
 /* /// OM_Destruct()
@@ -384,7 +384,7 @@ static ULONG OM_Destruct( struct IClass *cl, Object *obj, struct MUIP_NList_Dest
 	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	if( msg->entry ) {
-		FreePooled( msg->pool, msg->entry, sizeof( struct ChatNick ) );
+		FreeVec( msg->entry );
     }
 	return( 0 );
 }
@@ -397,8 +397,8 @@ static ULONG OM_Destruct( struct IClass *cl, Object *obj, struct MUIP_NList_Dest
 
 static ULONG OM_Compare( struct IClass *cl, Object *obj, struct MUIP_NList_Compare *msg )
 {
-STRPTR nick1 = (STRPTR) ((struct ChatNick *) msg->entry1)->cn_ChatNickEntry->cne_Nick;
-STRPTR nick2 = (STRPTR) ((struct ChatNick *) msg->entry2)->cn_ChatNickEntry->cne_Nick;
+STRPTR nick1 = (STRPTR) ((struct ChatUserEntry *) msg->entry1)->cue_ChatNickEntry->cne_Nick;
+STRPTR nick2 = (STRPTR) ((struct ChatUserEntry *) msg->entry2)->cue_ChatNickEntry->cne_Nick;
 
 	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 

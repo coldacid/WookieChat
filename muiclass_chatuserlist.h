@@ -44,11 +44,11 @@ ULONG   MCC_ChatUserList_InitClass( void );
 void    MCC_ChatUserList_DisposeClass( void );
 
 /*
-** ChatNick structure
+** ChatUserEntry structure
 */
 
-struct ChatNick {
-	struct ChatNickEntry *cn_ChatNickEntry;
+struct ChatUserEntry {
+	struct ChatNickEntry *cue_ChatNickEntry;
 };
 
 /*************************************************************************/

@@ -574,16 +574,16 @@ struct ChatChannelEntry *cce;
 static ULONG MM_ChannelNickRemove( struct IClass *cl, Object *obj, struct MP_WINDOWCHAT_CHANNELNICKREMOVE *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
-struct ChatNick *cn;
+struct ChatUserEntry *cue;
 ULONG i;
 
 	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	for( i = 0 ;  ; i++ ) {
-		cn = NULL;
-		DoMethod( mccdata->mcc_ClassObjects[ GID_CHATUSERLIST ], MUIM_NList_GetEntry, i, &cn );
-		if( cn ) {
-			if( cn->cn_ChatNickEntry == msg->ChatNickEntry ) {
+		cue = NULL;
+		DoMethod( mccdata->mcc_ClassObjects[ GID_CHATUSERLIST ], MUIM_NList_GetEntry, i, &cue );
+		if( cue ) {
+			if( cue->cue_ChatNickEntry == msg->ChatNickEntry ) {
 				DoMethod( mccdata->mcc_ClassObjects[ GID_CHATUSERLIST ], MUIM_NList_Remove, i );
 				break;
 			}

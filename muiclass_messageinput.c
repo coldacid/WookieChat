@@ -218,7 +218,7 @@ struct mccdata *mccdata = INST_DATA( cl, obj );
 							max	= MUIGetVar( mccdata->mcc_ClassObjects[ GID_CHATUSERLIST ], MUIA_NList_Entries );
 
 							if( pos ) {
-								struct ChatNick *cn;
+								struct ChatUserEntry *cue;
 								ULONG count = 0;
 								char chr, *tmp;
 								if( !mccdata->mcc_NickStart ) {
@@ -243,10 +243,10 @@ struct mccdata *mccdata = INST_DATA( cl, obj );
 								debug("post: '%s'\n", mccdata->mcc_NickPostBuffer );
 								if( mccdata->mcc_NickStart ) {
 									do{
-										cn = NULL;
-										DoMethod( mccdata->mcc_ClassObjects[ GID_CHATUSERLIST ], MUIM_NList_GetEntry, mccdata->mcc_NickStart - 1, &cn );
-										if( cn ) {
-											tmp = cn->cn_ChatNickEntry->cne_Nick;
+										cue = NULL;
+										DoMethod( mccdata->mcc_ClassObjects[ GID_CHATUSERLIST ], MUIM_NList_GetEntry, mccdata->mcc_NickStart - 1, &cue );
+										if( cue ) {
+											tmp = cue->cue_ChatNickEntry->cne_Nick;
 											if( ( *tmp == '@' ) || ( *tmp == '+' ) || ( *tmp == '%' ) ) {
 												tmp++;
 											}
@@ -268,7 +268,7 @@ struct mccdata *mccdata = INST_DATA( cl, obj );
 												strcat( mccdata->mcc_ComposeBuffer, mccdata->mcc_NickPostBuffer );
 												SetAttrs( obj, MUIA_NoNotify, TRUE, MUIA_String_Contents, mccdata->mcc_ComposeBuffer, MUIA_String_BufferPos, pos, TAG_DONE );
 												SetAttrs( _win(obj), MUIA_Window_ActiveObject, obj, TAG_DONE );
-												cn = NULL; /* terminate loop */
+												cue = NULL; /* terminate loop */
 											}
 										}
 										mccdata->mcc_NickStart++;
@@ -280,7 +280,7 @@ struct mccdata *mccdata = INST_DATA( cl, obj );
 										if( max < mccdata->mcc_NickStart ) {
 											mccdata->mcc_NickStart = 1;
 										}
-									} while( cn );
+									} while( cue );
 								}
 							} else {
 								mccdata->mcc_NickStart = 0; /* turn off */
