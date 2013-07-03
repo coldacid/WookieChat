@@ -370,21 +370,21 @@ static ULONG MM_ChannelPart( struct IClass *cl, Object *obj, Msg *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 struct Server *s = NULL;
-struct ChatChannel *cc;
+struct ChatChannelEntry *cce;
 #define PART_BUFFER 0x100
 char partbuffer[ PART_BUFFER ];
 
 	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
-	cc = NULL;
-	DoMethod( mccdata->mcc_ClassObjects[ GID_CHATCHANNELLIST ], MUIM_NList_GetEntry, MUIV_NList_GetEntry_Active, &cc );
-	if( cc ) {
+	cce = NULL;
+	DoMethod( mccdata->mcc_ClassObjects[ GID_CHATCHANNELLIST ], MUIM_NList_GetEntry, MUIV_NList_GetEntry_Active, &cce );
+	if( cce ) {
 		/* pointer magic */
-		s = (APTR) ( ( (IPTR) List_GetListFromNode( cc->cc_Channel ) ) - (IPTR) offsetof( struct Server, s_ChannelList ) );
+		s = (APTR) ( ( (IPTR) List_GetListFromNode( cce->cce_Channel ) ) - (IPTR) offsetof( struct Server, s_ChannelList ) );
 		strcpy( partbuffer, "/PART " );
-		strcat( partbuffer, cc->cc_Channel->c_Name );
+		strcat( partbuffer, cce->cce_Channel->c_Name );
 
-		DoMethod( mccdata->mcc_ClassObjects[ GID_NETWORK ], MM_NETWORK_SERVERMESSAGESENDMSG, s, cc->cc_Channel, partbuffer );
+		DoMethod( mccdata->mcc_ClassObjects[ GID_NETWORK ], MM_NETWORK_SERVERMESSAGESENDMSG, s, cce->cce_Channel, partbuffer );
 	}
 	return( 0 );
 }
@@ -398,7 +398,7 @@ char partbuffer[ PART_BUFFER ];
 static ULONG MM_ChannelAdd( struct IClass *cl, Object *obj, struct MP_WINDOWCHAT_CHANNELADD *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
-struct ChatChannel *cc;
+struct ChatChannelEntry *cce;
 ULONG i;
 
 	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
@@ -411,10 +411,10 @@ ULONG i;
 
 	/* only add, if not already in list */
 	for( i = 0 ;  ; i++ ) {
-		cc = NULL;
-		DoMethod( mccdata->mcc_ClassObjects[ GID_CHATCHANNELLIST ], MUIM_NList_GetEntry, i, &cc );
-		if( cc ) {
-			if( cc->cc_Channel == msg->Channel ) {
+		cce = NULL;
+		DoMethod( mccdata->mcc_ClassObjects[ GID_CHATCHANNELLIST ], MUIM_NList_GetEntry, i, &cce );
+		if( cce ) {
+			if( cce->cce_Channel == msg->Channel ) {
 				return( 0 );
 			}
 		} else {
@@ -438,7 +438,7 @@ ULONG i;
 static ULONG MM_ChannelRemove( struct IClass *cl, Object *obj, struct MP_WINDOWCHAT_CHANNELREMOVE *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
-struct ChatChannel *cc;
+struct ChatChannelEntry *cce;
 ULONG i;
 
 	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
@@ -446,10 +446,10 @@ ULONG i;
 //	  DoMethod( mccdata->mcc_ClassObjects[ GID_CONNECTEDBUTTONS ], MM_CONNECTEDBUTTONS_REMOVE, msg->Channel );
 
 	for( i = 0 ;  ; i++ ) {
-		cc = NULL;
-		DoMethod( mccdata->mcc_ClassObjects[ GID_CHATCHANNELLIST ], MUIM_NList_GetEntry, i, &cc );
-		if( cc ) {
-			if( cc->cc_Channel == msg->Channel ) {
+		cce = NULL;
+		DoMethod( mccdata->mcc_ClassObjects[ GID_CHATCHANNELLIST ], MUIM_NList_GetEntry, i, &cce );
+		if( cce ) {
+			if( cce->cce_Channel == msg->Channel ) {
 				DoMethod( mccdata->mcc_ClassObjects[ GID_CHATCHANNELLIST ], MUIM_NList_Remove, i );
 				if( i ) {
 					i--; /* next time this pos is a differen list entry different */
@@ -471,22 +471,22 @@ ULONG i;
 static ULONG MM_ChannelChange( struct IClass *cl, Object *obj, struct MP_WINDOWCHAT_CHANNELCHANGE *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
-struct ChatLogEntry    *cle;
-struct ChatChannel     *cc;
-struct Channel         *c;
+struct ChatLogEntry     *cle;
+struct ChatChannelEntry *cce;
+struct Channel          *c;
 
 	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	DoMethod( mccdata->mcc_ClassObjects[ GID_CHATLOG      ], MUIM_NList_Clear );
 	DoMethod( mccdata->mcc_ClassObjects[ GID_CHATUSERLIST ], MUIM_NList_Clear );
 
-	cc = NULL;
-	DoMethod( mccdata->mcc_ClassObjects[ GID_CHATCHANNELLIST ], MUIM_NList_GetEntry, MUIV_NList_GetEntry_Active, &cc );
-	if( cc ) {
-		if( ( c = cc->cc_Channel ) ) {
+	cce = NULL;
+	DoMethod( mccdata->mcc_ClassObjects[ GID_CHATCHANNELLIST ], MUIM_NList_GetEntry, MUIV_NList_GetEntry_Active, &cce );
+	if( cce ) {
+		if( ( c = cce->cce_Channel ) ) {
 			struct Node *node;
-			cc->cc_Pen = PEN_CHANNELLISTTEXT;
-			DoMethod( mccdata->mcc_ClassObjects[ GID_CHATCHANNELLIST ], MUIM_NList_Redraw, MUIV_NList_Redraw_Active, cc );
+			cce->cce_Pen = PEN_CHANNELLISTTEXT;
+			DoMethod( mccdata->mcc_ClassObjects[ GID_CHATCHANNELLIST ], MUIM_NList_Redraw, MUIV_NList_Redraw_Active, cce );
 
 			DoMethod( obj, MM_WINDOWCHAT_CHANNELCHANGETOPIC, c );
 
@@ -521,15 +521,15 @@ struct Channel         *c;
 static ULONG MM_ChannelChangeTopic( struct IClass *cl, Object *obj, struct MP_WINDOWCHAT_CHANNELCHANGETOPIC *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
-struct ChatChannel     *cc;
-struct Channel         *c;
+struct ChatChannelEntry *cce;
+struct Channel          *c;
 
 	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
-	cc = NULL;
-	DoMethod( mccdata->mcc_ClassObjects[ GID_CHATCHANNELLIST ], MUIM_NList_GetEntry, MUIV_NList_GetEntry_Active, &cc );
-	if( cc ) {
-		if( ( c = cc->cc_Channel ) ) {
+	cce = NULL;
+	DoMethod( mccdata->mcc_ClassObjects[ GID_CHATCHANNELLIST ], MUIM_NList_GetEntry, MUIV_NList_GetEntry_Active, &cce );
+	if( cce ) {
+		if( ( c = cce->cce_Channel ) ) {
 			char *topic;
 			if( ( topic = c->c_Topic ) ) {
 				SetAttrs( mccdata->mcc_ClassObjects[ GID_TOPIC ], MUIA_NoNotify, TRUE, MUIA_String_Contents, topic, TAG_DONE );
@@ -549,15 +549,15 @@ struct Channel         *c;
 static ULONG MM_ChannelNickAdd( struct IClass *cl, Object *obj, struct MP_WINDOWCHAT_CHANNELNICKADD *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
-struct ChatChannel *cc;
+struct ChatChannelEntry *cce;
 
 	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
-	cc = NULL;
-	DoMethod( mccdata->mcc_ClassObjects[ GID_CHATCHANNELLIST ], MUIM_NList_GetEntry, MUIV_NList_GetEntry_Active, &cc );
-	if( cc ) {
+	cce = NULL;
+	DoMethod( mccdata->mcc_ClassObjects[ GID_CHATCHANNELLIST ], MUIM_NList_GetEntry, MUIV_NList_GetEntry_Active, &cce );
+	if( cce ) {
 		/* is this channel visible right now? */
-		if( cc->cc_Channel == msg->Channel ) { /* yes, then update user list */
+		if( cce->cce_Channel == msg->Channel ) { /* yes, then update user list */
 			DoMethod( mccdata->mcc_ClassObjects[ GID_CHATUSERLIST ], MUIM_NList_InsertSingle, msg->ChatNickEntry, MUIV_NList_Insert_Bottom );
 			DoMethod( mccdata->mcc_ClassObjects[ GID_CHATUSERLIST ], MUIM_NList_Sort );
 		}
@@ -604,9 +604,9 @@ ULONG i;
 static ULONG MM_MessageReceived( struct IClass *cl, Object *obj, struct MP_WINDOWCHAT_MESSAGERECEIVED *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
-struct Channel *c;
-struct ChatChannel  *cc;
-struct ChatLogEntry *cle = msg->ChatLogEntry;
+struct Channel          *c;
+struct ChatChannelEntry *cce;
+struct ChatLogEntry     *cle = msg->ChatLogEntry;
 
 	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
@@ -616,25 +616,25 @@ struct ChatLogEntry *cle = msg->ChatLogEntry;
 
 /* is this channel visible right now? */
 
-	cc = NULL;
-	DoMethod( mccdata->mcc_ClassObjects[ GID_CHATCHANNELLIST ], MUIM_NList_GetEntry, MUIV_NList_GetEntry_Active, &cc );
-	if( cc && cc->cc_Channel == c ) {
+	cce = NULL;
+	DoMethod( mccdata->mcc_ClassObjects[ GID_CHATCHANNELLIST ], MUIM_NList_GetEntry, MUIV_NList_GetEntry_Active, &cce );
+	if( cce && cce->cce_Channel == c ) {
 	/* yes, so add to log */
 		DoMethod( mccdata->mcc_ClassObjects[ GID_CHATLOG ], MUIM_NList_InsertSingleWrap, cle, MUIV_NList_Insert_Bottom, WRAPCOL0, ALIGN_LEFT );
 		DoMethod( mccdata->mcc_ClassObjects[ GID_CHATLOG ], MM_CHATLOG_SHOWLASTLINE, FALSE );
 		/* now update the chat channel list */
-		cc->cc_Pen = PEN_CHANNELLISTTEXT;
-		DoMethod( mccdata->mcc_ClassObjects[ GID_CHATCHANNELLIST ], MUIM_NList_Redraw, MUIV_NList_Redraw_Active, cc );
+		cce->cce_Pen = PEN_CHANNELLISTTEXT;
+		DoMethod( mccdata->mcc_ClassObjects[ GID_CHATCHANNELLIST ], MUIM_NList_Redraw, MUIV_NList_Redraw_Active, cce );
 	} else { /* it is not, so handle color */
 		ULONG i;
 		for( i = 0 ; ; i++ ) {
-			cc = NULL;
-			DoMethod( mccdata->mcc_ClassObjects[ GID_CHATCHANNELLIST ], MUIM_NList_GetEntry, i, &cc );
-			if( cc ) {
-				if( cc->cc_Channel == c ) { /* is this our channel to update */
+			cce = NULL;
+			DoMethod( mccdata->mcc_ClassObjects[ GID_CHATCHANNELLIST ], MUIM_NList_GetEntry, i, &cce );
+			if( cce ) {
+				if( cce->cce_Channel == c ) { /* is this our channel to update */
 					switch( cle->cle_Pen ) {
 						case PEN_LOGHIGHLIGHT:
-							cc->cc_Pen = PEN_CHANNELLISTHIGHLIGHT;
+							cce->cce_Pen = PEN_CHANNELLISTHIGHLIGHT;
 							break;
 						default: /* no change */
 						case PEN_LOGOWNTEXT:
@@ -646,8 +646,8 @@ struct ChatLogEntry *cle = msg->ChatLogEntry;
 						case PEN_LOGQUIT:
 						case PEN_LOGKICK:
 						case PEN_LOGNICKCHANGE:
-							if( cc->cc_Pen < PEN_CHANNELLISTUSER ) {
-								cc->cc_Pen = PEN_CHANNELLISTUSER;
+							if( cce->cce_Pen < PEN_CHANNELLISTUSER ) {
+								cce->cce_Pen = PEN_CHANNELLISTUSER;
 							}
 							break;
 						case PEN_LOGMODE:
@@ -657,12 +657,12 @@ struct ChatLogEntry *cle = msg->ChatLogEntry;
 						case PEN_LOGINVITE:
 						case PEN_LOGTOPIC:
 						case PEN_LOGWALLOPS:
-							if( cc->cc_Pen < PEN_CHANNELLISTSERVER ) {
-								cc->cc_Pen = PEN_CHANNELLISTSERVER;
+							if( cce->cce_Pen < PEN_CHANNELLISTSERVER ) {
+								cce->cce_Pen = PEN_CHANNELLISTSERVER;
 							}
 							break;
 					}
-					DoMethod( mccdata->mcc_ClassObjects[ GID_CHATCHANNELLIST ], MUIM_NList_Redraw, i, cc );
+					DoMethod( mccdata->mcc_ClassObjects[ GID_CHATCHANNELLIST ], MUIM_NList_Redraw, i, cce );
 					break;
 				}
 			} else {

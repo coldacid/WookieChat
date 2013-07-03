@@ -189,17 +189,17 @@ struct mccdata *mccdata = INST_DATA( cl, obj );
 					switch( msg->imsg->Code ) {
 						case RAWKEY_RETURN:
 							{
-							struct ChatChannel *cc;
+							struct ChatChannelEntry *cce;
 							struct Server *s = NULL;
 							char *contents;
 
-								cc = NULL;
-								DoMethod( mccdata->mcc_ClassObjects[ GID_CHATCHANNELLIST ], MUIM_NList_GetEntry, MUIV_NList_GetEntry_Active, &cc );
-								if( cc ) {
+								cce = NULL;
+								DoMethod( mccdata->mcc_ClassObjects[ GID_CHATCHANNELLIST ], MUIM_NList_GetEntry, MUIV_NList_GetEntry_Active, &cce );
+								if( cce ) {
 									/* pointer magic */
-									s = (APTR) ( ( (IPTR) List_GetListFromNode( cc->cc_Channel ) ) - (IPTR) offsetof( struct Server, s_ChannelList ) );
+									s = (APTR) ( ( (IPTR) List_GetListFromNode( cce->cce_Channel ) ) - (IPTR) offsetof( struct Server, s_ChannelList ) );
 									contents = (char*) MUIGetVar( obj, MUIA_String_Contents );
-									DoMethod( mccdata->mcc_ClassObjects[ GID_NETWORK ], MM_NETWORK_SERVERMESSAGESENDMSG, s, cc->cc_Channel, MUIGetVar( obj, MUIA_String_Contents ) );
+									DoMethod( mccdata->mcc_ClassObjects[ GID_NETWORK ], MM_NETWORK_SERVERMESSAGESENDMSG, s, cce->cce_Channel, MUIGetVar( obj, MUIA_String_Contents ) );
 									DoMethod( obj, MM_MESSAGEINPUT_ADD, contents );
 
 									SetAttrs( obj, MUIA_String_Contents, "", TAG_DONE );

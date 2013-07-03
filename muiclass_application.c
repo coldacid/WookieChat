@@ -101,7 +101,7 @@ static STRPTR classlist[] = {
 
 /*************************************************************************/
 
-static ULONG OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
+static IPTR OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
 {
 Object *objs[ GID_LAST ];
 
@@ -153,7 +153,7 @@ Object *objs[ GID_LAST ];
 
 /*************************************************************************/
 
-static ULONG OM_Dispose( struct IClass *cl, Object *obj, Msg msg )
+static IPTR OM_Dispose( struct IClass *cl, Object *obj, Msg msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 
@@ -172,7 +172,7 @@ struct mccdata *mccdata = INST_DATA( cl, obj );
 
 /*************************************************************************/
 
-static ULONG OM_Get(struct IClass *cl, Object *obj, struct opGet *msg )
+static IPTR OM_Get(struct IClass *cl, Object *obj, struct opGet *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 
@@ -194,7 +194,7 @@ struct mccdata *mccdata = INST_DATA( cl, obj );
 
 /*************************************************************************/
 
-static ULONG MM_Startup( struct IClass *cl, Object *obj, Msg msg )
+static IPTR MM_Startup( struct IClass *cl, Object *obj, Msg msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 
@@ -229,7 +229,7 @@ struct mccdata *mccdata = INST_DATA( cl, obj );
 
 /*************************************************************************/
 
-static ULONG MM_Application_Load( struct IClass *cl, Object *obj, Msg msg )
+static IPTR MM_Application_Load( struct IClass *cl, Object *obj, Msg msg )
 {
 ULONG rc = DoSuperMethodA( cl, obj, (Msg) msg );
 //struct mccdata *mccdata = INST_DATA( cl, obj );
@@ -248,7 +248,7 @@ ULONG rc = DoSuperMethodA( cl, obj, (Msg) msg );
 
 /*************************************************************************/
 
-static ULONG MM_WindowFind( struct IClass *cl UNUSED , Object *obj, struct MP_APPLICATION_WINDOWFIND *msg )
+static IPTR MM_WindowFind( struct IClass *cl UNUSED , Object *obj, struct MP_APPLICATION_WINDOWFIND *msg )
 {
 
 	FORCHILD( obj, MUIA_Application_WindowList ) {
@@ -268,7 +268,7 @@ static ULONG MM_WindowFind( struct IClass *cl UNUSED , Object *obj, struct MP_AP
 
 /*************************************************************************/
 
-static ULONG MM_WindowDispose( struct IClass *cl UNUSED, Object *obj, struct MP_APPLICATION_WINDOWDISPOSE *msg )
+static IPTR MM_WindowDispose( struct IClass *cl UNUSED, Object *obj, struct MP_APPLICATION_WINDOWDISPOSE *msg )
 {
 Object *win;
 
@@ -285,7 +285,7 @@ Object *win;
 
 /*************************************************************************/
 
-static ULONG MM_WindowChatNew( struct IClass *cl UNUSED, Object *obj, Msg *msg )
+static IPTR MM_WindowChatNew( struct IClass *cl UNUSED, Object *obj, Msg *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 Object *win;
@@ -313,7 +313,7 @@ Object *win;
 
 /*************************************************************************/
 
-static ULONG MM_ChatSetActive( struct IClass *cl UNUSED , Object *obj, struct MP_APPLICATION_CHATSETACTIVE *msg )
+static IPTR MM_ChatSetActive( struct IClass *cl UNUSED , Object *obj, struct MP_APPLICATION_CHATSETACTIVE *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 ULONG i;
@@ -334,7 +334,7 @@ ULONG i;
 
 /*************************************************************************/
 
-static ULONG MM_ChatRemove( struct IClass *cl UNUSED , Object *obj, struct MP_APPLICATION_CHATREMOVE *msg )
+static IPTR MM_ChatRemove( struct IClass *cl UNUSED , Object *obj, struct MP_APPLICATION_CHATREMOVE *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 ULONG i, o;
@@ -369,7 +369,7 @@ ULONG i, o;
 
 /*************************************************************************/
 
-static ULONG MM_ChatFindActive( struct IClass *cl UNUSED , Object *obj, struct MP_APPLICATION_CHATFINDACTIVE *msg )
+static IPTR MM_ChatFindActive( struct IClass *cl UNUSED , Object *obj, struct MP_APPLICATION_CHATFINDACTIVE *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 ULONG i;
@@ -394,7 +394,7 @@ ULONG i;
 
 /*************************************************************************/
 
-static ULONG MM_MessageReceived( struct IClass *cl, Object *obj, struct MP_APPLICATION_MESSAGERECEIVED *msg )
+static IPTR MM_MessageReceived( struct IClass *cl, Object *obj, struct MP_APPLICATION_MESSAGERECEIVED *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 struct Server  *s;
@@ -437,7 +437,7 @@ struct Server  *s;
 
 /*************************************************************************/
 
-static ULONG MM_ChannelAdd( struct IClass *cl, Object *obj, struct MP_APPLICATION_CHANNELADD *msg )
+static IPTR MM_ChannelAdd( struct IClass *cl, Object *obj, struct MP_APPLICATION_CHANNELADD *msg )
 {
 Object *windowchat;
 
@@ -465,7 +465,7 @@ Object *windowchat;
 
 /*************************************************************************/
 
-static ULONG MM_ChannelRemove( struct IClass *cl, Object *obj, struct MP_APPLICATION_CHANNELREMOVE *msg )
+static IPTR MM_ChannelRemove( struct IClass *cl, Object *obj, struct MP_APPLICATION_CHANNELREMOVE *msg )
 {
 
 //	  DoMethod(
@@ -484,7 +484,7 @@ static ULONG MM_ChannelRemove( struct IClass *cl, Object *obj, struct MP_APPLICA
 
 /*************************************************************************/
 
-static ULONG MM_ChannelChangeTopic( struct IClass *cl, Object *obj, struct MP_APPLICATION_CHANNELREMOVE *msg )
+static IPTR MM_ChannelChangeTopic( struct IClass *cl, Object *obj, struct MP_APPLICATION_CHANNELREMOVE *msg )
 {
 
 	FORCHILD( obj, MUIA_Application_WindowList ) {
@@ -501,7 +501,7 @@ static ULONG MM_ChannelChangeTopic( struct IClass *cl, Object *obj, struct MP_AP
 
 /*************************************************************************/
 
-static ULONG MM_ChannelNickAdd( struct IClass *cl, Object *obj, struct MP_APPLICATION_CHANNELNICKADD *msg )
+static IPTR MM_ChannelNickAdd( struct IClass *cl, Object *obj, struct MP_APPLICATION_CHANNELNICKADD *msg )
 {
 
 	FORCHILD( obj, MUIA_Application_WindowList ) {
@@ -520,7 +520,7 @@ static ULONG MM_ChannelNickAdd( struct IClass *cl, Object *obj, struct MP_APPLIC
 
 /*************************************************************************/
 
-static ULONG MM_ChannelNickRemove( struct IClass *cl, Object *obj, struct MP_APPLICATION_CHANNELNICKREMOVE *msg )
+static IPTR MM_ChannelNickRemove( struct IClass *cl, Object *obj, struct MP_APPLICATION_CHANNELNICKREMOVE *msg )
 {
 
 	FORCHILD( obj, MUIA_Application_WindowList ) {
@@ -540,7 +540,7 @@ static ULONG MM_ChannelNickRemove( struct IClass *cl, Object *obj, struct MP_APP
 
 /*************************************************************************/
 
-static ULONG MM_VisualChange( struct IClass *cl, Object *obj, Msg *msg )
+static IPTR MM_VisualChange( struct IClass *cl, Object *obj, Msg *msg )
 {
 	FORCHILD( obj, MUIA_Application_WindowList ) {
 		if( MUIGetVar( child, MA_APPLICATION_CLASSID ) == CLASSID_WINDOWCHAT ) {

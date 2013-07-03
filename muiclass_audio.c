@@ -57,7 +57,7 @@ struct mccdata
 
 /*************************************************************************/
 
-static ULONG OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
+static IPTR OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
 {
 	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
@@ -70,7 +70,7 @@ static ULONG OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
 
 /*************************************************************************/
 
-static ULONG OM_Dispose( struct IClass *cl, Object *obj, Msg *msg )
+static IPTR OM_Dispose( struct IClass *cl, Object *obj, Msg *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 ULONG i;
@@ -91,7 +91,7 @@ ULONG i;
 
 /*************************************************************************/
 
-static ULONG OM_Set( struct IClass *cl, Object *obj, struct opSet *msg )
+static IPTR OM_Set( struct IClass *cl, Object *obj, struct opSet *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 struct TagItem *tag;
@@ -114,7 +114,7 @@ struct TagItem *tstate;
 
 /*************************************************************************/
 
-static ULONG MM_Play( struct IClass *cl, Object *obj, struct MP_AUDIO_PLAY *msg )
+static IPTR MM_Play( struct IClass *cl, Object *obj, struct MP_AUDIO_PLAY *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 

@@ -246,17 +246,17 @@ struct MUI_NList_TestPos_Result res;
 static ULONG MM_ContextMenuSelect( struct IClass *cl, Object *obj, struct  MUIP_ContextMenuChoice *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
-struct ChatChannel   *cc;
-struct ChatNick      *cn;
-struct ChatNickEntry *cne;
-struct Channel       *c;
-struct Server        *s;
+struct ChatChannelEntry *cce;
+struct ChatNick         *cn;
+struct ChatNickEntry    *cne;
+struct Channel          *c;
+struct Server           *s;
 
 	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
-	DoMethod( mccdata->mcc_ClassObjects[ GID_CHATCHANNELLIST ], MUIM_NList_GetEntry, MUIV_NList_GetEntry_Active, &cc );
+	DoMethod( mccdata->mcc_ClassObjects[ GID_CHATCHANNELLIST ], MUIM_NList_GetEntry, MUIV_NList_GetEntry_Active, &cce );
 
-	if( cc && ( c = cc->cc_Channel ) &&  ( cn = mccdata->mcc_SelectedContextEntry ) && (cne = cn->cn_ChatNickEntry) ) { /* paranoia */
+	if( cce && ( c = cce->cce_Channel ) &&  ( cn = mccdata->mcc_SelectedContextEntry ) && (cne = cn->cn_ChatNickEntry) ) { /* paranoia */
 		/* pointer magic */
 		s = (APTR) ( ( (IPTR) List_GetListFromNode( c ) ) - (IPTR) offsetof( struct Server, s_ChannelList ) );
 

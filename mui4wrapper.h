@@ -51,6 +51,9 @@
 #undef  MUIA_NList_Format
 #define MUIA_NList_Format MUIA_List_Format
 
+#undef  MUIA_NList_DragSortable
+#define MUIA_NList_DragSortable MUIA_List_DragSortable
+
 #undef  MUIA_NList_Active
 #define MUIA_NList_Active MUIA_List_Active
 
@@ -62,6 +65,9 @@
 
 #undef  MUIA_NList_Quiet
 #define MUIA_NList_Quiet MUIA_List_Quiet
+
+#undef  MUIA_NList_Input
+#define MUIA_NList_Input MUIA_List_Input
 
 #undef  MUIM_NList_GetEntry
 #define MUIM_NList_GetEntry MUIM_List_GetEntry
@@ -127,6 +133,12 @@ struct  MUIP_NList_Sort            { ULONG MethodID; };
 
 #undef  MUIA_NList_Title
 #define MUIA_NList_Title MUIA_List_Title
+
+#undef  MUIA_NList_InsertPosition
+#define MUIA_NList_InsertPosition MUIA_List_InsertPosition
+
+#undef  MUIA_NList_MultiSelect
+#define MUIA_NList_MultiSelect MUIA_List_MultiSelect
 
 #undef  MUIM_NList_TestPos
 #define MUIM_NList_TestPos MUIM_List_TestPos

@@ -5907,4 +5907,52 @@ Copy to new window
 Copy to new window
 Copy to new window
 ;
+MSG_MUICLASS_CHATCHANNELLIST_SERVERSHOW_CMENU
+Show Server
+Zeige Server
+Show Server
+Show Server
+Show Server
+Show Server
+Show Server
+Show Server
+Show Server
+Show Server
+;
+MSG_MUICLASS_CHATCHANNELLIST_SERVERHIDE_CMENU
+Hide Server
+Verstecke Server
+Hide Server
+Hide Server
+Hide Server
+Hide Server
+Hide Server
+Hide Server
+Hide Server
+Hide Server
+;
+MSG_MUICLASS_CHATCHANNELLIST_CHANNELREMOVE_CMENU
+Remove Channel
+Kanal entfernen
+Remove Channel
+Remove Channel
+Remove Channel
+Remove Channel
+Verstecke Server
+Remove Channel
+Remove Channel
+Remove Channel
+;
+MSG_MUICLASS_CHATCHANNELLIST_CHANNELLEAVE_CMENU
+Leave Channel
+Kanal verlassen
+Leave Channel
+Leave Channel
+Leave Channel
+Leave Channel
+Leave Channel
+Leave Channel
+Leave Channel
+Leave Channel
+;
 

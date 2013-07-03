@@ -26,11 +26,15 @@
 
 enum {
 MM_CHATCHANNELLIST_DUMMY =  0xFED00600,
+MM_CHATCHANNELLIST_WINDOWCLOSE,
 MM_CHATCHANNELLIST_PENSUPDATE,
 MM_CHATCHANNELLIST_PENSOBTAIN,
 MM_CHATCHANNELLIST_PENSRELEASE,
+MM_CHATCHANNELLIST_ISSERVERVISIBLE,
 /* Attributes */
 };
+
+struct MP_CHATCHANNELLIST_ISSERVERVISIBLE { ULONG MethodID; struct Channel *Channel; };
 
 /*************************************************************************/
 
@@ -47,9 +51,9 @@ void    MCC_ChatChannelList_DisposeClass( void );
 ** ChatChannel structure
 */
 
-struct ChatChannel {
-	ULONG                  cc_Pen;
-	struct Channel        *cc_Channel;
+struct ChatChannelEntry {
+	ULONG                  cce_Pen;
+	struct Channel        *cce_Channel;
 };
 
 /*************************************************************************/

@@ -49,6 +49,10 @@ GID_LAST,
 /* these need no storage, so defined after GID_LAST */
 MID_CMENU_MOVETONEWWINDOW,
 MID_CMENU_CLONETONEWWINDOW,
+MID_CMENU_SERVERSHOW,
+MID_CMENU_SERVERHIDE,
+MID_CMENU_CHANNELREMOVE,
+MID_CMENU_CHANNELLEAVE,
 };
 
 /*
@@ -59,12 +63,12 @@ MID_CMENU_CLONETONEWWINDOW,
 
 struct mccdata
 {
-	Object                *mcc_ClassObjects[ GID_LAST ];
-	LONG                   mcc_Pen[ PEN_NUMBEROF ];
-	LONG                   mcc_MUIPen[ PEN_NUMBEROF ];
-	ULONG                  mcc_PenRGB[ PEN_NUMBEROF ];
-	char                   mcc_DisplayBuffer[ DISPLAYBUFFER_SIZEOF ];
-	struct ChatChannel    *mcc_SelectedContextEntry;
+	Object                  *mcc_ClassObjects[ GID_LAST ];
+	LONG                     mcc_Pen[ PEN_NUMBEROF ];
+	LONG                     mcc_MUIPen[ PEN_NUMBEROF ];
+	ULONG                    mcc_PenRGB[ PEN_NUMBEROF ];
+	char                     mcc_DisplayBuffer[ DISPLAYBUFFER_SIZEOF ];
+	struct ChatChannelEntry *mcc_SelectedContextEntry;
 
 };
 
@@ -76,15 +80,18 @@ struct mccdata
 
 /*************************************************************************/
 
-static ULONG OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
+static IPTR OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
 {
 
 	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
-	return( (IPTR) DoSuperNew( cl, obj,
+	if( ( obj = DoSuperNew( cl, obj,
 						MUIA_ShortHelp  , LGS( MSG_MUICLASS_CHATCHANNELLIST_HELP ),
 						MUIA_ContextMenu, 1,
-						TAG_DONE ) );
+						TAG_DONE ) ) ) {
+		DoMethod( obj, MUIM_Notify, MUIA_NList_Entries, 0, obj, 1, MM_CHATCHANNELLIST_WINDOWCLOSE );
+	}
+	return( (IPTR) obj );
 }
 /* \\\ */
 /* /// OM_Setup()
@@ -93,7 +100,7 @@ static ULONG OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
 
 /*************************************************************************/
 
-static ULONG OM_Setup( struct IClass *cl, Object *obj, Msg *msg )
+static IPTR OM_Setup( struct IClass *cl, Object *obj, Msg *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 
@@ -112,7 +119,7 @@ struct mccdata *mccdata = INST_DATA( cl, obj );
 
 /*************************************************************************/
 
-static ULONG OM_Cleanup( struct IClass *cl, Object *obj, Msg *msg )
+static IPTR OM_Cleanup( struct IClass *cl, Object *obj, Msg *msg )
 {
 
 	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
@@ -129,10 +136,12 @@ static ULONG OM_Cleanup( struct IClass *cl, Object *obj, Msg *msg )
 
 /*************************************************************************/
 
-static ULONG MM_ContextMenuBuild( struct IClass *cl, Object *obj, struct MUIP_ContextMenuBuild *msg UNUSED )
+static IPTR MM_ContextMenuBuild( struct IClass *cl, Object *obj, struct MUIP_ContextMenuBuild *msg UNUSED )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 struct MUI_NList_TestPos_Result res;
+struct ChatChannelEntry *cce;
+struct Channel *c;
 
 	if( mccdata->mcc_ClassObjects[ MID_CONTEXTMENU ] ) {
 		MUI_DisposeObject( mccdata->mcc_ClassObjects[ MID_CONTEXTMENU ] );
@@ -142,16 +151,23 @@ struct MUI_NList_TestPos_Result res;
 	DoMethod( obj, MUIM_NList_TestPos, msg->mx, msg->my, &res );
 	if( res.entry != -1 ) {
 		DoMethod( obj, MUIM_NList_GetEntry, res.entry, &mccdata->mcc_SelectedContextEntry );
-		if( mccdata->mcc_SelectedContextEntry ) { /* paranoia */
+		if( ( cce = mccdata->mcc_SelectedContextEntry ) ) { /* paranoia */
+			if( ( c = cce->cce_Channel ) ) { /* paranoia */
+				//ULONG i, servervisible;
 
 /* now build the tree */
-			if( ( mccdata->mcc_ClassObjects[ MID_CONTEXTMENU ] = MenustripObject,
-							Child, MenuObject, MUIA_Menu_Title, LGS( MSG_MUICLASS_CHATCHANNELLIST_CMENU ),
-								Child, MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MUICLASS_CHATCHANNELLIST_MOVETONEWWINDOW_CMENU ), MUIA_UserData, MID_CMENU_MOVETONEWWINDOW, End,
-								Child, MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MUICLASS_CHATCHANNELLIST_CLONETONEWWINDOW_CMENU ), MUIA_UserData, MID_CMENU_CLONETONEWWINDOW, End,
-							End,
-						End ) ) {
 
+				if( ( mccdata->mcc_ClassObjects[ MID_CONTEXTMENU ] = MenustripObject,
+								Child, MenuObject, MUIA_Menu_Title, LGS( MSG_MUICLASS_CHATCHANNELLIST_CMENU ),
+									Child, MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MUICLASS_CHATCHANNELLIST_MOVETONEWWINDOW_CMENU  ), MUIA_UserData, MID_CMENU_MOVETONEWWINDOW, End,
+									Child, MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MUICLASS_CHATCHANNELLIST_CLONETONEWWINDOW_CMENU ), MUIA_UserData, MID_CMENU_CLONETONEWWINDOW, End,
+									Child, MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MUICLASS_CHATCHANNELLIST_SERVERSHOW_CMENU       ), MUIA_UserData, MID_CMENU_SERVERSHOW, End,
+									Child, MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MUICLASS_CHATCHANNELLIST_SERVERHIDE_CMENU       ), MUIA_UserData, MID_CMENU_SERVERHIDE, End,
+									Child, MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MUICLASS_CHATCHANNELLIST_CHANNELREMOVE_CMENU    ), MUIA_UserData, MID_CMENU_CHANNELREMOVE, End,
+									Child, MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MUICLASS_CHATCHANNELLIST_CHANNELLEAVE_CMENU     ), MUIA_UserData, MID_CMENU_CHANNELLEAVE, End,
+								End,
+							End ) ) {
+				}
 			}
 		}
 	}
@@ -163,15 +179,15 @@ struct MUI_NList_TestPos_Result res;
 
 /*************************************************************************/
 
-static ULONG MM_ContextMenuSelect( struct IClass *cl, Object *obj, struct  MUIP_ContextMenuChoice *msg )
+static IPTR MM_ContextMenuSelect( struct IClass *cl, Object *obj, struct  MUIP_ContextMenuChoice *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
-struct ChatChannel   *cc;
-struct Channel       *c;
+struct ChatChannelEntry *cce;
+struct Channel          *c;
 
 	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
-	if( ( cc = mccdata->mcc_SelectedContextEntry ) && ( c = cc->cc_Channel ) ) { /* paranoia */
+	if( ( cce = mccdata->mcc_SelectedContextEntry ) && ( c = cce->cce_Channel ) ) { /* paranoia */
 		if( msg->item ) {
 			switch( MUIGetVar( msg->item, MUIA_UserData ) ) {
 				case MID_CMENU_MOVETONEWWINDOW:
@@ -204,13 +220,13 @@ struct Channel       *c;
 
 /*************************************************************************/
 
-static ULONG OM_Display( struct IClass *cl, Object *obj, struct MUIP_NList_Display *msg )
+static IPTR OM_Display( struct IClass *cl, Object *obj, struct MUIP_NList_Display *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
-struct ChatChannel *cc;
+struct ChatChannelEntry *cce;
 
-	if( ( cc = msg->entry ) ) {
-		sprintf( mccdata->mcc_DisplayBuffer, "\033P[%ld]%s", mccdata->mcc_Pen[ cc->cc_Pen ], cc->cc_Channel->c_Name );
+	if( ( cce = msg->entry ) ) {
+		sprintf( mccdata->mcc_DisplayBuffer, "\033P[%ld]%s", mccdata->mcc_Pen[ cce->cce_Pen ], cce->cce_Channel->c_Name );
 		*msg->strings = (STRPTR) mccdata->mcc_DisplayBuffer;
 	}
 	return( 0 );
@@ -222,17 +238,17 @@ struct ChatChannel *cc;
 
 /*************************************************************************/
 
-static ULONG OM_Construct( struct IClass *cl, Object *obj, struct MUIP_NList_Construct *msg )
+static IPTR OM_Construct( struct IClass *cl, Object *obj, struct MUIP_NList_Construct *msg )
 {
-struct ChatChannel *cc;
+struct ChatChannelEntry *cce;
 
 	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
-	if( ( cc = AllocPooled( msg->pool, sizeof( struct ChatChannel ) ) ) ) {
-		cc->cc_Pen     = PEN_CHANNELLISTTEXT;
-		cc->cc_Channel = msg->entry;
+	if( ( cce = AllocVec( sizeof( struct ChatChannelEntry ), MEMF_ANY ) ) ) {
+		cce->cce_Pen     = PEN_CHANNELLISTTEXT;
+		cce->cce_Channel = msg->entry;
     }
-	return( (IPTR) cc );
+	return( (IPTR) cce );
 }
 /* \\\ */
 /* /// OM_Destruct()
@@ -241,13 +257,13 @@ struct ChatChannel *cc;
 
 /*************************************************************************/
 
-static ULONG OM_Destruct( struct IClass *cl, Object *obj, struct MUIP_NList_Destruct *msg )
+static IPTR OM_Destruct( struct IClass *cl, Object *obj, struct MUIP_NList_Destruct *msg )
 {
 
 	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	if( msg->entry ) {
-		FreePooled( msg->pool, msg->entry, sizeof( struct ChatChannel ) );
+		FreeVec( msg->entry );
     }
 	return( 0 );
 }
@@ -259,7 +275,7 @@ static ULONG OM_Destruct( struct IClass *cl, Object *obj, struct MUIP_NList_Dest
 
 /*************************************************************************/
 
-static ULONG MM_PensObtain( struct IClass *cl, Object *obj, Msg *msg )
+static IPTR MM_PensObtain( struct IClass *cl, Object *obj, Msg *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 struct MUI_PenSpec *penspec;
@@ -288,7 +304,7 @@ ULONG i;
 
 /*************************************************************************/
 
-static ULONG MM_PensRelease( struct IClass *cl, Object *obj, Msg *msg )
+static IPTR MM_PensRelease( struct IClass *cl, Object *obj, Msg *msg )
 {
 struct mccdata *mccdata = INST_DATA( cl, obj );
 ULONG i;
@@ -307,7 +323,7 @@ ULONG i;
 
 /*************************************************************************/
 
-static ULONG MM_PensUpdate( struct IClass *cl, Object *obj, Msg *msg )
+static IPTR MM_PensUpdate( struct IClass *cl, Object *obj, Msg *msg )
 {
 
 	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
@@ -318,6 +334,62 @@ static ULONG MM_PensUpdate( struct IClass *cl, Object *obj, Msg *msg )
 	return( 0 );
 }
 /* \\\ */
+
+/* /// MM_WindowClose()
+**
+*/
+
+/*************************************************************************/
+
+static IPTR MM_WindowClose( struct IClass *cl, Object *obj, Msg *msg )
+{
+
+	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
+
+	/* this is special. The window object gets disposed. Calling the method directly
+	** would dispose the object from within a notification of the very same object,
+	** which is quite bad.
+	*/
+	DoMethod( _app(obj), MUIM_Application_PushMethod, _app(obj), 2, MM_APPLICATION_WINDOWDISPOSE, _win(obj) );
+
+	return( 0 );
+}
+/* \\\ */
+#if 0
+/* /// MM_IsServerVisible()
+**
+*/
+
+/*************************************************************************/
+
+static IPTR MM_IsServerVisible( struct IClass *cl, Object *obj, struct MP_CHATCHANNELLIST_ISSERVERVISIBLE *msg )
+{
+struct ChatChannel *cc;
+struct Server *s = NULL;
+
+	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
+
+	/* pointer magic */
+	s = (APTR) ( ( (IPTR) List_GetListFromNode( msg->Channel ) ) - (IPTR) offsetof( struct Server, s_ChannelList ) );
+
+	for( i = 0 ;  ; i++ ) {
+		cc = NULL;
+		DoMethod( obj, MUIM_NList_GetEntry, i, &cc );
+		if( cc ) {
+			if( ( c = cc->cc_Channel ) ) {
+				if( c->c-Flags & CHANNELF_SERVER ) {
+					if( Stricmp( c->c_Name, s->
+				}
+			}
+		} else {
+			break;
+		}
+	}
+
+	return( result );
+}
+/* \\\ */
+#endif
 
 /*
 ** Dispatcher, init and dispose
@@ -332,18 +404,22 @@ static ULONG MM_PensUpdate( struct IClass *cl, Object *obj, Msg *msg )
 DISPATCHER(MCC_ChatChannelList_Dispatcher)
 {
 	switch (msg->MethodID) {
-		case OM_NEW                         : return( OM_New                ( cl, obj, (APTR) msg ) );
-		case MUIM_Setup                     : return( OM_Setup              ( cl, obj, (APTR) msg ) );
-		case MUIM_Cleanup                   : return( OM_Cleanup            ( cl, obj, (APTR) msg ) );
-		case MUIM_ContextMenuChoice         : return( MM_ContextMenuSelect  ( cl, obj, (APTR) msg ) );
-		case MUIM_ContextMenuBuild          : return( MM_ContextMenuBuild   ( cl, obj, (APTR) msg ) );
+		case OM_NEW                             : return( OM_New                ( cl, obj, (APTR) msg ) );
+		case MUIM_Setup                         : return( OM_Setup              ( cl, obj, (APTR) msg ) );
+		case MUIM_Cleanup                       : return( OM_Cleanup            ( cl, obj, (APTR) msg ) );
+		case MUIM_ContextMenuChoice             : return( MM_ContextMenuSelect  ( cl, obj, (APTR) msg ) );
+		case MUIM_ContextMenuBuild              : return( MM_ContextMenuBuild   ( cl, obj, (APTR) msg ) );
 
-		case MUIM_NList_Display             : return( OM_Display            ( cl, obj, (APTR) msg ) );
-		case MUIM_NList_Destruct            : return( OM_Destruct           ( cl, obj, (APTR) msg ) );
-		case MUIM_NList_Construct           : return( OM_Construct          ( cl, obj, (APTR) msg ) );
-		case MM_CHATCHANNELLIST_PENSOBTAIN  : return( MM_PensObtain         ( cl, obj, (APTR) msg ) );
-		case MM_CHATCHANNELLIST_PENSRELEASE : return( MM_PensRelease        ( cl, obj, (APTR) msg ) );
-		case MM_CHATCHANNELLIST_PENSUPDATE  : return( MM_PensUpdate         ( cl, obj, (APTR) msg ) );
+		case MUIM_NList_Display                 : return( OM_Display            ( cl, obj, (APTR) msg ) );
+		case MUIM_NList_Destruct                : return( OM_Destruct           ( cl, obj, (APTR) msg ) );
+		case MUIM_NList_Construct               : return( OM_Construct          ( cl, obj, (APTR) msg ) );
+		case MM_CHATCHANNELLIST_PENSOBTAIN      : return( MM_PensObtain         ( cl, obj, (APTR) msg ) );
+		case MM_CHATCHANNELLIST_PENSRELEASE     : return( MM_PensRelease        ( cl, obj, (APTR) msg ) );
+		case MM_CHATCHANNELLIST_PENSUPDATE      : return( MM_PensUpdate         ( cl, obj, (APTR) msg ) );
+
+		case MM_CHATCHANNELLIST_WINDOWCLOSE     : return( MM_WindowClose        ( cl, obj, (APTR) msg ) );
+//		  case MM_CHATCHANNELLIST_ISSERVERVISIBLE : return( MM_IsServerVisible    ( cl, obj, (APTR) msg ) );
+
 	}
 	return( DoSuperMethodA( cl, obj, msg ) );
 
