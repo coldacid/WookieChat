@@ -326,13 +326,13 @@ char statusstr[2];
 	statusstr[1] = '\0';
 	switch( ( statusstr[0] = *nick++ ) ) {
 		case '@':
-			status = "ops";
+			status = "Ops";
 			break;
 		case '%':
-			status = "half_ops";
+			status = "HalfOps";
 			break;
 		case '+':
-			status = "voice";
+			status = "Voice";
 			break;
 		default:
 			nick--;
@@ -342,7 +342,7 @@ char statusstr[2];
 	mccdata->mcc_ImageBuffer[0] = '\0';
 	if( status ) {
 		if( ( LRC( OID_GUI_NICKLISTGFXINFO ) ) ) {
-			sprintf( mccdata->mcc_ImageBuffer, "\033I[5:PROGDIR:smilies/nicklist/%s]", status );
+			sprintf( mccdata->mcc_ImageBuffer, "\033I[5:PROGDIR:Presets/UserStates/%s]", status );
 		} else {
 			sprintf( mccdata->mcc_ImageBuffer, "\033P[%ld]%s", mccdata->mcc_Pen[ PEN_USERLISTTEXT ], statusstr );
 		}
