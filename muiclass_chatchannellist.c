@@ -46,6 +46,7 @@
 enum
 {
 WID_SETTINGS = 0,
+GID_NETWORK,
 MID_CONTEXTMENU,
 GID_LAST,
 /* these need no storage, so defined after GID_LAST */
@@ -109,6 +110,7 @@ struct mccdata *mccdata = INST_DATA( cl, obj );
 	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	mccdata->mcc_ClassObjects[ WID_SETTINGS ] = (Object*) MUIGetVar( _app(obj), MA_APPLICATION_OBJECTWINDOWSETTINGS );
+	mccdata->mcc_ClassObjects[ GID_NETWORK  ] = (Object*) MUIGetVar( _app(obj), MA_APPLICATION_OBJECTNETWORK );
 
 	DoMethod( obj, MM_CHATCHANNELLIST_PENSOBTAIN  );
 
@@ -211,6 +213,26 @@ struct Channel          *c;
 						DoMethod( windowchat, MM_WINDOWCHAT_CHANNELADD, c );
 					}
 					}
+					break;
+				case MID_CMENU_SERVERSHOW:
+					if( !DoMethod( obj, MM_CHATCHANNELLIST_SERVERISVISIBLE, c ) ) {
+						struct Server *s;
+						/* pointer magic */
+						s = (APTR) ( ( (IPTR) List_GetListFromNode( cce->cce_Channel ) ) - (IPTR) offsetof( struct Server, s_ChannelList ) );
+						if( ( c = (APTR) DoMethod( mccdata->mcc_ClassObjects[ GID_NETWORK ], MM_NETWORK_CHANNELFIND, s, NULL ) ) ) {
+							DoMethod( _win(obj), MM_WINDOWCHAT_CHANNELADD, c );
+						}
+					}
+					break;
+				case MID_CMENU_SERVERHIDE:
+					if( ( c = (APTR) DoMethod( obj, MM_CHATCHANNELLIST_SERVERISVISIBLE, c ) ) ) {
+						DoMethod( _win(obj), MM_WINDOWCHAT_CHANNELREMOVE, c );
+					}
+					break;
+				case MID_CMENU_CHANNELREMOVE:
+					DoMethod( _win( obj ), MM_WINDOWCHAT_CHANNELREMOVE, c );
+					break;
+				case MID_CMENU_CHANNELLEAVE:
 					break;
 			}
 		}
