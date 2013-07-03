@@ -38,6 +38,7 @@ MM_WINDOWCHAT_CHANNELCHANGE,
 MM_WINDOWCHAT_CHANNELCHANGETOPIC,
 MM_WINDOWCHAT_CHANNELNICKADD,
 MM_WINDOWCHAT_CHANNELNICKREMOVE,
+MM_WINDOWCHAT_CHANNELISVISIBLE,
 /* Attributes */
 MA_WINDOWCHAT_OBJECTSETTINGS,
 MA_WINDOWCHAT_OBJECTNETWORK,
@@ -54,6 +55,7 @@ struct MP_WINDOWCHAT_CHANNELCHANGE      { ULONG MethodID; };
 struct MP_WINDOWCHAT_CHANNELCHANGETOPIC { ULONG MethodID; struct Channel *Channel; };
 struct MP_WINDOWCHAT_CHANNELNICKREMOVE  { ULONG MethodID; struct Channel *Channel; struct ChatNickEntry *ChatNickEntry; };
 struct MP_WINDOWCHAT_CHANNELNICKADD     { ULONG MethodID; struct Channel *Channel; struct ChatNickEntry *ChatNickEntry; };
+struct MP_WINDOWCHAT_CHANNELISVISIBLE   { ULONG MethodID; struct Channel *Channel; };
 
 /*************************************************************************/
 

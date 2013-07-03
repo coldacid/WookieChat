@@ -540,6 +540,21 @@ struct Channel          *c;
 }
 /* \\\ */
 
+/* /// MM_ChannelIsVisible()
+**
+** This is just a gateway to keep code clean
+*/
+
+/*************************************************************************/
+
+static IPTR MM_ChannelIsVisible( struct IClass *cl, Object *obj, struct MP_WINDOWCHAT_CHANNELISVISIBLE *msg )
+{
+struct mccdata *mccdata = INST_DATA( cl, obj );
+
+	return( DoMethod( mccdata->mcc_ClassObjects[ GID_CHATCHANNELLIST ], MM_CHATCHANNELLIST_CHANNELISVISIBLE, msg->Channel ) );
+}
+/* \\\ */
+
 /* /// MM_ChannelNickAdd()
 **
 */
@@ -706,6 +721,8 @@ DISPATCHER(MCC_WindowChat_Dispatcher)
 
 		case MM_WINDOWCHAT_CHANNELNICKADD       : return( MM_ChannelNickAdd      ( cl, obj, (APTR) msg ) );
 		case MM_WINDOWCHAT_CHANNELNICKREMOVE    : return( MM_ChannelNickRemove   ( cl, obj, (APTR) msg ) );
+
+		case MM_WINDOWCHAT_CHANNELISVISIBLE     : return( MM_ChannelIsVisible    ( cl, obj, (APTR) msg ) );
 
     }
 

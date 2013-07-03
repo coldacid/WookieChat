@@ -533,6 +533,38 @@ static IPTR MM_ChannelNickRemove( struct IClass *cl, Object *obj, struct MP_APPL
 }
 /* \\\ */
 
+/* /// MM_ChannelIsVisible()
+**
+** We distribute this method to all chat windows.
+**
+** The specified window will be excluded from search
+** and may be NULL to check all chat windows.
+*/
+
+/*************************************************************************/
+
+static IPTR MM_ChannelIsVisible( struct IClass *cl, Object *obj, struct MP_APPLICATION_CHANNELISVISIBLE *msg )
+{
+IPTR result = 0;
+
+	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
+
+	FORCHILD( obj, MUIA_Application_WindowList ) {
+		if( MUIGetVar( child, MA_APPLICATION_CLASSID ) == CLASSID_WINDOWCHAT ) {
+			if( child != msg->IgnoreWindowChat ) {
+				if( ( result = DoMethod( child, MM_WINDOWCHAT_CHANNELISVISIBLE, msg->Channel ) ) ) {
+					break;
+				}
+			}
+		}
+	} NEXTCHILD
+
+	debug( "%s (%ld) %s() - Result 0x%08lx \n", __FILE__, __LINE__, __func__, result );
+
+	return( result );
+}
+/* \\\ */
+
 /* /// MM_VisualChange()
 **
 ** We distribute this method to all chat windows.
@@ -542,6 +574,9 @@ static IPTR MM_ChannelNickRemove( struct IClass *cl, Object *obj, struct MP_APPL
 
 static IPTR MM_VisualChange( struct IClass *cl, Object *obj, Msg *msg )
 {
+
+	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
+
 	FORCHILD( obj, MUIA_Application_WindowList ) {
 		if( MUIGetVar( child, MA_APPLICATION_CLASSID ) == CLASSID_WINDOWCHAT ) {
 			DoMethod( child, MM_WINDOWCHAT_VISUALCHANGE );
@@ -589,6 +624,8 @@ DISPATCHER(MCC_Application_Dispatcher)
 		case MM_APPLICATION_CHANNELCHANGETOPIC  : return( MM_ChannelChangeTopic  ( cl, obj, (APTR) msg ) );
 		case MM_APPLICATION_CHANNELNICKADD      : return( MM_ChannelNickAdd      ( cl, obj, (APTR) msg ) );
 		case MM_APPLICATION_CHANNELNICKREMOVE   : return( MM_ChannelNickRemove   ( cl, obj, (APTR) msg ) );
+
+		case MM_APPLICATION_CHANNELISVISIBLE    : return( MM_ChannelIsVisible    ( cl, obj, (APTR) msg ) );
 
 		case MM_APPLICATION_VISUALCHANGE        : return( MM_VisualChange        ( cl, obj, (APTR) msg ) );
 

@@ -40,6 +40,7 @@ MM_APPLICATION_CHANNELNICKADD,
 MM_APPLICATION_CHANNELNICKREMOVE,
 
 MM_APPLICATION_VISUALCHANGE,
+MM_APPLICATION_CHANNELISVISIBLE,
 
 /* Attributes */
 MA_APPLICATION_CLASSID,
@@ -63,6 +64,7 @@ struct MP_APPLICATION_CHANNELADD        { ULONG MethodID; struct Channel *Channe
 struct MP_APPLICATION_CHANNELREMOVE     { ULONG MethodID; struct Channel *Channel; };
 struct MP_APPLICATION_CHANNELNICKADD    { ULONG MethodID; struct Channel *Channel; struct ChatNickEntry *ChatNickEntry; };
 struct MP_APPLICATION_CHANNELNICKREMOVE { ULONG MethodID; struct Channel *Channel; struct ChatNickEntry *ChatNickEntry; };
+struct MP_APPLICATION_CHANNELISVISIBLE  { ULONG MethodID; struct Channel *Channel; Object *IgnoreWindowChat; };
 
 
 /*

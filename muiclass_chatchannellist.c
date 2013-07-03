@@ -16,6 +16,7 @@
 
 #include <libraries/mui.h>
 #include <intuition/classusr.h>
+#include <libraries/gadtools.h>
 #include <prefs/prefhdr.h>
 #include <proto/muimaster.h>
 #include <proto/intuition.h>
@@ -27,6 +28,7 @@
 #include <stdio.h>
 
 #include "system.h"
+#include "functions.h"
 #include "locale.h"
 #include "muiclass.h"
 #include "muiclass_application.h"
@@ -153,18 +155,21 @@ struct Channel *c;
 		DoMethod( obj, MUIM_NList_GetEntry, res.entry, &mccdata->mcc_SelectedContextEntry );
 		if( ( cce = mccdata->mcc_SelectedContextEntry ) ) { /* paranoia */
 			if( ( c = cce->cce_Channel ) ) { /* paranoia */
-				//ULONG i, servervisible;
-
+				IPTR servervisible = DoMethod(      obj , MM_CHATCHANNELLIST_SERVERISVISIBLE, c );
+				IPTR channellast   = DoMethod( _app(obj), MM_APPLICATION_CHANNELISVISIBLE, c, _win(obj) );
+				IPTR isserver      = c->c_Flags & CHANNELF_SERVER;
 /* now build the tree */
 
 				if( ( mccdata->mcc_ClassObjects[ MID_CONTEXTMENU ] = MenustripObject,
 								Child, MenuObject, MUIA_Menu_Title, LGS( MSG_MUICLASS_CHATCHANNELLIST_CMENU ),
+									(( channellast || isserver ) ? TAG_IGNORE :	Child ), (( channellast || isserver ) ? TAG_IGNORE : (IPTR)	MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MUICLASS_CHATCHANNELLIST_CHANNELLEAVE_CMENU     ), MUIA_UserData, MID_CMENU_CHANNELLEAVE , End ),
+									((!channellast || isserver ) ? TAG_IGNORE :	Child ), ((!channellast || isserver ) ? TAG_IGNORE : (IPTR)	MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MUICLASS_CHATCHANNELLIST_CHANNELREMOVE_CMENU    ), MUIA_UserData, MID_CMENU_CHANNELREMOVE, End ),
+									((                isserver ) ? TAG_IGNORE : Child ), ((                isserver ) ? TAG_IGNORE : (IPTR)	MUI_MakeObject(MUIO_Menuitem, NM_BARLABEL, 0, 0, 0) ),
 									Child, MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MUICLASS_CHATCHANNELLIST_MOVETONEWWINDOW_CMENU  ), MUIA_UserData, MID_CMENU_MOVETONEWWINDOW, End,
 									Child, MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MUICLASS_CHATCHANNELLIST_CLONETONEWWINDOW_CMENU ), MUIA_UserData, MID_CMENU_CLONETONEWWINDOW, End,
-									Child, MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MUICLASS_CHATCHANNELLIST_SERVERSHOW_CMENU       ), MUIA_UserData, MID_CMENU_SERVERSHOW, End,
-									Child, MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MUICLASS_CHATCHANNELLIST_SERVERHIDE_CMENU       ), MUIA_UserData, MID_CMENU_SERVERHIDE, End,
-									Child, MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MUICLASS_CHATCHANNELLIST_CHANNELREMOVE_CMENU    ), MUIA_UserData, MID_CMENU_CHANNELREMOVE, End,
-									Child, MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MUICLASS_CHATCHANNELLIST_CHANNELLEAVE_CMENU     ), MUIA_UserData, MID_CMENU_CHANNELLEAVE, End,
+									Child, MUI_MakeObject(MUIO_Menuitem, NM_BARLABEL, 0, 0, 0),
+									( servervisible ? TAG_IGNORE : Child ), ( servervisible ? TAG_IGNORE : (IPTR) MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MUICLASS_CHATCHANNELLIST_SERVERSHOW_CMENU       ), MUIA_UserData, MID_CMENU_SERVERSHOW   , End ),
+									(!servervisible ? TAG_IGNORE : Child ), (!servervisible ? TAG_IGNORE : (IPTR) MenuitemObject, MUIA_Menuitem_Title, LGS( MSG_MUICLASS_CHATCHANNELLIST_SERVERHIDE_CMENU       ), MUIA_UserData, MID_CMENU_SERVERHIDE   , End ),
 								End,
 							End ) ) {
 				}
@@ -355,41 +360,78 @@ static IPTR MM_WindowClose( struct IClass *cl, Object *obj, Msg *msg )
 	return( 0 );
 }
 /* \\\ */
-#if 0
-/* /// MM_IsServerVisible()
+
+/* /// MM_ServerIsVisible()
 **
 */
 
 /*************************************************************************/
 
-static IPTR MM_IsServerVisible( struct IClass *cl, Object *obj, struct MP_CHATCHANNELLIST_ISSERVERVISIBLE *msg )
+static IPTR MM_ServerIsVisible( struct IClass *cl, Object *obj, struct MP_CHATCHANNELLIST_SERVERISVISIBLE *msg )
 {
-struct ChatChannel *cc;
-struct Server *s = NULL;
+struct ChatChannelEntry *cce;
+struct Channel *c;
+struct Server  *s;
+ULONG i;
 
 	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
 	/* pointer magic */
 	s = (APTR) ( ( (IPTR) List_GetListFromNode( msg->Channel ) ) - (IPTR) offsetof( struct Server, s_ChannelList ) );
-
-	for( i = 0 ;  ; i++ ) {
-		cc = NULL;
-		DoMethod( obj, MUIM_NList_GetEntry, i, &cc );
-		if( cc ) {
-			if( ( c = cc->cc_Channel ) ) {
-				if( c->c-Flags & CHANNELF_SERVER ) {
-					if( Stricmp( c->c_Name, s->
+	/* find server channel by flag */
+	for( c = (APTR) s->s_ChannelList.lh_Head ; c->c_Succ ; c = c->c_Succ ) {
+		if( c->c_Flags & CHANNELF_SERVER ) {
+			break;
+		}
+	}
+	if( c->c_Succ ) { /* did we find the server channel? */
+		/* now see if the channel we found is in visible list */
+		for( i = 0 ;  ; i++ ) {
+			cce = NULL;
+			DoMethod( obj, MUIM_NList_GetEntry, i, &cce );
+			if( cce ) {
+				if( ( c == cce->cce_Channel ) ) {
+					return( (IPTR) c );
 				}
+			} else {
+				break;
+			}
+		}
+	} else {
+		debug("####### ERROR: There is no server channel for server '%s'! ########\n", s->s_Name );
+	}
+	return( (IPTR) NULL );
+}
+/* \\\ */
+/* /// MM_ChannelIsVisible()
+**
+*/
+
+/*************************************************************************/
+
+static IPTR MM_ChannelIsVisible( struct IClass *cl, Object *obj, struct MP_CHATCHANNELLIST_CHANNELISVISIBLE *msg )
+{
+struct ChatChannelEntry *cce;
+ULONG i;
+
+	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
+
+	/* now see if the channel we found is in visible list */
+	for( i = 0 ;  ; i++ ) {
+		cce = NULL;
+		DoMethod( obj, MUIM_NList_GetEntry, i, &cce );
+		if( cce ) {
+			if( ( msg->Channel == cce->cce_Channel ) ) {
+				return( (IPTR) msg->Channel );
 			}
 		} else {
 			break;
 		}
 	}
 
-	return( result );
+	return( (IPTR) NULL );
 }
 /* \\\ */
-#endif
 
 /*
 ** Dispatcher, init and dispose
@@ -418,7 +460,8 @@ DISPATCHER(MCC_ChatChannelList_Dispatcher)
 		case MM_CHATCHANNELLIST_PENSUPDATE      : return( MM_PensUpdate         ( cl, obj, (APTR) msg ) );
 
 		case MM_CHATCHANNELLIST_WINDOWCLOSE     : return( MM_WindowClose        ( cl, obj, (APTR) msg ) );
-//		  case MM_CHATCHANNELLIST_ISSERVERVISIBLE : return( MM_IsServerVisible    ( cl, obj, (APTR) msg ) );
+		case MM_CHATCHANNELLIST_SERVERISVISIBLE : return( MM_ServerIsVisible    ( cl, obj, (APTR) msg ) );
+		case MM_CHATCHANNELLIST_CHANNELISVISIBLE: return( MM_ChannelIsVisible   ( cl, obj, (APTR) msg ) );
 
 	}
 	return( DoSuperMethodA( cl, obj, msg ) );
