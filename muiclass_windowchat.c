@@ -203,7 +203,7 @@ Object *objs[ GID_LAST ];
 
 		DoMethod( mccdata->mcc_ClassObjects[ GID_CLOSETAB        ], MUIM_Notify, MUIA_Pressed            , FALSE         , obj, 1, MM_WINDOWCHAT_CHANNELPART );
 
-		DoMethod( obj                                             , MUIM_Notify, MUIA_Window_CloseRequest, TRUE          , mccdata->mcc_ClassObjects[ WID_QUIT ], 3, MUIM_Set, MUIA_Window_Open, TRUE );
+		DoMethod( obj                                             , MUIM_Notify, MUIA_Window_CloseRequest, TRUE          , MUIV_Notify_Application, 2, MM_APPLICATION_WINDOWCHATCLOSE, obj );
 
 		SetAttrs( mccdata->mcc_ClassObjects[ GID_CHATMESSAGE ],
 					MA_MESSAGEINPUT_OBJECTCHATUSERLIST   , mccdata->mcc_ClassObjects[ GID_CHATUSERLIST ],

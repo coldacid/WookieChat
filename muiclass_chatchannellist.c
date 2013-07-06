@@ -377,7 +377,7 @@ static IPTR MM_WindowClose( struct IClass *cl, Object *obj, Msg *msg )
 	** would dispose the object from within a notification of the very same object,
 	** which is quite bad.
 	*/
-	DoMethod( _app(obj), MUIM_Application_PushMethod, _app(obj), 2, MM_APPLICATION_WINDOWDISPOSE, _win(obj) );
+	DoMethod( _app(obj), MUIM_Application_PushMethod, _app(obj), 2, MM_APPLICATION_WINDOWCHATCLOSE, _win(obj) );
 
 	return( 0 );
 }

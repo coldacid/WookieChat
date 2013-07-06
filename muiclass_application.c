@@ -306,6 +306,41 @@ Object *win;
 	return( (IPTR) win );
 }
 /* \\\ */
+/* /// MM_WindowChatClose()
+**
+*/
+
+/*************************************************************************/
+
+static IPTR MM_WindowChatClose( struct IClass *cl UNUSED, Object *obj, struct MP_APPLICATION_WINDOWCHATCLOSE *msg )
+{
+struct mccdata *mccdata = INST_DATA( cl, obj );
+ULONG found, num;
+
+	found = 0;
+	num   = 0;
+
+	FORCHILD( obj, MUIA_Application_WindowList ) {
+		if( MUIGetVar( child, MA_APPLICATION_CLASSID ) == CLASSID_WINDOWCHAT ) {
+			num++;
+			if( child == msg->Window ) {
+				found++;
+			}
+		}
+	} NEXTCHILD
+	if( !found ) {
+		debug("###### Something is broken, MM_APPLICATION_WINDOWCHATCLOSE called with wrong window argument ###########\n");
+		return( 0 );
+	} else {
+		if( num > 1 ) { /* in this case we simply close */
+			DoMethod( obj, MM_APPLICATION_WINDOWDISPOSE, msg->Window );
+		} else {
+			SetAttrs( mccdata->mcc_ClassObjects[ WID_QUIT ], MUIA_Window_Open, TRUE, TAG_DONE );
+		}
+	}
+	return( 0 );
+}
+/* \\\ */
 
 /* /// MM_ChatSetActive()
 **
@@ -612,7 +647,9 @@ DISPATCHER(MCC_Application_Dispatcher)
 		case MM_APPLICATION_STARTUP             : return( MM_Startup             ( cl, obj, (APTR) msg ) );
 		case MM_APPLICATION_WINDOWFIND          : return( MM_WindowFind          ( cl, obj, (APTR) msg ) );
 		case MM_APPLICATION_WINDOWDISPOSE       : return( MM_WindowDispose       ( cl, obj, (APTR) msg ) );
+
 		case MM_APPLICATION_WINDOWCHATNEW       : return( MM_WindowChatNew       ( cl, obj, (APTR) msg ) );
+		case MM_APPLICATION_WINDOWCHATCLOSE     : return( MM_WindowChatClose     ( cl, obj, (APTR) msg ) );
 
 		case MM_APPLICATION_CHATSETACTIVE       : return( MM_ChatSetActive       ( cl, obj, (APTR) msg ) );
 		case MM_APPLICATION_CHATREMOVE          : return( MM_ChatRemove          ( cl, obj, (APTR) msg ) );
