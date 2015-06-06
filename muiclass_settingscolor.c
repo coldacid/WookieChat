@@ -453,7 +453,7 @@ char *linebuffer;
 						}
 					}
 					debug("line is '%s'\n", linebuffer );
-					SetAttrs( mccdata->mcc_ClassObjects[ TAB_CONFIGITEMS[ i ].GadgetID ], TAB_CONFIGITEMS[ i ].Attr, linebuffer );
+					SetAttrs( mccdata->mcc_ClassObjects[ TAB_CONFIGITEMS[ i ].GadgetID ], TAB_CONFIGITEMS[ i ].Attr, linebuffer, TAG_DONE );
 				}
 			}
 			Close( handle );
