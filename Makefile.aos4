@@ -1,0 +1,91 @@
+CC          = ppc-amigaos-gcc
+LD          = ppc-amigaos-gcc
+LDFLAGS     =
+STRIP       = ppc-amigaos-strip
+LIBS        = -ldebug -lauto
+INCS        = -I.
+DEFINES     = -DDEBUG -DENABLE_MEMORYTRACKING=1 -DENABLE_NLIST=0
+CFLAGS      = $(INCS) $(DEFINES) -gstabs -D__USE_INLINE__ -D__USE_OLD_TIMEVAL__ -std=gnu99 -Wall -Wno-format -O0
+APPLICATION = WookieChat
+SYSTEM      = AMIGAOS4
+CATALOGS    = english deutsch espaсol franзais greek italiano magyar norsk polski 
+FLEXCAT     = flexcat
+			
+SOURCES   = wookiechat.c                \
+			version.c                   \
+			functions.c                 \
+			irccommand.c                \
+			muiclass.c                  \
+			muiclass_aliaslist.c        \
+			muiclass_application.c      \
+			muiclass_audio.c            \
+			muiclass_buttonlist.c       \
+			muiclass_channellist.c      \
+			muiclass_chatchannellist.c  \
+			muiclass_chatlog.c          \
+			muiclass_chatuserlist.c     \
+			muiclass_eventlist.c        \
+			muiclass_ignorelist.c       \
+			muiclass_messageinput.c     \
+			muiclass_network.c          \
+			muiclass_nicklist.c         \
+			muiclass_settingslist.c     \
+			muiclass_serverlist.c       \
+			muiclass_settingsalias.c    \
+			muiclass_settingsbutton.c   \
+			muiclass_settingscolor.c    \
+			muiclass_settingsdcc.c      \
+			muiclass_settingsevent.c    \
+			muiclass_settingsgeneral.c  \
+			muiclass_settingsgui.c      \
+			muiclass_settingslog.c      \
+			muiclass_settingsserver.c   \
+			muiclass_settingssound.c    \
+			muiclass_urllist.c          \
+			muiclass_windowabout.c      \
+			muiclass_windowchat.c       \
+			muiclass_windowignorelist.c \
+			muiclass_windowquit.c       \
+			muiclass_windowquicksetup.c \
+			muiclass_windowsettings.c   \
+			muiclass_windowurlgrabber.c \
+			system_amigaos4.c           \
+			locale.c                    \
+			debug.c                     \
+			memorytracking.c            \
+			
+			
+OBJECTS   = $(SOURCES:.c=.o)
+
+all: $(APPLICATION)_strings.h catalogs $(APPLICATION)
+ 
+$(APPLICATION): $(OBJECTS)
+	$(CC) $(CFLAGS) -o $(APPLICATION)_$(SYSTEM) $(OBJECTS) $(LIBS)
+
+clean:
+	-rm -f $(OBJECTS)
+	-rm -f $(OBJECTS:.o=.d)
+	-rm -f $(APPLICATION)_$(SYSTEM)
+	-rm -f catalogs/*/*.catalog
+	-rm -f $(APPLICATION)_strings.h
+
+-include $(OBJECTS:.o=.d)
+
+%.o: %.c $(APPLICATION)_strings.h *.h Makefile.os4
+	$(CC) $(CFLAGS) -c -o $@ $<
+	@$(CC) -MM $(CFLAGS) $< > $*.d
+
+#  locale
+#
+
+$(APPLICATION)_strings.h: $(APPLICATION).cd
+	@echo "    [FLEXCAT] $@"
+	@$(FLEXCAT) $(APPLICATION).cd $@=catalogs/C_h_orig.sd
+
+.PHONY: catalogs
+catalogs: $(patsubst %,catalogs/%/$(APPLICATION).catalog,$(CATALOGS))
+
+%.catalog: %.ct $(APPLICATION).cd
+	@echo "    [FLEXCAT] $@"
+	@$(FLEXCAT) $(APPLICATION).cd $< CATALOG=$@ MODIFIED
+	

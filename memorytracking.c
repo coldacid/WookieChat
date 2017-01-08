@@ -36,8 +36,9 @@
 
 #define MEMORYPROTECTION_CODE /* avoid patching this code */
 
-#include "memorytracking.h"
 #include "debug.h"
+#include "memorytracking.h"
+#include "system.h"
 
 /*************************************************************************/
 

@@ -8,7 +8,7 @@
     for the specific language governing rights and limitations under the License.
 */
 
-#if defined(__AROS__) || defined(__MORPHOS__)
+#if defined(__AROS__) || defined(__MORPHOS__) || defined(__amigaos4__)
 #define CATCOMP_ARRAY 1
 #else
 #error Provide locale specific definition for your system
@@ -40,7 +40,7 @@ BOOL Locale_Open( STRPTR catname, ULONG version, ULONG revision)
 	if( ( LocaleBase = (APTR) OpenLibrary( (_ub_cs) "locale.library",0 ) ) ) {
 #ifdef __amigaos4__
 extern struct LocaleIFace      *ILocale;
-		if( ( ILocale = (struct LocaleIFace *) GetInterface( LocaleBase, "main", 1, NULL ) ) ) {
+		    ILocale = (struct LocaleIFace *) GetInterface( LocaleBase, "main", 1, NULL );
 #endif
 		RemLibrary( (struct Library *) LocaleBase );
 		if( ( locale_locale = OpenLocale( NULL ) ) ) {
@@ -95,7 +95,7 @@ void Locale_Close(void)
 
 STRPTR Locale_GetString( long id )
 {
-#if defined(__AROS__) || defined(__MORPHOS__)
+#if defined(__AROS__) || defined(__MORPHOS__) || defined(__amigaos4__)
 	if (LocaleBase  && locale_catalog != NULL)
     {
         return (STRPTR)GetCatalogStr(locale_catalog, id, CatCompArray[id].cca_Str);

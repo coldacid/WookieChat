@@ -141,10 +141,10 @@ static struct LibraryData LibraryArray[] = {
 //	  LIBMACRO( "locale.library"           ,  0, LIBFLAGSF_OPTIONAL, LocaleBase      , ILocale    ), /* locale is handled in main() */
 	LIBMACRO( "intuition.library"        , 33, 0                 , IntuitionBase   , IIntuition ), /* second to deliver requesters */
 	LIBMACRO( "muimaster.library"        ,  0, 0                 , MUIMasterBase   , IMUIMaster ), /* third for mui requesters */
-	LIBMACRO( "dos.library"              ,  0, 0                 , DOSBase         , IDos       ), /* now all other stuff */
+	LIBMACRO( "dos.library"              ,  0, 0                 , DOSBase         , IDOS       ), /* now all other stuff */
 	LIBMACRO( "asl.library"              ,  0, 0                 , AslBase         , IAsl       ),
 	LIBMACRO( "icon.library"             ,  0, 0                 , IconBase        , IIcon      ),
-	LIBMACRO( "graphics.library"         ,  0, 0                 , GfxBase         , IGfx       ),
+	LIBMACRO( "graphics.library"         ,  0, 0                 , GfxBase         , IGraphics  ),
 	LIBMACRO( "utility.library"          ,  0, 0                 , UtilityBase     , IUtility   ),
 	LIBMACRO( "bsdsocket.library"        ,  0, LIBFLAGSF_OPTIONAL, SocketBase      , ISocket    ),
 	LIBMACRO( "datatypes.library"        , 43, 0                 , DataTypesBase   , IDataTypes ),
