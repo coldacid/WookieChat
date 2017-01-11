@@ -48,7 +48,9 @@ int main(int argc, char *argv[])
 ULONG result = MSG_ERROR_NOERROR;
 struct Device_Timer dt;
 
+#if !defined(__AROS__)
 	SysBase = (APTR) (*((struct ExecBase **) 4 ) );
+#endif
 
 	debug( "\n\n%78m*\n%s (%ld) %s() - WookieChat - Transmission begins...\n", __FILE__, __LINE__, __func__ );
 

@@ -74,7 +74,6 @@ ULONG ShowRequester( ULONG message, ULONG gadgets, IPTR *args )
 */
 
 #ifdef __AROS__
-struct ExecBase         *SysBase;
 struct LocaleBase       *LocaleBase;
 struct Library          *MUIMasterBase;
 struct IntuitionBase    *IntuitionBase;

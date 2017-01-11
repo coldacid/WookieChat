@@ -2,16 +2,16 @@ CC          = i386-aros-gcc
 LD          = i386-aros-gcc
 LDFLAGS     =
 STRIP       =
-LIBS        = -lamiga -lmui
+LIBS        =
 INCS        = -I.
 DEFINES     = -DDEBUG -DENABLE_MEMORYTRACKING=1 -DENABLE_NLIST=1
-CFLAGS      = $(INCS) $(DEFINES) -std=gnu99 -Wall -Wno-format -g -O0
+CFLAGS      = $(INCS) $(DEFINES) -std=gnu99 -Wall -Wno-format -Wno-pointer-sign -g -O0
 APPLICATION = WookieChat
 SYSTEM      = AROS
 CATALOGS    = english deutsch español français greek italiano magyar norsk polski svenska
 FLEXCAT     = flexcat
 
-SOURCES   = wookiechat.c                \
+SOURCES   = 		wookiechat.c                \
 			version.c                   \
 			functions.c                 \
 			irccommand.c                \
@@ -26,6 +26,7 @@ SOURCES   = wookiechat.c                \
 			muiclass_chatuserlist.c     \
 			muiclass_eventlist.c        \
 			muiclass_ignorelist.c       \
+			muiclass_messageinput.c     \
 			muiclass_network.c          \
 			muiclass_nicklist.c         \
 			muiclass_settingslist.c     \
