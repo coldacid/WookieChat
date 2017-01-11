@@ -40,7 +40,6 @@ typedef STRPTR          l_in;
 typedef STRPTR          loc_in;
 typedef UBYTE *         _ub_cs;
 typedef STRPTR          _s_cs;
-#define NTIP
 typedef ULONG           IPTR;
 
 #ifndef offsetof

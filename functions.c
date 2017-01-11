@@ -470,7 +470,7 @@ ULONG length;
 				srad->srad_rda->RDA_Source.CS_Length = length;
 				srad->srad_rda->RDA_Source.CS_CurChr = 0;
 				srad->srad_rda->RDA_Source.CS_Buffer = (STRPTR) &srad->srad_Buffer[ 0 ];
-				if( ( srad->srad_rd = ReadArgs( (_ub_cs) templatestring, (LONG*) &srad->srad_ArgArray[ 0 ], srad->srad_rda ) ) ) {
+				if( ( srad->srad_rd = ReadArgs( (_ub_cs) templatestring, (IPTR*) &srad->srad_ArgArray[ 0 ], srad->srad_rda ) ) ) {
 					return( srad );
 				}
 			}

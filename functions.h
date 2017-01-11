@@ -58,7 +58,7 @@ struct LibraryData {
 
 #ifndef __amigaos4__
 #define LIBMACRO(name,version,flags,base,ibase) { (char *) name, version, flags, (struct Library **) &base }
-#define LIBMACROEND  { NULL, NULL, 0, NULL }
+#define LIBMACROEND  { NULL, 0, 0, NULL }
 #else
 #define LIBMACRO(name,version,flags,base,ibase) { (char *) name, version, flags, (struct Library **) &base, &ibase }
 #define LIBMACROEND  { NULL, NULL, 0, NULL, NULL }

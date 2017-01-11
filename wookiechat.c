@@ -45,7 +45,7 @@ void *memorypool;
 
 int main(int argc, char *argv[])
 {
-ULONG result = MSG_ERROR_NOERROR;
+IPTR result = MSG_ERROR_NOERROR;
 struct Device_Timer dt;
 
 #if !defined(__AROS__)

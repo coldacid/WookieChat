@@ -88,7 +88,7 @@ static IPTR OM_New( struct IClass *cl, Object *obj, struct opSet *msg UNUSED )
 
 	debug( "%s (%ld) %s() - Class: 0x%08lx Object: 0x%08lx \n", __FILE__, __LINE__, __func__, cl, obj );
 
-	if( ( obj = DoSuperNew( cl, obj,
+	if( ( obj = (Object *)DoSuperNew( cl, obj,
 						MUIA_ShortHelp  , LGS( MSG_MUICLASS_CHATCHANNELLIST_HELP ),
 						MUIA_ContextMenu, 1,
 						TAG_DONE ) ) ) {

@@ -306,7 +306,7 @@ struct DateStamp ds;
 				FPuts( c->c_ChatLogFile, (_ub_cs) mccdata->mcc_NameBuffer );
 			}
 		}
-		return( c->c_ChatLogFile );
+		return ( (IPTR) c->c_ChatLogFile );
 	}
 	return( 0 );
 }

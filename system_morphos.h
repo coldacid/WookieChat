@@ -50,7 +50,6 @@ typedef STRPTR          loc_in;
 typedef STRPTR          _ub_cs;
 typedef CONST_STRPTR    _s_cs;
 #define ClassID char *
-#define NTIP
 typedef ULONG           IPTR;
 
 #ifndef offsetof

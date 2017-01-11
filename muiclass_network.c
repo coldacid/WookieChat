@@ -26,6 +26,7 @@
 
 #include <string.h>
 #include <stdio.h>
+#include <time.h>
 
 #include "system.h"
 #include "functions.h"

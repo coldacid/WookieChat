@@ -55,7 +55,6 @@ typedef CONST_STRPTR    l_in;
 typedef CONST_STRPTR    loc_in;
 typedef CONST_STRPTR    _ub_cs;
 typedef CONST_STRPTR    _s_cs;
-#define NTIP
 typedef ULONG           IPTR;
 
 #ifndef offsetof

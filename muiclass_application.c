@@ -205,7 +205,7 @@ struct mccdata *mccdata = INST_DATA( cl, obj );
 
 	if( !wbmessage ) {
 		struct RDArgs *readargs;
-		if( !( readargs = ReadArgs( (_ub_cs) READARGS_TEMPLATE, (LONG*) mccdata->mcc_ReadargsArray, NULL ) ) ) {
+		if( !( readargs = ReadArgs( (_ub_cs) READARGS_TEMPLATE, (IPTR*) mccdata->mcc_ReadargsArray, NULL ) ) ) {
 			Dos_ShowFailure();
 		} else {
 			/* insert arg handling */
